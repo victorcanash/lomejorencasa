@@ -31,6 +31,7 @@ export type AuthRegister = {
 
 export type UserAddress = {
   id: number;
+  userId: number;
   addressLine: string;
   additionalInfo: string;
   postalCode: string;
@@ -43,6 +44,7 @@ export type UserAddress = {
 
 export type UserPayment = {
   id: number;
+  userId: number;
   type: string;
   provider: string;
   accountNumber: string;
@@ -52,6 +54,7 @@ export type UserPayment = {
 
 export type Cart = {
   id: number;
+  userId: number;
   total: number;
   items: CartItem[];
 }
@@ -59,6 +62,8 @@ export type Cart = {
 
 export type CartItem = {
   id: number;
+  cartId: number;
+  productId: number;
   product: Product;
   quantity: number;
 }
@@ -86,6 +91,7 @@ export type ProductCategory = {
 
 export type ProductInventory = {
   id: number;
+  productId: number;
   quantity: number;
   size?: string;
 }
@@ -93,6 +99,7 @@ export type ProductInventory = {
 
 export type ProductDiscount = {
   id: number;
+  productId: number;
   name: string;
   description: string;
   discountPercent: number;
