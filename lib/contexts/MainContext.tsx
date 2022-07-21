@@ -1,6 +1,6 @@
-import { createContext, useState, Dispatch, SetStateAction, useContext } from 'react';
+import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
-import type { User } from 'core/types'
+import type { User } from '@core/types'
 
 export const MainContext = createContext<ContextType>({
   loading: true,

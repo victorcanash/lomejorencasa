@@ -15,11 +15,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import Link from 'core/components/Link';
-import { loginValidation } from 'core/constants';
-import { AuthLogin, User } from 'core/types';
-import { loginUser } from 'core/utils/auth';
-import { useMainContext } from 'lib/contexts/MainContext';
+import Link from '@core/components/Link';
+import { loginValidation } from '@core/constants';
+import { AuthLogin, User } from '@core/types';
+import { loginUser } from '@core/utils/auth';
+import { useMainContext } from '@lib/contexts/MainContext';
 
 export const LoginForm = () => {
   const firstRenderRef = useRef(false);
@@ -65,7 +65,6 @@ export const LoginForm = () => {
     if (!firstRenderRef.current) {
       firstRenderRef.current = true;
       setLoading(false);
-      console.log(user);
     }    
   });
 

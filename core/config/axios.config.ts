@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import envConfig from 'core/config/env.config';
+import envConfig from '@core/config/env.config';
 
 export default axios.create(
     {

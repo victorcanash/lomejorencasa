@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import { User, AuthLogin, AuthRegister } from 'core/types';
-import { JWTTokenKey } from 'core/constants';
-import { logged, login, register, logout } from 'core/services/authService';
-import { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem } from 'core/utils/storage';
-import { capitalizeFirstLetter } from 'core/utils/objects';
+import { User, AuthLogin, AuthRegister } from '@core/types';
+import { JWTTokenKey } from '@core/constants';
+import { logged, login, register, logout } from '@core/services/authService';
+import { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem } from '@core/utils/storage';
+import { capitalizeFirstLetter } from '@core/utils/objects';
 
 export const getCredentials = async () => {
   return new Promise<{token: string, user: User}>(async (resolve, reject) => {

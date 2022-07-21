@@ -15,11 +15,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import Link from 'core/components/Link';
-import { registerValidation } from 'core/constants';
-import { AuthRegister, AuthLogin, User } from 'core/types';
-import { registerUser, loginUser } from 'core/utils/auth';
-import { useMainContext } from 'lib/contexts/MainContext';
+import Link from '@core/components/Link';
+import { registerValidation } from '@core/constants';
+import { AuthRegister, AuthLogin, User } from '@core/types';
+import { registerUser, loginUser } from '@core/utils/auth';
+import { useMainContext } from '@lib/contexts/MainContext';
 
 export const RegisterForm = () => {
   const firstRenderRef = useRef(false);

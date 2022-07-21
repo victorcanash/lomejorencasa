@@ -10,13 +10,13 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import envConfig from 'core/config/env.config';
-import createEmotionCache from 'core/cache/createEmotionCache';
-import { User } from 'core/types';
-import { getCredentials } from 'core/utils/auth';
-import theme from 'lib/themes';
-import { MainContext } from 'lib/contexts/MainContext';
-import { Loading } from 'components/loading/Loading';
+import envConfig from '@core/config/env.config';
+import createEmotionCache from '@core/cache/createEmotionCache';
+import { User } from '@core/types';
+import { getCredentials } from '@core/utils/auth';
+import theme from '@lib/themes';
+import { MainContext } from '@lib/contexts/MainContext';
+import { Loading } from '@components/loading/Loading';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();

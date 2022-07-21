@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
-import axios from 'core/config/axios.config';
-import { AuthLogin, AuthRegister } from 'core/types';
+import axios from '@core/config/axios.config';
+import { AuthLogin, AuthRegister } from '@core/types';
 
 export const login = (authLogin: AuthLogin) => {
   return axios.post('/login', authLogin);

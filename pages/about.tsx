@@ -6,9 +6,9 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import Link from 'core/components/Link';
-import ProTip from 'core/components/ProTip';
-import Copyright from 'core/components/Copyright';
+import Link from '@core/components/Link';
+import ProTip from '@core/components/ProTip';
+import Copyright from '@core/components/Copyright';
 
 const About: NextPage = () => {
   return (
