@@ -17,6 +17,7 @@ import { getCredentials } from '@core/utils/auth';
 import theme from '@lib/themes';
 import { MainContext } from '@lib/contexts/MainContext';
 import { Loading } from '@components/layouts/Loading';
+import { Header } from '@components/layouts/Header';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -105,6 +106,7 @@ function MyApp(props: MyAppProps) {
             {
               initialized &&
                 <>
+                  <Header />
                   <Component {...pageProps} />
                 </>
             }
