@@ -19,12 +19,12 @@ import Link from '@core/components/Link';
 import { loginValidation } from '@core/constants';
 import { AuthLogin, User } from '@core/types';
 import { loginUser } from '@core/utils/auth';
-import { useMainContext } from '@lib/contexts/MainContext';
+import { useAppContext } from '@lib/contexts/AppContext';
 
 export const LoginForm = () => {
   const firstRenderRef = useRef(false);
 
-  const { token, setLoading, setToken, setUser, user } = useMainContext();
+  const { token, setLoading, setToken, setUser, user } = useAppContext();
 
   const router = useRouter();
 

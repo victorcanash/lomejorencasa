@@ -19,12 +19,12 @@ import Link from '@core/components/Link';
 import { registerValidation } from '@core/constants';
 import { AuthRegister, AuthLogin, User } from '@core/types';
 import { registerUser, loginUser } from '@core/utils/auth';
-import { useMainContext } from '@lib/contexts/MainContext';
+import { useAppContext } from '@lib/contexts/AppContext';
 
 export const RegisterForm = () => {
   const firstRenderRef = useRef(false);
 
-  const { token, setLoading, setToken, setUser } = useMainContext();
+  const { token, setLoading, setToken, setUser } = useAppContext();
 
   const router = useRouter();
 

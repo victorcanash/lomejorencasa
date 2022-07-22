@@ -10,7 +10,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 import { logoutUser } from '@core/utils/auth';
-import { useMainContext } from '@lib/contexts/MainContext';
+import { useAppContext } from '@lib/contexts/AppContext';
 
 interface Props {
   profileAnchorEl: HTMLElement | null;
@@ -35,7 +35,7 @@ export const Menu = (props: Props) => {
     mobileMenuId
   } = props;
 
-  const { token, user, setLoading, setToken, setUser } = useMainContext();
+  const { token, user, setLoading, setToken, setUser } = useAppContext();
 
   const router = useRouter();
   
