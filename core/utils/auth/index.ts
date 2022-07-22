@@ -67,7 +67,7 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
       if (response.status === StatusCodes.CREATED) {
         if (response.data.token){
           if (token !== '') {
-            await logout(token);
+            await logoutUser(token);
           }
           await setLocalStorageItem(JWTTokenKey, response.data.token);
           getCredentials().then((response: {token: string, user: User}) => {
@@ -91,4 +91,9 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
       reject(new Error(errorMsg));
     });
   })
+}
+
+export const logoutUser = async (token: string) => {
+  await logout(token);
+  await removeLocalStorageItem(JWTTokenKey);
 }
