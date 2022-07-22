@@ -16,7 +16,7 @@ import { User } from '@core/types';
 import { getCredentials } from '@core/utils/auth';
 import theme from '@lib/themes';
 import { MainContext } from '@lib/contexts/MainContext';
-import { Loading } from '@components/loading/Loading';
+import { Loading } from '@components/layouts/Loading';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -50,6 +50,8 @@ function MyApp(props: MyAppProps) {
       getCredentials().then((response: {token: string, user: User}) => {
         setToken(response.token);
         setUser(response.user);
+        setInitialized(true);
+      }).catch((error: Error) => {
         setInitialized(true);
       });   
     }    
@@ -89,7 +91,8 @@ function MyApp(props: MyAppProps) {
               setToken, 
               user, 
               setUser 
-            }}>
+            }}
+          >
 
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
@@ -101,7 +104,9 @@ function MyApp(props: MyAppProps) {
 
             {
               initialized &&
-                <Component {...pageProps} />
+                <>
+                  <Component {...pageProps} />
+                </>
             }
 
           </MainContext.Provider>
