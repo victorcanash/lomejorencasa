@@ -1,15 +1,17 @@
 import React from 'react';
 import Typography from '@mui/material/Typography';
-import MuiLink from '@mui/material/Link';
+
+import Link from '@core/components/Link';
 
 const Copyright = () => {
   return (
-    <Typography variant="body2" color="text.secondary" align="center">
+    <Typography variant="body2" color="text.secondary">
       {'Copyright © '}
-      <MuiLink color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="https://mui.com/">
         Your Website
-      </MuiLink>{' '}
-      {new Date().getFullYear()}.
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
     </Typography>
   );
 }
