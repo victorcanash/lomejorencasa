@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, MouseEvent } from 'react';
+import { useRouter } from 'next/router';
 
 import MuiMenu from '@mui/material/Menu';
 import Badge from '@mui/material/Badge';
@@ -7,6 +8,9 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+
+import { logoutUser } from '@core/utils/auth';
+import { useMainContext } from '@lib/contexts/MainContext';
 
 interface Props {
   profileAnchorEl: HTMLElement | null;
@@ -30,6 +34,10 @@ export const Menu = (props: Props) => {
     profileMenuId, 
     mobileMenuId
   } = props;
+
+  const { token, user, setLoading, setToken, setUser } = useMainContext();
+
+  const router = useRouter();
   
   const isProfileMenuOpen = Boolean(profileAnchorEl);
   const isMobileMenuOpen = Boolean(mobileAnchorEl);
@@ -41,6 +49,43 @@ export const Menu = (props: Props) => {
   const handleProfileMenuClose = () => {
     setProfileAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const goToPage = (to: string) => {
+    if (router.asPath === to) {
+        return;
+    }
+    router.push(to);
+  };
+
+  const onClickProfileBtn = () => {
+    handleProfileMenuClose();
+    goToPage('/profile');
+  };
+
+  const onClickOrdersBtn = () => {
+    setLoading(true);
+    handleProfileMenuClose();
+    goToPage('/orders');
+  };
+
+  const onClickSignOutBtn = async () => {
+    setLoading(true);
+    handleProfileMenuClose();
+    await logoutUser(token);
+    setToken('');
+    setUser(undefined);
+    goToPage('/');
+  };
+
+  const onClickSignInBtn = () => {
+    handleProfileMenuClose();
+    goToPage('/login');
+  };
+
+  const onClickRegisterBtn = () => {
+    handleProfileMenuClose();
+    goToPage('/register');
   };
 
   const renderProfileMenu = (
@@ -59,8 +104,20 @@ export const Menu = (props: Props) => {
       open={isProfileMenuOpen}
       onClose={handleProfileMenuClose}
     >
-      <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleProfileMenuClose}>My account</MenuItem>
+      {
+        (token && user) ?
+          <div>
+            <MenuItem onClick={onClickProfileBtn}>Profile</MenuItem>
+            <MenuItem onClick={onClickOrdersBtn}>Orders</MenuItem>
+            <MenuItem onClick={onClickSignOutBtn}>Sign out</MenuItem>
+          </div>
+          
+        :
+          <div>
+            <MenuItem onClick={onClickSignInBtn}>Sign in</MenuItem>
+            <MenuItem onClick={onClickRegisterBtn}>Register</MenuItem>
+          </div>
+      }
     </MuiMenu>
   );
 
@@ -82,7 +139,7 @@ export const Menu = (props: Props) => {
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={4} color="secondary">
             <MailIcon />
           </Badge>
         </IconButton>
@@ -94,7 +151,7 @@ export const Menu = (props: Props) => {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={17} color="secondary">
             <NotificationsIcon />
           </Badge>
         </IconButton>
