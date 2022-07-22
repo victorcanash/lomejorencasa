@@ -1,7 +1,8 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState, useRef, useEffect } from 'react';
 
-import type { User } from '@core/types'
+import type { User, ProductCategory } from '@core/types'
 import { getCredentials } from '@core/utils/auth';
+import { getAllProductCategories } from '@core/utils/products';
 
 type ContextType = {
   initialized: boolean;
@@ -11,6 +12,8 @@ type ContextType = {
   setToken: Dispatch<SetStateAction<string>>;
   user?: User;
   setUser: Dispatch<SetStateAction<User | undefined>>;
+  categories: ProductCategory[];
+  setCategories: Dispatch<SetStateAction<ProductCategory[]>>;
 };
 
 export const AppContext = createContext<ContextType>({
@@ -21,12 +24,14 @@ export const AppContext = createContext<ContextType>({
   setToken: () => {},
   user: undefined,
   setUser: () => {},
+  categories: [],
+  setCategories: () => {},
 });
 
 export const useAppContext = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('Error while reading main context');
+    throw new Error('Error while reading app context');
   }
 
   return context;
@@ -39,17 +44,30 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState('');
   const [user, setUser] = useState<User | undefined>(undefined);
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
 
   useEffect(() => {
     if (!firstRenderRef.current) {
       firstRenderRef.current = true; 
-      getCredentials().then((response: {token: string, user: User}) => {
-        setToken(response.token);
-        setUser(response.user);
-        setInitialized(true);
-      }).catch((error: Error) => {
-        setInitialized(true);
-      });   
+
+      const initData = async() => {
+        await getCredentials().then((response: {token: string, user: User}) => {
+          setToken(response.token);
+          setUser(response.user);
+        }).catch((error: Error) => {
+        }); 
+
+        await getAllProductCategories().then((response: {productCategories: ProductCategory[]}) => {
+          setCategories(response.productCategories);
+          setInitialized(true);
+        }).catch((error: Error) => {
+          setTimeout(() => {
+            initData();
+          }, 3000);
+        });
+      };  
+
+      initData();
     }    
   }, []);
 
@@ -62,7 +80,9 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         token, 
         setToken, 
         user, 
-        setUser 
+        setUser,
+        categories,
+        setCategories
       }}
     >
       {children}

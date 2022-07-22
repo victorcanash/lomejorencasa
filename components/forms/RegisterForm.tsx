@@ -17,7 +17,7 @@ import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
 import { registerValidation } from '@core/constants';
-import { AuthRegister, AuthLogin, User } from '@core/types';
+import type { AuthRegister, AuthLogin, User } from '@core/types';
 import { registerUser, loginUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 
