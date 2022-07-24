@@ -19,6 +19,16 @@ const theme = createTheme({
       main: red.A400,
     },
   },
+  components: {
+    MuiPaper: {
+      defaultProps: {
+        sx: {
+          backgroundColor: '#ff5722',
+          color: '#fff',
+        }
+      },
+    }
+  },
 });
 
 export default theme;

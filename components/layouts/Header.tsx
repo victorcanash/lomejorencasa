@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import MuiAppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -14,9 +15,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { Toolbar } from '@components/layouts/Toolbar';
 import { Search } from '@components/layouts/Search';
-import { Menu } from '@components/layouts/Menu';
+import { Drawer } from '@components/layouts/Drawer';
 
 
 interface Props {
@@ -35,35 +35,46 @@ const HideOnScroll = (props: Props) => {
 }
 
 
+export const userDrawerId = 'user-drawer';
+export const categoriesDrawerId = 'categories-drawer';
+
+
 export const Header = () => {
-  const [profileAnchorEl, setProfileAnchorEl] = 
-    React.useState<null | HTMLElement>(null);
-  const [mobileAnchorEl, setMobileAnchorEl] =
-    React.useState<null | HTMLElement>(null);
+  const [userDrawerOpen, setUserDrawerOpen] = useState(false);
+  const [categoriesDrawerOpen, setCategoriesDrawerOpen] = useState(false);
 
-  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setProfileAnchorEl(event.currentTarget);
+  const handleUserDrawer = () => {
+    setUserDrawerOpen(!userDrawerOpen);
   };
 
-  const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
-    setMobileAnchorEl(event.currentTarget);
+  const handleCategoriesDrawer = () => {
+    setCategoriesDrawerOpen(!categoriesDrawerOpen);
   };
 
-  const profileMenuId = 'account-menu-profile';
-  const mobileMenuId = 'account-menu-mobile';
+  const onClickAppBar = () => {
+    if (userDrawerOpen) {
+      setUserDrawerOpen(false);
+    }
+    if (categoriesDrawerOpen) {
+      setCategoriesDrawerOpen(false);
+    }
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, display:'flex' }}>
 
       <HideOnScroll>
-        <MuiAppBar color="primary">
+        <MuiAppBar color="primary" position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} onClick={onClickAppBar}>
           <Toolbar>
 
             <IconButton
               size="large"
               edge="start"
               color="inherit"
-              aria-label="open drawer"
+              aria-label="open categories drawer"
+              aria-controls={categoriesDrawerId}
+              aria-haspopup="true"
+              onClick={handleCategoriesDrawer}
               sx={{ mr: 2 }}
             >
               <MenuIcon />
@@ -102,44 +113,33 @@ export const Header = () => {
               <IconButton
                 size="large"
                 edge="end"
-                aria-label="account of current user"
-                aria-controls={profileMenuId}
+                aria-label="open user drawer"
+                aria-controls={userDrawerId}
                 aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
+                onClick={handleUserDrawer}
                 color="inherit"
               >
                 <AccountCircle />
               </IconButton>
             {/*</Box>*/}
 
-            {/*
-            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-              <IconButton
-                size="large"
-                aria-label="show more"
-                aria-controls={mobileMenuId}
-                aria-haspopup="true"
-                onClick={handleMobileMenuOpen}
-                color="inherit"
-              >
-                <MoreIcon />
-              </IconButton>
-            </Box>
-            */}
-
           </Toolbar>
         </MuiAppBar>
       </HideOnScroll>
 
-      <Menu 
-        profileAnchorEl={profileAnchorEl} 
-        setProfileAnchorEl={setProfileAnchorEl}
-        mobileAnchorEl={mobileAnchorEl}
-        setMobileAnchorEl={setMobileAnchorEl}
-        handleProfileMenuOpen={handleProfileMenuOpen}
-        handleMobileMenuOpen={handleMobileMenuOpen}
-        profileMenuId={profileMenuId}
-        mobileMenuId={mobileMenuId}
+      <Drawer
+        key={userDrawerId}
+        id={userDrawerId}
+        anchor={'right'}
+        open={userDrawerOpen}
+        handleDrawer={handleUserDrawer}
+      />
+      <Drawer
+        key={categoriesDrawerId}
+        id={categoriesDrawerId}
+        anchor={'left'}
+        open={categoriesDrawerOpen}
+        handleDrawer={handleCategoriesDrawer}
       />
 
     </Box>

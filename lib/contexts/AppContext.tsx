@@ -13,7 +13,6 @@ type ContextType = {
   user?: User;
   setUser: Dispatch<SetStateAction<User | undefined>>;
   categories: ProductCategory[];
-  setCategories: Dispatch<SetStateAction<ProductCategory[]>>;
 };
 
 export const AppContext = createContext<ContextType>({
@@ -25,7 +24,6 @@ export const AppContext = createContext<ContextType>({
   user: undefined,
   setUser: () => {},
   categories: [],
-  setCategories: () => {},
 });
 
 export const useAppContext = () => {
@@ -81,8 +79,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         setToken, 
         user, 
         setUser,
-        categories,
-        setCategories
+        categories
       }}
     >
       {children}
