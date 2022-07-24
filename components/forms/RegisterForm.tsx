@@ -138,7 +138,6 @@ export const RegisterForm = () => {
                 name="lastName"
                 autoComplete="lastName"        
                 label="Last Name"
-                autoFocus
                 value={props.values.lastName}
                 onChange={props.handleChange}
                 error={props.touched.lastName && Boolean(props.errors.lastName)}
