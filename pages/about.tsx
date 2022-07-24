@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import type { NextPage } from 'next';
 
 import Container from '@mui/material/Container';
@@ -9,13 +9,25 @@ import Button from '@mui/material/Button';
 import Link from '@core/components/Link';
 import ProTip from '@core/components/ProTip';
 import Copyright from '@core/components/Copyright';
+import { useAppContext } from '@lib/contexts/AppContext';
 
 const About: NextPage = () => {
+  const firstRenderRef = useRef(false);
+
+  const { setLoading } = useAppContext();
+
+  useEffect(() => {
+    if (!firstRenderRef.current) {
+      firstRenderRef.current = true;
+      setLoading(false);
+    }    
+  });
+
   return (
-    <Container maxWidth="lg">
+    <Container component="main" maxWidth="lg">
       <Box
         sx={{
-          my: 4,
+          marginTop: 12,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
