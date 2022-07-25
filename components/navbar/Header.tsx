@@ -110,7 +110,7 @@ export const Header = () => {
                 noWrap
                 component="div"
               >
-                VICTOR'S SHOP
+                VICTOR&apos;S SHOP
               </Typography>
             </Button>
 

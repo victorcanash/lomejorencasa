@@ -101,6 +101,7 @@ export const Drawer = (props: Props) => {
     },
   ];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!firstRenderRef.current) {
       firstRenderRef.current = true;

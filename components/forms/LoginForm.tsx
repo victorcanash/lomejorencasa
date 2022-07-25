@@ -161,7 +161,7 @@ export const LoginForm = () => {
                 </Grid>
                 <Grid item>
                   <Link href="/register" variant="body2">
-                    Don't have an account? Sign Up
+                    Don&apos;t have an account? Sign Up
                   </Link>
                 </Grid>
               </Grid>
