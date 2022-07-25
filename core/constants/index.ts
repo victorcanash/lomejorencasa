@@ -48,6 +48,10 @@ export const registerValidation = Yup.object().shape(
   }
 );
 
-export const JWTTokenKey = 'sessionJWTToken'
+export const JWTTokenKey = 'sessionJWTToken';
 
-export const maxCartQuantity = 99
+export const limitSearchProducts = 20;
+
+export const orderRemainsSearchProducts = false;
+
+export const maxCartQuantity = 99;

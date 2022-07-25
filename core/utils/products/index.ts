@@ -1,8 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
+import { limitSearchProducts, orderRemainsSearchProducts } from '@core/constants';
 import type { Product, ProductCategory } from '@core/types';
-import { getProductCategories } from '@core/services/productsService';
+import { getProductCategories, getProducts } from '@core/services/productsService';
 
 export const getAllProductCategories = async () => {
   return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
@@ -19,6 +20,27 @@ export const getAllProductCategories = async () => {
       console.error(`[Get Product Categories ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     }); 
+  })
+};
+
+export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryId: number) => {
+  return new Promise<{products: Product[], totalPages: number, currentPage: number}>(async (resolve, reject) => {
+    getProducts(page, limitSearchProducts, sortBy, order, keywords, categoryId, orderRemainsSearchProducts)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.products) {
+          resolve({
+            products: response.data.products,
+            totalPages: response.data.totalPages,
+            currentPage: response.data.currentPage
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        console.error(`[Get Products ERROR]: ${errorMsg}`);
+        reject(new Error(errorMsg));
+      }); 
   })
 };
 
