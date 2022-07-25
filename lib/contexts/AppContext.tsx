@@ -1,6 +1,6 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState, useRef, useEffect } from 'react';
 
-import type { User, ProductCategory } from '@core/types'
+import type { User, ProductCategory } from '@core/types';
 import { getCredentials } from '@core/utils/auth';
 import { getAllProductCategories } from '@core/utils/products';
 
