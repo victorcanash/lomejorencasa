@@ -19,8 +19,6 @@ const Home: NextPage = () => {
   const router = useRouter();
 
   const goToPage = (to: string) => {
-    console.log('from', router.pathname);
-    console.log('to', to);
     router.push(to);
   };
 

@@ -72,7 +72,7 @@ export const Drawer = (props: Props) => {
   const onClickCategoryBtn = (_text: string) => {
     setLoading(true);
     handleDrawer();
-    goToPage(`/${_text.toLowerCase()}`);
+    goToPage(`/search/${_text.toLowerCase()}`);
   };
 
   const loggedUserItemsList: ItemList[] =  [
