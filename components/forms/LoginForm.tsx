@@ -9,8 +9,10 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
@@ -67,97 +69,109 @@ export const LoginForm = () => {
   });
 
   return (
-    <>
-      <Avatar 
-        sx={{ 
-          m: 1, 
-          bgcolor: 'secondary.main' 
+    <Container component="main" maxWidth="xs">
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-          <LockOutlinedIcon />
-      </Avatar>
 
-      <Typography component="h1" variant="h5">
-        Sign in
-      </Typography>
+        <Avatar 
+          sx={{ 
+            m: 1, 
+            bgcolor: 'secondary.main' 
+          }}
+        >
+            <LockOutlinedIcon />
+        </Avatar>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={loginValidation}
-        onSubmit={handleSubmit}
-      >
-        {props => (
-          <Form>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
 
-            {/* Email Field */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              name="email"
-              autoComplete="email"
-              label="Email Address"
-              autoFocus
-              value={props.values.email}
-              onChange={props.handleChange}
-              error={props.touched.email && Boolean(props.errors.email)}
-              helperText={props.touched.email && props.errors.email}
-            />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={loginValidation}
+          onSubmit={handleSubmit}
+        >
+          {props => (
+            <Form>
 
-            {/* Password Field */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              label="Password"
-              value={props.values.password}
-              onChange={props.handleChange}
-              error={props.touched.password && Boolean(props.errors.password)}
-              helperText={props.touched.password && props.errors.password}
-            />
+              {/* Email Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                name="email"
+                autoComplete="email"
+                label="Email Address"
+                autoFocus
+                value={props.values.email}
+                onChange={props.handleChange}
+                error={props.touched.email && Boolean(props.errors.email)}
+                helperText={props.touched.email && props.errors.email}
+              />
 
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+              {/* Password Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="password"
+                name="password"
+                type="password"
+                autoComplete="current-password"
+                label="Password"
+                value={props.values.password}
+                onChange={props.handleChange}
+                error={props.touched.password && Boolean(props.errors.password)}
+                helperText={props.touched.password && props.errors.password}
+              />
 
-            {/* SUBMIT FORM */}
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              /*disabled={ formik.isSubmitting || !formik.isValid || !formik.touched.email }*/
-            >
-              Sign In
-            </Button>
+              <FormControlLabel
+                control={<Checkbox value="remember" color="primary" />}
+                label="Remember me"
+              />
 
-            {
-              errorMsg && errorMsg !== '' &&
-                <Alert severity="error">{ errorMsg }</Alert>
-            } 
+              {/* SUBMIT FORM */}
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                /*disabled={ formik.isSubmitting || !formik.isValid || !formik.touched.email }*/
+              >
+                Sign In
+              </Button>
 
-            <Grid container>
-              <Grid item xs>
-                <Link href="/login" variant="body2">
-                  Forgot password?
-                </Link>
+              {
+                errorMsg && errorMsg !== '' &&
+                  <Alert severity="error">{ errorMsg }</Alert>
+              } 
+
+              <Grid container>
+                <Grid item xs>
+                  <Link href="/login" variant="body2">
+                    Forgot password?
+                  </Link>
+                </Grid>
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    Don't have an account? Sign Up
+                  </Link>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Link href="/register" variant="body2">
-                  Don't have an account? Sign Up
-                </Link>
-              </Grid>
-            </Grid>
 
-          </Form>
-        )}
-      </Formik>
-    </>
+            </Form>
+          )}
+        </Formik>
+
+      </Box>
+
+    </Container>
   );
 };

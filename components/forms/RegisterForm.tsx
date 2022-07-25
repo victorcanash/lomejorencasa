@@ -9,8 +9,10 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
@@ -79,153 +81,165 @@ export const RegisterForm = () => {
   });
 
   return (
-    <>
-      <Avatar 
-        sx={{ 
-          m: 1, 
-          bgcolor: 'secondary.main' 
+    <Container component="main" maxWidth="xs">
+
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-          <LockOutlinedIcon />
-      </Avatar>
 
-      <Typography component="h1" variant="h5">
-        Sign up
-      </Typography>
+        <Avatar 
+          sx={{ 
+            m: 1, 
+            bgcolor: 'secondary.main' 
+          }}
+        >
+            <LockOutlinedIcon />
+        </Avatar>
 
-      <Formik
-        initialValues={initialValues}
-        validationSchema={registerValidation}
-        onSubmit={handleSubmit}
-      >
-        {props => (
-          <Form>
+        <Typography component="h1" variant="h5">
+          Sign up
+        </Typography>
 
-            {/* First Name Field */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="firstName"
-              name="firstName"
-              autoComplete="firstName"        
-              label="First Name"
-              autoFocus
-              value={props.values.firstName}
-              onChange={props.handleChange}
-              error={props.touched.firstName && Boolean(props.errors.firstName)}
-              helperText={props.touched.firstName && props.errors.firstName}
-            />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={registerValidation}
+          onSubmit={handleSubmit}
+        >
+          {props => (
+            <Form>
 
-            {/* Last Name Field */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="lastName"
-              name="lastName"
-              autoComplete="lastName"        
-              label="Last Name"
-              value={props.values.lastName}
-              onChange={props.handleChange}
-              error={props.touched.lastName && Boolean(props.errors.lastName)}
-              helperText={props.touched.lastName && props.errors.lastName}
-            />
+              {/* First Name Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="firstName"
+                name="firstName"
+                autoComplete="firstName"        
+                label="First Name"
+                autoFocus
+                value={props.values.firstName}
+                onChange={props.handleChange}
+                error={props.touched.firstName && Boolean(props.errors.firstName)}
+                helperText={props.touched.firstName && props.errors.firstName}
+              />
 
-            {/* Email Field */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              name="email"
-              autoComplete="email"
-              label="Email Address"   
-              value={props.values.email}
-              onChange={props.handleChange}
-              error={props.touched.email && Boolean(props.errors.email)}
-              helperText={props.touched.email && props.errors.email}
-            />
+              {/* Last Name Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="lastName"
+                name="lastName"
+                autoComplete="lastName"        
+                label="Last Name"
+                value={props.values.lastName}
+                onChange={props.handleChange}
+                error={props.touched.lastName && Boolean(props.errors.lastName)}
+                helperText={props.touched.lastName && props.errors.lastName}
+              />
 
-            {/* Password Field */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="password"
-              name="password"
-              autoComplete="new-password"
-              label="Password"
-              type="password"   
-              value={props.values.password}
-              onChange={props.handleChange}
-              error={props.touched.password && Boolean(props.errors.password)}
-              helperText={props.touched.password && props.errors.password}      
-            />
+              {/* Email Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                name="email"
+                autoComplete="email"
+                label="Email Address"   
+                value={props.values.email}
+                onChange={props.handleChange}
+                error={props.touched.email && Boolean(props.errors.email)}
+                helperText={props.touched.email && props.errors.email}
+              />
 
-            {/* Confirm Password Field */}
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="confirm"
-              name="confirm"
-              autoComplete="new-confirm"
-              label="Confirm Password"
-              type="password"   
-              value={props.values.confirm}
-              onChange={props.handleChange}
-              error={props.touched.confirm && Boolean(props.errors.confirm)}
-              helperText={props.touched.confirm && props.errors.confirm}      
-            />
+              {/* Password Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="password"
+                name="password"
+                autoComplete="new-password"
+                label="Password"
+                type="password"   
+                value={props.values.password}
+                onChange={props.handleChange}
+                error={props.touched.password && Boolean(props.errors.password)}
+                helperText={props.touched.password && props.errors.password}      
+              />
 
-            {/* Age Field */}
-            <TextField 
-              margin="normal"
-              required
-              fullWidth
-              id="age"
-              name="age"
-              autoComplete="age"
-              label="Age"
-              type="number"  
-              inputProps={{min: 10, max: 100}} 
-              value={props.values.age}
-              onChange={props.handleChange}
-              error={props.touched.age && Boolean(props.errors.age)}
-              helperText={props.touched.age && props.errors.age}      
-            />
+              {/* Confirm Password Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="confirm"
+                name="confirm"
+                autoComplete="new-confirm"
+                label="Confirm Password"
+                type="password"   
+                value={props.values.confirm}
+                onChange={props.handleChange}
+                error={props.touched.confirm && Boolean(props.errors.confirm)}
+                helperText={props.touched.confirm && props.errors.confirm}      
+              />
 
-            <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" />}
-              label="I want to receive inspiration, marketing promotions and updates via email."
-            />
+              {/* Age Field */}
+              <TextField 
+                margin="normal"
+                required
+                fullWidth
+                id="age"
+                name="age"
+                autoComplete="age"
+                label="Age"
+                type="number"  
+                inputProps={{min: 10, max: 100}} 
+                value={props.values.age}
+                onChange={props.handleChange}
+                error={props.touched.age && Boolean(props.errors.age)}
+                helperText={props.touched.age && props.errors.age}      
+              />
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Sign Up
-            </Button>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I want to receive inspiration, marketing promotions and updates via email."
+              />
 
-            {
-              errorMsg && errorMsg !== '' &&
-                <Alert severity="error">{ errorMsg }</Alert>
-            }        
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Sign Up
+              </Button>
 
-            <Grid container>
-              <Grid item xs>
-                <Link href="/login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
+              {
+                errorMsg && errorMsg !== '' &&
+                  <Alert severity="error">{ errorMsg }</Alert>
+              }        
+
+              <Grid container>
+                <Grid item xs>
+                  <Link href="/login" variant="body2">
+                    Already have an account? Sign in
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
 
-          </Form>
-        )}
-      </Formik>
-    </>
+            </Form>
+          )}
+        </Formik>
+
+      </Box>
+
+    </Container>
   );
 };
