@@ -1,5 +1,10 @@
 import * as Yup from 'yup';
 
+export const meta = {
+  title: 'Ecommerce',
+  description: 'ecommerce app.',
+};
+
 export const loginValidation = Yup.object().shape(
   {
     email: Yup

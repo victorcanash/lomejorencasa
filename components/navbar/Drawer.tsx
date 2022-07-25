@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -14,7 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 
 import { logoutUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
-import { userDrawerId, categoriesDrawerId } from '@components/layouts/Header';
+import { userDrawerId, categoriesDrawerId } from '@components/navbar/Header';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -23,16 +22,15 @@ interface Props {
   anchor: Anchor;
   open: boolean;
   handleDrawer: () => void;
+  goToPage: (to: string) => void;
 };
 
 export const Drawer = (props: Props) => {
-  const { id, anchor, open, handleDrawer } = props;
+  const { id, anchor, open, handleDrawer, goToPage } = props;
 
   const firstRenderRef = useRef(false);
 
   const { token, user, setLoading, setToken, setUser, categories } = useAppContext();
-
-  const router = useRouter();
 
   interface ItemList { 
     text: string;
@@ -40,10 +38,6 @@ export const Drawer = (props: Props) => {
   };
 
   const [itemsList, setItemsList] = useState<ItemList[]>([]);
-
-  const goToPage = (to: string) => {
-    router.push(to);
-  };
 
   const onClickProfileBtn = (_text: string) => {
     handleDrawer();

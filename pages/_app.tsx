@@ -9,12 +9,13 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
+import { meta } from '@core/constants';
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
-
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
-import { Main } from '@components/layouts/Main';
+import { SearchProvider } from '@lib/contexts/SearchContext';
+import { Layout } from '@components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -22,11 +23,6 @@ const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
-
-const meta = {
-  title: 'Ecommerce',
-  description: 'ecommerce app.',
-};
 
 export const titleTemplate = `%s | ${meta.title}`;
 
@@ -57,16 +53,19 @@ function MyApp(props: MyAppProps) {
 
       <CacheProvider value={emotionCache}>
         <Head>
-          <meta name="viewport" content="initial-scale=1, width=device-width" />
+          <meta name="keywords" content="ecommerce, shop, nextjs" />
+          <meta name="author" content="Victor Canas" />
+          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <AppProvider>
-            <Main 
-              Component={Component}
-              pageProps={pageProps}
-            />
+            <SearchProvider>     
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>          
+            </SearchProvider>
           </AppProvider>
         </ThemeProvider>
       </CacheProvider>

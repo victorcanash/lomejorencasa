@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
@@ -15,13 +17,13 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { Search } from '@components/layouts/Search';
-import { Drawer } from '@components/layouts/Drawer';
+import { Search } from '@components/navbar/Search';
+import { Drawer } from '@components/navbar/Drawer';
 
 
 interface Props {
   children: React.ReactElement;
-}
+};
 
 const HideOnScroll = (props: Props) => {
   const { children } = props;
@@ -32,7 +34,7 @@ const HideOnScroll = (props: Props) => {
       {children}
     </Slide>
   );
-}
+};
 
 
 export const userDrawerId = 'user-drawer';
@@ -40,6 +42,23 @@ export const categoriesDrawerId = 'categories-drawer';
 
 
 export const Header = () => {
+
+  const router = useRouter();
+
+  const goToPage = (to: string) => {
+    console.log('from', router.pathname);
+    console.log('to', to);
+    router.push(to);
+  };
+
+  const onClickAppBar = () => {
+    closeDrawers();
+  }
+
+  const onClickLogoBtn = () => {
+    goToPage('/');
+  }
+
   const [userDrawerOpen, setUserDrawerOpen] = useState(false);
   const [categoriesDrawerOpen, setCategoriesDrawerOpen] = useState(false);
 
@@ -51,17 +70,17 @@ export const Header = () => {
     setCategoriesDrawerOpen(!categoriesDrawerOpen);
   };
 
-  const onClickAppBar = () => {
+  const closeDrawers = () => {
     if (userDrawerOpen) {
       setUserDrawerOpen(false);
     }
-    if (categoriesDrawerOpen) {
+    else if (categoriesDrawerOpen) {
       setCategoriesDrawerOpen(false);
     }
   }
 
   return (
-    <Box sx={{ flexGrow: 1, display:'flex' }}>
+    <Box component="header" sx={{ flexGrow: 1, display:'flex' }}>
 
       <HideOnScroll>
         <MuiAppBar color="primary" position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} onClick={onClickAppBar}>
@@ -80,16 +99,23 @@ export const Header = () => {
               <MenuIcon />
             </IconButton>
 
-            <Typography
-              variant="h6"
-              noWrap
+            <Button
+              variant="text"
               component="div"
-              sx={{ display: { xs: 'none', sm: 'block' } }}
+              sx={{ display: { xs: 'none', sm: 'block' }, color: 'white' }}
+              onClick={onClickLogoBtn}
             >
-              VICTOR'S SHOP
-            </Typography>
+              <Typography
+                variant="h6"
+                noWrap
+                component="div"
+              >
+                VICTOR'S SHOP
+              </Typography>
+            </Button>
 
-            <Search />
+            <Search 
+            />
 
             <Box sx={{ flexGrow: 1 }} />
 
@@ -133,6 +159,7 @@ export const Header = () => {
         anchor={'right'}
         open={userDrawerOpen}
         handleDrawer={handleUserDrawer}
+        goToPage={goToPage}
       />
       <Drawer
         key={categoriesDrawerId}
@@ -140,8 +167,9 @@ export const Header = () => {
         anchor={'left'}
         open={categoriesDrawerOpen}
         handleDrawer={handleCategoriesDrawer}
+        goToPage={goToPage}
       />
 
     </Box>
   );
-}
+};
