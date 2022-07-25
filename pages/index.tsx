@@ -1,48 +1,64 @@
-import { useContext, useEffect } from 'react'
-import type { GetServerSideProps, NextPage } from 'next'
+import React, { useRef, useEffect } from 'react';
+import type { NextPage } from 'next';
+import { useRouter } from 'next/router';
 
-// import ProductCard from '../components/ProductCard'
-// import CartContext from '../components/context/CartContext'
-// import Header from '../components/Header'
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-/*export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await stripe.prices.list({
-    limit: 10,
-    expand: ['data.product'],
-  })
+import ProTip from '@core/components/ProTip';
+import Copyright from '@core/components/Copyright';
+import { useAppContext } from '@lib/contexts/AppContext';
 
-  const prices = res.data.filter((price) => {
-    return price.active
-  })
+const Home: NextPage = () => {
+  const firstRenderRef = useRef(false);
 
-  return {
-    props: {
-      prices,
-    },
-  }
-}*/
+  const { setLoading } = useAppContext();
 
-type Props = {
-  prices: number
-}
+  const router = useRouter();
 
-const Home: NextPage<Props> = ({ prices }) => {
+  const goToPage = (to: string) => {
+    console.log('from', router.pathname);
+    console.log('to', to);
+    router.push(to);
+  };
+
+  const onClickExploreBtn = () => {
+    setLoading(true);
+    goToPage('/search/all');
+  };
+
+  useEffect(() => {
+    if (!firstRenderRef.current) {
+      firstRenderRef.current = true;
+      setLoading(false);
+    }    
+  });
+
   return (
-    <main className="bg-gray-100 min-h-screen">
-      {/*<Header />*/}
-
-      <div className="max-w-5xl mx-auto py-8">
-        <div className="flex items-center justify-between border-b pb-3">
-          <h1 className="font-semibold tracking-wide leading-10 text-xl lg:text-3xl">Shop Now</h1>
-        </div>
-
-        <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 xl:gap-x-8">
-          {/*{prices.map((p) => (
-            <ProductCard key={p.id} price={p} />
-          ))}*/}
-        </div>
-      </div>
-    </main>
+    <Container component="main" maxWidth="lg">
+      <Box
+        sx={{
+          marginTop: 12,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Typography variant="h4" component="h1" gutterBottom>
+          Welcome to the shop
+        </Typography>
+        <Box maxWidth="sm">
+          <Button variant="contained" onClick={onClickExploreBtn}>
+            Explore our products
+          </Button>
+        </Box>
+        <ProTip />
+        <Copyright />
+      </Box>
+    </Container>
   )
 }
 
