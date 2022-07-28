@@ -13,4 +13,4 @@ export const setLocalStorageItem = (key: string, value: string): any | boolean =
 
 export const removeLocalStorageItem = (key: string): any | boolean => {
   localStorage.removeItem(key);
-}
+};

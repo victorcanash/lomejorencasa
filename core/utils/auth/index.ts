@@ -5,7 +5,7 @@ import { User, AuthLogin, AuthRegister } from '@core/types';
 import { JWTTokenKey } from '@core/constants';
 import { logged, login, register, logout } from '@core/services/authService';
 import { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem } from '@core/utils/storage';
-import { capitalizeFirstLetter } from '@core/utils/objects';
+import { capitalizeFirstLetter } from '@core/utils/strings';
 
 export const getCredentials = async () => {
   return new Promise<{token: string, user: User}>(async (resolve, reject) => {
