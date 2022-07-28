@@ -1,9 +1,12 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
+import envConfig from '@core/config/env.config';
 import { limitSearchProducts, orderRemainsSearchProducts } from '@core/constants';
 import type { Product, ProductCategory } from '@core/types';
 import { getProductCategories, getProducts } from '@core/services/productsService';
+import { roundTwoDecimals } from '@core/utils/numbers';
+import placeholder from 'public/images/placeholder.jpeg';
 
 export const getAllProductCategories = async () => {
   return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
@@ -21,6 +24,20 @@ export const getAllProductCategories = async () => {
       reject(new Error(errorMsg));
     }); 
   })
+};
+
+export const getProductCategory = (id: number, categories: ProductCategory[]) => {
+  let category = {} as ProductCategory;
+  if (id < 0) {
+    return category;
+  }
+  categories.forEach((item) => {
+    if (item.id == id) {
+      category = item;
+      return;
+    }
+  })
+  return category;
 };
 
 export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryId: number) => {
@@ -43,6 +60,21 @@ export const getAllProducts = async (page: number, sortBy: string, order: string
       }); 
   })
 };
+
+export const getProductImgUrl = (product: Product) => {
+  if (product.imageNames.length > 0 && product.imageNames[0]) {
+    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/1`;
+  }
+  return placeholder;
+}
+
+export const getProductPrice = (product: Product) => {
+  if (product.discount) {
+    let discount = (product.discount.discountPercent / 100) * product.price;
+    return roundTwoDecimals(product.price - discount);
+  }
+  return product.price;
+}
 
 /*export const addProductToCart = (
   cartItems: CartItem[],
