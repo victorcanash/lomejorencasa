@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Formik, Form } from 'formik';
@@ -16,24 +16,17 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
-import { loginValidation } from '@core/constants';
-import type { AuthLogin, User } from '@core/types';
+import { loginValidation, initLoginValues } from '@core/constants/auth';
+import type { AuthLogin, User } from '@core/types/auth';
 import { loginUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 
 export const LoginForm = () => {
-  const firstRenderRef = useRef(false);
-
   const { token, setLoading, setToken, setUser, user } = useAppContext();
 
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
-
-  const initialValues = { 
-    email: '',
-    password: '',
-  };
 
   const handleSubmit = async (values: {email: string, password: string}) => {
     setLoading(true);
@@ -62,14 +55,11 @@ export const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (!firstRenderRef.current) {
-      firstRenderRef.current = true;
-      setLoading(false);
-    }    
-  });
+    setLoading(false);  
+  }, [router.asPath, setLoading]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
 
       <Box
         sx={{
@@ -93,7 +83,7 @@ export const LoginForm = () => {
         </Typography>
 
         <Formik
-          initialValues={initialValues}
+          initialValues={initLoginValues}
           validationSchema={loginValidation}
           onSubmit={handleSubmit}
         >

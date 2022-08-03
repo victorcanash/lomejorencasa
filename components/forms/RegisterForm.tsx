@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { Formik, Form } from 'formik';
@@ -16,28 +16,17 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
-import { registerValidation } from '@core/constants';
-import type { AuthRegister, AuthLogin, User } from '@core/types';
+import { registerValidation, initRegisterValues } from '@core/constants/auth';
+import type { AuthRegister, AuthLogin, User } from '@core/types/auth';
 import { registerUser, loginUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 
 export const RegisterForm = () => {
-  const firstRenderRef = useRef(false);
-
   const { token, setLoading, setToken, setUser } = useAppContext();
 
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
-
-  const initialValues = { 
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    confirm: '',
-    age: 18
-  };
 
   const handleSubmit = async (values: {firstName: string, lastName: string, email: string, password: string, age: number}) => {
     setLoading(true);
@@ -74,14 +63,11 @@ export const RegisterForm = () => {
   };
 
   useEffect(() => {
-    if (!firstRenderRef.current) {
-      firstRenderRef.current = true;
-      setLoading(false);
-    }    
-  });
+    setLoading(false);  
+  }, [router.asPath, setLoading]);
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container maxWidth="xs">
 
       <Box
         sx={{
@@ -105,7 +91,7 @@ export const RegisterForm = () => {
         </Typography>
 
         <Formik
-          initialValues={initialValues}
+          initialValues={initRegisterValues}
           validationSchema={registerValidation}
           onSubmit={handleSubmit}
         >

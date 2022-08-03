@@ -9,9 +9,9 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
-import { meta } from '@core/constants';
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
+import { title, description } from '@core/constants/meta';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
@@ -24,7 +24,7 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
-export const titleTemplate = `%s | ${meta.title}`;
+export const titleTemplate = `%s | ${title}`;
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
@@ -33,13 +33,13 @@ function MyApp(props: MyAppProps) {
   return (
     <>
       <DefaultSeo
-        title={meta.title}
-        description={meta.description}
+        title={title}
+        description={description}
         openGraph={{
           type: 'website',
-          title: meta.title,
+          title: title,
           url: `https://${envConfig.NEXT_PUBLIC_URL!}${asPath}`,
-          description: meta.description,
+          description: description,
           images: [
             {
               url: `https://${envConfig.NEXT_PUBLIC_URL!}/logo_lg.png`,
@@ -47,7 +47,7 @@ function MyApp(props: MyAppProps) {
               height: 750,
             },
           ],
-          site_name: meta.title,
+          site_name: title,
         }}
       />
 
