@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
+import Link from '@core/components/Link';
 import ProTip from '@core/components/ProTip';
 import Copyright from '@core/components/Copyright';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -18,11 +19,6 @@ const About: NextPage = () => {
 
   const goToPage = (to: string) => {
     router.push(to);
-  };
-
-  const onClickHomeBtn = () => {
-    setLoading(true);
-    goToPage('/search');
   };
 
   useEffect(() => {
@@ -40,7 +36,7 @@ const About: NextPage = () => {
         MUI v5 + Next.js with TypeScript example
       </Typography>
       <Box maxWidth="sm">
-        <Button variant="contained" onClick={onClickHomeBtn}>
+        <Button variant="contained" component={Link} noLinkStyle href="/home">
           Go to the home page
         </Button>
       </Box>
