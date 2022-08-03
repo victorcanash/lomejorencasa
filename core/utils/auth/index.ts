@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import { User, AuthLogin, AuthRegister } from '@core/types';
-import { JWTTokenKey } from '@core/constants';
-import { logged, login, register, logout } from '@core/services/authService';
+import { JWTTokenKey } from '@core/constants/auth';
+import type { User, AuthLogin, AuthRegister } from '@core/types/auth';
+import { logged, login, register, logout } from '@core/services/auth';
 import { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem } from '@core/utils/storage';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 

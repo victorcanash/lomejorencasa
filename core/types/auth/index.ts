@@ -1,3 +1,5 @@
+import type { Cart } from '@core/types/cart';
+
 export type User = {
   id: number;
   email: string;
@@ -49,59 +51,4 @@ export type UserPayment = {
   provider: string;
   accountNumber: string;
   expiry: Date
-}
-
-
-export type Cart = {
-  id: number;
-  userId: number;
-  total: number;
-  items: CartItem[];
-}
-
-
-export type CartItem = {
-  id: number;
-  cartId: number;
-  productId: number;
-  product: Product;
-  quantity: number;
-}
-
-
-export type Product = {
-  id: number;
-  categoryId: number;
-  name: string;
-  description: string;
-  sku: string;
-  price: number;
-  imageNames: string[];
-  inventories: ProductInventory[];
-  discount?: ProductDiscount;
-};
-
-
-export type ProductCategory = {
-  id: number;
-  name: string;
-  description: string;
-}
-
-
-export type ProductInventory = {
-  id: number;
-  productId: number;
-  quantity: number;
-  size?: string;
-}
-
-
-export type ProductDiscount = {
-  id: number;
-  productId: number;
-  name: string;
-  description: string;
-  discountPercent: number;
-  active: boolean;
 }

@@ -1,10 +1,5 @@
 import * as Yup from 'yup';
 
-export const meta = {
-  title: 'Ecommerce',
-  description: 'ecommerce app.',
-};
-
 export const loginValidation = Yup.object().shape(
   {
     email: Yup
@@ -17,6 +12,11 @@ export const loginValidation = Yup.object().shape(
       .required('Password is required'),
   }
 );
+
+export const initLoginValues = {
+  email: '',
+  password: '',
+}
 
 export const registerValidation = Yup.object().shape(
   {
@@ -53,10 +53,13 @@ export const registerValidation = Yup.object().shape(
   }
 );
 
+export const initRegisterValues = { 
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirm: '',
+  age: 18
+};
+
 export const JWTTokenKey = 'sessionJWTToken';
-
-export const limitSearchProducts = 20;
-
-export const orderRemainsSearchProducts = false;
-
-export const maxCartQuantity = 99;
