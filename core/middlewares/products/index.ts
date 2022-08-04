@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 
 import axios from '@core/config/axios.config';
 
-export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryId: number, ordersRemain: boolean = false) => {
+export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string, ordersRemain: boolean) => {
   let addParams: any = {
     page,
     limit,
@@ -11,14 +11,14 @@ export const getProducts = (page: number, limit: number, sortBy: string, order: 
     keywords,
     orders_remain: ordersRemain
   };
-  if (categoryId > -1 ) {
+  if (categoryName != 'all' ) {
     addParams = {
       page,
       limit,
       sort_by: sortBy,
       order,
       keywords,
-      category_id: categoryId,
+      category_name: categoryName,
       orders_remain: ordersRemain
     };
   }
