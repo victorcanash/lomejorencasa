@@ -1,9 +1,6 @@
-import React from 'react';
-
 import CircularProgress from '@mui/material/CircularProgress';
 
-export const Loading = () => {
-
+const Loading = () => {
   return (
     <div 
       style={{
@@ -30,3 +27,5 @@ export const Loading = () => {
     </div>
   );
 };
+
+export default Loading;

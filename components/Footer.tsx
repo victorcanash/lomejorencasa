@@ -1,12 +1,10 @@
-import React from 'react';
-
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
 import Copyright from '@core/components/Copyright';
 
-export const Footer = () => {
+const Footer = () => {
   return (
     <Box
       component="footer"
@@ -27,3 +25,5 @@ export const Footer = () => {
     </Box>
   );
 }
+
+export default Footer;

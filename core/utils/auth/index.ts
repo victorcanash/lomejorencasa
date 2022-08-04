@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import { JWTTokenKey } from '@core/constants/auth';
 import type { User, AuthLogin, AuthRegister } from '@core/types/auth';
-import { logged, login, register, logout } from '@core/services/auth';
+import { logged, login, register, logout } from '@core/middlewares/auth';
 import { getLocalStorageItem, setLocalStorageItem, removeLocalStorageItem } from '@core/utils/storage';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 

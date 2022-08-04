@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-
 import { Formik, Form } from 'formik';
 
 import Avatar from '@mui/material/Avatar';
@@ -17,46 +14,14 @@ import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
 import { loginValidation, initLoginValues } from '@core/constants/auth';
-import type { AuthLogin, User } from '@core/types/auth';
-import { loginUser } from '@core/utils/auth';
-import { useAppContext } from '@lib/contexts/AppContext';
+import useAuth from '@lib/hooks/useAuth';
 
-export const LoginForm = () => {
-  const { token, setLoading, setToken, setUser, user } = useAppContext();
-
-  const router = useRouter();
-
-  const [errorMsg, setErrorMsg] = useState('');
+const LoginForm = () => {
+  const { errorMsg, login } = useAuth();
 
   const handleSubmit = async (values: {email: string, password: string}) => {
-    setLoading(true);
-    const authLogin: AuthLogin = {
-      email: values.email,
-      password: values.password
-    };
-    loginUser(authLogin, token).then((response: {token: string, user: User}) => {
-      setToken(response.token);
-      setUser(response.user);
-      router.push('/');
-    }).catch((error: Error) => {
-      let errorMsg = error.message
-      if (errorMsg.includes('email')) {
-        errorMsg = 'Email not found'
-      } else if (errorMsg.includes('password')) {
-        errorMsg = 'Password not found'
-      } else if (errorMsg.includes('locked out')) {
-        errorMsg = 'You are locked out'
-      } else {
-        errorMsg = 'Something went wrong, try again'
-      }
-      setErrorMsg(errorMsg);
-      setLoading(false);
-    });
+    login(values);
   };
-
-  useEffect(() => {
-    setLoading(false);  
-  }, [router.asPath, setLoading]);
 
   return (
     <Container maxWidth="xs">
@@ -165,3 +130,5 @@ export const LoginForm = () => {
     </Container>
   );
 };
+
+export default LoginForm;

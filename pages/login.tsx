@@ -1,9 +1,12 @@
 import type { NextPage } from 'next';
-import Head from "next/head";
+import Head from 'next/head';
 
-import { LoginForm } from '@components/forms/LoginForm';
+import usePage from '@lib/hooks/usePage';
+import LoginForm from '@components/forms/LoginForm';
 
 const Login: NextPage = () => { 
+  const page = usePage();
+
   return (
     <>
       <Head>

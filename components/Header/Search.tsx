@@ -44,8 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export const Search = () => {
-
+const Search = () => {
   return (
     <StyledSearch>
       <SearchIconWrapper>
@@ -58,3 +57,5 @@ export const Search = () => {
     </StyledSearch>
   )
 };
+
+export default Search;

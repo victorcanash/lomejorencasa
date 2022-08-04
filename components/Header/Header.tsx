@@ -17,9 +17,8 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MoreIcon from '@mui/icons-material/MoreVert';
 
-import { Search } from '@components/navbar/Search';
-import { Drawer } from '@components/navbar/Drawer';
-
+import Search from '@components/Header/Search';
+import Drawer from '@components/Header/Drawer';
 
 interface Props {
   children: React.ReactElement;
@@ -36,13 +35,10 @@ const HideOnScroll = (props: Props) => {
   );
 };
 
-
 export const userDrawerId = 'user-drawer';
 export const categoriesDrawerId = 'categories-drawer';
 
-
-export const Header = () => {
-
+const Header = () => {
   const router = useRouter();
 
   const goToPage = (to: string) => {
@@ -171,3 +167,5 @@ export const Header = () => {
     </Box>
   );
 };
+
+export default Header;

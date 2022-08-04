@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-
 import { Formik, Form } from 'formik';
 
 import Avatar from '@mui/material/Avatar';
@@ -17,54 +14,14 @@ import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
 import { registerValidation, initRegisterValues } from '@core/constants/auth';
-import type { AuthRegister, AuthLogin, User } from '@core/types/auth';
-import { registerUser, loginUser } from '@core/utils/auth';
-import { useAppContext } from '@lib/contexts/AppContext';
+import useAuth from '@lib/hooks/useAuth';
 
-export const RegisterForm = () => {
-  const { token, setLoading, setToken, setUser } = useAppContext();
-
-  const router = useRouter();
-
-  const [errorMsg, setErrorMsg] = useState('');
+const RegisterForm = () => {
+  const { errorMsg, register } = useAuth();
 
   const handleSubmit = async (values: {firstName: string, lastName: string, email: string, password: string, age: number}) => {
-    setLoading(true);
-    const authRegister: AuthRegister = {
-      email: values.email,
-      password: values.password,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      age: values.age,
-    };
-    registerUser(authRegister).then(() => {
-      const authLogin: AuthLogin = {
-        email: authRegister.email,
-        password: authRegister.password
-      }; 
-      loginUser(authLogin, token).then((response: {token: string, user: User}) => {
-        setToken(response.token);
-        setUser(response.user);
-        router.push('/');
-      }).catch((error) => {
-        setErrorMsg(error.message);
-        router.push('/login');
-      });
-    }).catch((error: Error) => {
-      let errorMsg = error.message
-      if (errorMsg.includes('Unique validation failure with the email')) {
-        errorMsg = 'Introduced email already exists'
-      } else {
-        errorMsg = 'Something went wrong, try again'
-      }
-      setErrorMsg(errorMsg);
-      setLoading(false);
-    })
+    register(values);
   };
-
-  useEffect(() => {
-    setLoading(false);  
-  }, [router.asPath, setLoading]);
 
   return (
     <Container maxWidth="xs">
@@ -229,3 +186,5 @@ export const RegisterForm = () => {
     </Container>
   );
 };
+
+export default RegisterForm;

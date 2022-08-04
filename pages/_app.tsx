@@ -11,11 +11,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
-import { title, description } from '@core/constants/meta';
+import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
-import { Layout } from '@components/Layout';
+import Layout from '@components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -23,8 +23,6 @@ const clientSideEmotionCache = createEmotionCache();
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
-
-export const titleTemplate = `%s | ${title}`;
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;

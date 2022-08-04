@@ -1,19 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Toolbar from '@mui/material/Toolbar';
 
+import Link from '@core/components/Link';
 import { logoutUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
-import { userDrawerId, categoriesDrawerId } from '@components/navbar/Header';
+import { userDrawerId, categoriesDrawerId } from '@components/Header/Header';
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
@@ -25,7 +23,7 @@ interface Props {
   goToPage: (to: string) => void;
 };
 
-export const Drawer = (props: Props) => {
+const Drawer = (props: Props) => {
   const { id, anchor, open, handleDrawer, goToPage } = props;
 
   const firstRenderRef = useRef(false);
@@ -40,6 +38,7 @@ export const Drawer = (props: Props) => {
   const [itemsList, setItemsList] = useState<ItemList[]>([]);
 
   const onClickProfileBtn = (_text: string) => {
+    setLoading(true);
     handleDrawer();
     goToPage('/profile');
   };
@@ -60,11 +59,13 @@ export const Drawer = (props: Props) => {
   };
 
   const onClickSignInBtn = (_text: string) => {
+    setLoading(true);
     handleDrawer();
     goToPage('/login');
   };
 
   const onClickRegisterBtn = (_text: string) => {
+    setLoading(true);
     handleDrawer();
     goToPage('/register');
   };
@@ -129,7 +130,7 @@ export const Drawer = (props: Props) => {
       <List>
         {itemsList.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <ListItemButton onClick={() => item.onClick(item.text)}>
+            <ListItemButton onClick={() => item.onClick(item.text)} component={Link} noLinkStyle href="/home">
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
@@ -153,3 +154,5 @@ export const Drawer = (props: Props) => {
       </MuiDrawer>
   );
 };
+
+export default Drawer;

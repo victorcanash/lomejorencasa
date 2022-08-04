@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import envConfig from '@core/config/env.config';
 import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
-import { getProductCategories, getProducts } from '@core/services/products';
+import { getProductCategories, getProducts } from '@core/middlewares/products';
 import { roundTwoDecimals } from '@core/utils/numbers';
 import placeholder from 'public/images/placeholder.jpeg';
 
@@ -26,23 +26,9 @@ export const getAllProductCategories = async () => {
   })
 };
 
-export const getProductCategory = (id: number, categories: ProductCategory[]) => {
-  let category = {} as ProductCategory;
-  if (id < 0) {
-    return category;
-  }
-  categories.forEach((item) => {
-    if (item.id == id) {
-      category = item;
-      return;
-    }
-  })
-  return category;
-};
-
-export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryId: number) => {
+export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
   return new Promise<{products: Product[], totalPages: number, currentPage: number}>(async (resolve, reject) => {
-    getProducts(page, limitByPageSearch, sortBy, order, keywords, categoryId, orderRemainsSearch)
+    getProducts(page, limitByPageSearch, sortBy, order, keywords, categoryName, orderRemainsSearch)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.products) {
           resolve({
