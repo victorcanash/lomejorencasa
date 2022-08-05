@@ -3,12 +3,12 @@ import Head from "next/head";
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
-import Link from '@core/components/Link';
+import LinkButton from '@core/components/LinkButton';
 import ProTip from '@core/components/ProTip';
 import Copyright from '@core/components/Copyright';
 import usePage from '@lib/hooks/usePage';
+
 
 const About: NextPage = () => {
   const page = usePage();
@@ -24,9 +24,9 @@ const About: NextPage = () => {
         MUI v5 + Next.js with TypeScript example
       </Typography>
       <Box maxWidth="sm">
-        <Button variant="contained" component={Link} noLinkStyle href="/">
+        <LinkButton href="/">
           Go to the home page
-        </Button>
+        </LinkButton>
       </Box>
       <ProTip />
       <Copyright />

@@ -3,9 +3,8 @@ import Head from "next/head";
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
-import Link from '@core/components/Link';
+import LinkButton from '@core/components/LinkButton';
 import ProTip from '@core/components/ProTip';
 import Copyright from '@core/components/Copyright';
 import usePage from '@lib/hooks/usePage';
@@ -14,9 +13,7 @@ import { useSearchContext } from '@lib/contexts/SearchContext';
 const Home: NextPage = () => {
   const page = usePage();
 
-  const { sortBy, order, keywords } = useSearchContext();
-
-  const hrefSearch = `/search?sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
+  const { sortBy, order, keywords, getHref } = useSearchContext();
 
   return (
     <>
@@ -29,9 +26,9 @@ const Home: NextPage = () => {
         Welcome to the shop
       </Typography>
       <Box maxWidth="sm">
-        <Button variant="contained" component={Link} noLinkStyle href={hrefSearch}>
+        <LinkButton href={getHref()}>
           Explore our products
-        </Button>
+        </LinkButton>
       </Box>
       <ProTip />
       <Copyright />

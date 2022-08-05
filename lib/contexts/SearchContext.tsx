@@ -7,6 +7,7 @@ type SearchContext = {
   setOrder: Dispatch<SetStateAction<string>>;
   keywords: string; 
   setKeywords: Dispatch<SetStateAction<string>>;
+  getHref: () => string;
 };
 
 const SearchContext = createContext<SearchContext>({
@@ -16,6 +17,7 @@ const SearchContext = createContext<SearchContext>({
   setOrder: () => {},
   keywords: '',
   setKeywords: () => {},
+  getHref: () => '',
 });
 
 export const useSearchContext = () => {
@@ -32,6 +34,10 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [order, setOrder] = useState<string>('asc');
   const [keywords, setKeywords] = useState<string>('');
 
+  const getHref = () => {
+    return `/search?sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
+  }
+
   return (
     <SearchContext.Provider
       value={{
@@ -41,6 +47,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         setOrder,
         keywords,
         setKeywords,
+        getHref,
       }}
     >
       {children}

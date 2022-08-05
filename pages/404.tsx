@@ -3,9 +3,8 @@ import Head from "next/head";
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
-import Link from '@core/components/Link';
+import LinkButton from '@core/components/LinkButton';
 import ProTip from '@core/components/ProTip';
 import Copyright from '@core/components/Copyright';
 
@@ -25,9 +24,9 @@ const NotFound: NextPage = () => {
         Not found page
       </Typography>
       <Box maxWidth="sm">
-        <Button variant="contained" component={Link} noLinkStyle href="/">
+        <LinkButton href="/">
           Go to the home page
-        </Button>
+        </LinkButton>
       </Box>
       <ProTip />
       <Copyright />
