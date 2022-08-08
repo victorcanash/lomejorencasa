@@ -23,7 +23,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <Container component="main" maxWidth="lg">
               <Box
                 sx={{
-                  marginTop: 12,
+                  mt: '50px',
+                  mb: '50px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'center',
