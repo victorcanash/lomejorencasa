@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import envConfig from '@core/config/env.config';
 import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
-import { getProductCategories, getProducts } from '@core/middlewares/products';
+import { getProductCategories, getProducts, getProductById } from '@core/middlewares/products';
 import { roundTwoDecimals } from '@core/utils/numbers';
 import placeholder from 'public/images/placeholder.jpeg';
 
@@ -47,12 +47,31 @@ export const getAllProducts = async (page: number, sortBy: string, order: string
   })
 };
 
-export const getProductImgUrl = (product: Product) => {
-  if (product.imageNames.length > 0 && product.imageNames[0]) {
-    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/1`;
+export const getProduct = (id: number) => {
+  return new Promise<{product: Product}>(async (resolve, reject) => {
+    getProductById(id)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.product) {
+          resolve({
+            product: response.data.product
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        console.error(`[Get Product ERROR]: ${errorMsg}`);
+        reject(new Error(errorMsg));
+      }); 
+  })
+};
+
+export const getProductImgUrl = (product: Product, index: number = 0) => {
+  if (product.imageNames.length > index && product.imageNames[index]) {
+    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index+1}`;
   }
   return placeholder;
-}
+};
 
 export const getProductPrice = (product: Product) => {
   if (product.discount) {
@@ -60,4 +79,4 @@ export const getProductPrice = (product: Product) => {
     return roundTwoDecimals(product.price - discount);
   }
   return product.price;
-}
+};

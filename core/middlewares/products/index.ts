@@ -28,6 +28,15 @@ export const getProducts = (page: number, limit: number, sortBy: string, order: 
   return axios.get('/products', options);
 }
 
+export const getProductById = (id: number) => {
+  const options: AxiosRequestConfig = {
+    params: {
+      id
+    }
+  }
+  return axios.get(`/products/${id}`, options);
+}
+
 export const getProductCategories = (page?: number, limit?: number, sortBy?: string, order?: string) => {
   const options: AxiosRequestConfig = {
     params: {
