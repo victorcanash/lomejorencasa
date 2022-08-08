@@ -1,3 +1,3 @@
-export const limitByPageSearch = 9;
+export const limitByPageSearch = 12;
 
 export const orderRemainsSearch = false;

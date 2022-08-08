@@ -11,7 +11,6 @@ import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
-import Button from '@mui/material/Button';
 
 import { getProductImgUrl, getProductPrice } from '@core/utils/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
@@ -27,10 +26,6 @@ const Search: NextPage<SearchProps> = (props) => {
   const router = useRouter();
 
   const productCategory = useProductCategory(categoryName);
-
-  const onClickProduct = (name: string) => {
-    router.push(`/product/${name}`);
-  };
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
     router.push({ 
@@ -63,55 +58,62 @@ const Search: NextPage<SearchProps> = (props) => {
           </Typography>
       }
 
-      <Container maxWidth="sm">
+      <Container maxWidth="md" sx={{ p: 0 }}>
         <ImageList 
-          sx={{ 
-            mb: '3',
-            gridTemplateColumns: 
-              'repeat(auto-fill, minmax(140px, 1fr))!important' 
-          }} 
-          gap={6}
+          gap={12}
+          sx={{
+            mt: 2,
+            mb: 2,
+            gridTemplateColumns:
+              'repeat(auto-fill, minmax(120px, 1fr))!important',
+          }}   
         >
           {products.map((product) => (
-            <ImageListItem key={product.id} sx={{ height: '100% !important' }} onClick={() => onClickProduct(product.name)}>
+            <Link key={product.id} href={`/product/${product.name}`} underline="none" color="inherit">
+              <ImageListItem sx={{ height: '100% !important' }}>
 
-              <div>
-                <Image
-                  src={getProductImgUrl(product)}
-                  alt="Picture of the product"
-                  width="800"
-                  height="1000"
-                  layout="responsive"
-                  objectFit="cover"
-                  /*priority={product.id === 1 || 2 || 3 || 4 || 5 || 6}*/
+                <div>
+                  <Image
+                    src={getProductImgUrl(product)}
+                    alt="Picture of the product"
+                    width="500"
+                    height="700"
+                    layout="responsive"
+                    objectFit="cover"
+                    /*priority={product.id === 1 || 2 || 3 || 4 || 5 || 6}*/
+                  />
+                </div>
+
+                <ImageListItemBar
+                  title={
+                    <div style={{fontSize: '13px'}}>
+                      {product.name}
+                    </div>
+                  }
+                  subtitle={
+                    <div style={{ marginTop: '5px', fontSize: '13px' }}>
+                      {
+                        product.discount ?
+                          <>
+                            <div style={{ color: 'red' }}>{getProductPrice(product)} €</div>
+                            <div style={{ marginTop: '5px', color: 'grey', fontSize: '10px' }}>
+                              Original: <s>{product.price} €</s> 
+                              <span style={{ color: 'red' }}> -{product.discount.discountPercent}%</span> 
+                            </div> 
+                          </>
+                          :
+                          <>
+                            {getProductPrice(product)} €
+                          </>
+
+                      }
+                    </div>
+                  }
+                  position="below"
                 />
-              </div>
 
-              <ImageListItemBar
-                title={product.name}
-                subtitle={
-                  <div style={{ marginTop: '10px', fontSize: '15px' }}>
-                    {
-                      product.discount ?
-                        <>
-                          <div style={{ color: 'red' }}>{getProductPrice(product)} €</div>
-                          <div style={{ marginTop: '5px', color: 'grey', fontSize: '13px' }}>
-                            Original: <s>{product.price} €</s> 
-                            <span style={{ color: 'red' }}> -{product.discount.discountPercent}%</span> 
-                          </div> 
-                        </>
-                        :
-                        <>
-                          {getProductPrice(product)} €
-                        </>
-
-                    }
-                  </div>
-                }
-                position="below"
-              />
-
-            </ImageListItem>
+              </ImageListItem>
+            </Link>
           ))}
         </ImageList>
       </Container>
