@@ -21,25 +21,27 @@ export const getSearchProps: GetServerSideProps = async (context) => {
   const keywordsSearch = typeof keywords == 'string' ? keywords : '';
   const categorySearch = typeof category == 'string' ? category : 'all';
 
-  let props = {} as SearchProps;
+  let result: { props: SearchProps } | { notFound: boolean } = { props: {} as SearchProps };
   
   await getAllProducts(pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch)
     .then((response: { products: Product[]; totalPages: number; currentPage: number }) => {
-      props = {
-        products: response.products,
-        currentPage: response.currentPage,
-        totalPages: response.totalPages,
-        categoryName: categorySearch,
-        sortBy: sortBySearch,
-        order: orderSearch,
-        keywords: keywordsSearch
-      }
+      result = {
+        props: {
+          products: response.products,
+          currentPage: response.currentPage,
+          totalPages: response.totalPages,
+          categoryName: categorySearch,
+          sortBy: sortBySearch,
+          order: orderSearch,
+          keywords: keywordsSearch
+        }
+      };
     })
     .catch((error: Error) => {
-      return { notFound: true };
+      result = { 
+        notFound: true 
+      };
     })
 
-  return {
-    props: props
-  };
+  return result
 };
