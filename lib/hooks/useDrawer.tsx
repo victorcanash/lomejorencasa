@@ -30,7 +30,7 @@ const useDrawer = (drawer: Drawers) => {
       categories.forEach((category) => {
         categoriesItems.push({
           text: capitalizeFirstLetter(category.name),
-          path: `${getHref()}&category=${category.name}`
+          path: getHref(category.name)
         });
       });
       setItems(categoriesItems);

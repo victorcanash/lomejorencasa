@@ -69,7 +69,7 @@ const Search: NextPage<SearchProps> = (props) => {
           }}   
         >
           {products.map((product) => (
-            <Link key={product.id} href={`/product/${product.name}`} underline="none" color="inherit">
+            <Link key={product.id} href={`/products/${product.name}?id=${product.id}`} underline="none" color="inherit">
               <ImageListItem sx={{ height: '100% !important' }}>
 
                 <div>

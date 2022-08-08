@@ -14,12 +14,13 @@ export interface SearchProps {
 }
 
 export const getSearchProps: GetServerSideProps = async (context) => {
-  const { page, sortBy, order, keywords, category } = context.query;
+  const category = context.params?.category;
+  const { page, sortBy, order, keywords } = context.query;
+  const categorySearch = typeof category == 'string' ? category : 'all';
   const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
   const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
   const orderSearch = typeof order == 'string' ? order : 'asc';
   const keywordsSearch = typeof keywords == 'string' ? keywords : '';
-  const categorySearch = typeof category == 'string' ? category : 'all';
 
   let result: { props: SearchProps } | { notFound: boolean } = { props: {} as SearchProps };
   
