@@ -68,7 +68,7 @@ export const getProduct = (id: number) => {
 
 export const getProductImgUrl = (product: Product, index: number = 0) => {
   if (product.imageNames.length > index && product.imageNames[index]) {
-    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index+1}`;
+    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`;
   }
   return placeholder;
 };
