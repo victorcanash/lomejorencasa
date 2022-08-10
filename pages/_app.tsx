@@ -3,7 +3,7 @@ import 'swiper/css/bundle';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
-import 'swiper/css/zoom';
+import 'react-medium-image-zoom/dist/styles.css'
 import 'styles/globals.css';
 
 import type { AppProps } from 'next/app';

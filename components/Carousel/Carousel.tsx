@@ -1,7 +1,8 @@
 import Image from 'next/image';
+import Zoom from 'react-medium-image-zoom'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, EffectCoverflow, Zoom, Pagination } from 'swiper';
+import { Swiper as SwiperType, Navigation, EffectCoverflow, Pagination } from 'swiper';
 
 import { Product } from '@core/types/products';
 import { getProductImgUrl } from '@core/utils/products';
@@ -16,9 +17,8 @@ const Carousel = ({ product }: Props) => {
   return (
     <Container maxWidth="sm" sx={{ p: 0 }}>
       <Swiper
-        modules={[Navigation, EffectCoverflow, Zoom, Pagination]}
+        modules={[Navigation, EffectCoverflow, Pagination]}
         navigation
-        zoom
         pagination={{
           clickable: true
         }}
@@ -34,15 +34,17 @@ const Carousel = ({ product }: Props) => {
         {product.imageNames.map((imgName, index) => (
           <SwiperSlide key={index}>
             <div>
-              <Image 
-                src={getProductImgUrl(product, index)} 
-                alt="room" 
-                width="400"
-                height="400"
-                layout="responsive" 
-                objectFit="cover" 
-                priority
-              />
+              <Zoom>
+                <Image 
+                  src={getProductImgUrl(product, index)} 
+                  alt="Product image" 
+                  width="400"
+                  height="400"
+                  layout="responsive" 
+                  objectFit="cover" 
+                  priority
+                />
+              </Zoom>
             </div>
           </SwiperSlide>
         ))}
