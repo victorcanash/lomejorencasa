@@ -27,7 +27,17 @@ const theme = createTheme({
           color: '#fff',
         }
       },
-    }
+    },
+    MuiContainer: {
+      defaultProps: {
+        disableGutters: true,
+      },
+    },
+    MuiToolbar: {
+      defaultProps: {
+        disableGutters: true,
+      },
+    },
   },
 });
 
