@@ -16,7 +16,7 @@ import { getProductImgUrl, getProductPrice } from '@core/utils/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import usePage from '@lib/hooks/usePage';
 import useProductCategory from '@lib/hooks/useProductCategory';
-import { SearchProps, getSearchProps } from '@lib/props/search';
+import { SearchProps, getSearchProps } from '@lib/server/search';
 
 const Search: NextPage<SearchProps> = (props) => {
   const { products, currentPage, totalPages, categoryName, sortBy, order, keywords } = props;
