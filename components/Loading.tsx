@@ -1,20 +1,12 @@
 import CircularProgress from '@mui/material/CircularProgress';
+import Container from '@mui/material/Container';
 
 const Loading = () => {
   return (
-    <div 
-      style={{
-        position: 'fixed',
-        top: '0px',
-        left: '0px',
-        zIndex: '10000',
-        width: '100vw', 
-        height: '100vh',
+    <Container 
+      className="above-layout"
+      sx={{
         backgroundColor: 'rgba(255, 255, 255, 0.7)', 
-        display:'flex', 
-        placeContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center'
       }}
     >
       <CircularProgress 
@@ -24,7 +16,7 @@ const Loading = () => {
         }}
         
       />
-    </div>
+    </Container>
   );
 };
 
