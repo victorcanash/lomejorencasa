@@ -1,16 +1,15 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
+import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 
 import { JWTTokenKey } from '@core/constants/auth';
-import { Storages } from '@core/constants/storage';
 import type { User, AuthLogin, AuthRegister } from '@core/types/auth';
 import { logged, login, register, logout } from '@core/middlewares/auth';
-import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 
-export const getCredentials = async () => {
+export const getCredentials = async (cookieOptions?: { req: any, res: any }) => {
   return new Promise<{token: string, user: User}>(async (resolve, reject) => {
-    const token = await getStorageItem(Storages.local, JWTTokenKey);
+    const token = await getCookie(JWTTokenKey, cookieOptions)?.toString() || '';
     logged(token).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.OK && response.data?.user) {
         if (!response.data?.user.lockedOut) {
@@ -25,7 +24,7 @@ export const getCredentials = async () => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      removeStorageItem(Storages.local, JWTTokenKey);
+      deleteCookie(JWTTokenKey, cookieOptions);
       let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
       console.error(`[Get Logged User ERROR]: ${errorMsg}`);
       /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
@@ -70,7 +69,7 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
           if (token !== '') {
             await logoutUser(token);
           }
-          await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
+          await setCookie(JWTTokenKey, response.data.token);
           getCredentials().then((response: {token: string, user: User}) => {
             resolve({
               token: response.token,
@@ -96,5 +95,5 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
 
 export const logoutUser = async (token: string) => {
   await logout(token);
-  await removeStorageItem(Storages.local, JWTTokenKey);
+  await deleteCookie(JWTTokenKey);
 }
