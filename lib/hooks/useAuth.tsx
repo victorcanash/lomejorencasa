@@ -6,11 +6,19 @@ import { registerUser, loginUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 
 const useAuth = () => {
-  const { token, setLoading, setToken, setUser } = useAppContext();
+  const { token, user, setLoading, setToken, setUser } = useAppContext();
 
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
+
+  const isLogged = () => {
+    if (!token || !user) {
+      router.push('/login');
+      return false;
+    }
+    return true;
+  };
 
   const login = async (values: {email: string, password: string}) => {
     setLoading(true);
@@ -74,8 +82,9 @@ const useAuth = () => {
 
   return {
     errorMsg,
+    isLogged,
     login,
-    register,
+    register
   }
 };
 
