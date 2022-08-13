@@ -6,20 +6,20 @@ export const getProducts = (page: number, limit: number, sortBy: string, order: 
   let addParams: any = {
     page,
     limit,
-    sort_by: sortBy,
+    sortBy,
     order,
     keywords,
-    orders_remain: ordersRemain
+    ordersRemain
   };
   if (categoryName != 'all' ) {
     addParams = {
       page,
       limit,
-      sort_by: sortBy,
+      sortBy,
       order,
       keywords,
-      category_name: categoryName,
-      orders_remain: ordersRemain
+      categoryName,
+      ordersRemain
     };
   }
   const options: AxiosRequestConfig = {
@@ -42,7 +42,7 @@ export const getProductCategories = (page?: number, limit?: number, sortBy?: str
     params: {
       page,
       limit,
-      sort_by: sortBy,
+      sortBy,
       order
     }
   }
