@@ -15,7 +15,7 @@ type ContextType = {
 };
 
 export const AppContext = createContext<ContextType>({
-  loading: false,
+  loading: true,
   setLoading: () => {},
   token: '',
   setToken: () => {},
@@ -35,7 +35,7 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [token, setToken] = useState('');
   const [user, setUser] = useState<User | undefined>(undefined);
   const [categories, setCategories] = useState<ProductCategory[]>([]);
