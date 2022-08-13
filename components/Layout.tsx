@@ -1,20 +1,15 @@
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
-import { useAppContext } from '@lib/contexts/AppContext';
 import Loading from '@components/Loading';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { loading } = useAppContext();
- 
+
   return (
     <>
-      {
-        loading &&
-          <Loading />
-      }
+      <Loading />
 
       <Header />
       <Container component="main" maxWidth="lg">

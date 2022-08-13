@@ -1,22 +1,23 @@
+import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import Container from '@mui/material/Container';
+
+import { useAppContext } from '@lib/contexts/AppContext';
 
 const Loading = () => {
+  const { loading } = useAppContext();
+
   return (
-    <Container 
-      className="above-layout"
-      sx={{
-        backgroundColor: 'rgba(255, 255, 255, 0.7)', 
-      }}
+    <Backdrop
+      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+      open={loading}
     >
-      <CircularProgress 
+      <CircularProgress
         size='60px' 
         sx={{
           color: 'primary.main'
         }}
-        
       />
-    </Container>
+    </Backdrop>
   );
 };
 
