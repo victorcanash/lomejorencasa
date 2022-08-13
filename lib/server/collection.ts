@@ -3,7 +3,7 @@ import type { GetServerSideProps } from 'next';
 import type { Product } from '@core/types/products';
 import { getAllProducts } from '@core/utils/products';
 
-export interface SearchProps {
+export interface CollectionProps {
   products: Product[]; 
   currentPage: number;
   totalPages: number; 
@@ -13,7 +13,7 @@ export interface SearchProps {
   keywords: string;
 }
 
-export const getSearchProps: GetServerSideProps = async (context) => {
+export const getCollectionProps: GetServerSideProps = async (context) => {
   const category = context.params?.category;
   const { page, sortBy, order, keywords } = context.query;
   const categorySearch = typeof category == 'string' ? category : 'all';
@@ -22,7 +22,7 @@ export const getSearchProps: GetServerSideProps = async (context) => {
   const orderSearch = typeof order == 'string' ? order : 'asc';
   const keywordsSearch = typeof keywords == 'string' ? keywords : '';
 
-  let result: { props: SearchProps } | { notFound: boolean } = { props: {} as SearchProps };
+  let result: { props: CollectionProps } | { notFound: boolean } = { props: {} as CollectionProps };
   
   await getAllProducts(pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch)
     .then((response: { products: Product[]; totalPages: number; currentPage: number }) => {

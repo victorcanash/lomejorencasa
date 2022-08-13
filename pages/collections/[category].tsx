@@ -3,6 +3,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image'
 
+import { composeProps } from "next-compose-props";
+
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -10,34 +12,30 @@ import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 
+import Link from '@core/components/Link';
 import { getProductImgUrl, getProductPrice } from '@core/utils/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
+import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
+import { useSearchContext } from '@lib/contexts/SearchContext';
 import useProductCategory from '@lib/hooks/useProductCategory';
-import { SearchProps, getSearchProps } from '@lib/server/search';
+import { CollectionProps, getCollectionProps } from '@lib/server/collection';
 
-const Search: NextPage<SearchProps> = (props) => {
-  const { products, currentPage, totalPages, categoryName, sortBy, order, keywords } = props;
+const Search: NextPage<PageProps & CollectionProps> = (props) => {
+  const { token, user, categories, 
+    products, currentPage, totalPages, categoryName, sortBy, order, keywords } = props;
 
-  const page = usePage();
+  const page = usePage({ token, user, categories });
+
+  const { getHref } = useSearchContext();
 
   const router = useRouter();
 
   const productCategory = useProductCategory(categoryName);
 
   const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    router.push({ 
-      pathname: '/search', 
-      query: { 
-        page: value,
-        sortBy: sortBy,
-        order: order,
-        keywords: keywords,
-        category: categoryName
-      }
-    });
+    router.push(getHref(categoryName, value));
   };
 
   return (
@@ -133,4 +131,4 @@ const Search: NextPage<SearchProps> = (props) => {
 
 export default Search;
 
-export const getServerSideProps = getSearchProps;
+export const getServerSideProps = composeProps(getPageProps, getCollectionProps);
