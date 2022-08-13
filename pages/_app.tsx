@@ -3,7 +3,7 @@ import 'swiper/css/bundle';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
-import 'react-medium-image-zoom/dist/styles.css'
+// import 'react-medium-image-zoom/dist/styles.css'
 import 'styles/globals.css';
 
 import type { AppProps } from 'next/app';
@@ -14,6 +14,7 @@ import { DefaultSeo } from 'next-seo';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { SnackbarProvider } from 'notistack';
 
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
@@ -62,6 +63,7 @@ function MyApp(props: MyAppProps) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
         <ThemeProvider theme={theme}>
+          <SnackbarProvider maxSnack={3}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <AppProvider>
@@ -71,6 +73,7 @@ function MyApp(props: MyAppProps) {
               </Layout>          
             </SearchProvider>
           </AppProvider>
+          </SnackbarProvider>
         </ThemeProvider>
       </CacheProvider>
     </>
