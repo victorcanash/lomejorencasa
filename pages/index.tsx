@@ -7,11 +7,12 @@ import Box from '@mui/material/Box';
 import LinkButton from '@core/components/LinkButton';
 import ProTip from '@core/components/ProTip';
 import Copyright from '@core/components/Copyright';
+import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 
-const Home: NextPage = () => {
-  const page = usePage();
+const Home: NextPage<PageProps> = (props) => {
+  const page = usePage(props);
 
   const { sortBy, order, keywords, getHref } = useSearchContext();
 
@@ -37,3 +38,5 @@ const Home: NextPage = () => {
 }
 
 export default Home
+
+export const getServerSideProps = getPageProps;

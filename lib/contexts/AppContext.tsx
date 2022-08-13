@@ -1,12 +1,9 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState, useRef, useEffect } from 'react';
+import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
 
 import type { User } from '@core/types/auth';
 import type { ProductCategory } from '@core/types/products';
-import { getCredentials } from '@core/utils/auth';
-import { getAllProductCategories } from '@core/utils/products';
 
 type ContextType = {
-  initialized: boolean;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
   token: string;
@@ -14,17 +11,18 @@ type ContextType = {
   user?: User;
   setUser: Dispatch<SetStateAction<User | undefined>>;
   categories: ProductCategory[];
+  setCategories: Dispatch<SetStateAction<ProductCategory[]>>;
 };
 
 export const AppContext = createContext<ContextType>({
-  initialized: false,
-  loading: true,
+  loading: false,
   setLoading: () => {},
   token: '',
   setToken: () => {},
   user: undefined,
   setUser: () => {},
   categories: [],
+  setCategories: () => {}
 });
 
 export const useAppContext = () => {
@@ -37,50 +35,22 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const firstRenderRef = useRef(false);
-
-  const [initialized, setInitialized] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
   const [user, setUser] = useState<User | undefined>(undefined);
   const [categories, setCategories] = useState<ProductCategory[]>([]);
 
-  useEffect(() => {
-    if (!firstRenderRef.current) {
-      firstRenderRef.current = true; 
-
-      const initData = async() => {
-        await getCredentials().then((response: {token: string, user: User}) => {
-          setToken(response.token);
-          setUser(response.user);
-        }).catch((error: Error) => {
-        }); 
-
-        await getAllProductCategories().then((response: {productCategories: ProductCategory[]}) => {
-          setCategories(response.productCategories);
-          setInitialized(true);
-        }).catch((error: Error) => {
-          setTimeout(() => {
-            initData();
-          }, 3000);
-        });
-      };  
-
-      initData();
-    }    
-  }, []);
-
   return (
     <AppContext.Provider
       value={{ 
-        initialized,
         loading, 
         setLoading, 
         token, 
         setToken, 
         user, 
         setUser,
-        categories
+        categories,
+        setCategories
       }}
     >
       {children}

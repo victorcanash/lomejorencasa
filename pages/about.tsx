@@ -7,11 +7,12 @@ import Box from '@mui/material/Box';
 import LinkButton from '@core/components/LinkButton';
 import ProTip from '@core/components/ProTip';
 import Copyright from '@core/components/Copyright';
+import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
 
 
-const About: NextPage = () => {
-  const page = usePage();
+const About: NextPage<PageProps> = (props) => {
+  const page = usePage(props);
 
   return (
     <>
@@ -35,3 +36,5 @@ const About: NextPage = () => {
 };
 
 export default About;
+
+export const getServerSideProps = getPageProps;
