@@ -12,6 +12,7 @@ import { Drawers } from '@core/constants/header';
 import HideOnScroll from '@core/components/HideOnScroll';
 import Link from '@core/components/Link';
 import useDrawer from '@lib/hooks/useDrawer';
+import useCart from '@lib/hooks/useCart';
 import Search from '@components/Header/Search';
 import Drawer from '@components/Header/Drawer';
 
@@ -33,6 +34,8 @@ const Header = () => {
       categoriesDrawer.setOpen(false);
     }
   }
+
+  const { quantity } = useCart();
 
   return (
     <Box component="header">
@@ -73,9 +76,12 @@ const Header = () => {
               size="large"
               aria-label="show 17 items from cart"
               color="inherit"
+              component={Link} 
+              noLinkStyle 
+              href="/cart"
             >
-              <Badge badgeContent={17} color="secondary">
-                <ShoppingCartIcon />
+              <Badge badgeContent={quantity} color="secondary">
+                  <ShoppingCartIcon></ShoppingCartIcon>
               </Badge>
             </IconButton>
 
