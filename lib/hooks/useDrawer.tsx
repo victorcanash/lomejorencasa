@@ -26,7 +26,7 @@ const useDrawer = (drawer: Drawers) => {
         setItems(unloggedUserDrawerItems);
       }
     } else if (drawer == Drawers.categoriesDrawer) {
-      let categoriesItems = [] as DrawerItem[];
+      const categoriesItems = [] as DrawerItem[];
       categories.forEach((category) => {
         categoriesItems.push({
           text: capitalizeFirstLetter(category.name),

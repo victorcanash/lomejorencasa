@@ -34,7 +34,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [order, setOrder] = useState<string>('asc');
   const [keywords, setKeywords] = useState<string>('');
 
-  const getHref = (categoryName: string = 'all', page: number = 1) => {
+  const getHref = (categoryName = 'all', page = 1) => {
     return `/collections/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
   }
 

@@ -15,7 +15,7 @@ export const getPageProps: GetServerSideProps = async (context) => {
   const { req, res } = context;
 
   let result: { props: PageProps } | { notFound: boolean } = { props: {} as PageProps };
-  let props: PageProps = { token: '', user: null, categories: [] }
+  const props: PageProps = { token: '', user: null, categories: [] }
 
   await getCredentials({ req, res }).then((response: {token: string, user: User }) => {
     props.token = response.token;

@@ -14,6 +14,7 @@ import { capitalizeFirstLetter } from '@core/utils/strings';
 import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
 import { ProductProps, getProductProps } from '@lib/server/product';
+import useCart from '@lib/hooks/useCart';
 import Carousel from '@components/Carousel';
 
 const Product: NextPage<PageProps & ProductProps> = (props) => {
@@ -22,6 +23,8 @@ const Product: NextPage<PageProps & ProductProps> = (props) => {
   const page = usePage({ token, user, categories });
 
   const router = useRouter();
+
+  const { addCartItem } = useCart();
 
   return (
     <>
@@ -65,13 +68,11 @@ const Product: NextPage<PageProps & ProductProps> = (props) => {
               </Typography>
           }
           <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            
-            >
-              Add to cart
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Add to cart
           </Button>
         </Box>
       </Container>
