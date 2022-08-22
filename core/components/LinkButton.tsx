@@ -1,18 +1,12 @@
-import Button from '@mui/material/Button';
+import Button, { ButtonProps } from '@mui/material/Button';
 
-import Link from '@core/components/Link';
+import Link, { LinkProps } from '@core/components/Link';
 
-type LinkButtonProps = {
-  children?: React.ReactNode,
-  href?: string
-};
-
-const LinkButton = (props: LinkButtonProps) => {
-  const { children, href } = props;
+const LinkButton = (props: ButtonProps & LinkProps) => {
 
   return (  
-    <Button variant="contained" component={Link} noLinkStyle href={href}>
-      {children}
+    <Button {...props} variant="contained" component={Link} noLinkStyle>
+      {props.children}
     </Button>
   );
 };

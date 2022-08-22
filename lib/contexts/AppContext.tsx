@@ -35,7 +35,7 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [token, setToken] = useState('');
   const [user, setUser] = useState<User | undefined>(undefined);
   const [categories, setCategories] = useState<ProductCategory[]>([]);

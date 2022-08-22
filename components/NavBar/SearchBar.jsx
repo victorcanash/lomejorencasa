@@ -1,13 +1,19 @@
+import { useRef } from 'react';
+import { useRouter } from 'next/router';
+
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
-const StyledSearch = styled('div')(({ theme }) => ({
+import { useSearchContext } from '@lib/contexts/SearchContext';
+
+const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.white, 0.25),
+    cursor: 'text',
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
@@ -37,23 +43,34 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     transition: theme.transitions.create('width'),
     width: '100%',
     [theme.breakpoints.up('md')]: {
-      width: '20ch',
+      width: '39ch',
     },
   },
 }));
 
-const Search = () => {
+const SearchBar = () => {
+  const router = useRouter();
+
+  const inputRef = useRef(null);
+
+  const { getHref, setKeywords } = useSearchContext();
+
+  const handleClick = () => {
+    setTimeout(() => inputRef.current.focus());
+  };
+
   return (
-    <StyledSearch>
+    <Search onClick={handleClick}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
+        inputRef={inputRef}
+        placeholder='Search...'
+        inputProps={{ 'aria-label': 'search', maxLength: 50 }}
       />
-    </StyledSearch>
-  )
+    </Search>
+  );
 };
 
-export default Search;
+export default SearchBar;

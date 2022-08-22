@@ -10,21 +10,20 @@ import { Drawers } from '@core/constants/header';
 import Link from '@core/components/Link';
 import useDrawer from '@lib/hooks/useDrawer';
 
-type Props = {
+type DrawerProps = {
   id: Drawers;
   anchor: 'top' | 'left' | 'bottom' | 'right';
   open: boolean;
   handleDrawer: () => void;
 };
 
-const Drawer = (props: Props) => {
+const Drawer = (props: DrawerProps) => {
   const { id, anchor, open, handleDrawer } = props;
 
   const { items } = useDrawer(id);
 
   return (
       <MuiDrawer
-        color="primary"
         anchor={anchor}
         open={open}
         onClose={handleDrawer}
@@ -34,8 +33,9 @@ const Drawer = (props: Props) => {
       >
         <Toolbar />
         <Box
-          color="primary"
-          sx={{ overflow: 'auto', backgroundColor: 'primary' }}
+          sx={{ 
+            overflow: 'auto',
+          }}
           onClick={handleDrawer}
         >
           <List>

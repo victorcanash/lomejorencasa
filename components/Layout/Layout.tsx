@@ -2,32 +2,27 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 import Loading from '@components/Loading';
-import Header from '@components/Header';
+import Header from '@components/NavBar';
 import Footer from '@components/Footer';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
-    <>
+    <div className="app">
       <Loading />
-
       <Header />
-      <Container component="main" maxWidth="lg">
+      <Container component="main">
         <Box
           sx={{
-            mt: '50px',
-            mb: '50px',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
+            mt: 10,
+            mb: 4,
           }}
         >
           {children}
         </Box>
       </Container>
       <Footer />
-    </>
+    </div>
   )
 }
 

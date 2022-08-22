@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 import LinkButton from '@core/components/LinkButton';
-import ProTip from '@core/components/ProTip';
-import Copyright from '@core/components/Copyright';
+import ProTip from '@components/ui/ProTip';
+import Copyright from '@components/ui/Copyright';
 import usePage from '@lib/hooks/usePage';
 
 const NotFound: NextPage = () => {
@@ -23,8 +23,19 @@ const NotFound: NextPage = () => {
       <Container 
         className="above-layout"
         sx={{
-          backgroundColor: 'white', 
-        }}>
+          backgroundColor: 'background.default',
+          position: 'fixed',
+          top: '0px',
+          left: '0px',
+          zIndex: 10000,
+          width: '100vw',
+          height: '100vh',
+          display: 'flex', 
+          placeContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
         <Typography variant="h4" component="h1" gutterBottom>
           Not found page
         </Typography>

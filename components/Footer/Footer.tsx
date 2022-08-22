@@ -1,18 +1,19 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 
-import Copyright from '@core/components/Copyright';
+import Copyright from '@components/ui/Copyright';
 
 const Footer = () => {
   return (
+    <>
+    <Divider />
     <Box
       component="footer"
-      color="primary"
       sx={{
         py: 3,
         px: 2,
-        backgroundColor: 'primary.main'
       }}
     >
       <Container maxWidth="sm">
@@ -22,6 +23,7 @@ const Footer = () => {
         <Copyright />
       </Container>
     </Box>
+    </>
   );
 }
 

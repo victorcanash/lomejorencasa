@@ -2,21 +2,21 @@ import Image from 'next/image';
 // import Zoom from 'react-medium-image-zoom'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Swiper as SwiperType, Navigation, EffectCoverflow, Pagination } from 'swiper';
+import { Navigation, EffectCoverflow, Pagination } from 'swiper';
+
+import Box from '@mui/material/Box';
 
 import { Product } from '@core/types/products';
 import { getProductImgUrl } from '@core/utils/products';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 
-type Props = {
-  product: Product
+type CarouselProps = {
+  product: Product,
 }
 
-const Carousel = ({ product }: Props) => {
+const Carousel = ({ product }: CarouselProps) => {
 
   return (
-    <Box sx={{ minWidth: "200px", maxWidth: "sm" }}>
+    <Box>
       <Swiper
         modules={[Navigation, EffectCoverflow, Pagination]}
         navigation
@@ -39,11 +39,10 @@ const Carousel = ({ product }: Props) => {
                 <Image 
                   src={getProductImgUrl(product, index)} 
                   alt="Product image" 
-                  width="4000"
-                  height="4000"
+                  width="500"
+                  height="500"
                   layout="responsive" 
                   objectFit="cover" 
-                  sizes="100vw"
                   priority
                 />
               {/*</Zoom>*/}

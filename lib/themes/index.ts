@@ -1,44 +1,43 @@
-import { createTheme } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
+import { createTheme, ThemeOptions } from '@mui/material/styles';
 
-const theme = createTheme({
+export const themeOptions: ThemeOptions = {
   palette: {
+    mode: 'dark',
     primary: {
-      light: '#ff784e',
-      main: '#ff5722',
-      dark: '#b23c17',
-      contrastText: '#fff',
+      main: '#91002e',
     },
     secondary: {
-      light: '#834bff',
-      main: '#651fff',
-      dark: '#4615b2',
-      contrastText: '#000',
+      main: '#3d0043',
     },
-    error: {
-      main: red.A400,
+    background: {
+      default: '#282c34',
+      //paper: '#2d2d2d',
+      paper: '#91002e',
     },
+    text: {
+      primary: '#ffffff',
+      secondary: '#ffffff',
+      disabled: '#bdbdbd',
+    },
+    divider: '#ffffff',
   },
-  components: {
-    MuiPaper: {
-      defaultProps: {
-        sx: {
-          backgroundColor: '#ff5722',
-          color: '#fff',
-        }
-      },
-    },
-    MuiContainer: {
-      defaultProps: {
-        disableGutters: true,
-      },
-    },
-    MuiToolbar: {
-      defaultProps: {
-        disableGutters: true,
-      },
-    },
+  typography: {
+    fontFamily: [
+      '-apple-system', 
+      'BlinkMacSystemFont', 
+      'Segoe UI', 
+      'Roboto', 
+      'Oxygen',
+      'Ubuntu', 
+      'Cantarell', 
+      'Fira Sans', 
+      'Droid Sans', 
+      'Helvetica Neue',
+      'sans-serif',
+    ].join(','),
   },
-});
+};
+
+const theme = createTheme(themeOptions);
 
 export default theme;
