@@ -3,15 +3,15 @@ import type { GetServerSideProps } from 'next';
 import type { Product } from '@core/types/products';
 import { getAllProducts } from '@core/utils/products';
 
-export interface CollectionProps {
-  products: Product[]; 
-  currentPage: number;
-  totalPages: number; 
-  categoryName: string;
-  sortBy: string; 
-  order: string;
-  keywords: string;
-}
+export type CollectionProps = {
+  products: Product[],
+  currentPage: number,
+  totalPages: number, 
+  categoryName: string,
+  sortBy: string,
+  order: string,
+  keywords: string,
+};
 
 export const getCollectionProps: GetServerSideProps = async (context) => {
   const category = context.params?.category;
@@ -44,5 +44,5 @@ export const getCollectionProps: GetServerSideProps = async (context) => {
       };
     })
 
-  return result
+  return result;
 };

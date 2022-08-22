@@ -1,21 +1,24 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
-import { getCookie, setCookie, deleteCookie } from 'cookies-next';
 
 import { JWTTokenKey } from '@core/constants/auth';
+import { Storages } from '@core/constants/storage';
 import type { User, AuthLogin, AuthRegister } from '@core/types/auth';
+import type { Cart } from '@core/types/cart';
+import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 import { logged, login, register, logout } from '@core/middlewares/auth';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 
-export const getCredentials = async (cookieOptions?: { req: any, res: any }) => {
-  return new Promise<{token: string, user: User}>(async (resolve, reject) => {
-    const token = await getCookie(JWTTokenKey, cookieOptions)?.toString() || '';
+export const getCredentials = async () => {
+  return new Promise<{token: string, user: User, cart: Cart}>(async (resolve, reject) => {
+    const token = await getStorageItem(Storages.local, JWTTokenKey) || '';
     logged(token).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.OK && response.data?.user) {
         if (!response.data?.user.lockedOut) {
           resolve({
             token: token,
-            user: response.data.user
+            user: response.data.user,
+            cart: response.data.cart,
           });
         } else {
           throw new Error('You are locked out');
@@ -24,8 +27,8 @@ export const getCredentials = async (cookieOptions?: { req: any, res: any }) => 
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      deleteCookie(JWTTokenKey, cookieOptions);
-      let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+      removeStorageItem(Storages.local, JWTTokenKey);
+      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
       console.error(`[Get Logged User ERROR]: ${errorMsg}`);
       /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
         removeLocalStorageItem(STORAGE_KEYS.JWTToken);
@@ -69,7 +72,7 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
           if (token !== '') {
             await logoutUser(token);
           }
-          await setCookie(JWTTokenKey, response.data.token);
+          await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
           getCredentials().then((response: {token: string, user: User}) => {
             resolve({
               token: response.token,
@@ -86,7 +89,7 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
       console.error(`[Login ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     });
@@ -95,5 +98,5 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
 
 export const logoutUser = async (token: string) => {
   await logout(token);
-  await deleteCookie(JWTTokenKey);
+  await removeStorageItem(Storages.local, JWTTokenKey);
 }

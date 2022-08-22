@@ -16,14 +16,16 @@ import { Drawers } from '@core/constants/header';
 import HideOnScroll from '@core/components/HideOnScroll';
 import Link from '@core/components/Link';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';
-import useCart from '@lib/hooks/useCart';
 import SearchBar from '@components/NavBar/SearchBar';
 import Drawer from '@components/NavBar/Drawer';
 import logo from 'public/images/lanus-logo.svg';
 
 const NavBar = () => {
   const { getHref } = useSearchContext();
+
+  const { quantity } = useCartContext();
 
   const userDrawer = useDrawer(Drawers.userDrawer);
   const categoriesDrawer = useDrawer(Drawers.categoriesDrawer);
@@ -42,8 +44,6 @@ const NavBar = () => {
       categoriesDrawer.setOpen(false);
     }
   }
-
-  const { quantity } = useCart();
 
   return (
     <Box component="header">

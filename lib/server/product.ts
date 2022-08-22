@@ -3,9 +3,9 @@ import type { GetServerSideProps } from 'next';
 import type { Product } from '@core/types/products';
 import { getProduct } from '@core/utils/products';
 
-export interface ProductProps {
-  product: Product; 
-}
+export type ProductProps = {
+  product: Product,
+};
 
 export const getProductProps: GetServerSideProps = async (context) => {
   const { id } = context.query;

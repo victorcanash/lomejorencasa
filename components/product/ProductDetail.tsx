@@ -10,9 +10,9 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
-import { Product } from "@core/types/products";
+import { Product } from '@core/types/products';
+import { useCartContext } from '@lib/contexts/CartContext';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
-import useCart from '@lib/hooks/useCart';
 import GoBackBtn from '@components/ui/GoBackBtn';
 import ProductDescription from '@components/product/ProductDescription';
 import Carousel from '@components/Carousel';
@@ -24,9 +24,9 @@ type ProductDetailProps = {
 const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
-  const { selectedInventory, handleSelectChange, loadedSelect } = useSelectInventory(product);
+  const { addCartItem } = useCartContext();
 
-  const { addCartItem } = useCart();
+  const { selectedInventory, handleSelectChange, loadedSelect } = useSelectInventory(product);
 
   const handleChange = (event: SelectChangeEvent) => {
     handleSelectChange(event.target.value as string);

@@ -1,5 +1,3 @@
-import type { Cart } from '@core/types/cart';
-
 export type User = {
   id: number;
   email: string;
@@ -8,7 +6,6 @@ export type User = {
   age: number;
   addresses: UserAddress[];
   payments: UserPayment[];
-  cart: Cart;
 }
 
 export type UserUpdate = {
