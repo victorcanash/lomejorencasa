@@ -5,6 +5,7 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
+import { allProductsName } from '@core/constants/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 
 const Search = styled('div')(({ theme }) => ({
@@ -49,14 +50,23 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchBar = () => {
-  const router = useRouter();
-
   const inputRef = useRef(null);
 
-  const { getHref, setKeywords } = useSearchContext();
+  const { getHref } = useSearchContext();
+
+  const router = useRouter();
 
   const handleClick = () => {
     setTimeout(() => inputRef.current.focus());
+  };
+
+  const handleOnKeyDown = (e) => {
+    if (e.key !== 'Enter') {
+      return;
+    }
+    inputRef.current.blur();
+    let categoryName = router.query.category ? router.query.category : allProductsName;
+    router.push(getHref(categoryName, 1, inputRef.current.value));
   };
 
   return (
@@ -66,8 +76,9 @@ const SearchBar = () => {
       </SearchIconWrapper>
       <StyledInputBase
         inputRef={inputRef}
-        placeholder='Search...'
+        placeholder='Search here'
         inputProps={{ 'aria-label': 'search', maxLength: 50 }}
+        onKeyDown={handleOnKeyDown}
       />
     </Search>
   );

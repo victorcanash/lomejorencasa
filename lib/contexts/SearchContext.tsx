@@ -7,8 +7,6 @@ type SearchContext = {
   setSortBy: Dispatch<SetStateAction<string>>;
   order: string;
   setOrder: Dispatch<SetStateAction<string>>;
-  keywords: string; 
-  setKeywords: Dispatch<SetStateAction<string>>;
   getHref: (categoryName?: string, page?: number) => string;
 };
 
@@ -17,8 +15,6 @@ const SearchContext = createContext<SearchContext>({
   setSortBy: () => {},
   order: 'asc',
   setOrder: () => {},
-  keywords: '',
-  setKeywords: () => {},
   getHref: () => '',
 });
 
@@ -34,9 +30,9 @@ export const useSearchContext = () => {
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [sortBy, setSortBy] = useState<string>('id');
   const [order, setOrder] = useState<string>('asc');
-  const [keywords, setKeywords] = useState<string>('');
 
-  const getHref = (categoryName = allProductsName, page = 1) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getHref = (categoryName = allProductsName, page = 1, keywords = '') => {
     return `/collections/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
   }
 
@@ -47,8 +43,6 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         setSortBy,
         order,
         setOrder,
-        keywords,
-        setKeywords,
         getHref,
       }}
     >
