@@ -18,7 +18,7 @@ export const getCredentials = async () => {
           resolve({
             token: token,
             user: response.data.user,
-            cart: response.data.cart,
+            cart: response.data.user.cart,
           });
         } else {
           throw new Error('You are locked out');
@@ -65,7 +65,7 @@ export const registerUser = async (authRegister: AuthRegister) => {
 }
 
 export const loginUser = async (authLogin: AuthLogin, token: string) => {
-  return new Promise<{token: string, user: User}>((resolve, reject) => {
+  return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
     login(authLogin).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         if (response.data.token){
@@ -73,10 +73,11 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
             await logoutUser(token);
           }
           await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
-          getCredentials().then((response: {token: string, user: User}) => {
+          getCredentials().then((response: {token: string, user: User, cart: Cart}) => {
             resolve({
               token: response.token,
-              user: response.user
+              user: response.user,
+              cart: response.cart,
             });
           }).catch((error: Error) => {
             reject(error);
