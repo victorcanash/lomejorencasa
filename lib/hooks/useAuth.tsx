@@ -1,12 +1,23 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { RouterPaths } from '@core/constants/navigation';
 import type { AuthRegister, AuthLogin, User } from '@core/types/auth';
-import { registerUser, loginUser } from '@core/utils/auth';
+import type { Cart } from '@core/types/cart';
+import { registerUser, loginUser, logoutUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 
 const useAuth = () => {
-  const { token, user, setLoading, setToken, setUser } = useAppContext();
+  const { 
+    token, 
+    user, 
+    setLoading, 
+    setToken, 
+    setUser, 
+    initCart,
+    removeCart,
+    previousPath, 
+  } = useAppContext();
 
   const router = useRouter();
 
@@ -14,7 +25,15 @@ const useAuth = () => {
 
   const isLogged = () => {
     if (!token || !user) {
-      router.push('/login');
+      return false;
+    }
+    return true;
+  };
+
+  const isProtectedPath = (path: string) => {
+    if (path != RouterPaths.cart &&
+        path != RouterPaths.orders &&
+        path != RouterPaths.profile) {
       return false;
     }
     return true;
@@ -26,10 +45,8 @@ const useAuth = () => {
       email: values.email,
       password: values.password
     };
-    loginUser(authLogin, token).then((response: {token: string, user: User}) => {
-      setToken(response.token);
-      setUser(response.user);
-      router.push('/');
+    loginUser(authLogin, token).then((response: {token: string, user: User, cart: Cart}) => {
+      onLoginSuccess(response.token, response.user, response.cart);
     }).catch((error: Error) => {
       let errorMsg = error.message
       if (errorMsg.includes('email')) {
@@ -60,13 +77,11 @@ const useAuth = () => {
         email: authRegister.email,
         password: authRegister.password
       }; 
-      loginUser(authLogin, token).then((response: {token: string, user: User}) => {
-        setToken(response.token);
-        setUser(response.user);
-        router.push('/');
+      loginUser(authLogin, token).then((response: {token: string, user: User, cart: Cart}) => {
+        onLoginSuccess(response.token, response.user, response.cart);
       }).catch((error) => {
         setErrorMsg(error.message);
-        router.push('/login');
+        router.push(RouterPaths.login);
       });
     }).catch((error: Error) => {
       let errorMsg = error.message
@@ -80,12 +95,42 @@ const useAuth = () => {
     })
   };
 
+  const onLoginSuccess = (token: string, user: User, cart: Cart) => {
+    setToken(token);
+    setUser(user);
+    initCart(cart);
+    if (previousPath && 
+        previousPath != RouterPaths.register && 
+        previousPath != RouterPaths.login){
+      router.back();
+    } else {
+      router.push(RouterPaths.home);
+    }
+  };
+
+  const logout = async () => {
+    setLoading(true);
+
+    await logoutUser(token);
+    setToken('');
+    setUser(undefined);
+    removeCart();
+
+    if (isProtectedPath(router.asPath)) {
+      router.push(RouterPaths.home);
+    } else {
+      setLoading(false);
+    }
+  };
+
   return {
     errorMsg,
     isLogged,
+    isProtectedPath,
     login,
-    register
-  }
+    register,
+    logout,
+  };
 };
 
 export default useAuth;

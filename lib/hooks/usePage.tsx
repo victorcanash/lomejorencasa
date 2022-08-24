@@ -1,38 +1,23 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { PageProps } from '@lib/server/page';
+import { RouterPaths } from '@core/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
-import { useCartContext } from '@lib/contexts/CartContext';
+import useAuth from '@lib/hooks/useAuth';
 
-const usePage = (pageProps?: PageProps) => {
-  const { setLoading, setToken, setUser, setCategories } = useAppContext();
-  const { setCart } = useCartContext();
+const usePage = () => {
+  const { setLoading } = useAppContext();
 
   const router = useRouter();
 
+  const { isProtectedPath: isProtectedPage } = useAuth();
+
   useEffect(() => {
-    if (pageProps && pageProps.categories && pageProps.categories.length > 0) {
-      setToken(pageProps.token);
-      setUser(pageProps.user || undefined);
-      setCart(pageProps.cart || undefined);
-      setCategories(pageProps.categories);
+    if (isProtectedPage(router.asPath)) {
+      router.push(RouterPaths.login);
     }
     setLoading(false);  
-  }, [
-      pageProps, 
-      pageProps?.categories, 
-      pageProps?.token, 
-      pageProps?.user, 
-      pageProps?.cart, 
-      router.asPath, 
-      setCategories, 
-      setLoading, 
-      setToken, 
-      setUser,
-      setCart,
-    ]
-  );
+  }, [isProtectedPage, router, router.asPath, setLoading]);
 
   return {};
 };

@@ -9,6 +9,7 @@ import Toolbar from '@mui/material/Toolbar';
 import { Drawers } from '@core/constants/header';
 import Link from '@core/components/Link';
 import useDrawer from '@lib/hooks/useDrawer';
+import useAuth from '@lib/hooks/useAuth';
 
 type DrawerProps = {
   id: Drawers;
@@ -21,6 +22,13 @@ const Drawer = (props: DrawerProps) => {
   const { id, anchor, open, handleDrawer } = props;
 
   const { items } = useDrawer(id);
+
+  const { logout } = useAuth();
+
+  const handleClickLogout = () => {
+    handleDrawer();
+    logout();
+  };
 
   return (
       <MuiDrawer
@@ -41,9 +49,15 @@ const Drawer = (props: DrawerProps) => {
           <List>
             {items.map((item) => (
               <ListItem key={item.text} disablePadding>
-                <ListItemButton onClick={handleDrawer} component={Link} noLinkStyle href={item.path}>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
+                { item.path ?
+                  <ListItemButton onClick={handleDrawer} component={Link} noLinkStyle href={item.path}>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                  :
+                  <ListItemButton onClick={handleClickLogout}>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                }
               </ListItem>
             ))}
           </List>

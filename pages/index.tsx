@@ -5,16 +5,15 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import LinkButton from '@core/components/LinkButton';
-import ProTip from '@components/ui/ProTip';
-import Copyright from '@components/ui/Copyright';
-import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import ProTip from '@components/ui/ProTip';
+import Copyright from '@components/ui/Copyright';
 
-const Home: NextPage<PageProps> = (props) => {
-  const page = usePage(props);
+const Home: NextPage = () => {
+  const page = usePage();
 
-  const { sortBy, order, keywords, getHref } = useSearchContext();
+  const { getHref } = useSearchContext();
 
   return (
     <>
@@ -38,5 +37,3 @@ const Home: NextPage<PageProps> = (props) => {
 }
 
 export default Home
-
-export const getServerSideProps = getPageProps;

@@ -1,45 +1,19 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 import { useSnackbar } from 'notistack';
 
-import { Cart, CartItem } from '@core/types/cart';
+import { RouterPaths } from '@core/constants/navigation';
+import { CartItem } from '@core/types/cart';
 import { Product, ProductInventory } from '@core/types/products';
 import { createCartItem, updateCartItem, deleteCartItem } from '@core/utils/cart';
+import { getProductPrice } from '@core/utils/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import useAuth from '@lib/hooks/useAuth';
 
-type ContextType = {
-  cart?: Cart,
-  setCart: Dispatch<SetStateAction<Cart | undefined>>,
-  quantity: number,
-  addCartItem: (product: Product, inventory: ProductInventory) => void,
-  updateCartItemQuantity: (cartItemId: number, quantity: number) => void,
-};
+export const useCart = () => {
+  const { token, cart, cartQuantity, setCartQuantity, cartPrice, setCartPrice } = useAppContext();
 
-export const CartContext = createContext<ContextType>({
-  cart: undefined,
-  setCart: () => {},
-  quantity: 0,
-  addCartItem: () => {},
-  updateCartItemQuantity: () => {},
-});
-
-export const useCartContext = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('Error while reading cart context');
-  }
-
-  return context;
-};
-
-export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const firstRenderRef = useRef(true);
-
-  const [cart, setCart] = useState<Cart | undefined>(undefined);
-  const [quantity, setQuantity] = useState(0);
-
-  const { token } = useAppContext();
+  const router = useRouter();
 
   const { isLogged } = useAuth();
 
@@ -47,6 +21,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const addCartItem = (product: Product, inventory: ProductInventory) => {
     if (!isLogged() || !cart) {
+      router.push(RouterPaths.login);
       return;
     };
 
@@ -59,6 +34,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       inventory: inventory,
       quantity: 1
     } as CartItem;
+
+    const itemPrice = getProductPrice(product);
 
     let cartItemIndex = -1;
     cart.items.forEach((item, index) => {
@@ -74,7 +51,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     if (cartItemIndex > -1) {
       updateCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
         cart.items[cartItemIndex] = response.cartItem;
-        addCartItemSuccess();
+        addCartItemSuccess(itemPrice);
       }).catch((error: Error) => {
         addCartItemError();
       });
@@ -83,15 +60,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       createCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
         cart.items.push(response.cartItem);
-        addCartItemSuccess();
+        addCartItemSuccess(itemPrice);
       }).catch((error: Error) => {
         addCartItemError();
       });
     };
   };
 
-  const addCartItemSuccess = () => {
-    setQuantity(quantity + 1);
+  const addCartItemSuccess = (itemPrice: number) => {
+    setCartQuantity(cartQuantity + 1);
+    setCartPrice(cartPrice + itemPrice);
     enqueueSnackbar('Added to the cart', { variant: 'success' });
   };
 
@@ -100,7 +78,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const updateCartItemQuantity = (cartItemId: number, quantity: number) => {
-    if (!isLogged() || !cart || cartItemId < 0) {
+    if (!isLogged() || !cart) {
+      router.push(RouterPaths.login);
       return;
     };
 
@@ -122,58 +101,40 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
     // Update cart item
     if (cartItem.quantity > 0) {
-      const quantityAdded = quantity - cartItem.quantity;
+      const addedQuantity = quantity - cartItem.quantity;
+      const addedPrice = getProductPrice(cartItem.product) * addedQuantity;
       cartItem.quantity = quantity;
       updateCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
         cart.items[cartItemIndex] = response.cartItem;
-        updateCartItemSuccess(quantityAdded);
+        updateCartItemSuccess(addedQuantity, addedPrice);
       }).catch((error: Error) => {
-        // Show popup error
+        updateCartItemError();
       });
 
     // Delete cart item
     } else {
+      const addedQuantity = -cartItem.quantity;
+      const addedPrice = -(getProductPrice(cartItem.product) * cartItem.quantity);
       deleteCartItem(token, cartItem.id).then(() => {
         cart.items.splice(cartItemIndex);
-        updateCartItemSuccess(-cartItem.quantity);
+        updateCartItemSuccess(addedQuantity, addedPrice);
       }).catch((error: Error) => {
-        // Show popup error
+        updateCartItemError();
       });
     };
   };
 
-  const updateCartItemSuccess = (addedQuantity: number) => {
-    setQuantity(quantity + addedQuantity);
+  const updateCartItemSuccess = (addedQuantity: number, addedPrice: number) => {
+    setCartPrice(cartPrice + addedPrice);
+    setCartQuantity(cartQuantity + addedQuantity);
   };
 
-  useEffect(() => {
-    if (firstRenderRef.current) {
-      firstRenderRef.current = false;
-      const getQuantity = () => {
-        let result = 0;
-        if (!cart || !cart.items || cart.items.length < 1) {
-          return result;
-        }
-        cart.items.forEach((item) => {
-          result += item.quantity;
-        })
-        return result;
-      }
-      setQuantity(getQuantity());
-    };
-  }, [cart]);
+  const updateCartItemError = () => {
+    enqueueSnackbar('Failed updating the cart, try again', { variant: 'error' });
+  };
 
-  return (
-    <CartContext.Provider
-      value={{ 
-        cart,
-        setCart,
-        quantity,
-        addCartItem,
-        updateCartItemQuantity,
-      }}
-    >
-      {children}
-    </CartContext.Provider>
-  );
+  return {
+    addCartItem,
+    updateCartItemQuantity
+  };
 };

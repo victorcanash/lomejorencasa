@@ -19,7 +19,7 @@ export const getAllProductCategories = async () => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
       console.error(`[Get Product Categories ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     }); 
@@ -40,7 +40,7 @@ export const getAllProducts = async (page: number, sortBy: string, order: string
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
         console.error(`[Get Products ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
@@ -59,14 +59,14 @@ export const getProduct = (id: number) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
         console.error(`[Get Product ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
   })
 };
 
-export const getProductImgUrl = (product: Product, index: number = 0) => {
+export const getProductImgUrl = (product: Product, index = 0) => {
   if (product.imageNames.length > index && product.imageNames[index]) {
     return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`;
   }
@@ -75,7 +75,7 @@ export const getProductImgUrl = (product: Product, index: number = 0) => {
 
 export const getProductPrice = (product: Product) => {
   if (product.discount) {
-    let discount = (product.discount.discountPercent / 100) * product.price;
+    const discount = (product.discount.discountPercent / 100) * product.price;
     return roundTwoDecimals(product.price - discount);
   }
   return product.price;

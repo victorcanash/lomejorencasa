@@ -6,11 +6,14 @@ import { DrawerItem } from '@core/types/header';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import useAuth from '@lib/hooks/useAuth';
 
 const useDrawer = (drawer: Drawers) => {
-  const { user, token, categories } = useAppContext();
+  const { categories } = useAppContext();
 
   const { getHref } = useSearchContext();
+
+  const { isLogged } = useAuth();
 
   const router = useRouter();
 
@@ -20,7 +23,7 @@ const useDrawer = (drawer: Drawers) => {
 
   useEffect(() => {
     if (drawer == Drawers.userDrawer) {
-      if (user && token) {
+      if (isLogged()) {
         setItems(loggedUserDrawerItems);
       } else {
         setItems(unloggedUserDrawerItems);
@@ -35,7 +38,7 @@ const useDrawer = (drawer: Drawers) => {
       });
       setItems(categoriesItems);
     }
-  }, [categories, drawer, getHref, router.asPath, token, user]);
+  }, [categories, drawer, getHref, router.asPath, isLogged]);
 
   return {
     items,

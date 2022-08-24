@@ -12,20 +12,21 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
+import { RouterPaths } from '@core/constants/navigation';
 import { Drawers } from '@core/constants/header';
 import HideOnScroll from '@core/components/HideOnScroll';
 import Link from '@core/components/Link';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';
 import SearchBar from '@components/NavBar/SearchBar';
 import Drawer from '@components/NavBar/Drawer';
 import logo from 'public/images/lanus-logo.svg';
 
 const NavBar = () => {
-  const { getHref } = useSearchContext();
+  const { cartQuantity } = useAppContext();
 
-  const { quantity } = useCartContext();
+  const { getHref } = useSearchContext();
 
   const userDrawer = useDrawer(Drawers.userDrawer);
   const categoriesDrawer = useDrawer(Drawers.categoriesDrawer);
@@ -58,7 +59,7 @@ const NavBar = () => {
             size='large'
             color='inherit'
             component={Link}
-            href='/'
+            href={RouterPaths.home}
           >
             <Image
               src={logo}
@@ -117,9 +118,9 @@ const NavBar = () => {
                 size='large'
                 color='inherit'
                 component={Link}
-                href='/cart'
+                href={RouterPaths.cart}
               >
-                <Badge badgeContent={quantity} color='error'>
+                <Badge badgeContent={cartQuantity} color='error'>
                   <ShoppingCartIcon sx={{ fontSize: 30 }} />
                 </Badge>
               </IconButton>

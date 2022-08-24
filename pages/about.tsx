@@ -4,15 +4,14 @@ import Head from "next/head";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import { RouterPaths } from '@core/constants/navigation';
 import LinkButton from '@core/components/LinkButton';
+import usePage from '@lib/hooks/usePage';
 import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';
-import { getPageProps, PageProps } from '@lib/server/page';
-import usePage from '@lib/hooks/usePage';
 
-
-const About: NextPage<PageProps> = (props) => {
-  const page = usePage(props);
+const About: NextPage = () => {
+  const page = usePage();
 
   return (
     <>
@@ -25,7 +24,7 @@ const About: NextPage<PageProps> = (props) => {
         MUI v5 + Next.js with TypeScript example
       </Typography>
       <Box maxWidth="sm">
-        <LinkButton href="/">
+        <LinkButton href={RouterPaths.home}>
           Go to the home page
         </LinkButton>
       </Box>
@@ -36,5 +35,3 @@ const About: NextPage<PageProps> = (props) => {
 };
 
 export default About;
-
-export const getServerSideProps = getPageProps;

@@ -5,10 +5,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
+import { RouterPaths } from '@core/constants/navigation';
 import LinkButton from '@core/components/LinkButton';
+import usePage from '@lib/hooks/usePage';
 import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';
-import usePage from '@lib/hooks/usePage';
 
 const NotFound: NextPage = () => {
   const page = usePage();
@@ -40,7 +41,7 @@ const NotFound: NextPage = () => {
           Not found page
         </Typography>
         <Box maxWidth="sm">
-          <LinkButton href="/">
+          <LinkButton href={RouterPaths.home}>
             Go to the home page
           </LinkButton>
         </Box>

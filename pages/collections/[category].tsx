@@ -1,19 +1,13 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import { composeProps } from "next-compose-props";
-
-import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
 import useProductCategory from '@lib/hooks/useProductCategory';
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
 import ProductList from '@components/product/ProductList';
 
-const Search: NextPage<PageProps & CollectionProps> = (props) => {
+const Search: NextPage<CollectionProps> = (props) => {
   const { 
-    token, 
-    user, 
-    categories, 
     products, 
     currentPage, 
     totalPages, 
@@ -23,7 +17,7 @@ const Search: NextPage<PageProps & CollectionProps> = (props) => {
     keywords 
   } = props;
 
-  const page = usePage({ token, user, categories });
+  const page = usePage();
 
   const productCategory = useProductCategory(categoryName);
 
@@ -46,4 +40,4 @@ const Search: NextPage<PageProps & CollectionProps> = (props) => {
 
 export default Search;
 
-export const getServerSideProps = composeProps(getPageProps, getCollectionProps);
+export const getServerSideProps = getCollectionProps;

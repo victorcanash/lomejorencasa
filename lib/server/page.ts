@@ -14,8 +14,6 @@ export type PageProps = {
 }
 
 export const getPageProps: GetServerSideProps = async (context) => {
-  const { req, res } = context;
-
   let result: { props: PageProps } | { notFound: boolean } = { props: {} as PageProps };
   const props: PageProps = { token: '', user: null, categories: [] }
 

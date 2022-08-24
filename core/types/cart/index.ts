@@ -3,7 +3,6 @@ import type { Product, ProductInventory } from '@core/types/products';
 export type Cart = {
   id: number;
   userId: number;
-  total: number;
   items: CartItem[];
 }
 

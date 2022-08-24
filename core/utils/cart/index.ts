@@ -16,7 +16,7 @@ export const createCart = (token: string) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
         console.error(`[Create Cart ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
@@ -35,7 +35,7 @@ export const createCartItem = (token: string, cartItem: CartItem) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
         console.error(`[Create Cart Item ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
@@ -54,7 +54,7 @@ export const updateCartItem = (token: string, cartItem: CartItem) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
         console.error(`[Update Cart Item ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
@@ -71,7 +71,7 @@ export const deleteCartItem = (token: string, id: number) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        let errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
         console.error(`[Delete Cart Item ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 

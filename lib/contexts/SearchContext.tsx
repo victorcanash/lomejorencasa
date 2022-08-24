@@ -1,5 +1,6 @@
 import { createContext, useState, Dispatch, SetStateAction, useContext } from 'react';
 
+import { RouterPaths } from '@core/constants/navigation';
 import { allProductsName } from '@core/constants/products';
 
 type SearchContext = {
@@ -28,13 +29,12 @@ export const useSearchContext = () => {
 };
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
-  const [sortBy, setSortBy] = useState<string>('id');
-  const [order, setOrder] = useState<string>('asc');
+  const [sortBy, setSortBy] = useState('id');
+  const [order, setOrder] = useState('asc');
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getHref = (categoryName = allProductsName, page = 1, keywords = '') => {
-    return `/collections/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
-  }
+    return `${RouterPaths.productList}/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
+  };
 
   return (
     <SearchContext.Provider

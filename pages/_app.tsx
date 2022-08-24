@@ -22,7 +22,6 @@ import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
-import { CartProvider } from '@lib/contexts/CartContext';
 import Layout from '@components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -68,12 +67,10 @@ function MyApp(props: MyAppProps) {
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <AppProvider>
-            <SearchProvider>  
-              <CartProvider>  
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>   
-              </CartProvider>        
+            <SearchProvider>   
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>         
             </SearchProvider>
           </AppProvider>
           </SnackbarProvider>

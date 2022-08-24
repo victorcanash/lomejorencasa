@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
 import LoginForm from '@components/forms/LoginForm';
 
-const Login: NextPage<PageProps> = (props) => { 
-  const page = usePage(props);
+const Login: NextPage = () => { 
+  const page = usePage();
 
   return (
     <>
@@ -21,5 +20,3 @@ const Login: NextPage<PageProps> = (props) => {
 };
 
 export default Login;
-
-export const getServerSideProps = getPageProps;

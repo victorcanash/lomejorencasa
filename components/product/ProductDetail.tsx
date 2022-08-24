@@ -11,7 +11,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
 import { Product } from '@core/types/products';
-import { useCartContext } from '@lib/contexts/CartContext';
+import { useCart } from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import GoBackBtn from '@components/ui/GoBackBtn';
 import ProductDescription from '@components/product/ProductDescription';
@@ -24,7 +24,7 @@ type ProductDetailProps = {
 const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
-  const { addCartItem } = useCartContext();
+  const { addCartItem } = useCart();
 
   const { selectedInventory, handleSelectChange, loadedSelect } = useSelectInventory(product);
 

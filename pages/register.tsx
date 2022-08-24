@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
 import Head from "next/head";
 
-import { getPageProps, PageProps } from '@lib/server/page';
 import usePage from '@lib/hooks/usePage';
 import RegisterForm from '@components/forms/RegisterForm';
 
-const Register: NextPage<PageProps> = (props) => { 
-  const page = usePage(props);
+const Register: NextPage = () => { 
+  const page = usePage();
 
   return (
     <>
@@ -21,5 +20,3 @@ const Register: NextPage<PageProps> = (props) => {
 };
 
 export default Register;
-
-export const getServerSideProps = getPageProps;
