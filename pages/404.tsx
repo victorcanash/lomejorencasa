@@ -22,6 +22,7 @@ const NotFound: NextPage = () => {
       </Head>
 
       <Container 
+        maxWidth={false}
         className="above-layout"
         sx={{
           backgroundColor: 'background.default',
