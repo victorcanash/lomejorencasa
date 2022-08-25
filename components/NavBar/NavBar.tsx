@@ -67,6 +67,7 @@ const NavBar = () => {
               height="64"
               layout="fixed"
               objectFit="cover"
+              priority
             />
           </IconButton>
 
