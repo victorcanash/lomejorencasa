@@ -5,6 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const GoBackBtn = (props: ButtonProps) => {
   const router = useRouter();
+  
   const handleReturn = () => router.back();
 
   return (

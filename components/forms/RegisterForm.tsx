@@ -17,7 +17,7 @@ import { registerValidation, initRegisterValues } from '@core/constants/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 const RegisterForm = () => {
-  const { errorMsg, register } = useAuth();
+  const { register, errorMsg } = useAuth();
 
   const handleSubmit = async (values: {firstName: string, lastName: string, email: string, password: string, age: number}) => {
     register(values);

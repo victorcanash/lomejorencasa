@@ -6,38 +6,17 @@ import type { AuthRegister, AuthLogin, User } from '@core/types/auth';
 import type { Cart } from '@core/types/cart';
 import { registerUser, loginUser, logoutUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 
 const useAuth = () => {
-  const { 
-    token, 
-    user, 
-    setLoading, 
-    setToken, 
-    setUser, 
-    initCart,
-    removeCart,
-    previousPath, 
-  } = useAppContext();
+  const { setLoading } = useAppContext();
+  const { token, prevLoginPath, initAuth, removeAuth, isProtectedPath } = useAuthContext();
+  const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
-
-  const isLogged = () => {
-    if (!token || !user) {
-      return false;
-    }
-    return true;
-  };
-
-  const isProtectedPath = (path: string) => {
-    if (path != RouterPaths.cart &&
-        path != RouterPaths.orders &&
-        path != RouterPaths.profile) {
-      return false;
-    }
-    return true;
-  };
 
   const login = async (values: {email: string, password: string}) => {
     setLoading(true);
@@ -96,12 +75,9 @@ const useAuth = () => {
   };
 
   const onLoginSuccess = (token: string, user: User, cart: Cart) => {
-    setToken(token);
-    setUser(user);
+    initAuth(token, user);
     initCart(cart);
-    if (previousPath && 
-        previousPath != RouterPaths.register && 
-        previousPath != RouterPaths.login){
+    if (prevLoginPath){
       router.back();
     } else {
       router.push(RouterPaths.home);
@@ -112,8 +88,7 @@ const useAuth = () => {
     setLoading(true);
 
     await logoutUser(token);
-    setToken('');
-    setUser(undefined);
+    removeAuth();
     removeCart();
 
     if (isProtectedPath(router.asPath)) {
@@ -124,12 +99,10 @@ const useAuth = () => {
   };
 
   return {
-    errorMsg,
-    isLogged,
-    isProtectedPath,
     login,
     register,
     logout,
+    errorMsg,
   };
 };
 

@@ -27,12 +27,13 @@ export const getAllProductCategories = async () => {
 };
 
 export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
-  return new Promise<{products: Product[], totalPages: number, currentPage: number}>(async (resolve, reject) => {
+  return new Promise<{products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number}>(async (resolve, reject) => {
     getProducts(page, limitByPageSearch, sortBy, order, keywords, categoryName, orderRemainsSearch)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.products) {
           resolve({
             products: response.data.products,
+            productCategory: response.data.category,
             totalPages: response.data.totalPages,
             currentPage: response.data.currentPage
           });

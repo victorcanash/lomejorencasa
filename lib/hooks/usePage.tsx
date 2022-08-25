@@ -3,21 +3,20 @@ import { useRouter } from 'next/router';
 
 import { RouterPaths } from '@core/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
-import useAuth from '@lib/hooks/useAuth';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const usePage = () => {
   const { setLoading } = useAppContext();
+  const { isLogged, isProtectedPath } = useAuthContext();
 
   const router = useRouter();
 
-  const { isProtectedPath: isProtectedPage } = useAuth();
-
   useEffect(() => {
-    if (isProtectedPage(router.asPath)) {
+    if (isProtectedPath(router.asPath)) {
       router.push(RouterPaths.login);
     }
     setLoading(false);  
-  }, [isProtectedPage, router, router.asPath, setLoading]);
+  }, [isProtectedPath, router, router.asPath, setLoading]);
 
   return {};
 };

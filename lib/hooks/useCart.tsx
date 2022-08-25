@@ -7,16 +7,14 @@ import { CartItem } from '@core/types/cart';
 import { Product, ProductInventory } from '@core/types/products';
 import { createCartItem, updateCartItem, deleteCartItem } from '@core/utils/cart';
 import { getProductPrice } from '@core/utils/products';
-import { useAppContext } from '@lib/contexts/AppContext';
-import useAuth from '@lib/hooks/useAuth';
+import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 
-export const useCart = () => {
-  const { token, cart, cartQuantity, setCartQuantity, cartPrice, setCartPrice } = useAppContext();
+const useCart = () => {
+  const { token, isLogged } = useAuthContext();
+  const { cart, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice } = useCartContext();
 
   const router = useRouter();
-
-  const { isLogged } = useAuth();
-
   const { enqueueSnackbar } = useSnackbar();
 
   const addCartItem = (product: Product, inventory: ProductInventory) => {
@@ -68,8 +66,8 @@ export const useCart = () => {
   };
 
   const addCartItemSuccess = (itemPrice: number) => {
-    setCartQuantity(cartQuantity + 1);
-    setCartPrice(cartPrice + itemPrice);
+    setTotalQuantity(totalQuantity + 1);
+    setTotalPrice(totalPrice + itemPrice);
     enqueueSnackbar('Added to the cart', { variant: 'success' });
   };
 
@@ -125,8 +123,8 @@ export const useCart = () => {
   };
 
   const updateCartItemSuccess = (addedQuantity: number, addedPrice: number) => {
-    setCartPrice(cartPrice + addedPrice);
-    setCartQuantity(cartQuantity + addedQuantity);
+    setTotalPrice(totalPrice + addedPrice);
+    setTotalQuantity(totalQuantity + addedQuantity);
   };
 
   const updateCartItemError = () => {
@@ -138,3 +136,5 @@ export const useCart = () => {
     updateCartItemQuantity
   };
 };
+
+export default useCart;

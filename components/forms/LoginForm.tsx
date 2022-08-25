@@ -17,7 +17,7 @@ import { loginValidation, initLoginValues } from '@core/constants/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 const LoginForm = () => {
-  const { errorMsg, login } = useAuth();
+  const { login, errorMsg } = useAuth();
 
   const handleSubmit = async (values: {email: string, password: string}) => {
     login(values);

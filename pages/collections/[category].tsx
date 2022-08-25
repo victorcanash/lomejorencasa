@@ -1,9 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import usePage from '@lib/hooks/usePage';
-import useProductCategory from '@lib/hooks/useProductCategory';
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
+import usePage from '@lib/hooks/usePage';
 import ProductList from '@components/product/ProductList';
 
 const Search: NextPage<CollectionProps> = (props) => {
@@ -11,15 +10,13 @@ const Search: NextPage<CollectionProps> = (props) => {
     products, 
     currentPage, 
     totalPages, 
-    categoryName, 
+    productCategory, 
     sortBy, 
     order, 
     keywords 
   } = props;
 
   const page = usePage();
-
-  const productCategory = useProductCategory(categoryName);
 
   return (
     <>

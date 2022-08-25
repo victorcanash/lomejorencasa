@@ -1,24 +1,16 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import { Drawers, loggedUserDrawerItems, unloggedUserDrawerItems } from '@core/constants/header';
 import { DrawerItem } from '@core/types/header';
 import { capitalizeFirstLetter } from '@core/utils/strings';
-import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import useAuth from '@lib/hooks/useAuth';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useDrawer = (drawer: Drawers) => {
-  const { categories } = useAppContext();
-
-  const { getHref } = useSearchContext();
-
-  const { isLogged } = useAuth();
-
-  const router = useRouter();
+  const { categories, getHref } = useSearchContext();
+  const { isLogged } = useAuthContext();
 
   const [items, setItems] = useState<DrawerItem[]>([]);
-
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -38,7 +30,7 @@ const useDrawer = (drawer: Drawers) => {
       });
       setItems(categoriesItems);
     }
-  }, [categories, drawer, getHref, router.asPath, isLogged]);
+  }, [categories, drawer, getHref, isLogged]);
 
   return {
     items,

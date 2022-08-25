@@ -13,7 +13,7 @@ import { useSearchContext } from '@lib/contexts/SearchContext';
 import ProductItem from '@components/product/ProductItem';
 
 type ProductListProps = {
-  category?: ProductCategory,
+  category: ProductCategory | null,
   products: Product[],
   totalPages: number,
   currentPage: number,
@@ -32,13 +32,13 @@ const ProductList = (props: ProductListProps) => {
 
   return (
     <>
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="h5" className='animate__animated animate__fadeInLeft'>
         { capitalizeFirstLetter(category?.name || allProductsName) }
       </Typography>
 
       {
         category &&
-          <Typography component="h2" variant="h6">
+          <Typography component="h2" variant="h6" className='animate__animated animate__fadeInLeft'>
             { capitalizeFirstLetter(category.description) }
           </Typography>
       }

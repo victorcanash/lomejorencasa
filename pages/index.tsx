@@ -5,14 +5,13 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import LinkButton from '@core/components/LinkButton';
-import usePage from '@lib/hooks/usePage';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import usePage from '@lib/hooks/usePage';
 import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';
 
 const Home: NextPage = () => {
   const page = usePage();
-
   const { getHref } = useSearchContext();
 
   return (

@@ -22,7 +22,6 @@ const Drawer = (props: DrawerProps) => {
   const { id, anchor, open, handleDrawer } = props;
 
   const { items } = useDrawer(id);
-
   const { logout } = useAuth();
 
   const handleClickLogout = () => {

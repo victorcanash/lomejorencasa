@@ -3,12 +3,11 @@ import { useRouter } from 'next/router';
 
 import { Product, ProductInventory } from "@core/types/products";
 
-
 const useSelectInventory = (product: Product) => {
+  const router = useRouter();
+
   const [selectedInventory, setSelectedInventory] = useState<ProductInventory | undefined>(undefined);
   const [loadedSelect, setLoadedSelect] = useState(false);
-
-  const router = useRouter();
 
   useEffect(() => {
     if (!loadedSelect) {

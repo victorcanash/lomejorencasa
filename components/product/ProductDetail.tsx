@@ -11,7 +11,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
 import { Product } from '@core/types/products';
-import { useCart } from '@lib/hooks/useCart';
+import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import GoBackBtn from '@components/ui/GoBackBtn';
 import ProductDescription from '@components/product/ProductDescription';
@@ -25,7 +25,6 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
   const { addCartItem } = useCart();
-
   const { selectedInventory, handleSelectChange, loadedSelect } = useSelectInventory(product);
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -60,10 +59,19 @@ const ProductDetail = (props: ProductDetailProps) => {
           </Card>
           <GoBackBtn />
         </Grid>
-        <Grid item xs={12} sm={12} md={6}>
+        <Grid 
+          item 
+          xs={12} 
+          sm={12} 
+          md={6}
+          className='animate__animated animate__fadeInRight'
+        >
           <ProductDescription product={product} detailed={true} />
           { loadedSelect &&
-            <FormControl sx={{ mt: 3, mb: 2 }}>
+            <FormControl 
+              sx={{ mt: 3, mb: 2 }} 
+              className='animate__animated animate__fadeIn'
+            >
               <InputLabel id="inventory-select-label">Size</InputLabel>
               <Select
                 labelId="inventory-select-label"

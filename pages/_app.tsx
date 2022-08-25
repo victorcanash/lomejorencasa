@@ -16,12 +16,14 @@ import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { SnackbarProvider } from 'notistack';
 
+import { title, description } from '@lib/constants/metas';
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
-import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
+import { AuthProvider } from '@lib/contexts/AuthContext';
+import { CartProvider } from '@lib/contexts/CartContext';
 import Layout from '@components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -63,16 +65,20 @@ function MyApp(props: MyAppProps) {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
         <ThemeProvider theme={theme}>
-          <SnackbarProvider maxSnack={3}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <AppProvider>
-            <SearchProvider>   
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>         
-            </SearchProvider>
-          </AppProvider>
+          <SnackbarProvider maxSnack={3}>
+            <AppProvider>
+              <SearchProvider> 
+                <AuthProvider>
+                  <CartProvider>
+                    <Layout>
+                      <Component {...pageProps} />
+                    </Layout> 
+                  </CartProvider>
+                </AuthProvider>          
+              </SearchProvider>
+            </AppProvider>
           </SnackbarProvider>
         </ThemeProvider>
       </CacheProvider>

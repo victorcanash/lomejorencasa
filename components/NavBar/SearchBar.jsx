@@ -50,11 +50,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchBar = () => {
-  const inputRef = useRef(null);
-
   const { getHref } = useSearchContext();
-
   const router = useRouter();
+
+  const inputRef = useRef(null);
 
   const handleClick = () => {
     setTimeout(() => inputRef.current.focus());

@@ -1,8 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import usePage from '@lib/hooks/usePage';
 import { ProductProps, getProductProps } from '@lib/server/product';
+import usePage from '@lib/hooks/usePage';
 import ProductDetail from '@components/product/ProductDetail';
 
 const Product: NextPage<ProductProps> = (props) => {

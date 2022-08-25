@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 import Copyright from '@components/ui/Copyright';
 
 const Footer = () => {
+  
   return (
     <>
     <Divider />
