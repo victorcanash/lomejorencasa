@@ -12,11 +12,11 @@ const usePage = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (isProtectedPath(router.asPath)) {
+    if (isProtectedPath(router.asPath) && !isLogged()) {
       router.push(RouterPaths.login);
     }
     setLoading(false);  
-  }, [isProtectedPath, router, router.asPath, setLoading]);
+  }, [isProtectedPath, router, router.asPath, setLoading, isLogged]);
 
   return {};
 };
