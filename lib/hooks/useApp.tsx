@@ -1,22 +1,22 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 import type { User } from '@core/types/auth';
 import type { ProductCategory } from '@core/types/products';
 import type { Cart } from '@core/types/cart';
 import { getCredentials } from '@core/utils/auth';
 import { getAllProductCategories } from '@core/utils/products';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
 const useApp = () => {
+  const { setInitialized } = useAppContext();
   const { initSearch } = useSearchContext();
   const { initAuth } = useAuthContext();
   const { initCart } = useCartContext();
 
   const firstRenderRef = useRef(false);
-
-  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
     if (!firstRenderRef.current) {
@@ -39,11 +39,9 @@ const useApp = () => {
 
       initData();
     }    
-  }, [initAuth, initCart, initSearch]);
+  }, [initAuth, initCart, initSearch, setInitialized]);
 
-  return {
-    initialized,
-  }
+  return {};
 }
 
 export default useApp;

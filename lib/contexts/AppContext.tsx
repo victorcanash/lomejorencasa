@@ -3,11 +3,15 @@ import { createContext, Dispatch, SetStateAction, useContext, useState } from 'r
 type ContextType = {
   loading: boolean,
   setLoading: Dispatch<SetStateAction<boolean>>,
+  initialized: boolean,
+  setInitialized: Dispatch<SetStateAction<boolean>>,
 };
 
 export const AppContext = createContext<ContextType>({
   loading: true,
   setLoading: () => {},
+  initialized: false,
+  setInitialized: () => {},
 });
 
 export const useAppContext = () => {
@@ -21,12 +25,15 @@ export const useAppContext = () => {
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
+  const [initialized, setInitialized] = useState(false);
 
   return (
     <AppContext.Provider
       value={{ 
         loading, 
         setLoading, 
+        initialized,
+        setInitialized,
       }}
     >
       {children}

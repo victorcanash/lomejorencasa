@@ -6,17 +6,17 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const usePage = () => {
-  const { setLoading } = useAppContext();
+  const { initialized, setLoading } = useAppContext();
   const { isLogged, isProtectedPath } = useAuthContext();
 
   const router = useRouter();
 
   useEffect(() => {
-    if (isProtectedPath(router.asPath) && !isLogged()) {
+    if (initialized && isProtectedPath(router.asPath) && !isLogged()) {
       router.push(RouterPaths.login);
     }
     setLoading(false);  
-  }, [isProtectedPath, router, router.asPath, setLoading, isLogged]);
+  }, [isProtectedPath, router, router.asPath, setLoading, isLogged, initialized]);
 
   return {};
 };
