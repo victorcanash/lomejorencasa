@@ -6,7 +6,7 @@ import { Storages } from '@core/constants/storage';
 import type { User, AuthLogin, AuthRegister } from '@core/types/auth';
 import type { Cart } from '@core/types/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
-import { logged, login, register, logout } from '@core/middlewares/auth';
+import { logged, login, register, logout, update } from '@core/middlewares/auth';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 
 export const getCredentials = async () => {
@@ -62,7 +62,7 @@ export const registerUser = async (authRegister: AuthRegister) => {
       reject(new Error(errorMsg));
     });
   })
-}
+};
 
 export const loginUser = async (authLogin: AuthLogin, token: string) => {
   return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
@@ -95,9 +95,37 @@ export const loginUser = async (authLogin: AuthLogin, token: string) => {
       reject(new Error(errorMsg));
     });
   })
-}
+};
 
 export const logoutUser = async (token: string) => {
   await logout(token);
   await removeStorageItem(Storages.local, JWTTokenKey);
-}
+};
+
+export const updateUser = async (user: User, token: string) => {
+  return new Promise<{user: User}>((resolve, reject) => {
+    update(token, user).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.CREATED) {
+        resolve({
+          user: response.data.user
+        });
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      let errorMsg = error.message;
+      if (error.response?.data?.message) {
+        errorMsg = error.response.data.message
+      } else {
+        const errorValFields = error.response?.data?.fields;
+        if (errorValFields?.length > 0 && 
+          errorValFields[0]?.error &&
+          errorValFields[0]?.name) {
+          errorMsg = `${capitalizeFirstLetter(errorValFields[0].error)} with the ${errorValFields[0].name} field`
+        }
+      }
+      console.error(`[Update User ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    });
+  })
+};
