@@ -15,7 +15,8 @@ import Typography from '@mui/material/Typography';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import useAuth from '@lib/hooks/useAuth';
-import AddressForm from '@components/forms/CheckoutAddressForm';
+import CheckoutAddressForm from '@components/forms/CheckoutAddressForm';
+import CheckoutPaymentForm from '@components/forms/CheckoutPaymentForm';
 
 const steps = ['Address', 'Payment', 'Checking'];
 
@@ -30,9 +31,9 @@ const Checkout: NextPage = () => {
   const getStepContent = (step: number) => {
     switch (step) {
       case 0:
-        return <AddressForm user={user} handleNext={handleNext} />;
+        return <CheckoutAddressForm user={user} handleNext={handleNext} />;
       case 1:
-        //return <PaymentForm />;
+        return <CheckoutPaymentForm user={user} handleNext={handleNext} handleBack={handleBack} />;
       case 2:
         //return <Review />;
       default:
@@ -69,7 +70,7 @@ const Checkout: NextPage = () => {
 
           <Stepper
             activeStep={activeStep}
-            sx={{ pt: 3, pb: 5, display: { xs: 'none', sm: 'flex' } }}
+            sx={{ pt: 3, pb: 5, /*display: { xs: 'none', sm: 'flex' }*/ }}
           >
             {steps.map((label) => (
               <Step key={label}>
@@ -87,26 +88,7 @@ const Checkout: NextPage = () => {
                 totalCartPrice={totalCartPrice}
               />
             */}) : (
-              <>
-                {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                      Back
-                    </Button>
-                  )}
-
-                  <Button
-                    variant='contained'
-                    onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
-                  >
-                    {activeStep === steps.length - 1
-                      ? 'Finish'
-                      : 'Siguiente'}
-                  </Button>
-                </Box>
-              </>
+              getStepContent(activeStep)
             )}
           </>
         {/*</Paper>*/}
