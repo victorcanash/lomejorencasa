@@ -1,14 +1,15 @@
 import { AxiosRequestConfig } from 'axios';
 
 import axios from '@core/config/axios.config';
-import type { User, AuthLogin, AuthRegister } from '@core/types/auth';
+import type { User } from '@core/types/user';
+import type { FormLogin, FormRegister } from '@core/types/forms';
 
-export const login = (authLogin: AuthLogin) => {
-  return axios.post('/login', authLogin);
+export const login = (formLogin: FormLogin) => {
+  return axios.post('/login', formLogin);
 };
 
-export const register = (authRegister: AuthRegister) => {
-  return axios.post('/register', authRegister);
+export const register = (formRegister: FormRegister) => {
+  return axios.post('/register', formRegister);
 };
 
 export const logout = (token: string) => {

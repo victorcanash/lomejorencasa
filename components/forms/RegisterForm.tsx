@@ -12,14 +12,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
+import { registerValidation, initRegisterValues } from '@core/constants/forms';
+import { FormRegister } from '@core/types/forms';
 import Link from '@core/components/Link';
-import { registerValidation, initRegisterValues } from '@core/constants/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 const RegisterForm = () => {
   const { register, errorMsg } = useAuth();
 
-  const handleSubmit = async (values: {firstName: string, lastName: string, email: string, password: string, age: number}) => {
+  const handleSubmit = async (values: FormRegister) => {
     register(values);
   };
 

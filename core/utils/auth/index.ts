@@ -3,7 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 
 import { JWTTokenKey } from '@core/constants/auth';
 import { Storages } from '@core/constants/storage';
-import type { User, AuthLogin, AuthRegister } from '@core/types/auth';
+import type { User } from '@core/types/user';
+import type { FormLogin, FormRegister } from '@core/types/forms';
 import type { Cart } from '@core/types/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 import { logged, login, register, logout, update } from '@core/middlewares/auth';
@@ -38,9 +39,9 @@ export const getCredentials = async () => {
   })
 };
 
-export const registerUser = async (authRegister: AuthRegister) => {
+export const registerUser = async (formRegister: FormRegister) => {
   return new Promise<true>((resolve, reject) => {
-    register(authRegister).then(async (response: AxiosResponse) => {
+    register(formRegister).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         resolve(true);
       } else {
@@ -64,9 +65,9 @@ export const registerUser = async (authRegister: AuthRegister) => {
   })
 };
 
-export const loginUser = async (authLogin: AuthLogin, token: string) => {
+export const loginUser = async (formLogin: FormLogin, token: string) => {
   return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
-    login(authLogin).then(async (response: AxiosResponse) => {
+    login(formLogin).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         if (response.data.token){
           if (token !== '') {

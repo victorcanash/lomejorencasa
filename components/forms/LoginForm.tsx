@@ -13,13 +13,14 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
-import { loginValidation, initLoginValues } from '@core/constants/auth';
+import { loginValidation, initLoginValues } from '@core/constants/forms';
+import { FormLogin } from '@core/types/forms';
 import useAuth from '@lib/hooks/useAuth';
 
 const LoginForm = () => {
   const { login, errorMsg } = useAuth();
 
-  const handleSubmit = async (values: {email: string, password: string}) => {
+  const handleSubmit = async (values: FormLogin) => {
     login(values);
   };
 

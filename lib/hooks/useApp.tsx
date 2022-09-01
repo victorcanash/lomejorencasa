@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 
-import type { User } from '@core/types/auth';
+import type { User } from '@core/types/user';
 import type { ProductCategory } from '@core/types/products';
 import type { Cart } from '@core/types/cart';
 import { getCredentials } from '@core/utils/auth';
