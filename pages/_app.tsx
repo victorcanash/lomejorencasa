@@ -24,6 +24,7 @@ import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
 import { AuthProvider } from '@lib/contexts/AuthContext';
 import { CartProvider } from '@lib/contexts/CartContext';
+import ErrorBoundary from '@components/ErrorBoundary';
 import Layout from '@components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
@@ -64,21 +65,26 @@ function MyApp(props: MyAppProps) {
           <meta name="author" content="Victor Canas" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         </Head>
+        
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
           <SnackbarProvider maxSnack={3}>
-            <AppProvider>
-              <SearchProvider> 
-                <AuthProvider>
-                  <CartProvider>
-                    <Layout>
-                      <Component {...pageProps} />
-                    </Layout> 
-                  </CartProvider>
-                </AuthProvider>          
-              </SearchProvider>
-            </AppProvider>
+            <ErrorBoundary>
+
+              <AppProvider>
+                <SearchProvider> 
+                  <AuthProvider>
+                    <CartProvider>
+                      <Layout>
+                        <Component {...pageProps} />
+                      </Layout> 
+                    </CartProvider>
+                  </AuthProvider>          
+                </SearchProvider>
+              </AppProvider>
+
+            </ErrorBoundary>
           </SnackbarProvider>
         </ThemeProvider>
       </CacheProvider>
