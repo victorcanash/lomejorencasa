@@ -8,10 +8,6 @@ export enum Drawers {
 
 export const loggedUserDrawerItems: DrawerItem[] = [
   {
-    text: 'Profile',
-    path: RouterPaths.profile,
-  },
-  {
     text: 'Orders',
     path: RouterPaths.orders,
   },

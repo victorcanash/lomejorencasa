@@ -1,11 +1,11 @@
 export enum RouterPaths {
   home = '/',
   about = '/about',
-  productDetail = '/products',
   productList = '/collections',
+  productDetail = '/products',
   login = '/login',
   register = '/register',
-  profile = '/profile',
   cart = '/cart',
+  checkout = '/checkout',
   orders = '/orders',
 }

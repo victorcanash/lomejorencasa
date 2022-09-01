@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { RouterPaths } from '@core/constants/navigation';
-import type { User } from '@core/types/auth';
+import type { User } from '@core/types/user';
 
 type ContextType = {
   token: string,
@@ -59,8 +59,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const isProtectedPath = (path: string) => {
     if (path != RouterPaths.cart &&
-        path != RouterPaths.orders &&
-        path != RouterPaths.profile) {
+        path != RouterPaths.checkout &&
+        path != RouterPaths.orders) {
       return false;
     }
     return true;
