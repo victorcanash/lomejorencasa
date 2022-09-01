@@ -29,7 +29,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
     postalCode: user?.addresses[0]?.postalCode || initAddressValues.postalCode,
     locality: user?.addresses[0]?.locality || initAddressValues.locality,
     //administrativeArea: user.addresses[0]?.administrativeArea || initAddressValues.administrativeArea,
-    country: user?.addresses[0]?.country || initAddressValues.country,
+    country: user?.addresses[0]?.country || initAddressValues.country
   });
 
   const handleSubmit = async (values: FormCheckoutAddress) => {
