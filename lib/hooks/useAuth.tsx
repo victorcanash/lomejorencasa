@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { RouterPaths } from '@core/constants/navigation';
-import type { AuthRegister, AuthLogin, User } from '@core/types/auth';
+import type { User } from '@core/types/user';
+import type { FormRegister, FormLogin } from '@core/types/forms';
 import type { Cart } from '@core/types/cart';
-import { registerUser, loginUser, logoutUser } from '@core/utils/auth';
+import { registerUser, loginUser, logoutUser, updateUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -18,43 +19,32 @@ const useAuth = () => {
 
   const [errorMsg, setErrorMsg] = useState('');
 
-  const login = async (values: {email: string, password: string}) => {
+  const login = async (formLogin: FormLogin) => {
     setLoading(true);
-    const authLogin: AuthLogin = {
-      email: values.email,
-      password: values.password
-    };
-    loginUser(authLogin, token).then((response: {token: string, user: User, cart: Cart}) => {
+    loginUser(formLogin, token).then((response: {token: string, user: User, cart: Cart}) => {
       onLoginSuccess(response.token, response.user, response.cart);
     }).catch((error: Error) => {
-      let errorMsg = error.message
+      let errorMsg = error.message;
       if (errorMsg.includes('email')) {
-        errorMsg = 'Email not found'
+        errorMsg = 'Email not found';
       } else if (errorMsg.includes('password')) {
-        errorMsg = 'Password not found'
+        errorMsg = 'Password not found';
       } else if (errorMsg.includes('locked out')) {
-        errorMsg = 'You are locked out'
+        errorMsg = 'You are locked out';
       } else {
-        errorMsg = 'Something went wrong, try again'
+        errorMsg = 'Something went wrong, try again';
       }
       setErrorMsg(errorMsg);
       setLoading(false);
     });
   };
 
-  const register = async (values: {firstName: string, lastName: string, email: string, password: string, age: number}) => {
+  const register = async (formRegister: FormRegister) => {
     setLoading(true);
-    const authRegister: AuthRegister = {
-      email: values.email,
-      password: values.password,
-      firstName: values.firstName,
-      lastName: values.lastName,
-      age: values.age,
-    };
-    registerUser(authRegister).then(() => {
-      const authLogin: AuthLogin = {
-        email: authRegister.email,
-        password: authRegister.password
+    registerUser(formRegister).then(() => {
+      const authLogin: FormLogin = {
+        email: formRegister.email,
+        password: formRegister.password
       }; 
       loginUser(authLogin, token).then((response: {token: string, user: User, cart: Cart}) => {
         onLoginSuccess(response.token, response.user, response.cart);
@@ -63,11 +53,11 @@ const useAuth = () => {
         router.push(RouterPaths.login);
       });
     }).catch((error: Error) => {
-      let errorMsg = error.message
+      let errorMsg = error.message;
       if (errorMsg.includes('Unique validation failure with the email')) {
-        errorMsg = 'Introduced email already exists'
+        errorMsg = 'Introduced email already exists';
       } else {
-        errorMsg = 'Something went wrong, try again'
+        errorMsg = 'Something went wrong, try again';
       }
       setErrorMsg(errorMsg);
       setLoading(false);
@@ -98,10 +88,26 @@ const useAuth = () => {
     }
   };
 
+  const update = async (user: User) => {
+    setLoading(true);
+    updateUser(user, token).then((response: {user: User}) => {
+      onUpdateSuccess(response.user);
+    }).catch((error: Error) => {
+      const errorMsg = error.message;
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
+
+  const onUpdateSuccess = (user: User) => {
+    setLoading(false);
+  }
+
   return {
     login,
     register,
     logout,
+    update,
     errorMsg,
   };
 };
