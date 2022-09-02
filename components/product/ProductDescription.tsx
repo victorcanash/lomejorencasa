@@ -1,7 +1,6 @@
 import Typography from '@mui/material/Typography';
 
 import { Product } from "@core/types/products";
-import { getProductPrice } from '@core/utils/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 
 type ProductDescriptionProps = {
@@ -27,7 +26,7 @@ const ProductDescription = (props: ProductDescriptionProps) => {
       { product.discount ?
         <>
           <Typography component={ detailed ? "h2" : "div" } variant={ detailed ? "h4" : "subtitle1"} color="error">
-            {getProductPrice(product)} €
+            {product.realPrice} €
           </Typography>
           <Typography component={ detailed ? "h3" : "span" } variant={ detailed ? "h6" : "subtitle2"}>
             Original: <s>{product.price} €</s>
@@ -38,7 +37,7 @@ const ProductDescription = (props: ProductDescriptionProps) => {
         </>
         :
         <Typography component={ detailed ? "h2" : "span" } variant={ detailed ? "h4" : "subtitle1"}>
-          {getProductPrice(product)} €
+          {product.realPrice} €
         </Typography>
       }
     </>

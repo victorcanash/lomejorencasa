@@ -5,6 +5,7 @@ export type Product = {
   description: string;
   sku: string;
   price: number;
+  realPrice: number;
   imageNames: string[];
   inventories: ProductInventory[];
   discount?: ProductDiscount;

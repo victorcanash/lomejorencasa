@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { CartItem } from '@core/types/cart';
-import { getProductImgUrl, getProductPrice } from '@core/utils/products';
+import { getProductImgUrl } from '@core/utils/products';
 import Link from '@core/components/Link';
 
 type CartItemProps = {
@@ -99,7 +99,7 @@ const CartItem = (props: CartItemProps) => {
 
           <Grid item>
             <Typography variant="subtitle1" component="div">
-              {(getProductPrice(item.product) * item.quantity).toFixed(2)} €
+              {(item.product.realPrice * item.quantity).toFixed(2)} €
             </Typography>
           </Grid>
 

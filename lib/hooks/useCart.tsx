@@ -6,7 +6,6 @@ import { RouterPaths } from '@core/constants/navigation';
 import { CartItem } from '@core/types/cart';
 import { Product, ProductInventory } from '@core/types/products';
 import { createCartItem, updateCartItem, deleteCartItem } from '@core/utils/cart';
-import { getProductPrice } from '@core/utils/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -36,7 +35,6 @@ const useCart = () => {
       quantity: 1
     } as CartItem;
 
-    const itemPrice = getProductPrice(product);
     let cartItemIndex = -1;
     cart.items.forEach((item, index) => {
       if (item.productId === product.id && item.inventoryId === inventory.id) {
@@ -51,7 +49,7 @@ const useCart = () => {
     if (cartItemIndex > -1) {
       updateCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
         cart.items[cartItemIndex] = cartItem;
-        addCartItemSuccess(itemPrice);
+        addCartItemSuccess(product.realPrice);
       }).catch((error: Error) => {
         addCartItemError();
       });
@@ -61,7 +59,7 @@ const useCart = () => {
       createCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
         cartItem.id = response.cartItem.id;
         cart.items.push(cartItem);
-        addCartItemSuccess(itemPrice);
+        addCartItemSuccess(product.realPrice);
       }).catch((error: Error) => {
         addCartItemError();
       });
@@ -95,7 +93,7 @@ const useCart = () => {
     // Update cart item
     if (quantity > 0) {
       const addedQuantity = quantity - cartItem.quantity;
-      const addedPrice = getProductPrice(cartItem.product) * addedQuantity;
+      const addedPrice = cartItem.product.realPrice * addedQuantity;
       cartItem.quantity = quantity;
       updateCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
         cart.items[cartItemIndex] = cartItem;
@@ -107,7 +105,7 @@ const useCart = () => {
     // Delete cart item
     } else {
       const addedQuantity = -cartItem.quantity;
-      const addedPrice = -(getProductPrice(cartItem.product) * cartItem.quantity);
+      const addedPrice = -(cartItem.product.realPrice * cartItem.quantity);
       deleteCartItem(token, cartItem.id).then(() => {
         cart.items.splice(cartItemIndex);
         updateCartItemSuccess(addedQuantity, addedPrice);

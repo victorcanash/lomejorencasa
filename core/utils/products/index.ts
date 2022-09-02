@@ -5,7 +5,6 @@ import envConfig from '@core/config/env.config';
 import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
 import { getProductCategories, getProducts, getProductById } from '@core/middlewares/products';
-import { roundTwoDecimals } from '@core/utils/numbers';
 import placeholder from 'public/images/placeholder.jpeg';
 
 export const getAllProductCategories = async () => {
@@ -72,12 +71,4 @@ export const getProductImgUrl = (product: Product, index = 0) => {
     return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`;
   }
   return placeholder;
-};
-
-export const getProductPrice = (product: Product) => {
-  if (product.discount) {
-    const discount = (product.discount.discountPercent / 100) * product.price;
-    return roundTwoDecimals(product.price - discount);
-  }
-  return product.price;
 };
