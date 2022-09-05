@@ -52,8 +52,11 @@ const ProductList = (props: ProductListProps) => {
         ))}
       </Grid>
 
-      <Stack spacing={2} sx={{ mt: 1, justifyContent: "center" }} >
+      <Stack spacing={2} sx={{ mt: 1 }} >
         <Pagination
+          sx={{
+            display: "flex", flexDirection: "col", justifyContent: "center"
+          }}
           count={totalPages}
           page={currentPage}
           onChange={handleChangePage}
