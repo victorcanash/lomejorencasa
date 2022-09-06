@@ -1,28 +1,25 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
-import LinkButton from '@core/components/LinkButton';
 import { useCartContext } from '@lib/contexts/CartContext';
 import usePage from '@lib/hooks/usePage';
 import useCart from '@lib/hooks/useCart';
 import CartItem from '@components/cart/CartItem';
 import GoBackBtn from '@components/ui/GoBackBtn';
+import CheckoutBtn from '@components/checkout/CheckoutBtn';
+import envConfig from '@core/config/env.config';
 
 const Cart: NextPage = () => {
   const { cart, totalPrice, totalQuantity } = useCartContext();
 
   const page = usePage();
   const { updateCartItemQuantity } = useCart();
-
-  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -59,12 +56,7 @@ const Cart: NextPage = () => {
           </Typography>
 
           <Box display='flex' justifyContent={'center'} my={1}>
-            <LinkButton
-              href='/checkout'
-              startIcon={<PointOfSaleIcon />}
-            >
-              Proceed to payment
-            </LinkButton>
+            <CheckoutBtn />
           </Box>
 
           <GoBackBtn />
