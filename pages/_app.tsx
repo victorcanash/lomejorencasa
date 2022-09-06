@@ -15,10 +15,12 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { SnackbarProvider } from 'notistack';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 
-import { title, description } from '@lib/constants/metas';
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
+import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
@@ -29,6 +31,10 @@ import Layout from '@components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
+
+const stripePromise = loadStripe(
+  envConfig.NEXT_PUBLIC_STRIPE_KEY
+);
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -69,23 +75,25 @@ function MyApp(props: MyAppProps) {
         <ThemeProvider theme={theme}>
           {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
           <CssBaseline />
-          <SnackbarProvider maxSnack={3}>
-            <ErrorBoundary>
+          <ErrorBoundary>
+            <SnackbarProvider maxSnack={3}>
+              <Elements stripe={stripePromise}>
 
-              <AppProvider>
-                <SearchProvider> 
-                  <AuthProvider>
-                    <CartProvider>
-                      <Layout>
-                        <Component {...pageProps} />
-                      </Layout> 
-                    </CartProvider>
-                  </AuthProvider>          
-                </SearchProvider>
-              </AppProvider>
+                <AppProvider>
+                  <SearchProvider> 
+                    <AuthProvider>
+                      <CartProvider>
+                        <Layout>
+                          <Component {...pageProps} />
+                        </Layout> 
+                      </CartProvider>
+                    </AuthProvider>          
+                  </SearchProvider>
+                </AppProvider>
 
-            </ErrorBoundary>
-          </SnackbarProvider>
+              </Elements>
+            </SnackbarProvider>
+          </ErrorBoundary>
         </ThemeProvider>
       </CacheProvider>
     </>
