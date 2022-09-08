@@ -42,7 +42,7 @@ const ProductList = (props: ProductListProps) => {
             { capitalizeFirstLetter(category.description) }
           </Typography>
       }
-      <Divider />
+      <Divider sx={{ my: 3 }} />
 
       <Grid container spacing={1} py={3}>
         {products?.map((item) => (

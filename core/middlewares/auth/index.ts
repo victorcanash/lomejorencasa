@@ -1,8 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 import axios from '@core/config/axios.config';
-import type { User } from '@core/types/user';
-import type { FormLogin, FormRegister } from '@core/types/forms';
+import type { FormLogin, FormRegister, FormUpdateUserData } from '@core/types/forms';
 
 export const login = (formLogin: FormLogin) => {
   return axios.post('/login', formLogin);
@@ -30,11 +29,20 @@ export const logged = (token: string) => {
   return axios.get('/logged', options);
 };
 
-export const update = (token: string, user: User) => {
+export const isAdmin = (token: string) => {
+  const options: AxiosRequestConfig = {
+      headers: {
+          'Authorization': `Bearer ${token}`
+      }
+  };
+  return axios.get('/admin', options);
+};
+
+export const updateData = (token: string, userId: number, formUpdateUser: FormUpdateUserData) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   };
-  return axios.put(`/users/${user.id}`, user, options);
+  return axios.put(`/users/${userId}`, formUpdateUser, options);
 };

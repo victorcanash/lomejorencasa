@@ -4,10 +4,10 @@ import { StatusCodes } from 'http-status-codes';
 import { JWTTokenKey } from '@core/constants/auth';
 import { Storages } from '@core/constants/storage';
 import type { User } from '@core/types/user';
-import type { FormLogin, FormRegister } from '@core/types/forms';
+import type { FormLogin, FormRegister, FormUpdateUserData } from '@core/types/forms';
 import type { Cart } from '@core/types/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
-import { logged, login, register, logout, update } from '@core/middlewares/auth';
+import { logged, login, register, logout, isAdmin, updateData } from '@core/middlewares/auth';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 
 export const getCredentials = async () => {
@@ -103,9 +103,27 @@ export const logoutUser = async (token: string) => {
   await removeStorageItem(Storages.local, JWTTokenKey);
 };
 
-export const updateUser = async (user: User, token: string) => {
+export const isAdminUser = async (token: string) => {
+  return new Promise<{isAdmin: boolean}>(async (resolve, reject) => {
+    logged(token).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.OK && response.data?.isAdmin) {
+          resolve({
+            isAdmin: response.data.isAdmin,
+          });
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+      console.error(`[Check Admin User ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    }); 
+  })
+}
+
+export const updateUserData = async (formUpdateUser: FormUpdateUserData, userId: number, token: string) => {
   return new Promise<{user: User}>((resolve, reject) => {
-    update(token, user).then(async (response: AxiosResponse) => {
+    updateData(token, userId, formUpdateUser).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         resolve({
           user: response.data.user

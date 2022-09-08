@@ -28,7 +28,7 @@ const Cart: NextPage = () => {
         <meta name="description" content="Cart page" />
       </Head>
 
-      <Typography component='h1' variant='h4'>
+      <Typography component='h1' variant='h5' className='animate__animated animate__fadeInLeft'>
         {`My cart (${totalQuantity})`}
       </Typography>
       <Divider sx={{ my: 3 }} />

@@ -58,7 +58,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isProtectedPath = (path: string) => {
-    if (path != RouterPaths.cart &&
+    if (path != RouterPaths.myaccount &&
+        path != RouterPaths.cart &&
         path != RouterPaths.orders) {
       return false;
     }

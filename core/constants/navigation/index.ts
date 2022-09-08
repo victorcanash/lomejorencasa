@@ -5,6 +5,7 @@ export enum RouterPaths {
   productDetail = '/products',
   login = '/login',
   register = '/register',
+  myaccount = '/myaccount',
   cart = '/cart',
   orders = '/orders',
 }

@@ -3,21 +3,23 @@ import { useRouter } from 'next/router';
 
 import { RouterPaths } from '@core/constants/navigation';
 import type { User } from '@core/types/user';
-import type { FormRegister, FormLogin } from '@core/types/forms';
+import type { FormRegister, FormLogin, FormUpdateUserData } from '@core/types/forms';
 import type { Cart } from '@core/types/cart';
-import { registerUser, loginUser, logoutUser, updateUser } from '@core/utils/auth';
+import { registerUser, loginUser, logoutUser, updateUserData } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();
-  const { token, prevLoginPath, initAuth, removeAuth, isProtectedPath } = useAuthContext();
+  const { token, user, prevLoginPath, initAuth, removeAuth, isProtectedPath } = useAuthContext();
   const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
+
+  const [successMsg, setSuccessMsg] = useState('');
 
   const login = async (formLogin: FormLogin) => {
     setLoading(true);
@@ -88,9 +90,10 @@ const useAuth = () => {
     }
   };
 
-  const update = async (user: User) => {
+  const updateData = async (formUpdateUser: FormUpdateUserData) => {
     setLoading(true);
-    updateUser(user, token).then((response: {user: User}) => {
+    setSuccessMsg('');
+    updateUserData(formUpdateUser, user?.id || -1, token).then((response: {user: User}) => {
       onUpdateSuccess(response.user);
     }).catch((error: Error) => {
       const errorMsg = error.message;
@@ -101,14 +104,16 @@ const useAuth = () => {
 
   const onUpdateSuccess = (user: User) => {
     setLoading(false);
+    setSuccessMsg('Updated user data');
   }
 
   return {
     login,
     register,
     logout,
-    update,
+    updateData,
     errorMsg,
+    successMsg,
   };
 };
 
