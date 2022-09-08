@@ -2,7 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['ecommerce-vc-api.herokuapp.com'],
+    domains: [
+      'localhost', 
+      'ecommerce-vc-api.herokuapp.com'
+    ],
   },
 }
 
