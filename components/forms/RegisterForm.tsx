@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -134,21 +135,29 @@ const RegisterForm = () => {
                 helperText={props.touched.confirm && props.errors.confirm}      
               />
 
-              {/* Age Field */}
-              <TextField 
-                margin="normal"
-                required
-                fullWidth
-                id="age"
-                name="age"
-                autoComplete="age"
-                label="Age"
-                type="number"  
-                inputProps={{min: 10, max: 100}} 
-                value={props.values.age}
-                onChange={props.handleChange}
-                error={props.touched.age && Boolean(props.errors.age)}
-                helperText={props.touched.age && props.errors.age}      
+              {/* Birthday Field */}
+              <DatePicker                           
+                label="Birthday"
+                disableFuture
+                openTo="year"
+                views={['year', 'month', 'day']}
+                value={props.values.birthday}
+                onChange={(value) => {
+                  props.setFieldValue('birthday', value, true);
+                }} 
+                renderInput={(params) => 
+                  <TextField 
+                    {...params} 
+                    margin="normal" 
+                    required 
+                    fullWidth 
+                    id="birthday" 
+                    name="birthday"
+                    autoComplete="birthday"                   
+                    error={props.touched.birthday && Boolean(props.errors.birthday)}
+                    helperText={props.touched.birthday && props.errors.birthday}                   
+                  />
+                }
               />
 
               <FormControlLabel

@@ -14,6 +14,8 @@ import { DefaultSeo } from 'next-seo';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { SnackbarProvider } from 'notistack';
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -77,21 +79,23 @@ function MyApp(props: MyAppProps) {
           <CssBaseline />
           <ErrorBoundary>
             <SnackbarProvider maxSnack={3}>
-              <Elements stripe={stripePromise}>
+              <LocalizationProvider dateAdapter={AdapterMoment}>
+                <Elements stripe={stripePromise}>
 
-                <AppProvider>
-                  <SearchProvider> 
-                    <AuthProvider>
-                      <CartProvider>
-                        <Layout>
-                          <Component {...pageProps} />
-                        </Layout> 
-                      </CartProvider>
-                    </AuthProvider>          
-                  </SearchProvider>
-                </AppProvider>
+                  <AppProvider>
+                    <SearchProvider> 
+                      <AuthProvider>
+                        <CartProvider>
+                          <Layout>
+                            <Component {...pageProps} />
+                          </Layout> 
+                        </CartProvider>
+                      </AuthProvider>          
+                    </SearchProvider>
+                  </AppProvider>
 
-              </Elements>
+                </Elements>
+              </LocalizationProvider>
             </SnackbarProvider>
           </ErrorBoundary>
         </ThemeProvider>
