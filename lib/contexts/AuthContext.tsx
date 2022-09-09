@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useRef, useEffect } from 'react';
+import { createContext, useContext, useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 
 import { RouterPaths } from '@core/constants/navigation';
@@ -6,22 +6,24 @@ import type { User } from '@core/types/user';
 
 type ContextType = {
   token: string,
+  setToken: Dispatch<SetStateAction<string>>,
   user?: User,
+  setUser: Dispatch<SetStateAction<User | undefined>>,
   prevLoginPath: string | undefined,
-  initAuth: (token: string, user: User) => void,
-  removeAuth: () => void,
   isLogged: () => boolean,
   isProtectedPath: (path: string) => boolean,
+  isAdminPath: (path: string) => boolean,
 };
 
 export const AuthContext = createContext<ContextType>({
   token: '',
+  setToken: () => {},
   user: undefined,
+  setUser: () => {},
   prevLoginPath: undefined,
-  initAuth: () => {},
-  removeAuth: () => {},
   isLogged: () => false,
   isProtectedPath: () => false,
+  isAdminPath: () => false,
 });
 
 export const useAuthContext = () => {
@@ -40,16 +42,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | undefined>(undefined);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
-  const initAuth = (token: string, user: User) => {
-    setToken(token);
-    setUser(user);
-  };
-
-  const removeAuth = () => {
-    setToken('');
-    setUser(undefined);
-  };
-
   const isLogged = () => {
     if (!token || !user) {
       return false;
@@ -60,7 +52,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const isProtectedPath = (path: string) => {
     if (path != RouterPaths.myaccount &&
         path != RouterPaths.cart &&
-        path != RouterPaths.orders) {
+        path != RouterPaths.orders &&
+        path != RouterPaths.admin) {
+      return false;
+    }
+    return true;
+  };
+
+  const isAdminPath = (path: string) => {
+    if (path != RouterPaths.admin) {
       return false;
     }
     return true;
@@ -77,12 +77,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     <AuthContext.Provider
       value={{ 
         token, 
+        setToken,
         user, 
+        setUser,
         prevLoginPath: prevLoginPathRef.current,
-        initAuth,
-        removeAuth,
         isLogged,
         isProtectedPath,
+        isAdminPath,
       }}
     >
       {children}

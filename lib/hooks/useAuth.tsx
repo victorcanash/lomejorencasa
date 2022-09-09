@@ -3,16 +3,16 @@ import { useRouter } from 'next/router';
 
 import { RouterPaths } from '@core/constants/navigation';
 import type { User } from '@core/types/user';
-import type { FormRegister, FormLogin, FormUpdateUserData } from '@core/types/forms';
+import type { FormRegister, FormLogin, FormUpdateAuth } from '@core/types/forms/auth';
 import type { Cart } from '@core/types/cart';
-import { registerUser, loginUser, logoutUser, updateUserData } from '@core/utils/auth';
+import { registerUser, loginUser, logoutUser, updateAuth, isAdminUser } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();
-  const { token, user, prevLoginPath, initAuth, removeAuth, isProtectedPath } = useAuthContext();
+  const { token, setToken, user, setUser, prevLoginPath, isProtectedPath } = useAuthContext();
   const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();
@@ -67,7 +67,8 @@ const useAuth = () => {
   };
 
   const onLoginSuccess = (token: string, user: User, cart: Cart) => {
-    initAuth(token, user);
+    setToken(token);
+    setUser(user);
     initCart(cart);
     if (prevLoginPath){
       router.back();
@@ -80,7 +81,8 @@ const useAuth = () => {
     setLoading(true);
 
     await logoutUser(token);
-    removeAuth();
+    setToken('');
+    setUser(undefined);
     removeCart();
 
     if (isProtectedPath(router.asPath)) {
@@ -90,28 +92,36 @@ const useAuth = () => {
     }
   };
 
-  const updateData = async (formUpdateUser: FormUpdateUserData) => {
+  const update = async (formUpdateAuth: FormUpdateAuth) => {
     setLoading(true);
+    setErrorMsg('');
     setSuccessMsg('');
-    updateUserData(formUpdateUser, user?.id || -1, token).then((response: {user: User}) => {
-      onUpdateSuccess(response.user);
+    updateAuth(formUpdateAuth, user?.id || -1, token).then((response: {token: string, user: User}) => {
+      onUpdateSuccess(response.token, response.user);
     }).catch((error: Error) => {
-      const errorMsg = error.message;
+      let errorMsg = error.message;
+      if (errorMsg.includes('password')) {
+        errorMsg = 'Password not found';
+      } else {
+        errorMsg = 'Something went wrong, try again';
+      }
       setErrorMsg(errorMsg);
       setLoading(false);
     });
   };
 
-  const onUpdateSuccess = (user: User) => {
+  const onUpdateSuccess = (token: string, user: User) => {
+    setToken(token);
+    setUser(user);
     setLoading(false);
-    setSuccessMsg('Updated user data');
+    setSuccessMsg('Updated data');
   }
 
   return {
-    login,
     register,
+    login, 
     logout,
-    updateData,
+    update,
     errorMsg,
     successMsg,
   };

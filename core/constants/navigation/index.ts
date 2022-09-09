@@ -8,4 +8,5 @@ export enum RouterPaths {
   myaccount = '/myaccount',
   cart = '/cart',
   orders = '/orders',
+  admin = '/admin',
 }

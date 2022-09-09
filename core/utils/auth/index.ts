@@ -4,40 +4,11 @@ import { StatusCodes } from 'http-status-codes';
 import { JWTTokenKey } from '@core/constants/auth';
 import { Storages } from '@core/constants/storage';
 import type { User } from '@core/types/user';
-import type { FormLogin, FormRegister, FormUpdateUserData } from '@core/types/forms';
+import type { FormLogin, FormRegister, FormUpdateAuth } from '@core/types/forms/auth';
 import type { Cart } from '@core/types/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
-import { logged, login, register, logout, isAdmin, updateData } from '@core/middlewares/auth';
+import { register, login, logout, getLogged, update, isAdmin } from '@core/middlewares/auth';
 import { capitalizeFirstLetter } from '@core/utils/strings';
-
-export const getCredentials = async () => {
-  return new Promise<{token: string, user: User, cart: Cart}>(async (resolve, reject) => {
-    const token = await getStorageItem(Storages.local, JWTTokenKey) || '';
-    logged(token).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.OK && response.data?.user) {
-        if (!response.data?.user.lockedOut) {
-          resolve({
-            token: token,
-            user: response.data.user,
-            cart: response.data.user.cart,
-          });
-        } else {
-          throw new Error('You are locked out');
-        }
-      } else {
-        throw new Error('Something went wrong');
-      }
-    }).catch((error) => {
-      removeStorageItem(Storages.local, JWTTokenKey);
-      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
-      console.error(`[Get Logged User ERROR]: ${errorMsg}`);
-      /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
-        removeLocalStorageItem(STORAGE_KEYS.JWTToken);
-      }*/
-      reject(new Error(errorMsg));
-    }); 
-  })
-};
 
 export const registerUser = async (formRegister: FormRegister) => {
   return new Promise<true>((resolve, reject) => {
@@ -69,12 +40,12 @@ export const loginUser = async (formLogin: FormLogin, token: string) => {
   return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
     login(formLogin).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
-        if (response.data.token){
+        if (response.data?.token){
           if (token !== '') {
             await logoutUser(token);
           }
           await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
-          getCredentials().then((response: {token: string, user: User, cart: Cart}) => {
+          getLoggedUser().then((response: {token: string, user: User, cart: Cart}) => {
             resolve({
               token: response.token,
               user: response.user,
@@ -103,31 +74,48 @@ export const logoutUser = async (token: string) => {
   await removeStorageItem(Storages.local, JWTTokenKey);
 };
 
-export const isAdminUser = async (token: string) => {
-  return new Promise<{isAdmin: boolean}>(async (resolve, reject) => {
-    logged(token).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.OK && response.data?.isAdmin) {
+export const getLoggedUser = async () => {
+  return new Promise<{token: string, user: User, cart: Cart}>(async (resolve, reject) => {
+    const token = await getStorageItem(Storages.local, JWTTokenKey) || '';
+    getLogged(token).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.OK && response.data?.user) {
+        if (!response.data?.user.lockedOut) {
           resolve({
-            isAdmin: response.data.isAdmin,
+            token: token,
+            user: response.data.user,
+            cart: response.data.user.cart,
           });
+        } else {
+          throw new Error('You are locked out');
+        }
       } else {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
+      removeStorageItem(Storages.local, JWTTokenKey);
       const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
-      console.error(`[Check Admin User ERROR]: ${errorMsg}`);
+      console.error(`[Get Logged User ERROR]: ${errorMsg}`);
+      /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
+        removeLocalStorageItem(STORAGE_KEYS.JWTToken);
+      }*/
       reject(new Error(errorMsg));
     }); 
   })
-}
+};
 
-export const updateUserData = async (formUpdateUser: FormUpdateUserData, userId: number, token: string) => {
-  return new Promise<{user: User}>((resolve, reject) => {
-    updateData(token, userId, formUpdateUser).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.CREATED) {
-        resolve({
-          user: response.data.user
-        });
+export const updateAuth = async (formUpdateAuth: FormUpdateAuth, userId: number, token: string) => {
+  return new Promise<{token: string, user: User}>((resolve, reject) => {
+    update(token, userId, formUpdateAuth).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.CREATED && response.data?.user) {
+        if (response.data?.token) {
+          await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
+          resolve({
+            token: response.data.token,
+            user: response.data.user,
+          });
+        } else {
+          throw new Error('Error generating updated token');
+        }
       } else {
         throw new Error('Something went wrong');
       }
@@ -143,8 +131,24 @@ export const updateUserData = async (formUpdateUser: FormUpdateUserData, userId:
           errorMsg = `${capitalizeFirstLetter(errorValFields[0].error)} with the ${errorValFields[0].name} field`
         }
       }
-      console.error(`[Update User ERROR]: ${errorMsg}`);
+      console.error(`[Update Auth ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     });
   })
 };
+
+export const isAdminUser = async (token: string) => {
+  return new Promise<boolean>(async (resolve, reject) => {
+    isAdmin(token).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.OK && response.data?.isAdmin) {
+          resolve(response.data?.isAdmin ? true : false);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+      console.error(`[Check Admin User ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    }); 
+  })
+}

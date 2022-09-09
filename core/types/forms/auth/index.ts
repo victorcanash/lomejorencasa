@@ -12,8 +12,9 @@ export type FormRegister = {
   birthday: Date,
 };
 
-export type FormUpdateUserData = {
-  firstName: string,
-  lastName: string,
-  birthday: Date,
+export type FormUpdateAuth = {
+  password: string,
+  newEmail: string,
+  newPassword: string,
+  newConfirm: string,
 };

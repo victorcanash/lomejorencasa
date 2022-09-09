@@ -6,7 +6,6 @@ export type Cart = {
   items: CartItem[];
 }
 
-
 export type CartItem = {
   id: number;
   cartId: number;

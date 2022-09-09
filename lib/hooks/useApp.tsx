@@ -3,7 +3,7 @@ import { useRef, useEffect } from 'react';
 import type { User } from '@core/types/user';
 import type { ProductCategory } from '@core/types/products';
 import type { Cart } from '@core/types/cart';
-import { getCredentials } from '@core/utils/auth';
+import { getLoggedUser } from '@core/utils/auth';
 import { getAllProductCategories } from '@core/utils/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -13,7 +13,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 const useApp = () => {
   const { setInitialized } = useAppContext();
   const { initSearch } = useSearchContext();
-  const { initAuth } = useAuthContext();
+  const { setToken, setUser } = useAuthContext();
   const { initCart } = useCartContext();
 
   const firstRenderRef = useRef(false);
@@ -22,9 +22,10 @@ const useApp = () => {
     if (!firstRenderRef.current) {
       firstRenderRef.current = true;
       
-      const initData = async() => {
-        await getCredentials().then((response: {token: string, user: User, cart: Cart}) => {
-          initAuth(response.token, response.user);
+      const initData = async () => {
+        await getLoggedUser().then((response: {token: string, user: User, cart: Cart}) => {
+          setToken(response.token);
+          setUser(response.user);
           initCart(response.cart);
         }).catch((error: Error) => {
         }); 
@@ -39,7 +40,7 @@ const useApp = () => {
 
       initData();
     }    
-  }, [initAuth, initCart, initSearch, setInitialized]);
+  }, [initCart, initSearch, setInitialized, setToken, setUser]);
 
   return {};
 }

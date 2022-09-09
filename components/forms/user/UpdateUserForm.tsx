@@ -8,18 +8,19 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { updateUserValidation, initRegisterValues } from '@core/constants/forms';
-import { FormUpdateUserData } from '@core/types/forms';
+import { updateUserValidation } from '@core/constants/forms/user';
+import { initRegisterValues } from '@core/constants/forms/auth';
+import { FormUpdateUser } from '@core/types/forms/user';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useAuth from '@lib/hooks/useAuth';
+import useUser from '@lib/hooks/useUser';
 
-const UpdateUserDataForm = () => {
+const UpdateUserForm = () => {
   const { user } = useAuthContext();
 
-  const { updateData, errorMsg, successMsg } = useAuth();
+  const { update, errorMsg, successMsg } = useUser();
 
-  const handleSubmit = async (values: FormUpdateUserData) => {
-    updateData(values);
+  const handleSubmit = async (values: FormUpdateUser) => {
+    update(values);
   };
 
   return (
@@ -42,7 +43,7 @@ const UpdateUserDataForm = () => {
             firstName: user?.firstName || initRegisterValues.firstName,
             lastName: user?.lastName || initRegisterValues.lastName,
             birthday: user?.birthday || initRegisterValues.birthday,
-          } as FormUpdateUserData}
+          } as FormUpdateUser}
           validationSchema={updateUserValidation}
           onSubmit={handleSubmit}
           enableReinitialize
@@ -134,4 +135,4 @@ const UpdateUserDataForm = () => {
   );
 };
 
-export default UpdateUserDataForm;
+export default UpdateUserForm;

@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from "next/head";
 
 import usePage from '@lib/hooks/usePage';
-import RegisterForm from '@components/forms/RegisterForm';
+import RegisterForm from '@components/forms/auth/RegisterForm';
 
 const Register: NextPage = () => { 
   const page = usePage();

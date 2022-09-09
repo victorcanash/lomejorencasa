@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { FormLogin, FormRegister } from '@core/types/forms';
+import { FormLogin, FormRegister } from '@core/types/forms/auth';
 import { subtractYears } from '@core/utils/dates';
 
 export const loginValidation = Yup.object().shape(
@@ -68,23 +68,33 @@ export const initRegisterValues: FormRegister = {
   birthday: subtractYears(18),
 };
 
-export const updateUserValidation = Yup.object().shape(
+export const updateEmailValidation = Yup.object().shape(
   {
-    firstName: Yup
+    email: Yup
       .string()
-      .min(3, 'First name must have 3 letters minimum')
-      .max(12, 'First name must have maximum 12 letters')
-      .required('First name is required'),
-    lastName: Yup
+      .email('Invalid email format')
+      .required('Email is required'),
+  }
+);
+
+export const updatePasswordValidation = Yup.object().shape(
+  {
+    password: Yup
       .string()
-      .min(3, 'Last name must have 3 letters minimum')
-      .max(12, 'Last name must have maximum 12 letters')
-      .required('Last name is required'),
-    birthday: Yup
-      .date()
-      .max(subtractYears(6), 'You must be over 6 years old')
-      .typeError('Birthday must be a valid date')
-      .nullable()
-      .required('Birthday is required'),
+      .min(8, 'Password too short')
+      .required('Password is required'),
+    newPassword: Yup
+      .string()
+      .min(8, 'New password too short')
+      .required('New password is required'),
+    newConfirm: Yup
+      .string()
+      .when("newPassword", {
+          is: (value: string) => (value && value.length > 0 ? true : false),
+          then: Yup.string().oneOf(
+              [Yup.ref("newPassword")], 'New passwords must match'
+          )
+      })
+      .required('You must confirm your new password'),
   }
 );

@@ -5,7 +5,8 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
 import usePage from '@lib/hooks/usePage';
-import UpdateUserDataForm from '@components/forms/UpdateUserDataForm';
+import UpdateUserForm from '@components/forms/user/UpdateUserForm';
+import UpdatePasswordForm from '@components/forms/auth/UpdatePasswordForm';
 
 const MyAccount: NextPage = () => { 
   const page = usePage();
@@ -22,7 +23,9 @@ const MyAccount: NextPage = () => {
       </Typography>
       <Divider sx={{ my: 3 }} />
       
-      <UpdateUserDataForm />
+      <UpdateUserForm />
+
+      <UpdatePasswordForm />
     </>
   )
 };

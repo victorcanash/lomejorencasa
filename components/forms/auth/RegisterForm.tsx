@@ -13,8 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { registerValidation, initRegisterValues } from '@core/constants/forms';
-import { FormRegister } from '@core/types/forms';
+import { registerValidation, initRegisterValues } from '@core/constants/forms/auth';
+import { FormRegister } from '@core/types/forms/auth';
 import Link from '@core/components/Link';
 import useAuth from '@lib/hooks/useAuth';
 

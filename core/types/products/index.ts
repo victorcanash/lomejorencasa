@@ -11,13 +11,11 @@ export type Product = {
   discount?: ProductDiscount;
 };
 
-
 export type ProductCategory = {
   id: number;
   name: string;
   description: string;
 }
-
 
 export type ProductInventory = {
   id: number;
@@ -25,7 +23,6 @@ export type ProductInventory = {
   quantity: number;
   size?: string;
 }
-
 
 export type ProductDiscount = {
   id: number;

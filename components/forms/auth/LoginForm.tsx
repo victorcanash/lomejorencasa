@@ -13,8 +13,8 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
-import { loginValidation, initLoginValues } from '@core/constants/forms';
-import { FormLogin } from '@core/types/forms';
+import { loginValidation, initLoginValues } from '@core/constants/forms/auth';
+import { FormLogin } from '@core/types/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 const LoginForm = () => {
