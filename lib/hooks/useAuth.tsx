@@ -85,9 +85,7 @@ const useAuth = () => {
     setUser(undefined);
     removeCart();
 
-    if (isProtectedPath(router.asPath)) {
-      router.push(RouterPaths.home);
-    } else {
+    if (!isProtectedPath(router.asPath)) {
       setLoading(false);
     }
   };
@@ -100,8 +98,10 @@ const useAuth = () => {
       onUpdateSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;
-      if (errorMsg.includes('password')) {
+      if (errorMsg.includes('Invalid password')) {
         errorMsg = 'Password not found';
+      } else if(errorMsg.includes('Email must be unique')) {
+        errorMsg = 'Introduced email already exists';
       } else {
         errorMsg = 'Something went wrong, try again';
       }
