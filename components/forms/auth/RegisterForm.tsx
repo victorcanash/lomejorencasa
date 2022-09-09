@@ -155,7 +155,7 @@ const RegisterForm = () => {
                     name="birthday"
                     autoComplete="birthday"                   
                     error={props.touched.birthday && Boolean(props.errors.birthday)}
-                    helperText={props.touched.birthday && props.errors.birthday}                   
+                    helperText={props.touched.birthday && props.errors.birthday as string}                   
                   />
                 }
               />
