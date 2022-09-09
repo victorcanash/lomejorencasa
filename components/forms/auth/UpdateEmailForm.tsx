@@ -8,12 +8,12 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { updatePasswordValidation } from '@core/constants/forms/auth';
+import { updateEmailValidation } from '@core/constants/forms/auth';
 import { initRegisterValues } from '@core/constants/forms/auth';
 import { FormUpdateAuth } from '@core/types/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
-const UpdatePasswordForm = () => {
+const UpdateEmailForm = () => {
   const { update, errorMsg, successMsg } = useAuth();
 
   const handleSubmit = async (values: FormUpdateAuth) => {
@@ -34,7 +34,7 @@ const UpdatePasswordForm = () => {
       >
 
         <Typography component="h2" variant="h6">
-          Change password
+          Change email address
         </Typography>
 
         <Formik
@@ -44,7 +44,7 @@ const UpdatePasswordForm = () => {
             newPassword: initRegisterValues.password,
             newConfirm: initRegisterValues.confirm,
           } as FormUpdateAuth}
-          validationSchema={updatePasswordValidation}
+          validationSchema={updateEmailValidation}
           onSubmit={handleSubmit}
           enableReinitialize
         >
@@ -56,7 +56,7 @@ const UpdatePasswordForm = () => {
                 margin="normal"
                 required
                 fullWidth
-                id="password2"
+                id="password1"
                 name="password"
                 type="password"
                 autoComplete="current-password"
@@ -67,36 +67,19 @@ const UpdatePasswordForm = () => {
                 helperText={props.touched.password && props.errors.password}
               />
 
-              {/* NewPassword Field */}
+              {/* Email Field */}
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="newPassword"
-                name="newPassword"
-                autoComplete="new-password"
-                label="New Password"
-                type="password"   
-                value={props.values.newPassword}
+                id="newEmail"
+                name="newEmail"
+                autoComplete="email"
+                label="New Email Address"   
+                value={props.values.newEmail}
                 onChange={props.handleChange}
-                error={props.touched.newPassword && Boolean(props.errors.newPassword)}
-                helperText={props.touched.newPassword && props.errors.newPassword}      
-              />
-
-              {/* Confirm NewPassword Field */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="newConfirm"
-                name="newConfirm"
-                autoComplete="new-confirm"
-                label="Confirm Password"
-                type="password"   
-                value={props.values.newConfirm}
-                onChange={props.handleChange}
-                error={props.touched.newConfirm && Boolean(props.errors.newConfirm)}
-                helperText={props.touched.newConfirm && props.errors.newConfirm}      
+                error={props.touched.newEmail && Boolean(props.errors.newEmail)}
+                helperText={props.touched.newEmail && props.errors.newEmail}
               />
 
               <Button
@@ -127,4 +110,4 @@ const UpdatePasswordForm = () => {
   );
 };
 
-export default UpdatePasswordForm;
+export default UpdateEmailForm;

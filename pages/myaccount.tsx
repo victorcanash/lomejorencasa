@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 
 import usePage from '@lib/hooks/usePage';
 import UpdateUserForm from '@components/forms/user/UpdateUserForm';
+import UpdateEmailForm from '@components/forms/auth/UpdateEmailForm';
 import UpdatePasswordForm from '@components/forms/auth/UpdatePasswordForm';
 
 const MyAccount: NextPage = () => { 
@@ -24,6 +25,8 @@ const MyAccount: NextPage = () => {
       <Divider sx={{ my: 3 }} />
       
       <UpdateUserForm />
+
+      <UpdateEmailForm />
 
       <UpdatePasswordForm />
     </>

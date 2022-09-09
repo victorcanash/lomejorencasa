@@ -70,10 +70,14 @@ export const initRegisterValues: FormRegister = {
 
 export const updateEmailValidation = Yup.object().shape(
   {
-    email: Yup
+    password: Yup
       .string()
-      .email('Invalid email format')
-      .required('Email is required'),
+      .min(8, 'Password too short')
+      .required('Password is required'),
+    newEmail: Yup
+      .string()
+      .email('Invalid new email format')
+      .required('New email is required'),
   }
 );
 
