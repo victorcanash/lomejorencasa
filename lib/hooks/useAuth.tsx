@@ -71,7 +71,7 @@ const useAuth = () => {
     setUser(user);
     initCart(cart);
     if (prevLoginPath){
-      router.back();
+      router.push(prevLoginPath);
     } else {
       router.push(RouterPaths.home);
     }
