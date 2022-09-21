@@ -44,10 +44,23 @@ export const registerUser = async (formRegister: FormRegister) => {
 };
 
 export const activateUser = async (token: string) => {
-  return new Promise<true>((resolve, reject) => {
+  return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
     activate(token).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.CREATED) {
-        resolve(true);
+      if (response.status === StatusCodes.CREATED && response.data?.user) {
+        if (response.data?.token){
+          const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
+          if (prevToken !== '') {
+            await logoutUser(prevToken);
+          }
+          await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
+          resolve({
+            token: response.data.token,
+            user: response.data.user,
+            cart: response.data.user.cart,
+          });         
+        } else {
+          throw new Error('Error generating token');
+        }
       } else {
         throw new Error('Something went wrong');
       }
@@ -59,13 +72,14 @@ export const activateUser = async (token: string) => {
   })
 };
 
-export const loginUser = async (formLogin: FormLogin, token: string) => {
+export const loginUser = async (formLogin: FormLogin) => {
   return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
     login(formLogin).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.CREATED) {
+      if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token){
-          if (token !== '') {
-            await logoutUser(token);
+          const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
+          if (prevToken !== '') {
+            await logoutUser(prevToken);
           }
           await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
           resolve({
@@ -74,7 +88,7 @@ export const loginUser = async (formLogin: FormLogin, token: string) => {
             cart: response.data.user.cart,
           });         
         } else {
-          throw new Error('Error generating login token');
+          throw new Error('Error generating token');
         }
       } else {
         throw new Error('Something went wrong');
@@ -111,7 +125,9 @@ export const getLoggedUser = async () => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      removeStorageItem(Storages.local, JWTTokenKey);
+      if (token) {
+        logoutUser(token);
+      }
       /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
         removeStorageItem(Storages.local, JWTTokenKey);
       }*/
@@ -143,13 +159,17 @@ export const updateUserEmail = async (token: string, newEmail = '', userId = -1)
     updateEmail(token, newEmail, userId).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token) {
+          const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
+          if (prevToken !== '') {
+            await logoutUser(prevToken);
+          }
           await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
           resolve({
             token: response.data.token,
             user: response.data.user,
           });
         } else {
-          throw new Error('Error generating updated token');
+          throw new Error('Error generating token');
         }
       } else {
         throw new Error('Something went wrong');
@@ -167,13 +187,17 @@ export const resetUserPassword = async (token: string, formResetPassword: FormRe
     resetPassword(token, formResetPassword, userId).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token) {
+          const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
+          if (prevToken !== '') {
+            await logoutUser(prevToken);
+          }
           await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
           resolve({
             token: response.data.token,
             user: response.data.user,
           });
         } else {
-          throw new Error('Error generating updated token');
+          throw new Error('Error generating token');
         }
       } else {
         throw new Error('Something went wrong');
