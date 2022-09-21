@@ -124,10 +124,8 @@ export const getLoggedUser = async () => {
       } else {
         throw new Error('Something went wrong');
       }
-    }).catch((error) => {
-      if (token) {
-        logoutUser(token);
-      }
+    }).catch(async (error) => {
+      await removeStorageItem(Storages.local, JWTTokenKey);
       /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
         removeStorageItem(Storages.local, JWTTokenKey);
       }*/
