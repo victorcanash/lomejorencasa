@@ -17,7 +17,7 @@ const useUser = () => {
   const update = async (formUpdateUser: FormUpdateUser) => {
     setLoading(true);
     setSuccessMsg('');
-    updateUser(formUpdateUser, user?.id || -1, token).then((response: {user: User}) => {
+    updateUser(token, formUpdateUser, user?.id || -1).then((response: {user: User}) => {
       onUpdateSuccess(response.user);
     }).catch((error: Error) => {
       const errorMsg = error.message;

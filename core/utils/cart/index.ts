@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import { Cart, CartItem } from '@core/types/cart';
 import { createCart as createCartMW, createCartItem as createCartItemMW, updateCartItem as updateCartItemMW, deleteCartItem as deleteCartItemMW } from '@core/middlewares/cart';
+import { getBackendErrorMsg } from '@core/utils/errors';
 
 export const createCart = (token: string) => {
   return new Promise<{cart: Cart}>(async (resolve, reject) => {
@@ -16,7 +17,7 @@ export const createCart = (token: string) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = getBackendErrorMsg(error);
         console.error(`[Create Cart ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
@@ -35,7 +36,7 @@ export const createCartItem = (token: string, cartItem: CartItem) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = getBackendErrorMsg(error);
         console.error(`[Create Cart Item ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
@@ -54,7 +55,7 @@ export const updateCartItem = (token: string, cartItem: CartItem) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = getBackendErrorMsg(error);
         console.error(`[Update Cart Item ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
@@ -71,7 +72,7 @@ export const deleteCartItem = (token: string, id: number) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+        const errorMsg = getBackendErrorMsg(error);
         console.error(`[Delete Cart Item ERROR]: ${errorMsg}`);
         reject(new Error(errorMsg));
       }); 
