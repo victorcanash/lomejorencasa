@@ -68,16 +68,11 @@ export const loginUser = async (formLogin: FormLogin, token: string) => {
             await logoutUser(token);
           }
           await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
-          getLoggedUser().then((response: {token: string, user: User, cart: Cart}) => {
-            resolve({
-              token: response.token,
-              user: response.user,
-              cart: response.cart,
-            });
-          }).catch((error: Error) => {
-            reject(error);
-          });
-          
+          resolve({
+            token: response.data.token,
+            user: response.data.user,
+            cart: response.data.user.cart,
+          });         
         } else {
           throw new Error('Error generating login token');
         }
@@ -102,15 +97,16 @@ export const getLoggedUser = async () => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || '';
     getLogged(token).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.OK && response.data?.user) {
-        if (!response.data?.user.lockedOut) {
-          resolve({
-            token: token,
-            user: response.data.user,
-            cart: response.data.user.cart,
-          });
-        } else {
+        if (response.data?.user.lockedOut) {
           throw new Error('You are locked out');
+        } else if (!response.data?.user.isActivated) {
+          throw new Error('You need to activate your account');
         }
+        resolve({
+          token: token,
+          user: response.data.user,
+          cart: response.data.user.cart,
+        });
       } else {
         throw new Error('Something went wrong');
       }
