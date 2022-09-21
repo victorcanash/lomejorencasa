@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
+import { RouterPaths } from '@core/constants/navigation';
 import { registerValidation, initRegisterValues } from '@core/constants/forms/auth';
 import { FormRegister } from '@core/types/forms/auth';
 import Link from '@core/components/Link';
@@ -185,7 +186,7 @@ const RegisterForm = () => {
 
               <Grid container>
                 <Grid item xs>
-                  <Link href="/login" variant="body2">
+                  <Link href={RouterPaths.login} variant="body2">
                     Already have an account? Sign in
                   </Link>
                 </Grid>

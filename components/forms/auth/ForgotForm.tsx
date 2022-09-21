@@ -3,8 +3,6 @@ import { Formik, Form } from 'formik';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
+import { RouterPaths } from '@core/constants/navigation';
 import Link from '@core/components/Link';
 import { initRegisterValues, forgotValidation } from '@core/constants/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
@@ -98,7 +97,7 @@ const ForgotForm = () => {
               <Grid container>
 
                 <Grid item>
-                  <Link href="/login" variant="body2">
+                  <Link href={RouterPaths.login} variant="body2">
                     Back to Sign in
                   </Link>
                 </Grid>

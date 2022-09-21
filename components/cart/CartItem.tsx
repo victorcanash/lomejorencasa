@@ -8,6 +8,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import { RouterPaths } from '@core/constants/navigation';
 import { CartItem } from '@core/types/cart';
 import { getProductImgUrl } from '@core/utils/products';
 import Link from '@core/components/Link';
@@ -48,17 +49,17 @@ const CartItem = (props: CartItemProps) => {
         <Grid
           item
         >
-          <Link href={`/products/${item.product.name}?id=${item.product.id}`} noLinkStyle>
-          <div style={{ position: 'relative', minWidth: '100px' }}>
-            <Image
-              src={getProductImgUrl(item.product)}
-              alt="Product image"
-              width="500"
-              height="500"
-              layout="responsive"
-              objectFit="cover"
-            />
-          </div>
+          <Link href={`${RouterPaths.productDetail}/${item.product.name}?id=${item.product.id}`} noLinkStyle>
+            <div style={{ position: 'relative', minWidth: '100px' }}>
+              <Image
+                src={getProductImgUrl(item.product)}
+                alt="Product image"
+                width="500"
+                height="500"
+                layout="responsive"
+                objectFit="cover"
+              />
+            </div>
           </Link>
         </Grid>
 

@@ -5,6 +5,7 @@ import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 
+import { RouterPaths } from '@core/constants/navigation';
 import { Product } from "@core/types/products";
 import Link from '@core/components/Link';
 import { getProductImgUrl } from '@core/utils/products';
@@ -19,7 +20,7 @@ const ProductItem = (props: ProductItemProps) => {
 
   return (
     <Card className='animate__animated animate__fadeIn' raised>
-      <CardActionArea component={Link} href={`/products/${product.name}?id=${product.id}`} noLinkStyle>
+      <CardActionArea component={Link} href={`${RouterPaths.productDetail}/${product.name}?id=${product.id}`} noLinkStyle>
         <CardMedia>
           <div>
             <Image
