@@ -3,9 +3,25 @@ import { useRouter } from 'next/router';
 
 import { RouterPaths } from '@core/constants/navigation';
 import type { User } from '@core/types/user';
-import type { FormRegister, FormLogin, FormUpdateAuth } from '@core/types/forms/auth';
+import type { 
+  FormRegister, 
+  FormLogin, 
+  FormUpdateEmail, 
+  FormResetPassword 
+} from '@core/types/forms/auth';
 import type { Cart } from '@core/types/cart';
-import { registerUser, loginUser, logoutUser, updateAuth, isAdminUser } from '@core/utils/auth';
+import { 
+  registerUser, 
+  activateUser, 
+  loginUser, 
+  logoutUser, 
+  isAdminUser,
+  updateUserEmail,
+  resetUserPassword,
+  sendUserActivationEmail,
+  sendUserUpdateEmail,
+  sendUserResetEmail,
+} from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -18,42 +34,12 @@ const useAuth = () => {
   const router = useRouter();
 
   const [errorMsg, setErrorMsg] = useState('');
-
   const [successMsg, setSuccessMsg] = useState('');
-
-  const login = async (formLogin: FormLogin) => {
-    setLoading(true);
-    loginUser(formLogin, token).then((response: {token: string, user: User, cart: Cart}) => {
-      onLoginSuccess(response.token, response.user, response.cart);
-    }).catch((error: Error) => {
-      let errorMsg = error.message;
-      if (errorMsg.includes('email')) {
-        errorMsg = 'Email not found';
-      } else if (errorMsg.includes('password')) {
-        errorMsg = 'Password not found';
-      } else if (errorMsg.includes('locked out')) {
-        errorMsg = 'You are locked out';
-      } else {
-        errorMsg = 'Something went wrong, try again';
-      }
-      setErrorMsg(errorMsg);
-      setLoading(false);
-    });
-  };
 
   const register = async (formRegister: FormRegister) => {
     setLoading(true);
     registerUser(formRegister).then(() => {
-      const authLogin: FormLogin = {
-        email: formRegister.email,
-        password: formRegister.password
-      }; 
-      loginUser(authLogin, token).then((response: {token: string, user: User, cart: Cart}) => {
-        onLoginSuccess(response.token, response.user, response.cart);
-      }).catch((error) => {
-        setErrorMsg(error.message);
-        router.push(RouterPaths.login);
-      });
+      onRegisterSuccess();
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Unique validation failure with the email')) {
@@ -64,6 +50,51 @@ const useAuth = () => {
       setErrorMsg(errorMsg);
       setLoading(false);
     })
+  };
+
+  const onRegisterSuccess = () => {
+    setLoading(false);
+    setSuccessMsg('Successfully registered, we have sent you an email with a link to verify your account before you can login');
+  };
+
+  const activate = async (token: string) => {
+    setLoading(true);
+    activateUser(token).then((response: {token: string, user: User, cart: Cart}) => {
+      onLoginSuccess(response.token, response.user, response.cart);
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('was already activated')) {
+        errorMsg = 'Your account was already activated';
+      } else if (errorMsg.includes('locked out')) {
+        errorMsg = 'You are locked out';
+      } else {
+        errorMsg = 'Something went wrong, try again';
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    })
+  };
+
+  const login = async (formLogin: FormLogin) => {
+    setLoading(true);
+    loginUser(formLogin).then((response: {token: string, user: User, cart: Cart}) => {
+      onLoginSuccess(response.token, response.user, response.cart);
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('email')) {
+        errorMsg = 'Email not found';
+      } else if (errorMsg.includes('password')) {
+        errorMsg = 'Password not found';
+      } else if (errorMsg.includes('activate')) {
+        errorMsg = 'You have to activate your account. We have sent you an email with a link to verify your account before you can login. If you cannot see the email, click here to resend the activation email'
+      } else if (errorMsg.includes('locked out')) {
+        errorMsg = 'You are locked out';
+      } else {
+        errorMsg = 'Something went wrong, try again';
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
   };
 
   const onLoginSuccess = (token: string, user: User, cart: Cart) => {
@@ -90,18 +121,36 @@ const useAuth = () => {
     }
   };
 
-  const update = async (formUpdateAuth: FormUpdateAuth) => {
+  const updateEmail = async (token: string, newEmail: string) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    updateAuth(formUpdateAuth, user?.id || -1, token).then((response: {token: string, user: User}) => {
+    updateUserEmail(token, newEmail).then((response: {token: string, user: User}) => {
       onUpdateSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;
-      if (errorMsg.includes('Invalid password')) {
-        errorMsg = 'Password not found';
-      } else if(errorMsg.includes('Email must be unique')) {
+      if (errorMsg.includes('Token is missing or has expirated')) {
+        errorMsg = 'This link has expirated';
+      } else if (errorMsg.includes('Email must be unique')) {
         errorMsg = 'Introduced email already exists';
+      } else {
+        errorMsg = 'Something went wrong, try again';
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
+
+  const resetPassword = async (token: string, formResetPassword: FormResetPassword) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    resetUserPassword(token, formResetPassword).then((response: {token: string, user: User}) => {
+      onUpdateSuccess(response.token, response.user);
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('Token is missing or has expirated')) {
+        errorMsg = 'This link has expirated';
       } else {
         errorMsg = 'Something went wrong, try again';
       }
@@ -115,13 +164,77 @@ const useAuth = () => {
     setUser(user);
     setLoading(false);
     setSuccessMsg('Updated data');
-  }
+  };
+
+  const sendActivationEmail = (email: string) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    sendUserActivationEmail(email).then(() => {
+      setLoading(false);
+      setSuccessMsg('Sent activation email');
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('Invalid email')) {
+        errorMsg = 'Email not found';
+      } else {
+        errorMsg = 'Something went wrong, try again';
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
+
+  const sendResetEmail = (email: string) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    sendUserResetEmail(email).then(() => {
+      setLoading(false);
+      setSuccessMsg('Sent reset email');
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('Invalid email')) {
+        errorMsg = 'Email not found';
+      } else {
+        errorMsg = 'Something went wrong, try again';
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
+
+  const sendUpdateEmail = (formUpdateEmail: FormUpdateEmail) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    sendUserUpdateEmail(token, formUpdateEmail).then(() => {
+      setLoading(false);
+      setSuccessMsg('Sent update email');
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('Invalid password')) {
+        errorMsg = 'Password not found';
+      } else if (errorMsg.includes('Email must be unique')) {
+        errorMsg = 'Introduced email already exists';
+      } else {
+        errorMsg = 'Something went wrong, try again';
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
 
   return {
     register,
+    activate,
     login, 
     logout,
-    update,
+    updateEmail,
+    resetPassword,
+    sendActivationEmail,
+    sendResetEmail,
+    sendUpdateEmail,
     errorMsg,
     successMsg,
   };
