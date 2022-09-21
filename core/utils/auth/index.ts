@@ -4,11 +4,28 @@ import { StatusCodes } from 'http-status-codes';
 import { JWTTokenKey } from '@core/constants/auth';
 import { Storages } from '@core/constants/storage';
 import type { User } from '@core/types/user';
-import type { FormLogin, FormRegister, FormUpdateAuth } from '@core/types/forms/auth';
+import type { 
+  FormLogin, 
+  FormRegister, 
+  FormUpdateEmail, 
+  FormResetPassword 
+} from '@core/types/forms/auth';
 import type { Cart } from '@core/types/cart';
+import { 
+  register, 
+  activate, 
+  login, 
+  logout, 
+  getLogged, 
+  isAdmin, 
+  updateEmail, 
+  resetPassword, 
+  sendActivationEmail,
+  sendResetEmail,
+  sendUpdateEmail
+} from '@core/middlewares/auth';
+import { getBackendErrorMsg } from '@core/utils/errors';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
-import { register, login, logout, getLogged, update, isAdmin } from '@core/middlewares/auth';
-import { capitalizeFirstLetter } from '@core/utils/strings';
 
 export const registerUser = async (formRegister: FormRegister) => {
   return new Promise<true>((resolve, reject) => {
@@ -19,18 +36,24 @@ export const registerUser = async (formRegister: FormRegister) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      let errorMsg = error.message;
-      if (error.response?.data?.message) {
-        errorMsg = error.response.data.message
-      } else {
-        const errorValFields = error.response?.data?.fields;
-        if (errorValFields?.length > 0 && 
-          errorValFields[0]?.error &&
-          errorValFields[0]?.name) {
-          errorMsg = `${capitalizeFirstLetter(errorValFields[0].error)} with the ${errorValFields[0].name} field`
-        }
-      }
+      const errorMsg = getBackendErrorMsg(error)
       console.error(`[Register ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    });
+  })
+};
+
+export const activateUser = async (token: string) => {
+  return new Promise<true>((resolve, reject) => {
+    activate(token).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.CREATED) {
+        resolve(true);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Activate ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     });
   })
@@ -62,7 +85,7 @@ export const loginUser = async (formLogin: FormLogin, token: string) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
+      const errorMsg = getBackendErrorMsg(error);
       console.error(`[Login ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     });
@@ -93,19 +116,35 @@ export const getLoggedUser = async () => {
       }
     }).catch((error) => {
       removeStorageItem(Storages.local, JWTTokenKey);
-      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
-      console.error(`[Get Logged User ERROR]: ${errorMsg}`);
       /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
-        removeLocalStorageItem(STORAGE_KEYS.JWTToken);
+        removeStorageItem(Storages.local, JWTTokenKey);
       }*/
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Get Logged ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     }); 
   })
 };
 
-export const updateAuth = async (formUpdateAuth: FormUpdateAuth, userId: number, token: string) => {
+export const isAdminUser = async (token: string) => {
+  return new Promise<boolean>(async (resolve, reject) => {
+    isAdmin(token).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.OK && response.data?.isAdmin) {
+          resolve(response.data?.isAdmin ? true : false);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Is Admin ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    }); 
+  })
+}
+
+export const updateUserEmail = async (token: string, newEmail = '', userId = -1) => {
   return new Promise<{token: string, user: User}>((resolve, reject) => {
-    update(token, userId, formUpdateAuth).then(async (response: AxiosResponse) => {
+    updateEmail(token, newEmail, userId).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token) {
           await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
@@ -120,35 +159,81 @@ export const updateAuth = async (formUpdateAuth: FormUpdateAuth, userId: number,
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      let errorMsg = error.message;
-      if (error.response?.data?.message) {
-        errorMsg = error.response.data.message
-      } else {
-        const errorValFields = error.response?.data?.fields;
-        if (errorValFields?.length > 0 && 
-          errorValFields[0]?.error &&
-          errorValFields[0]?.name) {
-          errorMsg = `${capitalizeFirstLetter(errorValFields[0].error)} with the ${errorValFields[0].name} field`
-        }
-      }
-      console.error(`[Update Auth ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Update Email ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
     });
   })
 };
 
-export const isAdminUser = async (token: string) => {
-  return new Promise<boolean>(async (resolve, reject) => {
-    isAdmin(token).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.OK && response.data?.isAdmin) {
-          resolve(response.data?.isAdmin ? true : false);
+export const resetUserPassword = async (token: string, formResetPassword: FormResetPassword, userId = -1) => {
+  return new Promise<{token: string, user: User}>((resolve, reject) => {
+    resetPassword(token, formResetPassword, userId).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.CREATED && response.data?.user) {
+        if (response.data?.token) {
+          await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
+          resolve({
+            token: response.data.token,
+            user: response.data.user,
+          });
+        } else {
+          throw new Error('Error generating updated token');
+        }
       } else {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = error.response?.data?.message ? error.response.data.message : error.message;
-      console.error(`[Check Admin User ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Reset Password ERROR]: ${errorMsg}`);
       reject(new Error(errorMsg));
-    }); 
+    });
   })
-}
+};
+
+export const sendUserActivationEmail = async (email: string) => {
+  return new Promise<true>((resolve, reject) => {
+    sendActivationEmail(email).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.CREATED) {
+        resolve(true);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Send Activation Email ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    });
+  })
+};
+
+export const sendUserResetEmail = async (email: string) => {
+  return new Promise<true>((resolve, reject) => {
+    sendResetEmail(email).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.CREATED) {
+        resolve(true);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Send Reset Email ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    });
+  })
+};
+
+export const sendUserUpdateEmail = async (token: string, formUpdateEmail: FormUpdateEmail, revertEmail = false) => {
+  return new Promise<true>((resolve, reject) => {
+    sendUpdateEmail(token, formUpdateEmail, revertEmail).then(async (response: AxiosResponse) => {
+      if (response.status === StatusCodes.CREATED) {
+        resolve(true);
+      } else {
+        throw new Error('Something went wrong');
+      }
+    }).catch((error) => {
+      const errorMsg = getBackendErrorMsg(error);
+      console.error(`[Send Update Email ERROR]: ${errorMsg}`);
+      reject(new Error(errorMsg));
+    });
+  })
+};
