@@ -68,7 +68,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (router.asPath != RouterPaths.login &&
-        router.asPath != RouterPaths.register) {
+        router.asPath != RouterPaths.register &&
+        router.asPath != RouterPaths.forgot) {
       prevLoginPathRef.current = router.asPath;
     }
   }, [router.asPath])
