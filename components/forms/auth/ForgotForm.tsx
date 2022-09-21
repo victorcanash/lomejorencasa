@@ -46,10 +46,6 @@ const ForgotForm = () => {
           Update your password
         </Typography>
 
-        <Typography component="h2" variant="h6">
-          Introduce the email linked to your account and we will send you an email with a link to set your new password.
-        </Typography>
-
         <Formik
           initialValues={{
             email: initRegisterValues.email,
@@ -59,6 +55,10 @@ const ForgotForm = () => {
         >
           {props => (
             <Form>
+
+              <Typography component="h2" variant="subtitle1" my={2}>
+                Introduce the email linked to your account and we will send you an email with a link to set your new password.
+              </Typography>
 
               {/* Email Field */}
               <TextField
