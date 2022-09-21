@@ -54,11 +54,11 @@ function MyApp(props: MyAppProps) {
         openGraph={{
           type: 'website',
           title: title,
-          url: `https://${envConfig.NEXT_PUBLIC_URL}${asPath}`,
+          url: `https://${envConfig.NEXT_PUBLIC_APP_URL}${asPath}`,
           description: description,
           images: [
             {
-              url: `https://${envConfig.NEXT_PUBLIC_URL}/logo_lg.png`,
+              url: `https://${envConfig.NEXT_PUBLIC_APP_URL}/logo_lg.png`,
               width: 1000,
               height: 750,
             },
