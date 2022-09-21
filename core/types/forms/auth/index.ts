@@ -12,9 +12,12 @@ export type FormRegister = {
   birthday: Date,
 };
 
-export type FormUpdateAuth = {
+export type FormUpdateEmail = {
   password: string,
   newEmail: string,
+};
+
+export type FormResetPassword = {
   newPassword: string,
   newConfirm: string,
-};
+}
