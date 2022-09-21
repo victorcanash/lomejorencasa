@@ -68,6 +68,15 @@ export const initRegisterValues: FormRegister = {
   birthday: subtractYears(18),
 };
 
+export const forgotValidation = Yup.object().shape(
+  {
+    email: Yup
+      .string()
+      .email('Invalid email format')
+      .required('Email is required'),
+  }
+);
+
 export const updateEmailValidation = Yup.object().shape(
   {
     password: Yup

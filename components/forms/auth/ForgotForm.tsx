@@ -13,15 +13,14 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import Link from '@core/components/Link';
-import { loginValidation, initLoginValues } from '@core/constants/forms/auth';
-import { FormLogin } from '@core/types/forms/auth';
+import { initRegisterValues, forgotValidation } from '@core/constants/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
-const LoginForm = () => {
-  const { login, errorMsg } = useAuth();
+const ForgotForm = () => {
+  const { sendResetEmail, errorMsg, successMsg } = useAuth();
 
-  const handleSubmit = async (values: FormLogin) => {
-    login(values);
+  const handleSubmit = async (values: {email: string}) => {
+    sendResetEmail(values.email);
   };
 
   return (
@@ -45,12 +44,18 @@ const LoginForm = () => {
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Sign in
+          Update your password
+        </Typography>
+
+        <Typography component="h2" variant="h6">
+          Introduce the email linked to your account and we will send you an email with a link to set your new password.
         </Typography>
 
         <Formik
-          initialValues={initLoginValues}
-          validationSchema={loginValidation}
+          initialValues={{
+            email: initRegisterValues.email,
+          }}
+          validationSchema={forgotValidation}
           onSubmit={handleSubmit}
         >
           {props => (
@@ -72,50 +77,29 @@ const LoginForm = () => {
                 helperText={props.touched.email && props.errors.email}
               />
 
-              {/* Password Field */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                label="Password"
-                value={props.values.password}
-                onChange={props.handleChange}
-                error={props.touched.password && Boolean(props.errors.password)}
-                helperText={props.touched.password && props.errors.password}
-              />
-
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Send email
               </Button>
 
               {
                 errorMsg && errorMsg !== '' &&
                   <Alert severity="error">{ errorMsg }</Alert>
-              } 
+              }  
+              {
+                successMsg && successMsg !== '' &&
+                  <Alert>{ successMsg }</Alert>
+              }  
 
               <Grid container>
-                <Grid item xs>
-                  <Link href="/forgot" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
+
                 <Grid item>
-                  <Link href="/register" variant="body2">
-                    Don&apos;t have an account? Sign up
+                  <Link href="/login" variant="body2">
+                    Back to Sign in
                   </Link>
                 </Grid>
               </Grid>
@@ -130,4 +114,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ForgotForm;

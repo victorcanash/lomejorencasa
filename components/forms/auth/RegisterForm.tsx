@@ -19,7 +19,7 @@ import Link from '@core/components/Link';
 import useAuth from '@lib/hooks/useAuth';
 
 const RegisterForm = () => {
-  const { register, errorMsg } = useAuth();
+  const { register, errorMsg, successMsg } = useAuth();
 
   const handleSubmit = async (values: FormRegister) => {
     register(values);
@@ -177,7 +177,11 @@ const RegisterForm = () => {
               {
                 errorMsg && errorMsg !== '' &&
                   <Alert severity="error">{ errorMsg }</Alert>
-              }        
+              }  
+              {
+                successMsg && successMsg !== '' &&
+                  <Alert>{ successMsg }</Alert>
+              }      
 
               <Grid container>
                 <Grid item xs>
