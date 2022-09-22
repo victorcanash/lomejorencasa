@@ -36,10 +36,11 @@ const useAuth = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const register = async (formRegister: FormRegister) => {
+  const register = async (formRegister: FormRegister, onSuccess?: (email: string) => void) => {
+    setErrorMsg('');
     setLoading(true);
     registerUser(formRegister).then(() => {
-      onRegisterSuccess();
+      onRegisterSuccess(formRegister.email, onSuccess);
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Unique validation failure with the email')) {
@@ -52,15 +53,21 @@ const useAuth = () => {
     })
   };
 
-  const onRegisterSuccess = () => {
+  const onRegisterSuccess = async (email: string, onSuccess?: (email: string) => void) => {
+    await sendUserActivationEmail(email);
+    if (onSuccess) {
+      onSuccess(email);
+    }
     setLoading(false);
-    setSuccessMsg('Successfully registered, we have sent you an email with a link to verify your account before you can login');
   };
 
   const activate = async (token: string) => {
+    setErrorMsg('');
+    setSuccessMsg('');
     setLoading(true);
-    activateUser(token).then((response: {token: string, user: User, cart: Cart}) => {
-      onLoginSuccess(response.token, response.user, response.cart);
+    activateUser(token).then(() => {
+      setSuccessMsg('Your account is activated and you can login now. You can close this window.')
+      setLoading(false);
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('was already activated')) {
@@ -86,7 +93,7 @@ const useAuth = () => {
       } else if (errorMsg.includes('password')) {
         errorMsg = 'Password not found';
       } else if (errorMsg.includes('activate')) {
-        errorMsg = 'You have to activate your account. We have sent you an email with a link to verify your account before you can login. If you cannot see the email, click here to resend the activation email'
+        errorMsg = 'You have to activate your account. We have sent you an email with a link to verify your account before you can login.'
       } else if (errorMsg.includes('locked out')) {
         errorMsg = 'You are locked out';
       } else {
@@ -166,13 +173,16 @@ const useAuth = () => {
     setSuccessMsg('Updated data');
   };
 
-  const sendActivationEmail = (email: string) => {
+  const sendActivationEmail = (email: string, onSuccess?: () => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     sendUserActivationEmail(email).then(() => {
       setLoading(false);
       setSuccessMsg('Sent activation email');
+      if (onSuccess) {
+        onSuccess();
+      }
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Invalid email')) {
