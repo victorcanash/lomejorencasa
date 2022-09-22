@@ -61,27 +61,6 @@ const useAuth = () => {
     setLoading(false);
   };
 
-  const activate = async (token: string) => {
-    setErrorMsg('');
-    setSuccessMsg('');
-    setLoading(true);
-    activateUser(token).then(() => {
-      setSuccessMsg('Your account is activated and you can login now. You can close this window.')
-      setLoading(false);
-    }).catch((error: Error) => {
-      let errorMsg = error.message;
-      if (errorMsg.includes('was already activated')) {
-        errorMsg = 'Your account was already activated';
-      } else if (errorMsg.includes('locked out')) {
-        errorMsg = 'You are locked out';
-      } else {
-        errorMsg = 'Something went wrong, try again';
-      }
-      setErrorMsg(errorMsg);
-      setLoading(false);
-    })
-  };
-
   const login = async (formLogin: FormLogin, onFailByActivation?: (email: string) => void) => {
     setLoading(true);
     loginUser(formLogin).then((response: {token: string, user: User, cart: Cart}) => {
@@ -240,7 +219,6 @@ const useAuth = () => {
 
   return {
     register,
-    activate,
     login, 
     logout,
     updateEmail,

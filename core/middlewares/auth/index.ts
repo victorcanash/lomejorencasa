@@ -2,6 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 
 import axios from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
+import { RouterPaths } from '@core/constants/navigation';
 import type { FormLogin, FormRegister, FormUpdateEmail, FormResetPassword } from '@core/types/forms/auth';
 
 export const register = (formRegister: FormRegister) => {
@@ -73,7 +74,7 @@ export const sendActivationEmail = (email: string) => {
     params: {
       appName: envConfig.NEXT_PUBLIC_APP_NAME,
       appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      url: `${envConfig.NEXT_PUBLIC_APP_URL}/activation`,
+      url: `${envConfig.NEXT_PUBLIC_APP_URL}${RouterPaths.activation}`,
     }
   };
   return axios.post('auth/send-email/activation', { email }, options);
