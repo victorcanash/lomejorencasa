@@ -17,7 +17,6 @@ const Error = (props: ErrorProps) => {
   return (
     <Container 
       maxWidth={false}
-      className="above-layout"
       sx={{
         backgroundColor: 'background.default',
         position: 'fixed',

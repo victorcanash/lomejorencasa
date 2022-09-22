@@ -53,7 +53,7 @@ const ActivateAccount = (props: ActivateAccountProps) => {
             Proceed to login
         </LinkButton>
 
-        <Typography component="h2" variant="subtitle1" sx={{ mt: 4, mb: 2}}>
+        <Typography component="h3" variant="subtitle2" sx={{ mt: 4, mb: 2}}>
           Didn&apos;t received the email? 
           Resend {
             timeLeft ?

@@ -6,6 +6,7 @@ import 'swiper/css/effect-coverflow';
 // import 'react-medium-image-zoom/dist/styles.css'
 import 'styles/globals.css';
 
+import { Fragment } from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -22,6 +23,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
+import { RouterPaths } from '@core/constants/navigation';
 import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
@@ -45,6 +47,9 @@ interface MyAppProps extends AppProps {
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const { asPath } = useRouter();
+
+  const isLayoutNeeded = ![`${RouterPaths.activation}`].includes(props.router.pathname);
+  const LayoutComponent = isLayoutNeeded ? Layout : Fragment;
 
   return (
     <>
@@ -86,9 +91,9 @@ function MyApp(props: MyAppProps) {
                     <SearchProvider> 
                       <AuthProvider>
                         <CartProvider>
-                          <Layout>
+                          <LayoutComponent>
                             <Component {...pageProps} />
-                          </Layout> 
+                          </LayoutComponent> 
                         </CartProvider>
                       </AuthProvider>          
                     </SearchProvider>

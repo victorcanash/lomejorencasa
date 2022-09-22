@@ -4,7 +4,6 @@ import Head from 'next/head';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
@@ -23,37 +22,43 @@ const Activation: NextPage<ActivationProps> = (props) => {
         <meta name="description" content="Activation page" />
       </Head>
 
-      <Container maxWidth="xs">
-
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+      <Container 
+        maxWidth={false}
+        sx={{
+          backgroundColor: 'background.default',
+          position: 'fixed',
+          top: '0px',
+          left: '0px',
+          zIndex: 10000,
+          width: '100vw',
+          height: '100vh',
+          display: 'flex', 
+          placeContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}
+      >
+        <Avatar 
+          sx={{ 
+            mb: 1, 
+            bgcolor: 'secondary.main' 
           }}
         >
-          <Avatar 
-            sx={{ 
-              m: 1, 
-              bgcolor: 'secondary.main' 
-            }}
-          >
-            {
-              successMsg != '' ?
-                <CheckCircleIcon />
-                :
-                <ErrorIcon />
-            }
-          </Avatar>
+          {
+            successMsg != '' ?
+              <CheckCircleIcon />
+              :
+              <ErrorIcon />
+          }
+        </Avatar>
 
-          <Typography component="h1" variant="h5">
-            Account activation link
-          </Typography>
+        <Typography component="h1" variant="h5">
+          Account activation link
+        </Typography>
 
-          <Typography component="h2" variant="subtitle1" my={2}>
-            { successMsg || errorMsg }
-          </Typography>
-        </Box>
+        <Typography component="h2" variant="subtitle1" my={2}>
+          { successMsg || errorMsg }
+        </Typography>
 
       </Container>
     </>
