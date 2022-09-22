@@ -44,23 +44,10 @@ export const registerUser = async (formRegister: FormRegister) => {
 };
 
 export const activateUser = async (token: string) => {
-  return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
+  return new Promise<true>((resolve, reject) => {
     activate(token).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.CREATED && response.data?.user) {
-        if (response.data?.token){
-          const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
-          if (prevToken !== '') {
-            await logoutUser(prevToken);
-          }
-          await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
-          resolve({
-            token: response.data.token,
-            user: response.data.user,
-            cart: response.data.user.cart,
-          });         
-        } else {
-          throw new Error('Error generating token');
-        }
+      if (response.status === StatusCodes.CREATED) {
+        resolve(true);
       } else {
         throw new Error('Something went wrong');
       }
