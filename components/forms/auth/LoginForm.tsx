@@ -18,11 +18,17 @@ import { loginValidation, initLoginValues } from '@core/constants/forms/auth';
 import { FormLogin } from '@core/types/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
-const LoginForm = () => {
+type LoginFormProps = {
+  onFailByActivation: (email: string) => void,
+}
+
+const LoginForm = (props: LoginFormProps) => {
+  const { onFailByActivation } = props;
+
   const { login, errorMsg } = useAuth();
 
   const handleSubmit = async (values: FormLogin) => {
-    login(values);
+    login(values, onFailByActivation);
   };
 
   return (

@@ -82,7 +82,7 @@ const useAuth = () => {
     })
   };
 
-  const login = async (formLogin: FormLogin) => {
+  const login = async (formLogin: FormLogin, onFailByActivation?: (email: string) => void) => {
     setLoading(true);
     loginUser(formLogin).then((response: {token: string, user: User, cart: Cart}) => {
       onLoginSuccess(response.token, response.user, response.cart);
@@ -94,6 +94,9 @@ const useAuth = () => {
         errorMsg = 'Password not found';
       } else if (errorMsg.includes('activate')) {
         errorMsg = 'You have to activate your account. We have sent you an email with a link to verify your account before you can login.'
+        if (onFailByActivation) {
+          onFailByActivation(formLogin.email);
+        }
       } else if (errorMsg.includes('locked out')) {
         errorMsg = 'You are locked out';
       } else {

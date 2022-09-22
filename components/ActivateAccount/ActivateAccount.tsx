@@ -11,10 +11,11 @@ import useCountdown from '@lib/hooks/useCountdown';
 
 type ActivateAccountProps = {
   email: string,
+  onClickProceedBtn?: () => void,
 };
 
 const ActivateAccount = (props: ActivateAccountProps) => {
-  const { email } = props;
+  const { email, onClickProceedBtn } = props;
 
   const { sendActivationEmail, errorMsg, successMsg } = useAuth();
 
@@ -48,7 +49,7 @@ const ActivateAccount = (props: ActivateAccountProps) => {
           Once you verified your account, proceed to login.
         </Typography>
 
-        <LinkButton href={RouterPaths.login} fullWidth>
+        <LinkButton href={RouterPaths.login} fullWidth onClick={onClickProceedBtn}>
             Proceed to login
         </LinkButton>
 

@@ -12,6 +12,7 @@ const Register: NextPage = () => {
   const [email, setEmail] = useState<string | undefined>(undefined)
 
   const onRegisterSuccess = (email: string) => {
+    window.scrollTo(0, 0);
     setEmail(email);
   }
 
