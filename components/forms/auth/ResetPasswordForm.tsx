@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { Formik, Form } from 'formik';
 
 import Typography from '@mui/material/Typography';
@@ -8,22 +10,21 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { updatePasswordValidation } from '@core/constants/forms/auth';
-import { initRegisterValues } from '@core/constants/forms/auth';
-import { FormUpdateAuth } from '@core/types/forms/auth';
+import { initRegisterValues, resetPasswordValidation } from '@core/constants/forms/auth';
+import { FormResetPassword } from '@core/types/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
-const UpdatePasswordForm = () => {
-  const { update, errorMsg, successMsg } = useAuth();
+const ResetPasswordForm = () => {
+  const router = useRouter();
+  const { resetPassword, errorMsg, successMsg } = useAuth();
 
-  const handleSubmit = async (values: FormUpdateAuth) => {
-    update(values);
+  const handleSubmit = async (values: FormResetPassword) => {
+    const token = typeof router.query.token == 'string' ? router.query.token : '';
+    resetPassword(token, values);
   };
 
   return (
     <Container maxWidth="xs">
-
-      <Divider sx={{ my: 3 }} />
       
       <Box
         sx={{
@@ -33,39 +34,21 @@ const UpdatePasswordForm = () => {
         }}
       >
 
-        <Typography component="h2" variant="h6">
-          Change password
+        <Typography component="h1" variant="h5">
+          Reset your password
         </Typography>
 
         <Formik
           initialValues={{
-            password: initRegisterValues.password,
-            newEmail: initRegisterValues.email,
             newPassword: initRegisterValues.password,
             newConfirm: initRegisterValues.confirm,
-          } as FormUpdateAuth}
-          validationSchema={updatePasswordValidation}
+          } as FormResetPassword}
+          validationSchema={resetPasswordValidation}
           onSubmit={handleSubmit}
           enableReinitialize
         >
           {props => (
             <Form>
-
-              {/* Password Field */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="password2"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                label="Password"
-                value={props.values.password}
-                onChange={props.handleChange}
-                error={props.touched.password && Boolean(props.errors.password)}
-                helperText={props.touched.password && props.errors.password}
-              />
 
               {/* NewPassword Field */}
               <TextField
@@ -105,7 +88,7 @@ const UpdatePasswordForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Update
+                Reset
               </Button>
 
               {
@@ -127,4 +110,4 @@ const UpdatePasswordForm = () => {
   );
 };
 
-export default UpdatePasswordForm;
+export default ResetPasswordForm;

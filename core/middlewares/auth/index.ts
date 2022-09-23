@@ -85,7 +85,7 @@ export const sendResetEmail = (email: string) => {
     params: {
       appName: envConfig.NEXT_PUBLIC_APP_NAME,
       appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      url: `${envConfig.NEXT_PUBLIC_APP_URL}/activation`,
+      url: `${envConfig.NEXT_PUBLIC_APP_URL}${RouterPaths.reset}`,
     }
   };
   return axios.post('auth/send-email/reset', { email }, options);
