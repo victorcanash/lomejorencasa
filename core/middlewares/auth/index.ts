@@ -99,7 +99,7 @@ export const sendUpdateEmail = (token: string, formUpdateEmail: FormUpdateEmail,
     params: {
       appName: envConfig.NEXT_PUBLIC_APP_NAME,
       appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      url: `${envConfig.NEXT_PUBLIC_APP_URL}/activation`,
+      url: `${envConfig.NEXT_PUBLIC_APP_URL}${RouterPaths.newemail}`,
       revertEmail,
     }
   };

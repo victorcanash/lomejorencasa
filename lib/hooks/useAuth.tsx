@@ -12,11 +12,9 @@ import type {
 import type { Cart } from '@core/types/cart';
 import { 
   registerUser, 
-  activateUser, 
   loginUser, 
   logoutUser, 
   isAdminUser,
-  updateUserEmail,
   resetUserPassword,
   sendUserActivationEmail,
   sendUserUpdateEmail,
@@ -110,33 +108,6 @@ const useAuth = () => {
     }
   };
 
-  const updateEmail = async (token: string, newEmail: string) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    updateUserEmail(token, newEmail).then((response: {token: string, user: User}) => {
-      onUpdateEmailSuccess(response.token, response.user);
-    }).catch((error: Error) => {
-      let errorMsg = error.message;
-      if (errorMsg.includes('Token is missing or has expirated')) {
-        errorMsg = 'This link is not valid or has expirated';
-      } else if (errorMsg.includes('Email must be unique')) {
-        errorMsg = 'Introduced email already exists';
-      } else {
-        errorMsg = 'Something went wrong, try again or resend another email';
-      }
-      setErrorMsg(errorMsg);
-      setLoading(false);
-    });
-  };
-
-  const onUpdateEmailSuccess = (token: string, user: User) => {
-    setToken(token);
-    setUser(user);
-    setLoading(false);
-    setSuccessMsg('Updated email. You can close this window and login with your new email.');
-  };
-
   const resetPassword = async (token: string, formResetPassword: FormResetPassword) => {
     setLoading(true);
     setErrorMsg('');
@@ -228,7 +199,6 @@ const useAuth = () => {
     register,
     login, 
     logout,
-    updateEmail,
     resetPassword,
     sendActivationEmail,
     sendResetEmail,
