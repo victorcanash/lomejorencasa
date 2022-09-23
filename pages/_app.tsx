@@ -48,7 +48,11 @@ function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const { asPath } = useRouter();
 
-  const isLayoutNeeded = ![`${RouterPaths.activation}`, `${RouterPaths.reset}`].includes(props.router.pathname);
+  const isLayoutNeeded = ![
+    `${RouterPaths.activation}`, 
+    `${RouterPaths.reset}`, 
+    `${RouterPaths.newemail}`]
+    .includes(props.router.pathname);
   const LayoutComponent = isLayoutNeeded ? Layout : Fragment;
 
   return (
