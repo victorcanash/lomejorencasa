@@ -8,16 +8,15 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { updateEmailValidation } from '@core/constants/forms/auth';
-import { initRegisterValues } from '@core/constants/forms/auth';
-import { FormUpdateAuth } from '@core/types/forms/auth';
+import { initRegisterValues, updateEmailValidation } from '@core/constants/forms/auth';
+import { FormUpdateEmail } from '@core/types/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 const UpdateEmailForm = () => {
-  const { update, errorMsg, successMsg } = useAuth();
+  const { sendUpdateEmail, errorMsg, successMsg } = useAuth();
 
-  const handleSubmit = async (values: FormUpdateAuth) => {
-    update(values);
+  const handleSubmit = async (values: FormUpdateEmail) => {
+    sendUpdateEmail(values);
   };
 
   return (
@@ -34,22 +33,24 @@ const UpdateEmailForm = () => {
       >
 
         <Typography component="h2" variant="h6">
-          Change email address
+           Change your email address
         </Typography>
 
         <Formik
           initialValues={{
             password: initRegisterValues.password,
             newEmail: initRegisterValues.email,
-            newPassword: initRegisterValues.password,
-            newConfirm: initRegisterValues.confirm,
-          } as FormUpdateAuth}
+          } as FormUpdateEmail}
           validationSchema={updateEmailValidation}
           onSubmit={handleSubmit}
           enableReinitialize
         >
           {props => (
             <Form>
+
+              <Typography component="h3" variant="subtitle1" mt={1}>
+                Introduce your new email address and we will send you an email with a link to confirm your new email address.
+              </Typography>
 
               {/* Password Field */}
               <TextField
@@ -67,7 +68,7 @@ const UpdateEmailForm = () => {
                 helperText={props.touched.password && props.errors.password}
               />
 
-              {/* Email Field */}
+              {/* NewEmail Field */}
               <TextField
                 margin="normal"
                 required
@@ -88,7 +89,7 @@ const UpdateEmailForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Update
+                Send email
               </Button>
 
               {
