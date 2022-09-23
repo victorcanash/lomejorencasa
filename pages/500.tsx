@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from "next/head";
 
 import usePage from '@lib/hooks/usePage';
-import ErrorUI from '@components/ui/Error';
+import ErrorUI from '@components/ui/ErrorPage';
 
 const Error: NextPage = () => {
   const page = usePage();

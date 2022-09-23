@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import ErrorUI from '@components/ui/Error';
+import ErrorPage from '@components/ui/ErrorPage';
 
 type ErrorBoundaryProps = {
   children: React.ReactNode,
@@ -23,7 +23,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <ErrorUI title='An error has ocurred' />
+        <ErrorPage title='An error has ocurred' />
       );
     }
 

@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from "next/head";
 
 import usePage from '@lib/hooks/usePage';
-import ErrorUI from '@components/ui/Error';
+import ErrorPage from '@components/ui/ErrorPage';
 
 const NotFound: NextPage = () => {
   const page = usePage();
@@ -14,7 +14,7 @@ const NotFound: NextPage = () => {
         <meta name="description" content="Not found page" />
       </Head>
 
-      <ErrorUI title='Not found page' />
+      <ErrorPage title='Not found page' />
     </>
   );
 };

@@ -24,19 +24,7 @@ const Activation: NextPage<ActivationProps> = (props) => {
 
       <Container 
         maxWidth={false}
-        sx={{
-          backgroundColor: 'background.default',
-          position: 'fixed',
-          top: '0px',
-          left: '0px',
-          zIndex: 10000,
-          width: '100vw',
-          height: '100vh',
-          display: 'flex', 
-          placeContent: 'center',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
+        className="centeredPage"
       >
         <Avatar 
           sx={{ 

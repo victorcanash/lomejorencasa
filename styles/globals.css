@@ -291,6 +291,16 @@ Custom classes
   -moz-osx-font-smoothing: grayscale;
 }
 
+.centeredPage {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex; 
+  place-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
 .swiper-button-next { 
   color: rgb(0, 0, 0);
 }

@@ -7,28 +7,22 @@ import LinkButton from '@core/components/LinkButton';
 import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';
 
-type ErrorProps = {
+type ErrorPageProps = {
   title: string,
 };
 
-const Error = (props: ErrorProps) => {
+const ErrorPage = (props: ErrorPageProps) => {
   const { title } = props;
 
   return (
     <Container 
       maxWidth={false}
+      className="centeredPage"
       sx={{
         backgroundColor: 'background.default',
-        position: 'fixed',
         top: '0px',
         left: '0px',
         zIndex: 10000,
-        width: '100vw',
-        height: '100vh',
-        display: 'flex', 
-        placeContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
       }}
     >
       <Typography variant="h4" component="h1" gutterBottom>
@@ -45,4 +39,4 @@ const Error = (props: ErrorProps) => {
   );
 };
 
-export default Error;
+export default ErrorPage;
