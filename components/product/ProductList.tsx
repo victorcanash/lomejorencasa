@@ -44,13 +44,20 @@ const ProductList = (props: ProductListProps) => {
       }
       <Divider sx={{ my: 3 }} />
 
-      <Grid container spacing={1} py={3}>
-        {products?.map((item) => (
-          <Grid item xs={6} sm={4} lg={3} key={item.id}>
-            <ProductItem product={item} />
+      {
+        products.length > 0 ?
+          <Grid container spacing={1} py={3}>
+            {products?.map((item) => (
+              <Grid item xs={6} sm={4} lg={3} key={item.id}>
+                <ProductItem product={item} />
+              </Grid>
+            ))}
           </Grid>
-        ))}
-      </Grid>
+          :
+          <Typography component="h3" variant="subtitle1" sx={{ textAlign: "center" }}>
+            There are no existing products.
+          </Typography>
+      }
 
       <Stack spacing={2} sx={{ mt: 1 }} >
         <Pagination
