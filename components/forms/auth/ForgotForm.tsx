@@ -12,7 +12,7 @@ import Alert from '@mui/material/Alert';
 
 import { RouterPaths } from '@core/constants/navigation';
 import Link from '@core/components/Link';
-import { initRegisterValues, forgotValidation } from '@core/constants/forms/auth';
+import { initRegisterValues, sendEmailValidation } from '@core/constants/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 const ForgotForm = () => {
@@ -50,7 +50,7 @@ const ForgotForm = () => {
           initialValues={{
             email: initRegisterValues.email,
           }}
-          validationSchema={forgotValidation}
+          validationSchema={sendEmailValidation}
           onSubmit={handleSubmit}
         >
           {props => (

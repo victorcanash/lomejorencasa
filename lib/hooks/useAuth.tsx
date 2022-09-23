@@ -115,19 +115,26 @@ const useAuth = () => {
     setErrorMsg('');
     setSuccessMsg('');
     updateUserEmail(token, newEmail).then((response: {token: string, user: User}) => {
-      onUpdateSuccess(response.token, response.user);
+      onUpdateEmailSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Token is missing or has expirated')) {
-        errorMsg = 'This link has expirated';
+        errorMsg = 'This link is not valid or has expirated';
       } else if (errorMsg.includes('Email must be unique')) {
         errorMsg = 'Introduced email already exists';
       } else {
-        errorMsg = 'Something went wrong, try again';
+        errorMsg = 'Something went wrong, try again or resend another email';
       }
       setErrorMsg(errorMsg);
       setLoading(false);
     });
+  };
+
+  const onUpdateEmailSuccess = (token: string, user: User) => {
+    setToken(token);
+    setUser(user);
+    setLoading(false);
+    setSuccessMsg('Updated email. You can close this window and login with your new email.');
   };
 
   const resetPassword = async (token: string, formResetPassword: FormResetPassword) => {
@@ -135,24 +142,24 @@ const useAuth = () => {
     setErrorMsg('');
     setSuccessMsg('');
     resetUserPassword(token, formResetPassword).then((response: {token: string, user: User}) => {
-      onUpdateSuccess(response.token, response.user);
+      onResetPasswordSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Token is missing or has expirated')) {
-        errorMsg = 'This link has expirated';
+        errorMsg = 'This link is not valid or has expirated';
       } else {
-        errorMsg = 'Something went wrong, try again';
+        errorMsg = 'Something went wrong, try again or resend another email';
       }
       setErrorMsg(errorMsg);
       setLoading(false);
     });
   };
 
-  const onUpdateSuccess = (token: string, user: User) => {
+  const onResetPasswordSuccess = (token: string, user: User) => {
     setToken(token);
     setUser(user);
     setLoading(false);
-    setSuccessMsg('Updated data');
+    setSuccessMsg('Updated password. You can close this window and login with your new password.');
   };
 
   const sendActivationEmail = (email: string, onSuccess?: () => void) => {

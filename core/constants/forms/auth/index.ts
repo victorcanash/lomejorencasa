@@ -68,7 +68,7 @@ export const initRegisterValues: FormRegister = {
   birthday: subtractYears(18),
 };
 
-export const forgotValidation = Yup.object().shape(
+export const sendEmailValidation = Yup.object().shape(
   {
     email: Yup
       .string()
@@ -90,12 +90,8 @@ export const updateEmailValidation = Yup.object().shape(
   }
 );
 
-export const updatePasswordValidation = Yup.object().shape(
+export const resetPasswordValidation = Yup.object().shape(
   {
-    password: Yup
-      .string()
-      .min(8, 'Password too short')
-      .required('Password is required'),
     newPassword: Yup
       .string()
       .min(8, 'New password too short')

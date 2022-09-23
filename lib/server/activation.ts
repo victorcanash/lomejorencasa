@@ -26,8 +26,10 @@ export const getActivationProps: GetServerSideProps = async (context) => {
       errorMsg = 'Your account was already activated';
     } else if (errorMsg.includes('locked out')) {
       errorMsg = 'You are locked out';
+    } else if (errorMsg.includes('Token is missing or has expirated')){
+      errorMsg = 'This link is not valid or has expirated';
     } else {
-      errorMsg = 'Something went wrong, try again';
+      errorMsg = 'Something went wrong, try again or resend another email';
     }
     result = {
       props: {
