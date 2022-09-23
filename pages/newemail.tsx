@@ -52,14 +52,19 @@ const NewEmail: NextPage = () => {
           Email update link
         </Typography>
 
+        <Typography component="h2" variant="subtitle1" mt={4}>
+          Click the confirm button to update and activate your new email
+        </Typography>
+
         <Button
+          variant="contained"
           onClick={onClickUpdateBtn}
           sx={{
-            mt: 2,
+            mt: 4,
             mb: 2,
           }}
         >
-          Confirm new email
+          Confirm
         </Button>
 
         {

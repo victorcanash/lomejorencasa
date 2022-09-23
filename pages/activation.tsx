@@ -44,7 +44,7 @@ const Activation: NextPage<ActivationProps> = (props) => {
           Account activation link
         </Typography>
 
-        <Typography component="h2" variant="subtitle1" my={2}>
+        <Typography component="h2" variant="subtitle1" mt={4}>
           { successMsg || errorMsg }
         </Typography>
 
