@@ -1,19 +1,27 @@
+import { useRouter } from 'next/router';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
-import { NewEmailProps, getNewEmailProps } from '@lib/server/newemail';
 import usePage from '@lib/hooks/usePage';
+import useAuth from '@lib/hooks/useAuth';
 
-const NewEmail: NextPage<NewEmailProps> = (props) => {
-  const { successMsg, errorMsg } = props;
-
+const NewEmail: NextPage = () => {
+  const router = useRouter();
   const page = usePage();
+  const { updateEmail, errorMsg, successMsg } = useAuth();
+
+  const onClickUpdateBtn = () => {
+    const token = typeof router.query.token == 'string' ? router.query.token : '';
+    updateEmail(token);
+  }
 
   return (
     <>
@@ -44,9 +52,24 @@ const NewEmail: NextPage<NewEmailProps> = (props) => {
           Email update link
         </Typography>
 
-        <Typography component="h2" variant="subtitle1" my={2}>
-          { successMsg || errorMsg }
-        </Typography>
+        <Button
+          onClick={onClickUpdateBtn}
+          sx={{
+            mt: 2,
+            mb: 2,
+          }}
+        >
+          Confirm new email
+        </Button>
+
+        {
+          errorMsg && errorMsg !== '' &&
+            <Alert severity="error">{ errorMsg }</Alert>
+        }  
+        {
+          successMsg && successMsg !== '' &&
+            <Alert>{ successMsg }</Alert>
+        } 
 
       </Container>
     </>
@@ -54,5 +77,3 @@ const NewEmail: NextPage<NewEmailProps> = (props) => {
 };
 
 export default NewEmail;
-
-export const getServerSideProps = getNewEmailProps;

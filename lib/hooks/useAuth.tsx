@@ -15,6 +15,7 @@ import {
   loginUser, 
   logoutUser, 
   isAdminUser,
+  updateUserEmail,
   resetUserPassword,
   sendUserActivationEmail,
   sendUserUpdateEmail,
@@ -108,6 +109,33 @@ const useAuth = () => {
     }
   };
 
+  const updateEmail = async (token: string) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    updateUserEmail(token).then((response: {token: string, user: User}) => {
+      onUpdateEmailSuccess(response.token, response.user);
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('Token is missing or has expirated')) {
+        errorMsg = 'This link is not valid or has expirated';
+      } else if (errorMsg.includes('Email must be unique')) {
+        errorMsg = 'Introduced email already exists';
+      } else {
+        errorMsg = 'Something went wrong, try again or resend another email';
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
+
+  const onUpdateEmailSuccess = (token: string, user: User) => {
+    setToken(token);
+    setUser(user);
+    setLoading(false);
+    setSuccessMsg(`Your email is updated now as ${user.email}. You can close this window.`);
+  };
+
   const resetPassword = async (token: string, formResetPassword: FormResetPassword) => {
     setLoading(true);
     setErrorMsg('');
@@ -130,7 +158,7 @@ const useAuth = () => {
     setToken(token);
     setUser(user);
     setLoading(false);
-    setSuccessMsg('Updated password. You can close this window and login with your new password.');
+    setSuccessMsg('Your password is updated now. You can close this window and login with your new password.');
   };
 
   const sendActivationEmail = (email: string, onSuccess?: () => void) => {
@@ -199,6 +227,7 @@ const useAuth = () => {
     register,
     login, 
     logout,
+    updateEmail,
     resetPassword,
     sendActivationEmail,
     sendResetEmail,
