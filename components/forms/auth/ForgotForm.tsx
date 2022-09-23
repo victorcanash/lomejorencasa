@@ -1,13 +1,14 @@
 import { Formik, Form } from 'formik';
 
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Divider from '@mui/material/Divider';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import { RouterPaths } from '@core/constants/navigation';
@@ -15,7 +16,13 @@ import Link from '@core/components/Link';
 import { initRegisterValues, sendEmailValidation } from '@core/constants/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
 
-const ForgotForm = () => {
+type ForgotFormProps = {
+  forgotPage: boolean,
+}
+
+const ForgotForm = (props: ForgotFormProps) => {
+  const { forgotPage } = props;
+
   const { sendResetEmail, errorMsg, successMsg } = useAuth();
 
   const handleSubmit = async (values: {email: string}) => {
@@ -25,6 +32,11 @@ const ForgotForm = () => {
   return (
     <Container maxWidth="xs">
 
+      {
+        !forgotPage &&
+          <Divider sx={{ my: 3 }} />
+      }
+
       <Box
         sx={{
           display: 'flex',
@@ -33,18 +45,28 @@ const ForgotForm = () => {
         }}
       >
 
-        <Avatar 
-          sx={{ 
-            m: 1, 
-            bgcolor: 'secondary.main' 
-          }}
-        >
-            <LockOutlinedIcon />
-        </Avatar>
+        {
+          forgotPage &&
+            <Avatar 
+              sx={{ 
+                m: 1, 
+                bgcolor: 'secondary.main' 
+              }}
+            >
+                <LockOutlinedIcon />
+            </Avatar>
+        }
 
-        <Typography component="h1" variant="h5">
-          Update your password
-        </Typography>
+        {
+          forgotPage ?
+            <Typography component="h1" variant="h5">
+              Forgotten password
+            </Typography>
+            :
+            <Typography component="h2" variant="h6">
+              Change your password
+            </Typography>
+        }
 
         <Formik
           initialValues={{
@@ -56,8 +78,8 @@ const ForgotForm = () => {
           {props => (
             <Form>
 
-              <Typography component="h2" variant="subtitle1" my={2}>
-                Introduce the email linked to your account and we will send you an email with a link to set your new password.
+              <Typography component={forgotPage ? 'h2' : 'h3'} variant="subtitle1" mt={1}>
+                Introduce your email address and we will send you an email with a link to set your new password.
               </Typography>
 
               {/* Email Field */}
@@ -94,14 +116,16 @@ const ForgotForm = () => {
                   <Alert>{ successMsg }</Alert>
               }  
 
-              <Grid container>
-
-                <Grid item>
-                  <Link href={RouterPaths.login} variant="body2">
-                    Back to Sign in
-                  </Link>
-                </Grid>
-              </Grid>
+              {
+                forgotPage &&
+                  <Grid container>
+                    <Grid item>
+                      <Link href={RouterPaths.login} variant="body2">
+                        Back to Sign in
+                      </Link>
+                    </Grid>
+                  </Grid>
+              }
 
             </Form>
           )}

@@ -35,7 +35,7 @@ const UpdateUserForm = () => {
       >
 
         <Typography component="h2" variant="h6">
-          Change data
+          Change your personal data
         </Typography>
 
         <Formik

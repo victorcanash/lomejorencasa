@@ -14,7 +14,7 @@ const Forgot: NextPage = () => {
         <meta name="description" content="Forgot password page" />
       </Head>
       
-      <ForgotForm />
+      <ForgotForm forgotPage={true} />
     </>
   )
 };
