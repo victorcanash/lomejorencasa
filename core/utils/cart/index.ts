@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import { Cart, CartItem } from '@core/types/cart';
-import { createCart as createCartMW, createCartItem as createCartItemMW, updateCartItem as updateCartItemMW, deleteCartItem as deleteCartItemMW } from '@core/middlewares/cart';
+import { /*Cart,*/ CartItem } from '@core/types/cart';
+import { /*createCart as createCartMW,*/ createCartItem as createCartItemMW, updateCartItem as updateCartItemMW, deleteCartItem as deleteCartItemMW } from '@core/middlewares/cart';
 import { getBackendErrorMsg } from '@core/utils/errors';
 
-export const createCart = (token: string) => {
+/*export const createCart = (token: string) => {
   return new Promise<{cart: Cart}>(async (resolve, reject) => {
     createCartMW(token)
       .then(async (response: AxiosResponse) => {
@@ -22,7 +22,7 @@ export const createCart = (token: string) => {
         reject(new Error(errorMsg));
       }); 
   })
-};
+};*/
 
 export const createCartItem = (token: string, cartItem: CartItem) => {
   return new Promise<{cartItem: CartItem}>(async (resolve, reject) => {
