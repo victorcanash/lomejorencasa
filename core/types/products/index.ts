@@ -8,7 +8,7 @@ export type Product = {
   realPrice: number;
   imageNames: string[];
   inventories: ProductInventory[];
-  discount?: ProductDiscount;
+  activeDiscount?: ProductDiscount;
 };
 
 export type ProductCategory = {

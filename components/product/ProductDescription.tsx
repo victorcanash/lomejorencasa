@@ -23,7 +23,7 @@ const ProductDescription = (props: ProductDescriptionProps) => {
         </Typography>
       }
       
-      { product.discount ?
+      { product.activeDiscount ?
         <>
           <Typography component={ detailed ? "h2" : "div" } variant={ detailed ? "h4" : "subtitle1"} color="error">
             {product.realPrice} €
@@ -32,7 +32,7 @@ const ProductDescription = (props: ProductDescriptionProps) => {
             Original: <s>{product.price} €</s>
           </Typography> 
           <Typography component={ detailed ? "h3" : "span" } variant={ detailed ? "h6" : "subtitle2"} color="error"> 
-            {` -${product.discount.discountPercent}%`}
+            {` -${product.activeDiscount.discountPercent}%`}
           </Typography> 
         </>
         :
