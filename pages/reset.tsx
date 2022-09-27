@@ -18,7 +18,7 @@ const Reset: NextPage = () => {
 
       <Container 
         maxWidth={false}
-        className="centeredPage"
+        className="noLayoutPage"
       >
         <ResetPasswordForm />
       </Container>

@@ -24,7 +24,7 @@ const Activation: NextPage<ActivationProps> = (props) => {
 
       <Container 
         maxWidth={false}
-        className="centeredPage"
+        className="noLayoutPage"
       >
         <Avatar 
           sx={{ 
