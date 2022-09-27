@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 
 import { RouterPaths, routerPathsMainLayout, routerPathsLinkLayout } from '@core/constants/navigation';
-import MainLayout from '@components/Layouts/MainLayout';
-import LinkLayout from '@components/Layouts/LinkLayout';
+import MainLayout from '@components/layouts/MainLayout';
+import LinkLayout from '@components/layouts/LinkLayout';
 
 const useLayout = (pathname: string) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
