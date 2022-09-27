@@ -14,7 +14,6 @@ import {
   registerUser, 
   loginUser, 
   logoutUser, 
-  isAdminUser,
   updateUserEmail,
   resetUserPassword,
   sendUserActivationEmail,

@@ -23,7 +23,7 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
-import { RouterPaths } from '@core/constants/navigation';
+import { RouterPaths, routerPathsWithoutLayout } from '@core/constants/navigation';
 import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
@@ -48,11 +48,7 @@ function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
   const { asPath } = useRouter();
 
-  const isLayoutNeeded = ![
-    `${RouterPaths.activation}`, 
-    `${RouterPaths.reset}`, 
-    `${RouterPaths.newemail}`]
-    .includes(props.router.pathname);
+  const isLayoutNeeded = !routerPathsWithoutLayout.includes(props.router.pathname as RouterPaths);
   const LayoutComponent = isLayoutNeeded ? Layout : Fragment;
 
   return (

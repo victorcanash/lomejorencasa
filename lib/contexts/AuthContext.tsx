@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { RouterPaths, routerPathsProtected, routerPathsAdmin } from '@core/constants/navigation';
 import type { User } from '@core/types/user';
 
 type ContextType = {
@@ -50,17 +50,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isProtectedPath = (path: string) => {
-    if (path != RouterPaths.myaccount &&
-        path != RouterPaths.cart &&
-        path != RouterPaths.orders &&
-        path != RouterPaths.admin) {
+    if (!routerPathsProtected.includes(path as RouterPaths)) {
       return false;
     }
     return true;
   };
 
   const isAdminPath = (path: string) => {
-    if (path != RouterPaths.admin) {
+    if (!routerPathsAdmin.includes(path as RouterPaths)) {
       return false;
     }
     return true;
