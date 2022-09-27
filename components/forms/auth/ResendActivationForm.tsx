@@ -9,12 +9,12 @@ import LinkButton from '@core/components/LinkButton';
 import useAuth from '@lib/hooks/useAuth';
 import useCountdown from '@lib/hooks/useCountdown';
 
-type ActivateAccountProps = {
+type ResendActivationFormProps = {
   email: string,
   onClickProceedBtn?: () => void,
 };
 
-const ActivateAccount = (props: ActivateAccountProps) => {
+const ResendActivationForm = (props: ResendActivationFormProps) => {
   const { email, onClickProceedBtn } = props;
 
   const { sendActivationEmail, errorMsg, successMsg } = useAuth();
@@ -88,4 +88,4 @@ const ActivateAccount = (props: ActivateAccountProps) => {
   );
 };
 
-export default ActivateAccount;
+export default ResendActivationForm;

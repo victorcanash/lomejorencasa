@@ -4,7 +4,7 @@ import Head from 'next/head';
 
 import usePage from '@lib/hooks/usePage';
 import LoginForm from '@components/forms/auth/LoginForm';
-import ActivateAccount from '@components/ActivateAccount';
+import ResendActivationForm from '@components/forms/auth/ResendActivationForm';
 
 const Login: NextPage = () => { 
   const page = usePage();
@@ -31,7 +31,7 @@ const Login: NextPage = () => {
         !email ?
           <LoginForm onFailByActivation={onLoginFailByActivation} />
           :
-          <ActivateAccount email={email} onClickProceedBtn={onClickProceedBtn} />
+          <ResendActivationForm email={email} onClickProceedBtn={onClickProceedBtn} />
       }
     </>
   )

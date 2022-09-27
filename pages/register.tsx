@@ -4,7 +4,7 @@ import Head from "next/head";
 
 import usePage from '@lib/hooks/usePage';
 import RegisterForm from '@components/forms/auth/RegisterForm';
-import ActivateAccount from '@components/ActivateAccount';
+import ResendActivationForm from '@components/forms/auth/ResendActivationForm';
 
 const Register: NextPage = () => { 
   const page = usePage();
@@ -27,7 +27,7 @@ const Register: NextPage = () => {
         !email ?
           <RegisterForm onSuccess={onRegisterSuccess} />
           :
-          <ActivateAccount email={email} />
+          <ResendActivationForm email={email} />
       }
     </>
   )
