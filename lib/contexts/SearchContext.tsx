@@ -10,7 +10,7 @@ type SearchContext = {
   setSortBy: Dispatch<SetStateAction<string>>,
   order: string,
   setOrder: Dispatch<SetStateAction<string>>,
-  getHref: (categoryName?: string, page?: number, keywords?: string) => string,
+  getHref: (categoryName?: string, page?: number, keywords?: string, admin?: boolean) => string,
   initSearch: (productCategories: ProductCategory[]) => void,
 };
 
@@ -42,8 +42,9 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     setCategories(productCategories);
   }
 
-  const getHref = (categoryName = allProductsName, page = 1, keywords = '') => {
-    return `${RouterPaths.productList}/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
+  const getHref = (categoryName = allProductsName, page = 1, keywords = '', admin = false) => {
+    const routerPath = !admin ? RouterPaths.productList : RouterPaths.admin;
+    return `${routerPath}/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
   };
 
   return (

@@ -10,9 +10,7 @@ const Search: NextPage<CollectionProps> = (props) => {
     products, 
     currentPage, 
     totalPages, 
-    productCategory, 
-    sortBy, 
-    order, 
+    productCategory,  
     keywords 
   } = props;
 
@@ -30,6 +28,7 @@ const Search: NextPage<CollectionProps> = (props) => {
         products={products} 
         totalPages={totalPages}
         currentPage={currentPage}
+        keywords={keywords}
       />
     </>
   );

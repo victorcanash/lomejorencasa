@@ -8,8 +8,6 @@ export type CollectionProps = {
   currentPage: number,
   totalPages: number, 
   productCategory: ProductCategory | null,
-  sortBy: string,
-  order: string,
   keywords: string,
 };
 
@@ -38,8 +36,6 @@ export const getCollectionProps: GetServerSideProps = async (context) => {
           productCategory: response.productCategory,
           currentPage: response.currentPage,
           totalPages: response.totalPages,
-          sortBy: sortBySearch,
-          order: orderSearch,
           keywords: keywordsSearch
         }
       };

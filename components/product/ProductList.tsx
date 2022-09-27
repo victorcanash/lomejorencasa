@@ -17,17 +17,18 @@ type ProductListProps = {
   products: Product[],
   totalPages: number,
   currentPage: number,
+  keywords: string,
 };
 
 const ProductList = (props: ProductListProps) => {
-  const { category, products, totalPages, currentPage } = props;
+  const { category, products, totalPages, currentPage, keywords } = props;
 
   const { getHref } = useSearchContext();
 
   const router = useRouter();
 
-  const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
-    router.push(getHref(category?.name || allProductsName, value));
+  const handleChangePage = (event: React.ChangeEvent<unknown>, page: number) => {
+    router.push(getHref(category?.name || allProductsName, page, keywords));
   };
 
   return (
