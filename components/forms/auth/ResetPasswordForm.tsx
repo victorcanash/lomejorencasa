@@ -34,7 +34,11 @@ const ResetPasswordForm = () => {
       >
 
         <Typography component="h1" variant="h5">
-          Reset your password
+          Password reset link
+        </Typography>
+
+        <Typography component="h2" variant="subtitle1" mt={4}>
+          Introduce your new password
         </Typography>
 
         <Formik

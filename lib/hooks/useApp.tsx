@@ -10,7 +10,7 @@ import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
-const useApp = () => {
+const useApp = (fromMainLayout = true) => {
   const { setInitialized } = useAppContext();
   const { initSearch } = useSearchContext();
   const { setToken, setUser } = useAuthContext();
@@ -38,9 +38,13 @@ const useApp = () => {
         });
       };  
 
-      initData();
+      if (fromMainLayout) {
+        initData();
+      } else {
+        setInitialized(true);
+      }
     }    
-  }, [initCart, initSearch, setInitialized, setToken, setUser]);
+  }, [fromMainLayout, initCart, initSearch, setInitialized, setToken, setUser]);
 
   return {};
 }

@@ -30,7 +30,20 @@ export const routerPathsAdmin = [
   RouterPaths.admin,
 ];
 
-export const routerPathsWithoutLayout = [
+export const routerPathsMainLayout = [
+  RouterPaths.home,
+  RouterPaths.about,
+  RouterPaths.productList,
+  RouterPaths.productDetail,
+  RouterPaths.login,
+  RouterPaths.register,
+  RouterPaths.forgot,
+  RouterPaths.myaccount,
+  RouterPaths.cart,
+  RouterPaths.orders,
+];
+
+export const routerPathsLinkLayout = [
   RouterPaths.activation,
   RouterPaths.reset,
   RouterPaths.newemail,

@@ -3,7 +3,6 @@ import Head from 'next/head';
 
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
@@ -18,37 +17,31 @@ const Activation: NextPage<ActivationProps> = (props) => {
   return (
     <>
       <Head>
-        <title>Account activation</title>
-        <meta name="description" content="Activation page" />
+        <title>Account activation link</title>
+        <meta name="description" content="Account activation link" />
       </Head>
 
-      <Container 
-        maxWidth={false}
-        className="noLayoutPage"
+      <Avatar 
+        sx={{ 
+          mb: 1, 
+          bgcolor: 'secondary.main' 
+        }}
       >
-        <Avatar 
-          sx={{ 
-            mb: 1, 
-            bgcolor: 'secondary.main' 
-          }}
-        >
-          {
-            successMsg != '' ?
-              <CheckCircleIcon />
-              :
-              <ErrorIcon />
-          }
-        </Avatar>
+        {
+          successMsg != '' ?
+            <CheckCircleIcon />
+            :
+            <ErrorIcon />
+        }
+      </Avatar>
 
-        <Typography component="h1" variant="h5">
-          Account activation link
-        </Typography>
+      <Typography component="h1" variant="h5">
+        Account activation link
+      </Typography>
 
-        <Typography component="h2" variant="subtitle1" mt={4}>
-          { successMsg || errorMsg }
-        </Typography>
-
-      </Container>
+      <Typography component="h2" variant="subtitle1" mt={4}>
+        { successMsg || errorMsg }
+      </Typography>
     </>
   );
 };

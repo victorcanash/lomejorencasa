@@ -6,7 +6,6 @@ import 'swiper/css/effect-coverflow';
 // import 'react-medium-image-zoom/dist/styles.css'
 import 'styles/globals.css';
 
-import { Fragment } from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -23,15 +22,14 @@ import { loadStripe } from '@stripe/stripe-js';
 
 import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
-import { RouterPaths, routerPathsWithoutLayout } from '@core/constants/navigation';
 import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
 import { AuthProvider } from '@lib/contexts/AuthContext';
 import { CartProvider } from '@lib/contexts/CartContext';
+import useLayout from '@lib/hooks/useLayout';
 import ErrorBoundary from '@components/ErrorBoundary';
-import Layout from '@components/Layout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -46,10 +44,9 @@ interface MyAppProps extends AppProps {
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  
   const { asPath } = useRouter();
-
-  const isLayoutNeeded = !routerPathsWithoutLayout.includes(props.router.pathname as RouterPaths);
-  const LayoutComponent = isLayoutNeeded ? Layout : Fragment;
+  const { LayoutComponent } = useLayout(props.router.pathname);
 
   return (
     <>

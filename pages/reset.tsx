@@ -1,8 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import Container from '@mui/material/Container';
-
 import usePage from '@lib/hooks/usePage';
 import ResetPasswordForm from '@components/forms/auth/ResetPasswordForm';
 
@@ -12,16 +10,11 @@ const Reset: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Password reset</title>
-        <meta name="description" content="Reset page" />
+        <title>Password reset link</title>
+        <meta name="description" content="Password reset link" />
       </Head>
 
-      <Container 
-        maxWidth={false}
-        className="noLayoutPage"
-      >
-        <ResetPasswordForm />
-      </Container>
+      <ResetPasswordForm />
     </>
   );
 };

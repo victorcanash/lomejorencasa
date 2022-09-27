@@ -29,7 +29,7 @@ const ConfirmNewEmailForm = () => {
       >
       
         <Typography component="h1" variant="h5">
-          Email update link
+          Confirm new email link
         </Typography>
 
         <Typography component="h2" variant="subtitle1" mt={4}>
