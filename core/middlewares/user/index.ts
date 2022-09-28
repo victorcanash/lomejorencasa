@@ -1,13 +1,22 @@
 import { AxiosRequestConfig } from 'axios';
 
 import axios from '@core/config/axios.config';
-import type { FormUpdateUser } from '@core/types/forms/user';
+import type { User } from '@core/types/user';
 
-export const update = (token: string, formUpdateUser: FormUpdateUser, userId: number) => {
+export const updateUser = (token: string, user: User) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   };
-  return axios.put(`/users/${userId}`, formUpdateUser, options);
+  return axios.put(`/users/${user.id}`, user, options);
 };
+
+export const deleteUser = (token: string, user: User) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  }
+  return axios.delete(`/users/${user.id}`, options)
+}

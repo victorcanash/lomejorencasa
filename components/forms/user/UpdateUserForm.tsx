@@ -10,17 +10,18 @@ import Alert from '@mui/material/Alert';
 
 import { updateUserValidation } from '@core/constants/forms/user';
 import { initRegisterValues } from '@core/constants/forms/auth';
-import { FormUpdateUser } from '@core/types/forms/user';
+import { ManageActions } from '@core/constants/auth';
+import { User } from '@core/types/user';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useUser from '@lib/hooks/useUser';
 
 const UpdateUserForm = () => {
   const { user } = useAuthContext();
 
-  const { update, errorMsg, successMsg } = useUser();
+  const { manageUser, errorMsg, successMsg } = useUser();
 
-  const handleSubmit = async (values: FormUpdateUser) => {
-    update(values);
+  const handleSubmit = async (values: User) => {
+    manageUser(ManageActions.update, values);
   };
 
   return (
@@ -40,10 +41,12 @@ const UpdateUserForm = () => {
 
         <Formik
           initialValues={{
+            id: user?.id || -1,
+            email: user?.email || '',
             firstName: user?.firstName || initRegisterValues.firstName,
             lastName: user?.lastName || initRegisterValues.lastName,
             birthday: user?.birthday || initRegisterValues.birthday,
-          } as FormUpdateUser}
+          } as User}
           validationSchema={updateUserValidation}
           onSubmit={handleSubmit}
           enableReinitialize
