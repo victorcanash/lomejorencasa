@@ -126,7 +126,7 @@ export const getLoggedUser = async () => {
 export const isAdminUser = async (token: string) => {
   return new Promise<boolean>(async (resolve, reject) => {
     isAdmin(token).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.OK && response.data?.isAdmin) {
+      if (response.status === StatusCodes.OK) {
           resolve(response.data?.isAdmin ? true : false);
       } else {
         throw new Error('Something went wrong');

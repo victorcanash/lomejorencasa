@@ -18,13 +18,19 @@ const usePage = () => {
         if (isProtectedPath(router.asPath) && !isLogged()) {
           router.push(pages.login.path);
           return;
+
         } else if (isAdminPath(router.asPath)) {
-          const userAdmin = await isAdminUser(token) 
-          if (!userAdmin) {
+          await isAdminUser(token).then((response: boolean) => {
+            if (!response) {
+              router.push(pages.home.path);
+              return;
+            }
+          }).catch((error: Error) => {
             router.push(pages.home.path);
             return;
-          }
+          }); 
         }
+        
         setLoading(false); 
       }
       
