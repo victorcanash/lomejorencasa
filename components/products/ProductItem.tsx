@@ -9,7 +9,7 @@ import { pages } from '@core/config/navigation.config';
 import { Product } from "@core/types/products";
 import Link from '@core/components/Link';
 import { getProductImgUrl } from '@core/utils/products';
-import ProductDescription from '@components/product/ProductDescription';
+import ProductDescription from '@components/products/ProductDescription';
 
 type ProductItemProps = {
   product: Product,

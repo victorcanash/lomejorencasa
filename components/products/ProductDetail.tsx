@@ -11,7 +11,7 @@ import { Product } from '@core/types/products';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import GoBackBtn from '@components/ui/GoBackBtn';
-import ProductDescription from '@components/product/ProductDescription';
+import ProductDescription from '@components/products/ProductDescription';
 import Carousel from '@components/Carousel';
 
 type ProductDetailProps = {
