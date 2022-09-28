@@ -3,9 +3,10 @@ import { useRouter } from 'next/router';
 import { useSnackbar } from 'notistack';
 
 import { pages } from '@core/config/navigation.config';
+import { ManageActions } from '@core/constants/auth';
 import { CartItem } from '@core/types/cart';
 import { Product, ProductInventory } from '@core/types/products';
-import { createCartItem, updateCartItem, deleteCartItem } from '@core/utils/cart';
+import { manageCartItem } from '@core/utils/cart';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -47,7 +48,7 @@ const useCart = () => {
 
     // Update cart item
     if (cartItemIndex > -1) {
-      updateCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
+      manageCartItem(ManageActions.update, token, cartItem).then((response: { cartItem: CartItem }) => {
         cart.items[cartItemIndex] = cartItem;
         addCartItemSuccess(product.realPrice);
       }).catch((error: Error) => {
@@ -56,7 +57,7 @@ const useCart = () => {
 
     // Create cart item
     } else {
-      createCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
+      manageCartItem(ManageActions.update, token, cartItem).then((response: { cartItem: CartItem }) => {
         cartItem.id = response.cartItem.id;
         cart.items.push(cartItem);
         addCartItemSuccess(product.realPrice);
@@ -95,7 +96,7 @@ const useCart = () => {
       const addedQuantity = quantity - cartItem.quantity;
       const addedPrice = cartItem.product.realPrice * addedQuantity;
       cartItem.quantity = quantity;
-      updateCartItem(token, cartItem).then((response: { cartItem: CartItem }) => {
+      manageCartItem(ManageActions.update, token, cartItem).then((response: { cartItem: CartItem }) => {
         cart.items[cartItemIndex] = cartItem;
         updateCartItemSuccess(addedQuantity, addedPrice);
       }).catch((error: Error) => {
@@ -106,7 +107,7 @@ const useCart = () => {
     } else {
       const addedQuantity = -cartItem.quantity;
       const addedPrice = -(cartItem.product.realPrice * cartItem.quantity);
-      deleteCartItem(token, cartItem.id).then(() => {
+      manageCartItem(ManageActions.update, token, cartItem).then(() => {
         cart.items.splice(cartItemIndex);
         updateCartItemSuccess(addedQuantity, addedPrice);
       }).catch((error: Error) => {

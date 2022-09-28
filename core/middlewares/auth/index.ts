@@ -49,7 +49,7 @@ export const isAdmin = (token: string) => {
   return axios.get('/auth/admin', options);
 };
 
-export const updateEmail = (token: string, newEmail = '', userId = -1, ) => {
+export const updateEmail = (token: string, newEmail = '', userId = -1) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`

@@ -30,11 +30,11 @@ export const updateCartItem = (token: string, cartItem: CartItem) => {
   return axios.put(`/citems/${cartItem.id}`, cartItem, options)
 }
 
-export const deleteCartItem = (token: string, id: number) => {
+export const deleteCartItem = (token: string, cartItem: CartItem) => {
   const options: AxiosRequestConfig = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   }
-  return axios.delete(`/citems/${id}`, options)
+  return axios.delete(`/citems/${cartItem.id}`, options)
 }

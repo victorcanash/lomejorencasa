@@ -24,7 +24,7 @@ import {
   sendResetEmail,
   sendUpdateEmail
 } from '@core/middlewares/auth';
-import { getBackendErrorMsg } from '@core/utils/errors';
+import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 
 export const registerUser = async (formRegister: FormRegister) => {
@@ -36,11 +36,11 @@ export const registerUser = async (formRegister: FormRegister) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error)
-      console.error(`[Register ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Register ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
-  })
+  });
 };
 
 export const activateUser = async (token: string) => {
@@ -52,8 +52,8 @@ export const activateUser = async (token: string) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Activate ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Activate ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
   })
@@ -81,11 +81,11 @@ export const loginUser = async (formLogin: FormLogin) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Login ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Login ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
-  })
+  });
 };
 
 export const logoutUser = async (token: string) => {
@@ -116,11 +116,11 @@ export const getLoggedUser = async () => {
       /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
         removeStorageItem(Storages.local, JWTTokenKey);
       }*/
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Get Logged ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Get Logged ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     }); 
-  })
+  });
 };
 
 export const isAdminUser = async (token: string) => {
@@ -132,8 +132,8 @@ export const isAdminUser = async (token: string) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Is Admin ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Is Admin ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     }); 
   })
@@ -160,8 +160,8 @@ export const updateUserEmail = async (token: string, newEmail = '', userId = -1)
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Update Email ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Update Email ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
   })
@@ -188,8 +188,8 @@ export const resetUserPassword = async (token: string, formResetPassword: FormRe
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Reset Password ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Reset Password ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
   })
@@ -204,8 +204,8 @@ export const sendUserActivationEmail = async (email: string) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Send Activation Email ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Send Activation Email ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
   })
@@ -220,8 +220,8 @@ export const sendUserResetEmail = async (email: string) => {
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Send Reset Email ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Send Reset Email ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
   })
@@ -236,8 +236,8 @@ export const sendUserUpdateEmail = async (token: string, formUpdateEmail: FormUp
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Send Update Email ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Send Update Email ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
   })

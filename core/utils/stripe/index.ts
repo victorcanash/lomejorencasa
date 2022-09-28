@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import { createCheckoutSession as createCheckoutSessionMW } from '@core/middlewares/stripe';
-import { getBackendErrorMsg } from '@core/utils/errors';
+import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const createCheckoutSession = (token: string) => {
   return new Promise<{sessionId: string}>(async (resolve, reject) => {
@@ -16,8 +16,8 @@ export const createCheckoutSession = (token: string) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg(error);
-        console.error(`[Create Checkout Session ERROR]: ${errorMsg}`);
+        const errorMsg = getBackendErrorMsg('Create Checkout Session ERROR', error);
+        logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
   })

@@ -5,3 +5,9 @@ export enum Protections {
   user = 'user',
   admin = 'admin',
 };
+
+export const enum ManageActions {
+  create = 'create',
+  update = 'update',
+  delete = 'delete',
+};

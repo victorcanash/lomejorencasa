@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import type { User } from '@core/types/user';
 import type { FormUpdateUser } from '@core/types/forms/user';
 import { update } from '@core/middlewares/user';
-import { getBackendErrorMsg } from '@core/utils/errors';
+import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const updateUser = async (token: string, formUpdateUser: FormUpdateUser, userId: number) => {
   return new Promise<{user: User}>((resolve, reject) => {
@@ -17,9 +17,9 @@ export const updateUser = async (token: string, formUpdateUser: FormUpdateUser, 
         throw new Error('Something went wrong');
       }
     }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Update User ERROR]: ${errorMsg}`);
+      const errorMsg = getBackendErrorMsg('Update User ERROR', error);
+      logBackendError(errorMsg);
       reject(new Error(errorMsg));
     });
-  })
+  });
 };
