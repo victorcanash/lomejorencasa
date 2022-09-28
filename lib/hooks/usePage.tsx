@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { pages } from '@core/config/navigation.config';
@@ -9,6 +9,8 @@ import { isAdminUser } from '@core/utils/auth';
 const usePage = () => {
   const { initialized, setLoading } = useAppContext();
   const { token, isLogged, isProtectedPath, isAdminPath } = useAuthContext();
+
+  const [checked, setChecked] = useState(false);
 
   const router = useRouter();
 
@@ -32,13 +34,16 @@ const usePage = () => {
         }
         
         setLoading(false); 
+        setChecked(true);
       }
       
       checkPage();
     }
   }, [isProtectedPath, isAdminPath, token, router, router.asPath, setLoading, isLogged, initialized]);
 
-  return {};
+  return {
+    checked
+  };
 };
 
 export default usePage;
