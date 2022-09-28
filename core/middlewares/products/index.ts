@@ -49,19 +49,3 @@ export const getProductCategories = (page: number, limit: number, sortBy?: strin
   }
   return axios.get('/pcategories', options);
 };
-
-export const getProductDiscounts = (token: string, page: number, limit: number, productId: number, sortBy?: string, order?: string) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    params: {
-      page,
-      limit,
-      productId,
-      sortBy,
-      order,
-    }
-  }
-  return axios.get('/pdiscounts', options);
-};
