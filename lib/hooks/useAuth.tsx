@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import type { User } from '@core/types/user';
 import type { 
   FormRegister, 
@@ -91,7 +91,7 @@ const useAuth = () => {
     if (prevLoginPath){
       router.push(prevLoginPath);
     } else {
-      router.push(RouterPaths.home);
+      router.push(pages.home.path);
     }
   };
 

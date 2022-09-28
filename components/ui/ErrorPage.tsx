@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import LinkButton from '@core/components/LinkButton';
 import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';
@@ -29,7 +29,7 @@ const ErrorPage = (props: ErrorPageProps) => {
         {title}
       </Typography>
       <Box maxWidth="sm">
-        <LinkButton href={RouterPaths.home}>
+        <LinkButton href={pages.home.path}>
           Go to the home page
         </LinkButton>
       </Box>

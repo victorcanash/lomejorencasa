@@ -4,7 +4,7 @@ import Head from "next/head";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import LinkButton from '@core/components/LinkButton';
 import usePage from '@lib/hooks/usePage';
 import ProTip from '@components/ui/ProTip';
@@ -24,7 +24,7 @@ const About: NextPage = () => {
         MUI v5 + Next.js with TypeScript example
       </Typography>
       <Box maxWidth="sm">
-        <LinkButton href={RouterPaths.home}>
+        <LinkButton href={pages.home.path}>
           Go to the home page
         </LinkButton>
       </Box>

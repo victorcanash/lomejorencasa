@@ -1,4 +1,4 @@
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import { DrawerItem } from '@core/types/header';
 
 export enum Drawers {
@@ -9,11 +9,11 @@ export enum Drawers {
 export const loggedUserDrawerItems: DrawerItem[] = [
   {
     text: 'Your profile',
-    path: RouterPaths.myaccount,
+    path: pages.myaccount.path,
   },
   {
     text: 'Orders',
-    path: RouterPaths.orders,
+    path: pages.orders.path,
   },
   {
     text: 'Sign out',
@@ -24,10 +24,10 @@ export const loggedUserDrawerItems: DrawerItem[] = [
 export const unloggedUserDrawerItems: DrawerItem[] = [
   {
     text: 'Sign in',
-    path: RouterPaths.login,
+    path: pages.login.path,
   },
   {
     text: 'Register',
-    path: RouterPaths.register,
+    path: pages.register.path,
   },
 ];

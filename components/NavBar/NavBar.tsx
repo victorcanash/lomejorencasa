@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import { Drawers } from '@core/constants/header';
 import HideOnScroll from '@core/components/HideOnScroll';
 import Link from '@core/components/Link';
@@ -58,7 +58,7 @@ const NavBar = () => {
             size='large'
             color='inherit'
             component={Link}
-            href={RouterPaths.home}
+            href={pages.home.path}
           >
             <Image
               src={logo}
@@ -118,7 +118,7 @@ const NavBar = () => {
                 size='large'
                 color='inherit'
                 component={Link}
-                href={RouterPaths.cart}
+                href={pages.cart.path}
               >
                 <Badge badgeContent={totalQuantity} color='error'>
                   <ShoppingCartIcon sx={{ fontSize: 30 }} />

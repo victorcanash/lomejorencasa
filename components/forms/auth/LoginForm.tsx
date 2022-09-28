@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import Link from '@core/components/Link';
 import { loginValidation, initLoginValues } from '@core/constants/forms/auth';
 import { FormLogin } from '@core/types/forms/auth';
@@ -116,12 +116,12 @@ const LoginForm = (props: LoginFormProps) => {
 
               <Grid container>
                 <Grid item xs>
-                  <Link href={RouterPaths.forgot} variant="body2">
+                  <Link href={pages.forgot.path} variant="body2">
                     Forgot password?
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href={RouterPaths.register} variant="body2">
+                  <Link href={pages.register.path} variant="body2">
                     Don&apos;t have an account? Sign up
                   </Link>
                 </Grid>

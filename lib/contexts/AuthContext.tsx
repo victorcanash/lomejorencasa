@@ -1,7 +1,8 @@
 import { createContext, useContext, useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 
-import { RouterPaths, routerPathsProtected, routerPathsAdmin } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
+import { Protections } from '@core/constants/auth';
 import type { User } from '@core/types/user';
 
 type ContextType = {
@@ -50,27 +51,37 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isProtectedPath = (path: string) => {
-    if (!routerPathsProtected.includes(path as RouterPaths)) {
-      return false;
+    for (const [, value] of Object.entries(pages)) {
+      if (value.path == path) {
+        if (value.protection == Protections.user) {
+          return true;
+        }
+        break;
+      }
     }
-    return true;
+    return false;
   };
 
   const isAdminPath = (path: string) => {
-    if (!routerPathsAdmin.includes(path as RouterPaths)) {
-      return false;
+    for (const [, value] of Object.entries(pages)) {
+      if (value.path == path) {
+        if (value.protection == Protections.admin) {
+          return true;
+        }
+        break;
+      }
     }
-    return true;
+    return false;
   };
 
   useEffect(() => {
-    if (router.asPath != RouterPaths.login &&
-        router.asPath != RouterPaths.register &&
-        router.asPath != RouterPaths.forgot &&
-        router.asPath != RouterPaths.activation &&
-        router.asPath != RouterPaths.reset &&
-        router.asPath != RouterPaths.newemail &&
-        router.asPath != RouterPaths.admin) {
+    if (router.asPath != pages.login.path &&
+        router.asPath != pages.register.path &&
+        router.asPath != pages.forgot.path &&
+        router.asPath != pages.activation.path &&
+        router.asPath != pages.reset.path &&
+        router.asPath != pages.newemail.path &&
+        router.asPath != pages.admin.path) {
       prevLoginPathRef.current = router.asPath;
     }
   }, [router.asPath])

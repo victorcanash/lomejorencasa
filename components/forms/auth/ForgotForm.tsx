@@ -11,7 +11,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Alert from '@mui/material/Alert';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import Link from '@core/components/Link';
 import { initRegisterValues, sendEmailValidation } from '@core/constants/forms/auth';
 import useAuth from '@lib/hooks/useAuth';
@@ -120,7 +120,7 @@ const ForgotForm = (props: ForgotFormProps) => {
                 forgotPage &&
                   <Grid container>
                     <Grid item>
-                      <Link href={RouterPaths.login} variant="body2">
+                      <Link href={pages.login.path} variant="body2">
                         Back to Sign in
                       </Link>
                     </Grid>

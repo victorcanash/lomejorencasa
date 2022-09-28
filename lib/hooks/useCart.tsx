@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import { useSnackbar } from 'notistack';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import { CartItem } from '@core/types/cart';
 import { Product, ProductInventory } from '@core/types/products';
 import { createCartItem, updateCartItem, deleteCartItem } from '@core/utils/cart';
@@ -20,7 +20,7 @@ const useCart = () => {
 
   const addCartItem = (product: Product, inventory: ProductInventory) => {
     if (!isLogged() || !cart) {
-      router.push(RouterPaths.login);
+      router.push(pages.login.path);
       return;
     };
     setLoading(true);
@@ -80,7 +80,7 @@ const useCart = () => {
 
   const updateCartItemQuantity = async (cartItem: CartItem, quantity: number) => {
     if (!isLogged() || !cart) {
-      router.push(RouterPaths.login);
+      router.push(pages.login.path);
       return;
     };
     if (cartItem.quantity == quantity) {

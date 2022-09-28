@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { isAdminUser } from '@core/utils/auth';
@@ -16,12 +16,12 @@ const usePage = () => {
     if (initialized) {
       const checkPage = async () => {
         if (isProtectedPath(router.asPath) && !isLogged()) {
-          router.push(RouterPaths.login);
+          router.push(pages.login.path);
           return;
         } else if (isAdminPath(router.asPath)) {
           const userAdmin = await isAdminUser(token) 
           if (!userAdmin) {
-            router.push(RouterPaths.home);
+            router.push(pages.home.path);
             return;
           }
         }

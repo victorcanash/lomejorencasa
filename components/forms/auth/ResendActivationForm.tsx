@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import LinkButton from '@core/components/LinkButton';
 import useAuth from '@lib/hooks/useAuth';
 import useCountdown from '@lib/hooks/useCountdown';
@@ -49,7 +49,7 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
           Once you verified your account, proceed to login.
         </Typography>
 
-        <LinkButton href={RouterPaths.login} fullWidth onClick={onClickProceedBtn}>
+        <LinkButton href={pages.login.path} fullWidth onClick={onClickProceedBtn}>
             Proceed to login
         </LinkButton>
 

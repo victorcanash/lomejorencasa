@@ -1,6 +1,6 @@
 import { createContext, useState, Dispatch, SetStateAction, useContext } from 'react';
 
-import { RouterPaths } from '@core/constants/navigation';
+import { pages } from '@core/config/navigation.config';
 import { allProductsName } from '@core/constants/products';
 import type { ProductCategory } from '@core/types/products';
 
@@ -43,7 +43,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const getHref = (categoryName = allProductsName, page = 1, keywords = '', admin = false) => {
-    const routerPath = !admin ? RouterPaths.productList : RouterPaths.admin;
+    const routerPath = !admin ? pages.productList.path : pages.admin.path;
     return `${routerPath}/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
   };
 
