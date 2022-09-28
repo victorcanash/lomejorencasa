@@ -1,12 +1,12 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import { createCheckoutSession as createCheckoutSessionMW } from '@core/middlewares/stripe';
+import { createCheckoutSession } from '@core/middlewares/stripe';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
-export const createCheckoutSession = (token: string) => {
+export const addCheckoutSession = (token: string) => {
   return new Promise<{sessionId: string}>(async (resolve, reject) => {
-    createCheckoutSessionMW(token)
+    createCheckoutSession(token)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data?.sessionId) {
           resolve({

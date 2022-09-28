@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import Button from '@mui/material/Button';
 
-import { createCheckoutSession } from '@core/utils/stripe';
+import { addCheckoutSession } from '@core/utils/stripe';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const CheckoutBtn = () => {
@@ -19,7 +19,7 @@ const CheckoutBtn = () => {
     if (!stripe) {
       errorSnackbar();
     }
-    createCheckoutSession(token).then(async (response: { sessionId: string }) => {
+    addCheckoutSession(token).then(async (response: { sessionId: string }) => {
       stripe?.redirectToCheckout({
         sessionId: response.sessionId
       }).then(() => {
