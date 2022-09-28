@@ -3,23 +3,19 @@ import { StatusCodes } from 'http-status-codes';
 
 import { ManageActions } from '@core/constants/auth';
 import { CartItem } from '@core/types/cart';
-import { 
-  createCartItem as createCartItemMW, 
-  updateCartItem as updateCartItemMW, 
-  deleteCartItem as deleteCartItemMW 
-} from '@core/middlewares/cart';
+import { createCartItem, updateCartItem, deleteCartItem } from '@core/middlewares/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const manageCartItem = (action: ManageActions, token: string, cartItem: CartItem) => {
   return new Promise<{cartItem: CartItem}>(async (resolve, reject) => {
-    let promiseMW = createCartItemMW;
+    let promiseMW = createCartItem;
     let successStatus = StatusCodes.CREATED;
     let errorTitle = 'Create Cart Item ERROR';
     if (action == ManageActions.update) {
-      promiseMW = updateCartItemMW;
+      promiseMW = updateCartItem;
       errorTitle = 'Update Cart Item ERROR';
     } else if (action == ManageActions.delete) {
-      promiseMW = deleteCartItemMW;
+      promiseMW = deleteCartItem;
       successStatus = StatusCodes.OK;
       errorTitle = 'Delete Cart Item ERROR';
     }

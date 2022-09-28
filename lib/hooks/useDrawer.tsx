@@ -7,7 +7,7 @@ import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useDrawer = (drawer: Drawers) => {
-  const { categories, getHref } = useSearchContext();
+  const { productCategories, getHref } = useSearchContext();
   const { isLogged } = useAuthContext();
 
   const [items, setItems] = useState<DrawerItem[]>([]);
@@ -22,15 +22,15 @@ const useDrawer = (drawer: Drawers) => {
       }
     } else if (drawer == Drawers.categoriesDrawer) {
       const categoriesItems = [] as DrawerItem[];
-      categories.forEach((category) => {
+      productCategories.forEach((productCategory) => {
         categoriesItems.push({
-          text: capitalizeFirstLetter(category.name),
-          path: getHref(category.name)
+          text: capitalizeFirstLetter(productCategory.name),
+          path: getHref(productCategory.name)
         });
       });
       setItems(categoriesItems);
     }
-  }, [categories, drawer, getHref, isLogged]);
+  }, [drawer, getHref, isLogged, productCategories]);
 
   return {
     items,

@@ -12,7 +12,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useApp = (fromMainLayout = true) => {
   const { setInitialized } = useAppContext();
-  const { initSearch } = useSearchContext();
+  const { setProductCategories } = useSearchContext();
   const { setToken, setUser } = useAuthContext();
   const { initCart } = useCartContext();
 
@@ -31,7 +31,7 @@ const useApp = (fromMainLayout = true) => {
         }); 
 
         await getAllProductCategories().then((response: {productCategories: ProductCategory[]}) => {
-          initSearch(response.productCategories);
+          setProductCategories(response.productCategories);
           setInitialized(true);
         }).catch((error: Error) => {
           throw error;
@@ -44,7 +44,7 @@ const useApp = (fromMainLayout = true) => {
         setInitialized(true);
       }
     }    
-  }, [fromMainLayout, initCart, initSearch, setInitialized, setToken, setUser]);
+  }, [fromMainLayout, initCart, setInitialized, setProductCategories, setToken, setUser]);
 
   return {};
 }

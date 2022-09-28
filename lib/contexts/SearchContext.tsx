@@ -5,23 +5,23 @@ import { allProductsName } from '@core/constants/products';
 import type { ProductCategory } from '@core/types/products';
 
 type SearchContext = {
-  categories: ProductCategory[],
+  productCategories: ProductCategory[],
+  setProductCategories: Dispatch<SetStateAction<ProductCategory[]>>,
   sortBy: string,
   setSortBy: Dispatch<SetStateAction<string>>,
   order: string,
   setOrder: Dispatch<SetStateAction<string>>,
   getHref: (categoryName?: string, page?: number, keywords?: string, admin?: boolean) => string,
-  initSearch: (productCategories: ProductCategory[]) => void,
 };
 
 const SearchContext = createContext<SearchContext>({
-  categories: [],
+  productCategories: [],
+  setProductCategories: () => {},
   sortBy: 'id',
   setSortBy: () => {},
   order: 'asc',
   setOrder: () => {},
   getHref: () => '',
-  initSearch: () => {},
 });
 
 export const useSearchContext = () => {
@@ -34,13 +34,9 @@ export const useSearchContext = () => {
 };
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
-  const [categories, setCategories] = useState<ProductCategory[]>([]);
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
   const [sortBy, setSortBy] = useState('id');
   const [order, setOrder] = useState('asc');
-
-  const initSearch = (productCategories: ProductCategory[]) => {
-    setCategories(productCategories);
-  }
 
   const getHref = (categoryName = allProductsName, page = 1, keywords = '', admin = false) => {
     const routerPath = !admin ? pages.productList.path : pages.admin.path;
@@ -50,13 +46,13 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <SearchContext.Provider
       value={{
-        categories,
+        productCategories,
+        setProductCategories,
         sortBy,
         setSortBy,
         order,
         setOrder,
         getHref,
-        initSearch,
       }}
     >
       {children}

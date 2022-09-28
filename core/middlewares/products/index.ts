@@ -94,13 +94,13 @@ export const deleteProduct = (token: string, product: Product) => {
   return axios.delete(`/products/${product.id}`, options)
 }
 
-export const uploadProductImages = (token: string, images: string[], productId: number) => {
+export const uploadProductImages = (token: string, productImages: string[], productId: number) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.post(`/products/${productId}/images`, { images }, options);
+  return axios.post(`/products/${productId}/images`, { images: productImages }, options);
 };
 
 export const deleteProductImage = (token: string, id: number, productId: number) => {
