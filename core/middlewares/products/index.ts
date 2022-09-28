@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 import axios from '@core/config/axios.config';
-import { FormProduct, FormProductCategory, FormProductInventory, FormProductDiscount } from '@core/types/forms/products';
+import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 
 export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string, ordersRemain: boolean) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,32 +67,31 @@ export const getProductDiscounts = (token: string, page: number, limit: number, 
   return axios.get('/pdiscounts', options);
 };
 
-
-export const createProduct = (token: string, formCreateProduct: FormProduct) => {
+export const createProduct = (token: string, product: Product) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.post('/products', formCreateProduct, options);
+  return axios.post('/products', product, options);
 };
 
-export const updateProduct = (token: string, formUpdateProduct: FormProduct, id: number) => {
+export const updateProduct = (token: string, product: Product) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.put(`/products/${id}`, formUpdateProduct, options);
+  return axios.put(`/products/${product.id}`, product, options);
 };
 
-export const deleteProduct = (token: string, id: number) => {
+export const deleteProduct = (token: string, product: Product) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.delete(`/products/${id}`, options)
+  return axios.delete(`/products/${product.id}`, options)
 }
 
 export const uploadProductImages = (token: string, images: string[], productId: number) => {
@@ -113,89 +112,83 @@ export const deleteProductImage = (token: string, id: number, productId: number)
   return axios.delete(`/products/${productId}/images/${id}`, options);
 };
 
-export const createPCategory = (token: string, formCreatePCategory: FormProductCategory) => {
+export const createProductCategory = (token: string, productCategory: ProductCategory) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.post('/pcategories', formCreatePCategory, options);
+  return axios.post('/pcategories', productCategory, options);
 };
 
-export const updatePCategory = (token: string, formUpdatePCategory: FormProductCategory, id: number) => {
+export const updateProductCategory = (token: string, productCategory: ProductCategory) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.put(`/pcategories/${id}`, formUpdatePCategory, options);
+  return axios.put(`/pcategories/${productCategory.id}`, productCategory, options);
 };
 
-export const deletePCategory = (token: string, id: number) => {
+export const deleteProductCategory = (token: string, productCategory: ProductCategory) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.delete(`/pcategories/${id}`, options)
+  return axios.delete(`/pcategories/${productCategory.id}`, options)
 }
 
-export const createPInventory = (token: string, formCreatePInventory: FormProductInventory, productId: number) => {
+export const createProductInventory = (token: string, productInventory: ProductInventory) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
-    },
-    params: {
-      productId
     }
   }
-  return axios.post('/pinventories', formCreatePInventory, options);
+  return axios.post('/pinventories', productInventory, options);
 };
 
-export const updatePInventory = (token: string, formUpdatePInventory: FormProductInventory, id: number) => {
+export const updateProductInventory = (token: string, productInventory: ProductInventory) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.put(`/pinventories/${id}`, formUpdatePInventory, options);
+  return axios.put(`/pinventories/${productInventory.id}`, productInventory, options);
 };
 
-export const deletePInventory = (token: string, id: number) => {
+export const deleteProductInventory = (token: string, productInventory: ProductInventory) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.delete(`/pinventories/${id}`, options)
+  return axios.delete(`/pinventories/${productInventory.id}`, options)
 }
 
-export const createPDiscount = (token: string, formCreatePDiscount: FormProductDiscount, productId: number) => {
+export const createProductDiscount = (token: string, productDiscount: ProductDiscount) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
-    },
-    params: {
-      productId
     }
   }
-  return axios.post('/pdiscounts', formCreatePDiscount, options);
+  return axios.post('/pdiscounts', productDiscount, options);
 };
 
-export const updatePDiscount = (token: string, formUpdatePDiscount: FormProductDiscount, id: number) => {
+export const updateProductDiscount = (token: string, productDiscount: ProductDiscount) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.put(`/pdiscounts/${id}`, formUpdatePDiscount, options);
+  return axios.put(`/pdiscounts/${productDiscount.id}`, productDiscount, options);
 };
 
-export const deletePDiscount = (token: string, id: number) => {
+export const deleteProductDiscount = (token: string, productDiscount: ProductDiscount) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.delete(`/pdiscounts/${id}`, options)
+  return axios.delete(`/pdiscounts/${productDiscount.id}`, options)
 };

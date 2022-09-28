@@ -3,15 +3,6 @@ import { AxiosRequestConfig } from 'axios'
 import axios from '@core/config/axios.config'
 import type { CartItem } from '@core/types/cart'
 
-/*export const createCart = (token: string) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  }
-  return axios.post('/carts', undefined, options)
-}*/
-
 export const createCartItem = (token: string, cartItem: CartItem) => {
   const options: AxiosRequestConfig = {
     headers: {
