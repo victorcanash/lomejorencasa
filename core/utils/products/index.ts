@@ -3,9 +3,29 @@ import { StatusCodes } from 'http-status-codes';
 
 import envConfig from '@core/config/env.config';
 import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
-import type { Product, ProductCategory, ProductDiscount } from '@core/types/products';
-import { getProducts, getProductById, getProductCategories, getProductDiscounts } from '@core/middlewares/products';
-import { getBackendErrorMsg } from '@core/utils/errors';
+import { ManageActions } from '@core/constants/auth';
+import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
+import { 
+  getProducts, 
+  getProductById, 
+  getProductCategories, 
+  getProductDiscounts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  uploadProductImages,
+  deleteProductImage,
+  createProductCategory,
+  updateProductCategory,
+  deleteProductCategory,
+  createProductInventory,
+  updateProductInventory,
+  deleteProductInventory,
+  createProductDiscount,
+  updateProductDiscount,
+  deleteProductDiscount,
+} from '@core/middlewares/products';
+import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import placeholder from 'public/images/placeholder.jpeg';
 
 export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
@@ -23,11 +43,11 @@ export const getAllProducts = async (page: number, sortBy: string, order: string
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg(error);
-        console.error(`[Get Products ERROR]: ${errorMsg}`);
+        const errorMsg = getBackendErrorMsg('Get Products ERROR', error);
+        logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
-  })
+  });
 };
 
 export const getProduct = (id: number) => {
@@ -42,11 +62,11 @@ export const getProduct = (id: number) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg(error);
-        console.error(`[Get Product By Id ERROR]: ${errorMsg}`);
+        const errorMsg = getBackendErrorMsg('Get Product By Id ERROR', error);
+        logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
-  })
+  });
 };
 
 export const getProductImgUrl = (product: Product, index = 0) => {
@@ -58,36 +78,200 @@ export const getProductImgUrl = (product: Product, index = 0) => {
 
 export const getAllProductCategories = async () => {
   return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
-    getProductCategories(1, 1000).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.OK && response.data?.productCategories) {
-        resolve({
-          productCategories: response.data.productCategories
-        });
-      } else {
-        throw new Error('Something went wrong');
-      }
-    }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Get Product Categories ERROR]: ${errorMsg}`);
-      reject(new Error(errorMsg));
-    }); 
+    getProductCategories(1, 1000)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.productCategories) {
+          resolve({
+            productCategories: response.data.productCategories
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get Product Categories ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
   })
 };
 
 export const getAllProductDiscounts = async (token: string, productId: number) => {
   return new Promise<{productDiscounts: ProductDiscount[]}>(async (resolve, reject) => {
-    getProductDiscounts(token, 1, 1000, productId).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.OK && response.data?.productDiscounts) {
-        resolve({
-          productDiscounts: response.data.productDiscounts
-        });
-      } else {
-        throw new Error('Something went wrong');
-      }
-    }).catch((error) => {
-      const errorMsg = getBackendErrorMsg(error);
-      console.error(`[Get Product Discounts ERROR]: ${errorMsg}`);
-      reject(new Error(errorMsg));
-    }); 
-  })
+    getProductDiscounts(token, 1, 1000, productId)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.productDiscounts) {
+          resolve({
+            productDiscounts: response.data.productDiscounts
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get Product Discounts ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const manageProduct = (action: ManageActions, token: string, product: Product) => {
+  return new Promise<{product: Product}>(async (resolve, reject) => {
+    let promiseMW = createProduct;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Product ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateProduct;
+      errorTitle = 'Update Product ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteProduct;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Product ERROR';
+    }
+
+    promiseMW(token, product)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            product: response.data.product,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const uploadProductImgs = (token: string, productImages: string[], productId: number) => {
+  return new Promise<{productImages: string[]}>(async (resolve, reject) => {
+    uploadProductImages(token, productImages, productId)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve({
+            productImages: response.data.productImages,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Upload Product Images ERROR', error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      });
+  }); 
+};
+
+export const deleteProductImg = (token: string, id: number, productId: number) => {
+  return new Promise<{productImages: string[]}>(async (resolve, reject) => {
+    deleteProductImage(token, id, productId)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK) {
+          resolve({
+            productImages: response.data.productImages,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Delete Product Image ERROR', error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      });
+  }); 
+};
+
+export const manageProductCategory = (action: ManageActions, token: string, productCategory: ProductCategory) => {
+  return new Promise<{productCategory: ProductCategory}>(async (resolve, reject) => {
+    let promiseMW = createProductCategory;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Product Category ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateProductCategory;
+      errorTitle = 'Update Product Category ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteProductCategory;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Product Category ERROR';
+    }
+
+    promiseMW(token, productCategory)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            productCategory: response.data.productCategory,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const manageProductInventory = (action: ManageActions, token: string, productInventory: ProductInventory) => {
+  return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {
+    let promiseMW = createProductInventory;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Product Inventory ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateProductInventory;
+      errorTitle = 'Update Product Inventory ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteProductInventory;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Product Inventory ERROR';
+    }
+
+    promiseMW(token, productInventory)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            productInventory: response.data.productInventory,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const manageProductDiscount = (action: ManageActions, token: string, productDiscount: ProductDiscount) => {
+  return new Promise<{productDiscount: ProductDiscount}>(async (resolve, reject) => {
+    let promiseMW = createProductDiscount;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Product Discount ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateProductDiscount;
+      errorTitle = 'Update Product Discount ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteProductDiscount;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Product Discount ERROR';
+    }
+
+    promiseMW(token, productDiscount)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            productDiscount: response.data.productDiscount,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
 };
