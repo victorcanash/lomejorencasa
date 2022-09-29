@@ -1,11 +1,9 @@
 import { useState } from 'react';
 import { Formik, Form } from 'formik';
 
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
@@ -46,13 +44,6 @@ const ManagePCategoryForm = (props: ManagePCategoryForm) => {
     }
   }
 
-  const initialValues = action == ManageActions.create ? 
-    initProductCategoryValues : {
-      id: productCategory?.id || -1,
-      name: productCategory?.name || initProductCategoryValues.name,
-      description: productCategory?.description || initProductCategoryValues.description,
-    } as ProductCategory;
-
   return (
     <Container maxWidth="xs">
 
@@ -64,15 +55,6 @@ const ManagePCategoryForm = (props: ManagePCategoryForm) => {
         }}
       >
 
-        <Avatar 
-          sx={{ 
-            m: 1, 
-            bgcolor: 'secondary.main' 
-          }}
-        >
-            <LockOutlinedIcon />
-        </Avatar>
-
         <Typography component="h1" variant="h5">
           {
             action == ManageActions.create ?
@@ -82,7 +64,11 @@ const ManagePCategoryForm = (props: ManagePCategoryForm) => {
         </Typography>
 
         <Formik
-          initialValues={initialValues}
+          initialValues={{
+            id: productCategory?.id || initProductCategoryValues.id,
+            name: productCategory?.name || initProductCategoryValues.name,
+            description: productCategory?.description || initProductCategoryValues.description,
+          } as ProductCategory}
           validationSchema={productCategoryValidation}
           onSubmit={handleSubmit}
         >
