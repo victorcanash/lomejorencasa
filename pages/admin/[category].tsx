@@ -1,12 +1,11 @@
 import type { NextPage } from 'next';
-import Head from "next/head";
+import Head from 'next/head';
 
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
-import { useAppContext } from '@lib/contexts/AppContext';
 import usePage from '@lib/hooks/usePage';
 import ProductListAdmin from '@components/admin/ProductListAdmin';
 
-const Admin: NextPage<CollectionProps> = (props) => {
+const AdminSearch: NextPage<CollectionProps> = (props) => {
   const { 
     products, 
     currentPage, 
@@ -15,19 +14,17 @@ const Admin: NextPage<CollectionProps> = (props) => {
     keywords 
   } = props;
 
-  const { loading } = useAppContext();
-
   const page = usePage();
 
   return (
     <>
       <Head>
-        <title>Admin</title>
-        <meta name="description" content="Admin page" />
+        <title>Admin search</title>
+        <meta name="description" content="Admin search page" />
       </Head>
 
       {
-        !loading &&
+        page.checked &&
           <ProductListAdmin 
             category={productCategory}
             products={products} 
@@ -40,6 +37,6 @@ const Admin: NextPage<CollectionProps> = (props) => {
   );
 };
 
-export default Admin;
+export default AdminSearch;
 
 export const getServerSideProps = getCollectionProps;

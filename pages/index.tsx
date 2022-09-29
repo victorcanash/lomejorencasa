@@ -11,8 +11,9 @@ import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';
 
 const Home: NextPage = () => {
-  const page = usePage();
   const { getHref } = useSearchContext();
+
+  const page = usePage();
 
   return (
     <>
@@ -32,7 +33,7 @@ const Home: NextPage = () => {
       <ProTip />
       <Copyright />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

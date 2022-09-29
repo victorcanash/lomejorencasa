@@ -6,75 +6,95 @@ const navigationConfig: NavigationConfig = {
   pages: {
     home: {
       path: '/',
+      filepath: '/',
       protection: Protections.none,
       type: PageTypes.main,
     },
     about: {
       path: '/about',
+      filepath: '/about',
       protection: Protections.none,
       type: PageTypes.main,
     },
     productList: {
       path: '/collections',
+      filepath: '/collections/[category]',
       protection: Protections.none,
       type: PageTypes.main,
     },
     productDetail: {
       path: '/products',
+      filepath: '/products/[product]',
       protection: Protections.none,
       type: PageTypes.main,
     },
 
     login: {
       path: '/login',
+      filepath: '/login',
       protection: Protections.none,
       type: PageTypes.main,
     },
     register: {
       path: '/register',
+      filepath: '/register',
       protection: Protections.none,
       type: PageTypes.main,
     },
     forgot: {
       path: '/forgot',
+      filepath: '/forgot',
       protection: Protections.none,
       type: PageTypes.main,
     },
 
     activation: {
       path: '/activation',
+      filepath: '/activation',
       protection: Protections.none,
       type: PageTypes.link,
     },
     reset: {
       path: '/reset',
+      filepath: '/reset',
       protection: Protections.none,
       type: PageTypes.link,
     },
     newemail: {
       path: '/newemail',
+      filepath: '/newemail',
       protection: Protections.none,
       type: PageTypes.link,
     },
     
     myaccount: {
       path: '/myaccount',
+      filepath: '/myaccount',
       protection: Protections.user,
       type: PageTypes.main,
     },
     cart: {
       path: '/cart',
+      filepath: '/cart',
       protection: Protections.user,
       type: PageTypes.main,
     },
     orders: {
       path: '/orders',
+      filepath: '/orders',
       protection: Protections.user,
       type: PageTypes.main,
     },
     
     admin: {
       path: '/admin',
+      filepath: '/admin',
+      protection: Protections.admin,
+      type: PageTypes.admin,
+    },
+    adminProductList: {
+      path: '/admin',
+      filepath: '/admin/[category]',
       protection: Protections.admin,
       type: PageTypes.admin,
     },

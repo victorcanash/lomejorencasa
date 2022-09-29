@@ -17,11 +17,11 @@ const usePage = () => {
   useEffect(() => {
     if (initialized) {
       const checkPage = async () => {
-        if (isProtectedPath(router.asPath) && !isLogged()) {
+        if (isProtectedPath() && !isLogged()) {
           router.push(pages.login.path);
           return;
 
-        } else if (isAdminPath(router.asPath)) {
+        } else if (isAdminPath()) {
           await isAdminUser(token).then((response: boolean) => {
             if (!response) {
               router.push(pages.home.path);

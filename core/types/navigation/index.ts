@@ -21,11 +21,13 @@ export type NavigationConfig = {
     orders: Page,
     
     admin: Page,
+    adminProductList: Page,
   },
 };
 
 export type Page = {
   path: string,
+  filepath: string,
   protection: Protections,
   type: PageTypes,
 };

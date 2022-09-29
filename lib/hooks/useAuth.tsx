@@ -103,7 +103,7 @@ const useAuth = () => {
     setUser(undefined);
     removeCart();
 
-    if (!isProtectedPath(router.asPath)) {
+    if (!isProtectedPath()) {
       setLoading(false);
     }
   };

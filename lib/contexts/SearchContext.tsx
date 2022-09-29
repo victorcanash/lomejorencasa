@@ -1,4 +1,5 @@
 import { createContext, useState, Dispatch, SetStateAction, useContext } from 'react';
+import { useRouter } from 'next/router';
 
 import { pages } from '@core/config/navigation.config';
 import { allProductsName } from '@core/constants/products';
@@ -34,12 +35,14 @@ export const useSearchContext = () => {
 };
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+
   const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
   const [sortBy, setSortBy] = useState('id');
   const [order, setOrder] = useState('asc');
 
-  const getHref = (categoryName = allProductsName, page = 1, keywords = '', admin = false) => {
-    const routerPath = !admin ? pages.productList.path : pages.admin.path;
+  const getHref = (categoryName = allProductsName, page = 1, keywords = '') => {
+    const routerPath = router.asPath != pages.admin.path ? pages.productList.path : pages.admin.path;
     return `${routerPath}/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
   };
 

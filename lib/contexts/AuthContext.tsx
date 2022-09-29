@@ -12,8 +12,8 @@ type ContextType = {
   setUser: Dispatch<SetStateAction<User | undefined>>,
   prevLoginPath: string | undefined,
   isLogged: () => boolean,
-  isProtectedPath: (path: string) => boolean,
-  isAdminPath: (path: string) => boolean,
+  isProtectedPath: () => boolean,
+  isAdminPath: () => boolean,
 };
 
 export const AuthContext = createContext<ContextType>({
@@ -50,10 +50,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return true;
   };
 
-  const isProtectedPath = (path: string) => {
-    for (const [, value] of Object.entries(pages)) {
-      if (value.path == path) {
-        if (value.protection == Protections.user) {
+  const isProtectedPath = () => {
+    for (const [, page] of Object.entries(pages)) {
+      if (page.filepath == router.pathname) {
+        if (page.protection == Protections.user) {
           return true;
         }
         break;
@@ -62,10 +62,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return false;
   };
 
-  const isAdminPath = (path: string) => {
-    for (const [, value] of Object.entries(pages)) {
-      if (value.path == path) {
-        if (value.protection == Protections.admin) {
+  const isAdminPath = () => {
+    for (const [, page] of Object.entries(pages)) {
+      if (page.filepath == router.pathname) {
+        if (page.protection == Protections.admin) {
           return true;
         }
         break;
