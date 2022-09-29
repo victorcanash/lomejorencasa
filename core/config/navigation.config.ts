@@ -76,7 +76,7 @@ const navigationConfig: NavigationConfig = {
     admin: {
       path: '/admin',
       protection: Protections.admin,
-      type: PageTypes.main,
+      type: PageTypes.admin,
     },
   }
 };
