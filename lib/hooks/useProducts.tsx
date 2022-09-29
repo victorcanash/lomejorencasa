@@ -1,8 +1,13 @@
 import { useState } from 'react';
 
 import { ManageActions } from '@core/constants/auth';
-import type { ProductCategory } from '@core/types/products';
-import { manageProductCategory as manageProductCategoryMW } from '@core/utils/products';
+import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
+import { 
+  manageProduct as manageProductMW,
+  manageProductCategory as manageProductCategoryMW,
+  manageProductInventory as manageProductInventoryMW,
+  manageProductDiscount as manageProductDiscountMW,
+} from '@core/utils/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -15,6 +20,25 @@ const useProducts = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const [successMsg, setSuccessMsg] = useState('');
+
+  const manageProduct = async (action: ManageActions, product: Product) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    manageProductMW(action, token, product)
+      .then((response: {product: Product}) => {
+        onManageProductSuccess();
+      }).catch((error: Error) => {
+        const errorMsg = error.message;
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
+  };
+
+  const onManageProductSuccess = () => {
+    setLoading(false);
+    setSuccessMsg('Updated data');
+  }
 
   const manageProductCategory = async (action: ManageActions, productCategory: ProductCategory) => {
     setLoading(true);
@@ -61,6 +85,7 @@ const useProducts = () => {
   }
 
   return {
+    manageProduct,
     manageProductCategory,
     errorMsg,
     successMsg,

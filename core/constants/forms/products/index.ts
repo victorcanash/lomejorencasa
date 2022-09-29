@@ -33,8 +33,8 @@ export const productValidation = Yup.object().shape(
 );
 
 export const initProductValues: Product = {
-  id: 0,
-  categoryId: 0,
+  id: -1,
+  categoryId: -1,
   name: '',
   description: '',
   sku: '',
@@ -59,7 +59,7 @@ export const productCategoryValidation = Yup.object().shape(
 );
 
 export const initProductCategoryValues: ProductCategory = {
-  id: 0,
+  id: -1,
   name: '',
   description: '',
 };
