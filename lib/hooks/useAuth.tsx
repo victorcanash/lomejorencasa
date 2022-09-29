@@ -108,11 +108,11 @@ const useAuth = () => {
     }
   };
 
-  const updateEmail = async (token: string) => {
+  const updateEmail = async (updateToken: string) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    updateUserEmail(token).then((response: {token: string, user: User}) => {
+    updateUserEmail(updateToken).then((response: {token: string, user: User}) => {
       onUpdateEmailSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;
@@ -135,11 +135,11 @@ const useAuth = () => {
     setSuccessMsg(`Your email is updated now as ${user.email}. You can close this window.`);
   };
 
-  const resetPassword = async (token: string, formResetPassword: FormResetPassword) => {
+  const resetPassword = async (updateToken: string, formResetPassword: FormResetPassword) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    resetUserPassword(token, formResetPassword).then((response: {token: string, user: User}) => {
+    resetUserPassword(updateToken, formResetPassword).then((response: {token: string, user: User}) => {
       onResetPasswordSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;

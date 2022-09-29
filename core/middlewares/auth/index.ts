@@ -9,10 +9,10 @@ export const register = (formRegister: FormRegister) => {
   return axios.post('/register', formRegister);
 };
 
-export const activate = (token: string) => {
+export const activate = (activationToken: string) => {
   const options: AxiosRequestConfig = {
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${activationToken}`
       }
   };
   return axios.put('/activate', undefined, options);
@@ -49,10 +49,10 @@ export const isAdmin = (token: string) => {
   return axios.get('/auth/admin', options);
 };
 
-export const updateEmail = (token: string, newEmail = '', userId = -1) => {
+export const updateEmail = (updateToken: string, newEmail = '', userId = -1) => {
   const options: AxiosRequestConfig = {
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${updateToken}`
     }
   };
   return axios.put(`/auth/${userId}`, {
@@ -60,10 +60,10 @@ export const updateEmail = (token: string, newEmail = '', userId = -1) => {
   }, options);
 };
 
-export const resetPassword = (token: string, formResetPassword: FormResetPassword, userId = -1) => {
+export const resetPassword = (updateToken: string, formResetPassword: FormResetPassword, userId = -1) => {
   const options: AxiosRequestConfig = {
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Bearer ${updateToken}`
     }
   };
   return axios.put(`/auth/${userId}`, formResetPassword, options);

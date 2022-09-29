@@ -13,8 +13,8 @@ const ConfirmNewEmailForm = () => {
   const { updateEmail, errorMsg, successMsg } = useAuth();
 
   const handleSubmit = async () => {
-    const token = typeof router.query.token == 'string' ? router.query.token : '';
-    updateEmail(token);
+    const updateToken = typeof router.query.token == 'string' ? router.query.token : '';
+    updateEmail(updateToken);
   }
 
   return (

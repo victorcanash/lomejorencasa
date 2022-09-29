@@ -18,8 +18,8 @@ const ResetPasswordForm = () => {
   const { resetPassword, errorMsg, successMsg } = useAuth();
 
   const handleSubmit = async (values: FormResetPassword) => {
-    const token = typeof router.query.token == 'string' ? router.query.token : '';
-    resetPassword(token, values);
+    const updateToken = typeof router.query.token == 'string' ? router.query.token : '';
+    resetPassword(updateToken, values);
   };
 
   return (

@@ -43,9 +43,9 @@ export const registerUser = async (formRegister: FormRegister) => {
   });
 };
 
-export const activateUser = async (token: string) => {
+export const activateUser = async (activationToken: string) => {
   return new Promise<true>((resolve, reject) => {
-    activate(token).then(async (response: AxiosResponse) => {
+    activate(activationToken).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         resolve(true);
       } else {
@@ -139,9 +139,9 @@ export const isAdminUser = async (token: string) => {
   })
 }
 
-export const updateUserEmail = async (token: string, newEmail = '', userId = -1) => {
+export const updateUserEmail = async (updateToken: string, newEmail = '', userId = -1) => {
   return new Promise<{token: string, user: User}>((resolve, reject) => {
-    updateEmail(token, newEmail, userId).then(async (response: AxiosResponse) => {
+    updateEmail(updateToken, newEmail, userId).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token) {
           const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
@@ -167,9 +167,9 @@ export const updateUserEmail = async (token: string, newEmail = '', userId = -1)
   })
 };
 
-export const resetUserPassword = async (token: string, formResetPassword: FormResetPassword, userId = -1) => {
+export const resetUserPassword = async (updateToken: string, formResetPassword: FormResetPassword, userId = -1) => {
   return new Promise<{token: string, user: User}>((resolve, reject) => {
-    resetPassword(token, formResetPassword, userId).then(async (response: AxiosResponse) => {
+    resetPassword(updateToken, formResetPassword, userId).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token) {
           const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
