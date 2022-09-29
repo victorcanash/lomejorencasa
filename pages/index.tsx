@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import Head from "next/head";
+import Head from 'next/head';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
