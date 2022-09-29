@@ -17,7 +17,7 @@ const useUser = () => {
 
   const [successMsg, setSuccessMsg] = useState('');
 
-  const manageUser = async (action: ManageActions, user: User) => {
+  const manageUser = async (action: ManageActions.update | ManageActions.delete, user: User) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
@@ -31,7 +31,7 @@ const useUser = () => {
       });
   };
 
-  const onManageUserSuccess = (action: ManageActions, user: User) => {
+  const onManageUserSuccess = (action: ManageActions.update | ManageActions.delete, user: User) => {
     if (action == ManageActions.update) {
       setUser(user);
       setLoading(false);

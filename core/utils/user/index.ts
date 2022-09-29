@@ -6,7 +6,7 @@ import type { User } from '@core/types/user';
 import { updateUser, deleteUser } from '@core/middlewares/user';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
-export const manageUser = (action: ManageActions, token: string, user: User) => {
+export const manageUser = (action: ManageActions.update | ManageActions.delete, token: string, user: User) => {
   return new Promise<{user: User}>(async (resolve, reject) => {
     let promiseMW;
     let successStatus = StatusCodes.CREATED;
@@ -19,7 +19,6 @@ export const manageUser = (action: ManageActions, token: string, user: User) => 
       successStatus = StatusCodes.OK;
       errorTitle = 'Delete User ERROR';
     } else {
-      reject(new Error('Create user not available in manageUser function'));
       return;
     }
 
