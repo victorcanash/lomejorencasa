@@ -5,10 +5,13 @@ import type { User } from '@core/types/user';
 import { manageUser as manageUserMW } from '@core/utils/user';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
+import useAuth from '@lib/hooks/useAuth';
 
 const useUser = () => {
   const { setLoading } = useAppContext();
   const { token, setUser } = useAuthContext();
+
+  const { logout } = useAuth();
 
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -31,12 +34,12 @@ const useUser = () => {
   const onManageUserSuccess = (action: ManageActions, user: User) => {
     if (action == ManageActions.update) {
       setUser(user);
+      setLoading(false);
       setSuccessMsg('Updated data');
     } else if (action == ManageActions.delete) {
-      /* TODO: Logout */
+      logout();
       setSuccessMsg('Deleted user');
     }
-    setLoading(false);
   }
 
   return {
