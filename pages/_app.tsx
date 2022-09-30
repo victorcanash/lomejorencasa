@@ -8,7 +8,6 @@ import 'styles/globals.css';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import { DefaultSeo } from 'next-seo';
 import { CacheProvider, EmotionCache } from '@emotion/react';
@@ -44,8 +43,7 @@ interface MyAppProps extends AppProps {
 
 function MyApp(props: MyAppProps) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-  
-  const { asPath } = useRouter();
+
   const { LayoutComponent } = useLayout(props.router.pathname);
 
   return (
@@ -56,7 +54,7 @@ function MyApp(props: MyAppProps) {
         openGraph={{
           type: 'website',
           title: title,
-          url: `https://${envConfig.NEXT_PUBLIC_APP_URL}${asPath}`,
+          url: `https://${envConfig.NEXT_PUBLIC_APP_URL}${props.router.asPath}`,
           description: description,
           images: [
             {

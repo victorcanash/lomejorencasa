@@ -6,11 +6,11 @@ import AdminLayout from '@components/layouts/AdminLayout';
 
 const useLayout = (pathname: string) => {
   let LayoutComponent = MainLayout;
-  for (const [, value] of Object.entries(pages)) {
-    if (value.path == pathname) {
-      if (value.type == PageTypes.link) {
+  for (const [, page] of Object.entries(pages)) {
+    if (page.filepath == pathname) {
+      if (page.type == PageTypes.link) {
         LayoutComponent = LinkLayout;
-      } else if (value.type == PageTypes.admin) {
+      } else if (page.type == PageTypes.admin) {
         LayoutComponent = AdminLayout;
       }
       break;

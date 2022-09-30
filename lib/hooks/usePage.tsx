@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { pages } from '@core/config/navigation.config';
@@ -14,32 +14,38 @@ const usePage = () => {
 
   const router = useRouter();
 
-  useEffect(() => {
-    if (initialized) {
-      const checkPage = async () => {
-        if (isProtectedPath() && !isLogged()) {
-          router.push(pages.login.path);
-          return;
+  const onCheckSuccess = useCallback(() => {
+    setLoading(false); 
+    setChecked(true);
+  }, [setLoading]);
 
-        } else if (isAdminPath()) {
-          await isAdminUser(token).then((response: boolean) => {
-            if (!response) {
-              router.push(pages.home.path);
-              return;
-            }
-          }).catch((error: Error) => {
-            router.push(pages.home.path);
-            return;
-          }); 
+  const checkPage = useCallback(async () => {
+    if (isProtectedPath() && !isLogged()) {
+      router.push(pages.login.path);
+
+    } else if (isAdminPath()) {
+      await isAdminUser(token).then((response: boolean) => {
+        if (!response) {
+          router.push(pages.home.path);
+        } else {
+          onCheckSuccess();
         }
-        
-        setLoading(false); 
-        setChecked(true);
-      }
-      
+      }).catch((error: Error) => {
+        router.push(pages.home.path);
+        return;
+      }); 
+
+    } else {
+      onCheckSuccess();
+    }
+    
+  }, [isAdminPath, isLogged, isProtectedPath, onCheckSuccess, router, token]);
+
+  useEffect(() => {
+    if (initialized) {      
       checkPage();
     }
-  }, [isProtectedPath, isAdminPath, token, router, router.asPath, setLoading, isLogged, initialized]);
+  }, [router.asPath, initialized, checkPage]);
 
   return {
     checked
