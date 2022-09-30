@@ -84,9 +84,49 @@ const useProducts = () => {
     setSuccessMsg('Updated data');
   }
 
+  const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    manageProductInventoryMW(action, token, productInventory)
+      .then((response: {productInventory: ProductInventory}) => {
+        onManagePInventorySuccess();
+      }).catch((error: Error) => {
+        const errorMsg = error.message;
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
+  };
+
+  const onManagePInventorySuccess = () => {
+    setLoading(false);
+    setSuccessMsg('Updated data');
+  }
+
+  const manageProductDiscount = async (action: ManageActions, productDiscount: ProductDiscount) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    manageProductDiscountMW(action, token, productDiscount)
+      .then((response: {productDiscount: ProductDiscount}) => {
+        onManagePDiscountSuccess();
+      }).catch((error: Error) => {
+        const errorMsg = error.message;
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
+  };
+
+  const onManagePDiscountSuccess = () => {
+    setLoading(false);
+    setSuccessMsg('Updated data');
+  }
+
   return {
     manageProduct,
     manageProductCategory,
+    manageProductInventory,
+    manageProductDiscount,
     errorMsg,
     successMsg,
   };

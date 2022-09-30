@@ -14,12 +14,12 @@ import { ProductCategory } from '@core/types/products';
 import useProducts from '@lib/hooks/useProducts';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 
-type ManagePCategoryForm = {
+type ManagePCategoryFormProps = {
   action: ManageActions.create | ManageActions.update,
   productCategory?: ProductCategory,
 };
 
-const ManagePCategoryForm = (props: ManagePCategoryForm) => {
+const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   const { action, productCategory } = props;
 
   const { manageProductCategory, errorMsg, successMsg } = useProducts();

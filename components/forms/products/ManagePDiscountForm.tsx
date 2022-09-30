@@ -4,32 +4,28 @@ import { Formik, Form } from 'formik';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
+import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { productValidation, initProductValues } from '@core/constants/forms/products';
+import { productDiscountValidation, initProductDiscountValues } from '@core/constants/forms/products';
 import { ManageActions } from '@core/constants/auth';
-import { Product } from '@core/types/products';
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { ProductDiscount, Product } from '@core/types/products';
 import useProducts from '@lib/hooks/useProducts';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 
-type ManageProductFormProps = {
+type ManagePDiscountFormProps = {
   action: ManageActions.create | ManageActions.update,
-  product?: Product,
+  product: Product,
+  productDiscount?: ProductDiscount,
 };
 
-const ManageProductForm = (props: ManageProductFormProps) => {
-  const { action, product } = props;
+const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
+  const { action, product, productDiscount } = props;
 
-  const { productCategories } = useSearchContext();
-
-  const { manageProduct, errorMsg, successMsg } = useProducts();
+  const { manageProductDiscount, errorMsg, successMsg } = useProducts();
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -37,8 +33,8 @@ const ManageProductForm = (props: ManageProductFormProps) => {
     setOpenDialog(!openDialog);
   };
 
-  const handleSubmit = async (values: Product) => {
-    manageProduct(action, values);
+  const handleSubmit = async (values: ProductDiscount) => {
+    manageProductDiscount(action, values);
   };
 
   const handleClickDeleteBtn = () => {
@@ -46,8 +42,8 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   };
 
   const onConfirmDelete = () => {
-    if (product) {
-      manageProduct(ManageActions.delete, product);
+    if (productDiscount) {
+      manageProductDiscount(ManageActions.delete, productDiscount);
     }
   }
 
@@ -65,51 +61,25 @@ const ManageProductForm = (props: ManageProductFormProps) => {
         <Typography component="h1" variant="h5">
           {
             action == ManageActions.create ?
-              'Create new product' :
-              'Update or delete the product'
+              'Create new product discount' :
+              'Update or delete the product discount'
           }
         </Typography>
 
         <Formik
           initialValues={{
-            id: product?.id || initProductValues.id,
-            categoryId: product?.categoryId || productCategories[0].id,
-            name: product?.name || initProductValues.name,
-            description: product?.description || initProductValues.description,
-            sku: product?.sku || initProductValues.sku,
-            price: product?.price || initProductValues.price,
-            realPrice: product?.realPrice || initProductValues.realPrice,
-            imageNames: product?.imageNames || initProductValues.imageNames,
-            inventories: product?.inventories || initProductValues.inventories,
-          } as Product}
-          validationSchema={productValidation}
+            id: productDiscount?.id || initProductDiscountValues.id,
+            productId: product.id,
+            name: productDiscount?.name || initProductDiscountValues.name,
+            description: productDiscount?.description || initProductDiscountValues.description,
+            discountPercent: productDiscount?.discountPercent || initProductDiscountValues.discountPercent,
+            active: productDiscount?.active || initProductDiscountValues.active,
+          } as ProductDiscount}
+          validationSchema={productDiscountValidation}
           onSubmit={handleSubmit}
         >
           {props => (
             <Form>
-
-              {/* Category ID Field */}
-              <InputLabel id="categpory-select-label">Category</InputLabel>
-              <Select
-                margin="dense"
-                required
-                fullWidth
-                id="categoryId"
-                name="categoryId"
-                autoComplete="categoryId"
-                labelId="category-select-label"
-                label="Category"
-                autoFocus
-                value={props.values.categoryId}
-                onChange={props.handleChange}
-                error={props.touched.categoryId && Boolean(props.errors.categoryId)}
-              >
-                { productCategories.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
-                    {item.name}
-                  </MenuItem>
-                ))}
-              </Select>
 
               {/* Name Field */}
               <TextField
@@ -141,42 +111,38 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 helperText={props.touched.description && props.errors.description}
               />
 
-              {/* SKU Field */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="sku"
-                name="sku"
-                autoComplete="sku"        
-                label="SKU"
-                value={props.values.sku}
-                onChange={props.handleChange}
-                error={props.touched.sku && Boolean(props.errors.sku)}
-                helperText={props.touched.sku && props.errors.sku}
-              />
-
-              {/* Price Field */}
+              {/* Discount Percent Field */}
               <TextField 
                 margin="normal"
                 required
                 fullWidth
-                id="price"
-                name="price"
-                autoComplete="price"
-                label="Price"
+                id="discountPercent"
+                name="discountPercent"
+                autoComplete="discountPercent"
+                label="Discount Percent"
                 type="decimal"  
                 InputProps={{
-                  endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                  endAdornment: <InputAdornment position="end">%</InputAdornment>,
                 }}
                 inputProps={{
                   min: 0,
                   inputMode: 'decimal',
                 }} 
-                value={props.values.price}
+                value={props.values.discountPercent}
                 onChange={props.handleChange}
-                error={props.touched.price && Boolean(props.errors.price)}
-                helperText={props.touched.price && props.errors.price} 
+                error={props.touched.discountPercent && Boolean(props.errors.discountPercent)}
+                helperText={props.touched.discountPercent && props.errors.discountPercent} 
+              />
+
+              {/* Active Field */}
+              <Checkbox
+                id="active"
+                name="active"
+                inputProps={{ 
+                  'aria-label': 'Active' 
+                }}
+                checked={props.values.active}
+                onChange={props.handleChange}
               />
 
               <Button
@@ -229,4 +195,4 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   );
 };
 
-export default ManageProductForm;
+export default ManagePDiscountForm;

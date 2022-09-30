@@ -63,3 +63,53 @@ export const initProductCategoryValues: ProductCategory = {
   name: '',
   description: '',
 };
+
+export const productInventoryValidation = Yup.object().shape(
+  {
+    quantity: Yup
+      .number()
+      .min(0, 'Quantity must be at least 0')
+      .required('Quantity is required'),
+    size: Yup
+      .string()
+      .min(3, 'Size must have 3 letters minimum')
+      .optional(),
+  }
+);
+
+export const initProductInventoryValues: ProductInventory = {
+  id: -1,
+  productId: -1,
+  quantity: 0,
+  size: undefined,
+}
+
+export const productDiscountValidation = Yup.object().shape(
+  {
+    name: Yup
+      .string()
+      .min(3, 'Name must have 3 letters minimum')
+      .max(12, 'Name must have maximum 12 letters')
+      .required('Name is required'),
+    description: Yup
+      .string()
+      .min(3, 'Description must have 3 letters minimum')
+      .required('Description is required'),
+    discountPercent: Yup
+      .number()
+      .min(0.1, 'DiscountPercent must be at least 0.1')
+      .required('DiscountPercent is required'),
+    active: Yup
+      .boolean()
+      .required('Active is required'),
+  }
+);
+
+export const initProductDiscountValues: ProductDiscount = {
+  id: -1,
+  productId: -1,
+  name: '',
+  description: '',
+  discountPercent: 0.1,
+  active: false,
+}
