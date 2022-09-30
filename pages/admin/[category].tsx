@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
 import usePage from '@lib/hooks/usePage';
-import ProductListAdmin from '@components/admin/ProductListAdmin';
+import ProductListAdmin from '@components/admin/lists/ProductListAdmin';
 
 const AdminSearch: NextPage<CollectionProps> = (props) => {
   const { 
