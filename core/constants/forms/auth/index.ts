@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { FormLogin, FormRegister } from '@core/types/forms/auth';
+import { AuthLogin, AuthRegister } from '@core/types/auth';
 import { subtractYears } from '@core/utils/dates';
 
 export const loginValidation = Yup.object().shape(
@@ -16,7 +16,7 @@ export const loginValidation = Yup.object().shape(
   }
 );
 
-export const initLoginValues: FormLogin = {
+export const initLoginValues: AuthLogin = {
   email: '',
   password: '',
 }
@@ -59,7 +59,7 @@ export const registerValidation = Yup.object().shape(
   }
 );
 
-export const initRegisterValues: FormRegister = { 
+export const initRegisterValues: AuthRegister = { 
   firstName: '',
   lastName: '',
   email: '',

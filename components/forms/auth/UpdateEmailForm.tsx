@@ -9,13 +9,13 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import { initRegisterValues, updateEmailValidation } from '@core/constants/forms/auth';
-import { FormUpdateEmail } from '@core/types/forms/auth';
+import { AuthUpdateEmail } from '@core/types/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 const UpdateEmailForm = () => {
   const { sendUpdateEmail, errorMsg, successMsg } = useAuth();
 
-  const handleSubmit = async (values: FormUpdateEmail) => {
+  const handleSubmit = async (values: AuthUpdateEmail) => {
     sendUpdateEmail(values);
   };
 
@@ -40,7 +40,7 @@ const UpdateEmailForm = () => {
           initialValues={{
             password: initRegisterValues.password,
             newEmail: initRegisterValues.email,
-          } as FormUpdateEmail}
+          } as AuthUpdateEmail}
           validationSchema={updateEmailValidation}
           onSubmit={handleSubmit}
           enableReinitialize

@@ -3,10 +3,10 @@ import { AxiosRequestConfig } from 'axios';
 import axios from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import { pages } from '@core/config/navigation.config';
-import type { FormLogin, FormRegister, FormUpdateEmail, FormResetPassword } from '@core/types/forms/auth';
+import type { AuthLogin, AuthRegister, AuthUpdateEmail, AuthResetPassword } from '@core/types/auth';
 
-export const register = (formRegister: FormRegister) => {
-  return axios.post('/register', formRegister);
+export const register = (authRegister: AuthRegister) => {
+  return axios.post('/register', authRegister);
 };
 
 export const activate = (activationToken: string) => {
@@ -18,8 +18,8 @@ export const activate = (activationToken: string) => {
   return axios.put('/activate', undefined, options);
 };
 
-export const login = (formLogin: FormLogin) => {
-  return axios.post('/login', formLogin);
+export const login = (authLogin: AuthLogin) => {
+  return axios.post('/login', authLogin);
 };
 
 export const logout = (token: string) => {
@@ -60,13 +60,13 @@ export const updateEmail = (updateToken: string, newEmail = '', userId = -1) => 
   }, options);
 };
 
-export const resetPassword = (updateToken: string, formResetPassword: FormResetPassword, userId = -1) => {
+export const resetPassword = (updateToken: string, authResetPassword: AuthResetPassword, userId = -1) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${updateToken}`
     }
   };
-  return axios.put(`/auth/${userId}`, formResetPassword, options);
+  return axios.put(`/auth/${userId}`, authResetPassword, options);
 };
 
 export const sendActivationEmail = (email: string) => {
@@ -91,7 +91,7 @@ export const sendResetEmail = (email: string) => {
   return axios.post('auth/send-email/reset', { email }, options);
 }
 
-export const sendUpdateEmail = (token: string, formUpdateEmail: FormUpdateEmail, revertEmail = false) => {
+export const sendUpdateEmail = (token: string, authUpdateEmail: AuthUpdateEmail, revertEmail = false) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -103,5 +103,5 @@ export const sendUpdateEmail = (token: string, formUpdateEmail: FormUpdateEmail,
       revertEmail,
     }
   };
-  return axios.post('auth/send-email/update', formUpdateEmail, options);
+  return axios.post('auth/send-email/update', authUpdateEmail, options);
 }

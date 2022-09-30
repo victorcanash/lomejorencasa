@@ -1,9 +1,9 @@
-export type FormLogin = {
+export type AuthLogin = {
   email: string,
   password: string,
 };
 
-export type FormRegister = {
+export type AuthRegister = {
   email: string,
   password: string,
   confirm: string,
@@ -12,12 +12,12 @@ export type FormRegister = {
   birthday: Date,
 };
 
-export type FormUpdateEmail = {
+export type AuthUpdateEmail = {
   password: string,
   newEmail: string,
 };
 
-export type FormResetPassword = {
+export type AuthResetPassword = {
   newPassword: string,
   newConfirm: string,
 }

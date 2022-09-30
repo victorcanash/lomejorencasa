@@ -15,7 +15,7 @@ import Alert from '@mui/material/Alert';
 import { pages } from '@core/config/navigation.config';
 import Link from '@core/components/Link';
 import { loginValidation, initLoginValues } from '@core/constants/forms/auth';
-import { FormLogin } from '@core/types/forms/auth';
+import { AuthLogin } from '@core/types/auth';
 import useAuth from '@lib/hooks/useAuth';
 
 type LoginFormProps = {
@@ -27,7 +27,7 @@ const LoginForm = (props: LoginFormProps) => {
 
   const { login, errorMsg } = useAuth();
 
-  const handleSubmit = async (values: FormLogin) => {
+  const handleSubmit = async (values: AuthLogin) => {
     login(values, onFailByActivation);
   };
 

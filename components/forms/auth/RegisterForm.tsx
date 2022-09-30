@@ -15,7 +15,7 @@ import Alert from '@mui/material/Alert';
 
 import { pages } from '@core/config/navigation.config';
 import { registerValidation, initRegisterValues } from '@core/constants/forms/auth';
-import { FormRegister } from '@core/types/forms/auth';
+import { AuthRegister } from '@core/types/auth';
 import Link from '@core/components/Link';
 import useAuth from '@lib/hooks/useAuth';
 
@@ -28,7 +28,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
   const { register, errorMsg } = useAuth();
 
-  const handleSubmit = async (values: FormRegister) => {
+  const handleSubmit = async (values: AuthRegister) => {
     register(values, onSuccess);
   };
 

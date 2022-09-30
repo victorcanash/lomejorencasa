@@ -5,11 +5,11 @@ import { JWTTokenKey } from '@core/constants/auth';
 import { Storages } from '@core/constants/storage';
 import type { User } from '@core/types/user';
 import type { 
-  FormLogin, 
-  FormRegister, 
-  FormUpdateEmail, 
-  FormResetPassword 
-} from '@core/types/forms/auth';
+  AuthLogin, 
+  AuthRegister, 
+  AuthUpdateEmail, 
+  AuthResetPassword 
+} from '@core/types/auth';
 import type { Cart } from '@core/types/cart';
 import { 
   register, 
@@ -27,9 +27,9 @@ import {
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 
-export const registerUser = async (formRegister: FormRegister) => {
+export const registerUser = async (authRegister: AuthRegister) => {
   return new Promise<true>((resolve, reject) => {
-    register(formRegister).then(async (response: AxiosResponse) => {
+    register(authRegister).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         resolve(true);
       } else {
@@ -59,9 +59,9 @@ export const activateUser = async (activationToken: string) => {
   })
 };
 
-export const loginUser = async (formLogin: FormLogin) => {
+export const loginUser = async (authLogin: AuthLogin) => {
   return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
-    login(formLogin).then(async (response: AxiosResponse) => {
+    login(authLogin).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token){
           const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
@@ -167,9 +167,9 @@ export const updateUserEmail = async (updateToken: string, newEmail = '', userId
   })
 };
 
-export const resetUserPassword = async (updateToken: string, formResetPassword: FormResetPassword, userId = -1) => {
+export const resetUserPassword = async (updateToken: string, authResetPassword: AuthResetPassword, userId = -1) => {
   return new Promise<{token: string, user: User}>((resolve, reject) => {
-    resetPassword(updateToken, formResetPassword, userId).then(async (response: AxiosResponse) => {
+    resetPassword(updateToken, authResetPassword, userId).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token) {
           const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
@@ -227,9 +227,9 @@ export const sendUserResetEmail = async (email: string) => {
   })
 };
 
-export const sendUserUpdateEmail = async (token: string, formUpdateEmail: FormUpdateEmail, revertEmail = false) => {
+export const sendUserUpdateEmail = async (token: string, authUpdateEmail: AuthUpdateEmail, revertEmail = false) => {
   return new Promise<true>((resolve, reject) => {
-    sendUpdateEmail(token, formUpdateEmail, revertEmail).then(async (response: AxiosResponse) => {
+    sendUpdateEmail(token, authUpdateEmail, revertEmail).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         resolve(true);
       } else {

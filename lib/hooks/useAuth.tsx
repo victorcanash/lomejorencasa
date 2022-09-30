@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 import { pages } from '@core/config/navigation.config';
 import type { User } from '@core/types/user';
 import type { 
-  FormRegister, 
-  FormLogin, 
-  FormUpdateEmail, 
-  FormResetPassword 
-} from '@core/types/forms/auth';
+  AuthRegister, 
+  AuthLogin, 
+  AuthUpdateEmail, 
+  AuthResetPassword 
+} from '@core/types/auth';
 import type { Cart } from '@core/types/cart';
 import { 
   registerUser, 
@@ -34,11 +34,11 @@ const useAuth = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const register = async (formRegister: FormRegister, onSuccess?: (email: string) => void) => {
+  const register = async (authRegister: AuthRegister, onSuccess?: (email: string) => void) => {
     setErrorMsg('');
     setLoading(true);
-    registerUser(formRegister).then(() => {
-      onRegisterSuccess(formRegister.email, onSuccess);
+    registerUser(authRegister).then(() => {
+      onRegisterSuccess(authRegister.email, onSuccess);
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Unique validation failure with the email')) {
@@ -59,9 +59,9 @@ const useAuth = () => {
     setLoading(false);
   };
 
-  const login = async (formLogin: FormLogin, onFailByActivation?: (email: string) => void) => {
+  const login = async (authLogin: AuthLogin, onFailByActivation?: (email: string) => void) => {
     setLoading(true);
-    loginUser(formLogin).then((response: {token: string, user: User, cart: Cart}) => {
+    loginUser(authLogin).then((response: {token: string, user: User, cart: Cart}) => {
       onLoginSuccess(response.token, response.user, response.cart);
     }).catch((error: Error) => {
       let errorMsg = error.message;
@@ -72,7 +72,7 @@ const useAuth = () => {
       } else if (errorMsg.includes('activate')) {
         errorMsg = 'You have to activate your account. We have sent you an email with a link to verify your account before you can login.'
         if (onFailByActivation) {
-          onFailByActivation(formLogin.email);
+          onFailByActivation(authLogin.email);
         }
       } else if (errorMsg.includes('locked out')) {
         errorMsg = 'You are locked out';
@@ -135,11 +135,11 @@ const useAuth = () => {
     setSuccessMsg(`Your email is updated now as ${user.email}. You can close this window.`);
   };
 
-  const resetPassword = async (updateToken: string, formResetPassword: FormResetPassword) => {
+  const resetPassword = async (updateToken: string, authResetPassword: AuthResetPassword) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    resetUserPassword(updateToken, formResetPassword).then((response: {token: string, user: User}) => {
+    resetUserPassword(updateToken, authResetPassword).then((response: {token: string, user: User}) => {
       onResetPasswordSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;
@@ -201,11 +201,11 @@ const useAuth = () => {
     });
   };
 
-  const sendUpdateEmail = (formUpdateEmail: FormUpdateEmail) => {
+  const sendUpdateEmail = (authUpdateEmail: AuthUpdateEmail) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserUpdateEmail(token, formUpdateEmail).then(() => {
+    sendUserUpdateEmail(token, authUpdateEmail).then(() => {
       setLoading(false);
       setSuccessMsg('Sent update email');
     }).catch((error: Error) => {
