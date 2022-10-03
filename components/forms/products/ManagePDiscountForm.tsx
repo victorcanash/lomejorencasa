@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -20,10 +21,20 @@ type ManagePDiscountFormProps = {
   action: ManageActions.create | ManageActions.update,
   product: Product,
   productDiscount?: ProductDiscount,
+  manageOnSubmit: boolean,
+  onSubmitSuccess?: (productDiscount: ProductDiscount) => void,
+  onDeleteSuccess?: () => void,
 };
 
 const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
-  const { action, product, productDiscount } = props;
+  const { 
+    action, 
+    product, 
+    productDiscount,
+    manageOnSubmit, 
+    onSubmitSuccess, 
+    onDeleteSuccess 
+  } = props;
 
   const { manageProductDiscount, errorMsg, successMsg } = useProducts();
 
@@ -34,7 +45,13 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
   };
 
   const handleSubmit = async (values: ProductDiscount) => {
-    manageProductDiscount(action, values);
+    if (manageOnSubmit) {
+      manageProductDiscount(action, values, onSubmitSuccess);
+    } else {
+      if (onSubmitSuccess) {
+        onSubmitSuccess(values);
+      }
+    }
   };
 
   const handleClickDeleteBtn = () => {
@@ -43,7 +60,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
 
   const onConfirmDelete = () => {
     if (productDiscount) {
-      manageProductDiscount(ManageActions.delete, productDiscount);
+      manageProductDiscount(ManageActions.delete, productDiscount, onDeleteSuccess);
     }
   }
 
@@ -135,14 +152,16 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
               />
 
               {/* Active Field */}
-              <Checkbox
-                id="active"
-                name="active"
-                inputProps={{ 
-                  'aria-label': 'Active' 
-                }}
-                checked={props.values.active}
-                onChange={props.handleChange}
+              <FormControlLabel 
+                control={
+                  <Checkbox 
+                    id="active"
+                    name="active"
+                    checked={props.values.active}
+                    onChange={props.handleChange} 
+                  />
+                } 
+                label="Active" 
               />
 
               <Button

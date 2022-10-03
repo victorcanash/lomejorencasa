@@ -22,10 +22,19 @@ import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 type ManageProductFormProps = {
   action: ManageActions.create | ManageActions.update,
   product?: Product,
+  manageOnSubmit: boolean,
+  onSubmitSuccess?: (product: Product) => void,
+  onDeleteSuccess?: () => void,
 };
 
 const ManageProductForm = (props: ManageProductFormProps) => {
-  const { action, product } = props;
+  const { 
+    action, 
+    product, 
+    manageOnSubmit, 
+    onSubmitSuccess, 
+    onDeleteSuccess 
+  } = props;
 
   const { productCategories } = useSearchContext();
 
@@ -38,7 +47,13 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   };
 
   const handleSubmit = async (values: Product) => {
-    manageProduct(action, values);
+    if (manageOnSubmit) {
+      manageProduct(action, values, onSubmitSuccess);
+    } else {
+      if (onSubmitSuccess) {
+        onSubmitSuccess(values);
+      }
+    }
   };
 
   const handleClickDeleteBtn = () => {
@@ -47,7 +62,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
 
   const onConfirmDelete = () => {
     if (product) {
-      manageProduct(ManageActions.delete, product);
+      manageProduct(ManageActions.delete, product, onDeleteSuccess);
     }
   }
 

@@ -4,6 +4,7 @@ import { Formik, Form } from 'formik';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -19,10 +20,20 @@ type ManagePInventoryFormProps = {
   action: ManageActions.create | ManageActions.update,
   product: Product,
   productInventory?: ProductInventory,
+  manageOnSubmit: boolean,
+  onSubmitSuccess?: (productInventory: ProductInventory) => void,
+  onDeleteSuccess?: () => void,
 };
 
 const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
-  const { action, product, productInventory } = props;
+  const { 
+    action, 
+    product, 
+    productInventory,
+    manageOnSubmit, 
+    onSubmitSuccess, 
+    onDeleteSuccess 
+  } = props;
 
   const { manageProductInventory, errorMsg, successMsg } = useProducts();
 
@@ -42,7 +53,13 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
     if (checkedSize) {
       values.size = undefined;
     }
-    manageProductInventory(action, values);
+    if (manageOnSubmit) {
+      manageProductInventory(action, values, onSubmitSuccess);
+    } else {
+      if (onSubmitSuccess) {
+        onSubmitSuccess(values);
+      }
+    }
   };
 
   const handleClickDeleteBtn = () => {
@@ -51,7 +68,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
 
   const onConfirmDelete = () => {
     if (productInventory) {
-      manageProductInventory(ManageActions.delete, productInventory);
+      manageProductInventory(ManageActions.delete, productInventory, onDeleteSuccess);
     }
   }
 
@@ -107,12 +124,14 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
               />
 
               {/* Size Field */}
-              <Checkbox
-                checked={checkedSize}
-                onChange={handleChangeCheckboxSize}
-                inputProps={{ 
-                  'aria-label': 'Unique size' 
-                }}
+              <FormControlLabel 
+                control={
+                  <Checkbox 
+                    checked={checkedSize}
+                    onChange={handleChangeCheckboxSize} 
+                  />
+                } 
+                label="Unique size" 
               />
               {
                 !checkedSize &&
@@ -124,7 +143,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                     name="size"
                     autoComplete="size"        
                     label="Size"
-                    value={props.values.size}
+                    value={props.values.size || ''}
                     onChange={props.handleChange}
                     error={props.touched.size && Boolean(props.errors.size)}
                     helperText={props.touched.size && props.errors.size}

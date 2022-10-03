@@ -21,13 +21,50 @@ const useProducts = () => {
 
   const [successMsg, setSuccessMsg] = useState('');
 
-  const manageProduct = async (action: ManageActions, product: Product) => {
+  const manageAllProduct = async (
+    action: ManageActions.create | ManageActions.update, 
+    product: Product, 
+    inventories: ProductInventory[], 
+    discounts: ProductDiscount[],
+    onSuccess: () => void) => {
+      setLoading(true);
+      setErrorMsg('');
+      setSuccessMsg('');
+      let productId = 0;
+
+      try {
+        productId = await (await manageProductMW(action, token, product)).product.id;
+
+        for (const inventory of inventories) {
+          inventory.productId = productId;
+          await manageProductInventoryMW(action, token, inventory);
+        }
+
+        for (const discount of discounts) {
+          discount.productId = productId;
+          await manageProductDiscountMW(action, token, discount);
+        }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        const errorMsg = error.message;
+        setErrorMsg(errorMsg);
+        setLoading(false);
+        return;
+      }
+
+      setLoading(false);
+      setSuccessMsg('Updated data');
+      onSuccess();
+  };
+
+  const manageProduct = async (action: ManageActions, product: Product, onSuccess?: (product: Product) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     manageProductMW(action, token, product)
       .then((response: {product: Product}) => {
-        onManageProductSuccess();
+        onManageProductSuccess(response.product, onSuccess);
       }).catch((error: Error) => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
@@ -35,10 +72,13 @@ const useProducts = () => {
       });
   };
 
-  const onManageProductSuccess = () => {
+  const onManageProductSuccess = (product: Product, onSuccess?: (product: Product) => void) => {
     setLoading(false);
     setSuccessMsg('Updated data');
-  }
+    if (onSuccess) {
+      onSuccess(product);
+    }
+  };
 
   const manageProductCategory = async (action: ManageActions, productCategory: ProductCategory) => {
     setLoading(true);
@@ -82,15 +122,15 @@ const useProducts = () => {
     }
     setLoading(false);
     setSuccessMsg('Updated data');
-  }
+  };
 
-  const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory) => {
+  const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     manageProductInventoryMW(action, token, productInventory)
       .then((response: {productInventory: ProductInventory}) => {
-        onManagePInventorySuccess();
+        onManagePInventorySuccess(response.productInventory, onSuccess);
       }).catch((error: Error) => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
@@ -98,18 +138,21 @@ const useProducts = () => {
       });
   };
 
-  const onManagePInventorySuccess = () => {
+  const onManagePInventorySuccess = (productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
     setLoading(false);
     setSuccessMsg('Updated data');
-  }
+    if (onSuccess) {
+      onSuccess(productInventory);
+    }
+  };
 
-  const manageProductDiscount = async (action: ManageActions, productDiscount: ProductDiscount) => {
+  const manageProductDiscount = async (action: ManageActions, productDiscount: ProductDiscount, onSuccess?: (productDiscount: ProductDiscount) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     manageProductDiscountMW(action, token, productDiscount)
       .then((response: {productDiscount: ProductDiscount}) => {
-        onManagePDiscountSuccess();
+        onManagePDiscountSuccess(response.productDiscount, onSuccess);
       }).catch((error: Error) => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
@@ -117,12 +160,16 @@ const useProducts = () => {
       });
   };
 
-  const onManagePDiscountSuccess = () => {
+  const onManagePDiscountSuccess = (productDiscount: ProductDiscount, onSuccess?: (productDiscount: ProductDiscount) => void) => {
     setLoading(false);
     setSuccessMsg('Updated data');
-  }
+    if (onSuccess) {
+      onSuccess(productDiscount);
+    }
+  };
 
   return {
+    manageAllProduct,
     manageProduct,
     manageProductCategory,
     manageProductInventory,

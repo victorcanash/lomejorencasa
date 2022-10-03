@@ -72,7 +72,6 @@ export const productInventoryValidation = Yup.object().shape(
       .required('Quantity is required'),
     size: Yup
       .string()
-      .min(3, 'Size must have 3 letters minimum')
       .optional(),
   }
 );
