@@ -57,7 +57,7 @@ const useCart = () => {
 
     // Create cart item
     } else {
-      manageCartItem(ManageActions.update, token, cartItem).then((response: { cartItem: CartItem }) => {
+      manageCartItem(ManageActions.create, token, cartItem).then((response: { cartItem: CartItem }) => {
         cartItem.id = response.cartItem.id;
         cart.items.push(cartItem);
         addCartItemSuccess(product.realPrice);
@@ -107,7 +107,7 @@ const useCart = () => {
     } else {
       const addedQuantity = -cartItem.quantity;
       const addedPrice = -(cartItem.product.realPrice * cartItem.quantity);
-      manageCartItem(ManageActions.update, token, cartItem).then(() => {
+      manageCartItem(ManageActions.delete, token, cartItem).then(() => {
         cart.items.splice(cartItemIndex);
         updateCartItemSuccess(addedQuantity, addedPrice);
       }).catch((error: Error) => {
