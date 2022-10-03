@@ -92,12 +92,6 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.admin,
       type: PageTypes.admin,
     },
-    adminProductList: {
-      path: '/admin',
-      filepath: '/admin/[category]',
-      protection: Protections.admin,
-      type: PageTypes.admin,
-    },
   }
 };
 

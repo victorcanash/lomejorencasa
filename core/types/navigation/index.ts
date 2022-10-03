@@ -21,7 +21,6 @@ export type NavigationConfig = {
     orders: Page,
     
     admin: Page,
-    adminProductList: Page,
   },
 };
 
