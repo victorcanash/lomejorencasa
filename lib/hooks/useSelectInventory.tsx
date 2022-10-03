@@ -11,7 +11,7 @@ const useSelectInventory = (product: Product) => {
 
   useEffect(() => {
     if (!loadedSelect) {
-      if (product.inventories.length <= 1) {
+      if (product.inventories.length > 0) {
         setSelectedInventory(product.inventories[0]);
       } 
       setLoadedSelect(true);

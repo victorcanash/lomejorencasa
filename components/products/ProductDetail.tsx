@@ -73,12 +73,12 @@ const ProductDetail = (props: ProductDetailProps) => {
               <Select
                 labelId="inventory-select-label"
                 id="inventory-select"
-                value={selectedInventory?.size}
+                value={selectedInventory?.size || 'Unique size'}
                 label="Size"
                 onChange={handleChange}
               >
                 { product.inventories.map((item) => (
-                  <MenuItem key={item.id} value={item.size}>
+                  <MenuItem key={item.id} value={item.size || 'Unique size'}>
                     {`${item.size || 'Unique size'} (${item.quantity} left)`}
                   </MenuItem>
                 ))}
