@@ -80,7 +80,7 @@ const useProducts = () => {
     }
   };
 
-  const manageProductCategory = async (action: ManageActions, productCategory: ProductCategory) => {
+  const manageProductCategory = async (action: ManageActions, productCategory: ProductCategory, onSuccess?: (productCategory: ProductCategory) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
@@ -90,7 +90,7 @@ const useProducts = () => {
         if (!responseProductCategory) {
           responseProductCategory = productCategory;
         }
-        onManagePCategorySuccess(action, responseProductCategory);
+        onManagePCategorySuccess(action, responseProductCategory, onSuccess);
       }).catch((error: Error) => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
@@ -98,7 +98,7 @@ const useProducts = () => {
       });
   };
 
-  const onManagePCategorySuccess = (action: ManageActions, productCategory: ProductCategory) => {
+  const onManagePCategorySuccess = (action: ManageActions, productCategory: ProductCategory, onSuccess?: (productCategory: ProductCategory) => void) => {
     switch (action) {
       case ManageActions.create:
         setProductCategories(current => [...current, productCategory]);
@@ -119,6 +119,9 @@ const useProducts = () => {
           productCategories.filter(item => item.id !== productCategory.id)
         );
         break;
+    }
+    if (onSuccess) {
+      onSuccess(productCategory);
     }
     setLoading(false);
     setSuccessMsg('Updated data');

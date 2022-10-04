@@ -17,10 +17,19 @@ import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 type ManagePCategoryFormProps = {
   action: ManageActions.create | ManageActions.update,
   productCategory?: ProductCategory,
+  manageOnSubmit: boolean,
+  onSubmitSuccess?: (productCategory: ProductCategory) => void,
+  onDeleteSuccess?: () => void,
 };
 
 const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
-  const { action, productCategory } = props;
+  const { 
+    action, 
+    productCategory, 
+    manageOnSubmit, 
+    onSubmitSuccess, 
+    onDeleteSuccess 
+  } = props;
 
   const { manageProductCategory, errorMsg, successMsg } = useProducts();
 
@@ -31,7 +40,13 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   };
 
   const handleSubmit = async (values: ProductCategory) => {
-    manageProductCategory(action, values);
+    if (manageOnSubmit) {
+      manageProductCategory(action, values, onSubmitSuccess);
+    } else {
+      if (onSubmitSuccess) {
+        onSubmitSuccess(values);
+      }
+    }
   };
 
   const handleClickDeleteBtn = () => {
@@ -40,7 +55,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
 
   const onConfirmDelete = () => {
     if (productCategory) {
-      manageProductCategory(ManageActions.delete, productCategory);
+      manageProductCategory(ManageActions.delete, productCategory, onDeleteSuccess);
     }
   }
 
