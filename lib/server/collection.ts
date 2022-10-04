@@ -13,14 +13,8 @@ export type CollectionProps = {
 
 export const getCollectionProps: GetServerSideProps = async (context) => {
   const categoryParam = context.params?.category;
-  const { categoryQuery, page, sortBy, order, keywords } = context.query;
-  let categorySearch = 'all';
-  if (typeof categoryParam == 'string') {
-    categorySearch = categoryParam;
-  }
-  else if (typeof categoryQuery == 'string') {
-    categorySearch = categoryQuery;
-  }
+  const { page, sortBy, order, keywords } = context.query;
+  const categorySearch = typeof categoryParam == 'string' ? categoryParam : 'all';
   const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
   const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
   const orderSearch = typeof order == 'string' ? order : 'asc';
