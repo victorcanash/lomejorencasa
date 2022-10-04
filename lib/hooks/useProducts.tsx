@@ -21,8 +21,7 @@ const useProducts = () => {
 
   const [successMsg, setSuccessMsg] = useState('');
 
-  const manageAllProduct = async (
-    action: ManageActions.create | ManageActions.update, 
+  const createAllProduct = async (
     product: Product, 
     inventories: ProductInventory[], 
     discounts: ProductDiscount[],
@@ -33,16 +32,16 @@ const useProducts = () => {
       let productId = 0;
 
       try {
-        productId = await (await manageProductMW(action, token, product)).product.id;
+        productId = await (await manageProductMW(ManageActions.create, token, product)).product.id;
 
         for (const inventory of inventories) {
           inventory.productId = productId;
-          await manageProductInventoryMW(action, token, inventory);
+          await manageProductInventoryMW(ManageActions.create, token, inventory);
         }
 
         for (const discount of discounts) {
           discount.productId = productId;
-          await manageProductDiscountMW(action, token, discount);
+          await manageProductDiscountMW(ManageActions.create, token, discount);
         }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -172,7 +171,7 @@ const useProducts = () => {
   };
 
   return {
-    manageAllProduct,
+    createAllProduct,
     manageProduct,
     manageProductCategory,
     manageProductInventory,

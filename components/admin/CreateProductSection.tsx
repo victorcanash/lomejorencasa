@@ -27,13 +27,11 @@ const CreateProductSection = (props: CreateProductSectionProps) => {
 
   const { productCategories } = useSearchContext();
 
-  const { manageAllProduct, errorMsg, successMsg } = useProducts();
+  const { createAllProduct, errorMsg, successMsg } = useProducts();
 
   const [product, setProduct] = useState<Product | undefined>(undefined);
   const [productInventories, setProductInventories] = useState<ProductInventory[]>([]);
   const [productDiscounts, setProductDiscounts] = useState<ProductDiscount[]>([]);
-
-  const manageAction = ManageActions.create;
 
   const handleClickBackBtn = () => {
     setSection(AdminSections.home);
@@ -41,7 +39,7 @@ const CreateProductSection = (props: CreateProductSectionProps) => {
 
   const handleClickConfirmBtn = () => {
     if (product && productInventories && productInventories.length > 0) {
-      manageAllProduct(manageAction, product, productInventories, productDiscounts, onSuccessManage);
+      createAllProduct(product, productInventories, productDiscounts, onSuccessManage);
     }
   }
 
@@ -96,7 +94,7 @@ const CreateProductSection = (props: CreateProductSectionProps) => {
       {
         !product &&
           <ManageProductForm
-            action={manageAction}
+            action={ManageActions.create}
             manageOnSubmit={false}
             onSubmitSuccess={onSuccessCreateProduct}
           />
@@ -134,7 +132,7 @@ const CreateProductSection = (props: CreateProductSectionProps) => {
             <Divider sx={{ my: 2 }} />
 
             <ManagePInventoryForm
-              action={manageAction}
+              action={ManageActions.create}
               product={product}
               manageOnSubmit={false}
               onSubmitSuccess={onSuccessCreatePInventory}
@@ -166,7 +164,7 @@ const CreateProductSection = (props: CreateProductSectionProps) => {
                   <Divider sx={{ my: 2 }} />
 
                   <ManagePDiscountForm
-                    action={manageAction}
+                    action={ManageActions.create}
                     product={product}
                     manageOnSubmit={false}
                     onSubmitSuccess={onSuccessCreatePDiscount}
