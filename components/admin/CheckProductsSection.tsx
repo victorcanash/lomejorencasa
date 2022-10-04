@@ -7,11 +7,11 @@ import { AdminSections } from '@core/constants/admin';
 import { ManageActions } from '@core/constants/auth';
 import ManagePCategoryForm from '@components/forms/products/ManagePCategoryForm';
 
-type CreatePCategorySectionProps = {
+type CheckProductsSectionProps = {
   setSection: Dispatch<SetStateAction<AdminSections>>,
 };
 
-const CreatePCategorySection = (props: CreatePCategorySectionProps) => {
+const CheckProductsSection = (props: CheckProductsSectionProps) => {
   const { setSection } = props;
 
   const handleClickBackBtn = () => {
@@ -29,12 +29,9 @@ const CreatePCategorySection = (props: CreatePCategorySectionProps) => {
       
       <Divider sx={{ my: 2 }} />
 
-      <ManagePCategoryForm
-        action={ManageActions.create}
-        manageOnSubmit={true}
-      />
+      
     </>
   );
 };
 
-export default CreatePCategorySection;
+export default CheckProductsSection;

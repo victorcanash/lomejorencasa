@@ -2,12 +2,11 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-
 import { AdminSections } from '@core/constants/admin';
 import usePage from '@lib/hooks/usePage';
 import HomeSection from '@components/admin/HomeSection';
+import CheckPCategoriesSection from '@components/admin/CheckPCategoriesSection';
+import CheckProductsSection from '@components/admin/CheckProductsSection';
 import CreatePCategorySection from '@components/admin/CreatePCategorySection';
 import CreateProductSection from '@components/admin/CreateProductSection';
 
@@ -31,6 +30,18 @@ const Admin: NextPage = () => {
                 <HomeSection 
                   setSection={setSection}
                 />
+            }
+            {
+              section == AdminSections.checkProductCategories &&
+              <CheckPCategoriesSection 
+                setSection={setSection}
+              />
+            }
+            {
+              section == AdminSections.checkProducts &&
+              <CheckProductsSection 
+                setSection={setSection}
+              />
             }
             {
               section == AdminSections.createProductCategory &&

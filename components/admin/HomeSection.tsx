@@ -6,8 +6,6 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
 import { AdminSections } from '@core/constants/admin';
-import LinkButton from '@core/components/LinkButton';
-import { useSearchContext } from '@lib/contexts/SearchContext';
 
 type HomeSectionProps = {
   setSection: Dispatch<SetStateAction<AdminSections>>,
@@ -16,7 +14,13 @@ type HomeSectionProps = {
 const HomeSection = (props: HomeSectionProps) => {
   const { setSection } = props;
 
-  const { getHref } = useSearchContext();
+  const handleClickCheckPCategoriesBtn = () => {
+    setSection(AdminSections.checkProductCategories);
+  }
+
+  const handleClickCheckProductsBtn = () => {
+    setSection(AdminSections.checkProducts);
+  }
 
   const handleClickNewPCategoryBtn = () => {
     setSection(AdminSections.createProductCategory);
@@ -40,12 +44,20 @@ const HomeSection = (props: HomeSectionProps) => {
           <Typography variant="h6" component="h2" gutterBottom>
             Check
           </Typography>
-          <LinkButton 
-            href={getHref()}
+          <Button
+            variant="contained"
             sx={{ m: 2 }}
+            onClick={handleClickCheckPCategoriesBtn}
+          >
+            Check all product categories
+          </Button>
+          <Button 
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={handleClickCheckProductsBtn}
           >
             Check all products
-          </LinkButton>
+          </Button>
         </Box>
 
         <Divider sx={{ my: 3 }} />
