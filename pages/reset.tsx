@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import usePage from '@lib/hooks/usePage';
-import ResetPasswordForm from '@components/forms/auth/ResetPasswordForm';
+import ResetPswForm from '@components/forms/auth/ResetPswForm';
 
 const Reset: NextPage = () => {
   const page = usePage();
@@ -14,7 +14,7 @@ const Reset: NextPage = () => {
         <meta name="description" content="Password reset link" />
       </Head>
 
-      <ResetPasswordForm />
+      <ResetPswForm />
     </>
   );
 };

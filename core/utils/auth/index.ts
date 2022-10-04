@@ -8,7 +8,7 @@ import type {
   AuthLogin, 
   AuthRegister, 
   AuthUpdateEmail, 
-  AuthResetPassword 
+  AuthResetPsw 
 } from '@core/types/auth';
 import type { Cart } from '@core/types/cart';
 import { 
@@ -19,9 +19,9 @@ import {
   getLogged, 
   isAdmin, 
   updateEmail, 
-  resetPassword, 
+  resetPsw, 
   sendActivationEmail,
-  sendResetEmail,
+  sendResetPswEmail,
   sendUpdateEmail
 } from '@core/middlewares/auth';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
@@ -167,9 +167,9 @@ export const updateUserEmail = async (updateToken: string, newEmail = '', userId
   })
 };
 
-export const resetUserPassword = async (updateToken: string, authResetPassword: AuthResetPassword, userId = -1) => {
+export const resetUserPsw = async (updateToken: string, authResetPassword: AuthResetPsw, userId = -1) => {
   return new Promise<{token: string, user: User}>((resolve, reject) => {
-    resetPassword(updateToken, authResetPassword, userId).then(async (response: AxiosResponse) => {
+    resetPsw(updateToken, authResetPassword, userId).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED && response.data?.user) {
         if (response.data?.token) {
           const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
@@ -211,9 +211,9 @@ export const sendUserActivationEmail = async (email: string) => {
   })
 };
 
-export const sendUserResetEmail = async (email: string) => {
+export const sendUserResetPswEmail = async (email: string) => {
   return new Promise<true>((resolve, reject) => {
-    sendResetEmail(email).then(async (response: AxiosResponse) => {
+    sendResetPswEmail(email).then(async (response: AxiosResponse) => {
       if (response.status === StatusCodes.CREATED) {
         resolve(true);
       } else {

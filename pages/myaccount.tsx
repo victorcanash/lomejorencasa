@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider';
 import usePage from '@lib/hooks/usePage';
 import UpdateUserForm from '@components/forms/user/UpdateUserForm';
 import UpdateEmailForm from '@components/forms/auth/UpdateEmailForm';
-import ForgotForm from '@components/forms/auth/ForgotForm';
+import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
 
 const MyAccount: NextPage = () => { 
   const page = usePage();
@@ -28,7 +28,7 @@ const MyAccount: NextPage = () => {
 
       <UpdateEmailForm />
 
-      <ForgotForm forgotPage={false} />
+      <ForgotPswForm />
     </>
   )
 };

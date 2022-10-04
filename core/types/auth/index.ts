@@ -17,7 +17,7 @@ export type AuthUpdateEmail = {
   newEmail: string,
 };
 
-export type AuthResetPassword = {
+export type AuthResetPsw = {
   newPassword: string,
   newConfirm: string,
 }

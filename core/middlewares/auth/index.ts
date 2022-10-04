@@ -3,7 +3,7 @@ import { AxiosRequestConfig } from 'axios';
 import axios from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import { pages } from '@core/config/navigation.config';
-import type { AuthLogin, AuthRegister, AuthUpdateEmail, AuthResetPassword } from '@core/types/auth';
+import type { AuthLogin, AuthRegister, AuthUpdateEmail, AuthResetPsw } from '@core/types/auth';
 
 export const register = (authRegister: AuthRegister) => {
   return axios.post('/register', authRegister);
@@ -60,7 +60,7 @@ export const updateEmail = (updateToken: string, newEmail = '', userId = -1) => 
   }, options);
 };
 
-export const resetPassword = (updateToken: string, authResetPassword: AuthResetPassword, userId = -1) => {
+export const resetPsw = (updateToken: string, authResetPassword: AuthResetPsw, userId = -1) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${updateToken}`
@@ -80,7 +80,7 @@ export const sendActivationEmail = (email: string) => {
   return axios.post('auth/send-email/activation', { email }, options);
 }
 
-export const sendResetEmail = (email: string) => {
+export const sendResetPswEmail = (email: string) => {
   const options: AxiosRequestConfig = {
     params: {
       appName: envConfig.NEXT_PUBLIC_APP_NAME,

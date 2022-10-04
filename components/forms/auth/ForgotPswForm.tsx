@@ -14,26 +14,23 @@ import Alert from '@mui/material/Alert';
 import { pages } from '@core/config/navigation.config';
 import Link from '@core/components/Link';
 import { initRegisterValues, sendEmailValidation } from '@core/constants/forms/auth';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import useAuth from '@lib/hooks/useAuth';
 
-type ForgotFormProps = {
-  forgotPage: boolean,
-}
+const ForgotPswForm = () => {
+  const { user, isLogged } = useAuthContext();
 
-const ForgotForm = (props: ForgotFormProps) => {
-  const { forgotPage } = props;
-
-  const { sendResetEmail, errorMsg, successMsg } = useAuth();
+  const { sendResetPswEmail, errorMsg, successMsg } = useAuth();
 
   const handleSubmit = async (values: {email: string}) => {
-    sendResetEmail(values.email);
+    sendResetPswEmail(values.email);
   };
 
   return (
     <Container maxWidth="xs">
 
       {
-        !forgotPage &&
+        isLogged() &&
           <Divider sx={{ my: 3 }} />
       }
 
@@ -46,7 +43,7 @@ const ForgotForm = (props: ForgotFormProps) => {
       >
 
         {
-          forgotPage &&
+          !isLogged &&
             <Avatar 
               sx={{ 
                 m: 1, 
@@ -58,7 +55,7 @@ const ForgotForm = (props: ForgotFormProps) => {
         }
 
         {
-          forgotPage ?
+          !isLogged ?
             <Typography component="h1" variant="h5">
               Forgotten password
             </Typography>
@@ -70,15 +67,16 @@ const ForgotForm = (props: ForgotFormProps) => {
 
         <Formik
           initialValues={{
-            email: initRegisterValues.email,
+            email: user?.email || initRegisterValues.email,
           }}
           validationSchema={sendEmailValidation}
           onSubmit={handleSubmit}
+          enableReinitialize
         >
           {props => (
             <Form>
 
-              <Typography component={forgotPage ? 'h2' : 'h3'} variant="subtitle1" mt={1}>
+              <Typography component={!isLogged() ? 'h2' : 'h3'} variant="subtitle1" mt={1}>
                 Introduce your email address and we will send you an email with a link to set your new password.
               </Typography>
 
@@ -117,7 +115,7 @@ const ForgotForm = (props: ForgotFormProps) => {
               }  
 
               {
-                forgotPage &&
+                !isLogged() &&
                   <Grid container>
                     <Grid item>
                       <Link href={pages.login.path} variant="body2">
@@ -137,4 +135,4 @@ const ForgotForm = (props: ForgotFormProps) => {
   );
 };
 
-export default ForgotForm;
+export default ForgotPswForm;

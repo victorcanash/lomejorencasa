@@ -43,7 +43,6 @@ const UpdateEmailForm = () => {
           } as AuthUpdateEmail}
           validationSchema={updateEmailValidation}
           onSubmit={handleSubmit}
-          enableReinitialize
         >
           {props => (
             <Form>

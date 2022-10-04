@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import usePage from '@lib/hooks/usePage';
-import ForgotForm from '@components/forms/auth/ForgotForm';
+import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
 
 const Forgot: NextPage = () => { 
   const page = usePage();
@@ -14,7 +14,7 @@ const Forgot: NextPage = () => {
         <meta name="description" content="Forgot password page" />
       </Head>
       
-      <ForgotForm forgotPage={true} />
+      <ForgotPswForm />
     </>
   )
 };

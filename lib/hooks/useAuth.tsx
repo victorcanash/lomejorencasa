@@ -7,7 +7,7 @@ import type {
   AuthRegister, 
   AuthLogin, 
   AuthUpdateEmail, 
-  AuthResetPassword 
+  AuthResetPsw 
 } from '@core/types/auth';
 import type { Cart } from '@core/types/cart';
 import { 
@@ -15,10 +15,10 @@ import {
   loginUser, 
   logoutUser, 
   updateUserEmail,
-  resetUserPassword,
+  resetUserPsw,
   sendUserActivationEmail,
   sendUserUpdateEmail,
-  sendUserResetEmail,
+  sendUserResetPswEmail,
 } from '@core/utils/auth';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -26,7 +26,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();
-  const { token, setToken, setUser, prevLoginPath, isProtectedPath } = useAuthContext();
+  const { token, setToken, user, setUser, prevLoginPath, isProtectedPath, isLogged } = useAuthContext();
   const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();
@@ -118,7 +118,7 @@ const useAuth = () => {
       let errorMsg = error.message;
       if (errorMsg.includes('Token is missing or has expirated')) {
         errorMsg = 'This link is not valid or has expirated';
-      } else if (errorMsg.includes('Email must be unique')) {
+      } else if (errorMsg.includes('Unique validation failure with the newEmail')) {
         errorMsg = 'Introduced email already exists';
       } else {
         errorMsg = 'Something went wrong, try again or resend another email';
@@ -135,11 +135,11 @@ const useAuth = () => {
     setSuccessMsg(`Your email is updated now as ${user.email}. You can close this window.`);
   };
 
-  const resetPassword = async (updateToken: string, authResetPassword: AuthResetPassword) => {
+  const resetPsw = async (updateToken: string, authResetPassword: AuthResetPsw) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    resetUserPassword(updateToken, authResetPassword).then((response: {token: string, user: User}) => {
+    resetUserPsw(updateToken, authResetPassword).then((response: {token: string, user: User}) => {
       onResetPasswordSuccess(response.token, response.user);
     }).catch((error: Error) => {
       let errorMsg = error.message;
@@ -182,11 +182,15 @@ const useAuth = () => {
     });
   };
 
-  const sendResetEmail = (email: string) => {
+  const sendResetPswEmail = (email: string) => {
+    if (isLogged() && email != user?.email) {
+      setErrorMsg('This is not your email');
+      return;
+    }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserResetEmail(email).then(() => {
+    sendUserResetPswEmail(email).then(() => {
       setLoading(false);
       setSuccessMsg('Sent reset email');
     }).catch((error: Error) => {
@@ -212,7 +216,7 @@ const useAuth = () => {
       let errorMsg = error.message;
       if (errorMsg.includes('Invalid password')) {
         errorMsg = 'Password not found';
-      } else if (errorMsg.includes('Email must be unique')) {
+      } else if (errorMsg.includes('Unique validation failure with the newEmail')) {
         errorMsg = 'Introduced email already exists';
       } else {
         errorMsg = 'Something went wrong, try again';
@@ -227,9 +231,9 @@ const useAuth = () => {
     login, 
     logout,
     updateEmail,
-    resetPassword,
+    resetPsw,
     sendActivationEmail,
-    sendResetEmail,
+    sendResetPswEmail,
     sendUpdateEmail,
     errorMsg,
     successMsg,
