@@ -25,6 +25,7 @@ type ManageProductFormProps = {
   manageOnSubmit: boolean,
   onSubmitSuccess?: (product: Product) => void,
   onDeleteSuccess?: () => void,
+  onCancel?: () => void,
 };
 
 const ManageProductForm = (props: ManageProductFormProps) => {
@@ -33,7 +34,8 @@ const ManageProductForm = (props: ManageProductFormProps) => {
     product, 
     manageOnSubmit, 
     onSubmitSuccess, 
-    onDeleteSuccess 
+    onDeleteSuccess,
+    onCancel,
   } = props;
 
   const { productCategories } = useSearchContext();
@@ -63,6 +65,12 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   const onConfirmDelete = () => {
     if (product) {
       manageProduct(ManageActions.delete, product, onDeleteSuccess);
+    }
+  }
+
+  const handleCancelBtn = () => {
+    if (onCancel) {
+      onCancel();
     }
   }
 
@@ -216,6 +224,18 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                     onClick={handleClickDeleteBtn}
                   >
                     Delete
+                  </Button>
+              }
+
+              {
+                onCancel &&
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
+                    onClick={handleCancelBtn}
+                  >
+                    Cancel
                   </Button>
               }
 

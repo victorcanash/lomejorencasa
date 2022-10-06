@@ -24,6 +24,7 @@ type ManagePDiscountFormProps = {
   manageOnSubmit: boolean,
   onSubmitSuccess?: (productDiscount: ProductDiscount) => void,
   onDeleteSuccess?: () => void,
+  onCancel?: () => void,
 };
 
 const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
@@ -33,7 +34,8 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
     productDiscount,
     manageOnSubmit, 
     onSubmitSuccess, 
-    onDeleteSuccess 
+    onDeleteSuccess,
+    onCancel,
   } = props;
 
   const { manageProductDiscount, errorMsg, successMsg } = useProducts();
@@ -61,6 +63,12 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
   const onConfirmDelete = () => {
     if (productDiscount) {
       manageProductDiscount(ManageActions.delete, productDiscount, onDeleteSuccess);
+    }
+  }
+
+  const handleCancelBtn = () => {
+    if (onCancel) {
+      onCancel();
     }
   }
 
@@ -186,6 +194,18 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                     onClick={handleClickDeleteBtn}
                   >
                     Delete
+                  </Button>
+              }
+
+              {
+                onCancel &&
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
+                    onClick={handleCancelBtn}
+                  >
+                    Cancel
                   </Button>
               }
 

@@ -20,6 +20,7 @@ type ManagePCategoryFormProps = {
   manageOnSubmit: boolean,
   onSubmitSuccess?: (productCategory: ProductCategory) => void,
   onDeleteSuccess?: () => void,
+  onCancel?: () => void,
 };
 
 const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
@@ -28,7 +29,8 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
     productCategory, 
     manageOnSubmit, 
     onSubmitSuccess, 
-    onDeleteSuccess 
+    onDeleteSuccess,
+    onCancel, 
   } = props;
 
   const { manageProductCategory, errorMsg, successMsg } = useProducts();
@@ -56,6 +58,12 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   const onConfirmDelete = () => {
     if (productCategory) {
       manageProductCategory(ManageActions.delete, productCategory, onDeleteSuccess);
+    }
+  }
+
+  const handleCancelBtn = () => {
+    if (onCancel) {
+      onCancel();
     }
   }
 
@@ -143,6 +151,18 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
                     onClick={handleClickDeleteBtn}
                   >
                     Delete
+                  </Button>
+              }
+
+              {
+                onCancel &&
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
+                    onClick={handleCancelBtn}
+                  >
+                    Cancel
                   </Button>
               }
 

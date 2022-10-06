@@ -23,6 +23,7 @@ type ManagePInventoryFormProps = {
   manageOnSubmit: boolean,
   onSubmitSuccess?: (productInventory: ProductInventory) => void,
   onDeleteSuccess?: () => void,
+  onCancel?: () => void,
 };
 
 const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
@@ -32,7 +33,8 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
     productInventory,
     manageOnSubmit, 
     onSubmitSuccess, 
-    onDeleteSuccess 
+    onDeleteSuccess,
+    onCancel,
   } = props;
 
   const { manageProductInventory, errorMsg, successMsg } = useProducts();
@@ -69,6 +71,12 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
   const onConfirmDelete = () => {
     if (productInventory) {
       manageProductInventory(ManageActions.delete, productInventory, onDeleteSuccess);
+    }
+  }
+
+  const handleCancelBtn = () => {
+    if (onCancel) {
+      onCancel();
     }
   }
 
@@ -172,6 +180,18 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                     onClick={handleClickDeleteBtn}
                   >
                     Delete
+                  </Button>
+              }
+
+              {
+                onCancel &&
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    sx={{ mt: 2, mb: 2 }}
+                    onClick={handleCancelBtn}
+                  >
+                    Cancel
                   </Button>
               }
 
