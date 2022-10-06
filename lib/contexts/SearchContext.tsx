@@ -3,6 +3,7 @@ import { createContext, useState, Dispatch, SetStateAction, useContext } from 'r
 import { pages } from '@core/config/navigation.config';
 import { allProductsName } from '@core/constants/products';
 import type { ProductCategory } from '@core/types/products';
+import { AdminSections } from '@core/constants/admin';
 
 type SearchContext = {
   productCategories: ProductCategory[],
@@ -38,8 +39,13 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [sortBy, setSortBy] = useState('id');
   const [order, setOrder] = useState('asc');
 
-  const getHref = (categoryName = allProductsName, page = 1, keywords = '') => {
-    return `${pages.productList.path}/${categoryName}?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
+  const getHref = (categoryName = allProductsName, page = 1, keywords = '', admin = false) => {
+    const pagePath = !admin ? `${pages.productList.path}/${categoryName}` : pages.admin.path;
+    let queries = `?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
+    if (admin) {
+      queries += `&section=${AdminSections.checkProducts}`;
+    }
+    return `${pagePath}${queries}`;
   };
 
   return (

@@ -1,19 +1,30 @@
-import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+
 import { AdminSections } from '@core/constants/admin';
+import { AdminProps, getAdminProps } from '@lib/server/admin';
 import usePage from '@lib/hooks/usePage';
-import HomeSection from '@components/admin/HomeSection';
-import CheckPCategoriesSection from '@components/admin/CheckPCategoriesSection';
-import CheckProductsSection from '@components/admin/CheckProductsSection';
-import CreatePCategorySection from '@components/admin/CreatePCategorySection';
-import CreateProductSection from '@components/admin/CreateProductSection';
+import HomeSection from '@components/admin/sections/HomeSection';
+import CheckCategoriesSection from '@components/admin/sections/CheckCategoriesSection';
+import CheckProductsSection from '@components/admin/sections/CheckProductsSection';
+import CreateCategorySection from '@components/admin/sections/CreateCategorySection';
+import CreateProductSection from '@components/admin/sections/CreateProductSection';
+import GoBackBtn from '@components/ui/GoBackBtn';
 
-const Admin: NextPage = () => {
+const Admin: NextPage<AdminProps> = (props) => {
+  const { 
+    section,
+    products, 
+    currentPage, 
+    totalPages, 
+    productCategory,  
+    keywords, 
+  } = props;
+
   const page = usePage();
-
-  const [section, setSection] = useState(AdminSections.home);
 
   return (
     <>
@@ -25,35 +36,43 @@ const Admin: NextPage = () => {
       {
         page.checked &&
           <>
+
+            {
+              section == AdminSections.home ?
+                <Typography variant="h4" component="h1" gutterBottom>
+                  Welcome to the admin page
+                </Typography>
+                :
+                <GoBackBtn />
+            }
+
+            <Divider sx={{ my: 3 }} />
+
             {
               section == AdminSections.home &&
-                <HomeSection 
-                  setSection={setSection}
-                />
+                <HomeSection />
             }
             {
               section == AdminSections.checkProductCategories &&
-              <CheckPCategoriesSection 
-                setSection={setSection}
-              />
+                <CheckCategoriesSection />
             }
             {
               section == AdminSections.checkProducts &&
-              <CheckProductsSection 
-                setSection={setSection}
-              />
+                <CheckProductsSection 
+                  category={productCategory}
+                  products={products}
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  keywords={keywords}
+                />
             }
             {
               section == AdminSections.createProductCategory &&
-              <CreatePCategorySection 
-                setSection={setSection}
-              />
+                <CreateCategorySection />
             }
             {
               section == AdminSections.createProduct &&
-              <CreateProductSection 
-                setSection={setSection}
-              />
+                <CreateProductSection />
             }
           </>
       }
@@ -62,3 +81,5 @@ const Admin: NextPage = () => {
 };
 
 export default Admin;
+
+export const getServerSideProps = getAdminProps;
