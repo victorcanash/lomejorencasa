@@ -23,7 +23,7 @@ const CartDetail = () => {
       </Typography>
       <Divider sx={{ my: 3 }} />
 
-      {cart && cart.items.length > 0 ? (
+      {cart && cart.items.length > 0 ?
         <>
           <Container className='animate__animated animate__fadeIn'>
             {cart.items.map((item) => (
@@ -49,16 +49,15 @@ const CartDetail = () => {
             <CheckoutBtn />
           </Box>
 
-          <GoBackBtn />
         </>
-      ) : (
+      :
         <>
           <Typography variant='h5' align='center' sx={{ my: 5 }}>
             There are no products added
           </Typography>
-          <GoBackBtn />
         </>
-      )}
+      }
+      <GoBackBtn />
     </>
   );
 };
