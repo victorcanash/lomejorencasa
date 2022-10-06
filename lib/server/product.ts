@@ -13,7 +13,7 @@ export const getProductProps: GetServerSideProps = async (context) => {
 
   let result: { props: ProductProps } | { notFound: boolean } = { props: {} as ProductProps };
   
-  await getProduct(idSearch)
+  await getProduct(idSearch, false)
     .then((response: { product: Product }) => {
       result = {
         props: {

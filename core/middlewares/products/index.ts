@@ -3,7 +3,7 @@ import { AxiosRequestConfig } from 'axios';
 import axios from '@core/config/axios.config';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 
-export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string, ordersRemain: boolean) => {
+export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string, ordersRemain: boolean, inventories: boolean, discounts: boolean) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let addParams: any = {
     page,
@@ -12,6 +12,8 @@ export const getProducts = (page: number, limit: number, sortBy: string, order: 
     order,
     keywords,
     ordersRemain,
+    inventories,
+    discounts,
   };
   if (categoryName != 'all' ) {
     addParams = {
@@ -22,6 +24,8 @@ export const getProducts = (page: number, limit: number, sortBy: string, order: 
       keywords,
       categoryName,
       ordersRemain,
+      inventories,
+      discounts,
     };
   }
   const options: AxiosRequestConfig = {
@@ -30,10 +34,11 @@ export const getProducts = (page: number, limit: number, sortBy: string, order: 
   return axios.get('/products', options);
 };
 
-export const getProductById = (id: number) => {
+export const getProductById = (id: number, inventories: boolean, discounts: boolean) => {
   const options: AxiosRequestConfig = {
     params: {
-      id,
+      inventories,
+      discounts,
     }
   }
   return axios.get(`/products/${id}`, options);

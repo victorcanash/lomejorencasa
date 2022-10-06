@@ -28,10 +28,31 @@ import {
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import placeholder from 'public/images/placeholder.jpeg';
 
-export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
-  return new Promise<{products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number}>(async (resolve, reject) => {
-    getProducts(page, limitByPageSearch, sortBy, order, keywords, categoryName, orderRemainsSearch)
-      .then(async (response: AxiosResponse) => {
+export const getAllProducts = async (
+  page: number, 
+  sortBy: string, 
+  order: string, 
+  keywords: string, 
+  categoryName: string,
+  discounts: boolean
+) => {
+  return new Promise<{
+    products: Product[], 
+    productCategory: ProductCategory | null, 
+    totalPages: number, 
+    currentPage: number,
+  }>(async (resolve, reject) => {
+    getProducts(
+      page, 
+      limitByPageSearch, 
+      sortBy, 
+      order, 
+      keywords, 
+      categoryName, 
+      orderRemainsSearch, 
+      true, 
+      discounts
+    ).then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.products) {
           resolve({
             products: response.data.products,
@@ -50,9 +71,9 @@ export const getAllProducts = async (page: number, sortBy: string, order: string
   });
 };
 
-export const getProduct = (id: number) => {
+export const getProduct = (id: number, discounts: boolean) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
-    getProductById(id)
+    getProductById(id, true, discounts)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.product) {
           resolve({
