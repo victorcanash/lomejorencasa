@@ -4,16 +4,19 @@ import Typography from '@mui/material/Typography';
 
 type CategoryDetailProps = {
   category: ProductCategory,
+  created: boolean,
 };
 
 const CategoryDetail = (props: CategoryDetailProps) => {
-  const { category } = props;
+  const { category, created } = props;
 
   return (
     <>
-      <Typography component="div" variant="subtitle1">
-        {`ID: ${category.id}`}
-      </Typography>
+      { created &&
+        <Typography component="div" variant="subtitle1">
+          {`ID: ${category.id}`}
+        </Typography>
+      }
       <Typography component="div" variant="subtitle1">
         {`Name: ${category.name}`}
       </Typography>

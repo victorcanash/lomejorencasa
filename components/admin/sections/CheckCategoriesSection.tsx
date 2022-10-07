@@ -45,6 +45,7 @@ const CheckCategoriesSection = () => {
               <Grid item xs={6} key={index}>
                 <CategoryDetail 
                   category={item}
+                  created={true}
                 />
                 <Button 
                   variant="contained"  
