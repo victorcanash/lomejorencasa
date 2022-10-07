@@ -3,45 +3,51 @@ import { AxiosRequestConfig } from 'axios';
 import axios from '@core/config/axios.config';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 
-export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string, ordersRemain: boolean, inventories: boolean, discounts: boolean) => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let addParams: any = {
-    page,
-    limit,
-    sortBy,
-    order,
-    keywords,
-    ordersRemain,
-    inventories,
-    discounts,
-  };
-  if (categoryName != 'all' ) {
-    addParams = {
+export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string , ordersRemain: boolean) => {
+  const categoryNameValue = categoryName == 'all' ? undefined : categoryName;
+  const options: AxiosRequestConfig = {
+    params: {
       page,
       limit,
       sortBy,
       order,
       keywords,
-      categoryName,
+      categoryName: categoryNameValue,
       ordersRemain,
-      inventories,
-      discounts,
-    };
-  }
-  const options: AxiosRequestConfig = {
-    params: addParams,
-  }
+    },
+  };
   return axios.get('/products', options);
 };
 
-export const getProductById = (id: number, inventories: boolean, discounts: boolean) => {
+export const getAdminProducts = (token: string, page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
+  const categoryNameValue = categoryName == 'all' ? undefined : categoryName;
   const options: AxiosRequestConfig = {
     params: {
-      inventories,
-      discounts,
-    }
-  }
-  return axios.get(`/products/${id}`, options);
+      page,
+      limit,
+      sortBy,
+      order,
+      keywords,
+      categoryName: categoryNameValue,
+    },
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  };
+  return axios.get('/admin/products', options);
+};
+
+export const getProductById = (id: number) => {
+  return axios.get(`/products/${id}`);
+};
+
+export const getAdminProductById = (token: string, id: number) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+  };
+  return axios.get(`/admin/products/${id}`, options);
 };
 
 export const getProductCategories = (page: number, limit: number, sortBy?: string, order?: string) => {
@@ -54,22 +60,6 @@ export const getProductCategories = (page: number, limit: number, sortBy?: strin
     }
   }
   return axios.get('/pcategories', options);
-};
-
-export const getProductDiscounts = (token: string, page: number, limit: number, productId: number, sortBy?: string, order?: string) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    params: {
-      page,
-      limit,
-      productId,
-      sortBy,
-      order,
-    }
-  }
-  return axios.get('/pdiscounts', options);
 };
 
 export const createProduct = (token: string, product: Product) => {
