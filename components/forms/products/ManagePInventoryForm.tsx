@@ -39,7 +39,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
 
   const { manageProductInventory, errorMsg, successMsg } = useProducts();
 
-  const [checkedSize, setCheckedSize] = useState(true);
+  const [checkedSize, setCheckedSize] = useState(productInventory?.size ? false : true);
 
   const [openDialog, setOpenDialog] = useState(false);
 
