@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { 
+  getAdminProduct as getAdminProductMW,
   manageProduct as manageProductMW,
   manageProductCategory as manageProductCategoryMW,
   manageProductInventory as manageProductInventoryMW,
@@ -20,6 +21,21 @@ const useProducts = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const [successMsg, setSuccessMsg] = useState('');
+
+  const getAdminProduct = async (id: number, onSuccess: (product: Product) => void) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await getAdminProductMW(token, id)
+      .then((response: { product: Product }) => {
+        onSuccess(response.product);
+        setLoading(false);
+        setSuccessMsg('Get product successfully');
+    }).catch((error: Error) => {
+      setLoading(false);
+      setErrorMsg(error.message);
+    })
+  }
 
   const createAllProduct = async (
     product: Product, 
@@ -171,6 +187,7 @@ const useProducts = () => {
   };
 
   return {
+    getAdminProduct,
     createAllProduct,
     manageProduct,
     manageProductCategory,
