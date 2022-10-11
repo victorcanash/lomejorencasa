@@ -13,7 +13,8 @@ type CarouselProps = {
   product: Product,
 }
 
-const Carousel = ({ product }: CarouselProps) => {
+const Carousel = (props: CarouselProps) => {
+  const { product } = props;
 
   return (
     <Box>
@@ -32,7 +33,7 @@ const Carousel = ({ product }: CarouselProps) => {
           slideShadows: true,
         }}
       >
-        {product.imageNames.map((imgName, index) => (
+        { product.imageNames.map((_imgName, index) => (
           <SwiperSlide key={index}>
             <div style={{ marginBottom: "40px"}}>
               {/*<Zoom>*/}
