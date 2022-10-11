@@ -1,8 +1,6 @@
 import { useRouter } from 'next/router';
 
 import Grid from '@mui/material/Grid';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
@@ -11,6 +9,7 @@ import { allProductsName } from '@core/constants/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import ProductItem from '@components/products/ProductItem';
+import Pagination from '@components/Pagination';
 
 type ProductListProps = {
   category: ProductCategory | null,
@@ -60,18 +59,11 @@ const ProductList = (props: ProductListProps) => {
           </Typography>
       }
 
-      <Stack spacing={2} sx={{ mt: 1 }} >
-        <Pagination
-          sx={{
-            display: "flex", flexDirection: "col", justifyContent: "center"
-          }}
-          count={totalPages}
-          page={currentPage}
-          onChange={handleChangePage}
-          variant="outlined"
-          shape="rounded"
-        />
-      </Stack>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onChangePage={handleChangePage}
+      />
     </>
   );
 };
