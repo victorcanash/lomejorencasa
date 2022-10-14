@@ -14,8 +14,8 @@ import {
   createProduct,
   updateProduct,
   deleteProduct,
-  uploadProductImages,
-  deleteProductImage,
+  uploadProductImgs as uploadProductImgsMW,
+  deleteProductImg as deleteProductImgMW,
   createProductCategory,
   updateProductCategory,
   deleteProductCategory,
@@ -178,9 +178,9 @@ export const manageProduct = (action: ManageActions, token: string, product: Pro
   });
 };
 
-export const uploadProductImgs = (token: string, productImages: string[], productId: number) => {
+export const uploadProductImgs = (token: string, productImages: File[], productId: number) => {
   return new Promise<{productImages: string[]}>(async (resolve, reject) => {
-    uploadProductImages(token, productImages, productId)
+    uploadProductImgsMW(token, productImages, productId)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
@@ -199,7 +199,7 @@ export const uploadProductImgs = (token: string, productImages: string[], produc
 
 export const deleteProductImg = (token: string, id: number, productId: number) => {
   return new Promise<{productImages: string[]}>(async (resolve, reject) => {
-    deleteProductImage(token, id, productId)
+    deleteProductImgMW(token, id, productId)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK) {
           resolve({

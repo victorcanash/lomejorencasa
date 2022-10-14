@@ -8,6 +8,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
 import { Product } from '@core/types/products';
+import { getProductImgUrl } from '@core/utils/products';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import GoBackBtn from '@components/ui/GoBackBtn';
@@ -51,7 +52,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           <Card raised>
             <CardMedia>
-              <Carousel product={product} />
+              <Carousel 
+                imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })} 
+              />
             </CardMedia>
           </Card>
           <GoBackBtn />

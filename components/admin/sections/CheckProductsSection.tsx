@@ -4,8 +4,6 @@ import { useRouter } from 'next/router';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import UpdateIcon from '@mui/icons-material/Update';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -21,8 +19,9 @@ import ManageProductForm from '@components/forms/products/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/products/ManagePInventoryForm';
 import ManagePDiscountForm from '@components/forms/products/ManagePDiscountForm';
 import ProductDetail from '@components/admin/details/ProductDetail';
-import InventoryDetail from '@components/admin/details/InventoryDetail';
-import DiscountDetail from '@components/admin/details/DiscountDetail';
+import InventoriesDetail from '@components/admin/details/InventoriesDetail';
+import DiscountsDetail from '@components/admin/details/DiscountsDetail';
+import Pagination from '@components/Pagination';
 
 export type CheckProductsSectionProps = {
   category: ProductCategory | null,
@@ -79,6 +78,10 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     return false;
   };
 
+  const handleChangePage = (event: React.ChangeEvent<unknown>, page: number) => {
+    router.push(getHref(category?.name || allProductsName, page, keywords));
+  };
+
   const refreshProduct = (productId: number) => {
     getAdminProduct(productId, onRefreshProductSuccess);
   };
@@ -100,10 +103,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     unselectModel();
   };
 
-  const handleChangePage = (event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getHref(category?.name || allProductsName, page, keywords));
-  };
-
   const onClickUpdateProductBtn = (product: Product) => {
     setSelectedModel({
       product: product,
@@ -120,11 +119,11 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     });
   }
   
-  const onClickUpdateInventoryBtn = (product: Product, inventory: ProductInventory) => {
+  const onClickUpdateInventoryBtn = (product: Product, inventoryIndex: number) => {
     if (product.inventories) {
       setSelectedModel({
         product: product,
-        inventory: inventory,
+        inventory: product.inventories[inventoryIndex],
         discount: undefined,
       });
     }
@@ -138,12 +137,12 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     });
   }
 
-  const onClickUpdateDiscountBtn = (product: Product, discount: ProductDiscount) => {
+  const onClickUpdateDiscountBtn = (product: Product, discountIndex: number) => {
     if (product.discounts) {
       setSelectedModel({
         product: product,
         inventory: undefined,
-        discount: discount,
+        discount: product.discounts[discountIndex],
       });
     }
   };
@@ -222,7 +221,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
           <ManageProductForm 
             action={ManageActions.update}
             product={selectedModel.product}
-            manageOnSubmit={true}
             onSubmitSuccess={onSuccessUpdateProduct}
             onDeleteSuccess={onSuccessDeleteProduct}
             onCancel={onCancelModel}
@@ -260,7 +258,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
   return (
     <>           
       { !anySelectedModel() ?
-
         <>
           <Typography component="h1" variant="h5">
             Products
@@ -268,7 +265,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
 
           <Grid container spacing={4} py={3}>
             {checkProducts?.map((item, index) => (
-              <Grid item xs={6} key={index}>
+              <Grid item xs={12} key={index}>
                 <Typography component="div" variant="h6">
                   Product detail
                 </Typography>
@@ -276,16 +273,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                   product={item.product}
                   created={true}
                 />   
-                <Typography component="div" variant="subtitle1">
-                  {`Active discount: ${item.product.activeDiscount ? '' : 'Null'}`}
-                </Typography>
-                { item.product.activeDiscount && 
-                    <DiscountDetail
-                      key="activeDiscount"
-                      discount={item.product.activeDiscount}
-                      created={true}
-                    /> 
-                }
+                
                 <div>
                   <Button 
                     variant="contained"  
@@ -313,24 +301,23 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     Check all discounts
                   </Button>
                 </div> 
-                { item.checkDiscounts && item.product.discounts &&
-                  <>
-                    { item.product.discounts.map((discount, index) => (
-                      <div key={`${index}${item.product.name}`}>
-                        <DiscountDetail          
-                          discount={discount}
-                          created={true}
-                        />
+
+                { item.checkDiscounts && item.product.discounts && item.product.discounts.length > 0 &&
+                  <DiscountsDetail
+                    discounts={item.product.discounts}
+                    created={true}
+                    getDiscountActionComponent={(discountIndex: number) => {
+                      return (
                         <Button 
-                          variant="contained"  
-                          startIcon={<UpdateIcon />}                    
-                          onClick={() => onClickUpdateDiscountBtn(item.product, discount)}
-                        >
+                            variant="contained"  
+                            startIcon={<UpdateIcon />}                    
+                            onClick={() => onClickUpdateDiscountBtn(item.product, discountIndex)}
+                          >
                           Update discount
-                        </Button>    
-                      </div>
-                    ))}
-                  </>
+                        </Button> 
+                      );
+                    }}
+                  />
                 }
                 <div>
                   <Button 
@@ -350,47 +337,35 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     Check all inventories
                   </Button>
                 </div>
-                { item.checkInventories && item.product.inventories &&
-                  <>
-                    { item.product.inventories.map((inventory, index) => (
-                      <div key={`${index}${item.product.name}`}>
-                        <InventoryDetail
-                          inventory={inventory}
-                          created={true}
-                        /> 
+                { item.checkInventories && item.product.inventories && item.product.inventories.length > 0 &&
+                  <InventoriesDetail
+                    inventories={item.product.inventories}
+                    created={true}
+                    getInventoryActionComponent={(inventoryIndex: number) => {
+                      return (
                         <Button 
-                          variant="contained"  
-                          startIcon={<UpdateIcon />}                    
-                          onClick={() => onClickUpdateInventoryBtn(item.product, inventory)}
-                        >
+                            variant="contained"  
+                            startIcon={<UpdateIcon />}                    
+                            onClick={() => onClickUpdateInventoryBtn(item.product, inventoryIndex)}
+                          >
                           Update inventory
                         </Button> 
-                      </div>
-                    ))}
-                  </>
+                      );
+                    }}
+                  />
                 }
               </Grid>
             ))}
           </Grid>
 
-          <Stack spacing={2} sx={{ mt: 1 }} >
-            <Pagination
-              sx={{
-                display: "flex", flexDirection: "col", justifyContent: "center"
-              }}
-              count={totalPages}
-              page={currentPage}
-              onChange={handleChangePage}
-              variant="outlined"
-              shape="rounded"
-            />
-          </Stack>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onChangePage={handleChangePage}
+          />
         </>
-
       :
-
         getManageForm()
-
       }
     </>
   );

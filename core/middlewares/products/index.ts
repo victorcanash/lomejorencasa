@@ -89,16 +89,21 @@ export const deleteProduct = (token: string, product: Product) => {
   return axios.delete(`/products/${product.id}`, options)
 }
 
-export const uploadProductImages = (token: string, productImages: string[], productId: number) => {
+export const uploadProductImgs = (token: string, productImages: File[], productId: number) => {
   const options: AxiosRequestConfig = {
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`,
     }
   }
-  return axios.post(`/products/${productId}/images`, { images: productImages }, options);
+  const data = new FormData();
+  for (let i = 0; i < productImages.length; i++) {
+    data.append('images', productImages[i]);
+  }
+  return axios.post(`/products/${productId}/images`, data, options);
 };
 
-export const deleteProductImage = (token: string, id: number, productId: number) => {
+export const deleteProductImg = (token: string, id: number, productId: number) => {
   const options: AxiosRequestConfig = {
     headers: {
       'Authorization': `Bearer ${token}`

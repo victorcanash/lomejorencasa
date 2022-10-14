@@ -1,8 +1,11 @@
 import { Product } from '@core/types/products';
 
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
+import { getProductImgUrl } from '@core/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import Carousel from '@components/Carousel';
 
 type ProductDetailProps = {
   product: Product,
@@ -37,9 +40,19 @@ const ProductDetail = (props: ProductDetailProps) => {
         {`Price: ${product.price}`}
       </Typography>
       { created &&
-        <Typography component="div" variant="subtitle1">
-          {`Real price (with discount): ${product.realPrice}`}
-        </Typography>
+        <>
+          <Typography component="div" variant="subtitle1">
+            {`Real price (with discount): ${product.realPrice}`}
+          </Typography>
+          <Typography component="div" variant="subtitle1">
+            {`Active discount ID: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
+          </Typography>
+          <Box sx={{width: "360px"}}>
+            <Carousel 
+              imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })} 
+            />
+          </Box>
+        </>
       }
     </>
   );

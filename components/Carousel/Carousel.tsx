@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image, { StaticImageData } from 'next/image';
 // import Zoom from 'react-medium-image-zoom'
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,15 +6,12 @@ import { Navigation, EffectCoverflow, Pagination } from 'swiper';
 
 import Box from '@mui/material/Box';
 
-import { Product } from '@core/types/products';
-import { getProductImgUrl } from '@core/utils/products';
-
 type CarouselProps = {
-  product: Product,
+  imgSources: (string | StaticImageData)[],
 }
 
 const Carousel = (props: CarouselProps) => {
-  const { product } = props;
+  const { imgSources } = props;
 
   return (
     <Box>
@@ -33,12 +30,12 @@ const Carousel = (props: CarouselProps) => {
           slideShadows: true,
         }}
       >
-        { product.imageNames.map((_imgName, index) => (
-          <SwiperSlide key={index}>
+        { imgSources.map((imgSrc, imgSrcIndex) => (
+          <SwiperSlide key={imgSrcIndex}>
             <div style={{ marginBottom: "40px"}}>
               {/*<Zoom>*/}
                 <Image 
-                  src={getProductImgUrl(product, index)} 
+                  src={imgSrc} 
                   alt="Product image" 
                   width="500"
                   height="500"

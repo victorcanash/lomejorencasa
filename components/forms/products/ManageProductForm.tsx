@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+
 import { Formik, Form } from 'formik';
 
 import Button from '@mui/material/Button';
@@ -15,15 +16,17 @@ import Alert from '@mui/material/Alert';
 import { productValidation, initProductValues } from '@core/constants/forms/products';
 import { ManageActions } from '@core/constants/auth';
 import { Product } from '@core/types/products';
+import { UploadFile } from '@core/types/upload';
+import { getProductImgUrl } from '@core/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import useProducts from '@lib/hooks/useProducts';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
+import ImagesDetail from '@components/admin/details/ImagesDetail';
 
 type ManageProductFormProps = {
   action: ManageActions.create | ManageActions.update,
   product?: Product,
-  manageOnSubmit: boolean,
-  onSubmitSuccess?: (product: Product) => void,
+  onSubmitSuccess?: (product: Product, uploadImgs?: UploadFile[]) => void,
   onDeleteSuccess?: () => void,
   onCancel?: () => void,
 };
@@ -32,7 +35,6 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   const { 
     action, 
     product, 
-    manageOnSubmit, 
     onSubmitSuccess, 
     onDeleteSuccess,
     onCancel,
@@ -40,21 +42,58 @@ const ManageProductForm = (props: ManageProductFormProps) => {
 
   const { productCategories } = useSearchContext();
 
-  const { manageProduct, errorMsg, successMsg } = useProducts();
+  const { validateProductImgs, updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
 
+  const uploadImgsInputRef = useRef<HTMLInputElement | null>(null);
+
+  const [uploadImgs, setUploadImgs] = useState<UploadFile[]>([]);
+  const [deleteExistingImgs, setDeleteExistingImgs] = useState<number[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
+
+  // on set files to the upload input we add it in uploadFiles
+  const handleChangeUploadImgsInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      Array.from(files).forEach((file) => {
+        setUploadImgs(current => [...current, { 
+          url: URL.createObjectURL(file),
+          file: file,
+        }]);
+      })
+    }
+    if (uploadImgsInputRef.current) {
+      uploadImgsInputRef.current.value = '';
+    }
+  };
+
+  // on click the delete button from a uploaded img we remove it from uploadImgs
+  const handleClickDeleteUploadImgBtn = (uploadImgIndex: number) => {
+    setUploadImgs(
+      uploadImgs.filter((_item, index) => index !== uploadImgIndex)
+    );
+  };
+
+  // on click the delete button from an existing img we add its index in deleteExistingImgs
+  const handleClickDeleteExistingImgBtn = (deleteExistingImg: number) => {
+    setDeleteExistingImgs(current => [...current, deleteExistingImg]);
+  };
+
+  // on click the discard button from an existing img we remove its index from deleteExistingImgs
+  const handleClickRecoverExistingImgBtn = (deleteExistingImg: number) => {
+    setDeleteExistingImgs(
+      deleteExistingImgs.filter((item) => item !== deleteExistingImg)
+    );
+  }
 
   const handleDialog = () => {
     setOpenDialog(!openDialog);
   };
 
   const handleSubmit = async (values: Product) => {
-    if (manageOnSubmit) {
-      manageProduct(action, values, onSubmitSuccess);
-    } else {
-      if (onSubmitSuccess) {
-        onSubmitSuccess(values);
-      }
+    if (action == ManageActions.create) {
+      validateProductImgs(values, uploadImgs, undefined, onSubmitSuccess);
+    } else if (action == ManageActions.update) {
+      updateProduct(values, uploadImgs, deleteExistingImgs, onSubmitSuccess);
     }
   };
 
@@ -64,7 +103,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
 
   const onConfirmDelete = () => {
     if (product) {
-      manageProduct(ManageActions.delete, product, onDeleteSuccess);
+      deleteProduct(product, onDeleteSuccess);
     }
   }
 
@@ -201,6 +240,54 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 error={props.touched.price && Boolean(props.errors.price)}
                 helperText={props.touched.price && props.errors.price} 
               />
+              { uploadImgs && uploadImgs.length > 0 &&
+                <>
+                  <Typography component="h3" variant="subtitle1" sx={{ mt: 2 }}>
+                    New images to upload:
+                  </Typography>
+                  <ImagesDetail
+                    imgSources={uploadImgs.map((item) => { return item.url })}
+                    getImgActionComponent={(srcImgIndex: number) => {
+                      return (
+                        <Button variant="contained" onClick={()=>handleClickDeleteUploadImgBtn(srcImgIndex)}>
+                          Remove
+                        </Button>
+                      )
+                    }}
+                  />
+                </>
+              }
+              <Button variant="contained" component="label" sx={{ mt: 2 }}>
+                Upload new image
+                <input ref={uploadImgsInputRef} hidden accept="image/*" multiple type="file" onChange={handleChangeUploadImgsInput} />
+              </Button>
+
+              { product?.imageNames && product?.imageNames.length > 0 &&
+                <>
+                  <Typography component="h3" variant="subtitle1" sx={{ mt: 2 }}>
+                    Existing images:
+                  </Typography>
+                  <ImagesDetail
+                    imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })}
+                    getImgActionComponent={(srcImgIndex: number) => {
+                      const component = deleteExistingImgs.includes(srcImgIndex) ?
+                        <>
+                          <Typography component="div" variant="subtitle2">
+                            Will be deleted
+                          </Typography>
+                          <Button variant="contained" onClick={()=>handleClickRecoverExistingImgBtn(srcImgIndex)}>
+                            Recover
+                          </Button>
+                        </>
+                      :
+                        <Button variant="contained" onClick={()=>handleClickDeleteExistingImgBtn(srcImgIndex)}>
+                          Delete
+                        </Button>
+                      return component;
+                    }}
+                  />
+                </>
+              }
 
               <Button
                 type="submit"

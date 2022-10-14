@@ -2,9 +2,12 @@ import { useState } from 'react';
 
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
+import { UploadFile } from '@core/types/upload';
 import { 
   getAdminProduct as getAdminProductMW,
   manageProduct as manageProductMW,
+  uploadProductImgs,
+  deleteProductImg,
   manageProductCategory as manageProductCategoryMW,
   manageProductInventory as manageProductInventoryMW,
   manageProductDiscount as manageProductDiscountMW,
@@ -35,61 +38,136 @@ const useProducts = () => {
       setLoading(false);
       setErrorMsg(error.message);
     })
-  }
-
-  const createAllProduct = async (
-    product: Product, 
-    inventories: ProductInventory[], 
-    discounts: ProductDiscount[],
-    onSuccess: () => void) => {
-      setLoading(true);
-      setErrorMsg('');
-      setSuccessMsg('');
-      let productId = 0;
-
-      try {
-        productId = await (await manageProductMW(ManageActions.create, token, product)).product.id;
-
-        for (const inventory of inventories) {
-          inventory.productId = productId;
-          await manageProductInventoryMW(ManageActions.create, token, inventory);
-        }
-
-        for (const discount of discounts) {
-          discount.productId = productId;
-          await manageProductDiscountMW(ManageActions.create, token, discount);
-        }
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      } catch (error: any) {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
-        setLoading(false);
-        return;
-      }
-
-      setLoading(false);
-      setSuccessMsg('Updated data');
-      onSuccess();
   };
 
-  const manageProduct = async (action: ManageActions, product: Product, onSuccess?: (product: Product) => void) => {
+  const validateProductImgs = (
+    product: Product, 
+    uploadImgs?: UploadFile[],
+    deleteImgs?: number[], 
+    onSuccess?: (product: Product, uploadImgs?: UploadFile[]) => void
+  ) => {
+    const totalImgs = product.imageNames.length - 
+      (deleteImgs ? deleteImgs.length : 0) + 
+      ((uploadImgs ? uploadImgs.length : 0));
+    if (totalImgs < 1) {
+      setSuccessMsg('');
+      setErrorMsg('The product must contain at least one image');
+      return false;
+    } 
+    if (onSuccess) {
+      onSuccess(product, uploadImgs);
+    }
+    return true;
+  };
+
+  const createProduct = async (
+    product: Product, 
+    uploadImgs: UploadFile[],
+    inventories: ProductInventory[], 
+    discounts: ProductDiscount[],
+    onSuccess: () => void
+  ) => {
+    if (!validateProductImgs(product, uploadImgs, undefined)) {
+      return;
+    }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    manageProductMW(action, token, product)
-      .then((response: {product: Product}) => {
-        onManageProductSuccess(response.product, onSuccess);
-      }).catch((error: Error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
+    let productId = 0;
+
+    try {
+      productId = await (await manageProductMW(ManageActions.create, token, product)).product.id;
+
+      await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productId);
+
+      for (const inventory of inventories) {
+        inventory.productId = productId;
+        await manageProductInventoryMW(ManageActions.create, token, inventory);
+      }
+
+      for (const discount of discounts) {
+        discount.productId = productId;
+        await manageProductDiscountMW(ManageActions.create, token, discount);
+      }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setLoading(false);
+      setErrorMsg(error.message);
+      return;
+    }
+
+    setLoading(false);
+    setSuccessMsg('Created product');
+    onSuccess();
   };
 
-  const onManageProductSuccess = (product: Product, onSuccess?: (product: Product) => void) => {
+  const updateProduct = async (
+    product: Product, 
+    uploadImgs?: UploadFile[], 
+    deleteImgs?: number[], 
+    onSuccess?: (product: Product, uploadImgs?: UploadFile[]) => void
+  ) => {
+    if (!validateProductImgs(product, uploadImgs, deleteImgs)) {
+      return;
+    }
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    let productResponse;
+
+    try {
+      productResponse = await (await manageProductMW(ManageActions.update, token, product)).product;
+
+      if (uploadImgs && uploadImgs.length > 0) {
+        await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productResponse.id);
+      }
+
+      if (deleteImgs && deleteImgs.length > 0) {
+        for (let i = 0; i < deleteImgs.length; i++) {
+          await deleteProductImg(token, deleteImgs[i], productResponse.id);
+        }
+      }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setErrorMsg(error.message);
+      setLoading(false);
+      return;
+    }
+
     setLoading(false);
-    setSuccessMsg('Updated data');
+    setSuccessMsg('Updated product');
+    if (onSuccess) {
+      onSuccess(product, uploadImgs);
+    }
+};
+
+const deleteProduct = async (
+  product: Product, 
+  onSuccess?: (product: Product) => void) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    try {
+      await manageProductMW(ManageActions.delete, token, product);
+
+      if (product.imageNames && product.imageNames.length > 0) {
+        for (let i = 0; i < product.imageNames.length; i++) {
+          await deleteProductImg(token, i, product.id);
+        }
+      }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setErrorMsg(error.message);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(false);
+    setSuccessMsg('Deleted product');
     if (onSuccess) {
       onSuccess(product);
     }
@@ -107,8 +185,7 @@ const useProducts = () => {
         }
         onManagePCategorySuccess(action, responseProductCategory, onSuccess);
       }).catch((error: Error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
+        setErrorMsg(error.message);
         setLoading(false);
       });
   };
@@ -150,8 +227,7 @@ const useProducts = () => {
       .then((response: {productInventory: ProductInventory}) => {
         onManagePInventorySuccess(response.productInventory, onSuccess);
       }).catch((error: Error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
+        setErrorMsg(error.message);
         setLoading(false);
       });
   };
@@ -172,8 +248,7 @@ const useProducts = () => {
       .then((response: {productDiscount: ProductDiscount}) => {
         onManagePDiscountSuccess(response.productDiscount, onSuccess);
       }).catch((error: Error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
+        setErrorMsg(error.message);
         setLoading(false);
       });
   };
@@ -188,8 +263,10 @@ const useProducts = () => {
 
   return {
     getAdminProduct,
-    createAllProduct,
-    manageProduct,
+    validateProductImgs,
+    createProduct,
+    updateProduct,
+    deleteProduct,
     manageProductCategory,
     manageProductInventory,
     manageProductDiscount,
