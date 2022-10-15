@@ -12,7 +12,7 @@ type CarouselProps = {
 
 const Carousel = (props: CarouselProps) => {
   const { imgSources } = props;
-
+  
   return (
     <Box>
       <Swiper

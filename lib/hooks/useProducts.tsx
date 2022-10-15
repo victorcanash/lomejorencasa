@@ -119,14 +119,14 @@ const useProducts = () => {
     try {
       productResponse = await (await manageProductMW(ManageActions.update, token, product)).product;
 
-      if (uploadImgs && uploadImgs.length > 0) {
-        await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productResponse.id);
-      }
-
       if (deleteImgs && deleteImgs.length > 0) {
-        for (let i = 0; i < deleteImgs.length; i++) {
+        for (let i = deleteImgs.length - 1; i >= 0; i--) {
           await deleteProductImg(token, deleteImgs[i], productResponse.id);
         }
+      }
+      
+      if (uploadImgs && uploadImgs.length > 0) {
+        await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productResponse.id);
       }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -151,13 +151,13 @@ const deleteProduct = async (
     setSuccessMsg('');
 
     try {
-      await manageProductMW(ManageActions.delete, token, product);
-
       if (product.imageNames && product.imageNames.length > 0) {
-        for (let i = 0; i < product.imageNames.length; i++) {
+        for (let i = product.imageNames.length - 1; i >= 0; i--) {
           await deleteProductImg(token, i, product.id);
         }
       }
+
+      await manageProductMW(ManageActions.delete, token, product);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
