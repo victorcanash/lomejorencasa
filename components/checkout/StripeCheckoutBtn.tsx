@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useStripe } from '@stripe/react-stripe-js';
+// import { useStripe } from '@stripe/react-stripe-js';
 import { useSnackbar } from 'notistack';
 
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
@@ -9,14 +9,14 @@ import Button from '@mui/material/Button';
 import { addCheckoutSession } from '@core/utils/stripe';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
-const CheckoutBtn = () => {
+const StripeCheckoutBtn = () => {
   const { token } = useAuthContext();
 
-  const stripe = useStripe();
+  // const stripe = useStripe();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleOnClick = () => {
-    if (!stripe) {
+    /*if (!stripe) {
       errorSnackbar();
     }
     addCheckoutSession(token).then(async (response: { sessionId: string }) => {
@@ -29,7 +29,7 @@ const CheckoutBtn = () => {
       })
     }).catch((error) => {
         errorSnackbar();
-    });
+    });*/
   };
 
   const errorSnackbar = () => {
@@ -46,4 +46,4 @@ const CheckoutBtn = () => {
   );
 };
 
-export default CheckoutBtn;
+export default StripeCheckoutBtn;

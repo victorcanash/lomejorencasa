@@ -9,7 +9,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
 import CartItem from '@components/cart/CartItem';
 import GoBackBtn from '@components/ui/GoBackBtn';
-import CheckoutBtn from '@components/checkout/CheckoutBtn';
+// import StripeCheckoutBtn from '@components/checkout/StripeCheckoutBtn';
 
 const CartDetail = () => {
   const { cart, totalPrice, totalQuantity } = useCartContext();
@@ -46,7 +46,7 @@ const CartDetail = () => {
           </Typography>
 
           <Box display='flex' justifyContent={'center'} my={1}>
-            <CheckoutBtn />
+            {/*<StripeCheckoutBtn />*/}
           </Box>
 
         </>

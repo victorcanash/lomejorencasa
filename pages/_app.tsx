@@ -11,16 +11,18 @@ import Head from 'next/head';
 
 import { DefaultSeo } from 'next-seo';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+// import { GoogleOAuthProvider } from '@react-oauth/google';
+// import { Elements } from '@stripe/react-stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
+
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { SnackbarProvider } from 'notistack';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
 
-import envConfig from '@core/config/env.config';
 import createEmotionCache from '@core/cache/createEmotionCache';
+import envConfig from '@core/config/env.config';
 import { title, description } from '@lib/constants/metas';
 import theme from '@lib/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
@@ -33,16 +35,20 @@ import ErrorBoundary from '@components/ErrorBoundary';
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
 
-const stripePromise = loadStripe(
+/*const stripePromise = loadStripe(
   envConfig.NEXT_PUBLIC_STRIPE_KEY
-);
+);*/
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 
 function MyApp(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { 
+    Component, 
+    emotionCache = clientSideEmotionCache, 
+    pageProps 
+  } = props;
 
   const { LayoutComponent } = useLayout(props.router.pathname);
 
@@ -66,39 +72,42 @@ function MyApp(props: MyAppProps) {
           site_name: title,
         }}
       />
+      <Head>
+        <meta name="keywords" content="ecommerce, shop, nextjs" />
+        <meta name="author" content="Victor Canas" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
 
       <CacheProvider value={emotionCache}>
-        <Head>
-          <meta name="keywords" content="ecommerce, shop, nextjs" />
-          <meta name="author" content="Victor Canas" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        </Head>
-        
-        <ThemeProvider theme={theme}>
-          {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <CssBaseline />
-          <ErrorBoundary>
-            <SnackbarProvider maxSnack={3}>
-              <LocalizationProvider dateAdapter={AdapterMoment}>
-                <Elements stripe={stripePromise}>
+        {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
+          {/*<Elements stripe={stripePromise}>*/}
+          
+            <ThemeProvider theme={theme}>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <SnackbarProvider maxSnack={3}>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                  
+                  <ErrorBoundary>
+                    <AppProvider>
+                      <SearchProvider> 
+                        <AuthProvider>
+                          <CartProvider>
+                            <LayoutComponent>
+                              <Component {...pageProps} />
+                            </LayoutComponent> 
+                          </CartProvider>
+                        </AuthProvider>          
+                      </SearchProvider>
+                    </AppProvider>
+                  </ErrorBoundary>
 
-                  <AppProvider>
-                    <SearchProvider> 
-                      <AuthProvider>
-                        <CartProvider>
-                          <LayoutComponent>
-                            <Component {...pageProps} />
-                          </LayoutComponent> 
-                        </CartProvider>
-                      </AuthProvider>          
-                    </SearchProvider>
-                  </AppProvider>
+                </LocalizationProvider>
+              </SnackbarProvider>
+            </ThemeProvider>
 
-                </Elements>
-              </LocalizationProvider>
-            </SnackbarProvider>
-          </ErrorBoundary>
-        </ThemeProvider>
+          {/*</Elements>*/}
+        {/*</GoogleOAuthProvider>*/}
       </CacheProvider>
     </>
   )
