@@ -14,7 +14,6 @@ import { allProductsName } from "@core/constants/products";
 import { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { CheckProduct, SelectedModel } from '@core/types/admin';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import useProducts from '@lib/hooks/useProducts';
 import ManageProductForm from '@components/forms/products/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/products/ManagePInventoryForm';
 import ManagePDiscountForm from '@components/forms/products/ManagePDiscountForm';
@@ -29,6 +28,7 @@ export type CheckProductsSectionProps = {
   totalPages: number,
   currentPage: number,
   keywords: string,
+  getAdminProduct: (id: number, onSuccess: (product: Product) => void) => Promise<void>,
 };
 
 const CheckProductsSection = (props: CheckProductsSectionProps) => {
@@ -37,14 +37,13 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     products, 
     totalPages, 
     currentPage, 
-    keywords 
+    keywords,
+    getAdminProduct,
   } = props;
 
   const { getHref } = useSearchContext();
 
   const router = useRouter();
-
-  const { getAdminProduct } = useProducts();
 
   const [checkProducts, setCheckProducts] = useState(
     products.map((item) => {

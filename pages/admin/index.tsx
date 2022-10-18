@@ -54,6 +54,7 @@ const Admin: NextPage = () => {
                 totalPages={checkProductsProps.totalPages}
                 currentPage={checkProductsProps.currentPage}
                 keywords={checkProductsProps.keywords}
+                getAdminProduct={checkProductsProps.getAdminProduct}
               />
           }
           {

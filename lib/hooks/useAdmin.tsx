@@ -3,17 +3,30 @@ import { useRouter } from 'next/router';
 
 import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductCategory } from '@core/types/products';
-import { getAllAdminProducts } from '@core/utils/products';
+import { getAllAdminProducts, getAdminProduct as getAdminProductMW } from '@core/utils/products';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { CheckProductsSectionProps } from '@components/admin/sections/CheckProductsSection';
 
 const useAdmin = (checkedPage: boolean) => {
+  const { setLoading } = useAppContext();
   const { token } = useAuthContext();
 
   const router = useRouter();
 
   const [section, setSection] = useState<AdminSections | undefined>(undefined);
   const [checkProductsProps, setCheckProductsProps] = useState<CheckProductsSectionProps | undefined>(undefined);
+
+  const getAdminProduct = useCallback(async (id: number, onSuccess: (product: Product) => void) => {
+    setLoading(true);
+    await getAdminProductMW(token, id)
+      .then((response: { product: Product }) => {
+        onSuccess(response.product);
+        setLoading(false);
+    }).catch((error: Error) => {
+      setLoading(false);
+    })
+  }, [setLoading, token]);
 
   const getCheckProductsProps = useCallback(async (sectionSearch: AdminSections) => {
     const { category, page, sortBy, order, keywords } = router.query;
@@ -31,12 +44,13 @@ const useAdmin = (checkedPage: boolean) => {
         totalPages: response.totalPages,
         currentPage: response.currentPage,
         keywords: keywordsSearch,
+        getAdminProduct: getAdminProduct,
       });
       setSection(sectionSearch);
     }).catch((error: Error) => {
       setSection(AdminSections.home);
     })
-  }, [router.query, token]);
+  }, [getAdminProduct, router.query, token]);
   
   useEffect(() => {
     if (checkedPage) {

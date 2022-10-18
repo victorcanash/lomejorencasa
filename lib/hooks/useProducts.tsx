@@ -4,7 +4,6 @@ import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { UploadFile } from '@core/types/upload';
 import { 
-  getAdminProduct as getAdminProductMW,
   manageProduct as manageProductMW,
   uploadProductImgs,
   deleteProductImg,
@@ -24,21 +23,6 @@ const useProducts = () => {
   const [errorMsg, setErrorMsg] = useState('');
 
   const [successMsg, setSuccessMsg] = useState('');
-
-  const getAdminProduct = async (id: number, onSuccess: (product: Product) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    await getAdminProductMW(token, id)
-      .then((response: { product: Product }) => {
-        onSuccess(response.product);
-        setLoading(false);
-        setSuccessMsg('Get product successfully');
-    }).catch((error: Error) => {
-      setLoading(false);
-      setErrorMsg(error.message);
-    })
-  };
 
   const validateProductImgs = (
     product: Product, 
@@ -262,7 +246,6 @@ const deleteProduct = async (
   };
 
   return {
-    getAdminProduct,
     validateProductImgs,
     createProduct,
     updateProduct,
