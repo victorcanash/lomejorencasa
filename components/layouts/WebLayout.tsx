@@ -2,8 +2,9 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 import Header from '@components/NavBar';
+import Footer from '@components/Footer';
 
-const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+const WebLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
@@ -20,8 +21,9 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
           {children}
         </Box>
       </Container>
+      <Footer />
     </>
   )
 }
 
-export default AdminLayout;
+export default WebLayout;

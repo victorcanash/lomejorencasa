@@ -1,34 +1,26 @@
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+import { useRouter } from 'next/router';
 
 import { useAppContext } from '@lib/contexts/AppContext';
 import useApp from '@lib/hooks/useApp';
+import useLayout from '@lib/hooks/useLayout';
 import Loading from '@components/Loading';
-import Header from '@components/NavBar';
-import Footer from '@components/Footer';
+import LinkLayout from '@components/layouts/LinkLayout';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { initialized } = useAppContext();
 
-  const app = useApp();
+  const router = useRouter();
+
+  const { LayoutComponent } = useLayout(router.pathname);
+
+  const app = useApp(LayoutComponent === LinkLayout);
 
   return (
     <div className="app" style={initialized ? {pointerEvents: 'auto'} : {pointerEvents: 'none'}}>
       <Loading />
-      <Header />
-      <Container 
-        component="main"
-      >
-        <Box
-          sx={{
-            mt: 10,
-            mb: 4,
-          }}
-        >
-          {children}
-        </Box>
-      </Container>
-      <Footer />
+      <LayoutComponent>
+        {children}
+      </LayoutComponent>
     </div>
   )
 }

@@ -10,7 +10,7 @@ import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
-const useApp = (fromMainLayout = true) => {
+const useApp = (fromLinkLayout: boolean) => {
   const { setInitialized } = useAppContext();
   const { setProductCategories } = useSearchContext();
   const { setToken, setUser } = useAuthContext();
@@ -38,13 +38,13 @@ const useApp = (fromMainLayout = true) => {
         });
       };  
 
-      if (fromMainLayout) {
+      if (!fromLinkLayout) {
         initData();
       } else {
         setInitialized(true);
       }
     }    
-  }, [fromMainLayout, initCart, setInitialized, setProductCategories, setToken, setUser]);
+  }, [fromLinkLayout, initCart, setInitialized, setProductCategories, setToken, setUser]);
 
   return {};
 }

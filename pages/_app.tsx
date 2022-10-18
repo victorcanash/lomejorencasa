@@ -29,8 +29,8 @@ import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
 import { AuthProvider } from '@lib/contexts/AuthContext';
 import { CartProvider } from '@lib/contexts/CartContext';
-import useLayout from '@lib/hooks/useLayout';
 import ErrorBoundary from '@components/ErrorBoundary';
+import MainLayout from '@components/layouts/MainLayout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -49,8 +49,6 @@ function MyApp(props: MyAppProps) {
     emotionCache = clientSideEmotionCache, 
     pageProps 
   } = props;
-
-  const { LayoutComponent } = useLayout(props.router.pathname);
 
   return (
     <>
@@ -93,9 +91,9 @@ function MyApp(props: MyAppProps) {
                       <SearchProvider> 
                         <AuthProvider>
                           <CartProvider>
-                            <LayoutComponent>
+                            <MainLayout>
                               <Component {...pageProps} />
-                            </LayoutComponent> 
+                            </MainLayout> 
                           </CartProvider>
                         </AuthProvider>          
                       </SearchProvider>
