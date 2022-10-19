@@ -9,7 +9,7 @@ export const createCartItem = (token: string, cartItem: CartItem) => {
       Authorization: `Bearer ${token}`
     }
   }
-  return axios.post('/citems', cartItem, options)
+  return axios.post('/cart-items', cartItem, options)
 }
 
 export const updateCartItem = (token: string, cartItem: CartItem) => {
@@ -18,7 +18,7 @@ export const updateCartItem = (token: string, cartItem: CartItem) => {
       Authorization: `Bearer ${token}`
     }
   }
-  return axios.put(`/citems/${cartItem.id}`, cartItem, options)
+  return axios.put(`/cart-items/${cartItem.id}`, cartItem, options)
 }
 
 export const deleteCartItem = (token: string, cartItem: CartItem) => {
@@ -27,5 +27,5 @@ export const deleteCartItem = (token: string, cartItem: CartItem) => {
       Authorization: `Bearer ${token}`
     }
   }
-  return axios.delete(`/citems/${cartItem.id}`, options)
+  return axios.delete(`/cart-items/${cartItem.id}`, options)
 }

@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import envConfig from '@core/config/env.config';
 import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
@@ -10,6 +9,7 @@ import {
   getAdminProducts,
   getProductById, 
   getAdminProductById,
+  getProductImgUrl as getProductImgUrlMW,
   getProductCategories,
   createProduct,
   updateProduct,
@@ -123,7 +123,7 @@ export const getAdminProduct = (token: string, id: number) => {
 
 export const getProductImgUrl = (product: Product, index = 0) => {
   if (product.imageNames.length > index && product.imageNames[index]) {
-    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`;
+    return getProductImgUrlMW(index, product.id);
   }
   return placeholder;
 };

@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
 
 import axios from '@core/config/axios.config';
+import envConfig from '@core/config/env.config';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 
 export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string , ordersRemain: boolean) => {
@@ -50,6 +51,10 @@ export const getAdminProductById = (token: string, id: number) => {
   return axios.get(`/admin/products/${id}`, options);
 };
 
+export const getProductImgUrl = (id: number, productId: number) => {
+  return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${productId}/images/${id}`;
+}
+
 export const getProductCategories = (page: number, limit: number, sortBy?: string, order?: string) => {
   const options: AxiosRequestConfig = {
     params: {
@@ -59,7 +64,7 @@ export const getProductCategories = (page: number, limit: number, sortBy?: strin
       order,
     }
   }
-  return axios.get('/pcategories', options);
+  return axios.get('/product-categories', options);
 };
 
 export const createProduct = (token: string, product: Product) => {
@@ -118,7 +123,7 @@ export const createProductCategory = (token: string, productCategory: ProductCat
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.post('/pcategories', productCategory, options);
+  return axios.post('/product-categories', productCategory, options);
 };
 
 export const updateProductCategory = (token: string, productCategory: ProductCategory) => {
@@ -127,7 +132,7 @@ export const updateProductCategory = (token: string, productCategory: ProductCat
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.put(`/pcategories/${productCategory.id}`, productCategory, options);
+  return axios.put(`/product-categories/${productCategory.id}`, productCategory, options);
 };
 
 export const deleteProductCategory = (token: string, productCategory: ProductCategory) => {
@@ -136,7 +141,7 @@ export const deleteProductCategory = (token: string, productCategory: ProductCat
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.delete(`/pcategories/${productCategory.id}`, options)
+  return axios.delete(`/product-categories/${productCategory.id}`, options)
 }
 
 export const createProductInventory = (token: string, productInventory: ProductInventory) => {
@@ -145,7 +150,7 @@ export const createProductInventory = (token: string, productInventory: ProductI
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.post('/pinventories', productInventory, options);
+  return axios.post('/product-inventories', productInventory, options);
 };
 
 export const updateProductInventory = (token: string, productInventory: ProductInventory) => {
@@ -154,7 +159,7 @@ export const updateProductInventory = (token: string, productInventory: ProductI
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.put(`/pinventories/${productInventory.id}`, productInventory, options);
+  return axios.put(`/product-inventories/${productInventory.id}`, productInventory, options);
 };
 
 export const deleteProductInventory = (token: string, productInventory: ProductInventory) => {
@@ -163,7 +168,7 @@ export const deleteProductInventory = (token: string, productInventory: ProductI
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.delete(`/pinventories/${productInventory.id}`, options)
+  return axios.delete(`/product-inventories/${productInventory.id}`, options)
 }
 
 export const createProductDiscount = (token: string, productDiscount: ProductDiscount) => {
@@ -172,7 +177,7 @@ export const createProductDiscount = (token: string, productDiscount: ProductDis
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.post('/pdiscounts', productDiscount, options);
+  return axios.post('/product-discounts', productDiscount, options);
 };
 
 export const updateProductDiscount = (token: string, productDiscount: ProductDiscount) => {
@@ -181,7 +186,7 @@ export const updateProductDiscount = (token: string, productDiscount: ProductDis
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.put(`/pdiscounts/${productDiscount.id}`, productDiscount, options);
+  return axios.put(`/product-discounts/${productDiscount.id}`, productDiscount, options);
 };
 
 export const deleteProductDiscount = (token: string, productDiscount: ProductDiscount) => {
@@ -190,5 +195,5 @@ export const deleteProductDiscount = (token: string, productDiscount: ProductDis
       'Authorization': `Bearer ${token}`
     }
   }
-  return axios.delete(`/pdiscounts/${productDiscount.id}`, options)
+  return axios.delete(`/product-discounts/${productDiscount.id}`, options)
 };
