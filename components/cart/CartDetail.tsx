@@ -4,17 +4,24 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
+import useOrders from '@lib/hooks/useOrders';
 import CartItem from '@components/cart/CartItem';
 import GoBackBtn from '@components/ui/GoBackBtn';
-// import StripeCheckoutBtn from '@components/checkout/StripeCheckoutBtn';
 
 const CartDetail = () => {
   const { cart, totalPrice, totalQuantity } = useCartContext();
 
   const { updateCartItemQuantity } = useCart();
+  const { checkoutPaypalOrder } = useOrders();
+
+  const onClickProceedBtn = () => {
+    checkoutPaypalOrder();
+  };
 
   return (
     <>
@@ -46,7 +53,13 @@ const CartDetail = () => {
           </Typography>
 
           <Box display='flex' justifyContent={'center'} my={1}>
-            {/*<StripeCheckoutBtn />*/}
+            <Button
+              variant="contained"
+              startIcon={<PointOfSaleIcon />}
+              onClick={onClickProceedBtn}
+            >
+              Proceed to payment
+            </Button>
           </Box>
 
         </>
