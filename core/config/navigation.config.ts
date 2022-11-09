@@ -79,6 +79,12 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.user,
       type: PageTypes.main,
     },
+    checkout: {
+      path: '/checkout',
+      filepath: '/checkout',
+      protection: Protections.user,
+      type: PageTypes.main,
+    },
     orders: {
       path: '/orders',
       filepath: '/orders',

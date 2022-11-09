@@ -18,6 +18,7 @@ export type NavigationConfig = {
     
     myaccount: Page,
     cart: Page,
+    checkout: Page,
     orders: Page,
     
     admin: Page,
