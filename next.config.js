@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     domains: [
       'localhost', 
-      'ecommerce-vc-api.herokuapp.com'
+      'ecommerce-vc-api.herokuapp.com',
     ],
   },
 }

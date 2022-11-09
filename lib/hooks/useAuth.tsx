@@ -26,7 +26,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();
-  const { token, setToken, user, setUser, prevLoginPath, isProtectedPath, isLogged } = useAuthContext();
+  const { token, setToken, braintreeToken, setBraintreeToken, user, setUser, prevLoginPath, isProtectedPath, isLogged } = useAuthContext();
   const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();
@@ -61,8 +61,8 @@ const useAuth = () => {
 
   const login = async (authLogin: AuthLogin, onFailByActivation?: (email: string) => void) => {
     setLoading(true);
-    loginUser(authLogin).then((response: {token: string, user: User, cart: Cart}) => {
-      onLoginSuccess(response.token, response.user, response.cart);
+    loginUser(authLogin).then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
+      onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('email')) {
@@ -84,9 +84,10 @@ const useAuth = () => {
     });
   };
 
-  const onLoginSuccess = (token: string, user: User, cart: Cart) => {
+  const onLoginSuccess = (token: string, user: User, braintreeToken: string, cart: Cart) => {
     setToken(token);
     setUser(user);
+    setBraintreeToken(braintreeToken);
     initCart(cart);
     if (prevLoginPath){
       router.push(prevLoginPath);
@@ -100,6 +101,7 @@ const useAuth = () => {
 
     await logoutUser(token);
     setToken('');
+    setBraintreeToken(undefined);
     setUser(undefined);
     removeCart();
 

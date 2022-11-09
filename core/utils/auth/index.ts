@@ -60,9 +60,9 @@ export const activateUser = async (activationToken: string) => {
 };
 
 export const loginUser = async (authLogin: AuthLogin) => {
-  return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
+  return new Promise<{token: string, user: User, braintreeToken: string, cart: Cart}>((resolve, reject) => {
     login(authLogin).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.CREATED && response.data?.user) {
+      if (response.status === StatusCodes.CREATED && response.data?.user && response.data?.braintreeToken) {
         if (response.data?.token){
           const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
           if (prevToken !== '') {
@@ -72,6 +72,7 @@ export const loginUser = async (authLogin: AuthLogin) => {
           resolve({
             token: response.data.token,
             user: response.data.user,
+            braintreeToken: response.data.braintreeToken,
             cart: response.data.user.cart,
           });         
         } else {
@@ -94,10 +95,10 @@ export const logoutUser = async (token: string) => {
 };
 
 export const getLoggedUser = async () => {
-  return new Promise<{token: string, user: User, cart: Cart}>(async (resolve, reject) => {
+  return new Promise<{token: string, user: User, braintreeToken: string, cart: Cart}>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || '';
     getLogged(token).then(async (response: AxiosResponse) => {
-      if (response.status === StatusCodes.OK && response.data?.user) {
+      if (response.status === StatusCodes.OK && response.data?.user && response.data?.braintreeToken) {
         if (response.data?.user.lockedOut) {
           throw new Error('You are locked out');
         } else if (!response.data?.user.isActivated) {
@@ -106,6 +107,7 @@ export const getLoggedUser = async () => {
         resolve({
           token: token,
           user: response.data.user,
+          braintreeToken: response.data.braintreeToken,
           cart: response.data.user.cart,
         });
       } else {

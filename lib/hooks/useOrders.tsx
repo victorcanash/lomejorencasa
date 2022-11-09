@@ -1,6 +1,6 @@
 import { useSnackbar } from 'notistack';
 
-import { checkoutOrder, captureOrder } from '@core/utils/paypal';
+import { createTransaction } from '@core/utils/payment';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useOrders = () => {
@@ -8,31 +8,23 @@ const useOrders = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const checkoutPaypalOrder = () => {
-    checkoutOrder(token)
-      .then((response: { checkoutUrl: string }) => {
-        window.location.href = response.checkoutUrl;
+  const startTransaction = async (paymentMethodNonce: string) => {
+    let transaction: any = undefined;
+    await createTransaction(token, paymentMethodNonce)
+      .then((response: { transaction: any }) => {
+        transaction = response.transaction;
       }).catch(() => {
         errorSnackbar();
       });
+    return transaction;
   };
-
-  const capturePaypalOrder = (orderToken: string) => {
-    captureOrder(token, orderToken)
-      .then((response: { data: any }) => {
-        console.log('CAPTURE DATA: ', response.data);
-      }).catch(() => {
-        errorSnackbar();
-      })
-  }
 
   const errorSnackbar = () => {
     enqueueSnackbar('Failed proceeding to payment, try it again', { variant: 'error' });
-  }
+  };
 
   return {
-    checkoutPaypalOrder,
-    capturePaypalOrder,
+    startTransaction,
   };
 };
 

@@ -8,9 +8,11 @@ import type { User } from '@core/types/user';
 type ContextType = {
   token: string,
   setToken: Dispatch<SetStateAction<string>>,
+  braintreeToken?: string,
+  setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
   user?: User,
   setUser: Dispatch<SetStateAction<User | undefined>>,
-  prevLoginPath: string | undefined,
+  prevLoginPath?: string,
   isLogged: () => boolean,
   isProtectedPath: () => boolean,
   isAdminPath: () => boolean,
@@ -19,6 +21,8 @@ type ContextType = {
 export const AuthContext = createContext<ContextType>({
   token: '',
   setToken: () => {},
+  braintreeToken: '',
+  setBraintreeToken: () => {},
   user: undefined,
   setUser: () => {},
   prevLoginPath: undefined,
@@ -40,6 +44,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const [token, setToken] = useState('');
+  const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<User | undefined>(undefined);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
@@ -91,6 +96,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value={{ 
         token, 
         setToken,
+        braintreeToken,
+        setBraintreeToken,
         user, 
         setUser,
         prevLoginPath: prevLoginPathRef.current,

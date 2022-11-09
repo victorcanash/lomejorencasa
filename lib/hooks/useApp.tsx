@@ -13,7 +13,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 const useApp = (fromLinkLayout: boolean) => {
   const { setInitialized } = useAppContext();
   const { setProductCategories } = useSearchContext();
-  const { setToken, setUser } = useAuthContext();
+  const { setToken, setBraintreeToken, setUser } = useAuthContext();
   const { initCart } = useCartContext();
 
   const firstRenderRef = useRef(false);
@@ -23,9 +23,10 @@ const useApp = (fromLinkLayout: boolean) => {
       firstRenderRef.current = true;
       
       const initData = async () => {
-        await getLoggedUser().then((response: {token: string, user: User, cart: Cart}) => {
+        await getLoggedUser().then(async (response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
           setToken(response.token);
           setUser(response.user);
+          setBraintreeToken(response.braintreeToken);
           initCart(response.cart);
         }).catch((error: Error) => {
         }); 
@@ -44,7 +45,7 @@ const useApp = (fromLinkLayout: boolean) => {
         setInitialized(true);
       }
     }    
-  }, [fromLinkLayout, initCart, setInitialized, setProductCategories, setToken, setUser]);
+  }, [fromLinkLayout, initCart, setBraintreeToken, setInitialized, setProductCategories, setToken, setUser]);
 
   return {};
 }

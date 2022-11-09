@@ -22,6 +22,9 @@
     "@mui/material": "^5.8.7",
     "@mui/x-date-pickers": "^5.0.0",
     "axios": "^0.27.2",
+    "braintree-web": "^3.88.2",
+    "braintree-web-drop-in": "^1.33.4",
+    "braintree-web-drop-in-react": "^1.2.1",
     "formik": "^2.2.9",
     "http-status-codes": "^2.2.0",
     "moment": "^2.29.4",
@@ -35,6 +38,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/braintree-web-drop-in": "^1.33.0",
     "@types/node": "18.0.1",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.6",
