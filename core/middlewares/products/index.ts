@@ -4,7 +4,7 @@ import axios from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 
-export const getProducts = (page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string , ordersRemain: boolean) => {
+export const getProducts = (token: string, page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string , ordersRemain: boolean, adminData = false) => {
   const categoryNameValue = categoryName == 'all' ? undefined : categoryName;
   const options: AxiosRequestConfig = {
     params: {
@@ -15,40 +15,25 @@ export const getProducts = (page: number, limit: number, sortBy: string, order: 
       keywords,
       categoryName: categoryNameValue,
       ordersRemain,
+      adminData,
+    },
+    headers: {
+      'Authorization': `Bearer ${token}`
     },
   };
   return axios.get('/products', options);
 };
 
-export const getAdminProducts = (token: string, page: number, limit: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
-  const categoryNameValue = categoryName == 'all' ? undefined : categoryName;
+export const getProductById = (token: string, id: number, adminData = false) => {
   const options: AxiosRequestConfig = {
     params: {
-      page,
-      limit,
-      sortBy,
-      order,
-      keywords,
-      categoryName: categoryNameValue,
+      adminData,
     },
     headers: {
       'Authorization': `Bearer ${token}`
     },
   };
-  return axios.get('/admin/products', options);
-};
-
-export const getProductById = (id: number) => {
-  return axios.get(`/products/${id}`);
-};
-
-export const getAdminProductById = (token: string, id: number) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-  };
-  return axios.get(`/admin/products/${id}`, options);
+  return axios.get(`/products/${id}`, options);
 };
 
 export const getProductImgUrl = (id: number, productId: number) => {

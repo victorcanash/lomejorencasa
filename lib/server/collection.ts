@@ -22,7 +22,7 @@ export const getCollectionProps: GetServerSideProps = async (context) => {
 
   let result: { props: CollectionProps } | { notFound: boolean } = { props: {} as CollectionProps };
   
-  await getAllProducts(pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch)
+  await getAllProducts('', pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch)
     .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
       result = {
         props: {

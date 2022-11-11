@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductCategory } from '@core/types/products';
-import { getAllAdminProducts, getAdminProduct as getAdminProductMW } from '@core/utils/products';
+import { getAllProducts, getProduct } from '@core/utils/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { CheckProductsSectionProps } from '@components/admin/sections/CheckProductsSection';
@@ -19,7 +19,7 @@ const useAdmin = (checkedPage: boolean) => {
 
   const getAdminProduct = useCallback(async (id: number, onSuccess: (product: Product) => void) => {
     setLoading(true);
-    await getAdminProductMW(token, id)
+    await getProduct(token, id, true)
       .then((response: { product: Product }) => {
         onSuccess(response.product);
         setLoading(false);
@@ -36,7 +36,7 @@ const useAdmin = (checkedPage: boolean) => {
     const orderSearch = typeof order == 'string' ? order : 'asc';
     const keywordsSearch = typeof keywords == 'string' ? keywords : '';
 
-    await getAllAdminProducts(token, pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch)
+    await getAllProducts(token, pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, true)
     .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
       setCheckProductsProps({
         category: response.productCategory,

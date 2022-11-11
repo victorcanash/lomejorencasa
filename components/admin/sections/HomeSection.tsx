@@ -7,9 +7,12 @@ import Divider from '@mui/material/Divider';
 
 import { pages } from '@core/config/navigation.config';
 import { AdminSections } from '@core/constants/admin';
+import { useSearchContext } from '@lib/contexts/SearchContext';
 
 const HomeSection = () => {
   const router = useRouter();
+
+  const { productCategories } = useSearchContext();
 
   const onClickSectionBtn = (section: AdminSections) => {
     router.push(`${pages.admin.path}?section=${section}`);
@@ -56,6 +59,7 @@ const HomeSection = () => {
             variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createProduct)}
+            disabled={productCategories.length <= 0}
           >
             Add new product
           </Button>

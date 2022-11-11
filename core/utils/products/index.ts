@@ -6,9 +6,7 @@ import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { 
   getProducts, 
-  getAdminProducts,
-  getProductById, 
-  getAdminProductById,
+  getProductById,
   getProductImgUrl as getProductImgUrlMW,
   getProductCategories,
   createProduct,
@@ -29,14 +27,14 @@ import {
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import placeholder from 'public/images/placeholder.jpeg';
 
-export const getAllProducts = async (page: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
+export const getAllProducts = async (token: string, page: number, sortBy: string, order: string, keywords: string, categoryName: string, adminData = false) => {
   return new Promise<{
     products: Product[], 
     productCategory: ProductCategory | null, 
     totalPages: number, 
     currentPage: number,
   }>(async (resolve, reject) => {
-    getProducts(page, limitByPageSearch, sortBy, order, keywords, categoryName, orderRemainsSearch)
+    getProducts(token, page, limitByPageSearch, sortBy, order, keywords, categoryName, orderRemainsSearch, adminData)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.products) {
           resolve({
@@ -56,36 +54,9 @@ export const getAllProducts = async (page: number, sortBy: string, order: string
   });
 };
 
-export const getAllAdminProducts = async (token: string, page: number, sortBy: string, order: string, keywords: string, categoryName: string) => {
-  return new Promise<{
-    products: Product[], 
-    productCategory: ProductCategory | null, 
-    totalPages: number, 
-    currentPage: number,
-  }>(async (resolve, reject) => {
-    getAdminProducts(token, page, limitByPageSearch, sortBy, order, keywords, categoryName)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK && response.data?.products) {
-          resolve({
-            products: response.data.products,
-            productCategory: response.data.category,
-            totalPages: response.data.totalPages,
-            currentPage: response.data.currentPage
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get Admin Products ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
-
-export const getProduct = (id: number) => {
+export const getProduct = (token: string, id: number, adminData = false) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
-    getProductById(id)
+    getProductById(token, id, adminData)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.product) {
           resolve({
@@ -96,25 +67,6 @@ export const getProduct = (id: number) => {
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Get Product By Id ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
-
-export const getAdminProduct = (token: string, id: number) => {
-  return new Promise<{product: Product}>(async (resolve, reject) => {
-    getAdminProductById(token, id)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK && response.data?.product) {
-          resolve({
-            product: response.data.product
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get Admin Product By Id ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 

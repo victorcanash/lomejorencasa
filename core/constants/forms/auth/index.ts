@@ -19,7 +19,7 @@ export const loginValidation = Yup.object().shape(
 export const initLoginValues: AuthLogin = {
   email: '',
   password: '',
-}
+};
 
 export const registerValidation = Yup.object().shape(
   {
