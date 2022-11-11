@@ -2,8 +2,9 @@ import { AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import { ManageActions } from '@core/constants/auth';
-import type { User } from '@core/types/user';
-import { updateUser, deleteUser } from '@core/middlewares/user';
+import type { User, UserAddress } from '@core/types/user';
+import { CheckoutAddresses } from '@core/types/checkout';
+import { updateUser, deleteUser, updateAddresses as updateAddressesMW } from '@core/middlewares/user';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const manageUser = (action: ManageActions.update | ManageActions.delete, token: string, user: User) => {
@@ -33,6 +34,26 @@ export const manageUser = (action: ManageActions.update | ManageActions.delete, 
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const updateAddresses = (token: string, user: User, checkoutAddresses: CheckoutAddresses) => {
+  return new Promise<{shipping: UserAddress, billing: UserAddress}>(async (resolve, reject) => {
+    updateAddressesMW(token, user, checkoutAddresses)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve({
+            shipping: response.data.shipping,
+            billing: response.data.billing,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Update Addresses ERROR', error);
         logBackendError(errorMsg)
         reject(new Error(errorMsg));
       }); 
