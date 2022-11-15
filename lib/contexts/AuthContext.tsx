@@ -1,6 +1,8 @@
 import { createContext, useContext, useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 
+import { PaymentMethodPayload, cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
+
 import { pages } from '@core/config/navigation.config';
 import { Protections } from '@core/constants/auth';
 import type { User } from '@core/types/user';
@@ -12,6 +14,10 @@ type ContextType = {
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
   user?: User,
   setUser: Dispatch<SetStateAction<User | undefined>>,
+  paymentPayload?: PaymentMethodPayload,
+  setPaymentPayload: Dispatch<SetStateAction<PaymentMethodPayload | undefined>>,
+  getCardPayload: () => cardPaymentMethodPayload | undefined,
+  getPaypalPayload: () => paypalPaymentMethodPayload | undefined,
   prevLoginPath?: string,
   isLogged: () => boolean,
   isProtectedPath: () => boolean,
@@ -25,6 +31,10 @@ export const AuthContext = createContext<ContextType>({
   setBraintreeToken: () => {},
   user: undefined,
   setUser: () => {},
+  paymentPayload: undefined,
+  setPaymentPayload: () => {},
+  getCardPayload: () => undefined,
+  getPaypalPayload: () => undefined,
   prevLoginPath: undefined,
   isLogged: () => false,
   isProtectedPath: () => false,
@@ -46,7 +56,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<User | undefined>(undefined);
+  const [paymentPayload, setPaymentPayload] = useState<PaymentMethodPayload | undefined>(undefined);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
+
+  const getCardPayload = () => {
+    return paymentPayload as cardPaymentMethodPayload;
+  };
+
+  const getPaypalPayload = () => {
+    return paymentPayload as paypalPaymentMethodPayload;
+  };
 
   const isLogged = () => {
     if (!token || !user) {
@@ -100,6 +119,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setBraintreeToken,
         user, 
         setUser,
+        paymentPayload,
+        setPaymentPayload,
+        getCardPayload,
+        getPaypalPayload,
         prevLoginPath: prevLoginPathRef.current,
         isLogged,
         isProtectedPath,

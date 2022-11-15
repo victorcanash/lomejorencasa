@@ -1,6 +1,5 @@
-import { Fragment, useState, useEffect, Dispatch, SetStateAction } from 'react';
-
-import { PaymentMethodPayload, cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
+import { Fragment, Dispatch, SetStateAction } from 'react';
+import { useRouter } from 'next/router';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -10,38 +9,36 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
 
+import { pages } from '@core/config/navigation.config';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useOrders from '@lib/hooks/useOrders';
+import usePayments from '@lib/hooks/usePayments';
 import CartItem from '@components/cart/CartItem';
 import AddressDetail from '@components/checkout/details/AddressDetail';
 
 type CheckoutConfirmationSectionProps = {
-  next: () => void,
   back: () => void,
-  paymentPayload: PaymentMethodPayload,
   setTransactionError: Dispatch<SetStateAction<string>>,
 };
 
 const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) => {
-  const { next, back, paymentPayload, setTransactionError } = props;
+  const { back, setTransactionError } = props;
 
-  const { user } = useAuthContext();
+  const { user, paymentPayload, getCardPayload, getPaypalPayload } = useAuthContext();
 
   const { cart, totalPrice } = useCartContext();
 
-  const { startTransaction, errorMsg, successMsg } = useOrders();
+  const router = useRouter();
 
-  const [cardPayload, setCardPayload] = useState<cardPaymentMethodPayload | undefined>(undefined)
-  const [paypalPayload, setPaypalPayload] = useState<paypalPaymentMethodPayload | undefined>(undefined)
+  const { createTransaction, errorMsg, successMsg } = usePayments();
 
   const handleSubmit = () => {
     setTransactionError('');
-    startTransaction(paymentPayload.nonce, onSuccessSubmit, onErrorSubmit);
+    createTransaction(paymentPayload?.nonce || '', onSuccessSubmit, onErrorSubmit);
   };
 
   const onSuccessSubmit = () => {
-    next();
+    router.push(pages.orders.path);
   };
 
   const onErrorSubmit = (message: string) => {
@@ -53,11 +50,6 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
     setTransactionError('');
     back();
   };
-
-  useEffect(() => {
-    setCardPayload(paymentPayload as cardPaymentMethodPayload);
-    setPaypalPayload(paymentPayload as paypalPaymentMethodPayload);
-  }, [paymentPayload, setCardPayload, setPaypalPayload]);
 
   return (
     <>
@@ -87,18 +79,14 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
               </Typography>
               <Box mt={1}>
                 <Typography component="div" variant="subtitle1" >
-                  {paymentPayload.type}
+                  {paymentPayload?.type}
                 </Typography>
-                { cardPayload?.details.lastFour &&
-                    <Typography component="div" variant="subtitle1">
-                      {`Finishes in ${cardPayload?.details.lastFour}`}
-                    </Typography>
-                }
-                { paypalPayload?.details.email && 
-                  <Typography component="div" variant="subtitle1">
-                    {paypalPayload?.details.email}
-                  </Typography>
-                }
+                <Typography component="div" variant="subtitle1">
+                  {`Finishes in ${getCardPayload()?.details.lastFour}`}
+                </Typography>
+                <Typography component="div" variant="subtitle1">
+                  {getPaypalPayload()?.details.email}
+                </Typography>
               </Box>
             </Grid>
 

@@ -10,22 +10,21 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useUser from '@lib/hooks/useUser';
+import usePayments from '@lib/hooks/usePayments';
 
 type CheckoutPaymentSectionProps = {
   next: () => void,
   back: () => void,
-  setPaymentPayload: Dispatch<SetStateAction<PaymentMethodPayload | undefined>>,
   transactionError: string,
   setTransactionError: Dispatch<SetStateAction<string>>,
 };
 
 const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
-  const { next, back, setPaymentPayload, transactionError, setTransactionError } = props;
+  const { next, back, transactionError, setTransactionError } = props;
 
-  const { braintreeToken } = useAuthContext();
+  const { braintreeToken, setPaymentPayload } = useAuthContext();
 
-  const { checkPaymentMethod, errorMsg, successMsg } = useUser();
+  const { checkPaymentMethod, errorMsg, successMsg } = usePayments();
 
   const [dropinInstance, setDropinInstance] = useState<Dropin | undefined>(undefined)
 
