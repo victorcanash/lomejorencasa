@@ -20,7 +20,7 @@ import ManagePDiscountForm from '@components/forms/products/ManagePDiscountForm'
 import ProductDetail from '@components/admin/details/ProductDetail';
 import InventoriesDetail from '@components/admin/details/InventoriesDetail';
 import DiscountsDetail from '@components/admin/details/DiscountsDetail';
-import Pagination from '@components/Pagination';
+import Pagination from '@components/ui/Pagination';
 
 export type CheckProductsSectionProps = {
   category: ProductCategory | null,

@@ -9,7 +9,7 @@ import { allProductsName } from '@core/constants/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import ProductItem from '@components/products/ProductItem';
-import Pagination from '@components/Pagination';
+import Pagination from '@components/ui/Pagination';
 
 type ProductListProps = {
   category: ProductCategory | null,

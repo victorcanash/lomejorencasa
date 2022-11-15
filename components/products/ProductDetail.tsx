@@ -13,7 +13,7 @@ import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import GoBackBtn from '@components/ui/GoBackBtn';
 import ProductDescription from '@components/products/ProductDescription';
-import Carousel from '@components/Carousel';
+import Carousel from '@components/ui/Carousel';
 
 type ProductDetailProps = {
   product: Product,

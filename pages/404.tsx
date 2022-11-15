@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 
 import usePage from '@lib/hooks/usePage';
-import ErrorPage from '@components/ui/ErrorPage';
+import ErrorPage from '@components/exceptions/ErrorPage';
 
 const NotFound: NextPage = () => {
   const page = usePage();

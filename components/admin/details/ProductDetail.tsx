@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 
 import { getProductImgUrl } from '@core/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import Carousel from '@components/Carousel';
+import Carousel from '@components/ui/Carousel';
 
 type ProductDetailProps = {
   product: Product,

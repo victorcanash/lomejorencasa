@@ -1,6 +1,6 @@
-import { ProductCategory } from '@core/types/products';
-
 import Typography from '@mui/material/Typography';
+
+import { ProductCategory } from '@core/types/products';
 
 type CategoryDetailProps = {
   category: ProductCategory,

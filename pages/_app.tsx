@@ -29,7 +29,7 @@ import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
 import { AuthProvider } from '@lib/contexts/AuthContext';
 import { CartProvider } from '@lib/contexts/CartContext';
-import ErrorBoundary from '@components/ErrorBoundary';
+import ErrorBoundary from '@components/exceptions/ErrorBoundary';
 import MainLayout from '@components/layouts/MainLayout';
 
 // Client-side cache, shared for the whole session of the user in the browser.
