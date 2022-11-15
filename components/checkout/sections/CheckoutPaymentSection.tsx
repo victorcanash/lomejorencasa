@@ -57,7 +57,15 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
             Payment method
           </Typography>
           { braintreeToken &&
-            <>
+            <div 
+              style={{ 
+                backgroundColor: 'white',
+                border: '1px solid black',
+                borderRadius: '10px',
+                padding: '13px 5px 0px 5px',
+                marginTop: '10px',
+              }}
+            >
               <DropIn
                 options={{ 
                   authorization: braintreeToken,
@@ -76,7 +84,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
                   setDropinInstance(instance);
                 }}
               />
-            </>
+            </div>
           }
         </Grid>
       </Grid>
