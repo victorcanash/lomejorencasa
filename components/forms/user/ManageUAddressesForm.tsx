@@ -13,14 +13,14 @@ import { initCheckoutAddressesValues } from '@core/constants/forms/checkout';
 import { CheckoutAddresses } from '@core/types/checkout';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useUser from '@lib/hooks/useUser';
-import AddressForm from '@components/forms/checkout/AddressForm';
+import UAddressForm from '@components/forms/user/UAddressForm';
 
-type CheckoutAddressesFormProps = {
-  next: () => void,
+type ManageUAddressesFormProps = {
+  onSubmitSuccess?: () => void,
 };
 
-const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
-  const { next } = props;
+const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
+  const { onSubmitSuccess } = props;
 
   const { user } = useAuthContext();
 
@@ -41,15 +41,13 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
       formikHelpers.setFieldValue('billing.locality', values.shipping.locality);
       formikHelpers.setFieldValue('billing.country', values.shipping.country);
     }
-    updateAddresses(user, checkoutAddresses, onSuccessSubmit);
-  };
-
-  const onSuccessSubmit = () => {
-    next();
+    updateAddresses(user, checkoutAddresses, onSubmitSuccess);
   };
 
   const handleSubmitWithoutSave = () => {
-    next();
+    if (onSubmitSuccess) {
+      onSubmitSuccess();
+    }
   }
 
   return (
@@ -94,7 +92,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
                 <Typography component="h3" variant="h6">
                   Shipping address
                 </Typography>
-                <AddressForm
+                <UAddressForm
                   values={props.values.shipping}
                   errors={props.errors.shipping}
                   touched={props.touched.shipping}
@@ -120,7 +118,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
                   label="Same as shipping address" 
                 />
                 { !props.values.sameAsShipping &&
-                  <AddressForm
+                  <UAddressForm
                     values={props.values.billing}
                     errors={props.errors.billing}
                     touched={props.touched.billing}
@@ -187,4 +185,4 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
   );
 };
 
-export default CheckoutAddressesForm;
+export default ManageUAddressesForm;

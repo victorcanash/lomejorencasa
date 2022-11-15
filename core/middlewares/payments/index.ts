@@ -11,5 +11,5 @@ export const createTransaction = (token: string, paymentMethodNonce: string) => 
         'Authorization': `Bearer ${token}`
       }
   };
-  return axios.post('/payment/transaction', data, options);
+  return axios.post('/payments/transaction', data, options);
 };

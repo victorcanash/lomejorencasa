@@ -15,19 +15,23 @@ import Link from '@core/components/Link';
 
 type CartItemProps = {
   item: CartItem,
-  updateQuantity: (cartItem: CartItem, quantity: number) => void,
+  updateQuantity?: (cartItem: CartItem, quantity: number) => void,
 };
 
 const CartItem = (props: CartItemProps) => {
   const { item, updateQuantity } = props;
 
   const handleRemoveItem = () => {
-    updateQuantity(item, 0);
+    if (updateQuantity) {
+      updateQuantity(item, 0);
+    }
   };
 
   const handleSelectQuantity = (event: SelectChangeEvent) => {
-    const quantity = parseInt(event.target.value);
-    updateQuantity(item, quantity);
+    if (updateQuantity) {
+      const quantity = parseInt(event.target.value);
+      updateQuantity(item, quantity);
+    }
   };
 
   const getMenuItems = () => {
@@ -74,27 +78,34 @@ const CartItem = (props: CartItemProps) => {
               <Typography variant="body2">
                 Size: {item.inventory.size || 'Unique'}
               </Typography>
+              { !updateQuantity &&
+                <Typography variant="body2">
+                  Quantity: {item.quantity.toString()}
+                </Typography>
+              }
             </Grid>
 
-            <Grid item>
-              <Select
-                labelId="quantity-select-label"
-                id="quantity-select"
-                value={item.quantity.toString()}
-                label="Quantity"
-                onChange={handleSelectQuantity}
-              >
-                {getMenuItems()}
-              </Select>
-
-              <Tooltip title='Delete' placement='top'>
-                <IconButton 
-                  onClick={handleRemoveItem}
+            { updateQuantity &&
+              <Grid item>
+                <Select
+                  labelId="quantity-select-label"
+                  id="quantity-select"
+                  value={item.quantity.toString()}
+                  label="Quantity"
+                  onChange={handleSelectQuantity}
                 >
-                  <DeleteIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
+                  {getMenuItems()}
+                </Select>
+
+                <Tooltip title='Delete' placement='top'>
+                  <IconButton 
+                    onClick={handleRemoveItem}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+              </Grid>
+            }
 
           </Grid>
 

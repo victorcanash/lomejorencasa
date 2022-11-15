@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { ManageActions } from '@core/constants/auth';
 import type { User, UserAddress } from '@core/types/user';
 import { CheckoutAddresses } from '@core/types/checkout';
-import { manageUser as manageUserMW, updateAddresses as updateAddressesMW } from '@core/utils/user';
+import { 
+  manageUser as manageUserMW, 
+  updateAddresses as updateAddressesMW,
+} from '@core/utils/user';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useAuth from '@lib/hooks/useAuth';

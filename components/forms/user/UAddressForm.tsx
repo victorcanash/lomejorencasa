@@ -10,7 +10,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-type AddressFormProps = {
+type UAddressFormProps = {
   autoFocus: boolean,
   values: UserAddress,
   errors?: FormikErrors<UserAddress>,
@@ -23,7 +23,7 @@ type AddressFormProps = {
   },
 };
 
-const AddressForm = (props: AddressFormProps) => {
+const UAddressForm = (props: UAddressFormProps) => {
   const getAddressType = () => {
     return props.values.type;
   };
@@ -144,4 +144,4 @@ const AddressForm = (props: AddressFormProps) => {
   );
 };
 
-export default AddressForm;
+export default UAddressForm;

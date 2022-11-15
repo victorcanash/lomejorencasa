@@ -1,30 +1,19 @@
-import { useSnackbar } from 'notistack';
+import { useState } from 'react';
 
-import { createTransaction } from '@core/utils/payment';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useOrders = () => {
+  const { setLoading } = useAppContext();
   const { token } = useAuthContext();
 
-  const { enqueueSnackbar } = useSnackbar();
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const startTransaction = async (paymentMethodNonce: string) => {
-    let transaction: any = undefined;
-    await createTransaction(token, paymentMethodNonce)
-      .then((response: { transaction: any }) => {
-        transaction = response.transaction;
-      }).catch(() => {
-        errorSnackbar();
-      });
-    return transaction;
-  };
-
-  const errorSnackbar = () => {
-    enqueueSnackbar('Failed proceeding to payment, try it again', { variant: 'error' });
-  };
+  const [successMsg, setSuccessMsg] = useState('');
 
   return {
-    startTransaction,
+    errorMsg,
+    successMsg,
   };
 };
 
