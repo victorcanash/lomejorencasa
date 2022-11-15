@@ -1,29 +1,11 @@
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
+import axios, { getAuthHeaders } from '@core/config/axios.config';
+import envConfig from '@core/config/env.config';
 import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
-import { 
-  getProducts, 
-  getProductById,
-  getProductImgUrl as getProductImgUrlMW,
-  getProductCategories,
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  uploadProductImgs as uploadProductImgsMW,
-  deleteProductImg as deleteProductImgMW,
-  createProductCategory,
-  updateProductCategory,
-  deleteProductCategory,
-  createProductInventory,
-  updateProductInventory,
-  deleteProductInventory,
-  createProductDiscount,
-  updateProductDiscount,
-  deleteProductDiscount,
-} from '@core/middlewares/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import placeholder from 'public/images/placeholder.jpeg';
 
@@ -34,7 +16,21 @@ export const getAllProducts = async (token: string, page: number, sortBy: string
     totalPages: number, 
     currentPage: number,
   }>(async (resolve, reject) => {
-    getProducts(token, page, limitByPageSearch, sortBy, order, keywords, categoryName, orderRemainsSearch, adminData)
+    const categoryNameValue = categoryName == 'all' ? undefined : categoryName;
+    const options: AxiosRequestConfig = {
+      params: {
+        page,
+        limit: limitByPageSearch,
+        sortBy,
+        order,
+        keywords,
+        categoryName: categoryNameValue,
+        ordersRemain: orderRemainsSearch,
+        adminData,
+      },
+      headers: getAuthHeaders(token),
+    };
+    axios.get('/products', options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.products) {
           resolve({
@@ -56,7 +52,13 @@ export const getAllProducts = async (token: string, page: number, sortBy: string
 
 export const getProduct = (token: string, id: number, adminData = false) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
-    getProductById(token, id, adminData)
+    const options: AxiosRequestConfig = {
+      params: {
+        adminData,
+      },
+      headers: getAuthHeaders(token),
+    };
+    axios.get(`/products/${id}`, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.product) {
           resolve({
@@ -75,14 +77,22 @@ export const getProduct = (token: string, id: number, adminData = false) => {
 
 export const getProductImgUrl = (product: Product, index = 0) => {
   if (product.imageNames.length > index && product.imageNames[index]) {
-    return getProductImgUrlMW(index, product.id);
+    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`
   }
   return placeholder;
 };
 
-export const getAllProductCategories = async () => {
+export const getAllProductCategories = async (sortBy?: string, order?: string) => {
   return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
-    getProductCategories(1, 1000)
+    const options: AxiosRequestConfig = {
+      params: {
+        page: 1,
+        limit: 1000,
+        sortBy,
+        order,
+      }
+    }
+    axios.get('/product-categories', options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK && response.data?.productCategories) {
           resolve({
@@ -130,9 +140,40 @@ export const manageProduct = (action: ManageActions, token: string, product: Pro
   });
 };
 
+const createProduct = (token: string, product: Product) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.post('/products', product, options);
+};
+
+const updateProduct = (token: string, product: Product) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.put(`/products/${product.id}`, product, options);
+};
+
+const deleteProduct = (token: string, product: Product) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.delete(`/products/${product.id}`, options)
+}
+
 export const uploadProductImgs = (token: string, productImages: File[], productId: number) => {
   return new Promise<{productImages: string[]}>(async (resolve, reject) => {
-    uploadProductImgsMW(token, productImages, productId)
+    const options: AxiosRequestConfig = {
+      headers: {
+        ...getAuthHeaders(token),
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    const data = new FormData();
+    for (let i = 0; i < productImages.length; i++) {
+      data.append('images', productImages[i]);
+    }
+    axios.post(`/products/${productId}/images`, data, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
@@ -151,7 +192,10 @@ export const uploadProductImgs = (token: string, productImages: File[], productI
 
 export const deleteProductImg = (token: string, id: number, productId: number) => {
   return new Promise<{productImages: string[]}>(async (resolve, reject) => {
-    deleteProductImgMW(token, id, productId)
+    const options: AxiosRequestConfig = {
+      headers: getAuthHeaders(token),
+    };
+    axios.delete(`/products/${productId}/images/${id}`, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK) {
           resolve({
@@ -199,6 +243,27 @@ export const manageProductCategory = (action: ManageActions, token: string, prod
   });
 };
 
+const createProductCategory = (token: string, productCategory: ProductCategory) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.post('/product-categories', productCategory, options);
+};
+
+const updateProductCategory = (token: string, productCategory: ProductCategory) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.put(`/product-categories/${productCategory.id}`, productCategory, options);
+};
+
+const deleteProductCategory = (token: string, productCategory: ProductCategory) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.delete(`/product-categories/${productCategory.id}`, options)
+}
+
 export const manageProductInventory = (action: ManageActions, token: string, productInventory: ProductInventory) => {
   return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {
     let promiseMW = createProductInventory;
@@ -230,6 +295,27 @@ export const manageProductInventory = (action: ManageActions, token: string, pro
   });
 };
 
+const createProductInventory = (token: string, productInventory: ProductInventory) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.post('/product-inventories', productInventory, options);
+};
+
+const updateProductInventory = (token: string, productInventory: ProductInventory) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.put(`/product-inventories/${productInventory.id}`, productInventory, options);
+};
+
+const deleteProductInventory = (token: string, productInventory: ProductInventory) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.delete(`/product-inventories/${productInventory.id}`, options)
+}
+
 export const manageProductDiscount = (action: ManageActions, token: string, productDiscount: ProductDiscount) => {
   return new Promise<{productDiscount: ProductDiscount}>(async (resolve, reject) => {
     let promiseMW = createProductDiscount;
@@ -259,4 +345,25 @@ export const manageProductDiscount = (action: ManageActions, token: string, prod
         reject(new Error(errorMsg));
       }); 
   });
+};
+
+const createProductDiscount = (token: string, productDiscount: ProductDiscount) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.post('/product-discounts', productDiscount, options);
+};
+
+const updateProductDiscount = (token: string, productDiscount: ProductDiscount) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.put(`/product-discounts/${productDiscount.id}`, productDiscount, options);
+};
+
+const deleteProductDiscount = (token: string, productDiscount: ProductDiscount) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.delete(`/product-discounts/${productDiscount.id}`, options)
 };

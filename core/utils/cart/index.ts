@@ -1,9 +1,9 @@
-import { AxiosResponse } from 'axios';
+import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
+import axios, { getAuthHeaders } from '@core/config/axios.config';
 import { ManageActions } from '@core/constants/auth';
 import { CartItem } from '@core/types/cart';
-import { createCartItem, updateCartItem, deleteCartItem } from '@core/middlewares/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const manageCartItem = (action: ManageActions, token: string, cartItem: CartItem) => {
@@ -36,3 +36,24 @@ export const manageCartItem = (action: ManageActions, token: string, cartItem: C
       }); 
   });
 };
+
+const createCartItem = (token: string, cartItem: CartItem) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.post('/cart-items', cartItem, options);
+}
+
+const updateCartItem = (token: string, cartItem: CartItem) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.put(`/cart-items/${cartItem.id}`, cartItem, options);
+}
+
+const deleteCartItem = (token: string, cartItem: CartItem) => {
+  const options: AxiosRequestConfig = {
+    headers: getAuthHeaders(token),
+  };
+  return axios.delete(`/cart-items/${cartItem.id}`, options);
+}
