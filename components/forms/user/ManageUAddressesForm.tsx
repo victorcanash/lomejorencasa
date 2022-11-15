@@ -24,7 +24,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
 
   const { user } = useAuthContext();
 
-  const { updateAddresses, errorMsg, successMsg } = useUser();
+  const { updateUserAddresses: updateAddresses, errorMsg, successMsg } = useUser();
 
   const handleSubmit = async (values: CheckoutAddresses, formikHelpers: FormikHelpers<CheckoutAddresses>) => {
     if (!user) {
