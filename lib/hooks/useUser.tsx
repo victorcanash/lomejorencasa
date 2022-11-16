@@ -3,11 +3,9 @@ import { useState } from 'react';
 import { ManageActions } from '@core/constants/auth';
 import type { User, UserAddress } from '@core/types/user';
 import { CheckoutAddresses } from '@core/types/checkout';
-import type { Cart, CartItem } from '@core/types/cart';
 import { 
   manageUser as manageUserMW, 
   updateUserAddresses as updateUserAddressesMW,
-  checkUserCart as checkUserCartMW,
 } from '@core/utils/user';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -77,33 +75,9 @@ const useUser = () => {
     setSuccessMsg('Updated data');
   };
 
-  const checkUserCart = async (user: User, onSuccess?: (changedItems: CartItem[], deletedItems: CartItem[]) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    checkUserCartMW(token, user)
-      .then((response: {cart: Cart, changedItems: CartItem[], deletedItems: CartItem[]}) => {
-        onCheckUserCartSuccess(response.cart, response.changedItems, response.deletedItems, onSuccess);
-      }).catch((error: Error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
-  };
-
-  const onCheckUserCartSuccess = (cart: Cart, changedItems: CartItem[], deletedItems: CartItem[], onSuccess?: (changedItems: CartItem[], deletedItems: CartItem[]) => void) => {
-    initCart(cart);
-    if (onSuccess) {
-      onSuccess(changedItems, deletedItems);
-    }
-    setLoading(false);
-    setSuccessMsg('Updated data');
-  };
-
   return {
     manageUser,
     updateUserAddresses,
-    checkUserCart,
     errorMsg,
     successMsg,
   };

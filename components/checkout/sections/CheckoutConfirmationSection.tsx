@@ -1,4 +1,4 @@
-import { Fragment, Dispatch, SetStateAction } from 'react';
+import { Fragment, Dispatch, SetStateAction, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import Button from '@mui/material/Button';
@@ -10,11 +10,14 @@ import Divider from '@mui/material/Divider';
 import Alert from '@mui/material/Alert';
 
 import { pages } from '@core/config/navigation.config';
+import { CartItem } from '@core/types/cart';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import useCart from '@lib/hooks/useCart';
 import usePayments from '@lib/hooks/usePayments';
-import CartItem from '@components/cart/CartItem';
+import CartItemDetail from '@components/cart/CartItemDetail';
 import AddressDetail from '@components/checkout/details/AddressDetail';
+import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 
 type CheckoutConfirmationSectionProps = {
   back: () => void,
@@ -31,17 +34,36 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   const router = useRouter();
 
   const { createTransaction, errorMsg, successMsg } = usePayments();
+  const { checkCart } = useCart();
 
-  const handleSubmit = () => {
-    setTransactionError('');
-    createTransaction(paymentPayload?.nonce || '', onSuccessSubmit, onErrorSubmit);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [changedCartItems, setChangedCartItems] = useState<CartItem[]>([]);
+  const [deletedCartItems, setDeletedCartItems] = useState<CartItem[]>([]);
+
+  const handleDialog = () => {
+    setOpenDialog(!openDialog);
   };
 
-  const onSuccessSubmit = () => {
+  const handleConfirm = () => {
+    setTransactionError('');
+    checkCart(onSuccessCheckCart);
+  };
+
+  const onSuccessCheckCart = (changedItems: CartItem[], deletedItems: CartItem[]) => {
+    if (changedItems.length < 1 && deletedItems.length < 1) {
+      createTransaction(paymentPayload?.nonce || '', onSuccessCreateTransaction, onErrorCreateTransaction);
+    } else {
+      setChangedCartItems(changedItems);
+      setDeletedCartItems(deletedItems);
+      handleDialog();
+    }
+  };
+
+  const onSuccessCreateTransaction = () => {
     router.push(pages.orders.path);
   };
 
-  const onErrorSubmit = (message: string) => {
+  const onErrorCreateTransaction = (message: string) => {
     setTransactionError(message);
     back();
   }
@@ -95,9 +117,9 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 Order
               </Typography>
               <Box mt={1}>
-                {cart?.items.map((item) => (
+                {cart.items.map((item) => (
                   <Fragment key={item.id}>
-                    <CartItem 
+                    <CartItemDetail 
                       item={item}
                     />
                     <Divider variant='fullWidth' sx={{ my: 3 }} />
@@ -134,7 +156,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={handleSubmit}
+                onClick={handleConfirm}
               >
                 Confirm
               </Button> 
@@ -149,6 +171,13 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
             successMsg && successMsg !== '' &&
               <Alert>{ successMsg }</Alert>
           }      
+
+          <CheckedCartDialog
+            open={openDialog}
+            handleDialog={handleDialog}
+            changedItems={changedCartItems}
+            deletedItems={deletedCartItems}
+          />
 
         </Container>
       }

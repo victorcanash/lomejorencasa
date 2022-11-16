@@ -22,13 +22,13 @@ const Transition = forwardRef(function Transition(
 
 type ConfirmDialogProps = {
   open: boolean,
-  handleDialog: () => void;
+  handleDialog: () => void,
   onConfirm: () => void,
   title?: string,
   message?: string,
   successBtnContent?: string,
   cancelBtnContent?: string,
-}
+};
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
   const { 

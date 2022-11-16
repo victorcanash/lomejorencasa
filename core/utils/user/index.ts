@@ -6,7 +6,6 @@ import { ManageActions } from '@core/constants/auth';
 import type { User, UserAddress } from '@core/types/user';
 import { CheckoutAddresses } from '@core/types/checkout';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
-import { Cart, CartItem } from '@core/types/cart';
 
 export const manageUser = (action: ManageActions.update | ManageActions.delete, token: string, user: User) => {
   return new Promise<{user: User}>(async (resolve, reject) => {
@@ -72,30 +71,6 @@ export const updateUserAddresses = (token: string, user: User, checkoutAddresses
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Update User Addresses ERROR', error);
-        logBackendError(errorMsg)
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
-
-export const checkUserCart = (token: string, user: User) => {
-  return new Promise<{cart: Cart, changedItems: CartItem[], deletedItems: CartItem[]}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: getAuthHeaders(token),
-    };
-    axios.put(`/users/${user.id}/check-cart`, undefined, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
-          resolve({
-            cart: response.data.cart,
-            changedItems: response.data.changedItems,
-            deletedItems: response.data.deletedItems,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Check User Cart ERROR', error);
         logBackendError(errorMsg)
         reject(new Error(errorMsg));
       }); 

@@ -10,7 +10,7 @@ import { pages } from '@core/config/navigation.config';
 import LinkButton from '@core/components/LinkButton';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
-import CartItem from '@components/cart/CartItem';
+import CartItemDetail from '@components/cart/CartItemDetail';
 import GoBackBtn from '@components/ui/GoBackBtn';
 
 const CartDetail = () => {
@@ -30,7 +30,7 @@ const CartDetail = () => {
           <Container className='animate__animated animate__fadeIn'>
             {cart.items.map((item) => (
               <Fragment key={item.id}>
-                <CartItem 
+                <CartItemDetail 
                   item={item} 
                   updateQuantity={updateCartItemQuantity}
                 />

@@ -13,12 +13,12 @@ import { CartItem } from '@core/types/cart';
 import { getProductImgUrl } from '@core/utils/products';
 import Link from '@core/components/Link';
 
-type CartItemProps = {
+type CartItemDetailProps = {
   item: CartItem,
   updateQuantity?: (cartItem: CartItem, quantity: number) => void,
 };
 
-const CartItem = (props: CartItemProps) => {
+const CartItemDetail = (props: CartItemDetailProps) => {
   const { item, updateQuantity } = props;
 
   const handleRemoveItem = () => {
@@ -122,4 +122,4 @@ const CartItem = (props: CartItemProps) => {
   );
 };
 
-export default CartItem;
+export default CartItemDetail;

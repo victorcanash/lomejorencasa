@@ -28,15 +28,15 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
 
   const [dropinInstance, setDropinInstance] = useState<Dropin | undefined>(undefined)
 
-  const handleSubmit = () => {
+  const handleContinue = () => {
     if (!dropinInstance) {
       return;
     }
     setTransactionError('');
-    checkPaymentMethod(dropinInstance, onSuccessSubmit);
+    checkPaymentMethod(dropinInstance, onSuccessCheckPaymentMethod);
   };
 
-  const onSuccessSubmit = (paymentPayload: PaymentMethodPayload) => {
+  const onSuccessCheckPaymentMethod = (paymentPayload: PaymentMethodPayload) => {
     setPaymentPayload(paymentPayload);
     setTimeout(() => { 
       next(); 
@@ -108,7 +108,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={handleSubmit}
+            onClick={handleContinue}
             disabled={!dropinInstance}
           >
             Continue
