@@ -24,7 +24,8 @@ const Transition = forwardRef(function Transition(
 type CheckedCartDialogProps = {
   open: boolean,
   handleDialog: () => void,
-  changedItems: CartItem[],
+  changedCart: boolean,
+  changedItemsByInventory: CartItem[],
   message?: string,
 };
 
@@ -32,7 +33,8 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
   const { 
     open,
     handleDialog,
-    changedItems,
+    changedCart,
+    changedItemsByInventory,
     message,
   } = props;
 
@@ -52,16 +54,25 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
         {'Cart updated'}
       </DialogTitle>
       <DialogContent>
-        <DialogContentText 
-          id="checked-cart-dialog"
-        >
-          {'The quantity of some products in your cart has been updated due to insufficient inventory:'}
-        </DialogContentText>
-        { changedItems.map((item) => (
-          <DialogContentText key={item.id}>
-            {`-Quantity of ${item.product.name}: ${item.quantity}`}
+        { changedItemsByInventory.length > 0 &&
+          <>
+            <DialogContentText 
+              id="checked-cart-dialog"
+            >
+              {'The quantity of some products in your cart has been updated due to insufficient inventory:'}
+            </DialogContentText>
+            { changedItemsByInventory.map((item) => (
+              <DialogContentText key={item.id}>
+                {`-Quantity of ${item.product.name}: ${item.quantity}`}
+              </DialogContentText>
+            ))}
+          </>
+        }
+        { changedItemsByInventory.length <= 0 && changedCart &&
+          <DialogContentText>
+            {'Your cart has been updated.'}
           </DialogContentText>
-        ))}
+        }
         { message &&
           <DialogContentText>
             {message}

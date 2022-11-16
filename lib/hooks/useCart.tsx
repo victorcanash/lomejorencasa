@@ -131,23 +131,36 @@ const useCart = () => {
     enqueueSnackbar('Failed updating the cart, try again', { variant: 'error' });
   };
 
-  const checkCart = async (onSuccess?: (changedItems: CartItem[]) => void, onError?: () => void) => {
+  const checkCart = async (onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void, onError?: () => void) => {
     if (!cart) {
       return;
     }
     setLoading(true);
     checkCartMW(token, cart)
-      .then((response: {cart: Cart, changedItems: CartItem[]}) => {
-        onCheckCartSuccess(response.cart, response.changedItems, onSuccess);
+      .then((response: {cart: Cart, changedItemsByInventory: CartItem[]}) => {
+        onCheckCartSuccess(response.cart, response.changedItemsByInventory, onSuccess);
       }).catch((_error: Error) => {
         onCheckCartError(onError);
       });
   };
 
-  const onCheckCartSuccess = (cart: Cart, changedItems: CartItem[], onSuccess?: (changedItems: CartItem[]) => void) => {
-    initCart(cart);
+  const onCheckCartSuccess = (newCart: Cart, changedItemsByInventory: CartItem[], onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void) => {
+    const diffCarts = cart?.items.filter(item => {
+      return !newCart.items.some(newItem => {
+        return (
+          newItem.id === item.id &&
+          newItem.quantity === item.quantity
+        );
+      });
+    });
+    let changedCart = false;
+    if ((diffCarts && diffCarts.length > 0) || (cart && cart.items.length != newCart.items.length)) {
+      changedCart = true;
+    } 
+
+    initCart(newCart);
     if (onSuccess) {
-      onSuccess(changedItems);
+      onSuccess(changedCart, changedItemsByInventory);
     }
     setLoading(false);
   };

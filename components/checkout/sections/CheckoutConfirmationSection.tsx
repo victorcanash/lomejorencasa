@@ -36,7 +36,8 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   const { checkCart } = useCart();
 
   const [openDialog, setOpenDialog] = useState(false);
-  const [changedCartItems, setChangedCartItems] = useState<CartItem[]>([]);
+  const [changedCart, setChangedCart] = useState(false);
+  const [changedItemsByInventory, setChangedItemsByInventory] = useState<CartItem[]>([]);
 
   const handleDialog = () => {
     setOpenDialog(!openDialog);
@@ -47,11 +48,12 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
     checkCart(onSuccessCheckCart);
   };
 
-  const onSuccessCheckCart = (changedItems: CartItem[]) => {
-    if (changedItems.length < 1) {
+  const onSuccessCheckCart = (changedCart: boolean, changedItemsByInventory: CartItem[]) => {
+    setChangedCart(changedCart);
+    setChangedItemsByInventory(changedItemsByInventory);
+    if (changedItemsByInventory.length < 1 && !changedCart) {
       createTransaction(paymentPayload?.nonce || '', onSuccessCreateTransaction, onErrorCreateTransaction);
     } else {
-      setChangedCartItems(changedItems);
       handleDialog();
     }
   };
@@ -168,7 +170,8 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
           <CheckedCartDialog
             open={openDialog}
             handleDialog={handleDialog}
-            changedItems={changedCartItems}
+            changedCart={changedCart}
+            changedItemsByInventory={changedItemsByInventory}
             message='Check your order and click the confirm button again.'
           />
 

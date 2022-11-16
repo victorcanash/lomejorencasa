@@ -7,7 +7,7 @@ import { Cart, CartItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const checkCart = (token: string, cart: Cart) => {
-  return new Promise<{cart: Cart, changedItems: CartItem[]}>(async (resolve, reject) => {
+  return new Promise<{cart: Cart, changedItemsByInventory: CartItem[]}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
     };
@@ -16,7 +16,7 @@ export const checkCart = (token: string, cart: Cart) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
             cart: response.data.cart,
-            changedItems: response.data.changedItems,
+            changedItemsByInventory: response.data.changedItemsByInventory,
           });
         } else {
           throw new Error('Something went wrong');

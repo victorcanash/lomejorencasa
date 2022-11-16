@@ -28,15 +28,15 @@ const Cart: NextPage = () => {
 
   const [openDialog, setOpenDialog] = useState(false);
   const [checkedCart, setCheckedCart] = useState(false);
-  const [changedCartItems, setChangedCartItems] = useState<CartItem[]>([]);
+  const [changedItemsByInventory, setChangedItemsByInventory] = useState<CartItem[]>([]);
 
   const handleDialog = useCallback(() => {
     setOpenDialog(!openDialog);
   }, [openDialog]);
 
-  const onSuccessCheckCart = useCallback((changedItems: CartItem[]) => {
-    setChangedCartItems(changedItems);
-    if (changedItems.length > 0) {
+  const onSuccessCheckCart = useCallback((_changedCart: boolean, changedItemsByInventory: CartItem[]) => {
+    setChangedItemsByInventory(changedItemsByInventory);
+    if (changedItemsByInventory.length > 0) {
       handleDialog();
     }
     setCheckedCart(true);
@@ -94,7 +94,8 @@ const Cart: NextPage = () => {
       <CheckedCartDialog
         open={openDialog}
         handleDialog={handleDialog}
-        changedItems={changedCartItems}
+        changedCart={false}
+        changedItemsByInventory={changedItemsByInventory}
         message='Check your cart.'
       />
     </>
