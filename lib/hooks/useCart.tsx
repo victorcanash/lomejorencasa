@@ -48,22 +48,24 @@ const useCart = () => {
 
     // Update cart item
     if (cartItemIndex > -1) {
-      manageCartItem(ManageActions.update, token, cartItem).then((response: { cartItem: CartItem }) => {
-        cart.items[cartItemIndex] = cartItem;
-        onAddCartItemSuccess(product.realPrice);
-      }).catch((error: Error) => {
-        onAddCartItemError();
-      });
+      manageCartItem(ManageActions.update, token, cartItem)
+        .then((response: { cartItem: CartItem }) => {
+          cart.items[cartItemIndex] = cartItem;
+          onAddCartItemSuccess(product.realPrice);
+        }).catch((error: Error) => {
+          onAddCartItemError();
+        });
 
     // Create cart item
     } else {
-      manageCartItem(ManageActions.create, token, cartItem).then((response: { cartItem: CartItem }) => {
-        cartItem.id = response.cartItem.id;
-        cart.items.push(cartItem);
-        onAddCartItemSuccess(product.realPrice);
-      }).catch((error: Error) => {
-        onAddCartItemError();
-      });
+      manageCartItem(ManageActions.create, token, cartItem)
+        .then((response: { cartItem: CartItem }) => {
+          cartItem.id = response.cartItem.id;
+          cart.items.push(cartItem);
+          onAddCartItemSuccess(product.realPrice);
+        }).catch((error: Error) => {
+          onAddCartItemError();
+        });
     };
   };
 
@@ -79,12 +81,12 @@ const useCart = () => {
     enqueueSnackbar('Failed adding to the cart, try again', { variant: 'error' });
   };
 
-  const updateCartItemQuantity = async (cartItem: CartItem, quantity: number) => {
+  const updateCartItemQuantity = async (cartItem: CartItem, quantity: number, forceUpdate = false) => {
     if (!isLogged() || !cart) {
       router.push(pages.login.path);
       return;
     };
-    if (cartItem.quantity == quantity) {
+    if (cartItem.quantity == quantity && !forceUpdate) {
       return;
     };
     setLoading(true);
@@ -96,23 +98,25 @@ const useCart = () => {
       const addedQuantity = quantity - cartItem.quantity;
       const addedPrice = cartItem.product.realPrice * addedQuantity;
       cartItem.quantity = quantity;
-      manageCartItem(ManageActions.update, token, cartItem).then((response: { cartItem: CartItem }) => {
-        cart.items[cartItemIndex] = cartItem;
-        onUpdateCartItemSuccess(addedQuantity, addedPrice);
-      }).catch((error: Error) => {
-        onUpdateCartItemError();
-      });
+      manageCartItem(ManageActions.update, token, cartItem)
+        .then((response: { cartItem: CartItem }) => {
+          cart.items[cartItemIndex] = cartItem;
+          onUpdateCartItemSuccess(addedQuantity, addedPrice);
+        }).catch((error: Error) => {
+          onUpdateCartItemError();
+        });
 
     // Delete cart item
     } else {
       const addedQuantity = -cartItem.quantity;
       const addedPrice = -(cartItem.product.realPrice * cartItem.quantity);
-      manageCartItem(ManageActions.delete, token, cartItem).then(() => {
-        cart.items.splice(cartItemIndex);
-        onUpdateCartItemSuccess(addedQuantity, addedPrice);
-      }).catch((error: Error) => {
-        onUpdateCartItemError();
-      });
+      manageCartItem(ManageActions.delete, token, cartItem)
+        .then(() => {
+          cart.items.splice(cartItemIndex, 1);
+          onUpdateCartItemSuccess(addedQuantity, addedPrice);
+        }).catch((error: Error) => {
+          onUpdateCartItemError();
+        });
     };
   };
 
@@ -127,28 +131,31 @@ const useCart = () => {
     enqueueSnackbar('Failed updating the cart, try again', { variant: 'error' });
   };
 
-  const checkCart = async (onSuccess?: (changedItems: CartItem[], deletedItems: CartItem[]) => void) => {
+  const checkCart = async (onSuccess?: (changedItems: CartItem[]) => void, onError?: () => void) => {
     if (!cart) {
       return;
     }
     setLoading(true);
     checkCartMW(token, cart)
-      .then((response: {cart: Cart, changedItems: CartItem[], deletedItems: CartItem[]}) => {
-        onCheckCartSuccess(response.cart, response.changedItems, response.deletedItems, onSuccess);
-      }).catch((error: Error) => {
-        onCheckCartError();
+      .then((response: {cart: Cart, changedItems: CartItem[]}) => {
+        onCheckCartSuccess(response.cart, response.changedItems, onSuccess);
+      }).catch((_error: Error) => {
+        onCheckCartError(onError);
       });
   };
 
-  const onCheckCartSuccess = (cart: Cart, changedItems: CartItem[], deletedItems: CartItem[], onSuccess?: (changedItems: CartItem[], deletedItems: CartItem[]) => void) => {
+  const onCheckCartSuccess = (cart: Cart, changedItems: CartItem[], onSuccess?: (changedItems: CartItem[]) => void) => {
     initCart(cart);
     if (onSuccess) {
-      onSuccess(changedItems, deletedItems);
+      onSuccess(changedItems);
     }
     setLoading(false);
   };
 
-  const onCheckCartError = () => {
+  const onCheckCartError = (onError?: () => void) => {
+    if (onError) {
+      onError();
+    }
     setLoading(false);
     enqueueSnackbar('Failed checking the cart, try again', { variant: 'error' });
   };

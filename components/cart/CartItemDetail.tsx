@@ -15,7 +15,7 @@ import Link from '@core/components/Link';
 
 type CartItemDetailProps = {
   item: CartItem,
-  updateQuantity?: (cartItem: CartItem, quantity: number) => void,
+  updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
 };
 
 const CartItemDetail = (props: CartItemDetailProps) => {
@@ -23,7 +23,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
   const handleRemoveItem = () => {
     if (updateQuantity) {
-      updateQuantity(item, 0);
+      updateQuantity(item, 0, true);
     }
   };
 
@@ -36,6 +36,13 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
   const getMenuItems = () => {
     const menuItems = [];
+    if (item.quantity == 0) {
+      menuItems.push(
+        <MenuItem key={0} value={0}>
+          {0}
+        </MenuItem>
+      );
+    }
     for (let i = 0; i < item.inventory.quantity; i++) {
       menuItems.push(
         <MenuItem key={i+1} value={i+1}>
@@ -71,7 +78,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
           <Grid item xs container direction="column" spacing={2}>
 
-            <Grid item xs>
+            <Grid item xs style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
               <Typography gutterBottom variant="subtitle1" component="div">
                 {item.product.name}
               </Typography>
@@ -93,6 +100,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   value={item.quantity.toString()}
                   label="Quantity"
                   onChange={handleSelectQuantity}
+                  disabled={item.inventory.quantity <= 0}
                 >
                   {getMenuItems()}
                 </Select>
@@ -104,13 +112,19 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                     <DeleteIcon />
                   </IconButton>
                 </Tooltip>
+
+                { item.quantity <= 0 &&
+                  <Typography variant="body2" style={item.inventory.quantity <= 0 ? {color: 'grey'} : undefined}>
+                    { item.inventory.quantity <= 0 ? 'Inventory not available right now.' : 'Inventory available right now.' }
+                  </Typography>
+                }
               </Grid>
             }
 
           </Grid>
 
           <Grid item>
-            <Typography variant="subtitle1" component="div">
+            <Typography variant="subtitle1" component="div" style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
               {(item.product.realPrice * item.quantity).toFixed(2)} €
             </Typography>
           </Grid>

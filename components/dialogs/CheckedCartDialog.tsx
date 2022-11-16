@@ -1,4 +1,4 @@
-import { useEffect, useState, forwardRef } from 'react';
+import { forwardRef } from 'react';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -25,7 +25,7 @@ type CheckedCartDialogProps = {
   open: boolean,
   handleDialog: () => void,
   changedItems: CartItem[],
-  deletedItems: CartItem[],
+  message?: string,
 };
 
 const CheckedCartDialog = (props: CheckedCartDialogProps) => {
@@ -33,7 +33,7 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
     open,
     handleDialog,
     changedItems,
-    deletedItems,
+    message,
   } = props;
 
   const handleClickAcceptBtn = () => {
@@ -62,14 +62,11 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
             {`-Quantity of ${item.product.name}: ${item.quantity}`}
           </DialogContentText>
         ))}
-        { deletedItems.map((item) => (
-          <DialogContentText key={item.id}>
-            {`-Quantity of ${item.product.name}: 0`}
+        { message &&
+          <DialogContentText>
+            {message}
           </DialogContentText>
-        ))}
-        <DialogContentText>
-          {'Check your order and click the confirm button again.'}
-        </DialogContentText>
+        }
       </DialogContent>
       <DialogActions>
         <Button 

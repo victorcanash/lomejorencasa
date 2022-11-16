@@ -37,7 +37,7 @@ export const createTransaction = (token: string, paymentMethodNonce: string) => 
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Checkout Order ERROR', error);
+        const errorMsg = getBackendErrorMsg('Create Transaction ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 

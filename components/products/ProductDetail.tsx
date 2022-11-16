@@ -90,6 +90,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 fullWidth
                 variant="contained"
                 onClick={onClickAddCartBtn}
+                disabled={!selectedInventory || selectedInventory.quantity == 0}
                 sx={{ mt: 1 }}
               >
                 Add to cart

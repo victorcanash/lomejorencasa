@@ -7,7 +7,7 @@ import { Cart, CartItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const checkCart = (token: string, cart: Cart) => {
-  return new Promise<{cart: Cart, changedItems: CartItem[], deletedItems: CartItem[]}>(async (resolve, reject) => {
+  return new Promise<{cart: Cart, changedItems: CartItem[]}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
     };
@@ -17,7 +17,6 @@ export const checkCart = (token: string, cart: Cart) => {
           resolve({
             cart: response.data.cart,
             changedItems: response.data.changedItems,
-            deletedItems: response.data.deletedItems,
           });
         } else {
           throw new Error('Something went wrong');
