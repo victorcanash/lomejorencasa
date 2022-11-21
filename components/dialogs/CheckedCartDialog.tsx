@@ -63,7 +63,7 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
             </DialogContentText>
             { changedItemsByInventory.map((item) => (
               <DialogContentText key={item.id}>
-                {`-Quantity of ${item.product.name}: ${item.quantity}`}
+                {`-Quantity of ${item.inventory.product.name} ${item.inventory.name}: ${item.quantity}`}
               </DialogContentText>
             ))}
           </>

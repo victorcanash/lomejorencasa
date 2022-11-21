@@ -92,6 +92,7 @@ export const initProductInventoryValues: ProductInventory = {
     price: 0,
     quantity: 0,
   },
+  product: {} as Product,
 }
 
 export const productDiscountValidation = Yup.object().shape(

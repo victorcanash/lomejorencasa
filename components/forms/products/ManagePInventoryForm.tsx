@@ -105,6 +105,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
               price: productInventory?.bigbuy.price || initProductInventoryValues.bigbuy.price,
               quantity: productInventory?.bigbuy.quantity || initProductInventoryValues.bigbuy.quantity,
             },
+            product: productInventory?.product || initProductInventoryValues.product,
           } as ProductInventory}
           validationSchema={productInventoryValidation}
           onSubmit={handleSubmit}

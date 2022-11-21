@@ -32,6 +32,7 @@ export type ProductInventory = {
     price: number,
     quantity: number,
   },
+  product: Product,
 };
 
 export type ProductDiscount = {

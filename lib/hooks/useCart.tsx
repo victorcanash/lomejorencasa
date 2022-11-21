@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import { pages } from '@core/config/navigation.config';
 import { ManageActions } from '@core/constants/auth';
 import { Cart, CartItem } from '@core/types/cart';
-import { Product, ProductInventory } from '@core/types/products';
+import { ProductInventory } from '@core/types/products';
 import { manageCartItem, checkCart as checkCartMW } from '@core/utils/cart';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -19,7 +19,7 @@ const useCart = () => {
   const router = useRouter();
   const { enqueueSnackbar } = useSnackbar();
 
-  const addCartItem = (product: Product, inventory: ProductInventory) => {
+  const addCartItem = (inventory: ProductInventory) => {
     if (!isLogged() || !cart) {
       router.push(pages.login.path);
       return;
@@ -29,16 +29,14 @@ const useCart = () => {
     const cartItem = {
       id: 0,
       cartId: cart.id,
-      productId: product.id,
       inventoryId: inventory.id,
-      product: product,
       inventory: inventory,
       quantity: 1
     } as CartItem;
 
     let cartItemIndex = -1;
     cart.items.forEach((item, index) => {
-      if (item.productId === product.id && item.inventoryId === inventory.id) {
+      if (item.inventoryId === inventory.id) {
         cartItemIndex = index;
         cartItem.id = item.id;
         cartItem.quantity = item.quantity + 1;
