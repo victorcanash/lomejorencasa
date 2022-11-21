@@ -22,7 +22,7 @@ export const checkPaymentMethod = (dropin: Dropin) => {
 };
 
 export const createTransaction = (token: string, paymentMethodNonce: string) => {
-  return new Promise<{transaction: any, braintreeToken: string}>(async (resolve, reject) => {
+  return new Promise<{transactionId: string, braintreeToken: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
     };
@@ -30,7 +30,7 @@ export const createTransaction = (token: string, paymentMethodNonce: string) => 
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
-            transaction: response.data.transaction,
+            transactionId: response.data.transactionId,
             braintreeToken: response.data.braintreeToken,
           });
         } else {

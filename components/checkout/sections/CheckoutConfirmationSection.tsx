@@ -58,7 +58,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
     }
   };
 
-  const onSuccessCreateTransaction = () => {
+  const onSuccessCreateTransaction = (transactionId: string) => {
     router.push(pages.orders.path);
   };
 

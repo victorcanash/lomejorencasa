@@ -40,14 +40,13 @@ const usePayments = () => {
     setSuccessMsg('Checked payment method');
   };
 
-  const createTransaction = async (paymentMethodNonce: string, onSuccess?: () => void, onError?: (message: string) => void) => {
+  const createTransaction = async (paymentMethodNonce: string, onSuccess?: (transactionId: string) => void, onError?: (message: string) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     await createTransactionMW(token, paymentMethodNonce)
-      .then((response: { transaction: any, braintreeToken: string }) => {
-        console.log(response.transaction);
-        onCreateTransactionSuccess(response.braintreeToken, onSuccess);
+      .then((response: { transactionId: string, braintreeToken: string }) => {
+        onCreateTransactionSuccess(response.transactionId, response.braintreeToken, onSuccess);
       }).catch((error) => {
         let errorMsg = error.message;
         if (errorMsg.includes('Insufficient Funds')) {
@@ -63,10 +62,10 @@ const usePayments = () => {
       });
   };
 
-  const onCreateTransactionSuccess = (braintreeToken: string, onSuccess?: () => void) => {
+  const onCreateTransactionSuccess = (transactionId: string, braintreeToken: string, onSuccess?: (transactionId: string) => void) => {
     setBraintreeToken(braintreeToken);
     if (onSuccess) {
-      onSuccess();
+      onSuccess(transactionId);
     }
     setLoading(false);
     setSuccessMsg('Created transaction');
