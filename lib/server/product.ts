@@ -25,7 +25,7 @@ export const getProductProps: GetServerSideProps = async (context) => {
       result = {
         notFound: true
       }
-    })
+    });
 
   return result;
 };

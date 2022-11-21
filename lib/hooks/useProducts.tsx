@@ -57,12 +57,13 @@ const useProducts = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    let productId = 0;
+    let productId = -1;
+    let productImages: string[] = [];
 
     try {
       productId = await (await manageProductMW(ManageActions.create, token, product)).product.id;
 
-      await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productId);
+      productImages = await (await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productId)).productImages;
 
       for (const inventory of inventories) {
         inventory.productId = productId;
@@ -76,6 +77,15 @@ const useProducts = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
+      if (productId > -1) {
+        if (productImages.length > 0) {
+          for (let i = productImages.length - 1; i >= 0; i--) {
+            await deleteProductImg(token, i, productId);
+          }
+        }
+        product = { ...product, id: productId }
+        await manageProductMW(ManageActions.delete, token, product);
+      }
       setLoading(false);
       setErrorMsg(error.message);
       return;
