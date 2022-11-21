@@ -49,7 +49,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     let result = 0;
     if (cart && cart.items && cart.items.length >= 1) {
       cart.items.forEach((item) => {
-        result += item.product.realPrice * item.quantity;
+        result += item.inventory.realPrice * item.quantity;
       });
     }
     setTotalPrice(result);

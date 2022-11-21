@@ -51,7 +51,7 @@ const useCart = () => {
       manageCartItem(ManageActions.update, token, cartItem)
         .then((response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
-          onAddCartItemSuccess(product.realPrice);
+          onAddCartItemSuccess(inventory.realPrice);
         }).catch((error: Error) => {
           onAddCartItemError();
         });
@@ -62,7 +62,7 @@ const useCart = () => {
         .then((response: { cartItem: CartItem }) => {
           cartItem.id = response.cartItem.id;
           cart.items.push(cartItem);
-          onAddCartItemSuccess(product.realPrice);
+          onAddCartItemSuccess(inventory.realPrice);
         }).catch((error: Error) => {
           onAddCartItemError();
         });
@@ -96,7 +96,7 @@ const useCart = () => {
     // Update cart item
     if (quantity > 0) {
       const addedQuantity = quantity - cartItem.quantity;
-      const addedPrice = cartItem.product.realPrice * addedQuantity;
+      const addedPrice = cartItem.inventory.realPrice * addedQuantity;
       cartItem.quantity = quantity;
       manageCartItem(ManageActions.update, token, cartItem)
         .then((response: { cartItem: CartItem }) => {
@@ -109,7 +109,7 @@ const useCart = () => {
     // Delete cart item
     } else {
       const addedQuantity = -cartItem.quantity;
-      const addedPrice = -(cartItem.product.realPrice * cartItem.quantity);
+      const addedPrice = -(cartItem.inventory.realPrice * cartItem.quantity);
       manageCartItem(ManageActions.delete, token, cartItem)
         .then(() => {
           cart.items.splice(cartItemIndex, 1);

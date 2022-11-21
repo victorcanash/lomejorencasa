@@ -3,9 +3,8 @@ export type Product = {
   categoryId: number,
   name: string,
   description: string,
-  sku: string,
-  price: number,
-  realPrice: number,
+  lowestPrice: number,
+  lowestRealPrice: number,
   imageNames: string[],
   inventories: ProductInventory[],
   discounts?: ProductDiscount[],
@@ -16,14 +15,24 @@ export type ProductCategory = {
   id: number,
   name: string,
   description: string,
-}
+};
 
 export type ProductInventory = {
   id: number,
   productId: number,
-  quantity: number,
-  size?: string,
-}
+  sku: string,
+  name: string,
+  description: string,
+  price: number,
+  realPrice: number,
+  bigbuy: {
+    id: number,
+    name: string,
+    description: string,
+    price: number,
+    quantity: number,
+  },
+};
 
 export type ProductDiscount = {
   id: number,
@@ -32,4 +41,4 @@ export type ProductDiscount = {
   description: string,
   discountPercent: number,
   active: boolean,
-}
+};

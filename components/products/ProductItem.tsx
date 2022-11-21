@@ -34,7 +34,7 @@ const ProductItem = (props: ProductItemProps) => {
           </div>
         </CardMedia>
         <CardContent>
-          <ProductDescription product={product} detailed={false} />
+          <ProductDescription product={product} detailed={false} selectedInventory={undefined} />
         </CardContent>
       </CardActionArea>
     </Card>

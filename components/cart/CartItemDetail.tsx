@@ -43,10 +43,18 @@ const CartItemDetail = (props: CartItemDetailProps) => {
         </MenuItem>
       );
     }
-    for (let i = 0; i < item.inventory.quantity; i++) {
+    if (item.inventory.bigbuy.quantity > 0) {
+      for (let i = 0; i < item.inventory.bigbuy.quantity; i++) {
+        menuItems.push(
+          <MenuItem key={i+1} value={i+1}>
+            {i+1}
+          </MenuItem>
+        );
+      }
+    } else if (item.quantity != 0){
       menuItems.push(
-        <MenuItem key={i+1} value={i+1}>
-          {i+1}
+        <MenuItem key={item.quantity} value={item.quantity}>
+          {item.quantity}
         </MenuItem>
       );
     }
@@ -83,7 +91,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 {item.product.name}
               </Typography>
               <Typography variant="body2">
-                Size: {item.inventory.size || 'Unique'}
+                {item.inventory.name || ''}
               </Typography>
               { !updateQuantity &&
                 <Typography variant="body2">
@@ -100,7 +108,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   value={item.quantity.toString()}
                   label="Quantity"
                   onChange={handleSelectQuantity}
-                  disabled={item.inventory.quantity <= 0}
+                  disabled={item.inventory.bigbuy.quantity <= 0}
                 >
                   {getMenuItems()}
                 </Select>
@@ -114,8 +122,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 </Tooltip>
 
                 { item.quantity <= 0 &&
-                  <Typography variant="body2" style={item.inventory.quantity <= 0 ? {color: 'grey'} : undefined}>
-                    { item.inventory.quantity <= 0 ? 'Inventory not available right now.' : 'Inventory available right now.' }
+                  <Typography variant="body2" style={item.inventory.bigbuy.quantity <= 0 ? {color: 'grey'} : undefined}>
+                    { item.inventory.bigbuy.quantity <= 0 ? 'Inventory not available right now.' : 'Inventory available right now.' }
                   </Typography>
                 }
               </Grid>
@@ -125,7 +133,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
           <Grid item>
             <Typography variant="subtitle1" component="div" style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
-              {(item.product.realPrice * item.quantity).toFixed(2)} €
+              {(item.inventory.realPrice * item.quantity).toFixed(2)} €
             </Typography>
           </Grid>
 

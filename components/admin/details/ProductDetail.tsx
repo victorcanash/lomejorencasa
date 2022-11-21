@@ -33,16 +33,11 @@ const ProductDetail = (props: ProductDetailProps) => {
       <Typography component="div" variant="subtitle1">
         {`Category: ${productCategories.filter((item) => item.id == product.categoryId)[0]?.name}`}
       </Typography>
-      <Typography component="div" variant="subtitle1">
-        {`SKU: ${product.sku}`}
-      </Typography>
-      <Typography component="div" variant="subtitle1">
-        {`Price: ${product.price}`}
-      </Typography>
+     
       { created &&
         <>
           <Typography component="div" variant="subtitle1">
-            {`Real price (with discount): ${product.realPrice}`}
+            {`Lowest price (with discount): ${product.lowestRealPrice}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
             {`Active discount ID: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}

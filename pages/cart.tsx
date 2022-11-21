@@ -39,15 +39,14 @@ const Cart: NextPage = () => {
     if (changedItemsByInventory.length > 0) {
       handleDialog();
     }
-    setCheckedCart(true);
   }, [handleDialog]);
 
   const onErrorCheckCart = useCallback(() => {
-    setCheckedCart(true);
   }, []);
 
   useEffect(() => {
     if (page.checked && !checkedCart) {
+      setCheckedCart(true);
       checkCart(onSuccessCheckCart, onErrorCheckCart);
     }
   }, [checkCart, checkedCart, onErrorCheckCart, onSuccessCheckCart, page.checked, router.asPath]);
@@ -64,7 +63,7 @@ const Cart: NextPage = () => {
       </Typography>
       <Divider sx={{ my: 3 }} />
 
-      {cart && cart.items && cart.items.length > 0 ?
+      { cart && cart.items && cart.items.length > 0 ?
         <>
           <CartDetail
             updateQuantity={updateCartItemQuantity}

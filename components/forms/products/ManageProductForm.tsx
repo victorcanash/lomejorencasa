@@ -4,7 +4,6 @@ import { Formik, Form } from 'formik';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -138,9 +137,8 @@ const ManageProductForm = (props: ManageProductFormProps) => {
             categoryId: product?.categoryId || productCategories[0].id,
             name: product?.name || initProductValues.name,
             description: product?.description || initProductValues.description,
-            sku: product?.sku || initProductValues.sku,
-            price: product?.price || initProductValues.price,
-            realPrice: product?.realPrice || initProductValues.realPrice,
+            lowestPrice: product?.lowestPrice || initProductValues.lowestPrice,
+            lowestRealPrice: product?.lowestRealPrice || initProductValues.lowestRealPrice,
             imageNames: product?.imageNames || initProductValues.imageNames,
             inventories: product?.inventories || initProductValues.inventories,
           } as Product}
@@ -203,43 +201,6 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 helperText={props.touched.description && props.errors.description}
               />
 
-              {/* SKU Field */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="sku"
-                name="sku"
-                autoComplete="sku"        
-                label="SKU"
-                value={props.values.sku}
-                onChange={props.handleChange}
-                error={props.touched.sku && Boolean(props.errors.sku)}
-                helperText={props.touched.sku && props.errors.sku}
-              />
-
-              {/* Price Field */}
-              <TextField 
-                margin="normal"
-                required
-                fullWidth
-                id="price"
-                name="price"
-                autoComplete="price"
-                label="Price"
-                type="decimal"  
-                InputProps={{
-                  endAdornment: <InputAdornment position="end">€</InputAdornment>,
-                }}
-                inputProps={{
-                  min: 0,
-                  inputMode: 'decimal',
-                }} 
-                value={props.values.price}
-                onChange={props.handleChange}
-                error={props.touched.price && Boolean(props.errors.price)}
-                helperText={props.touched.price && props.errors.price} 
-              />
               { uploadImgs && uploadImgs.length > 0 &&
                 <>
                   <Typography component="h3" variant="subtitle1" sx={{ mt: 2 }}>

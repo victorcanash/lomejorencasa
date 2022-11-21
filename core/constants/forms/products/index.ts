@@ -22,13 +22,6 @@ export const productValidation = Yup.object().shape(
       .string()
       .min(3, 'Description must have 3 letters minimum')
       .required('Description is required'),
-    sku: Yup
-      .string()
-      .required('SKU is required'),
-    price: Yup
-      .number()
-      .min(0, 'Price must be at least 0')
-      .required('Price is required'),
   }
 );
 
@@ -37,9 +30,8 @@ export const initProductValues: Product = {
   categoryId: -1,
   name: '',
   description: '',
-  sku: '',
-  price: 0,
-  realPrice: 0,
+  lowestPrice: 0,
+  lowestRealPrice: 0,
   imageNames: [],
   inventories: [],
 }
@@ -66,21 +58,40 @@ export const initProductCategoryValues: ProductCategory = {
 
 export const productInventoryValidation = Yup.object().shape(
   {
-    quantity: Yup
-      .number()
-      .min(0, 'Quantity must be at least 0')
-      .required('Quantity is required'),
-    size: Yup
+    sku: Yup
       .string()
-      .optional(),
+      .required('SKU is required'),
+    name: Yup
+      .string()
+      .min(3, 'Name must have 3 letters minimum')
+      .max(12, 'Name must have maximum 12 letters')
+      .required('Name is required'),
+    description: Yup
+      .string()
+      .min(3, 'Description must have 3 letters minimum')
+      .required('Description is required'),
+    price: Yup
+      .number()
+      .min(0, 'Price must be at least 0')
+      .required('Price is required'),
   }
 );
 
 export const initProductInventoryValues: ProductInventory = {
   id: -1,
   productId: -1,
-  quantity: 0,
-  size: undefined,
+  sku: '',
+  name: '',
+  description: '',
+  price: 0,
+  realPrice: 0,
+  bigbuy: {
+    id: 0,
+    name: '',
+    description: '',
+    price: 0,
+    quantity: 0,
+  },
 }
 
 export const productDiscountValidation = Yup.object().shape(

@@ -1,16 +1,17 @@
 import Typography from '@mui/material/Typography';
 
-import { Product } from "@core/types/products";
+import { Product, ProductInventory } from "@core/types/products";
 import { capitalizeFirstLetter } from '@core/utils/strings';
 
 type ProductDescriptionProps = {
   product: Product,
   detailed: boolean,
+  selectedInventory: ProductInventory | undefined,
 };
 
 const ProductDescription = (props: ProductDescriptionProps) => {
-  const { product, detailed } = props;
-
+  const { product, detailed, selectedInventory } = props;
+  
   return (
     <>
       <Typography component={ detailed ? "h1" : "div" } variant={ detailed ? "h4" : "subtitle1" }>
@@ -26,10 +27,10 @@ const ProductDescription = (props: ProductDescriptionProps) => {
       { product.activeDiscount ?
         <>
           <Typography component={ detailed ? "h2" : "div" } variant={ detailed ? "h4" : "subtitle1"} color="error">
-            {product.realPrice} €
+            {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
           </Typography>
           <Typography component={ detailed ? "h3" : "span" } variant={ detailed ? "h6" : "subtitle2"}>
-            Original: <s>{product.price} €</s>
+            Original: <s>{selectedInventory ? selectedInventory.price : product.lowestPrice} €</s>
           </Typography> 
           <Typography component={ detailed ? "h3" : "span" } variant={ detailed ? "h6" : "subtitle2"} color="error"> 
             {` -${product.activeDiscount.discountPercent}%`}
@@ -37,7 +38,7 @@ const ProductDescription = (props: ProductDescriptionProps) => {
         </>
         :
         <Typography component={ detailed ? "h2" : "span" } variant={ detailed ? "h4" : "subtitle1"}>
-          {product.realPrice} €
+          {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
         </Typography>
       }
     </>

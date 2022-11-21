@@ -213,6 +213,10 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     );
   };
 
+  const onClickRefreshBigbuyBtn = (productId: number) => {
+    refreshProduct(productId);
+  }
+
   const getManageForm = () => {
     if (selectedModel.product) {
       if (!selectedModel.inventory && !selectedModel.discount) {
@@ -340,6 +344,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                   <InventoriesDetail
                     inventories={item.product.inventories}
                     created={true}
+                    onClickRefreshBigbuyBtn={onClickRefreshBigbuyBtn}
                     getInventoryActionComponent={(inventoryIndex: number) => {
                       return (
                         <Button 

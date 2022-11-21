@@ -2,9 +2,7 @@ import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Button from '@mui/material/Button';
 
 import { Product } from '@core/types/products';
@@ -23,11 +21,7 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
   const { addCartItem } = useCart();
-  const { selectedInventory, handleSelectChange, loadedSelect } = useSelectInventory(product);
-
-  const handleChange = (event: SelectChangeEvent) => {
-    handleSelectChange(event.target.value as string);
-  };
+  const { Select, selectedInventory, loaded } = useSelectInventory(product);
 
   const onClickAddCartBtn = () => {
     if (selectedInventory) {
@@ -66,31 +60,19 @@ const ProductDetail = (props: ProductDetailProps) => {
           md={6}
           className='animate__animated animate__fadeInRight'
         >
-          <ProductDescription product={product} detailed={true} />
-          { loadedSelect &&
+          <ProductDescription product={product} detailed={true} selectedInventory={selectedInventory} />
+          { loaded &&
             <FormControl 
               sx={{ mt: 3, mb: 2 }} 
               className='animate__animated animate__fadeIn'
             >
-              <InputLabel id="inventory-select-label">Size</InputLabel>
-              <Select
-                labelId="inventory-select-label"
-                id="inventory-select"
-                value={selectedInventory?.size || 'Unique size'}
-                label="Size"
-                onChange={handleChange}
-              >
-                { product.inventories.map((item) => (
-                  <MenuItem key={item.id} value={item.size || 'Unique size'}>
-                    {`${item.size || 'Unique size'} (${item.quantity} left)`}
-                  </MenuItem>
-                ))}
-              </Select>
+              <InputLabel id="inventory-select-label">Type</InputLabel>
+              <Select />
               <Button
                 fullWidth
                 variant="contained"
                 onClick={onClickAddCartBtn}
-                disabled={!selectedInventory || selectedInventory.quantity == 0}
+                disabled={!selectedInventory || selectedInventory.bigbuy.quantity == 0}
                 sx={{ mt: 1 }}
               >
                 Add to cart

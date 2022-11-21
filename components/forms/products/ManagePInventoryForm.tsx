@@ -3,8 +3,7 @@ import { Formik, Form } from 'formik';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import InputAdornment from '@mui/material/InputAdornment';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -39,22 +38,13 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
 
   const { manageProductInventory, errorMsg, successMsg } = useProducts();
 
-  const [checkedSize, setCheckedSize] = useState(productInventory?.size ? false : true);
-
   const [openDialog, setOpenDialog] = useState(false);
-
-  const handleChangeCheckboxSize = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckedSize(event.target.checked);
-  };
 
   const handleDialog = () => {
     setOpenDialog(!openDialog);
   };
 
   const handleSubmit = async (values: ProductInventory) => {
-    if (checkedSize) {
-      values.size = undefined;
-    }
     if (manageOnSubmit) {
       manageProductInventory(action, values, onSubmitSuccess);
     } else {
@@ -103,8 +93,18 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
           initialValues={{
             id: productInventory?.id || initProductInventoryValues.id,
             productId: product.id,
-            quantity: productInventory?.quantity || initProductInventoryValues.quantity,
-            size: productInventory?.size || initProductInventoryValues.size,
+            sku: productInventory?.sku || initProductInventoryValues.sku,
+            name: productInventory?.name || initProductInventoryValues.name,
+            description: productInventory?.description || initProductInventoryValues.description,
+            price: productInventory?.price || initProductInventoryValues.price,
+            realPrice: productInventory?.realPrice || initProductInventoryValues.realPrice,
+            bigbuy: {
+              id: productInventory?.bigbuy.id || initProductInventoryValues.bigbuy.id,
+              name: productInventory?.bigbuy.name || initProductInventoryValues.bigbuy.name,
+              description: productInventory?.bigbuy.description || initProductInventoryValues.bigbuy.description,
+              price: productInventory?.bigbuy.price || initProductInventoryValues.bigbuy.price,
+              quantity: productInventory?.bigbuy.quantity || initProductInventoryValues.bigbuy.quantity,
+            },
           } as ProductInventory}
           validationSchema={productInventoryValidation}
           onSubmit={handleSubmit}
@@ -112,51 +112,73 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
           {props => (
             <Form>
 
-              {/* Quantity Field */}
-              <TextField 
+               {/* SKU Field */}
+               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="quantity"
-                name="quantity"
-                autoComplete="quantity"
-                label="Quantity"
-                type="number"  
-                inputProps={{
-                  min: 0,
-                }} 
-                value={props.values.quantity}
+                id="sku"
+                name="sku"
+                autoComplete="sku"        
+                label="SKU"
+                value={props.values.sku}
                 onChange={props.handleChange}
-                error={props.touched.quantity && Boolean(props.errors.quantity)}
-                helperText={props.touched.quantity && props.errors.quantity} 
+                error={props.touched.sku && Boolean(props.errors.sku)}
+                helperText={props.touched.sku && props.errors.sku}
               />
 
-              {/* Size Field */}
-              <FormControlLabel 
-                control={
-                  <Checkbox 
-                    checked={checkedSize}
-                    onChange={handleChangeCheckboxSize} 
-                  />
-                } 
-                label="Unique size" 
+              {/* Name Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="name"
+                name="name"
+                autoComplete="name"        
+                label="Name"
+                value={props.values.name}
+                onChange={props.handleChange}
+                error={props.touched.name && Boolean(props.errors.name)}
+                helperText={props.touched.name && props.errors.name}
               />
-              {
-                !checkedSize &&
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="size"
-                    name="size"
-                    autoComplete="size"        
-                    label="Size"
-                    value={props.values.size || ''}
-                    onChange={props.handleChange}
-                    error={props.touched.size && Boolean(props.errors.size)}
-                    helperText={props.touched.size && props.errors.size}
-                  />
-              }
+
+              {/* Description Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="description"
+                name="description"
+                autoComplete="description"        
+                label="Description"
+                value={props.values.description}
+                onChange={props.handleChange}
+                error={props.touched.description && Boolean(props.errors.description)}
+                helperText={props.touched.description && props.errors.description}
+              />
+
+              {/* Price Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="price"
+                name="price"
+                autoComplete="price"
+                label="Price"
+                type="decimal"  
+                InputProps={{
+                  endAdornment: <InputAdornment position="end">€</InputAdornment>,
+                }}
+                inputProps={{
+                  min: 0,
+                  inputMode: 'decimal',
+                }} 
+                value={props.values.price}
+                onChange={props.handleChange}
+                error={props.touched.price && Boolean(props.errors.price)}
+                helperText={props.touched.price && props.errors.price} 
+              />
 
               <Button
                 type="submit"

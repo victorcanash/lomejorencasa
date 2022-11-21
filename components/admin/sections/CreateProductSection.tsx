@@ -41,16 +41,7 @@ const CreateProductSection = () => {
   }
 
   const onSuccessCreateInventory = (inventory: ProductInventory) => {
-    if (inventory.size) {
-      // Then cannot be an inventory with unique size
-      setInventories(
-        inventories.filter(item => item.size)
-      );
-      setInventories(current => [...current, inventory]);
-    } else { 
-      // Inventory with unique size
-      setInventories([inventory]);
-    }
+    setInventories(current => [...current, inventory]);
   }
 
   const onSuccessCreateDiscount = (discount: ProductDiscount) => {
