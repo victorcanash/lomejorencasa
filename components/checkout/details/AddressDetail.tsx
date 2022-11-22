@@ -4,26 +4,27 @@ import { UserAddress } from '@core/types/user';
 
 type AddressDetailProps = {
   address: UserAddress,
+  variant: 'subtitle1' | 'body2'
 };
 
 const AddressDetail = (props: AddressDetailProps) => {
-  const { address } = props;
+  const { address, variant } = props;
 
   return (
     <>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant={variant}>
         {`${address.firstName} ${address.lastName}`}
       </Typography>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant={variant}>
         {address.addressLine1}
       </Typography>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant={variant}>
         {address.addressLine2}
       </Typography>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant={variant}>
       {`${address.postalCode} ${address.locality}`}
       </Typography>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant={variant}>
         {address.country}
       </Typography>
     </>

@@ -85,9 +85,15 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.user,
       type: PageTypes.main,
     },
-    orders: {
+    orderList: {
       path: '/orders',
       filepath: '/orders',
+      protection: Protections.user,
+      type: PageTypes.main,
+    },
+    orderDetail: {
+      path: '/orders',
+      filepath: '/orders/[id]',
       protection: Protections.user,
       type: PageTypes.main,
     },

@@ -25,7 +25,7 @@ const ProductDetail = (props: ProductDetailProps) => {
 
   const onClickAddCartBtn = () => {
     if (selectedInventory) {
-      addCartItem(product, selectedInventory);
+      addCartItem(selectedInventory);
     }
   };
 

@@ -65,9 +65,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     <>
       <Grid container spacing={2}>
 
-        <Grid
-          item
-        >
+        <Grid item>
           <Link href={`${pages.productDetail.path}/${item.inventory.product.name}?id=${item.inventory.product.id}`} noLinkStyle>
             <div style={{ position: 'relative', minWidth: '100px' }}>
               <Image

@@ -13,7 +13,7 @@ export const loggedUserDrawerItems: DrawerItem[] = [
   },
   {
     text: 'Orders',
-    path: pages.orders.path,
+    path: pages.orderList.path,
   },
   {
     text: 'Sign out',

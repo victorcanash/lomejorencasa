@@ -14,7 +14,6 @@ const usePayments = () => {
   const { token, setBraintreeToken } = useAuthContext();
 
   const [errorMsg, setErrorMsg] = useState('');
-
   const [successMsg, setSuccessMsg] = useState('');
 
   const checkPaymentMethod = (dropin: Dropin, onSuccess?: (paymentPayload: PaymentMethodPayload) => void) => {
@@ -72,10 +71,10 @@ const usePayments = () => {
   }
 
   return {
-    checkPaymentMethod,
-    createTransaction,
     errorMsg,
     successMsg,
+    checkPaymentMethod,
+    createTransaction,
   };
 };
 

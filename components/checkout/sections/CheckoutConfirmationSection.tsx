@@ -10,10 +10,12 @@ import Alert from '@mui/material/Alert';
 
 import { pages } from '@core/config/navigation.config';
 import { CartItem } from '@core/types/cart';
+import { Order } from '@core/types/orders';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
 import usePayments from '@lib/hooks/usePayments';
+import useOrders from '@lib/hooks/useOrders';
 import CartDetail from '@components/cart/CartDetail';
 import AddressDetail from '@components/checkout/details/AddressDetail';
 import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
@@ -34,6 +36,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
 
   const { createTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
+  const { createOrder } = useOrders();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [changedCart, setChangedCart] = useState(false);
@@ -59,13 +62,19 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   };
 
   const onSuccessCreateTransaction = (transactionId: string) => {
-    router.push(pages.orders.path);
+    createOrder(transactionId, onSuccessCreateOrder, onErrorCreateOrder);
   };
 
   const onErrorCreateTransaction = (message: string) => {
     setTransactionError(message);
     back();
-  }
+  };
+
+  const onSuccessCreateOrder = (order: Order) => {
+    router.push(`${pages.orderDetail.path}/${order.id}`);
+  };
+
+  const onErrorCreateOrder = (_message: string) => {};
 
   const handleBack = () => {
     setTransactionError('');
@@ -85,6 +94,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
               <Box mt={1}>
                 <AddressDetail 
                   address={user.shipping}
+                  variant="subtitle1"
                 />
               </Box>
               <Typography component="h3" variant="h6" mt={3}>
@@ -93,6 +103,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
               <Box mt={1}>
                 <AddressDetail 
                   address={user.billing}
+                  variant="subtitle1"
                 />
               </Box>
               <Typography component="h3" variant="h6" mt={3}>
@@ -103,7 +114,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                   {paymentPayload?.type}
                 </Typography>
                 <Typography component="div" variant="subtitle1">
-                  {`Finishes in ${getCardPayload()?.details.lastFour}`}
+                  {getCardPayload()?.details.lastFour ? `Finishes in ${getCardPayload()?.details.lastFour}` : undefined}
                 </Typography>
                 <Typography component="div" variant="subtitle1">
                   {getPaypalPayload()?.details.email}
