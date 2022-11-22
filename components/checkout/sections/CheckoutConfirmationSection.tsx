@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useRouter } from 'next/router';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -8,9 +7,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
-import { pages } from '@core/config/navigation.config';
 import { CartItem } from '@core/types/cart';
-import { Order } from '@core/types/orders';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
@@ -31,8 +28,6 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   const { user, paymentPayload, getCardPayload, getPaypalPayload } = useAuthContext();
 
   const { cart, totalPrice } = useCartContext();
-
-  const router = useRouter();
 
   const { createTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
@@ -62,19 +57,13 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   };
 
   const onSuccessCreateTransaction = (transactionId: string) => {
-    createOrder(transactionId, onSuccessCreateOrder, onErrorCreateOrder);
+    createOrder(transactionId);
   };
 
   const onErrorCreateTransaction = (message: string) => {
     setTransactionError(message);
     back();
   };
-
-  const onSuccessCreateOrder = (order: Order) => {
-    router.push(`${pages.orderDetail.path}/${order.id}`);
-  };
-
-  const onErrorCreateOrder = (_message: string) => {};
 
   const handleBack = () => {
     setTransactionError('');

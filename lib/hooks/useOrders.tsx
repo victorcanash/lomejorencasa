@@ -1,5 +1,9 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
+import { useSnackbar } from 'notistack';
+
+import { pages } from '@core/config/navigation.config';
 import { Order } from '@core/types/orders';
 import { 
   getOrders as getOrdersMW, 
@@ -12,6 +16,10 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 const useOrders = () => {
   const { setLoading } = useAppContext();
   const { token } = useAuthContext();
+
+  const router = useRouter();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -66,24 +74,21 @@ const useOrders = () => {
     setSuccessMsg('');
     await createOrderMW(token, braintreeTransactionId)
       .then((response: { order: Order }) => {
-        onCreateOrderSuccess(response.order, onSuccess);
+        if (onSuccess) {
+          onSuccess(response.order);
+        }
+        setSuccessMsg('Created order');
       }).catch((error) => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
-        setLoading(false);
         if (onError) {
           onError(errorMsg);
         }
       });
-  };
-
-  const onCreateOrderSuccess = (order: Order, onSuccess?: (order: Order) => void) => {
-    if (onSuccess) {
-      onSuccess(order);
-    }
     setLoading(false);
-    setSuccessMsg('Created order');
-  }
+    enqueueSnackbar('Order completed, you will receive an email with all details', { variant: 'success' });
+    router.push(pages.home.path);
+  };
 
   return {
     errorMsg,
