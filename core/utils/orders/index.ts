@@ -5,7 +5,7 @@ import axios, { getAuthHeaders } from '@core/config/axios.config';
 import { Order } from '@core/types/orders';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
-export const getOrders = (token: string, page: number, sortBy: string, order: string) => {
+export const getOrders = (token: string, page: number, sortBy: string, order: string, userId: number) => {
   return new Promise<{
     orders: Order[], 
     totalPages: number, 
@@ -17,6 +17,7 @@ export const getOrders = (token: string, page: number, sortBy: string, order: st
         limit: 10,
         sortBy,
         order,
+        userId,
       },
       headers: getAuthHeaders(token),
     };
@@ -55,28 +56,6 @@ export const getOrder = (token: string, id: number) => {
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Get Order By Id ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  })
-};
-
-export const createOrder = (token: string, braintreeTransactionId: string) => {
-  return new Promise<{order: Order}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: getAuthHeaders(token),
-    };
-    axios.post('/orders', { braintreeTransactionId }, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
-          resolve({
-            order: response.data.order,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Create Order ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 

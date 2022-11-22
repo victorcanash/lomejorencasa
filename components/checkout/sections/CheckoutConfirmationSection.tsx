@@ -12,7 +12,6 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
 import usePayments from '@lib/hooks/usePayments';
-import useOrders from '@lib/hooks/useOrders';
 import CartDetail from '@components/cart/CartDetail';
 import AddressDetail from '@components/checkout/details/AddressDetail';
 import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
@@ -31,7 +30,6 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
 
   const { createTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
-  const { createOrder } = useOrders();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [changedCart, setChangedCart] = useState(false);
@@ -50,14 +48,10 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
     setChangedCart(changedCart);
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
-      createTransaction(paymentPayload?.nonce || '', onSuccessCreateTransaction, onErrorCreateTransaction);
+      createTransaction(paymentPayload?.nonce || '', onErrorCreateTransaction);
     } else {
       handleDialog();
     }
-  };
-
-  const onSuccessCreateTransaction = (transactionId: string) => {
-    createOrder(transactionId);
   };
 
   const onErrorCreateTransaction = (message: string) => {

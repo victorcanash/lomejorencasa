@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
+import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
+import { pages } from '@core/config/navigation.config';
+import { Order } from '@core/types/orders';
 import { 
   checkPaymentMethod as checkPaymentMethodMW, 
   createTransaction as createTransactionMW, 
@@ -12,6 +16,10 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 const usePayments = () => {
   const { setLoading } = useAppContext();
   const { token, setBraintreeToken } = useAuthContext();
+
+  const router = useRouter();
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -39,16 +47,21 @@ const usePayments = () => {
     setSuccessMsg('Checked payment method');
   };
 
-  const createTransaction = async (paymentMethodNonce: string, onSuccess?: (transactionId: string) => void, onError?: (message: string) => void) => {
+  const createTransaction = async (paymentMethodNonce: string, onError?: (message: string) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     await createTransactionMW(token, paymentMethodNonce)
-      .then((response: { transactionId: string, braintreeToken: string }) => {
-        onCreateTransactionSuccess(response.transactionId, response.braintreeToken, onSuccess);
+      .then((response: { braintreeToken: string, order: Order }) => {
+        setBraintreeToken(response.braintreeToken);
+        onCreateTransactionSuccess();
       }).catch((error) => {
         let errorMsg = error.message;
-        if (errorMsg.includes('Insufficient Funds')) {
+        if (errorMsg.includes('Create bigbuy order error')) {
+          onCreateTransactionSuccess();
+          return;
+        }
+        else if (errorMsg.includes('Insufficient Funds')) {
           errorMsg = 'Failed proceeding to payment, insufficient funds';
         } else {
           errorMsg = 'Failed proceeding to payment, modify your data or choose a different payment method';
@@ -61,14 +74,12 @@ const usePayments = () => {
       });
   };
 
-  const onCreateTransactionSuccess = (transactionId: string, braintreeToken: string, onSuccess?: (transactionId: string) => void) => {
-    setBraintreeToken(braintreeToken);
-    if (onSuccess) {
-      onSuccess(transactionId);
-    }
+  const onCreateTransactionSuccess = () => {
     setLoading(false);
     setSuccessMsg('Created transaction');
-  }
+    enqueueSnackbar('Order completed, you will receive an email with all order details', { variant: 'success' });
+    router.push(pages.home.path);
+  };
 
   return {
     errorMsg,
