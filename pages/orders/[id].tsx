@@ -19,7 +19,6 @@ const Order: NextPage = () => {
 
   const onSuccessGetOrder = (order: Order) => {
     setOrder(order);
-    console.log(order)
   }
 
   useEffect(() => {

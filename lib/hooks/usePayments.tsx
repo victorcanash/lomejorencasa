@@ -57,7 +57,8 @@ const usePayments = () => {
         onCreateTransactionSuccess();
       }).catch((error) => {
         let errorMsg = error.message;
-        if (errorMsg.includes('Create bigbuy order error')) {
+        if (errorMsg.includes('Create bigbuy order error') || 
+            errorMsg.includes('Get order info error')) {
           onCreateTransactionSuccess();
           return;
         }
