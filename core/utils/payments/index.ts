@@ -4,7 +4,6 @@ import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
 import axios, { getAuthHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { pages } from '@core/config/navigation.config';
 import { Order } from '@core/types/orders';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
@@ -30,7 +29,6 @@ export const createTransaction = (token: string, paymentMethodNonce: string) => 
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-        url: `${envConfig.NEXT_PUBLIC_APP_URL}${pages.home.path}`,
       },
       headers: getAuthHeaders(token),
     };
