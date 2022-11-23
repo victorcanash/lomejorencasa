@@ -14,6 +14,7 @@ import {
   registerUser, 
   loginUser, 
   logoutUser, 
+  getLoggedUser,
   updateUserEmail,
   resetUserPsw,
   sendUserActivationEmail,
@@ -109,6 +110,22 @@ const useAuth = () => {
       setLoading(false);
     }
   };
+
+  const getLogged = async (onSuccess?: () => void, onError?: (message: string) => void) => {
+    getLoggedUser().then(async (response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
+      setToken(response.token);
+      setUser(response.user);
+      setBraintreeToken(response.braintreeToken);
+      initCart(response.cart);
+      if (onSuccess) {
+        onSuccess();
+      }
+    }).catch((error: Error) => {
+      if (onError) {
+        onError(error.message);
+      }
+    });
+  }
 
   const updateEmail = async (updateToken: string) => {
     setLoading(true);
@@ -232,6 +249,7 @@ const useAuth = () => {
     register,
     login, 
     logout,
+    getLogged,
     updateEmail,
     resetPsw,
     sendActivationEmail,

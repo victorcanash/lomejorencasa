@@ -25,7 +25,7 @@ export const checkPaymentMethod = (dropin: Dropin) => {
 };
 
 export const createTransaction = (token: string, paymentMethodNonce: string) => {
-  return new Promise<{braintreeToken: string, order: Order}>(async (resolve, reject) => {
+  return new Promise<{order: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
@@ -38,7 +38,6 @@ export const createTransaction = (token: string, paymentMethodNonce: string) => 
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
-            braintreeToken: response.data.braintreeToken,
             order: response.data.order,
           });
         } else {

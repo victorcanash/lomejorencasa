@@ -5,6 +5,8 @@ import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
 import { pages } from '@core/config/navigation.config';
+import { User } from '@core/types/user';
+import { Cart } from '@core/types/cart';
 import { Order } from '@core/types/orders';
 import { 
   checkPaymentMethod as checkPaymentMethodMW, 
@@ -12,14 +14,19 @@ import {
 } from '@core/utils/payments';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useCartContext } from '@lib/contexts/CartContext';
+import useAuth from '@lib/hooks/useAuth';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
-  const { token, setBraintreeToken } = useAuthContext();
+  const { token } = useAuthContext();
+  const { initCart } = useCartContext();
 
   const router = useRouter();
 
   const { enqueueSnackbar } = useSnackbar();
+
+  const { getLogged, logout } = useAuth()
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -52,8 +59,7 @@ const usePayments = () => {
     setErrorMsg('');
     setSuccessMsg('');
     await createTransactionMW(token, paymentMethodNonce)
-      .then((response: { braintreeToken: string, order: Order }) => {
-        setBraintreeToken(response.braintreeToken);
+      .then((response: { order: Order }) => {
         onCreateTransactionSuccess();
       }).catch((error) => {
         let errorMsg = error.message;
@@ -75,11 +81,17 @@ const usePayments = () => {
       });
   };
 
-  const onCreateTransactionSuccess = () => {
-    setLoading(false);
+  const onCreateTransactionSuccess = async () => {
+    router.push(pages.home.path);
+    await getLogged(() => {
+      // On success
+      setLoading(false);
+    }, async (_message: string) => {
+      // On error
+      await logout()
+    })
     setSuccessMsg('Created transaction');
     enqueueSnackbar('Order completed, you will receive an email with all order details', { variant: 'success' });
-    router.push(pages.home.path);
   };
 
   return {
