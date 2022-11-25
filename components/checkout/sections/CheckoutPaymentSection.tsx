@@ -40,7 +40,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
     setPaymentPayload(paymentPayload);
     setTimeout(() => { 
       next(); 
-    }, 1000);
+    }, 10);
   };
 
   const handleBack = () => {

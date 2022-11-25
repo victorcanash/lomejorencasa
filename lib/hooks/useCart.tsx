@@ -129,7 +129,7 @@ const useCart = () => {
     enqueueSnackbar('Failed updating the cart, try again', { variant: 'error' });
   };
 
-  const checkCart = async (onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void, onError?: () => void) => {
+  const checkCart = async (onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void) => {
     if (!cart) {
       return;
     }
@@ -138,7 +138,7 @@ const useCart = () => {
       .then((response: {cart: Cart, changedItemsByInventory: CartItem[]}) => {
         onCheckCartSuccess(response.cart, response.changedItemsByInventory, onSuccess);
       }).catch((_error: Error) => {
-        onCheckCartError(onError);
+        onCheckCartError();
       });
   };
 
@@ -160,13 +160,9 @@ const useCart = () => {
     if (onSuccess) {
       onSuccess(changedCart, changedItemsByInventory);
     }
-    setLoading(false);
   };
 
-  const onCheckCartError = (onError?: () => void) => {
-    if (onError) {
-      onError();
-    }
+  const onCheckCartError = () => {
     setLoading(false);
     enqueueSnackbar('Failed checking the cart, try again', { variant: 'error' });
   };

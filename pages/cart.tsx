@@ -11,6 +11,7 @@ import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import { pages } from '@core/config/navigation.config';
 import { CartItem } from '@core/types/cart';
 import LinkButton from '@core/components/LinkButton';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import usePage from '@lib/hooks/usePage';
 import useCart from '@lib/hooks/useCart';
@@ -19,6 +20,7 @@ import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 import GoBackBtn from '@components/ui/GoBackBtn';
 
 const Cart: NextPage = () => {
+  const { setLoading } = useAppContext();
   const { cart, totalPrice, totalQuantity } = useCartContext();
 
   const router = useRouter();
@@ -35,21 +37,19 @@ const Cart: NextPage = () => {
   }, [openDialog]);
 
   const onSuccessCheckCart = useCallback((_changedCart: boolean, changedItemsByInventory: CartItem[]) => {
+    setLoading(false);
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length > 0) {
       handleDialog();
     }
-  }, [handleDialog]);
-
-  const onErrorCheckCart = useCallback(() => {
-  }, []);
+  }, [handleDialog, setLoading]);
 
   useEffect(() => {
     if (page.checked && !checkedCart) {
       setCheckedCart(true);
-      checkCart(onSuccessCheckCart, onErrorCheckCart);
+      checkCart(onSuccessCheckCart);
     }
-  }, [checkCart, checkedCart, onErrorCheckCart, onSuccessCheckCart, page.checked, router.asPath]);
+  }, [checkCart, checkedCart, onSuccessCheckCart, page.checked, router.asPath]);
 
   return (
     <>

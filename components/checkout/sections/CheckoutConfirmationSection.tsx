@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
 import { CartItem } from '@core/types/cart';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
@@ -24,8 +25,8 @@ type CheckoutConfirmationSectionProps = {
 const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) => {
   const { back, setTransactionError } = props;
 
+  const { setLoading } = useAppContext();
   const { user, paymentPayload, getCardPayload, getPaypalPayload } = useAuthContext();
-
   const { cart, totalPrice } = useCartContext();
 
   const { createTransaction, errorMsg, successMsg } = usePayments();
@@ -50,6 +51,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
     if (changedItemsByInventory.length < 1 && !changedCart) {
       createTransaction(paymentPayload?.nonce || '', onErrorCreateTransaction);
     } else {
+      setLoading(false);
       handleDialog();
     }
   };
