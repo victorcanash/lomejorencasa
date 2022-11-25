@@ -31,6 +31,7 @@ export const createTransaction = (token: string, paymentMethodNonce: string) => 
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
       headers: getAuthHeaders(token),
+      timeout: 15000,
     };
     axios.post('/payments/transaction', { paymentMethodNonce }, options)
       .then(async (response: AxiosResponse) => {
