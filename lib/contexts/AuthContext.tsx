@@ -105,6 +105,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         router.asPath != pages.activation.path &&
         router.asPath != pages.reset.path &&
         router.asPath != pages.newemail.path &&
+        router.asPath != pages.checkout.path &&
+        router.asPath != pages.orderList.path &&
+        router.asPath != pages.orderDetail.path &&
         router.asPath != pages.admin.path) {
       prevLoginPathRef.current = router.asPath;
     }

@@ -27,7 +27,16 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();
-  const { token, setToken, setBraintreeToken, user, setUser, prevLoginPath, isProtectedPath, isLogged } = useAuthContext();
+  const { 
+    token, 
+    setToken, 
+    setBraintreeToken, 
+    user, 
+    setUser, 
+    prevLoginPath, 
+    isProtectedPath, 
+    isLogged 
+  } = useAuthContext();
   const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();

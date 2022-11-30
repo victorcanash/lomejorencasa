@@ -9,13 +9,11 @@ import {
 } from '@core/utils/user';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import { useCartContext } from '@lib/contexts/CartContext';
 import useAuth from '@lib/hooks/useAuth';
 
 const useUser = () => {
   const { setLoading } = useAppContext();
   const { token, setUser } = useAuthContext();
-  const { initCart } = useCartContext();
 
   const { logout } = useAuth();
 
