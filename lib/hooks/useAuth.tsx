@@ -27,7 +27,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();
-  const { token, setToken, braintreeToken, setBraintreeToken, user, setUser, prevLoginPath, isProtectedPath, isLogged } = useAuthContext();
+  const { token, setToken, setBraintreeToken, user, setUser, prevLoginPath, isProtectedPath, isLogged } = useAuthContext();
   const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();
@@ -112,7 +112,7 @@ const useAuth = () => {
   };
 
   const getLogged = async (onSuccess?: () => void, onError?: (message: string) => void) => {
-    getLoggedUser().then(async (response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
+    await getLoggedUser().then(async (response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
       setToken(response.token);
       setUser(response.user);
       setBraintreeToken(response.braintreeToken);

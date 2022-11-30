@@ -30,7 +30,7 @@ const usePage = () => {
         } else {
           onCheckSuccess();
         }
-      }).catch((error: Error) => {
+      }).catch((_error: Error) => {
         router.push(pages.home.path);
         return;
       }); 
