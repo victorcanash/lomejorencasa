@@ -2,7 +2,8 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders } from '@core/config/axios.config';
-import { Order } from '@core/types/orders';
+import envConfig from '@core/config/env.config';
+import { Order, OrderFailedCreate } from '@core/types/orders';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const getOrders = (token: string, page: number, sortBy: string, order: string, userId: number) => {
@@ -56,6 +57,58 @@ export const getOrder = (token: string, id: number) => {
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Get Order By Id ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  })
+};
+
+export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
+  return new Promise<{order: Order}>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: getAuthHeaders(token),
+      params: {
+        appName: envConfig.NEXT_PUBLIC_APP_NAME,
+        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
+      },
+    };
+    axios.post('/orders', order, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve({
+            order: response.data.order,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Create Failed Order ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  })
+};
+
+export const sendFailedOrderEmail = (token: string, id: number) => {
+  return new Promise<{order: Order}>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: getAuthHeaders(token),
+      params: {
+        appName: envConfig.NEXT_PUBLIC_APP_NAME,
+        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
+      },
+    };
+    axios.post(`/orders/${id}/send-email/check`, undefined, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve({
+            order: response.data.order,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Send Failed Order Email ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 

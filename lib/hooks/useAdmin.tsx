@@ -70,6 +70,12 @@ const useAdmin = (checkedPage: boolean) => {
           case AdminSections.createProduct.toString():
             sectionSearch = AdminSections.createProduct;
             break;
+          case AdminSections.createFailedOrder.toString():
+            sectionSearch = AdminSections.createFailedOrder;
+            break;
+          case AdminSections.sendFailedOrderEmail.toString():
+            sectionSearch = AdminSections.sendFailedOrderEmail;
+            break;
         }
       }
       setSection(sectionSearch);

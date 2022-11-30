@@ -64,6 +64,28 @@ const HomeSection = () => {
             Add new product
           </Button>
         </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Box sx={{ m: 2 }}>
+          <Typography variant="h6" component="h2" gutterBottom>
+            Manage errors
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={() => onClickSectionBtn(AdminSections.createFailedOrder)}
+          >
+            Create failed order
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={() => onClickSectionBtn(AdminSections.sendFailedOrderEmail)}
+          >
+            Send failed order email
+          </Button>
+        </Box>
       </Box>
     </>
   );

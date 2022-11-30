@@ -4,4 +4,6 @@ export enum AdminSections {
   checkProducts = 'checkProducts',
   createProductCategory = 'createProductCategory',
   createProduct = 'createProduct',
+  createFailedOrder = 'createFailedOrder',
+  sendFailedOrderEmail = 'sendFailedOrderEmail',
 };

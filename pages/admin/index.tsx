@@ -12,6 +12,8 @@ import CheckCategoriesSection from '@components/admin/sections/CheckCategoriesSe
 import CheckProductsSection from '@components/admin/sections/CheckProductsSection';
 import CreateCategorySection from '@components/admin/sections/CreateCategorySection';
 import CreateProductSection from '@components/admin/sections/CreateProductSection';
+import CreateFailedOrderSection from '@components/admin/sections/CreateFailedOrderSection';
+import SendFailedOrderEmailSection from '@components/admin/sections/SendFailedOrderEmailSection';
 import GoBackBtn from '@components/ui/GoBackBtn';
 
 const Admin: NextPage = () => {
@@ -64,6 +66,14 @@ const Admin: NextPage = () => {
           {
             section == AdminSections.createProduct &&
               <CreateProductSection />
+          }
+          {
+            section == AdminSections.createFailedOrder &&
+              <CreateFailedOrderSection />
+          }
+          {
+            section == AdminSections.sendFailedOrderEmail &&
+              <SendFailedOrderEmailSection />
           }
         </>
       }

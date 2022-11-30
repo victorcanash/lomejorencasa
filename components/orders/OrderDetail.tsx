@@ -14,10 +14,11 @@ import GoBackBtn from '@components/ui/GoBackBtn';
 
 type OrderDetailProps = {
   order: Order,
+  backBtn: boolean,
 };
 
 const OrderDetail = (props: OrderDetailProps) => {
-  const { order } = props;
+  const { order, backBtn } = props;
 
   return (
     <>
@@ -122,7 +123,9 @@ const OrderDetail = (props: OrderDetailProps) => {
         Total: {Number(order.braintree.amount).toFixed(2)} €
       </Typography>
 
-      <GoBackBtn />
+      { backBtn &&
+        <GoBackBtn />
+      }
     </>
   );
 };

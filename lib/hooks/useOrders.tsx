@@ -1,9 +1,11 @@
 import { useState } from 'react';
 
-import { Order } from '@core/types/orders';
+import { Order, OrderFailedCreate } from '@core/types/orders';
 import { 
   getOrders as getOrdersMW, 
   getOrder as getOrderMW,
+  createFailedOrder as createFailedOrderMW,
+  sendFailedOrderEmail as sendFailedOrderEmailMW,
 } from '@core/utils/orders';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -59,11 +61,63 @@ const useOrders = () => {
     setSuccessMsg('Got order');
   }
 
+  const createFailedOrder = async (order: OrderFailedCreate, onSuccess?: (order?: Order) => void) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await createFailedOrderMW(token, order)
+      .then((response: { order: Order }) => {
+        onCreateFailedOrderSuccess(response.order, onSuccess);
+      }).catch((error) => {
+        let errorMsg = error.message;
+        if (errorMsg.includes('Get order info error')) {
+          onCreateFailedOrderSuccess(undefined, onSuccess);
+          return;
+        } else if (errorMsg.includes('Braintree error')) {
+          errorMsg = 'Invalid BraintreeTransaction ID'; 
+        }
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
+  };
+
+  const onCreateFailedOrderSuccess = (order: Order | undefined, onSuccess?: (order?: Order) => void) => {
+    if (onSuccess) {
+      onSuccess(order);
+    }
+    setLoading(false);
+    setSuccessMsg('Created order');
+  }
+
+  const sendFailedOrderEmail = async (id: number, onSuccess?: (order: Order) => void) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await sendFailedOrderEmailMW(token, id)
+      .then((response: { order: Order }) => {
+        onSendFailedOrderEmailSuccess(response.order, onSuccess);
+      }).catch((error) => {
+        const errorMsg = error.message;
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
+  };
+
+  const onSendFailedOrderEmailSuccess = (order: Order, onSuccess?: (order: Order) => void) => {
+    if (onSuccess) {
+      onSuccess(order);
+    }
+    setLoading(false);
+    setSuccessMsg('Sent order check email');
+  }
+
   return {
     errorMsg,
     successMsg,
     getOrders,
     getOrder,
+    createFailedOrder,
+    sendFailedOrderEmail,
   };
 };
 

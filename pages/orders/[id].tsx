@@ -40,6 +40,7 @@ const Order: NextPage = () => {
       { loadedOrder && order &&
         <OrderDetail 
           order={order} 
+          backBtn={true}
         />
       }
     </>
