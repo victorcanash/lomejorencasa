@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useSnackbar } from 'notistack';
+
 import { Order, OrderFailedCreate } from '@core/types/orders';
 import { 
   getOrders as getOrdersMW, 
@@ -14,10 +16,12 @@ const useOrders = () => {
   const { setLoading } = useAppContext();
   const { token, user } = useAuthContext();
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const getOrders = async (page: number, onSuccess?: (orders: Order[], totalPages: number, currentPage: number) => void) => {
+  const getOrders = async (page: number, onSuccess?: (orders: Order[], totalPages: number, currentPage: number) => void, onError?: (errorMsg: string) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
@@ -28,6 +32,10 @@ const useOrders = () => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
         setLoading(false);
+        enqueueSnackbar('Failed getting orders, try again', { variant: 'error' });
+        if (onError) {
+          onError(errorMsg);
+        }
       });
   };
 
@@ -39,7 +47,7 @@ const useOrders = () => {
     setSuccessMsg('Got orders');
   }
 
-  const getOrder = async (id: number, onSuccess?: (order: Order) => void) => {
+  const getOrder = async (id: number, onSuccess?: (order: Order) => void, onError?: (errorMsg: string) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
@@ -50,6 +58,10 @@ const useOrders = () => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
         setLoading(false);
+        enqueueSnackbar('Failed getting order details, try again', { variant: 'error' });
+        if (onError) {
+          onError(errorMsg);
+        }
       });
   };
 
