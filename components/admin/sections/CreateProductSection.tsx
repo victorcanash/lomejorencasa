@@ -38,37 +38,37 @@ const CreateProductSection = () => {
     if (uploadImgs) {
       setUploadImgs(uploadImgs);
     }
-  }
+  };
 
   const onSuccessCreateInventory = (inventory: ProductInventory) => {
     setInventories(current => [...current, inventory]);
-  }
+  };
 
   const onSuccessCreateDiscount = (discount: ProductDiscount) => {
     setDiscounts(current => [...current, discount]);
-  }
+  };
 
   const onClickDeleteInventoryBtn = (deleteIndex: number) => {
     setInventories(
       inventories.filter((_item, index) => index !== deleteIndex)
     );
-  }
+  };
 
   const onClickDeleteDiscountBtn = (deleteIndex: number) => {
     setDiscounts(
       discounts.filter((_item, index) => index !== deleteIndex)
     );
-  }
+  };
 
   const onClickConfirmBtn = () => {
     if (product && inventories && inventories.length > 0) {
       createProduct(product, uploadImgs, inventories, discounts, onSuccessConfirm);
     }
-  }
+  };
 
   const onSuccessConfirm = () => {
     router.push(`${pages.admin.path}?section=${AdminSections.home}`);
-  }
+  };
 
   return (
     <>           

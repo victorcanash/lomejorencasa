@@ -8,8 +8,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { checkoutAddressesValidation } from '@core/constants/forms/checkout';
-import { initCheckoutAddressesValues } from '@core/constants/forms/checkout';
+import { checkoutAddressesValidation, initCheckoutAddressesValues } from '@core/constants/forms/checkout';
 import { CheckoutAddresses } from '@core/types/checkout';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useUser from '@lib/hooks/useUser';
@@ -47,8 +46,8 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
   const handleSubmitWithoutSave = () => {
     if (onSubmitSuccess) {
       onSubmitSuccess();
-    }
-  }
+    };
+  };
 
   return (
     <Container maxWidth="md">
