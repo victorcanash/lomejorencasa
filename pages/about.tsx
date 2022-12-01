@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
@@ -11,21 +13,26 @@ import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';
 
 const About: NextPage = () => {
+  const intl = useIntl();
+
   const page = usePage();
+
+  const title = intl.formatMessage({ id: 'about.metas.title' });
+  const description = intl.formatMessage({ id: 'about.metas.description' });
 
   return (
     <>
       <Head>
-        <title>About</title>
-        <meta name="description" content="About page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
 
       <Typography variant="h4" component="h1" gutterBottom>
-        MUI v5 + Next.js with TypeScript example
+        <FormattedMessage id="about.h1" />
       </Typography>
       <Box maxWidth="sm">
         <LinkButton href={pages.home.path}>
-          Go to the home page
+          <FormattedMessage id="about.homeBtn" />
         </LinkButton>
       </Box>
       <ProTip />

@@ -2,6 +2,8 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { useIntl } from 'react-intl';
+
 import { CheckoutSections } from '@core/constants/checkout';
 import usePage from '@lib/hooks/usePage';
 import Stepper from '@components/ui/Stepper';
@@ -10,7 +12,12 @@ import CheckoutPaymentSection from '@components/checkout/sections/CheckoutPaymen
 import CheckoutConfirmationSection from '@components/checkout/sections/CheckoutConfirmationSection';
 
 const Checkout: NextPage = () => {
+  const intl = useIntl();
+
   const page = usePage();
+
+  const title = intl.formatMessage({ id: 'checkout.metas.title' });
+  const description = intl.formatMessage({ id: 'checkout.metas.description' });
 
   const [activeStep, setActiveStep] = useState(0);
   const [transactionError, setTransactionError] = useState('');
@@ -38,8 +45,8 @@ const Checkout: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Checkout</title>
-        <meta name="description" content="Checkout page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
 
       <Stepper 

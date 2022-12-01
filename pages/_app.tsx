@@ -8,8 +8,10 @@ import 'styles/globals.css';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 import { DefaultSeo } from 'next-seo';
+import { IntlProvider } from 'react-intl';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 // import { GoogleOAuthProvider } from '@react-oauth/google';
 // import { Elements } from '@stripe/react-stripe-js';
@@ -23,8 +25,8 @@ import { SnackbarProvider } from 'notistack';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
 import envConfig from '@core/config/env.config';
-import { title, description } from '@lib/constants/metas';
-import theme from '@lib/themes';
+import { messages } from '@lib/constants/lang';
+import theme from '@lib/constants/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
 import { AuthProvider } from '@lib/contexts/AuthContext';
@@ -49,6 +51,11 @@ function MyApp(props: MyAppProps) {
     emotionCache = clientSideEmotionCache, 
     pageProps 
   } = props;
+
+  const { locale } = useRouter();
+
+  const title = locale === 'es' ? messages['es']['metas.title'] : messages['en']['metas.title'];
+  const description = locale === 'es'? messages['es']['metas.description'] : messages['en']['metas.description'];
 
   return (
     <>
@@ -76,38 +83,40 @@ function MyApp(props: MyAppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <CacheProvider value={emotionCache}>
-        
-        {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
-          {/*<Elements stripe={stripePromise}>*/}
+      <IntlProvider locale={locale || 'en'} messages={locale === 'es' ? messages['es'] : messages['en']}>
+        <CacheProvider value={emotionCache}>
           
-            <ThemeProvider theme={theme}>
-              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-              <CssBaseline />
-              <SnackbarProvider maxSnack={3}>
-                <LocalizationProvider dateAdapter={AdapterMoment}>
-                  
-                  <ErrorBoundary>
-                    <AppProvider>
-                      <SearchProvider> 
-                        <AuthProvider>
-                          <CartProvider>
-                            <MainLayout>
-                              <Component {...pageProps} />
-                            </MainLayout> 
-                          </CartProvider>
-                        </AuthProvider>          
-                      </SearchProvider>
-                    </AppProvider>
-                  </ErrorBoundary>
+          {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
+            {/*<Elements stripe={stripePromise}>*/}
+            
+              <ThemeProvider theme={theme}>
+                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                <CssBaseline />
+                <SnackbarProvider maxSnack={3}>
+                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                    
+                    <ErrorBoundary>
+                      <AppProvider>
+                        <SearchProvider> 
+                          <AuthProvider>
+                            <CartProvider>
+                              <MainLayout>
+                                <Component {...pageProps} />
+                              </MainLayout> 
+                            </CartProvider>
+                          </AuthProvider>          
+                        </SearchProvider>
+                      </AppProvider>
+                    </ErrorBoundary>
 
-                </LocalizationProvider>
-              </SnackbarProvider>
-            </ThemeProvider>
+                  </LocalizationProvider>
+                </SnackbarProvider>
+              </ThemeProvider>
 
-          {/*</Elements>*/}
-        {/*</GoogleOAuthProvider>*/}
-      </CacheProvider>
+            {/*</Elements>*/}
+          {/*</GoogleOAuthProvider>*/}
+        </CacheProvider>
+      </IntlProvider>
     </>
   )
 }

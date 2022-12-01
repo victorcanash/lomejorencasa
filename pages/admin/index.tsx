@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
@@ -17,14 +19,19 @@ import SendFailedOrderEmailSection from '@components/admin/sections/SendFailedOr
 import GoBackBtn from '@components/ui/GoBackBtn';
 
 const Admin: NextPage = () => {
+  const intl = useIntl();
+
   const page = usePage();
   const { section, checkProductsProps } = useAdmin(page.checked);
+  
+  const title = intl.formatMessage({ id: 'admin.metas.title' });
+  const description = intl.formatMessage({ id: 'admin.metas.description' });
 
   return (
     <>
       <Head>
-        <title>Admin</title>
-        <meta name="description" content="Admin page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
 
       { page.checked && section &&
@@ -32,7 +39,7 @@ const Admin: NextPage = () => {
           {
             section == AdminSections.home ?
               <Typography variant="h4" component="h1" gutterBottom>
-                Welcome to the admin page
+                <FormattedMessage id="admin.h1" />
               </Typography>
               :
               <GoBackBtn />

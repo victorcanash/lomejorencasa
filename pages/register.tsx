@@ -2,12 +2,19 @@ import { useState } from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { useIntl } from 'react-intl';
+
 import usePage from '@lib/hooks/usePage';
 import RegisterForm from '@components/forms/auth/RegisterForm';
 import ResendActivationForm from '@components/forms/auth/ResendActivationForm';
 
 const Register: NextPage = () => { 
+  const intl = useIntl();
+
   const page = usePage();
+
+  const title = intl.formatMessage({ id: 'register.metas.title' });
+  const description = intl.formatMessage({ id: 'register.metas.description' });
 
   const [email, setEmail] = useState<string | undefined>(undefined)
 
@@ -19,8 +26,8 @@ const Register: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Register</title>
-        <meta name="description" content="Register page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
       
       {

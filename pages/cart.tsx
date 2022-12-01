@@ -3,6 +3,8 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
@@ -24,9 +26,13 @@ const Cart: NextPage = () => {
   const { cart, totalPrice, totalQuantity } = useCartContext();
 
   const router = useRouter();
+  const intl = useIntl();
 
   const page = usePage();
   const { checkCart, updateCartItemQuantity } = useCart();
+
+  const title = intl.formatMessage({ id: 'cart.metas.title' });
+  const description = intl.formatMessage({ id: 'cart.metas.description' });
 
   const [openDialog, setOpenDialog] = useState(false);
   const [checkedCart, setCheckedCart] = useState(false);
@@ -54,12 +60,12 @@ const Cart: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Cart</title>
-        <meta name="description" content="Cart page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
 
       <Typography component='h1' variant='h5' className='animate__animated animate__fadeInLeft'>
-        {`My cart (${totalQuantity})`}
+        <FormattedMessage id="cart.h1" />{`(${totalQuantity})`}
       </Typography>
       <Divider sx={{ my: 3 }} />
 
@@ -76,7 +82,7 @@ const Cart: NextPage = () => {
               startIcon={<PointOfSaleIcon />}
               disabled={totalPrice <= 0}
             >
-              Proceed to payment
+              <FormattedMessage id="cart.checkoutBtn" />
             </LinkButton>
           </Box>
 
@@ -84,7 +90,7 @@ const Cart: NextPage = () => {
       :
         <>
           <Typography component='div' variant='h5' align='center' sx={{ my: 5 }}>
-            There are no products added
+            <FormattedMessage id="cart.noItems" />
           </Typography>
         </>
       }

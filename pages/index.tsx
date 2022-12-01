@@ -1,6 +1,8 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
@@ -13,21 +15,26 @@ import Copyright from '@components/ui/Copyright';
 const Home: NextPage = () => {
   const { getHref } = useSearchContext();
 
+  const intl = useIntl();
+
   const page = usePage();
+
+  const title = intl.formatMessage({ id: 'home.metas.title' });
+  const description = intl.formatMessage({ id: 'home.metas.description' });
 
   return (
     <>
       <Head>
-        <title>Home</title>
-        <meta name="description" content="Home page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
 
       <Typography variant="h4" component="h1" gutterBottom>
-        Welcome to the shop
+        <FormattedMessage id="home.welcome" />
       </Typography>
       <Box maxWidth="sm">
         <LinkButton href={getHref()}>
-          Explore our products
+        <FormattedMessage id="home.explore" />
         </LinkButton>
       </Box>
       <ProTip />

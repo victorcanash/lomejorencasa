@@ -1,20 +1,27 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import { useIntl } from 'react-intl';
+
 import usePage from '@lib/hooks/usePage';
 import ErrorUI from '@components/exceptions/ErrorPage';
 
 const Error: NextPage = () => {
+  const intl = useIntl();
+
   const page = usePage();
+
+  const title = intl.formatMessage({ id: 'error.metas.title' });
+  const description = intl.formatMessage({ id: 'error.metas.description' });
   
   return (
     <>
       <Head>
-        <title>Error</title>
-        <meta name="description" content="Error page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
 
-      <ErrorUI title='An error has ocurred' />
+      <ErrorUI title={intl.formatMessage({ id: 'error.h1' })} />
     </>
   );
 };

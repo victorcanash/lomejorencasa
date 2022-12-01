@@ -3,6 +3,8 @@ import type { NextPage } from 'next';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import { useIntl } from 'react-intl';
+
 import { pages } from '@core/config/navigation.config';
 import { Order } from '@core/types/orders';
 import usePage from '@lib/hooks/usePage';
@@ -11,9 +13,13 @@ import OrderList from '@components/orders/OrderList';
 
 const Orders: NextPage = () => {
   const router = useRouter();
+  const intl = useIntl();
 
   const page = usePage();
   const { getOrders } = useOrders();
+
+  const title = intl.formatMessage({ id: 'orderList.metas.title' });
+  const description = intl.formatMessage({ id: 'orderList.metas.description' });
 
   const [loadedOrders, setLoadedOrders] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -44,8 +50,8 @@ const Orders: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Orders</title>
-        <meta name="description" content="Orders page" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
       </Head>
 
     { loadedOrders &&
