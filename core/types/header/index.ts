@@ -1,4 +1,4 @@
 export type DrawerItem = {
-  text: string,
+  textId: string,
   path: string | undefined,
 };

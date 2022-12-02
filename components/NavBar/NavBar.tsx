@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { useIntl } from 'react-intl';
+
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
@@ -13,7 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { pages } from '@core/config/navigation.config';
-import { Drawers } from '@core/constants/header';
+import { Drawers } from '@lib/constants/header';
 import HideOnScroll from '@core/components/HideOnScroll';
 import Link from '@core/components/Link';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -24,9 +26,11 @@ import Drawer from '@components/NavBar/Drawer';
 import logo from 'public/images/lanus-logo.svg';
 
 const NavBar = () => {
+  const { getHref } = useSearchContext();
   const { totalQuantity } = useCartContext();
 
-  const { getHref } = useSearchContext();
+  const intl = useIntl();
+
   const userDrawer = useDrawer(Drawers.userDrawer);
   const categoriesDrawer = useDrawer(Drawers.categoriesDrawer);
 
@@ -52,56 +56,68 @@ const NavBar = () => {
         <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'primary.main' }} onClick={closeDrawers}>
           <Toolbar variant="dense">
 
-          <IconButton
-            sx={{ p: 0 }}
-            aria-label='cart'
-            size='large'
-            color='inherit'
-            component={Link}
-            href={pages.home.path}
-          >
-            <Image
-              src={logo}
-              alt="Logo"
-              width="64"
-              height="64"
-              layout="fixed"
-              objectFit="cover"
-              priority
-            />
-          </IconButton>
-
-            <Box
-              sx={{
-                display: { xs: 'flex', md: 'none' },
-              }}
-            >
+            <Tooltip title={intl.formatMessage({ id: 'header.tooltips.logo' })}>
               <IconButton
-                size="large"
-                color="inherit"
-                aria-label="categories menu"
-                aria-controls={Drawers.categoriesDrawer}
-                aria-haspopup="true"
-                sx={{ mx: 1 }}
-                onClick={handleCategoriesDrawer}
+                sx={{ p: 0 }}
+                size='large'
+                color='inherit'
+                component={Link}
+                href={pages.home.path}
               >
-                <MenuIcon sx={{ fontSize: 30 }} />
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width="64"
+                  height="64"
+                  layout="fixed"
+                  objectFit="cover"
+                  priority
+                />
               </IconButton>
-            </Box>
+            </Tooltip>
+
+            <Tooltip 
+              title={
+                categoriesDrawer.open ? 
+                  intl.formatMessage({ id: 'header.tooltips.hideCategoriesMenu' }) :
+                  intl.formatMessage({ id: 'header.tooltips.showCategoriesMenu' })
+              }
+            >
+              <Box
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                }}
+              >
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  aria-controls={Drawers.categoriesDrawer}
+                  aria-haspopup="true"
+                  sx={{ mx: 1 }}
+                  onClick={handleCategoriesDrawer}
+                >
+                  <MenuIcon sx={{ fontSize: 30 }} />
+                </IconButton>
+              </Box>
+            </Tooltip>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {categoriesDrawer.items.map((category) => (
-                <Button
-                  key={category.text}
-                  component={Link}
-                  href={getHref(category.text)}
-                  sx={{
-                    color: 'text.disabled',
-                    '&.active': { color: 'text.primary' },
-                    '&:hover': { color: 'text.primary' },
-                  }}
+                <Tooltip 
+                  key={category.textId}
+                  title={intl.formatMessage({ id: 'header.tooltips.category' }, { name: category.textId })}
                 >
-                  {category.text}
-                </Button>
+                  <Button
+                    component={Link}
+                    href={getHref(category.textId)}
+                    sx={{
+                      color: 'text.disabled',
+                      '&.active': { color: 'text.primary' },
+                      '&:hover': { color: 'text.primary' },
+                    }}
+                  >
+                    {category.textId}
+                  </Button>
+                </Tooltip>
               ))}
             </Box>
 
@@ -111,10 +127,9 @@ const NavBar = () => {
 
             <Box sx={{ flexGrow: 1 }} />
 
-            <Tooltip title='Show cart'>
+            <Tooltip title={intl.formatMessage({ id: 'header.tooltips.cart' })}>
               <IconButton
                 sx={{ mx: 1 }}
-                aria-label='cart'
                 size='large'
                 color='inherit'
                 component={Link}
@@ -126,16 +141,23 @@ const NavBar = () => {
               </IconButton>
             </Tooltip>
 
-            <IconButton
-              size="large"
-              aria-label="open user drawer"
-              aria-controls={Drawers.userDrawer}
-              aria-haspopup="true"
-              onClick={handleUserDrawer}
-              color="inherit"
+            <Tooltip 
+              title={
+                userDrawer.open ? 
+                  intl.formatMessage({ id: 'header.tooltips.hideUserMenu' }) :
+                  intl.formatMessage({ id: 'header.tooltips.showUserMenu' })
+              }
             >
-              <AccountCircle sx={{ fontSize: 30 }} />
-            </IconButton>
+              <IconButton
+                size="large"
+                aria-controls={Drawers.userDrawer}
+                aria-haspopup="true"
+                onClick={handleUserDrawer}
+                color="inherit"
+              >
+                <AccountCircle sx={{ fontSize: 30 }} />
+              </IconButton>
+            </Tooltip>
 
           </Toolbar>
         </AppBar>

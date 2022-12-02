@@ -8,26 +8,26 @@ export enum Drawers {
 
 export const loggedUserDrawerItems: DrawerItem[] = [
   {
-    text: 'Your profile',
+    textId: 'profile',
     path: pages.myaccount.path,
   },
   {
-    text: 'Orders',
+    textId: 'orders',
     path: pages.orderList.path,
   },
   {
-    text: 'Sign out',
+    textId: 'signOut',
     path: undefined,
   },
 ];
 
 export const unloggedUserDrawerItems: DrawerItem[] = [
   {
-    text: 'Sign in',
+    textId: 'signIn',
     path: pages.login.path,
   },
   {
-    text: 'Register',
+    textId: 'register',
     path: pages.register.path,
   },
 ];

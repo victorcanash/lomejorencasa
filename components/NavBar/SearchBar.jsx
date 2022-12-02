@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { useRouter } from 'next/router';
 
+import { useIntl } from 'react-intl';
+
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -51,7 +53,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const SearchBar = () => {
   const { getHref } = useSearchContext();
+
   const router = useRouter();
+  const intl = useIntl();
 
   const inputRef = useRef(null);
 
@@ -75,8 +79,10 @@ const SearchBar = () => {
       </SearchIconWrapper>
       <StyledInputBase
         inputRef={inputRef}
-        placeholder='Search here'
-        inputProps={{ 'aria-label': 'search', maxLength: 50 }}
+        placeholder={intl.formatMessage({ id: 'header.searchBar.placeholder' })}
+        inputProps={{ 
+          maxLength: 50,
+        }}
         onKeyDown={handleOnKeyDown}
       />
     </Search>

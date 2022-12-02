@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { useIntl } from 'react-intl';
+
 import { pages } from '@core/config/navigation.config';
 import type { User } from '@core/types/user';
 import type { 
@@ -40,6 +42,7 @@ const useAuth = () => {
   const { initCart, removeCart } = useCartContext();
 
   const router = useRouter();
+  const intl = useIntl();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -52,9 +55,9 @@ const useAuth = () => {
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Unique validation failure with the email')) {
-        errorMsg = 'Introduced email already exists';
+        errorMsg = intl.formatMessage({ id: 'register.errors.email' });
       } else {
-        errorMsg = 'Something went wrong, try again';
+        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
       }
       setErrorMsg(errorMsg);
       setLoading(false);
@@ -76,18 +79,18 @@ const useAuth = () => {
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('email')) {
-        errorMsg = 'Email not found';
+        errorMsg = intl.formatMessage({ id: 'login.errors.email' });
       } else if (errorMsg.includes('password')) {
-        errorMsg = 'Password not found';
+        errorMsg = intl.formatMessage({ id: 'login.errors.password' });
       } else if (errorMsg.includes('activate')) {
-        errorMsg = 'You have to activate your account. We have sent you an email with a link to verify your account before you can login.'
+        errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
         if (onFailByActivation) {
           onFailByActivation(authLogin.email);
         }
       } else if (errorMsg.includes('locked out')) {
-        errorMsg = 'You are locked out';
+        errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
       } else {
-        errorMsg = 'Something went wrong, try again';
+        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
       }
       setErrorMsg(errorMsg);
       setLoading(false);
@@ -145,11 +148,11 @@ const useAuth = () => {
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Token is missing or has expirated')) {
-        errorMsg = 'This link is not valid or has expirated';
+        errorMsg = intl.formatMessage({ id: 'newemail.errors.invalidToken' });
       } else if (errorMsg.includes('Unique validation failure with the newEmail')) {
-        errorMsg = 'Introduced email already exists';
+        errorMsg = intl.formatMessage({ id: 'newemail.errors.email' });
       } else {
-        errorMsg = 'Something went wrong, try again or resend another email';
+        errorMsg = intl.formatMessage({ id: 'newemail.errors.default' });
       }
       setErrorMsg(errorMsg);
       setLoading(false);
@@ -160,7 +163,7 @@ const useAuth = () => {
     setToken(token);
     setUser(user);
     setLoading(false);
-    setSuccessMsg(`Your email is updated now as ${user.email}. You can close this window.`);
+    setSuccessMsg(intl.formatMessage({ id: 'newemail.successes.default' }));
   };
 
   const resetPsw = async (updateToken: string, authResetPassword: AuthResetPsw) => {
@@ -172,9 +175,9 @@ const useAuth = () => {
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Token is missing or has expirated')) {
-        errorMsg = 'This link is not valid or has expirated';
+        errorMsg = intl.formatMessage({ id: 'reset.errors.invalidToken' });
       } else {
-        errorMsg = 'Something went wrong, try again or resend another email';
+        errorMsg = intl.formatMessage({ id: 'reset.errors.default' });
       }
       setErrorMsg(errorMsg);
       setLoading(false);
@@ -185,7 +188,7 @@ const useAuth = () => {
     setToken(token);
     setUser(user);
     setLoading(false);
-    setSuccessMsg('Your password is updated now. You can close this window and login with your new password.');
+    setSuccessMsg(intl.formatMessage({ id: 'reset.successes.default' }));
   };
 
   const sendActivationEmail = (email: string, onSuccess?: () => void) => {
@@ -194,16 +197,16 @@ const useAuth = () => {
     setSuccessMsg('');
     sendUserActivationEmail(email).then(() => {
       setLoading(false);
-      setSuccessMsg('Sent activation email');
+      setSuccessMsg(intl.formatMessage({ id: 'activation.successes.email' }));
       if (onSuccess) {
         onSuccess();
       }
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Invalid email')) {
-        errorMsg = 'Email not found';
+        errorMsg = intl.formatMessage({ id: 'activation.errors.email' });
       } else {
-        errorMsg = 'Something went wrong, try again';
+        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
       }
       setErrorMsg(errorMsg);
       setLoading(false);
@@ -212,7 +215,7 @@ const useAuth = () => {
 
   const sendResetPswEmail = (email: string) => {
     if (isLogged() && email != user?.email) {
-      setErrorMsg('This is not your email');
+      setErrorMsg(intl.formatMessage({ id: 'reset.errors.credentials' }));
       return;
     }
     setLoading(true);
@@ -220,13 +223,13 @@ const useAuth = () => {
     setSuccessMsg('');
     sendUserResetPswEmail(email).then(() => {
       setLoading(false);
-      setSuccessMsg('Sent reset email');
+      setSuccessMsg(intl.formatMessage({ id: 'reset.successes.email' }));
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Invalid email')) {
-        errorMsg = 'Email not found';
+        errorMsg = intl.formatMessage({ id: 'reset.errors.email' });
       } else {
-        errorMsg = 'Something went wrong, try again';
+        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
       }
       setErrorMsg(errorMsg);
       setLoading(false);
@@ -239,15 +242,15 @@ const useAuth = () => {
     setSuccessMsg('');
     sendUserUpdateEmail(token, authUpdateEmail).then(() => {
       setLoading(false);
-      setSuccessMsg('Sent update email');
+      setSuccessMsg(intl.formatMessage({ id: 'newemail.successes.email' }));
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Invalid password')) {
-        errorMsg = 'Password not found';
+        errorMsg = intl.formatMessage({ id: 'newemail.errors.password' });
       } else if (errorMsg.includes('Unique validation failure with the newEmail')) {
-        errorMsg = 'Introduced email already exists';
+        errorMsg = intl.formatMessage({ id: 'newemail.errors.email' });
       } else {
-        errorMsg = 'Something went wrong, try again';
+        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
       }
       setErrorMsg(errorMsg);
       setLoading(false);

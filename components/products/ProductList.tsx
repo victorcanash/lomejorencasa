@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { FormattedMessage } from 'react-intl';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -26,14 +28,21 @@ const ProductList = (props: ProductListProps) => {
 
   const router = useRouter();
 
-  const handleChangePage = (event: React.ChangeEvent<unknown>, page: number) => {
+  const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
     router.push(getHref(category?.name || allProductsName, page, keywords));
   };
 
   return (
     <>
       <Typography component="h1" variant="h5" className='animate__animated animate__fadeInLeft'>
-        { capitalizeFirstLetter(category?.name || allProductsName) }
+        { category?.name ?
+          capitalizeFirstLetter(category.name) 
+          :
+          <FormattedMessage
+            id="productList.allCategories"
+            defaultMessage={allProductsName}
+          />
+        } 
       </Typography>
 
       {
@@ -55,7 +64,9 @@ const ProductList = (props: ProductListProps) => {
           </Grid>
           :
           <Typography component="h3" variant="subtitle1" sx={{ textAlign: "center" }}>
-            There are no existing products.
+            <FormattedMessage
+              id="productList.noItems"
+            />
           </Typography>
       }
 

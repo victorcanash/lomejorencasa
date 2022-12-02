@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -28,6 +30,8 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   const { setLoading } = useAppContext();
   const { user, paymentPayload, getCardPayload, getPaypalPayload } = useAuthContext();
   const { cart, totalPrice } = useCartContext();
+
+  const intl = useIntl();
 
   const { createTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
@@ -168,7 +172,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
             handleDialog={handleDialog}
             changedCart={changedCart}
             changedItemsByInventory={changedItemsByInventory}
-            message='Check your order and click the confirm button again.'
+            message={intl.formatMessage({ id: 'dialogs.checkedCart.content.checkoutPage' })}
           />
 
         </Container>

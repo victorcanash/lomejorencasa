@@ -1,11 +1,13 @@
 import { ChangeEvent } from 'react';
 
 import { FormikErrors, FormikTouched } from 'formik';
+import { FormattedMessage } from 'react-intl';
 
 import TextField from '@mui/material/TextField';
 
 import { CountryOptions } from '@core/constants/addresses'
 import { UserAddress } from '@core/types/user';
+import { getCountryName } from '@core/utils/addresses';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -133,9 +135,12 @@ const UAddressForm = (props: UAddressFormProps) => {
         onChange={props.handleChange}
         error={props.touched?.country && Boolean(props.errors?.country)}
       >
-        { Object.values(CountryOptions).map((item) => (
-          <MenuItem key={item} value={item}>
-            {item}
+        { Object.keys(CountryOptions).map((countryKey) => (
+          <MenuItem key={countryKey} value={getCountryName(countryKey)}>
+            <FormattedMessage 
+              id={countryKey} 
+              defaultMessage={getCountryName(countryKey)}
+            />
           </MenuItem>
         ))}
       </Select>

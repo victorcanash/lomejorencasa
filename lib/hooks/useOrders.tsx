@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { Order, OrderFailedCreate } from '@core/types/orders';
@@ -16,6 +17,7 @@ const useOrders = () => {
   const { setLoading } = useAppContext();
   const { token, user } = useAuthContext();
 
+  const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -32,7 +34,10 @@ const useOrders = () => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
         setLoading(false);
-        enqueueSnackbar('Failed getting orders, try again', { variant: 'error' });
+        enqueueSnackbar(
+          intl.formatMessage({ id: 'orderList.errors.default' }),
+          { variant: 'error' }
+        );
         if (onError) {
           onError(errorMsg);
         }
@@ -44,7 +49,7 @@ const useOrders = () => {
       onSuccess(orders, totalPages, currentPage);
     }
     setLoading(false);
-    setSuccessMsg('Got orders');
+    setSuccessMsg(intl.formatMessage({ id: 'orderList.successes.default' }));
   }
 
   const getOrder = async (id: number, onSuccess?: (order: Order) => void, onError?: (errorMsg: string) => void) => {
@@ -58,7 +63,10 @@ const useOrders = () => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
         setLoading(false);
-        enqueueSnackbar('Failed getting order details, try again', { variant: 'error' });
+        enqueueSnackbar(
+          intl.formatMessage({ id: 'orderDetail.errors.default' }), 
+          { variant: 'error' }
+        );
         if (onError) {
           onError(errorMsg);
         }
@@ -70,7 +78,7 @@ const useOrders = () => {
       onSuccess(order);
     }
     setLoading(false);
-    setSuccessMsg('Got order');
+    setSuccessMsg(intl.formatMessage({ id: 'orderDetail.successes.default' }));
   }
 
   const createFailedOrder = async (order: OrderFailedCreate, onSuccess?: (order?: Order) => void) => {
@@ -86,7 +94,7 @@ const useOrders = () => {
           onCreateFailedOrderSuccess(undefined, onSuccess);
           return;
         } else if (errorMsg.includes('Braintree error')) {
-          errorMsg = 'Invalid BraintreeTransaction ID'; 
+          errorMsg = intl.formatMessage({ id: 'admin.errors.invalidOrderTransactionId' })
         }
         setErrorMsg(errorMsg);
         setLoading(false);
@@ -98,7 +106,7 @@ const useOrders = () => {
       onSuccess(order);
     }
     setLoading(false);
-    setSuccessMsg('Created order');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createOrder' }));
   }
 
   const sendFailedOrderEmail = async (id: number, onSuccess?: (order: Order) => void) => {
@@ -120,7 +128,7 @@ const useOrders = () => {
       onSuccess(order);
     }
     setLoading(false);
-    setSuccessMsg('Sent order check email');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.sendOrderEmail' }));
   }
 
   return {

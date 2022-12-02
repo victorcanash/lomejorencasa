@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { UploadFile } from '@core/types/upload';
@@ -20,6 +22,8 @@ const useProducts = () => {
   const { token } = useAuthContext();
   const { productCategories, setProductCategories } = useSearchContext();
 
+  const intl = useIntl();
+
   const [errorMsg, setErrorMsg] = useState('');
 
   const [successMsg, setSuccessMsg] = useState('');
@@ -35,7 +39,7 @@ const useProducts = () => {
       ((uploadImgs ? uploadImgs.length : 0));
     if (totalImgs < 1) {
       setSuccessMsg('');
-      setErrorMsg('The product must contain at least one image');
+      setErrorMsg(intl.formatMessage({ id: 'admin.errors.validateProductImgs' }));
       return false;
     } 
     if (onSuccess) {
@@ -92,7 +96,7 @@ const useProducts = () => {
     }
 
     setLoading(false);
-    setSuccessMsg('Created product');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createProduct' }));
     onSuccess();
   };
 
@@ -131,7 +135,7 @@ const useProducts = () => {
     }
 
     setLoading(false);
-    setSuccessMsg('Updated product');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateProduct' }));
     if (onSuccess) {
       onSuccess(product, uploadImgs);
     }
@@ -161,7 +165,7 @@ const deleteProduct = async (
     }
 
     setLoading(false);
-    setSuccessMsg('Deleted product');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.deleteProduct' }));
     if (onSuccess) {
       onSuccess(product);
     }
@@ -210,7 +214,7 @@ const deleteProduct = async (
       onSuccess(productCategory);
     }
     setLoading(false);
-    setSuccessMsg('Updated data');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePCategory' }));
   };
 
   const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
@@ -228,7 +232,7 @@ const deleteProduct = async (
 
   const onManagePInventorySuccess = (productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
     setLoading(false);
-    setSuccessMsg('Updated data');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePInventory' }));
     if (onSuccess) {
       onSuccess(productInventory);
     }
@@ -249,7 +253,7 @@ const deleteProduct = async (
 
   const onManagePDiscountSuccess = (productDiscount: ProductDiscount, onSuccess?: (productDiscount: ProductDiscount) => void) => {
     setLoading(false);
-    setSuccessMsg('Updated data');
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePDiscount' }));
     if (onSuccess) {
       onSuccess(productDiscount);
     }

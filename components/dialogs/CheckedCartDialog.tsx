@@ -1,5 +1,7 @@
 import { forwardRef } from 'react';
 
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -38,6 +40,8 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
     message,
   } = props;
 
+  const intl = useIntl();
+
   const handleClickAcceptBtn = () => {
     handleDialog();
   }
@@ -51,7 +55,7 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
       aria-describedby="checked-cart-dialog"
     >
       <DialogTitle>
-        {'Cart updated'}
+        <FormattedMessage id="dialogs.checkedCart.title" />
       </DialogTitle>
       <DialogContent>
         { changedItemsByInventory.length > 0 &&
@@ -59,18 +63,26 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
             <DialogContentText 
               id="checked-cart-dialog"
             >
-              {'The quantity of some products in your cart has been updated due to insufficient inventory:'}
+              <FormattedMessage id="dialogs.checkedCart.content.changedItems" />
             </DialogContentText>
             { changedItemsByInventory.map((item) => (
               <DialogContentText key={item.id}>
-                {`-Quantity of ${item.inventory.product.name} ${item.inventory.name}: ${item.quantity}`}
+                {'-'}
+                <FormattedMessage
+                  id="dialogs.checkedCart.content.changedItem"
+                  values={{
+                    productName: item.inventory.product.name,
+                    inventoryName: item.inventory.name,
+                    quantity: item.quantity,
+                  }}
+                />
               </DialogContentText>
             ))}
           </>
         }
         { changedItemsByInventory.length <= 0 && changedCart &&
           <DialogContentText>
-            {'Your cart has been updated.'}
+            <FormattedMessage id="dialogs.checkedCart.content.changedCart" />
           </DialogContentText>
         }
         { message &&
@@ -84,7 +96,7 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
           onClick={handleClickAcceptBtn}
           variant="contained"
         >
-          {'Accept'}
+          <FormattedMessage id="dialogs.checkedCart.acceptBtn" />
         </Button>
       </DialogActions>
     </Dialog>

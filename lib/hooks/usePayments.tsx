@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
 import { pages } from '@core/config/navigation.config';
-import { User } from '@core/types/user';
-import { Cart } from '@core/types/cart';
 import { Order } from '@core/types/orders';
 import { 
   checkPaymentMethod as checkPaymentMethodMW, 
@@ -14,16 +13,14 @@ import {
 } from '@core/utils/payments';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import { useCartContext } from '@lib/contexts/CartContext';
 import useAuth from '@lib/hooks/useAuth';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
   const { token } = useAuthContext();
-  const { initCart } = useCartContext();
 
   const router = useRouter();
-
+  const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
   const { getLogged, logout } = useAuth()
@@ -40,7 +37,7 @@ const usePayments = () => {
         onCheckPaymentMethodSuccess(response.paymentPayload, onSuccess);
       }).catch((_error: Error) => {
         dropin.clearSelectedPaymentMethod();
-        const errorMsg = 'Something went wrong. Try again or select a different payment method.';
+        const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
         setErrorMsg(errorMsg);
         setLoading(false);
       })
@@ -51,7 +48,7 @@ const usePayments = () => {
       onSuccess(paymentPayload);
     }
     setLoading(false);
-    setSuccessMsg('Checked payment method');
+    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
   };
 
   const createTransaction = async (paymentMethodNonce: string, onError?: (message: string) => void) => {
@@ -59,7 +56,7 @@ const usePayments = () => {
     setErrorMsg('');
     setSuccessMsg('');
     await createTransactionMW(token, paymentMethodNonce)
-      .then((response: { order: Order }) => {
+      .then((_response: { order: Order }) => {
         onCreateTransactionSuccess();
       }).catch((error) => {
         let errorMsg = error.message;
@@ -69,9 +66,9 @@ const usePayments = () => {
           return;
         }
         else if (errorMsg.includes('Insufficient Funds')) {
-          errorMsg = 'Failed proceeding to payment, insufficient funds';
+          errorMsg = intl.formatMessage({ id: 'checkout.errors.insufficientFunds' });
         } else {
-          errorMsg = 'Failed proceeding to payment, modify your data or choose a different payment method';
+          errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
         }
         setErrorMsg(errorMsg);
         setLoading(false);
@@ -90,8 +87,11 @@ const usePayments = () => {
       // On error
       await logout()
     })
-    setSuccessMsg('Created transaction');
-    enqueueSnackbar('Order completed, you will receive an email with all order details', { variant: 'success' });
+    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.createTransaction'}));
+    enqueueSnackbar(intl.formatMessage(
+      { id: 'checkout.successes.createOrder' }), 
+      { variant: 'success' }
+    );
   };
 
   return {

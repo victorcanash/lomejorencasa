@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -66,7 +68,9 @@ const ProductDetail = (props: ProductDetailProps) => {
               sx={{ mt: 3, mb: 2 }} 
               className='animate__animated animate__fadeIn'
             >
-              <InputLabel id="inventory-select-label">Type</InputLabel>
+              <InputLabel id="inventory-select-label">
+                <FormattedMessage id="forms.selectInventory.label" />
+              </InputLabel>
               <Select />
               <Button
                 fullWidth
@@ -75,7 +79,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 disabled={!selectedInventory || selectedInventory.bigbuy.quantity == 0}
                 sx={{ mt: 1 }}
               >
-                Add to cart
+                <FormattedMessage id="productDetail.addCartBtn" />
               </Button>
             </FormControl>
           }

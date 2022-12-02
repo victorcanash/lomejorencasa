@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 
+import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { pages } from '@core/config/navigation.config';
@@ -17,6 +18,7 @@ const useCart = () => {
   const { cart, initCart, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice } = useCartContext();
 
   const router = useRouter();
+  const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
   const addCartItem = (inventory: ProductInventory) => {
@@ -71,12 +73,18 @@ const useCart = () => {
     setTotalQuantity(totalQuantity + 1);
     setTotalPrice(totalPrice + itemPrice);
     setLoading(false);
-    enqueueSnackbar('Added to the cart', { variant: 'success' });
+    enqueueSnackbar(
+      intl.formatMessage({ id: 'cart.successes.add' }), 
+      { variant: 'success' }
+    );
   };
 
   const onAddCartItemError = () => {
     setLoading(false);
-    enqueueSnackbar('Failed adding to the cart, try again', { variant: 'error' });
+    enqueueSnackbar(
+      intl.formatMessage({ id: 'cart.errors.add' }), 
+      { variant: 'error' }
+    );
   };
 
   const updateCartItemQuantity = async (cartItem: CartItem, quantity: number, forceUpdate = false) => {
@@ -126,7 +134,10 @@ const useCart = () => {
 
   const onUpdateCartItemError = () => {
     setLoading(false);
-    enqueueSnackbar('Failed updating the cart, try again', { variant: 'error' });
+    enqueueSnackbar(
+      intl.formatMessage({ id: 'cart.errors.update' }), 
+      { variant: 'error' }
+    );
   };
 
   const checkCart = async (onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void) => {
@@ -152,7 +163,8 @@ const useCart = () => {
       });
     });
     let changedCart = false;
-    if ((diffCarts && diffCarts.length > 0) || (cart && cart.items.length != newCart.items.length)) {
+    if ((diffCarts && diffCarts.length > 0) || 
+        (cart && cart.items.length != newCart.items.length)) {
       changedCart = true;
     } 
 
@@ -164,7 +176,10 @@ const useCart = () => {
 
   const onCheckCartError = () => {
     setLoading(false);
-    enqueueSnackbar('Failed checking the cart, try again', { variant: 'error' });
+    enqueueSnackbar(
+      intl.formatMessage({ id: 'cart.errors.check' }), 
+      { variant: 'error' }
+    );
   };
 
   return {

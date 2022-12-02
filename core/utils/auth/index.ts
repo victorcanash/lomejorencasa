@@ -121,7 +121,7 @@ export const getLoggedUser = async () => {
         /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
           removeStorageItem(Storages.local, JWTTokenKey);
         }*/
-        const errorMsg = getBackendErrorMsg('Get Logged ERROR', error);
+        const errorMsg = getBackendErrorMsg('Get Logged User ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
@@ -141,7 +141,7 @@ export const isAdminUser = async (token: string) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Is Admin ERROR', error);
+        const errorMsg = getBackendErrorMsg('Is Admin User ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
@@ -173,7 +173,7 @@ export const updateUserEmail = async (updateToken: string, newEmail = '', userId
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Update Email ERROR', error);
+        const errorMsg = getBackendErrorMsg('Update User Email ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       });
@@ -205,7 +205,7 @@ export const resetUserPsw = async (updateToken: string, authResetPassword: AuthR
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Reset Password ERROR', error);
+        const errorMsg = getBackendErrorMsg('Reset User Password ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       });
@@ -229,7 +229,7 @@ export const sendUserActivationEmail = async (email: string) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Send Activation Email ERROR', error);
+        const errorMsg = getBackendErrorMsg('Send User Activation Email ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       });
@@ -253,7 +253,7 @@ export const sendUserResetPswEmail = async (email: string) => {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Send Reset Email ERROR', error);
+        const errorMsg = getBackendErrorMsg('Send User Reset Email ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       });
@@ -279,7 +279,7 @@ export const sendUserUpdateEmail = async (token: string, authUpdateEmail: AuthUp
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Send Update Email ERROR', error);
+        const errorMsg = getBackendErrorMsg('Send User Update Email ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       });

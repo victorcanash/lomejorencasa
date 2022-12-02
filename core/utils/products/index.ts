@@ -43,7 +43,7 @@ export const getAllProducts = async (token: string, page: number, sortBy: string
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get Products ERROR', error);
+        const errorMsg = getBackendErrorMsg('Get All Products ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
@@ -102,7 +102,7 @@ export const getAllProductCategories = async (sortBy?: string, order?: string) =
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get Product Categories ERROR', error);
+        const errorMsg = getBackendErrorMsg('Get All Product Categories ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 

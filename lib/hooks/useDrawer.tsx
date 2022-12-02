@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Drawers, loggedUserDrawerItems, unloggedUserDrawerItems } from '@core/constants/header';
+import { Drawers, loggedUserDrawerItems, unloggedUserDrawerItems } from '@lib/constants/header';
 import { DrawerItem } from '@core/types/header';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -24,7 +24,7 @@ const useDrawer = (drawer: Drawers) => {
       const categoriesItems = [] as DrawerItem[];
       productCategories.forEach((productCategory) => {
         categoriesItems.push({
-          text: capitalizeFirstLetter(productCategory.name),
+          textId: capitalizeFirstLetter(productCategory.name),
           path: getHref(productCategory.name)
         });
       });

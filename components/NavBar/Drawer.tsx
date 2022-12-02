@@ -1,3 +1,5 @@
+import { useIntl } from 'react-intl';
+
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -6,7 +8,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 
-import { Drawers } from '@core/constants/header';
+import { Drawers } from '@lib/constants/header';
 import Link from '@core/components/Link';
 import useDrawer from '@lib/hooks/useDrawer';
 import useAuth from '@lib/hooks/useAuth';
@@ -20,6 +22,8 @@ type DrawerProps = {
 
 const Drawer = (props: DrawerProps) => {
   const { id, anchor, open, handleDrawer } = props;
+
+  const intl = useIntl();
 
   const { items } = useDrawer(id);
   const { logout } = useAuth();
@@ -47,14 +51,18 @@ const Drawer = (props: DrawerProps) => {
         >
           <List>
             {items.map((item) => (
-              <ListItem key={item.text} disablePadding>
+              <ListItem key={item.textId} disablePadding>
                 { item.path ?
                   <ListItemButton onClick={handleDrawer} component={Link} noLinkStyle href={item.path}>
-                    <ListItemText primary={item.text} />
+                    <ListItemText 
+                      primary={intl.formatMessage({ id: `header.drawerItems.${item.textId}`, defaultMessage: item.textId })} 
+                    />
                   </ListItemButton>
                   :
                   <ListItemButton onClick={handleClickLogout}>
-                    <ListItemText primary={item.text} />
+                    <ListItemText 
+                      primary={intl.formatMessage({ id: `header.drawerItems.${item.textId}`, defaultMessage: item.textId })} 
+                    />
                   </ListItemButton>
                 }
               </ListItem>

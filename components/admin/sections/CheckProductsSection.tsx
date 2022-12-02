@@ -77,7 +77,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     return false;
   };
 
-  const handleChangePage = (event: React.ChangeEvent<unknown>, page: number) => {
+  const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
     router.push(getHref(category?.name || allProductsName, page, keywords));
   };
 

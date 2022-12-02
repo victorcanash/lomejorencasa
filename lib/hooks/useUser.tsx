@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import { ManageActions } from '@core/constants/auth';
 import type { User, UserAddress } from '@core/types/user';
 import { CheckoutAddresses } from '@core/types/checkout';
@@ -15,6 +17,8 @@ const useUser = () => {
   const { setLoading } = useAppContext();
   const { token, setUser } = useAuthContext();
 
+  const intl = useIntl();
+
   const { logout } = useAuth();
 
   const [errorMsg, setErrorMsg] = useState('');
@@ -28,8 +32,8 @@ const useUser = () => {
     manageUserMW(action, token, user)
       .then((response: {user: User}) => {
         onManageUserSuccess(action, response.user);
-      }).catch((error: Error) => {
-        const errorMsg = error.message;
+      }).catch((_error: Error) => {
+        const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
         setErrorMsg(errorMsg);
         setLoading(false);
       });
@@ -39,10 +43,10 @@ const useUser = () => {
     if (action == ManageActions.update) {
       setUser(user);
       setLoading(false);
-      setSuccessMsg('Updated data');
+      setSuccessMsg(intl.formatMessage({ id: 'myaccount.successes.updateUser' }));
     } else if (action == ManageActions.delete) {
       logout();
-      setSuccessMsg('Deleted user');
+      setSuccessMsg(intl.formatMessage({ id: 'myaccount.successes.deleteUser' }));
     }
   };
 
@@ -53,8 +57,8 @@ const useUser = () => {
     updateUserAddressesMW(token, user, checkoutAddresses)
       .then((response: {shipping: UserAddress, billing: UserAddress}) => {
         onUpdateUserAddressesSuccess(user, response.shipping, response.billing, onSuccess);
-      }).catch((error: Error) => {
-        const errorMsg = error.message;
+      }).catch((_error: Error) => {
+        const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
         setErrorMsg(errorMsg);
         setLoading(false);
       });
@@ -70,7 +74,7 @@ const useUser = () => {
       onSuccess();
     }
     setLoading(false);
-    setSuccessMsg('Updated data');
+    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.updateAddresses' }));
   };
 
   return {

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
+import { FormattedMessage, useIntl } from 'react-intl';
+
 import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -8,6 +10,7 @@ import { Product, ProductInventory } from "@core/types/products";
 
 const useSelectInventory = (product: Product) => {
   const router = useRouter();
+  const intl = useIntl();
 
   const [selectedInventory, setSelectedInventory] = useState<ProductInventory | undefined>(undefined);
   const [loaded, setLoaded] = useState(false);
@@ -36,12 +39,18 @@ const useSelectInventory = (product: Product) => {
           labelId="inventory-select-label"
           id="inventory-select"
           value={selectedInventory?.name || ''}
-          label="Size"
+          label={intl.formatMessage({ id: 'forms.selectInventory.label' })}
           onChange={handleChange}
         >
           { product.inventories.map((item) => (
-            <MenuItem key={item.id} value={item.name || ''}>
-              {`${item.name || ''} (${item.bigbuy.quantity} left)`}
+            <MenuItem key={item.id} value={item.name}>
+              <FormattedMessage
+                id="forms.selectInventory.content"
+                values={{
+                  name: item.name,
+                  quantity: item.bigbuy.quantity,
+                }}
+              />
             </MenuItem>
           ))}
         </MuiSelect>
