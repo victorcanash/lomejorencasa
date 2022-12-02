@@ -101,7 +101,7 @@ const Cart: NextPage = () => {
         handleDialog={handleDialog}
         changedCart={false}
         changedItemsByInventory={changedItemsByInventory}
-        message='Check your cart.'
+        message={intl.formatMessage({ id: 'dialogs.checkedCart.content.cartPage' })}
       />
     </>
   );

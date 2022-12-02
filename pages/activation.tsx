@@ -21,6 +21,20 @@ const Activation: NextPage<ActivationProps> = (props) => {
   const title = intl.formatMessage({ id: 'activation.metas.title' });
   const description = intl.formatMessage({ id: 'activation.metas.description' });
 
+  const getSuccessTxt = () => {
+    return intl.formatMessage({ id: 'activation.successes.default' });
+  }
+  const getErrorTxt = () => {
+    if (errorMsg.includes('was already activated')) {
+      return intl.formatMessage({ id: 'activation.errors.alreadyActivated' });
+    } else if (errorMsg.includes('locked out')) {
+      return intl.formatMessage({ id: 'activation.errors.lockedOut' });
+    } else if (errorMsg.includes('Token is missing or has expirated')){
+      return intl.formatMessage({ id: 'activation.errors.invalidToken' });
+    } 
+    return intl.formatMessage({ id: 'activation.errors.default' });
+  }
+
   return (
     <>
       <Head>
@@ -35,7 +49,7 @@ const Activation: NextPage<ActivationProps> = (props) => {
         }}
       >
         {
-          successMsg != '' ?
+          successMsg ?
             <CheckCircleIcon />
             :
             <ErrorIcon />
@@ -47,7 +61,12 @@ const Activation: NextPage<ActivationProps> = (props) => {
       </Typography>
 
       <Typography component="h2" variant="subtitle1" mt={4}>
-        { successMsg || errorMsg }
+        { successMsg &&
+          getSuccessTxt()
+        }
+        { errorMsg &&
+          getErrorTxt()
+        }
       </Typography>
     </>
   );

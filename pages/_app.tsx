@@ -54,8 +54,8 @@ function MyApp(props: MyAppProps) {
 
   const { locale } = useRouter();
 
-  const title = locale === 'es' ? messages['es']['metas.title'] : messages['en']['metas.title'];
-  const description = locale === 'es'? messages['es']['metas.description'] : messages['en']['metas.description'];
+  const title = locale === 'es' ? messages['es']['app.metas.title'] : messages['en']['app.metas.title'];
+  const description = locale === 'es'? messages['es']['app.metas.description'] : messages['en']['app.metas.description'];
 
   return (
     <>

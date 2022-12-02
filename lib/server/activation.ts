@@ -16,21 +16,12 @@ export const getActivationProps: GetServerSideProps = async (context) => {
   await activateUser(tokenSearch).then(() => {
     result = {
       props: {
-        successMsg: 'Your account is activated and you can login now. You can close this window.',
+        successMsg: 'Succeeded',
         errorMsg: '',
       }
     };
   }).catch((error: Error) => {
-    let errorMsg = error.message;
-    if (errorMsg.includes('was already activated')) {
-      errorMsg = 'Your account was already activated';
-    } else if (errorMsg.includes('locked out')) {
-      errorMsg = 'You are locked out';
-    } else if (errorMsg.includes('Token is missing or has expirated')){
-      errorMsg = 'This link is not valid or has expirated';
-    } else {
-      errorMsg = 'Something went wrong, try again or resend another email';
-    }
+    const errorMsg = error.message;
     result = {
       props: {
         successMsg: '',
