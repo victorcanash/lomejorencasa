@@ -10,9 +10,10 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 
-import { orderFailedCreateValidation, initOrderFailedCreateValues } from '@core/constants/forms/orders';
+import { AddressTypes } from '@core/constants/addresses';
 import { Order, OrderFailedCreate, OrderProductFailedCreate } from '@core/types/orders';
 import useOrders from '@lib/hooks/useOrders';
+import useForms from '@lib/hooks/useForms';
 import UAddressForm from '@components/forms/user/UAddressForm';
 import CreateFailedOrderProductForm from '@components/forms/orders/CreateFailedOrderProductForm';
 
@@ -25,6 +26,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
   const { onSubmitSuccess, onCancel } = props;
 
   const { createFailedOrder, errorMsg, successMsg } = useOrders();
+  const { createFailedOrderFormValidation, orderFieldsInitValues, addressFieldsInitValues } = useForms();
 
   const [orderProducts, setOrderProducts] = useState<OrderProductFailedCreate[]>([]);
 
@@ -99,8 +101,18 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         }
 
         <Formik
-          initialValues={initOrderFailedCreateValues}
-          validationSchema={orderFailedCreateValidation}
+          initialValues={{
+            userId: orderFieldsInitValues.userId,
+            braintreeTransactionId: orderFieldsInitValues.braintreeTransactionId,
+            shipping: {
+              id: -1,
+              userId: -1,
+              type: AddressTypes.SHIPPING,
+              ...addressFieldsInitValues,
+            }, 
+            products: [],
+          } as OrderFailedCreate}
+          validationSchema={createFailedOrderFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

@@ -138,6 +138,15 @@
   "notfound.metas.description": "Not found page",
   "notfound.h1": "Page not found",
 
+  "forms.errors.default": "Invalid field",
+  "forms.errors.required": "Required field",
+  "forms.errors.minString": "This field has to contain at least {min} characters",
+  "forms.errors.maxString": "This field has to contain at most {max} characters",
+  "forms.errors.email": "Invalid email format",
+  "forms.errors.confirmPassword": "Passwords have to match",
+  "forms.errors.minNumber": "This field has to be at least {min}",
+  "forms.errors.maxNumber": "This field has to be at most {max}",
+  "forms.errors.maxBirthday": "You have to be at least {minYears} years old",
   "forms.selectInventory.label": "Type",
   "forms.selectInventory.content": "{name} ({quantity} left)",
 

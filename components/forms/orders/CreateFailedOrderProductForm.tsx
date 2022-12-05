@@ -6,8 +6,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import { orderProductFailedCreateValidation, initOrderProductFailedCreateValues } from '@core/constants/forms/orders';
 import { OrderProductFailedCreate } from '@core/types/orders';
+import useForms from '@lib/hooks/useForms';
 
 type CreateFailedOrderProductFormProps = {
   onSubmitSuccess: (orderProduct: OrderProductFailedCreate) => void,
@@ -15,6 +15,8 @@ type CreateFailedOrderProductFormProps = {
 
 const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) => {
   const { onSubmitSuccess } = props;
+
+  const { createFailedOrderProductFormValidation, orderProductFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: OrderProductFailedCreate) => {
     onSubmitSuccess(values)
@@ -36,8 +38,8 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
         </Typography>
 
         <Formik
-          initialValues={initOrderProductFailedCreateValues}
-          validationSchema={orderProductFailedCreateValidation}
+          initialValues={orderProductFieldsInitValues as OrderProductFailedCreate}
+          validationSchema={createFailedOrderProductFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

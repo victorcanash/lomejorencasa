@@ -14,9 +14,9 @@ import Alert from '@mui/material/Alert';
 
 import { pages } from '@core/config/navigation.config';
 import Link from '@core/components/Link';
-import { loginValidation, initLoginValues } from '@core/constants/forms/auth';
 import { AuthLogin } from '@core/types/auth';
 import useAuth from '@lib/hooks/useAuth';
+import useForms from '@lib/hooks/useForms';
 
 type LoginFormProps = {
   onFailByActivation: (email: string) => void,
@@ -26,6 +26,7 @@ const LoginForm = (props: LoginFormProps) => {
   const { onFailByActivation } = props;
 
   const { login, errorMsg } = useAuth();
+  const { loginFormValidation, userFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: AuthLogin) => {
     login(values, onFailByActivation);
@@ -56,8 +57,11 @@ const LoginForm = (props: LoginFormProps) => {
         </Typography>
 
         <Formik
-          initialValues={initLoginValues}
-          validationSchema={loginValidation}
+          initialValues={{
+            email: userFieldsInitValues.email,
+            password: userFieldsInitValues.password,
+          } as AuthLogin}
+          validationSchema={loginFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

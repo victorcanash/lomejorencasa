@@ -9,10 +9,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { productInventoryValidation, initProductInventoryValues } from '@core/constants/forms/products';
 import { ManageActions } from '@core/constants/auth';
 import { ProductInventory, Product } from '@core/types/products';
 import useProducts from '@lib/hooks/useProducts';
+import useForms from '@lib/hooks/useForms';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 
 type ManagePInventoryFormProps = {
@@ -37,6 +37,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
   } = props;
 
   const { manageProductInventory, errorMsg, successMsg } = useProducts();
+  const { manageInventoryFormValidation, inventoryFieldsInitValues } = useForms();
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -91,23 +92,23 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
 
         <Formik
           initialValues={{
-            id: productInventory?.id || initProductInventoryValues.id,
+            id: productInventory?.id || -1,
             productId: product.id,
-            sku: productInventory?.sku || initProductInventoryValues.sku,
-            name: productInventory?.name || initProductInventoryValues.name,
-            description: productInventory?.description || initProductInventoryValues.description,
-            price: productInventory?.price || initProductInventoryValues.price,
-            realPrice: productInventory?.realPrice || initProductInventoryValues.realPrice,
+            sku: productInventory?.sku || inventoryFieldsInitValues.sku,
+            name: productInventory?.name || inventoryFieldsInitValues.name,
+            description: productInventory?.description || inventoryFieldsInitValues.description,
+            price: productInventory?.price || inventoryFieldsInitValues.price,
+            realPrice: productInventory?.realPrice || 0,
             bigbuy: {
-              id: productInventory?.bigbuy.id || initProductInventoryValues.bigbuy.id,
-              name: productInventory?.bigbuy.name || initProductInventoryValues.bigbuy.name,
-              description: productInventory?.bigbuy.description || initProductInventoryValues.bigbuy.description,
-              price: productInventory?.bigbuy.price || initProductInventoryValues.bigbuy.price,
-              quantity: productInventory?.bigbuy.quantity || initProductInventoryValues.bigbuy.quantity,
+              id: productInventory?.bigbuy.id || 0,
+              name: productInventory?.bigbuy.name || '',
+              description: productInventory?.bigbuy.description || '',
+              price: productInventory?.bigbuy.price || 0,
+              quantity: productInventory?.bigbuy.quantity || 0,
             },
-            product: productInventory?.product || initProductInventoryValues.product,
+            product: productInventory?.product || {} as Product,
           } as ProductInventory}
-          validationSchema={productInventoryValidation}
+          validationSchema={manageInventoryFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

@@ -7,9 +7,9 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 
-import { sendFailedOrderEmailValidation, initSendFailedOrderEmailValues } from '@core/constants/forms/orders';
 import { Order } from '@core/types/orders';
 import useOrders from '@lib/hooks/useOrders';
+import useForms from '@lib/hooks/useForms';
 
 type SendFailedOrderEmailFormProps = {
   onSubmitSuccess?: (order: Order) => void,
@@ -20,6 +20,7 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
   const { onSubmitSuccess, onCancel } = props;
 
   const { sendFailedOrderEmail, errorMsg, successMsg } = useOrders();
+  const { sendFailedOrderEmailFormValidation, orderFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: { orderId: number }) => {
     sendFailedOrderEmail(values.orderId, onSubmitSuccess);
@@ -47,8 +48,10 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
         </Typography>
 
         <Formik
-          initialValues={initSendFailedOrderEmailValues}
-          validationSchema={sendFailedOrderEmailValidation}
+          initialValues={{
+            orderId: orderFieldsInitValues.id,
+          }}
+          validationSchema={sendFailedOrderEmailFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

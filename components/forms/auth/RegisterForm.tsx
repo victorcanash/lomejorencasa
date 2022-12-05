@@ -14,10 +14,10 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import { pages } from '@core/config/navigation.config';
-import { registerValidation, initRegisterValues } from '@core/constants/forms/auth';
 import { AuthRegister } from '@core/types/auth';
 import Link from '@core/components/Link';
 import useAuth from '@lib/hooks/useAuth';
+import useForms from '@lib/hooks/useForms';
 
 type RegisterFormProps = {
   onSuccess: (email: string) => void,
@@ -27,6 +27,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const { onSuccess } = props;
 
   const { register, errorMsg } = useAuth();
+  const { registerFormValidation, userFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: AuthRegister) => {
     register(values, onSuccess);
@@ -57,8 +58,15 @@ const RegisterForm = (props: RegisterFormProps) => {
         </Typography>
 
         <Formik
-          initialValues={initRegisterValues}
-          validationSchema={registerValidation}
+          initialValues={{
+            email: userFieldsInitValues.email,
+            password: userFieldsInitValues.password,
+            confirm: userFieldsInitValues.confirm,
+            firstName: userFieldsInitValues.firstName,
+            lastName: userFieldsInitValues.lastName,
+            birthday: userFieldsInitValues.birthday,
+          } as AuthRegister}
+          validationSchema={registerFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

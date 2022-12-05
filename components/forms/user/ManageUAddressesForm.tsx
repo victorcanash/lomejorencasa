@@ -8,10 +8,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { checkoutAddressesValidation, initCheckoutAddressesValues } from '@core/constants/forms/checkout';
+import { AddressTypes } from '@core/constants/addresses';
 import { CheckoutAddresses } from '@core/types/checkout';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useUser from '@lib/hooks/useUser';
+import useForms from '@lib/hooks/useForms';
 import UAddressForm from '@components/forms/user/UAddressForm';
 
 type ManageUAddressesFormProps = {
@@ -24,6 +25,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
   const { user } = useAuthContext();
 
   const { updateUserAddresses: updateAddresses, errorMsg, successMsg } = useUser();
+  const { checkoutAddressesFormValidation, addressFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: CheckoutAddresses, formikHelpers: FormikHelpers<CheckoutAddresses>) => {
     if (!user) {
@@ -55,32 +57,32 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
       <Formik
         initialValues={{
           shipping: {
-            id: user?.shipping?.id || initCheckoutAddressesValues.shipping.id,
-            userId: user?.shipping?.userId || user?.id || initCheckoutAddressesValues.shipping.userId,
-            type: user?.shipping?.type || initCheckoutAddressesValues.shipping.type,
-            firstName: user?.shipping?.firstName || user?.firstName || initCheckoutAddressesValues.shipping.firstName,
-            lastName: user?.shipping?.lastName || user?.lastName || initCheckoutAddressesValues.shipping.lastName,
-            addressLine1: user?.shipping?.addressLine1 || initCheckoutAddressesValues.shipping.addressLine1,
-            addressLine2: user?.shipping?.addressLine2 || initCheckoutAddressesValues.shipping.addressLine2,
-            postalCode: user?.shipping?.postalCode || initCheckoutAddressesValues.shipping.postalCode,
-            locality: user?.shipping?.locality || initCheckoutAddressesValues.shipping.locality,
-            country: user?.shipping?.country || initCheckoutAddressesValues.shipping.country,
+            id: user?.shipping?.id || -1,
+            userId: user?.shipping?.userId || user?.id || -1,
+            type: user?.shipping?.type || AddressTypes.SHIPPING,
+            firstName: user?.shipping?.firstName || user?.firstName || addressFieldsInitValues.firstName,
+            lastName: user?.shipping?.lastName || user?.lastName || addressFieldsInitValues.lastName,
+            addressLine1: user?.shipping?.addressLine1 || addressFieldsInitValues.addressLine1,
+            addressLine2: user?.shipping?.addressLine2 || addressFieldsInitValues.addressLine2,
+            postalCode: user?.shipping?.postalCode || addressFieldsInitValues.postalCode,
+            locality: user?.shipping?.locality || addressFieldsInitValues.locality,
+            country: user?.shipping?.country || addressFieldsInitValues.country,
           },
           billing: {
-            id: user?.billing?.id || initCheckoutAddressesValues.billing.id,
-            userId: user?.billing?.userId || user?.id || initCheckoutAddressesValues.billing.userId,
-            type: user?.billing?.type || initCheckoutAddressesValues.billing.type,
-            firstName: user?.billing?.firstName || user?.firstName || initCheckoutAddressesValues.billing.firstName,
-            lastName: user?.billing?.lastName || user?.lastName || initCheckoutAddressesValues.billing.lastName,
-            addressLine1: user?.billing?.addressLine1 || initCheckoutAddressesValues.billing.addressLine1,
-            addressLine2: user?.billing?.addressLine2 || initCheckoutAddressesValues.billing.addressLine2,
-            postalCode: user?.billing?.postalCode || initCheckoutAddressesValues.billing.postalCode,
-            locality: user?.billing?.locality || initCheckoutAddressesValues.billing.locality,
-            country: user?.billing?.country || initCheckoutAddressesValues.billing.country,
+            id: user?.billing?.id || -1,
+            userId: user?.billing?.userId || user?.id || -1,
+            type: user?.billing?.type || AddressTypes.BILLING,
+            firstName: user?.billing?.firstName || user?.firstName || addressFieldsInitValues.firstName,
+            lastName: user?.billing?.lastName || user?.lastName || addressFieldsInitValues.lastName,
+            addressLine1: user?.billing?.addressLine1 || addressFieldsInitValues.addressLine1,
+            addressLine2: user?.billing?.addressLine2 || addressFieldsInitValues.addressLine2,
+            postalCode: user?.billing?.postalCode || addressFieldsInitValues.postalCode,
+            locality: user?.billing?.locality || addressFieldsInitValues.locality,
+            country: user?.billing?.country || addressFieldsInitValues.country,
           },
-          sameAsShipping: initCheckoutAddressesValues.sameAsShipping,
+          sameAsShipping: false,
         } as CheckoutAddresses}
-        validationSchema={checkoutAddressesValidation}
+        validationSchema={checkoutAddressesFormValidation}
         onSubmit={handleSubmit}
         enableReinitialize
       >

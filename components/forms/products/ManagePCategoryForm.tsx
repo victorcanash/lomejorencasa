@@ -8,10 +8,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { productCategoryValidation, initProductCategoryValues } from '@core/constants/forms/products';
 import { ManageActions } from '@core/constants/auth';
 import { ProductCategory } from '@core/types/products';
 import useProducts from '@lib/hooks/useProducts';
+import useForms from '@lib/hooks/useForms';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 
 type ManagePCategoryFormProps = {
@@ -34,6 +34,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   } = props;
 
   const { manageProductCategory, errorMsg, successMsg } = useProducts();
+  const { manageCategoryFormValidation, categoryFieldsInitValues } = useForms();
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -88,11 +89,11 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
 
         <Formik
           initialValues={{
-            id: productCategory?.id || initProductCategoryValues.id,
-            name: productCategory?.name || initProductCategoryValues.name,
-            description: productCategory?.description || initProductCategoryValues.description,
+            id: productCategory?.id || -1,
+            name: productCategory?.name || categoryFieldsInitValues.name,
+            description: productCategory?.description || categoryFieldsInitValues.description,
           } as ProductCategory}
-          validationSchema={productCategoryValidation}
+          validationSchema={manageCategoryFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

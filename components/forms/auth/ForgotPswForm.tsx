@@ -13,14 +13,15 @@ import Alert from '@mui/material/Alert';
 
 import { pages } from '@core/config/navigation.config';
 import Link from '@core/components/Link';
-import { initRegisterValues, sendEmailValidation } from '@core/constants/forms/auth';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useAuth from '@lib/hooks/useAuth';
+import useForms from '@lib/hooks/useForms';
 
 const ForgotPswForm = () => {
   const { user, isLogged } = useAuthContext();
 
   const { sendResetPswEmail, errorMsg, successMsg } = useAuth();
+  const { sendEmailFormValidation, userFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: {email: string}) => {
     sendResetPswEmail(values.email);
@@ -67,9 +68,9 @@ const ForgotPswForm = () => {
 
         <Formik
           initialValues={{
-            email: user?.email || initRegisterValues.email,
+            email: user?.email || userFieldsInitValues.email,
           }}
-          validationSchema={sendEmailValidation}
+          validationSchema={sendEmailFormValidation}
           onSubmit={handleSubmit}
           enableReinitialize
         >

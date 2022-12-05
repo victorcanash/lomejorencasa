@@ -8,17 +8,17 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { updateUserValidation } from '@core/constants/forms/user';
-import { initRegisterValues } from '@core/constants/forms/auth';
 import { ManageActions } from '@core/constants/auth';
 import { User } from '@core/types/user';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useUser from '@lib/hooks/useUser';
+import useForms from '@lib/hooks/useForms';
 
 const UpdateUserForm = () => {
   const { user } = useAuthContext();
 
   const { manageUser, errorMsg, successMsg } = useUser();
+  const { updateUserFormValidation, userFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: User) => {
     manageUser(ManageActions.update, values);
@@ -42,12 +42,12 @@ const UpdateUserForm = () => {
         <Formik
           initialValues={{
             id: user?.id || -1,
-            email: user?.email || '',
-            firstName: user?.firstName || initRegisterValues.firstName,
-            lastName: user?.lastName || initRegisterValues.lastName,
-            birthday: user?.birthday || initRegisterValues.birthday,
+            email: user?.email || userFieldsInitValues.email,
+            firstName: user?.firstName || userFieldsInitValues.firstName,
+            lastName: user?.lastName || userFieldsInitValues.lastName,
+            birthday: user?.birthday || userFieldsInitValues.birthday,
           } as User}
-          validationSchema={updateUserValidation}
+          validationSchema={updateUserFormValidation}
           onSubmit={handleSubmit}
           enableReinitialize
         >

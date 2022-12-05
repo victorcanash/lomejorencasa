@@ -136,6 +136,15 @@
   "notfound.metas.description": "Página de no encontrado",
   "notfound.h1": "Página no encontrada",
 
+  "forms.errors.default": "Campo inválido",
+  "forms.errors.required": "Camp requerido",
+  "forms.errors.minString": "Este campo tiene que contener como mínimo {min} carácteres",
+  "forms.errors.maxString": "Este campo tiene que contener como mucho {max} carácteres",
+  "forms.errors.email": "Formato de correo inválido",
+  "forms.errors.confirmPassword": "Las contraseñas tienen que coincidir",
+  "forms.errors.minNumber": "Este campo tiene que ser como mínimo {min}",
+  "forms.errors.maxNumber": "Este campo tiene que ser como mucho {max}",
+  "forms.errors.maxBirthday": "Tienes que tener al menos {minYears} años",
   "forms.selectInventory.label": "Tipo",
   "forms.selectInventory.content": "{name} (quedan {quantity})",
 

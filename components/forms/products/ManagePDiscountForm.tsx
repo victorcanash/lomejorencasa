@@ -11,10 +11,10 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { productDiscountValidation, initProductDiscountValues } from '@core/constants/forms/products';
 import { ManageActions } from '@core/constants/auth';
 import { ProductDiscount, Product } from '@core/types/products';
 import useProducts from '@lib/hooks/useProducts';
+import useForms from '@lib/hooks/useForms';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 
 type ManagePDiscountFormProps = {
@@ -39,6 +39,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
   } = props;
 
   const { manageProductDiscount, errorMsg, successMsg } = useProducts();
+  const { manageDiscountFormValidation, discountFieldsInitValues } = useForms();
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -93,14 +94,14 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
 
         <Formik
           initialValues={{
-            id: productDiscount?.id || initProductDiscountValues.id,
+            id: productDiscount?.id || -1,
             productId: product.id,
-            name: productDiscount?.name || initProductDiscountValues.name,
-            description: productDiscount?.description || initProductDiscountValues.description,
-            discountPercent: productDiscount?.discountPercent || initProductDiscountValues.discountPercent,
-            active: productDiscount?.active || initProductDiscountValues.active,
+            name: productDiscount?.name || discountFieldsInitValues.name,
+            description: productDiscount?.description || discountFieldsInitValues.description,
+            discountPercent: productDiscount?.discountPercent || discountFieldsInitValues.discountPercent,
+            active: productDiscount?.active || discountFieldsInitValues.active,
           } as ProductDiscount}
-          validationSchema={productDiscountValidation}
+          validationSchema={manageDiscountFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

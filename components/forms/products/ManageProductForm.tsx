@@ -12,13 +12,13 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { productValidation, initProductValues } from '@core/constants/forms/products';
 import { ManageActions } from '@core/constants/auth';
 import { Product } from '@core/types/products';
 import { UploadFile } from '@core/types/upload';
 import { getProductImgUrl } from '@core/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import useProducts from '@lib/hooks/useProducts';
+import useForms from '@lib/hooks/useForms';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 import ImagesDetail from '@components/admin/details/ImagesDetail';
 
@@ -42,6 +42,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   const { productCategories } = useSearchContext();
 
   const { validateProductImgs, updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
+  const { manageProductFormValidation, productFieldsInitValues } = useForms();
 
   const uploadImgsInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -133,16 +134,16 @@ const ManageProductForm = (props: ManageProductFormProps) => {
 
         <Formik
           initialValues={{
-            id: product?.id || initProductValues.id,
+            id: product?.id || -1,
             categoryId: product?.categoryId || productCategories[0].id,
-            name: product?.name || initProductValues.name,
-            description: product?.description || initProductValues.description,
-            lowestPrice: product?.lowestPrice || initProductValues.lowestPrice,
-            lowestRealPrice: product?.lowestRealPrice || initProductValues.lowestRealPrice,
-            imageNames: product?.imageNames || initProductValues.imageNames,
-            inventories: product?.inventories || initProductValues.inventories,
+            name: product?.name || productFieldsInitValues.name,
+            description: product?.description || productFieldsInitValues.description,
+            lowestPrice: product?.lowestPrice || 0,
+            lowestRealPrice: product?.lowestRealPrice || 0,
+            imageNames: product?.imageNames || [],
+            inventories: product?.inventories || [],
           } as Product}
-          validationSchema={productValidation}
+          validationSchema={manageProductFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (

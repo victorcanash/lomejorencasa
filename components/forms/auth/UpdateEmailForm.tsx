@@ -8,12 +8,13 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { initRegisterValues, updateEmailValidation } from '@core/constants/forms/auth';
 import { AuthUpdateEmail } from '@core/types/auth';
 import useAuth from '@lib/hooks/useAuth';
+import useForms from '@lib/hooks/useForms';
 
 const UpdateEmailForm = () => {
   const { sendUpdateEmail, errorMsg, successMsg } = useAuth();
+  const { updateEmailFormValidation, userFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: AuthUpdateEmail) => {
     sendUpdateEmail(values);
@@ -38,10 +39,10 @@ const UpdateEmailForm = () => {
 
         <Formik
           initialValues={{
-            password: initRegisterValues.password,
-            newEmail: initRegisterValues.email,
+            password: userFieldsInitValues.password,
+            newEmail: userFieldsInitValues.email,
           } as AuthUpdateEmail}
-          validationSchema={updateEmailValidation}
+          validationSchema={updateEmailFormValidation}
           onSubmit={handleSubmit}
         >
           {props => (
