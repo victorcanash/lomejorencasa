@@ -3,6 +3,7 @@
   "app.metas.description": "Aplicacion ecommerce",
   "app.successes.default": "Logrado",
   "app.errors.default": "Algo falló, inténtalo otra vez",
+  "app.goBackBtn": "Go back",
 
   "header.drawerItems.profile": "Tu perfil",
   "header.drawerItems.orders": "Pedidos",
@@ -96,6 +97,9 @@
   
   "checkout.metas.title": "Pago",
   "checkout.metas.description": "Página de pago",
+  "checkout.sections.address": "Dirección",
+  "checkout.sections.payment": "Pago",
+  "checkout.sections.confirmation": "Confirmación",
   "checkout.successes.updateAddresses": "Direcciones actualizadas",
   "checkout.successes.checkPaymentMethod": "Método de pago verificado",
   "checkout.successes.createTransaction": "Transacción creada",
