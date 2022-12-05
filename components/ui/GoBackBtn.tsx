@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { FormattedMessage } from 'react-intl';
+
 import Button, { ButtonProps } from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
@@ -18,7 +20,7 @@ const GoBackBtn = (props: ButtonProps & GoBackBtnProps) => {
 
   return (
     <Button {...props} startIcon={<ArrowBackIcon />} onClick={onClick || onClickDefault}>
-      Go back
+      <FormattedMessage id="app.goBackBtn" />
     </Button>
   );
 };

@@ -51,7 +51,9 @@ const Checkout: NextPage = () => {
 
       <Stepper 
         activeStep={activeStep}
-        steps={Object.values(CheckoutSections)}
+        steps={Object.values(CheckoutSections).map((section) => {
+          return intl.formatMessage({ id: `checkout.sections.${section}` });
+        })}
       />
 
       { currentCheckoutSection() == CheckoutSections.address &&

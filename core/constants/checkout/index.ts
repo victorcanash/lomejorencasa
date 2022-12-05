@@ -1,5 +1,5 @@
 export enum CheckoutSections {
-  address = 'Address',
-  payment = 'Payment',
-  confirmation = 'Confirmation',
+  address = 'address',
+  payment = 'payment',
+  confirmation = 'confirmation',
 };
