@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
@@ -24,7 +26,7 @@ const OrderList = (props: OrderListProps) => {
   return (
     <>
       <Typography variant="h5" component="h1" className='animate__animated animate__fadeInLeft'>
-        Orders
+        <FormattedMessage id="orderList.h1" />
       </Typography>
 
       {
@@ -40,7 +42,7 @@ const OrderList = (props: OrderListProps) => {
           </Grid>
           :
           <Typography component="h3" variant="subtitle1" sx={{ textAlign: "center" }}>
-            There are no existing orders.
+            <FormattedMessage id="orderList.noItems" />
           </Typography>
       }
 

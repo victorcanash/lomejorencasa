@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
@@ -17,6 +19,8 @@ const CartDetail = (props: CartDetailProps) => {
   const { updateQuantity, showEmptyItems } = props;
 
   const { cart, totalPrice } = useCartContext();
+
+  const intl = useIntl();
 
   return (
     <>
@@ -44,7 +48,7 @@ const CartDetail = (props: CartDetailProps) => {
             align='right'
             className='animate__animated animate__fadeInUp'
           >
-            Total: {totalPrice.toFixed(2)} €
+            {`${intl.formatMessage({ id: "cart.total" })}: ${totalPrice.toFixed(2)} €`}
           </Typography>
         </>
       }

@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { useIntl, FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -16,6 +18,7 @@ const OrderItem = (props: OrderItemProps) => {
   const { order } = props;
 
   const router = useRouter();
+  const intl = useIntl();
 
   const onClickShowOrder = () => {
     router.push(`${pages.orderDetail.path}/${order.id}`);
@@ -25,12 +28,12 @@ const OrderItem = (props: OrderItemProps) => {
     <>
       <Divider sx={{ mb: 3 }} />
       <Typography component="h3" variant="h6">
-        {`Order number: ${order.id}`}
+        {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.id}`}
       </Typography>
       <Grid container spacing={1} py={3}>
         <Grid item xs={6}>
           <Typography component="div" variant="subtitle1">
-            {`Order date: ${new Date(order.createdAt).toLocaleDateString()}`}
+            {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString()}`}
           </Typography>
         </Grid>
         <Grid item xs={6}>
@@ -38,7 +41,7 @@ const OrderItem = (props: OrderItemProps) => {
             variant="contained"
             onClick={onClickShowOrder}
           >
-            Show order
+            <FormattedMessage id="orderDetail.showBtn" />
           </Button>
         </Grid>
       </Grid>

@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -13,6 +14,8 @@ import useAuth from '@lib/hooks/useAuth';
 import useForms from '@lib/hooks/useForms';
 
 const UpdateEmailForm = () => {
+  const intl = useIntl();
+
   const { sendUpdateEmail, errorMsg, successMsg } = useAuth();
   const { updateEmailFormValidation, userFieldsInitValues } = useForms();
 
@@ -34,7 +37,9 @@ const UpdateEmailForm = () => {
       >
 
         <Typography component="h2" variant="h6">
-           Change your email address
+          <FormattedMessage 
+            id="forms.updateEmail.title" 
+          />
         </Typography>
 
         <Formik
@@ -49,7 +54,9 @@ const UpdateEmailForm = () => {
             <Form>
 
               <Typography component="h3" variant="subtitle1" mt={1}>
-                Introduce your new email address and we will send you an email with a link to confirm your new email address.
+                <FormattedMessage 
+                  id="forms.updateEmail.description" 
+                />
               </Typography>
 
               {/* Password Field */}
@@ -61,7 +68,7 @@ const UpdateEmailForm = () => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                label="Password"
+                label={intl.formatMessage({ id: "forms.password" })}
                 value={props.values.password}
                 onChange={props.handleChange}
                 error={props.touched.password && Boolean(props.errors.password)}
@@ -76,7 +83,7 @@ const UpdateEmailForm = () => {
                 id="newEmail"
                 name="newEmail"
                 autoComplete="email"
-                label="New Email Address"   
+                label={intl.formatMessage({ id: "forms.newEmail" })}  
                 value={props.values.newEmail}
                 onChange={props.handleChange}
                 error={props.touched.newEmail && Boolean(props.errors.newEmail)}
@@ -89,7 +96,9 @@ const UpdateEmailForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Send email
+                <FormattedMessage 
+                  id="forms.updateEmail.successBtn" 
+                />
               </Button>
 
               {

@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -25,6 +26,8 @@ type LoginFormProps = {
 const LoginForm = (props: LoginFormProps) => {
   const { onFailByActivation } = props;
 
+  const intl = useIntl();
+
   const { login, errorMsg } = useAuth();
   const { loginFormValidation, userFieldsInitValues } = useForms();
 
@@ -49,11 +52,13 @@ const LoginForm = (props: LoginFormProps) => {
             bgcolor: 'secondary.main' 
           }}
         >
-            <LockOutlinedIcon />
+          <LockOutlinedIcon />
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Sign in
+          <FormattedMessage 
+            id="forms.login.title" 
+          />
         </Typography>
 
         <Formik
@@ -75,7 +80,7 @@ const LoginForm = (props: LoginFormProps) => {
                 id="email"
                 name="email"
                 autoComplete="email"
-                label="Email Address"
+                label={intl.formatMessage({ id: "forms.email" })}
                 autoFocus
                 value={props.values.email}
                 onChange={props.handleChange}
@@ -92,7 +97,7 @@ const LoginForm = (props: LoginFormProps) => {
                 name="password"
                 type="password"
                 autoComplete="current-password"
-                label="Password"
+                label={intl.formatMessage({ id: "forms.password" })}
                 value={props.values.password}
                 onChange={props.handleChange}
                 error={props.touched.password && Boolean(props.errors.password)}
@@ -101,7 +106,7 @@ const LoginForm = (props: LoginFormProps) => {
 
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
+                label={intl.formatMessage({ id: "forms.rememberMe" })}
               />
 
               <Button
@@ -110,7 +115,9 @@ const LoginForm = (props: LoginFormProps) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                <FormattedMessage 
+                  id="forms.login.successBtn" 
+                />
               </Button>
 
               {
@@ -121,12 +128,16 @@ const LoginForm = (props: LoginFormProps) => {
               <Grid container>
                 <Grid item xs>
                   <Link href={pages.forgot.path} variant="body2">
-                    Forgot password?
+                    <FormattedMessage 
+                      id="forms.login.forgotLink" 
+                    />
                   </Link>
                 </Grid>
                 <Grid item>
                   <Link href={pages.register.path} variant="body2">
-                    Don&apos;t have an account? Sign up
+                    <FormattedMessage 
+                      id="forms.login.registerLink" 
+                    />
                   </Link>
                 </Grid>
               </Grid>

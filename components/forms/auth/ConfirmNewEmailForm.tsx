@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { FormattedMessage } from 'react-intl';
+
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -29,11 +31,15 @@ const ConfirmNewEmailForm = () => {
       >
       
         <Typography component="h1" variant="h5">
-          Confirm new email link
+          <FormattedMessage 
+            id="forms.confirmNewEmail.title" 
+          />
         </Typography>
 
         <Typography component="h2" variant="subtitle1" mt={4}>
-          Click the confirm button to update and activate your new email
+          <FormattedMessage 
+            id="forms.confirmNewEmail.description" 
+          />
         </Typography>
 
         <Button
@@ -44,7 +50,9 @@ const ConfirmNewEmailForm = () => {
             mb: 2,
           }}
         >
-          Confirm
+          <FormattedMessage 
+            id="forms.confirmNewEmail.successBtn" 
+          />
         </Button>
 
         {

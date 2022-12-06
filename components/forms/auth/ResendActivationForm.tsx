@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -18,7 +20,6 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
   const { email, onClickProceedBtn } = props;
 
   const { sendActivationEmail, errorMsg, successMsg } = useAuth();
-
   const { trigger, timeLeft, active } = useCountdown();
 
   const onSendActivationEmailSuccess = () => {
@@ -41,25 +42,37 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
       >
 
         <Typography component="h1" variant="h5">
-          Activate your account
+          <FormattedMessage 
+            id="forms.resendActivation.title" 
+          />
         </Typography>
 
         <Typography component="h2" variant="subtitle1" my={2}>
-          We have sent an email to {email} with a link to activate your account before you can login.
-          Once you verified your account, proceed to login.
+          <FormattedMessage 
+            id="forms.resendActivation.description" 
+            values={{ email }}
+          />
         </Typography>
 
         <LinkButton href={pages.login.path} fullWidth onClick={onClickProceedBtn}>
-            Proceed to login
+          <FormattedMessage 
+            id="forms.resendActivation.loginLink" 
+          />
         </LinkButton>
 
         <Typography component="h3" variant="subtitle2" sx={{ mt: 4, mb: 2}}>
-          Didn&apos;t received the email? 
-          Resend {
-            timeLeft ?
-              `in ${timeLeft} ${timeLeft > 1 ? 'seconds' : 'second'}`
+          <FormattedMessage 
+            id="forms.resendActivation.received" 
+          />
+          { timeLeft ?
+            <FormattedMessage 
+              id="forms.resendActivation.resendTime"
+              values={{ timeLeft }}
+            />
             :
-            'now'
+            <FormattedMessage 
+              id="forms.resendActivation.resendNow"
+            />
           }
         </Typography>
 
@@ -70,7 +83,9 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
           sx={{ mb: 2 }}
           disabled={active}
         >
-          Resend
+          <FormattedMessage 
+            id="forms.resendActivation.successBtn" 
+          />
         </Button>
 
         {

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -40,6 +41,8 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   } = props;
 
   const { productCategories } = useSearchContext();
+
+  const intl = useIntl();
 
   const { validateProductImgs, updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
@@ -127,8 +130,13 @@ const ManageProductForm = (props: ManageProductFormProps) => {
         <Typography component="h1" variant="h5">
           {
             action == ManageActions.create ?
-              'Create new product' :
-              'Update or delete the product'
+              <FormattedMessage 
+                id="forms.createProduct.title" 
+              />
+              :
+              <FormattedMessage 
+                id="forms.updateProduct.title" 
+              />
           }
         </Typography>
 
@@ -150,7 +158,11 @@ const ManageProductForm = (props: ManageProductFormProps) => {
             <Form>
 
               {/* Category ID Field */}
-              <InputLabel id="categpory-select-label">Category</InputLabel>
+              <InputLabel id="categpory-select-label">
+                <FormattedMessage 
+                  id="forms.category" 
+                />
+              </InputLabel>
               <Select
                 margin="dense"
                 required
@@ -159,7 +171,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 name="categoryId"
                 autoComplete="categoryId"
                 labelId="category-select-label"
-                label="Category"
+                label={intl.formatMessage({ id: "forms.category" })}
                 autoFocus
                 value={props.values.categoryId}
                 onChange={props.handleChange}
@@ -180,7 +192,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 id="name"
                 name="name"
                 autoComplete="name"        
-                label="Name"
+                label={intl.formatMessage({ id: "forms.name" })}
                 value={props.values.name}
                 onChange={props.handleChange}
                 error={props.touched.name && Boolean(props.errors.name)}
@@ -195,7 +207,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 id="description"
                 name="description"
                 autoComplete="description"        
-                label="Description"
+                label={intl.formatMessage({ id: "forms.description" })}
                 value={props.values.description}
                 onChange={props.handleChange}
                 error={props.touched.description && Boolean(props.errors.description)}
@@ -205,14 +217,18 @@ const ManageProductForm = (props: ManageProductFormProps) => {
               { uploadImgs && uploadImgs.length > 0 &&
                 <>
                   <Typography component="h3" variant="subtitle1" sx={{ mt: 2 }}>
-                    New images to upload:
+                    <FormattedMessage 
+                      id="forms.manageProductImgs.newImgs" 
+                    />
                   </Typography>
                   <ImagesDetail
                     imgSources={uploadImgs.map((item) => { return item.url })}
                     getImgActionComponent={(srcImgIndex: number) => {
                       return (
                         <Button variant="contained" onClick={()=>handleClickDeleteUploadImgBtn(srcImgIndex)}>
-                          Remove
+                          <FormattedMessage 
+                            id="app.removeBtn" 
+                          />
                         </Button>
                       )
                     }}
@@ -220,14 +236,18 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 </>
               }
               <Button variant="contained" component="label" sx={{ mt: 2 }}>
-                Upload new image
+                <FormattedMessage 
+                  id="forms.manageProductImgs.upload" 
+                />
                 <input ref={uploadImgsInputRef} hidden accept="image/*" multiple type="file" onChange={handleChangeUploadImgsInput} />
               </Button>
 
               { product?.imageNames && product?.imageNames.length > 0 &&
                 <>
                   <Typography component="h3" variant="subtitle1" sx={{ mt: 2 }}>
-                    Existing images:
+                    <FormattedMessage 
+                      id="forms.manageProductImgs.existingImgs" 
+                    />
                   </Typography>
                   <ImagesDetail
                     imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })}
@@ -235,15 +255,21 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                       const component = deleteExistingImgs.includes(srcImgIndex) ?
                         <>
                           <Typography component="div" variant="subtitle2">
-                            Will be deleted
+                            <FormattedMessage 
+                              id="forms.manageProductImgs.deleted" 
+                            />
                           </Typography>
                           <Button variant="contained" onClick={()=>handleClickRecoverExistingImgBtn(srcImgIndex)}>
-                            Recover
+                            <FormattedMessage 
+                              id="forms.recoverBtn" 
+                            />
                           </Button>
                         </>
                       :
                         <Button variant="contained" onClick={()=>handleClickDeleteExistingImgBtn(srcImgIndex)}>
-                          Delete
+                          <FormattedMessage 
+                            id="forms.deleteBtn" 
+                          />
                         </Button>
                       return component;
                     }}
@@ -259,8 +285,13 @@ const ManageProductForm = (props: ManageProductFormProps) => {
               >
                 {
                   action == ManageActions.create ?
-                    'Create' :
-                    'Update'
+                    <FormattedMessage 
+                      id="forms.createProduct.successBtn" 
+                    />
+                    :
+                    <FormattedMessage 
+                      id="forms.updateProduct.successBtn" 
+                    />
                 }
               </Button>
 
@@ -272,7 +303,9 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleClickDeleteBtn}
                   >
-                    Delete
+                    <FormattedMessage 
+                      id="forms.deleteBtn" 
+                    />
                   </Button>
               }
 
@@ -284,7 +317,9 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleCancelBtn}
                   >
-                    Cancel
+                    <FormattedMessage 
+                      id="app.cancelBtn" 
+                    />
                   </Button>
               }
 

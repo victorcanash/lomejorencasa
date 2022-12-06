@@ -1,5 +1,7 @@
 import { useState } from 'react';
+
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -37,6 +39,8 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
     onDeleteSuccess,
     onCancel,
   } = props;
+
+  const intl = useIntl();
 
   const { manageProductDiscount, errorMsg, successMsg } = useProducts();
   const { manageDiscountFormValidation, discountFieldsInitValues } = useForms();
@@ -87,8 +91,13 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
         <Typography component="h1" variant="h5">
           {
             action == ManageActions.create ?
-              'Create new product discount' :
-              'Update or delete the product discount'
+              <FormattedMessage 
+                id="forms.createDiscount.title" 
+              />
+              :
+              <FormattedMessage 
+                id="forms.updateDiscount.title" 
+              />
           }
         </Typography>
 
@@ -115,7 +124,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                 id="name"
                 name="name"
                 autoComplete="name"        
-                label="Name"
+                label={intl.formatMessage({ id: "forms.name" })}
                 value={props.values.name}
                 onChange={props.handleChange}
                 error={props.touched.name && Boolean(props.errors.name)}
@@ -130,7 +139,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                 id="description"
                 name="description"
                 autoComplete="description"        
-                label="Description"
+                label={intl.formatMessage({ id: "forms.description" })}
                 value={props.values.description}
                 onChange={props.handleChange}
                 error={props.touched.description && Boolean(props.errors.description)}
@@ -145,7 +154,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                 id="discountPercent"
                 name="discountPercent"
                 autoComplete="discountPercent"
-                label="Discount Percent"
+                label={intl.formatMessage({ id: "forms.discountPercent" })}
                 type="decimal"  
                 InputProps={{
                   endAdornment: <InputAdornment position="end">%</InputAdornment>,
@@ -170,7 +179,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                     onChange={props.handleChange} 
                   />
                 } 
-                label="Active" 
+                label={intl.formatMessage({ id: "forms.active" })}
               />
 
               <Button
@@ -181,8 +190,13 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
               >
                 {
                   action == ManageActions.create ?
-                    'Create' :
-                    'Update'
+                    <FormattedMessage 
+                      id="forms.createDiscount.successBtn" 
+                    />
+                    :
+                    <FormattedMessage 
+                      id="forms.updateDiscount.successBtn" 
+                    />
                 }
               </Button>
 
@@ -194,7 +208,9 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleClickDeleteBtn}
                   >
-                    Delete
+                    <FormattedMessage 
+                      id="forms.deleteBtn" 
+                    />
                   </Button>
               }
 
@@ -206,7 +222,9 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleCancelBtn}
                   >
-                    Cancel
+                    <FormattedMessage 
+                      id="forms.cancelBtn" 
+                    />
                   </Button>
               }
 

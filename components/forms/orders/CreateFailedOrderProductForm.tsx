@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -15,6 +16,8 @@ type CreateFailedOrderProductFormProps = {
 
 const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) => {
   const { onSubmitSuccess } = props;
+
+  const intl = useIntl();
 
   const { createFailedOrderProductFormValidation, orderProductFieldsInitValues } = useForms();
 
@@ -34,7 +37,9 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
       >
 
         <Typography component="h3" variant="subtitle1">
-          Add order product
+          <FormattedMessage 
+            id="forms.createFailedOrderProduct.title" 
+          />
         </Typography>
 
         <Formik
@@ -53,7 +58,7 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
                 id="quantity"
                 name="quantity"
                 autoComplete="quantity"
-                label="Quantity"
+                label={intl.formatMessage({ id: "forms.quantity" })}
                 type="numeric"  
                 inputProps={{
                   min: 0,
@@ -73,7 +78,7 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
                 id="inventoryId"
                 name="inventoryId"
                 autoComplete="inventoryId"
-                label="Inventory ID"
+                label={intl.formatMessage({ id: "forms.inventoryId" })}
                 type="numeric"  
                 inputProps={{
                   min: 0,
@@ -91,7 +96,9 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Add order product
+                <FormattedMessage 
+                  id="forms.createFailedOrderProduct.successBtn" 
+                />
               </Button> 
 
             </Form>

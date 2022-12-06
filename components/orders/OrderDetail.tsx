@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
 
+import { useIntl, FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -20,31 +22,44 @@ type OrderDetailProps = {
 const OrderDetail = (props: OrderDetailProps) => {
   const { order, backBtn } = props;
 
+  const intl = useIntl();
+
   return (
     <>
       <Typography variant="h5" component="h1" className='animate__animated animate__fadeInLeft' mb={1}>
-        {`Order number: ${order.id}`}
+        {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.id}`}
       </Typography>
 
       <Typography component="div" variant="subtitle1" pt={2}>
-        {`Status: ${order.bigbuy.status}`}
+        {`${intl.formatMessage({ id: "orderDetail.status" })}: ${order.bigbuy.status}`}
       </Typography>
 
       <Grid container spacing={1} py={3}>
         <Grid item xs={12} sm={6}>
           <Typography component="div" variant="subtitle1">
-            {`Order date: ${new Date(order.createdAt).toLocaleDateString()}`}
+            {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString()}`}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           { order.braintree.creditCard.cardType != '' &&
             <Typography component="div" variant="subtitle1">
-              {`Paid with ${order.braintree.creditCard.cardType} ....${order.braintree.creditCard.last4}`}
+              <FormattedMessage 
+                id="orderDetail.paidCard" 
+                values={{
+                  cardType: order.braintree.creditCard.cardType,
+                  last4: order.braintree.creditCard.last4,
+                }}
+              />
             </Typography>
           }
           { order.braintree.paypalAccount.payerEmail != '' &&
             <Typography component="div" variant="subtitle1">
-              {`Paid with Paypal ${order.braintree.paypalAccount.payerEmail}`}
+              <FormattedMessage 
+                id="orderDetail.paidCard" 
+                values={{
+                  payerEmail: order.braintree.paypalAccount.payerEmail,
+                }}
+              />
             </Typography>
           }
         </Grid>
@@ -53,7 +68,9 @@ const OrderDetail = (props: OrderDetailProps) => {
       <Grid container spacing={1} pb={3}>
         <Grid item xs={6}>
           <Typography component="div" variant="subtitle1">
-            Shipping address
+            <FormattedMessage 
+              id="forms.shipping" 
+            />
           </Typography>
           <Box mt={1}>
             <AddressDetail 
@@ -75,9 +92,9 @@ const OrderDetail = (props: OrderDetailProps) => {
         </Grid>
         { order.braintree.billing.addressLine1 != '' &&
           <Grid item xs={6}>
-            <Typography component="div" variant="subtitle1">
-              Billing address
-            </Typography>
+            <FormattedMessage 
+              id="forms.billing" 
+            />
             <Box mt={1}>
               <AddressDetail 
                 address={{
@@ -100,7 +117,7 @@ const OrderDetail = (props: OrderDetailProps) => {
       </Grid>
 
       <Typography component="div" variant="subtitle1">
-        Products:
+        {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
       </Typography>
       <Divider sx={{ mb: 3, mt: 2 }} />
       <Box mt={1} className='animate__animated animate__fadeIn'>
@@ -120,7 +137,7 @@ const OrderDetail = (props: OrderDetailProps) => {
         align='right'
         className='animate__animated animate__fadeInUp'
       >
-        Total: {Number(order.braintree.amount).toFixed(2)} €
+        {`${intl.formatMessage({ id: "cart.total" })}: ${Number(order.braintree.amount).toFixed(2)} €`}
       </Typography>
 
       { backBtn &&

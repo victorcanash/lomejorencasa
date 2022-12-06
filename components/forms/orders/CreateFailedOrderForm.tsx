@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -24,6 +25,8 @@ type CreateFailedOrderFormProps = {
 
 const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
   const { onSubmitSuccess, onCancel } = props;
+
+  const intl = useIntl();
 
   const { createFailedOrder, errorMsg, successMsg } = useOrders();
   const { createFailedOrderFormValidation, orderFieldsInitValues, addressFieldsInitValues } = useForms();
@@ -67,7 +70,9 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
       >
 
         <Typography component="h1" variant="h5" mb={3}>
-          Create failed order
+          <FormattedMessage 
+            id="forms.createFailedOrder.title" 
+          />
         </Typography>
 
         {/* Order Products */}
@@ -77,22 +82,24 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         { orderProducts && orderProducts.length > 0 &&
           <>
             <Typography component="h3" variant="subtitle1" mt={3}>
-              Order products:
+              {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
             </Typography>
             <Grid container spacing={1} pt={2} pb={5}>
               { orderProducts.map((product, productIndex) => (
                 <Grid item xs={6} key={productIndex}>
                   <Typography component="div" variant="subtitle1">
-                    {`Quantity: ${product.quantity}`}
+                    {`${intl.formatMessage({ id: "forms.quantity" })}: ${product.quantity}`}
                   </Typography>
                   <Typography component="div" variant="subtitle1">
-                    {`Inventory ID: ${product.inventoryId}`}
+                    {`${intl.formatMessage({ id: "forms.inventoryId" })}: ${product.inventoryId}`}
                   </Typography>
                   <Button 
                     variant="contained"                    
                     onClick={() => onClickDeleteOrderProductBtn(productIndex)}
                   >
-                    Delete
+                    <FormattedMessage 
+                      id="app.deleteBtn" 
+                    />
                   </Button> 
                 </Grid>
               ))}
@@ -126,7 +133,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 id="userId"
                 name="userId"
                 autoComplete="userId"
-                label="User ID"
+                label={intl.formatMessage({ id: "forms.userId" })}
                 type="numeric"  
                 inputProps={{
                   min: 0,
@@ -146,7 +153,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 id="braintreeTransactionId"
                 name="braintreeTransactionId"
                 autoComplete="braintreeTransactionId"        
-                label="BraintreeTransaction ID"
+                label={intl.formatMessage({ id: "forms.braintreeTransactionId" })}
                 value={props.values.braintreeTransactionId}
                 onChange={props.handleChange}
                 error={props.touched.braintreeTransactionId && Boolean(props.errors.braintreeTransactionId)}
@@ -155,7 +162,9 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
               
               {/* Shipping Address */}
               <Typography component="h3" variant="subtitle1" mt={3}>
-                Shipping address:
+                <FormattedMessage 
+                  id="forms.shipping" 
+                />
               </Typography>
               <UAddressForm
                 values={props.values.shipping}
@@ -172,7 +181,9 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 sx={{ mt: 3, mb: 2 }}
                 disabled={!orderProducts || orderProducts.length <= 0}
               >
-                Create
+                <FormattedMessage 
+                  id="forms.createFailedOrder.successBtn" 
+                />
               </Button>
 
               {
@@ -183,7 +194,9 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleCancelBtn}
                   >
-                    Cancel
+                    <FormattedMessage 
+                      id="app.cancelBtn" 
+                    />
                   </Button>
               }
 

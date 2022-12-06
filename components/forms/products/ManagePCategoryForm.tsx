@@ -1,5 +1,7 @@
 import { useState } from 'react';
+
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -32,6 +34,8 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
     onDeleteSuccess,
     onCancel, 
   } = props;
+
+  const intl = useIntl();
 
   const { manageProductCategory, errorMsg, successMsg } = useProducts();
   const { manageCategoryFormValidation, categoryFieldsInitValues } = useForms();
@@ -82,8 +86,13 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
         <Typography component="h1" variant="h5">
           {
             action == ManageActions.create ?
-              'Create new product category' :
-              'Update or delete the product category'
+              <FormattedMessage 
+                id="forms.createCategory.title" 
+              />
+              :
+              <FormattedMessage 
+                id="forms.updateCategory.title" 
+              />
           }
         </Typography>
 
@@ -107,7 +116,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
                 id="name"
                 name="name"
                 autoComplete="name"        
-                label="Name"
+                label={intl.formatMessage({ id: "forms.name" })}
                 autoFocus
                 value={props.values.name}
                 onChange={props.handleChange}
@@ -123,7 +132,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
                 id="description"
                 name="description"
                 autoComplete="description"        
-                label="Description"
+                label={intl.formatMessage({ id: "forms.description" })}
                 value={props.values.description}
                 onChange={props.handleChange}
                 error={props.touched.description && Boolean(props.errors.description)}
@@ -138,8 +147,13 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
               >
                 {
                   action == ManageActions.create ?
-                    'Create' :
-                    'Update'
+                    <FormattedMessage 
+                      id="forms.createCategory.successBtn" 
+                    />
+                    :
+                    <FormattedMessage 
+                      id="forms.updateCategory.successBtn" 
+                    />
                 }
               </Button>
 
@@ -151,7 +165,9 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleClickDeleteBtn}
                   >
-                    Delete
+                    <FormattedMessage 
+                      id="forms.deleteBtn" 
+                    />
                   </Button>
               }
 
@@ -163,7 +179,9 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleCancelBtn}
                   >
-                    Cancel
+                    <FormattedMessage 
+                      id="forms.cancelBtn" 
+                    />
                   </Button>
               }
 

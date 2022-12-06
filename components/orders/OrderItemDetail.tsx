@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { useIntl, FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
@@ -21,6 +23,8 @@ type OrderItemDetailProps = {
 const OrderItemDetail = (props: OrderItemDetailProps) => {
   const { orderItem } = props;
 
+  const intl = useIntl();
+
   return (
     <Grid container spacing={2}>
 
@@ -41,7 +45,9 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         </Grid>
         :
         <Typography variant="subtitle1" component="div">
-          The product reference no longer exists
+          <FormattedMessage 
+            id="orderDetail.noProductReference" 
+          />
         </Typography>
       }
 
@@ -55,17 +61,17 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
               {orderItem.inventory?.name || undefined}
             </Typography>
             <Typography variant="body2">
-              Quantity: {orderItem.quantity.toString()}
+              {`${intl.formatMessage({ id: "forms.quantity" })}: ${orderItem.quantity.toString()}`}
             </Typography>
             <Typography variant="body2">
-              SKU: {orderItem.reference}
+              {`${intl.formatMessage({ id: "forms.sku" })}: ${orderItem.reference}`}
             </Typography>
           </Grid>
         </Grid>
 
         <Grid item>
           <Typography variant="subtitle1" component="div" style={orderItem.quantity <= 0 ? {color: 'grey'} : undefined}>
-            {orderItem.inventory ? ((orderItem.inventory?.realPrice * orderItem.quantity).toFixed(2)) : undefined} €
+            {`${orderItem.inventory ? ((orderItem.inventory?.realPrice * orderItem.quantity).toFixed(2)) : undefined} €`}
           </Typography>
         </Grid>
       </Grid>

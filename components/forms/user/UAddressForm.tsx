@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 import { FormikErrors, FormikTouched } from 'formik';
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import TextField from '@mui/material/TextField';
 
@@ -26,6 +26,8 @@ type UAddressFormProps = {
 };
 
 const UAddressForm = (props: UAddressFormProps) => {
+  const intl = useIntl();
+
   const getAddressType = () => {
     return props.values.type;
   };
@@ -41,7 +43,7 @@ const UAddressForm = (props: UAddressFormProps) => {
         id={`${getAddressType()}.firstName`}
         name={`${getAddressType()}.firstName`}
         autoComplete="firstName"        
-        label="First Name"
+        label={intl.formatMessage({ id: "forms.firstName" })}
         autoFocus={props.autoFocus}
         value={props.values.firstName}
         onChange={props.handleChange}
@@ -57,7 +59,7 @@ const UAddressForm = (props: UAddressFormProps) => {
         id={`${getAddressType()}.lastName`}
         name={`${getAddressType()}.lastName`}
         autoComplete="lastName"        
-        label="Last Name"
+        label={intl.formatMessage({ id: "forms.lastName" })}
         value={props.values.lastName}
         onChange={props.handleChange}
         error={props.touched?.lastName && Boolean(props.errors?.lastName)}
@@ -72,7 +74,7 @@ const UAddressForm = (props: UAddressFormProps) => {
         id={`${getAddressType()}.addressLine1`}
         name={`${getAddressType()}.addressLine1`}
         autoComplete="addressLine1"        
-        label="Address Line 1"
+        label={intl.formatMessage({ id: "forms.addressLine1" })}
         value={props.values.addressLine1}
         onChange={props.handleChange}
         error={props.touched?.addressLine1 && Boolean(props.errors?.addressLine1)}
@@ -86,7 +88,7 @@ const UAddressForm = (props: UAddressFormProps) => {
         id={`${getAddressType()}.addressLine2`}
         name={`${getAddressType()}.addressLine2`}
         autoComplete="addressLine2"        
-        label="Address Line 2"
+        label={intl.formatMessage({ id: "forms.addressLine2" })}
         value={props.values.addressLine2}
         onChange={props.handleChange}
         error={props.touched?.addressLine2 && Boolean(props.errors?.addressLine2)}
@@ -101,7 +103,7 @@ const UAddressForm = (props: UAddressFormProps) => {
         id={`${getAddressType()}.postalCode`}
         name={`${getAddressType()}.postalCode`}
         autoComplete="postalCode"        
-        label="Postal Code"
+        label={intl.formatMessage({ id: "forms.postalCode" })}
         value={props.values.postalCode}
         onChange={props.handleChange}
         error={props.touched?.postalCode && Boolean(props.errors?.postalCode)}
@@ -116,7 +118,7 @@ const UAddressForm = (props: UAddressFormProps) => {
         id={`${getAddressType()}.locality`}
         name={`${getAddressType()}.locality`}
         autoComplete="city"        
-        label="Locality"
+        label={intl.formatMessage({ id: "forms.locality" })}
         value={props.values.locality}
         onChange={props.handleChange}
         error={props.touched?.locality && Boolean(props.errors?.locality)}
@@ -124,7 +126,9 @@ const UAddressForm = (props: UAddressFormProps) => {
       />
 
       {/* Country Field */}
-      <InputLabel id="country-select-label">Country</InputLabel>
+      <InputLabel id="country-select-label">
+        <FormattedMessage id="forms.country" />
+      </InputLabel>
       <Select
         labelId="country-select-label"
         required

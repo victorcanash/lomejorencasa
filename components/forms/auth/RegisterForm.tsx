@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -26,6 +27,8 @@ type RegisterFormProps = {
 const RegisterForm = (props: RegisterFormProps) => {
   const { onSuccess } = props;
 
+  const intl = useIntl();
+
   const { register, errorMsg } = useAuth();
   const { registerFormValidation, userFieldsInitValues } = useForms();
 
@@ -50,11 +53,13 @@ const RegisterForm = (props: RegisterFormProps) => {
             bgcolor: 'secondary.main' 
           }}
         >
-            <LockOutlinedIcon />
+          <LockOutlinedIcon />
         </Avatar>
 
         <Typography component="h1" variant="h5">
-          Sign up
+          <FormattedMessage 
+            id="forms.register.title" 
+          />
         </Typography>
 
         <Formik
@@ -80,7 +85,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                 id="firstName"
                 name="firstName"
                 autoComplete="firstName"        
-                label="First Name"
+                label={intl.formatMessage({ id: "forms.firstName" })}
                 autoFocus
                 value={props.values.firstName}
                 onChange={props.handleChange}
@@ -96,7 +101,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                 id="lastName"
                 name="lastName"
                 autoComplete="lastName"        
-                label="Last Name"
+                label={intl.formatMessage({ id: "forms.lastName" })}
                 value={props.values.lastName}
                 onChange={props.handleChange}
                 error={props.touched.lastName && Boolean(props.errors.lastName)}
@@ -111,7 +116,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                 id="email"
                 name="email"
                 autoComplete="email"
-                label="Email Address"   
+                label={intl.formatMessage({ id: "forms.email" })}  
                 value={props.values.email}
                 onChange={props.handleChange}
                 error={props.touched.email && Boolean(props.errors.email)}
@@ -126,7 +131,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                 id="password"
                 name="password"
                 autoComplete="new-password"
-                label="Password"
+                label={intl.formatMessage({ id: "forms.password" })}
                 type="password"   
                 value={props.values.password}
                 onChange={props.handleChange}
@@ -142,7 +147,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                 id="confirm"
                 name="confirm"
                 autoComplete="new-confirm"
-                label="Confirm Password"
+                label={intl.formatMessage({ id: "forms.confirmPassword" })}
                 type="password"   
                 value={props.values.confirm}
                 onChange={props.handleChange}
@@ -152,7 +157,7 @@ const RegisterForm = (props: RegisterFormProps) => {
 
               {/* Birthday Field */}
               <DatePicker                           
-                label="Birthday"
+                label={intl.formatMessage({ id: "forms.birthday" })}
                 disableFuture
                 openTo="year"
                 views={['year', 'month', 'day']}
@@ -186,7 +191,9 @@ const RegisterForm = (props: RegisterFormProps) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign Up
+                <FormattedMessage 
+                  id="forms.register.successBtn" 
+                />
               </Button>
 
               {
@@ -197,7 +204,9 @@ const RegisterForm = (props: RegisterFormProps) => {
               <Grid container>
                 <Grid item xs>
                   <Link href={pages.login.path} variant="body2">
-                    Already have an account? Sign in
+                    <FormattedMessage 
+                      id="forms.register.loginLink" 
+                    />
                   </Link>
                 </Grid>
               </Grid>

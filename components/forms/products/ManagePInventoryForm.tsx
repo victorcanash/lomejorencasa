@@ -1,5 +1,7 @@
 import { useState } from 'react';
+
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -35,6 +37,8 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
     onDeleteSuccess,
     onCancel,
   } = props;
+
+  const intl = useIntl();
 
   const { manageProductInventory, errorMsg, successMsg } = useProducts();
   const { manageInventoryFormValidation, inventoryFieldsInitValues } = useForms();
@@ -85,8 +89,13 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
         <Typography component="h1" variant="h5">
           {
             action == ManageActions.create ?
-              'Create new product inventory' :
-              'Update or delete the product inventory'
+              <FormattedMessage 
+                id="forms.createInventory.title" 
+              />
+              :
+              <FormattedMessage 
+                id="forms.updateInventory.title" 
+              />
           }
         </Typography>
 
@@ -122,7 +131,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                 id="sku"
                 name="sku"
                 autoComplete="sku"        
-                label="SKU"
+                label={intl.formatMessage({ id: "forms.sku" })}
                 value={props.values.sku}
                 onChange={props.handleChange}
                 error={props.touched.sku && Boolean(props.errors.sku)}
@@ -137,7 +146,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                 id="name"
                 name="name"
                 autoComplete="name"        
-                label="Name"
+                label={intl.formatMessage({ id: "forms.name" })}
                 value={props.values.name}
                 onChange={props.handleChange}
                 error={props.touched.name && Boolean(props.errors.name)}
@@ -152,7 +161,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                 id="description"
                 name="description"
                 autoComplete="description"        
-                label="Description"
+                label={intl.formatMessage({ id: "forms.description" })}
                 value={props.values.description}
                 onChange={props.handleChange}
                 error={props.touched.description && Boolean(props.errors.description)}
@@ -167,7 +176,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                 id="price"
                 name="price"
                 autoComplete="price"
-                label="Price"
+                label={intl.formatMessage({ id: "forms.price" })}
                 type="decimal"  
                 InputProps={{
                   endAdornment: <InputAdornment position="end">€</InputAdornment>,
@@ -190,8 +199,13 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
               >
                 {
                   action == ManageActions.create ?
-                    'Create' :
-                    'Update'
+                    <FormattedMessage 
+                      id="forms.createInventory.successBtn" 
+                    />
+                    :
+                    <FormattedMessage 
+                      id="forms.updateInventory.successBtn" 
+                    />
                 }
               </Button>
 
@@ -203,7 +217,9 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleClickDeleteBtn}
                   >
-                    Delete
+                    <FormattedMessage 
+                      id="forms.deleteBtn" 
+                    />
                   </Button>
               }
 
@@ -215,7 +231,9 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleCancelBtn}
                   >
-                    Cancel
+                    <FormattedMessage 
+                      id="app.cancelBtn" 
+                    />
                   </Button>
               }
 

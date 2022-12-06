@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -19,6 +20,8 @@ import useForms from '@lib/hooks/useForms';
 
 const ForgotPswForm = () => {
   const { user, isLogged } = useAuthContext();
+
+  const intl = useIntl();
 
   const { sendResetPswEmail, errorMsg, successMsg } = useAuth();
   const { sendEmailFormValidation, userFieldsInitValues } = useForms();
@@ -51,18 +54,22 @@ const ForgotPswForm = () => {
                 bgcolor: 'secondary.main' 
               }}
             >
-                <LockOutlinedIcon />
+              <LockOutlinedIcon />
             </Avatar>
         }
 
         {
           !isLogged ?
             <Typography component="h1" variant="h5">
-              Forgotten password
+              <FormattedMessage 
+                id="forms.forgotPassword.title" 
+              />
             </Typography>
             :
             <Typography component="h2" variant="h6">
-              Change your password
+              <FormattedMessage 
+                id="forms.forgotPassword.subtitle" 
+              />
             </Typography>
         }
 
@@ -78,7 +85,9 @@ const ForgotPswForm = () => {
             <Form>
 
               <Typography component={!isLogged() ? 'h2' : 'h3'} variant="subtitle1" mt={1}>
-                Introduce your email address and we will send you an email with a link to set your new password.
+                <FormattedMessage 
+                  id="forms.forgotPassword.description" 
+                />
               </Typography>
 
               {/* Email Field */}
@@ -89,7 +98,7 @@ const ForgotPswForm = () => {
                 id="email"
                 name="email"
                 autoComplete="email"
-                label="Email Address"
+                label={intl.formatMessage({ id: "forms.email" })}
                 autoFocus
                 value={props.values.email}
                 onChange={props.handleChange}
@@ -103,7 +112,9 @@ const ForgotPswForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Send email
+                <FormattedMessage 
+                  id="forms.forgotPassword.successBtn" 
+                />
               </Button>
 
               {
@@ -120,7 +131,9 @@ const ForgotPswForm = () => {
                   <Grid container>
                     <Grid item>
                       <Link href={pages.login.path} variant="body2">
-                        Back to Sign in
+                        <FormattedMessage 
+                          id="forms.forgotPassword.loginLink" 
+                        />
                       </Link>
                     </Grid>
                   </Grid>

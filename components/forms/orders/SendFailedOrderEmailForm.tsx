@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -18,6 +19,8 @@ type SendFailedOrderEmailFormProps = {
 
 const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
   const { onSubmitSuccess, onCancel } = props;
+
+  const intl = useIntl();
 
   const { sendFailedOrderEmail, errorMsg, successMsg } = useOrders();
   const { sendFailedOrderEmailFormValidation, orderFieldsInitValues } = useForms();
@@ -44,7 +47,9 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
       >
 
         <Typography component="h1" variant="h5" mb={3}>
-          Send failed order email
+          <FormattedMessage 
+            id="forms.sendFailedOrderEmail.title" 
+          />
         </Typography>
 
         <Formik
@@ -65,7 +70,7 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
                 id="orderId"
                 name="orderId"
                 autoComplete="orderId"
-                label="Order ID"
+                label={intl.formatMessage({ id: "forms.orderId" })}
                 type="numeric"  
                 inputProps={{
                   min: 0,
@@ -83,7 +88,9 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Send
+                <FormattedMessage 
+                  id="forms.sendFailedOrderEmail.successBtn" 
+                />
               </Button>
 
               {
@@ -94,7 +101,9 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
                     sx={{ mt: 2, mb: 2 }}
                     onClick={handleCancelBtn}
                   >
-                    Cancel
+                    <FormattedMessage 
+                      id="forms.cancelBtn" 
+                    />
                   </Button>
               }
 

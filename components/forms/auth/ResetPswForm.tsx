@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -15,6 +16,7 @@ import useForms from '@lib/hooks/useForms';
 
 const ResetPswForm = () => {
   const router = useRouter();
+  const intl = useIntl();
 
   const { resetPsw: resetPassword, errorMsg, successMsg } = useAuth();
   const { resetPasswordFormValidation, userFieldsInitValues } = useForms();
@@ -36,11 +38,15 @@ const ResetPswForm = () => {
       >
 
         <Typography component="h1" variant="h5">
-          Password reset link
+          <FormattedMessage 
+            id="forms.resetPassword.title" 
+          />
         </Typography>
 
         <Typography component="h2" variant="subtitle1" mt={4}>
-          Introduce your new password
+          <FormattedMessage 
+            id="forms.resetPassword.description" 
+          />
         </Typography>
 
         <Formik
@@ -62,7 +68,7 @@ const ResetPswForm = () => {
                 id="newPassword"
                 name="newPassword"
                 autoComplete="new-password"
-                label="New Password"
+                label={intl.formatMessage({ id: "forms.newPassword" })}
                 type="password"   
                 value={props.values.newPassword}
                 onChange={props.handleChange}
@@ -78,7 +84,7 @@ const ResetPswForm = () => {
                 id="newConfirm"
                 name="newConfirm"
                 autoComplete="new-confirm"
-                label="Confirm Password"
+                label={intl.formatMessage({ id: "forms.confirmPassword" })}
                 type="password"   
                 value={props.values.newConfirm}
                 onChange={props.handleChange}
@@ -92,7 +98,9 @@ const ResetPswForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Reset
+                <FormattedMessage 
+                  id="forms.resetPassword.successBtn" 
+                />
               </Button>
 
               {

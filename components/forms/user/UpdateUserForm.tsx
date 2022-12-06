@@ -1,4 +1,5 @@
 import { Formik, Form } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -16,6 +17,8 @@ import useForms from '@lib/hooks/useForms';
 
 const UpdateUserForm = () => {
   const { user } = useAuthContext();
+
+  const intl = useIntl();
 
   const { manageUser, errorMsg, successMsg } = useUser();
   const { updateUserFormValidation, userFieldsInitValues } = useForms();
@@ -36,7 +39,7 @@ const UpdateUserForm = () => {
       >
 
         <Typography component="h2" variant="h6">
-          Change your personal data
+          <FormattedMessage id="forms.updateUser.title" />
         </Typography>
 
         <Formik
@@ -62,7 +65,7 @@ const UpdateUserForm = () => {
                 id="firstName"
                 name="firstName"
                 autoComplete="firstName"        
-                label="First Name"
+                label={intl.formatMessage({ id: "forms.firstName" })}
                 autoFocus
                 value={props.values.firstName}
                 onChange={props.handleChange}
@@ -78,7 +81,7 @@ const UpdateUserForm = () => {
                 id="lastName"
                 name="lastName"
                 autoComplete="lastName"        
-                label="Last Name"
+                label={intl.formatMessage({ id: "forms.lastName" })}
                 value={props.values.lastName}
                 onChange={props.handleChange}
                 error={props.touched.lastName && Boolean(props.errors.lastName)}
@@ -87,7 +90,7 @@ const UpdateUserForm = () => {
 
               {/* Birthday Field */}
               <DatePicker                           
-                label="Birthday"
+                label={intl.formatMessage({ id: "forms.birthday" })}
                 disableFuture
                 openTo="year"
                 views={['year', 'month', 'day']}
@@ -116,7 +119,7 @@ const UpdateUserForm = () => {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Update
+                <FormattedMessage id="forms.updateUser.successBtn" />
               </Button>
 
               {

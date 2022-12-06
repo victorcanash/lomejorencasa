@@ -1,4 +1,5 @@
 import { Formik, Form, FormikHelpers } from 'formik';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
@@ -23,6 +24,8 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
   const { onSubmitSuccess } = props;
 
   const { user } = useAuthContext();
+
+  const intl = useIntl();
 
   const { updateUserAddresses: updateAddresses, errorMsg, successMsg } = useUser();
   const { checkoutAddressesFormValidation, addressFieldsInitValues } = useForms();
@@ -91,7 +94,9 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
             <Grid container spacing={5} mt={1}>
               <Grid item xs={12} sm={6}>
                 <Typography component="h3" variant="h6">
-                  Shipping address
+                  <FormattedMessage 
+                    id="forms.shipping" 
+                  />
                 </Typography>
                 <UAddressForm
                   values={props.values.shipping}
@@ -104,19 +109,19 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
 
               <Grid item xs={12} sm={6}>
                 <Typography component="h3" variant="h6">
-                  Billing address
+                  <FormattedMessage 
+                    id="forms.billing" 
+                  />
                 </Typography>
-                {/* Same as Shipping Field */}
                 <FormControlLabel 
                   control={
                     <Checkbox 
                       id="sameAsShipping"
                       name="sameAsShipping"
-                      //checked={props.values.sameAsShipping}
                       onChange={props.handleChange} 
                     />
                   } 
-                  label="Same as shipping address" 
+                  label={intl.formatMessage({ id: "forms.sameAsShipping" })}
                 />
                 { !props.values.sameAsShipping &&
                   <UAddressForm
@@ -139,7 +144,9 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
                   sx={{ mt: 3, mb: 2 }}
                   disabled
                 >
-                  Back
+                  <FormattedMessage 
+                    id="app.backBtn" 
+                  />
                 </Button> 
               </Grid> 
 
@@ -152,7 +159,9 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
                     variant="contained"
                     sx={{ mt: 3, mb: 2 }}
                     >
-                      Continue
+                      <FormattedMessage 
+                        id="app.continueBtn" 
+                      />
                     </Button> 
                 }  
                 {
@@ -164,7 +173,9 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
                     sx={{ mt: 3, mb: 2 }}
                     onClick={handleSubmitWithoutSave}
                     >
-                      Continue
+                      <FormattedMessage 
+                        id="app.continueBtn" 
+                      />
                     </Button> 
                 } 
               </Grid>  

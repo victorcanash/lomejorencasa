@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 
 import { Product, ProductInventory } from "@core/types/products";
@@ -30,7 +32,7 @@ const ProductDescription = (props: ProductDescriptionProps) => {
             {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
           </Typography>
           <Typography component={ detailed ? "h3" : "span" } variant={ detailed ? "h6" : "subtitle2"}>
-            Original: <s>{selectedInventory ? selectedInventory.price : product.lowestPrice} €</s>
+            <FormattedMessage id="productDetail.original" />: <s>{selectedInventory ? selectedInventory.price : product.lowestPrice} €</s>
           </Typography> 
           <Typography component={ detailed ? "h3" : "span" } variant={ detailed ? "h6" : "subtitle2"} color="error"> 
             {` -${product.activeDiscount.discountPercent}%`}
