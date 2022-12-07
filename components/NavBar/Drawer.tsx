@@ -55,13 +55,21 @@ const Drawer = (props: DrawerProps) => {
                 { item.path ?
                   <ListItemButton onClick={handleDrawer} component={Link} noLinkStyle href={item.path}>
                     <ListItemText 
-                      primary={intl.formatMessage({ id: `header.drawerItems.${item.textId}`, defaultMessage: item.textId })} 
+                      primary={
+                        !!intl.messages[`header.drawerItems.${item.textId}`] ?
+                          intl.formatMessage({ id: `header.drawerItems.${item.textId}`, defaultMessage: item.textId }) :
+                          item.textId
+                      } 
                     />
                   </ListItemButton>
                   :
                   <ListItemButton onClick={handleClickLogout}>
                     <ListItemText 
-                      primary={intl.formatMessage({ id: `header.drawerItems.${item.textId}`, defaultMessage: item.textId })} 
+                      primary={
+                        !!intl.messages[`header.drawerItems.${item.textId}`] ?
+                          intl.formatMessage({ id: `header.drawerItems.${item.textId}`, defaultMessage: item.textId }) :
+                          item.textId
+                      }  
                     />
                   </ListItemButton>
                 }
