@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -30,7 +32,9 @@ const ErrorPage = (props: ErrorPageProps) => {
       </Typography>
       <Box maxWidth="sm">
         <LinkButton href={pages.home.path}>
-          Go to the home page
+          <FormattedMessage 
+            id="about.homeBtn" 
+          />
         </LinkButton>
       </Box>
       <ProTip />

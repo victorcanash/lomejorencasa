@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { FormattedMessage } from 'react-intl';
+
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -89,14 +91,18 @@ const CreateProductSection = () => {
             }}
           >
             <Typography component="h1" variant="h5">
-              Created product
+              <FormattedMessage
+                id="admin.createdProduct"
+              />
             </Typography>
             <ProductDetail
               product={product}
               created={false}
             />
             <Typography component="div" variant="subtitle1">
-              New images to upload
+              <FormattedMessage
+                id="forms.manageProductImgs.newImgs"
+              />
             </Typography>
             <ImagesDetail
               imgSources={uploadImgs.map((item) => { return item.url })}
@@ -123,7 +129,9 @@ const CreateProductSection = () => {
                         startIcon={<DeleteIcon />}                    
                         onClick={() => onClickDeleteInventoryBtn(inventoryIndex)}
                       >
-                        Delete
+                        <FormattedMessage
+                          id="app.deleteBtn"
+                        />
                       </Button>
                     );
                   }}
@@ -149,7 +157,9 @@ const CreateProductSection = () => {
                           startIcon={<DeleteIcon />}                    
                           onClick={() => onClickDeleteDiscountBtn(discountIndex)}
                         >
-                          Delete
+                          <FormattedMessage
+                            id="app.deleteBtn"
+                          />
                         </Button>
                       );
                     }}
@@ -163,7 +173,9 @@ const CreateProductSection = () => {
                   onClick={onClickConfirmBtn}
                   sx={{  mb: 2 }}
                 >
-                  Confirm creation
+                  <FormattedMessage
+                    id="admin.confirmBtn"
+                  />
                 </Button>
 
                 {

@@ -1,3 +1,5 @@
+import { useIntl, FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -19,6 +21,8 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
     onClickRefreshBigbuyBtn,
   } = props;
 
+  const intl = useIntl();
+
   const handleClickRefreshBigbuyBtn = (productId: number) => {
     if (onClickRefreshBigbuyBtn) {
       onClickRefreshBigbuyBtn(productId)
@@ -32,50 +36,52 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
           { created &&
             <>
               <Typography component="div" variant="subtitle1">
-                {`ID: ${inventory.id}`}
+                {`${intl.formatMessage({ id: 'forms.id' })}: ${inventory.id}`}
               </Typography>
               <Typography component="div" variant="subtitle1">
-                {`Product ID: ${inventory.productId}`}
+                {`${intl.formatMessage({ id: 'forms.productId' })}: ${inventory.productId}`}
               </Typography>
             </>
           }
           <Typography component="div" variant="subtitle1">
-            {`SKU: ${inventory.sku}`}
+            {`${intl.formatMessage({ id: 'forms.sku' })}: ${inventory.sku}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`Name: ${inventory.name}`}
+            {`${intl.formatMessage({ id: 'forms.name' })}: ${inventory.name}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`Description: ${inventory.description}`}
+            {`${intl.formatMessage({ id: 'forms.description' })}: ${inventory.description}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`Price: ${inventory.price}`}
+            {`${intl.formatMessage({ id: 'forms.price' })}: ${inventory.price}`}
           </Typography>
           { created &&
             <>
               <Typography component="div" variant="subtitle1">
-                {`Real price (with discount): ${inventory.realPrice}`}
+                {`${intl.formatMessage({ id: 'forms.realPrice' })}: ${inventory.realPrice}`}
               </Typography>
               <Button 
                 variant="contained"                    
                 onClick={() => handleClickRefreshBigbuyBtn(inventory.productId)}
               >
-                Refresh bigbuy data
+                <FormattedMessage
+                  id="admin.refreshBigbuyBtn"
+                />
               </Button> 
               <Typography component="div" variant="subtitle1">
-                {`Bigbuy id: ${inventory.bigbuy.id}`}
+                {`Bigbuy ${intl.formatMessage({ id: 'forms.id' })}: ${inventory.bigbuy.id}`}
               </Typography>
               <Typography component="div" variant="subtitle1">
-                {`Bigbuy name: ${inventory.bigbuy.name}`}
+                {`Bigbuy ${intl.formatMessage({ id: 'forms.name' })}: ${inventory.bigbuy.name}`}
               </Typography>
               <Typography component="div" variant="subtitle1">
-                {`Bigbuy description: ${inventory.bigbuy.description}`}
+                {`Bigbuy ${intl.formatMessage({ id: 'forms.description' })}: ${inventory.bigbuy.description}`}
               </Typography>
               <Typography component="div" variant="subtitle1">
-                {`Bigbuy price: ${inventory.bigbuy.price}`}
+                {`Bigbuy ${intl.formatMessage({ id: 'forms.price' })}: ${inventory.bigbuy.price}`}
               </Typography>
               <Typography component="div" variant="subtitle1">
-                {`Bigbuy quantity: ${inventory.bigbuy.quantity}`}
+                {`Bigbuy ${intl.formatMessage({ id: 'forms.quantity' })}: ${inventory.bigbuy.quantity}`}
               </Typography>
             </>
           }

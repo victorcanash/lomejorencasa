@@ -1,8 +1,9 @@
-import { Product } from '@core/types/products';
+import { useIntl } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import { Product } from '@core/types/products';
 import { getProductImgUrl } from '@core/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import Carousel from '@components/ui/Carousel';
@@ -17,30 +18,32 @@ const ProductDetail = (props: ProductDetailProps) => {
 
   const { productCategories } = useSearchContext();
 
+  const intl = useIntl();
+
   return (
     <>
       { created &&
         <Typography component="div" variant="subtitle1">
-          {`ID: ${product.id}`}
+          {`${intl.formatMessage({ id: 'forms.id' })}: ${product.id}`}
         </Typography>
       }
       <Typography component="div" variant="subtitle1">
-        {`Name: ${product.name}`}
+        {`${intl.formatMessage({ id: 'forms.name' })}: ${product.name}`}
       </Typography>
       <Typography component="div" variant="subtitle1">
-        {`Description: ${product.description}`}
+        {`${intl.formatMessage({ id: 'forms.description' })}: ${product.description}`}
       </Typography>
       <Typography component="div" variant="subtitle1">
-        {`Category: ${productCategories.filter((item) => item.id == product.categoryId)[0]?.name}`}
+        {`${intl.formatMessage({ id: 'forms.category' })}: ${productCategories.filter((item) => item.id == product.categoryId)[0]?.name}`}
       </Typography>
      
       { created &&
         <>
           <Typography component="div" variant="subtitle1">
-            {`Lowest price (with discount): ${product.lowestRealPrice}`}
+            {`${intl.formatMessage({ id: 'forms.lowestRealPrice' })}: ${product.lowestRealPrice}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`Active discount ID: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
+            {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
           </Typography>
           <Box sx={{width: "360px"}}>
             <Carousel 

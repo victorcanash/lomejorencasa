@@ -1,5 +1,6 @@
 import { useState, Dispatch, SetStateAction } from 'react';
 
+import { useIntl, FormattedMessage } from 'react-intl';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 import DropIn from 'braintree-web-drop-in-react';
 
@@ -23,6 +24,8 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
   const { next, back, transactionError, setTransactionError } = props;
 
   const { braintreeToken, setPaymentPayload } = useAuthContext();
+
+  const intl = useIntl();
 
   const { checkPaymentMethod, errorMsg, successMsg } = usePayments();
 
@@ -54,7 +57,9 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
       <Grid container spacing={5} mt={1}>
         <Grid item xs={12}>
           <Typography component="h3" variant="h6">
-            Payment method
+            <FormattedMessage
+              id="checkout.paymentMethod"
+            />
           </Typography>
           { braintreeToken &&
             <div 
@@ -69,7 +74,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
               <DropIn
                 options={{ 
                   authorization: braintreeToken,
-                  locale: 'en',
+                  locale: intl.locale,
                   vaultManager: true,
                   card: {
                     cardholderName: {
@@ -98,7 +103,9 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleBack}
           >
-            Back
+            <FormattedMessage 
+              id="app.backBtn" 
+            />
           </Button> 
         </Grid> 
 
@@ -111,7 +118,9 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
             onClick={handleContinue}
             disabled={!dropinInstance}
           >
-            Continue
+            <FormattedMessage 
+              id="app.continueBtn" 
+            />
           </Button> 
         </Grid>  
       </Grid>

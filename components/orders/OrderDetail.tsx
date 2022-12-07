@@ -55,7 +55,7 @@ const OrderDetail = (props: OrderDetailProps) => {
           { order.braintree.paypalAccount.payerEmail != '' &&
             <Typography component="div" variant="subtitle1">
               <FormattedMessage 
-                id="orderDetail.paidCard" 
+                id="orderDetail.paidPaypal" 
                 values={{
                   payerEmail: order.braintree.paypalAccount.payerEmail,
                 }}

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 
 import { Order } from '@core/types/orders';
@@ -30,7 +32,9 @@ const CreateFailedOrderSection = () => {
             />
             :
             <Typography variant="h5" component="h1">
-              Order created successfully but an error was occurred sending the order check email
+              <FormattedMessage
+                id="forms.createFailedOrder.createdWithoutEmail"
+              />
             </Typography>
           }
         </>

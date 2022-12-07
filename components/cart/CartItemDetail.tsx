@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import { useIntl } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
@@ -20,6 +22,8 @@ type CartItemDetailProps = {
 
 const CartItemDetail = (props: CartItemDetailProps) => {
   const { item, updateQuantity } = props;
+
+  const intl = useIntl();
 
   const handleRemoveItem = () => {
     if (updateQuantity) {
@@ -93,7 +97,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               </Typography>
               { !updateQuantity &&
                 <Typography variant="body2">
-                  Quantity: {item.quantity.toString()}
+                  {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
                 </Typography>
               }
             </Grid>
@@ -104,14 +108,17 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   labelId="quantity-select-label"
                   id="quantity-select"
                   value={item.quantity.toString()}
-                  label="Quantity"
+                  label={intl.formatMessage({ id: 'forms.quantity' })}
                   onChange={handleSelectQuantity}
                   disabled={item.inventory.bigbuy.quantity <= 0}
                 >
                   {getMenuItems()}
                 </Select>
 
-                <Tooltip title='Delete' placement='top'>
+                <Tooltip 
+                  title={intl.formatMessage({ id: 'app.deleteBtn' })} 
+                  placement='top'
+                >
                   <IconButton 
                     onClick={handleRemoveItem}
                   >
@@ -121,7 +128,10 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
                 { item.quantity <= 0 &&
                   <Typography variant="body2" style={item.inventory.bigbuy.quantity <= 0 ? {color: 'grey'} : undefined}>
-                    { item.inventory.bigbuy.quantity <= 0 ? 'Inventory not available right now.' : 'Inventory available right now.' }
+                    { item.inventory.bigbuy.quantity <= 0 ? 
+                      intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
+                      intl.formatMessage({ id: 'cart.inventoryAvailable' })
+                    }
                   </Typography>
                 }
               </Grid>

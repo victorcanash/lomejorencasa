@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -20,7 +22,7 @@ const CheckCategoriesSection = () => {
     setSelected(category);
   }
 
-  const onSuccessUpdate = (category: ProductCategory) => {
+  const onSuccessUpdate = (_category: ProductCategory) => {
     setSelected(undefined);
   }
 
@@ -38,7 +40,9 @@ const CheckCategoriesSection = () => {
 
         <>
           <Typography component="h1" variant="h5">
-            Product categories
+            <FormattedMessage
+              id="admin.productCategories"
+            />
           </Typography>
           <Grid container spacing={4} py={3}>
             {productCategories?.map((item, index) => (
@@ -52,7 +56,9 @@ const CheckCategoriesSection = () => {
                   startIcon={<UpdateIcon />}                    
                   onClick={() => onClickUpdateBtn(item)}
                 >
-                  Update
+                  <FormattedMessage
+                    id="app.updateCategoryBtn"
+                  />
                 </Button>
               </Grid>
             ))}

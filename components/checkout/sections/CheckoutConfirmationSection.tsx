@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
@@ -78,7 +78,9 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
           <Grid container spacing={5} mt={1}>
             <Grid item xs={12} sm={6}>
               <Typography component="h3" variant="h6">
-                Shipping address
+                <FormattedMessage 
+                  id="forms.shipping" 
+                />
               </Typography>
               <Box mt={1}>
                 <AddressDetail 
@@ -87,7 +89,9 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 />
               </Box>
               <Typography component="h3" variant="h6" mt={3}>
-                Billing address
+                <FormattedMessage 
+                  id="forms.billing" 
+                />
               </Typography>
               <Box mt={1}>
                 <AddressDetail 
@@ -96,24 +100,40 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 />
               </Box>
               <Typography component="h3" variant="h6" mt={3}>
-                Payment
+                <FormattedMessage 
+                  id="checkout.sections.payment" 
+                />
               </Typography>
               <Box mt={1}>
-                <Typography component="div" variant="subtitle1" >
-                  {paymentPayload?.type}
-                </Typography>
-                <Typography component="div" variant="subtitle1">
-                  {getCardPayload()?.details.lastFour ? `Finishes in ${getCardPayload()?.details.lastFour}` : undefined}
-                </Typography>
-                <Typography component="div" variant="subtitle1">
-                  {getPaypalPayload()?.details.email}
-                </Typography>
+                { getCardPayload()?.details.lastFour &&
+                  <Typography component="div" variant="subtitle1">
+                    <FormattedMessage 
+                      id="orderDetail.paidCard" 
+                      values={{
+                        cardType: paymentPayload?.type,
+                        last4: getCardPayload()?.details.lastFour,
+                      }}
+                    />
+                  </Typography>
+                }
+                { getPaypalPayload()?.details.email &&
+                  <Typography component="div" variant="subtitle1">
+                    <FormattedMessage 
+                      id="orderDetail.paidPaypal" 
+                      values={{
+                        payerEmail: getPaypalPayload()?.details.email
+                      }}
+                    />
+                  </Typography>
+                }
               </Box>
             </Grid>
 
             <Grid item xs={12} sm={6}>
               <Typography component="h3" variant="h6">
-                Order
+                <FormattedMessage 
+                  id="checkout.order" 
+                />
               </Typography>
               { cart && cart.items && cart.items.length > 0 && totalPrice > 0 ?
                 <>
@@ -124,7 +144,9 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
               :
                 <>
                   <Typography component='div' variant='subtitle1' mt={1}>
-                    There are no products added
+                    <FormattedMessage 
+                      id="cart.noItems" 
+                    />
                   </Typography>
                 </>
               }
@@ -140,7 +162,9 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 sx={{ mt: 3, mb: 2 }}
                 onClick={handleBack}
               >
-                Back
+                <FormattedMessage 
+                  id="app.backBtn" 
+                />
               </Button> 
             </Grid> 
 
@@ -153,7 +177,9 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 onClick={handleConfirm}
                 disabled={totalPrice <= 0}
               >
-                Confirm
+                <FormattedMessage 
+                  id="checkout.confirmBtn" 
+                />
               </Button> 
             </Grid>  
           </Grid>   

@@ -1,3 +1,5 @@
+import { useIntl } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
@@ -16,6 +18,8 @@ const DiscountsDetail = (props: DiscountsDetailProps) => {
     getDiscountActionComponent,
   } = props;
 
+  const intl = useIntl();
+
   return (
     <Grid container spacing={1} py={3}>
       { discounts.map((discount, discountIndex) => (
@@ -23,24 +27,24 @@ const DiscountsDetail = (props: DiscountsDetailProps) => {
           { created &&
             <>
               <Typography component="div" variant="subtitle1">
-                {`ID: ${discount.id}`}
+                {`${intl.formatMessage({ id: 'forms.id' })}: ${discount.id}`}
               </Typography>
               <Typography component="div" variant="subtitle1">
-                {`Product ID: ${discount.productId}`}
+                {`${intl.formatMessage({ id: 'forms.productId' })}: ${discount.productId}`}
               </Typography>
             </>
           }
           <Typography component="div" variant="subtitle1">
-            {`Name: ${discount.name}`}
+            {`${intl.formatMessage({ id: 'forms.name' })}: ${discount.name}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`Description: ${discount.description}`}
+            {`${intl.formatMessage({ id: 'forms.description' })}: ${discount.description}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`Discount percent: ${discount.discountPercent} %`}
+            {`${intl.formatMessage({ id: 'forms.discountPercent' })}: ${discount.discountPercent} %`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`Active: ${discount.active}`}
+            {`${intl.formatMessage({ id: 'forms.active' })}: ${discount.active}`}
           </Typography>
           { getDiscountActionComponent(discountIndex) }
         </Grid>

@@ -1,3 +1,5 @@
+import { FormattedMessage } from 'react-intl';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -19,7 +21,9 @@ const Footer = () => {
     >
       <Container maxWidth="sm">
         <Typography variant="body1">
-          My sticky footer can be found here.
+          <FormattedMessage 
+            id="footer.content" 
+          />
         </Typography>
         <Copyright />
       </Container>

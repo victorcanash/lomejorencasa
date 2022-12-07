@@ -1,5 +1,7 @@
 import { useEffect, useState, forwardRef } from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -24,20 +26,12 @@ type ConfirmDialogProps = {
   open: boolean,
   handleDialog: () => void,
   onConfirm: () => void,
-  title?: string,
-  message?: string,
-  successBtnContent?: string,
-  cancelBtnContent?: string,
 };
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
   const { 
     open,
     handleDialog,
-    title, 
-    message, 
-    successBtnContent,
-    cancelBtnContent,
     onConfirm, 
   } = props;
 
@@ -73,13 +67,16 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       aria-describedby="confirm-dialog"
     >
       <DialogTitle>
-        {title || 'Confirm action'}
+        <FormattedMessage id="dialogs.confirm.title" />
       </DialogTitle>
       <DialogContent>
         <DialogContentText 
           id="confirm-dialog"
         >
-          {message || `Confirm action writing "${confirmTxt}" and clicking the ${successBtnContent || 'confirm'} button`}
+          <FormattedMessage 
+            id="dialogs.confirm.content"
+            values={{ confirmTxt }} 
+          />
         </DialogContentText>
         <TextField
           autoFocus
@@ -94,14 +91,14 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
           onClick={handleClickCancelBtn}
           variant="contained"
         >
-          {cancelBtnContent || 'Cancel'}
+          <FormattedMessage id="dialogs.confirm.cancelBtn" />
         </Button>
         <Button 
           onClick={handleClickConfirmBtn}
           variant="contained"
           disabled={confirmFieldError}
         >
-          {successBtnContent || 'Confirm'}
+          <FormattedMessage id="dialogs.confirm.confirmBtn" />
         </Button>
       </DialogActions>
     </Dialog>

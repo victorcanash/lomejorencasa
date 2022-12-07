@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 
+import { FormattedMessage } from 'react-intl';
+
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -263,14 +265,18 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
       { !anySelectedModel() ?
         <>
           <Typography component="h1" variant="h5">
-            Products
+            <FormattedMessage
+              id="admin.products"
+            />
           </Typography>
 
           <Grid container spacing={4} py={3}>
             {checkProducts?.map((item, index) => (
               <Grid item xs={12} key={index}>
                 <Typography component="div" variant="h6">
-                  Product detail
+                  <FormattedMessage
+                    id="admin.productDetail"
+                  />
                 </Typography>
                 <ProductDetail
                   product={item.product}
@@ -283,7 +289,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     startIcon={<UpdateIcon />}                    
                     onClick={() => onClickUpdateProductBtn(item.product)}
                   >
-                    Update product
+                    <FormattedMessage
+                      id="admin.updateProductBtn"
+                    />
                   </Button> 
                 </div>
                 <div>
@@ -292,7 +300,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     startIcon={<AddIcon />}                    
                     onClick={() => onClickCreateDiscountBtn(item.product)}
                   >
-                    Create discount
+                    <FormattedMessage
+                      id="admin.createDiscountBtn"
+                    />
                   </Button> 
                 </div>
                 <div>  
@@ -301,7 +311,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     onClick={() => onClickCheckDiscountsBtn(item.product)}
                     startIcon={ !item.checkDiscounts ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
                   >
-                    Check all discounts
+                    <FormattedMessage
+                      id="admin.checkDiscountsBtn"
+                    />
                   </Button>
                 </div> 
 
@@ -316,7 +328,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                             startIcon={<UpdateIcon />}                    
                             onClick={() => onClickUpdateDiscountBtn(item.product, discountIndex)}
                           >
-                          Update discount
+                          <FormattedMessage
+                            id="admin.updateDiscountBtn"
+                          />
                         </Button> 
                       );
                     }}
@@ -328,7 +342,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     startIcon={<AddIcon />}                    
                     onClick={() => onClickCreateInventoryBtn(item.product)}
                   >
-                    Create inventory
+                    <FormattedMessage
+                      id="admin.createInventoryBtn"
+                    />
                   </Button>  
                 </div>
                 <div>
@@ -337,7 +353,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     onClick={() => onClickCheckInventoriesBtn(item.product)}
                     startIcon={ !item.checkInventories ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
                   >
-                    Check all inventories
+                    <FormattedMessage
+                      id="admin.checkInventoriesBtn"
+                    />
                   </Button>
                 </div>
                 { item.checkInventories && item.product.inventories && item.product.inventories.length > 0 &&
@@ -352,7 +370,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                             startIcon={<UpdateIcon />}                    
                             onClick={() => onClickUpdateInventoryBtn(item.product, inventoryIndex)}
                           >
-                          Update inventory
+                          <FormattedMessage
+                            id="admin.updateInventoryBtn"
+                          />
                         </Button> 
                       );
                     }}

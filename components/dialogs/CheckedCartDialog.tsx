@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -39,8 +39,6 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
     changedItemsByInventory,
     message,
   } = props;
-
-  const intl = useIntl();
 
   const handleClickAcceptBtn = () => {
     handleDialog();

@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -24,21 +26,27 @@ const HomeSection = () => {
 
         <Box sx={{ m: 2 }}>
           <Typography variant="h6" component="h2" gutterBottom>
-            Check
+            <FormattedMessage
+              id="admin.check"
+            />
           </Typography>
           <Button
             variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.checkProductCategories)}
           >
-            Check all product categories
+            <FormattedMessage
+              id="admin.checkCategoriesBtn"
+            />
           </Button>
           <Button 
             variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.checkProducts)}
           >
-            Check all products
+            <FormattedMessage
+              id="admin.checkProductsBtn"
+            />
           </Button>
         </Box>
 
@@ -46,14 +54,18 @@ const HomeSection = () => {
 
         <Box sx={{ m: 2 }}>
           <Typography variant="h6" component="h2" gutterBottom>
-            Create
+            <FormattedMessage
+              id="admin.create"
+            />
           </Typography>
           <Button
             variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createProductCategory)}
           >
-            Add new product category
+            <FormattedMessage
+              id="admin.createCategoryBtn"
+            />
           </Button>
           <Button
             variant="contained"
@@ -61,7 +73,9 @@ const HomeSection = () => {
             onClick={() => onClickSectionBtn(AdminSections.createProduct)}
             disabled={productCategories.length <= 0}
           >
-            Add new product
+            <FormattedMessage
+              id="admin.createProductBtn"
+            />
           </Button>
         </Box>
 
@@ -69,21 +83,27 @@ const HomeSection = () => {
 
         <Box sx={{ m: 2 }}>
           <Typography variant="h6" component="h2" gutterBottom>
-            Manage errors
+            <FormattedMessage
+              id="admin.manageErrors"
+            />
           </Typography>
           <Button
             variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createFailedOrder)}
           >
-            Create failed order
+            <FormattedMessage
+              id="admin.createFailedOrderBtn"
+            />
           </Button>
           <Button
             variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.sendFailedOrderEmail)}
           >
-            Send failed order email
+            <FormattedMessage
+              id="admin.sendFailedOrderEmailBtn"
+            />
           </Button>
         </Box>
       </Box>
