@@ -1,11 +1,12 @@
 import { Component } from 'react';
 
-import { useIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 
 import ErrorPage from '@components/exceptions/ErrorPage';
 
 type ErrorBoundaryProps = {
   children: React.ReactNode,
+  intl: IntlShape,
 };
 
 type ErrorBoundaryState = {
@@ -13,8 +14,6 @@ type ErrorBoundaryState = {
 };
 
 class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  intl = useIntl();
-
   constructor(props: ErrorBoundaryProps) {
     super(props)
     this.state = { hasError: false }
@@ -27,7 +26,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <ErrorPage title={this.intl.formatMessage({ id: 'error.h1' })}/>
+        <ErrorPage title={this.props.intl.formatMessage({ id: 'error.h1' })}/>
       );
     }
 
@@ -35,4 +34,4 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   };
 };
 
-export default ErrorBoundary;
+export default injectIntl(ErrorBoundary);
