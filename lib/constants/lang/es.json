@@ -217,6 +217,7 @@
   "forms.lowestRealPrice": "Precio mas bajo (con descuento)",
   "forms.discountPercent": "Porcentaje de descuento",
   "forms.active": "Activo",
+  "forms.locale": "Código de idioma",
   "forms.id": "ID",
   "forms.userId": "ID del usuario",
   "forms.productId": "ID del producto",

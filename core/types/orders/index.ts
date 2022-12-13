@@ -49,6 +49,7 @@ export type Order = {
 };
 
 export type OrderFailedCreate = {
+  locale: string,
   userId: number,
   braintreeTransactionId: string,
   shipping: UserAddress,

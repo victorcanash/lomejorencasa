@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router'
 
 import { Formik, Form } from 'formik';
 import { useIntl, FormattedMessage } from 'react-intl';
@@ -9,6 +10,9 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
 import Alert from '@mui/material/Alert';
 
 import { AddressTypes } from '@core/constants/addresses';
@@ -26,6 +30,7 @@ type CreateFailedOrderFormProps = {
 const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
   const { onSubmitSuccess, onCancel } = props;
 
+  const router = useRouter();
   const intl = useIntl();
 
   const { createFailedOrder, errorMsg, successMsg } = useOrders();
@@ -109,6 +114,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
 
         <Formik
           initialValues={{
+            locale: orderFieldsInitValues.locale,
             userId: orderFieldsInitValues.userId,
             braintreeTransactionId: orderFieldsInitValues.braintreeTransactionId,
             shipping: {
@@ -124,6 +130,33 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         >
           {props => (
             <Form>
+
+              {/* Locale Field */}
+              <InputLabel id="locale-label">
+                <FormattedMessage 
+                  id="forms.locale" 
+                />
+              </InputLabel>
+              <Select
+                margin="dense"
+                required
+                fullWidth
+                id="locale"
+                name="locale"
+                autoComplete="locale"
+                labelId="locale-label"
+                label={intl.formatMessage({ id: "forms.locale" })}
+                autoFocus
+                value={orderFieldsInitValues.locale}
+                onChange={props.handleChange}
+                error={props.touched.locale && Boolean(props.errors.locale)}
+              >
+                { router.locales?.map((locale) => (
+                  <MenuItem key={locale} value={locale}>
+                    {locale}
+                  </MenuItem>
+                ))}
+              </Select>
 
               {/* UserID Field */}
               <TextField

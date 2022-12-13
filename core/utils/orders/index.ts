@@ -89,7 +89,7 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
   })
 };
 
-export const sendFailedOrderEmail = (token: string, id: number) => {
+export const sendFailedOrderEmail = (token: string, id: number, locale: string) => {
   return new Promise<{order: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
@@ -98,7 +98,7 @@ export const sendFailedOrderEmail = (token: string, id: number) => {
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
     };
-    axios.post(`/orders/${id}/send-email/check`, undefined, options)
+    axios.post(`/orders/${id}/send-email/check`, { locale }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({

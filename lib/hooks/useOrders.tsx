@@ -109,11 +109,11 @@ const useOrders = () => {
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createOrder' }));
   }
 
-  const sendFailedOrderEmail = async (id: number, onSuccess?: (order: Order) => void) => {
+  const sendFailedOrderEmail = async (id: number, locale: string, onSuccess?: (order: Order) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await sendFailedOrderEmailMW(token, id)
+    await sendFailedOrderEmailMW(token, id, locale)
       .then((response: { order: Order }) => {
         onSendFailedOrderEmailSuccess(response.order, onSuccess);
       }).catch((error) => {
