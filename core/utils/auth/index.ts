@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import axios, { getAuthHeaders } from '@core/config/axios.config';
+import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import { pages } from '@core/config/navigation.config';
 import { JWTTokenKey } from '@core/constants/auth';
@@ -212,9 +212,10 @@ export const resetUserPsw = async (updateToken: string, authResetPassword: AuthR
   })
 };
 
-export const sendUserActivationEmail = async (email: string) => {
+export const sendUserActivationEmail = async (currentLocale: string, email: string) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
+      headers: getLanguageHeaders(currentLocale),
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
@@ -236,9 +237,10 @@ export const sendUserActivationEmail = async (email: string) => {
   })
 };
 
-export const sendUserResetPswEmail = async (email: string) => {
+export const sendUserResetPswEmail = async (currentLocale: string, email: string) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
+      headers: getLanguageHeaders(currentLocale),
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
@@ -260,10 +262,13 @@ export const sendUserResetPswEmail = async (email: string) => {
   })
 };
 
-export const sendUserUpdateEmail = async (token: string, authUpdateEmail: AuthUpdateEmail, revertEmail = false) => {
+export const sendUserUpdateEmail = async (token: string, currentLocale: string, authUpdateEmail: AuthUpdateEmail, revertEmail = false) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
-      headers: getAuthHeaders(token),
+      headers: {
+        ...getAuthHeaders(token),
+        ...getLanguageHeaders(currentLocale),
+      },
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,

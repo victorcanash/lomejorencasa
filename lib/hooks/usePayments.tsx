@@ -55,7 +55,7 @@ const usePayments = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await createTransactionMW(token, paymentMethodNonce)
+    await createTransactionMW(token, intl.locale, paymentMethodNonce)
       .then((_response: { order: Order }) => {
         onCreateTransactionSuccess();
       }).catch((error) => {

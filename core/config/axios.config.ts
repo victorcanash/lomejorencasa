@@ -13,3 +13,9 @@ export const getAuthHeaders = (token: string) => {
     'Authorization': `Bearer ${token}`,
   } as AxiosRequestHeaders;
 };
+
+export const getLanguageHeaders = (currentLocale: string) => {
+  return {
+    'Accept-Language': currentLocale,
+  } as AxiosRequestHeaders;
+};

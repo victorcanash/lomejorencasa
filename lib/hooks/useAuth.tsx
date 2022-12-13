@@ -65,7 +65,7 @@ const useAuth = () => {
   };
 
   const onRegisterSuccess = async (email: string, onSuccess?: (email: string) => void) => {
-    await sendUserActivationEmail(email);
+    await sendUserActivationEmail(intl.locale, email);
     if (onSuccess) {
       onSuccess(email);
     }
@@ -195,7 +195,7 @@ const useAuth = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserActivationEmail(email).then(() => {
+    sendUserActivationEmail(intl.locale, email).then(() => {
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'activation.successes.email' }));
       if (onSuccess) {
@@ -221,7 +221,7 @@ const useAuth = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserResetPswEmail(email).then(() => {
+    sendUserResetPswEmail(intl.locale, email).then(() => {
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'reset.successes.email' }));
     }).catch((error: Error) => {
@@ -240,7 +240,7 @@ const useAuth = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserUpdateEmail(token, authUpdateEmail).then(() => {
+    sendUserUpdateEmail(token, intl.locale, authUpdateEmail).then(() => {
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'newemail.successes.email' }));
     }).catch((error: Error) => {
