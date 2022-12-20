@@ -64,6 +64,7 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
           <FormattedMessage 
             id="forms.resendActivation.received" 
           />
+          {" "}
           { timeLeft ?
             <FormattedMessage 
               id="forms.resendActivation.resendTime"

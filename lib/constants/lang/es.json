@@ -257,7 +257,7 @@
   "forms.resetPassword.successBtn": "Resetear",
 
   "forms.resendActivation.title": "Activa tu cuenta",
-  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta antes de que puedas iniciar sessión.<br />Una vez verifiques tu cuenta, procede a iniciar sessión.",
+  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta antes de que puedas iniciar sessión. Una vez verifiques tu cuenta, procede a iniciar sessión.",
   "forms.resendActivation.successBtn": "Reenviar",
   "forms.resendActivation.loginLink": "Proceder a iniciar sessión",
   "forms.resendActivation.received": "No recibiste el correo?",

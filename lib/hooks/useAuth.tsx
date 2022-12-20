@@ -78,15 +78,15 @@ const useAuth = () => {
       onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
     }).catch((error: Error) => {
       let errorMsg = error.message;
-      if (errorMsg.includes('email')) {
-        errorMsg = intl.formatMessage({ id: 'login.errors.email' });
-      } else if (errorMsg.includes('password')) {
-        errorMsg = intl.formatMessage({ id: 'login.errors.password' });
-      } else if (errorMsg.includes('activate')) {
+      if (errorMsg.includes('activate')) {
         errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
         if (onFailByActivation) {
           onFailByActivation(authLogin.email);
         }
+      } else if (errorMsg.includes('email')) {
+        errorMsg = intl.formatMessage({ id: 'login.errors.email' });
+      } else if (errorMsg.includes('password')) {
+        errorMsg = intl.formatMessage({ id: 'login.errors.password' });
       } else if (errorMsg.includes('locked out')) {
         errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
       } else {

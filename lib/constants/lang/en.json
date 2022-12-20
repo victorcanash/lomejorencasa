@@ -233,7 +233,7 @@
   "forms.login.title": "Sign in",
   "forms.login.successBtn": "Sign in",
   "forms.login.forgotLink": "Forgot password?",
-  "forms.login.registerLink": "Don&apos;t have an account? Sign up",
+  "forms.login.registerLink": "Don't have an account? Sign up",
 
   "forms.forgotPassword.title": "Forgotten password",
   "forms.forgotPassword.subtitle": "Change your password",
@@ -257,10 +257,10 @@
   "forms.resetPassword.successBtn": "Reset",
 
   "forms.resendActivation.title": "Activate your account",
-  "forms.resendActivation.description": "We have sent an email to {email} with a link to activate your account before you can login.<br />Once you verified your account, proceed to login.",
+  "forms.resendActivation.description": "We have sent an email to {email} with a link to activate your account before you can login. Once you verified your account, proceed to login.",
   "forms.resendActivation.successBtn": "Resend",
   "forms.resendActivation.loginLink": "Proceed to login",
-  "forms.resendActivation.received": "Didn&apos;t received the email?",
+  "forms.resendActivation.received": "Didn't received the email?",
   "forms.resendActivation.resendTime": "Resend in {timeLeft} second/s",
   "forms.resendActivation.resendNow": "Resend now",
 
