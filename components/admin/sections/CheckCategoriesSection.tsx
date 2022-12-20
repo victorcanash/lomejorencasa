@@ -57,7 +57,7 @@ const CheckCategoriesSection = () => {
                   onClick={() => onClickUpdateBtn(item)}
                 >
                   <FormattedMessage
-                    id="app.updateCategoryBtn"
+                    id="admin.updateCategoryBtn"
                   />
                 </Button>
               </Grid>
