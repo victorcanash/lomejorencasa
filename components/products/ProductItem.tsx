@@ -20,7 +20,7 @@ const ProductItem = (props: ProductItemProps) => {
 
   return (
     <Card className='animate__animated animate__fadeIn' raised>
-      <CardActionArea component={Link} href={`${pages.productDetail.path}/${product.name}?id=${product.id}`} noLinkStyle>
+      <CardActionArea component={Link} href={`${pages.productDetail.path}/${product.name.current}?id=${product.id}`} noLinkStyle>
         <CardMedia>
           <div>
             <Image

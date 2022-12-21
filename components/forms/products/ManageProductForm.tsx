@@ -179,39 +179,69 @@ const ManageProductForm = (props: ManageProductFormProps) => {
               >
                 { productCategories.map((item) => (
                   <MenuItem key={item.id} value={item.id}>
-                    {item.name}
+                    {item.name.current}
                   </MenuItem>
                 ))}
               </Select>
 
-              {/* Name Field */}
+              {/* Name EN Field */}
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="name"
-                name="name"
-                autoComplete="name"        
-                label={intl.formatMessage({ id: "forms.name" })}
-                value={props.values.name}
+                id="name.en"
+                name="name.en"
+                autoComplete="name.en"        
+                label={intl.formatMessage({ id: "forms.name.en" })}
+                value={props.values.name.en}
                 onChange={props.handleChange}
-                error={props.touched.name && Boolean(props.errors.name)}
-                helperText={props.touched.name && props.errors.name}
+                error={props.touched.name?.en && Boolean(props.errors.name?.en)}
+                helperText={props.touched.name?.en && props.errors.name?.en}
               />
 
-              {/* Description Field */}
+              {/* Name ES Field */}
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                id="description"
-                name="description"
-                autoComplete="description"        
-                label={intl.formatMessage({ id: "forms.description" })}
-                value={props.values.description}
+                id="name.es"
+                name="name.es"
+                autoComplete="name.es"        
+                label={intl.formatMessage({ id: "forms.name.es" })}
+                value={props.values.name.es}
                 onChange={props.handleChange}
-                error={props.touched.description && Boolean(props.errors.description)}
-                helperText={props.touched.description && props.errors.description}
+                error={props.touched.name?.es && Boolean(props.errors.name?.es)}
+                helperText={props.touched.name?.es && props.errors.name?.es}
+              />
+
+              {/* Description EN Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="description.en"
+                name="description.en"
+                autoComplete="description.en"        
+                label={intl.formatMessage({ id: "forms.description.en" })}
+                value={props.values.description.en}
+                onChange={props.handleChange}
+                error={props.touched.description?.en && Boolean(props.errors.description?.en)}
+                helperText={props.touched.description?.en && props.errors.description?.en}
+              />
+
+              {/* Description ES Field */}
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="description.es"
+                name="description.es"
+                autoComplete="description.es"        
+                label={intl.formatMessage({ id: "forms.description.es" })}
+                value={props.values.description.es}
+                onChange={props.handleChange}
+                error={props.touched.description?.es && Boolean(props.errors.description?.es)}
+                helperText={props.touched.description?.es && props.errors.description?.es}
               />
 
               { uploadImgs && uploadImgs.length > 0 &&

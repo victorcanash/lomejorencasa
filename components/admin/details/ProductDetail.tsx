@@ -28,13 +28,19 @@ const ProductDetail = (props: ProductDetailProps) => {
         </Typography>
       }
       <Typography component="div" variant="subtitle1">
-        {`${intl.formatMessage({ id: 'forms.name' })}: ${product.name}`}
+        {`${intl.formatMessage({ id: 'forms.name.en' })}: ${product.name.en}`}
       </Typography>
       <Typography component="div" variant="subtitle1">
-        {`${intl.formatMessage({ id: 'forms.description' })}: ${product.description}`}
+        {`${intl.formatMessage({ id: 'forms.name.es' })}: ${product.name.es}`}
       </Typography>
       <Typography component="div" variant="subtitle1">
-        {`${intl.formatMessage({ id: 'forms.category' })}: ${productCategories.filter((item) => item.id == product.categoryId)[0]?.name}`}
+        {`${intl.formatMessage({ id: 'forms.description.en' })}: ${product.description.en}`}
+      </Typography>
+      <Typography component="div" variant="subtitle1">
+        {`${intl.formatMessage({ id: 'forms.description.es' })}: ${product.description.es}`}
+      </Typography>
+      <Typography component="div" variant="subtitle1">
+        {`${intl.formatMessage({ id: 'forms.category' })}: ${productCategories.filter((item) => item.id == product.categoryId)[0]?.name.current}`}
       </Typography>
      
       { created &&

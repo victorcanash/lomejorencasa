@@ -17,12 +17,12 @@ const ProductDescription = (props: ProductDescriptionProps) => {
   return (
     <>
       <Typography component={ detailed ? "h1" : "div" } variant={ detailed ? "h4" : "subtitle1" }>
-        {capitalizeFirstLetter(product.name)}
+        {capitalizeFirstLetter(product.name.current)}
       </Typography>
 
       { detailed &&
         <Typography component="h2" variant="h6">
-          {capitalizeFirstLetter(product.description)}
+          {capitalizeFirstLetter(product.description.current)}
         </Typography>
       }
       

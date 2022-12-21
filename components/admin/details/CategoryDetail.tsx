@@ -22,10 +22,16 @@ const CategoryDetail = (props: CategoryDetailProps) => {
         </Typography>
       }
       <Typography component="div" variant="subtitle1">
-        {`${intl.formatMessage({ id: 'forms.name' })}: ${category.name}`}
+        {`${intl.formatMessage({ id: 'forms.name.en' })}: ${category.name.en}`}
       </Typography>
       <Typography component="div" variant="subtitle1">
-        {`${intl.formatMessage({ id: 'forms.description' })}: ${category.description}`}
+        {`${intl.formatMessage({ id: 'forms.name.es' })}: ${category.name.es}`}
+      </Typography>
+      <Typography component="div" variant="subtitle1">
+        {`${intl.formatMessage({ id: 'forms.description.en' })}: ${category.description.en}`}
+      </Typography>
+      <Typography component="div" variant="subtitle1">
+        {`${intl.formatMessage({ id: 'forms.description.es' })}: ${category.description.es}`}
       </Typography>
     </>
   );

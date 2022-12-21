@@ -29,14 +29,14 @@ const ProductList = (props: ProductListProps) => {
   const router = useRouter();
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getHref(category?.name || allProductsName, page, keywords));
+    router.push(getHref(category?.name.current || allProductsName, page, keywords));
   };
 
   return (
     <>
       <Typography component="h1" variant="h5" className='animate__animated animate__fadeInLeft'>
         { category?.name ?
-          capitalizeFirstLetter(category.name) 
+          capitalizeFirstLetter(category.name.current) 
           :
           <FormattedMessage
             id="productList.allCategories"
@@ -48,7 +48,7 @@ const ProductList = (props: ProductListProps) => {
       {
         category &&
           <Typography component="h2" variant="h6" className='animate__animated animate__fadeInLeft'>
-            { capitalizeFirstLetter(category.description) }
+            { capitalizeFirstLetter(category.description.current) }
           </Typography>
       }
       <Divider sx={{ my: 3 }} />

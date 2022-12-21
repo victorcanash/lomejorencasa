@@ -24,8 +24,8 @@ const useDrawer = (drawer: Drawers) => {
       const categoriesItems = [] as DrawerItem[];
       productCategories.forEach((productCategory) => {
         categoriesItems.push({
-          textId: capitalizeFirstLetter(productCategory.name),
-          path: getHref(productCategory.name)
+          textId: capitalizeFirstLetter(productCategory.name.current),
+          path: getHref(productCategory.name.current)
         });
       });
       setItems(categoriesItems);

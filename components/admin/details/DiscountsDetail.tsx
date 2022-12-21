@@ -35,10 +35,16 @@ const DiscountsDetail = (props: DiscountsDetailProps) => {
             </>
           }
           <Typography component="div" variant="subtitle1">
-            {`${intl.formatMessage({ id: 'forms.name' })}: ${discount.name}`}
+            {`${intl.formatMessage({ id: 'forms.name.en' })}: ${discount.name.en}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`${intl.formatMessage({ id: 'forms.description' })}: ${discount.description}`}
+            {`${intl.formatMessage({ id: 'forms.name.es' })}: ${discount.name.es}`}
+          </Typography>
+          <Typography component="div" variant="subtitle1">
+            {`${intl.formatMessage({ id: 'forms.description.en' })}: ${discount.description.en}`}
+          </Typography>
+          <Typography component="div" variant="subtitle1">
+            {`${intl.formatMessage({ id: 'forms.description.es' })}: ${discount.description.es}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
             {`${intl.formatMessage({ id: 'forms.discountPercent' })}: ${discount.discountPercent} %`}

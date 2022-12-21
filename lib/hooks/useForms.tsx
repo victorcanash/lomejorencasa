@@ -162,58 +162,53 @@ const useForms = () => {
     inventoryId: 0,
   };
 
+  const localizedTextsFieldsValidation = {
+    en: Yup
+      .string()
+      .min(3)
+      .required(),
+    es: Yup
+      .string()
+      .min(3)
+      .required(),
+  };
+
+  const localizedTextsFieldsInitValues = {
+    en: '',
+    es: '',
+  };
+
   const productFieldsValidation = {
     categoryId: Yup
       .number()
       .min(0)
       .required(),
-    name: Yup
-      .string()
-      .min(3)
-      .max(12)
-      .required(),
-    description: Yup
-      .string()
-      .min(3)
-      .required(),
+    name: Yup.object().shape(localizedTextsFieldsValidation),
+    description: Yup.object().shape(localizedTextsFieldsValidation),
   };
 
   const productFieldsInitValues = {
     categoryId: 0,
-    name: '',
-    description: '',
+    name: localizedTextsFieldsInitValues,
+    description: localizedTextsFieldsInitValues,
   };
 
   const categoryFieldsValidation = {
-    name: Yup
-      .string()
-      .min(3)
-      .max(12)
-      .required(),
-    description: Yup
-      .string()
-      .min(3)
-      .required(),
-  };
+    name: Yup.object().shape(localizedTextsFieldsValidation),
+    description: Yup.object().shape(localizedTextsFieldsValidation),
+  }
 
   const categoryFieldsInitValues = {
-    name: '',
-    description: '',
-  };
+    name: localizedTextsFieldsInitValues,
+    description: localizedTextsFieldsInitValues,
+  }
 
   const inventoryFieldsValidation = {
     sku: Yup
       .string()
       .required(),
-    name: Yup
-      .string()
-      .min(3)
-      .max(12)
-      .required(),
-    description: Yup
-      .string()
-      .min(3)
-      .required(),
+    name: Yup.object().shape(localizedTextsFieldsValidation),
+    description: Yup.object().shape(localizedTextsFieldsValidation),
     price: Yup
       .number()
       .min(0)
@@ -222,21 +217,14 @@ const useForms = () => {
 
   const inventoryFieldsInitValues = {
     sku: '',
-    name: '',
-    description: '',
+    name: localizedTextsFieldsInitValues,
+    description: localizedTextsFieldsInitValues,
     price: 0,
   };
 
   const discountFieldsValidation = {
-    name: Yup
-      .string()
-      .min(3)
-      .max(12)
-      .required(),
-    description: Yup
-      .string()
-      .min(3)
-      .required(),
+    name: Yup.object().shape(localizedTextsFieldsValidation),
+    description: Yup.object().shape(localizedTextsFieldsValidation),
     discountPercent: Yup
       .number()
       .min(0.1)
@@ -246,8 +234,8 @@ const useForms = () => {
   };
 
   const discountFieldsInitValues = {
-    name: '',
-    description: '',
+    name: localizedTextsFieldsInitValues,
+    description: localizedTextsFieldsInitValues,
     discountPercent: 0.1,
     active: false,
   };
@@ -330,7 +318,7 @@ const useForms = () => {
   const manageInventoryFormValidation = Yup.object().shape({
     sku: inventoryFieldsValidation.sku,
     name: inventoryFieldsValidation.name,
-    description: inventoryFieldsValidation.description,
+    description: productFieldsValidation.description,
     price: inventoryFieldsValidation.price,
   });
 

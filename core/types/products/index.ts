@@ -1,8 +1,10 @@
+import { LocalizedText } from '@core/types/localizedTexts';
+
 export type Product = {
   id: number,
   categoryId: number,
-  name: string,
-  description: string,
+  name: LocalizedText,
+  description: LocalizedText,
   lowestPrice: number,
   lowestRealPrice: number,
   imageNames: string[],
@@ -13,16 +15,16 @@ export type Product = {
 
 export type ProductCategory = {
   id: number,
-  name: string,
-  description: string,
+  name: LocalizedText,
+  description: LocalizedText,
 };
 
 export type ProductInventory = {
   id: number,
   productId: number,
   sku: string,
-  name: string,
-  description: string,
+  name: LocalizedText,
+  description: LocalizedText,
   price: number,
   realPrice: number,
   bigbuy: {
@@ -38,8 +40,8 @@ export type ProductInventory = {
 export type ProductDiscount = {
   id: number,
   productId: number,
-  name: string,
-  description: string,
+  name: LocalizedText,
+  description: LocalizedText,
   discountPercent: number,
   active: boolean,
 };

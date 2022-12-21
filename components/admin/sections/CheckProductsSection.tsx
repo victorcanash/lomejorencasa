@@ -80,7 +80,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
   };
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getHref(category?.name || allProductsName, page, keywords));
+    router.push(getHref(category?.name.current || allProductsName, page, keywords));
   };
 
   const refreshProduct = (productId: number) => {

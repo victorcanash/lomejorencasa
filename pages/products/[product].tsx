@@ -20,7 +20,7 @@ const Product: NextPage<ProductProps> = (props) => {
   return (
     <>
       <Head>
-        <title>{product.name}</title>
+        <title>{product.name.current}</title>
         <meta name="description" content={description} />
       </Head>
 

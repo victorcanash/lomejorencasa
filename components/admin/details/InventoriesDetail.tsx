@@ -47,10 +47,16 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
             {`${intl.formatMessage({ id: 'forms.sku' })}: ${inventory.sku}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`${intl.formatMessage({ id: 'forms.name' })}: ${inventory.name}`}
+            {`${intl.formatMessage({ id: 'forms.name.en' })}: ${inventory.name.en}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
-            {`${intl.formatMessage({ id: 'forms.description' })}: ${inventory.description}`}
+            {`${intl.formatMessage({ id: 'forms.name.es' })}: ${inventory.name.es}`}
+          </Typography>
+          <Typography component="div" variant="subtitle1">
+            {`${intl.formatMessage({ id: 'forms.description.en' })}: ${inventory.description.en}`}
+          </Typography>
+          <Typography component="div" variant="subtitle1">
+            {`${intl.formatMessage({ id: 'forms.description.es' })}: ${inventory.description.es}`}
           </Typography>
           <Typography component="div" variant="subtitle1">
             {`${intl.formatMessage({ id: 'forms.price' })}: ${inventory.price}`}

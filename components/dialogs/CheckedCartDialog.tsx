@@ -69,8 +69,8 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
                 <FormattedMessage
                   id="dialogs.checkedCart.content.changedItem"
                   values={{
-                    productName: item.inventory.product.name,
-                    inventoryName: item.inventory.name,
+                    productName: item.inventory.product.name.current,
+                    inventoryName: item.inventory.name.current,
                     quantity: item.quantity,
                   }}
                 />

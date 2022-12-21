@@ -29,7 +29,7 @@ const useSelectInventory = (product: Product) => {
   }, [loaded, product.inventories, router.asPath]);
 
   const handleSelectChange = (name: string) => {
-    setSelectedInventory(product.inventories.find(item => item.name === name));
+    setSelectedInventory(product.inventories.find(item => item.name.current === name));
   };
 
   const Select = () => {
@@ -38,16 +38,16 @@ const useSelectInventory = (product: Product) => {
         <MuiSelect
           labelId="inventory-select-label"
           id="inventory-select"
-          value={selectedInventory?.name || ''}
+          value={selectedInventory?.name.current || ''}
           label={intl.formatMessage({ id: 'forms.selectInventory.label' })}
           onChange={handleChange}
         >
           { product.inventories.map((item) => (
-            <MenuItem key={item.id} value={item.name}>
+            <MenuItem key={item.id} value={item.name.current}>
               <FormattedMessage
                 id="forms.selectInventory.content"
                 values={{
-                  name: item.name,
+                  name: item.name.current,
                   quantity: item.bigbuy.quantity,
                 }}
               />

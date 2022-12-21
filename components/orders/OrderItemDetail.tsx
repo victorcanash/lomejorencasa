@@ -55,10 +55,10 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
         <Grid item xs container direction="column" spacing={2}>
           <Grid item xs style={orderItem.quantity <= 0 ? {color: 'grey'} : undefined}>
             <Typography gutterBottom variant="subtitle1" component="div">
-              {orderItem.inventory?.product.name || orderItem.name}
+              {orderItem.inventory?.product.name.current || orderItem.name}
             </Typography>
             <Typography variant="body2">
-              {orderItem.inventory?.name || undefined}
+              {orderItem.inventory?.name.current || undefined}
             </Typography>
             <Typography variant="body2">
               {`${intl.formatMessage({ id: "forms.quantity" })}: ${orderItem.quantity.toString()}`}

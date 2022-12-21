@@ -70,7 +70,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       <Grid container spacing={2}>
 
         <Grid item>
-          <Link href={`${pages.productDetail.path}/${item.inventory.product.name}?id=${item.inventory.product.id}`} noLinkStyle>
+          <Link href={`${pages.productDetail.path}/${item.inventory.product.name.current}?id=${item.inventory.product.id}`} noLinkStyle>
             <div style={{ position: 'relative', minWidth: '100px' }}>
               <Image
                 src={getProductImgUrl(item.inventory.product)}
@@ -90,10 +90,10 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
             <Grid item xs style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
               <Typography gutterBottom variant="subtitle1" component="div">
-                {item.inventory.product.name}
+                {item.inventory.product.name.current}
               </Typography>
               <Typography variant="body2">
-                {item.inventory.name || ''}
+                {item.inventory.name.current || ''}
               </Typography>
               { !updateQuantity &&
                 <Typography variant="body2">
