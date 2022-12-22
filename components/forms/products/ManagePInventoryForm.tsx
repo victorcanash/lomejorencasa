@@ -147,6 +147,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                 name="name.en"
                 autoComplete="name.en"        
                 label={intl.formatMessage({ id: "forms.name.en" })}
+                autoFocus
                 value={props.values.name.en}
                 onChange={props.handleChange}
                 error={props.touched.name?.en && Boolean(props.errors.name?.en)}

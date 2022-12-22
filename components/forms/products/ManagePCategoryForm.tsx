@@ -133,7 +133,6 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
                 name="name.es"
                 autoComplete="name.es"        
                 label={intl.formatMessage({ id: "forms.name.es" })}
-                autoFocus
                 value={props.values.name.es}
                 onChange={props.handleChange}
                 error={props.touched.name?.es && Boolean(props.errors.name?.es)}
