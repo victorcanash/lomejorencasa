@@ -1,5 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import type { ProductCategory } from '@core/types/products';
 import { getAllProductCategories } from '@core/utils/products';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -11,6 +13,8 @@ const useApp = (fromLinkLayout: boolean) => {
   const { setInitialized } = useAppContext();
   const { setProductCategories } = useSearchContext();
 
+  const intl = useIntl();
+
   const { getLogged } = useAuth();
   const { initForms } = useForms();
 
@@ -20,7 +24,7 @@ const useApp = (fromLinkLayout: boolean) => {
     initForms();
     if (!fromLinkLayout) {
       await getLogged();
-      await getAllProductCategories().then((response: {productCategories: ProductCategory[]}) => {
+      await getAllProductCategories(intl.locale).then((response: {productCategories: ProductCategory[]}) => {
         setProductCategories(response.productCategories);
         setInitialized(true);
       }).catch((error: Error) => {
@@ -29,7 +33,7 @@ const useApp = (fromLinkLayout: boolean) => {
     } else {
       setInitialized(true);
     }
-  }, [initForms, fromLinkLayout, getLogged, setProductCategories, setInitialized]);
+  }, [initForms, fromLinkLayout, getLogged, intl.locale, setProductCategories, setInitialized]);
 
   useEffect(() => {
     if (!firstRenderRef.current) {

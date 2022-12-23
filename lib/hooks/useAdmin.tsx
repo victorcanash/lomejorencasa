@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
+import { useIntl } from 'react-intl';
+
 import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductCategory } from '@core/types/products';
 import { getAllProducts, getProduct } from '@core/utils/products';
@@ -13,20 +15,21 @@ const useAdmin = (checkedPage: boolean) => {
   const { token } = useAuthContext();
 
   const router = useRouter();
+  const intl = useIntl();
 
   const [section, setSection] = useState<AdminSections | undefined>(undefined);
   const [checkProductsProps, setCheckProductsProps] = useState<CheckProductsSectionProps | undefined>(undefined);
 
   const getAdminProduct = useCallback(async (id: number, onSuccess: (product: Product) => void) => {
     setLoading(true);
-    await getProduct(token, id, true)
+    await getProduct(token, intl.locale, id, true)
       .then((response: { product: Product }) => {
         onSuccess(response.product);
         setLoading(false);
-    }).catch((error: Error) => {
+    }).catch((_error: Error) => {
       setLoading(false);
     })
-  }, [setLoading, token]);
+  }, [intl.locale, setLoading, token]);
 
   const getCheckProductsProps = useCallback(async (sectionSearch: AdminSections) => {
     const { category, page, sortBy, order, keywords } = router.query;
@@ -36,7 +39,7 @@ const useAdmin = (checkedPage: boolean) => {
     const orderSearch = typeof order == 'string' ? order : 'asc';
     const keywordsSearch = typeof keywords == 'string' ? keywords : '';
 
-    await getAllProducts(token, pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, true)
+    await getAllProducts(token, intl.locale, pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, true)
     .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
       setCheckProductsProps({
         category: response.productCategory,
@@ -47,10 +50,10 @@ const useAdmin = (checkedPage: boolean) => {
         getAdminProduct: getAdminProduct,
       });
       setSection(sectionSearch);
-    }).catch((error: Error) => {
+    }).catch((_error: Error) => {
       setSection(AdminSections.home);
     })
-  }, [getAdminProduct, router.query, token]);
+  }, [getAdminProduct, intl.locale, router.query, token]);
   
   useEffect(() => {
     if (checkedPage) {

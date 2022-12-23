@@ -1,7 +1,7 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import axios, { getAuthHeaders } from '@core/config/axios.config';
+import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
 import { ManageActions } from '@core/constants/auth';
@@ -9,7 +9,16 @@ import type { Product, ProductCategory, ProductInventory, ProductDiscount } from
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import placeholder from 'public/images/placeholder.jpeg';
 
-export const getAllProducts = async (token: string, page: number, sortBy: string, order: string, keywords: string, categoryName: string, adminData = false) => {
+export const getAllProducts = async (
+  token: string, 
+  currentLocale: string, 
+  page: number, 
+  sortBy: string, 
+  order: string, 
+  keywords: string, 
+  categoryName: string, 
+  adminData = false
+) => {
   return new Promise<{
     products: Product[], 
     productCategory: ProductCategory | null, 
@@ -28,7 +37,10 @@ export const getAllProducts = async (token: string, page: number, sortBy: string
         ordersRemain: orderRemainsSearch,
         adminData,
       },
-      headers: getAuthHeaders(token),
+      headers: {
+        ...getAuthHeaders(token),
+        ...getLanguageHeaders(currentLocale),
+      },
     };
     axios.get('/products', options)
       .then(async (response: AxiosResponse) => {
@@ -50,13 +62,16 @@ export const getAllProducts = async (token: string, page: number, sortBy: string
   });
 };
 
-export const getProduct = (token: string, id: number, adminData = false) => {
+export const getProduct = (token: string, currentLocale: string, id: number, adminData = false) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       params: {
         adminData,
       },
-      headers: getAuthHeaders(token),
+      headers: {
+        ...getAuthHeaders(token),
+        ...getLanguageHeaders(currentLocale),
+      },
     };
     axios.get(`/products/${id}`, options)
       .then(async (response: AxiosResponse) => {
@@ -82,7 +97,7 @@ export const getProductImgUrl = (product: Product, index = 0) => {
   return placeholder;
 };
 
-export const getAllProductCategories = async (sortBy?: string, order?: string) => {
+export const getAllProductCategories = async (currentLocale: string, sortBy?: string, order?: string) => {
   return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       params: {
@@ -90,7 +105,8 @@ export const getAllProductCategories = async (sortBy?: string, order?: string) =
         limit: 1000,
         sortBy,
         order,
-      }
+      },
+      headers: getLanguageHeaders(currentLocale),
     }
     axios.get('/product-categories', options)
       .then(async (response: AxiosResponse) => {
@@ -109,7 +125,7 @@ export const getAllProductCategories = async (sortBy?: string, order?: string) =
   })
 };
 
-export const manageProduct = (action: ManageActions, token: string, product: Product) => {
+export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     let promiseMW = createProduct;
     let successStatus = StatusCodes.CREATED;
@@ -123,7 +139,7 @@ export const manageProduct = (action: ManageActions, token: string, product: Pro
       errorTitle = 'Delete Product ERROR';
     }
 
-    promiseMW(token, product)
+    promiseMW(token, currentLocale, product)
       .then(async (response: AxiosResponse) => {
         if (response.status === successStatus) {
           resolve({
@@ -140,23 +156,32 @@ export const manageProduct = (action: ManageActions, token: string, product: Pro
   });
 };
 
-const createProduct = (token: string, product: Product) => {
+const createProduct = (token: string, currentLocale: string, product: Product) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.post('/products', product, options);
 };
 
-const updateProduct = (token: string, product: Product) => {
+const updateProduct = (token: string, currentLocale: string, product: Product) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.put(`/products/${product.id}`, product, options);
 };
 
-const deleteProduct = (token: string, product: Product) => {
+const deleteProduct = (token: string, currentLocale: string, product: Product) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.delete(`/products/${product.id}`, options)
 }
@@ -212,7 +237,7 @@ export const deleteProductImg = (token: string, id: number, productId: number) =
   }); 
 };
 
-export const manageProductCategory = (action: ManageActions, token: string, productCategory: ProductCategory) => {
+export const manageProductCategory = (action: ManageActions, token: string, currentLocale: string, productCategory: ProductCategory) => {
   return new Promise<{productCategory: ProductCategory}>(async (resolve, reject) => {
     let promiseMW = createProductCategory;
     let successStatus = StatusCodes.CREATED;
@@ -226,7 +251,7 @@ export const manageProductCategory = (action: ManageActions, token: string, prod
       errorTitle = 'Delete Product Category ERROR';
     }
 
-    promiseMW(token, productCategory)
+    promiseMW(token, currentLocale, productCategory)
       .then(async (response: AxiosResponse) => {
         if (response.status === successStatus) {
           resolve({
@@ -243,28 +268,37 @@ export const manageProductCategory = (action: ManageActions, token: string, prod
   });
 };
 
-const createProductCategory = (token: string, productCategory: ProductCategory) => {
+const createProductCategory = (token: string, currentLocale: string, productCategory: ProductCategory) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.post('/product-categories', productCategory, options);
 };
 
-const updateProductCategory = (token: string, productCategory: ProductCategory) => {
+const updateProductCategory = (token: string, currentLocale: string, productCategory: ProductCategory) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.put(`/product-categories/${productCategory.id}`, productCategory, options);
 };
 
-const deleteProductCategory = (token: string, productCategory: ProductCategory) => {
+const deleteProductCategory = (token: string, currentLocale: string, productCategory: ProductCategory) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.delete(`/product-categories/${productCategory.id}`, options)
 }
 
-export const manageProductInventory = (action: ManageActions, token: string, productInventory: ProductInventory) => {
+export const manageProductInventory = (action: ManageActions, token: string, currentLocale: string, productInventory: ProductInventory) => {
   return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {
     let promiseMW = createProductInventory;
     let successStatus = StatusCodes.CREATED;
@@ -278,7 +312,7 @@ export const manageProductInventory = (action: ManageActions, token: string, pro
       errorTitle = 'Delete Product Inventory ERROR';
     }
 
-    promiseMW(token, productInventory)
+    promiseMW(token, currentLocale, productInventory)
       .then(async (response: AxiosResponse) => {
         if (response.status === successStatus) {
           resolve({
@@ -295,28 +329,37 @@ export const manageProductInventory = (action: ManageActions, token: string, pro
   });
 };
 
-const createProductInventory = (token: string, productInventory: ProductInventory) => {
+const createProductInventory = (token: string, currentLocale: string, productInventory: ProductInventory) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.post('/product-inventories', productInventory, options);
 };
 
-const updateProductInventory = (token: string, productInventory: ProductInventory) => {
+const updateProductInventory = (token: string, currentLocale: string, productInventory: ProductInventory) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.put(`/product-inventories/${productInventory.id}`, productInventory, options);
 };
 
-const deleteProductInventory = (token: string, productInventory: ProductInventory) => {
+const deleteProductInventory = (token: string, currentLocale: string, productInventory: ProductInventory) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.delete(`/product-inventories/${productInventory.id}`, options)
 }
 
-export const manageProductDiscount = (action: ManageActions, token: string, productDiscount: ProductDiscount) => {
+export const manageProductDiscount = (action: ManageActions, token: string, currentLocale: string, productDiscount: ProductDiscount) => {
   return new Promise<{productDiscount: ProductDiscount}>(async (resolve, reject) => {
     let promiseMW = createProductDiscount;
     let successStatus = StatusCodes.CREATED;
@@ -330,7 +373,7 @@ export const manageProductDiscount = (action: ManageActions, token: string, prod
       errorTitle = 'Delete Product Discount ERROR';
     }
 
-    promiseMW(token, productDiscount)
+    promiseMW(token, currentLocale, productDiscount)
       .then(async (response: AxiosResponse) => {
         if (response.status === successStatus) {
           resolve({
@@ -347,23 +390,32 @@ export const manageProductDiscount = (action: ManageActions, token: string, prod
   });
 };
 
-const createProductDiscount = (token: string, productDiscount: ProductDiscount) => {
+const createProductDiscount = (token: string, currentLocale: string, productDiscount: ProductDiscount) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.post('/product-discounts', productDiscount, options);
 };
 
-const updateProductDiscount = (token: string, productDiscount: ProductDiscount) => {
+const updateProductDiscount = (token: string, currentLocale: string, productDiscount: ProductDiscount) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.put(`/product-discounts/${productDiscount.id}`, productDiscount, options);
 };
 
-const deleteProductDiscount = (token: string, productDiscount: ProductDiscount) => {
+const deleteProductDiscount = (token: string, currentLocale: string, productDiscount: ProductDiscount) => {
   const options: AxiosRequestConfig = {
-    headers: getAuthHeaders(token),
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
   };
   return axios.delete(`/product-discounts/${productDiscount.id}`, options)
 };

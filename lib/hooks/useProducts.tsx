@@ -65,18 +65,18 @@ const useProducts = () => {
     let productImages: string[] = [];
 
     try {
-      productId = await (await manageProductMW(ManageActions.create, token, product)).product.id;
+      productId = await (await manageProductMW(ManageActions.create, token, intl.locale, product)).product.id;
 
       productImages = await (await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productId)).productImages;
 
       for (const inventory of inventories) {
         inventory.productId = productId;
-        await manageProductInventoryMW(ManageActions.create, token, inventory);
+        await manageProductInventoryMW(ManageActions.create, token, intl.locale, inventory);
       }
 
       for (const discount of discounts) {
         discount.productId = productId;
-        await manageProductDiscountMW(ManageActions.create, token, discount);
+        await manageProductDiscountMW(ManageActions.create, token, intl.locale, discount);
       }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -88,7 +88,7 @@ const useProducts = () => {
           }
         }
         product = { ...product, id: productId }
-        await manageProductMW(ManageActions.delete, token, product);
+        await manageProductMW(ManageActions.delete, token, intl.locale, product);
       }
       setLoading(false);
       setErrorMsg(error.message);
@@ -115,7 +115,7 @@ const useProducts = () => {
     let productResponse;
 
     try {
-      productResponse = await (await manageProductMW(ManageActions.update, token, product)).product;
+      productResponse = await (await manageProductMW(ManageActions.update, token, intl.locale, product)).product;
 
       if (deleteImgs && deleteImgs.length > 0) {
         for (let i = deleteImgs.length - 1; i >= 0; i--) {
@@ -155,7 +155,7 @@ const deleteProduct = async (
         }
       }
 
-      await manageProductMW(ManageActions.delete, token, product);
+      await manageProductMW(ManageActions.delete, token, intl.locale, product);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -175,7 +175,7 @@ const deleteProduct = async (
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    manageProductCategoryMW(action, token, productCategory)
+    manageProductCategoryMW(action, token, intl.locale, productCategory)
       .then((response: {productCategory: ProductCategory}) => {
         let responseProductCategory = response.productCategory;
         if (!responseProductCategory) {
@@ -221,7 +221,7 @@ const deleteProduct = async (
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    manageProductInventoryMW(action, token, productInventory)
+    manageProductInventoryMW(action, token, intl.locale, productInventory)
       .then((response: {productInventory: ProductInventory}) => {
         onManagePInventorySuccess(response.productInventory, onSuccess);
       }).catch((error: Error) => {
@@ -242,7 +242,7 @@ const deleteProduct = async (
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    manageProductDiscountMW(action, token, productDiscount)
+    manageProductDiscountMW(action, token, intl.locale, productDiscount)
       .then((response: {productDiscount: ProductDiscount}) => {
         onManagePDiscountSuccess(response.productDiscount, onSuccess);
       }).catch((error: Error) => {
