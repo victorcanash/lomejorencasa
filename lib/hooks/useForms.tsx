@@ -69,6 +69,10 @@ const useForms = () => {
       )
       .nullable()
       .required(),
+    getEmails: Yup
+      .boolean(),
+    remember: Yup
+      .boolean(),
   };
 
   const userFieldsInitValues = { 
@@ -78,6 +82,8 @@ const useForms = () => {
     firstName: '',
     lastName: '',
     birthday: subtractYears(18),
+    getEmails: false,
+    remember: true,
   };
 
   const addressFieldsValidation = {
@@ -245,6 +251,7 @@ const useForms = () => {
   const loginFormValidation = Yup.object().shape({
     email: userFieldsValidation.email,
     password: userFieldsValidation.password,
+    remember: userFieldsValidation.remember,
   });
   
   const registerFormValidation = Yup.object().shape({
@@ -254,6 +261,7 @@ const useForms = () => {
     firstName: userFieldsValidation.firstName,
     lastName: userFieldsValidation.lastName,
     birthday: userFieldsValidation.birthday,
+    getEmails: userFieldsValidation.getEmails,
   });
   
   const sendEmailFormValidation = Yup.object().shape({
@@ -274,6 +282,7 @@ const useForms = () => {
     firstName: userFieldsValidation.firstName,
     lastName: userFieldsValidation.lastName,
     birthday: userFieldsValidation.birthday,
+    getEmails: userFieldsValidation.getEmails,
   });
 
   const checkoutAddressesFormValidation = Yup.object().shape({

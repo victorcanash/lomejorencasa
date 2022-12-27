@@ -199,6 +199,7 @@
   "forms.firstName": "Nombre",
   "forms.lastName": "Apellido",
   "forms.birthday": "Fecha de cumpleaños",
+  "forms.getEmails": "Quiero recibir inspiración, promociones de marketing y actualizaciones por correo electrónico",
   "forms.shipping": "Dirección de envío",
   "forms.billing": "Dirección de facturación",
   "forms.addressLine1": "Línea de dirección 1",

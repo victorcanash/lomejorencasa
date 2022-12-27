@@ -4,6 +4,8 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
@@ -49,6 +51,7 @@ const UpdateUserForm = () => {
             firstName: user?.firstName || userFieldsInitValues.firstName,
             lastName: user?.lastName || userFieldsInitValues.lastName,
             birthday: user?.birthday || userFieldsInitValues.birthday,
+            getEmails: userFieldsInitValues.getEmails,
           } as User}
           validationSchema={updateUserFormValidation}
           onSubmit={handleSubmit}
@@ -111,6 +114,16 @@ const UpdateUserForm = () => {
                     helperText={props.touched.birthday && props.errors.birthday as string}                   
                   />
                 }
+              />
+
+              {/* Get Emails Field */}
+              <FormControlLabel
+                id="getEmails"
+                name="getEmails"
+                control={<Checkbox value="getEmails" color="primary" />}
+                label={intl.formatMessage({ id: "forms.getEmails" })}
+                value={props.values.getEmails}
+                onChange={props.handleChange}
               />
 
               <Button

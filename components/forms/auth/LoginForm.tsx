@@ -65,6 +65,7 @@ const LoginForm = (props: LoginFormProps) => {
           initialValues={{
             email: userFieldsInitValues.email,
             password: userFieldsInitValues.password,
+            remember: userFieldsInitValues.remember,
           } as AuthLogin}
           validationSchema={loginFormValidation}
           onSubmit={handleSubmit}
@@ -104,9 +105,14 @@ const LoginForm = (props: LoginFormProps) => {
                 helperText={props.touched.password && props.errors.password}
               />
 
+              {/* Remember Field */}
               <FormControlLabel
+                id="remember"
+                name="remember"
                 control={<Checkbox value="remember" color="primary" />}
                 label={intl.formatMessage({ id: "forms.rememberMe" })}
+                value={props.values.remember}
+                onChange={props.handleChange}
               />
 
               <Button

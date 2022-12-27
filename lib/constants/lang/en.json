@@ -199,6 +199,7 @@
   "forms.firstName": "First name",
   "forms.lastName": "Last name",
   "forms.birthday": "Birthday",
+  "forms.getEmails": "I want to receive inspiration, marketing promotions and updates via email",
   "forms.shipping": "Shipping address",
   "forms.billing": "Billing address",
   "forms.addressLine1": "Address line 1",

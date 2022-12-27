@@ -1,6 +1,7 @@
 export type AuthLogin = {
   email: string,
   password: string,
+  remember: boolean,
 };
 
 export type AuthRegister = {
@@ -10,6 +11,7 @@ export type AuthRegister = {
   firstName: string,
   lastName: string,
   birthday: Date,
+  getEmails: boolean,
 };
 
 export type AuthUpdateEmail = {

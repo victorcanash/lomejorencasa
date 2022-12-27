@@ -4,8 +4,8 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-// import FormControlLabel from '@mui/material/FormControlLabel';
-// import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -70,6 +70,7 @@ const RegisterForm = (props: RegisterFormProps) => {
             firstName: userFieldsInitValues.firstName,
             lastName: userFieldsInitValues.lastName,
             birthday: userFieldsInitValues.birthday,
+            getEmails: userFieldsInitValues.getEmails,
           } as AuthRegister}
           validationSchema={registerFormValidation}
           onSubmit={handleSubmit}
@@ -180,10 +181,15 @@ const RegisterForm = (props: RegisterFormProps) => {
                 }
               />
 
-              {/*<FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="I want to receive inspiration, marketing promotions and updates via email."
-              />*/}
+              {/* Get Emails Field */}
+              <FormControlLabel
+                id="getEmails"
+                name="getEmails"
+                control={<Checkbox value="getEmails" color="primary" />}
+                label={intl.formatMessage({ id: "forms.getEmails" })}
+                value={props.values.getEmails}
+                onChange={props.handleChange}
+              />
 
               <Button
                 type="submit"

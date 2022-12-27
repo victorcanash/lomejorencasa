@@ -6,6 +6,7 @@ export type User = {
   firstName: string,
   lastName: string,
   birthday: Date,
+  getEmails: boolean,
   shipping?: UserAddress,
   billing?: UserAddress,
 };

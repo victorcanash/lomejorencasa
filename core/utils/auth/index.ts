@@ -64,7 +64,9 @@ export const loginUser = async (authLogin: AuthLogin) => {
             if (prevToken !== '') {
               await logoutUser(prevToken);
             }
-            await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
+            if (authLogin.remember) {
+              await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
+            }
             resolve({
               token: response.data.token,
               user: response.data.user,
@@ -95,7 +97,11 @@ export const logoutUser = async (token: string) => {
 
 export const getLoggedUser = async () => {
   return new Promise<{token: string, user: User, braintreeToken: string, cart: Cart}>(async (resolve, reject) => {
-    const token = await getStorageItem(Storages.local, JWTTokenKey) || '';
+    const token = await getStorageItem(Storages.local, JWTTokenKey);
+    if (!token) {
+      reject(new Error('Empty token'));
+      return;
+    }
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
     };
@@ -117,10 +123,13 @@ export const getLoggedUser = async () => {
           throw new Error('Something went wrong');
         }
       }).catch(async (error) => {
-        await removeStorageItem(Storages.local, JWTTokenKey);
-        /* if (error.response?.status === StatusCodes.UNAUTHORIZED || error.response?.status === StatusCodes.NOT_FOUND) {
-          removeStorageItem(Storages.local, JWTTokenKey);
-        }*/
+        // await removeStorageItem(Storages.local, JWTTokenKey);
+        if (error.response?.status === StatusCodes.UNAUTHORIZED || 
+            error.response?.status === StatusCodes.NOT_FOUND ||
+            error.message.includes('You are locked out') ||
+            error.message.includes('You need to activate your account')) {
+          await removeStorageItem(Storages.local, JWTTokenKey);
+        }
         const errorMsg = getBackendErrorMsg('Get Logged User ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
