@@ -107,12 +107,15 @@ const LoginForm = (props: LoginFormProps) => {
 
               {/* Remember Field */}
               <FormControlLabel
-                id="remember"
-                name="remember"
-                control={<Checkbox value="remember" color="primary" />}
                 label={intl.formatMessage({ id: "forms.rememberMe" })}
-                value={props.values.remember}
-                onChange={props.handleChange}
+                control={
+                  <Checkbox 
+                    id="remember"
+                    name="remember"
+                    checked={props.values.remember} 
+                    onChange={props.handleChange}
+                  />
+                }
               />
 
               <Button

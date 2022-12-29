@@ -168,7 +168,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                 }} 
                 renderInput={(params) => 
                   <TextField 
-                    {...params} 
+                    {...params}
                     margin="normal" 
                     required 
                     fullWidth 
@@ -183,12 +183,16 @@ const RegisterForm = (props: RegisterFormProps) => {
 
               {/* Get Emails Field */}
               <FormControlLabel
-                id="getEmails"
-                name="getEmails"
-                control={<Checkbox value="getEmails" color="primary" />}
                 label={intl.formatMessage({ id: "forms.getEmails" })}
-                value={props.values.getEmails}
-                onChange={props.handleChange}
+                control={
+                  <Checkbox 
+                    id="getEmails"
+                    name="getEmails"
+                    checked={props.values.getEmails} 
+                    onChange={props.handleChange}
+                  />
+                }
+                sx={{ mt: 1 }}
               />
 
               <Button
