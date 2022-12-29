@@ -329,5 +329,10 @@
   "dialogs.confirm.confirmBtn": "Confirmar",
   "dialogs.confirm.cancelBtn": "Cancelar",
 
+  "dialogs.cookies.title": "Alguien dijo... cookies?",
+  "dialogs.cookies.content": "Utilizamos cookies para ofrecerte un servicio mejor, más seguro y más rápido y para apoyar nuestro negocio. Algunas cookies son necesarias para utilizar nuestros servicios, mejorarlos y asegurarse de que funcionan correctamente. Si haces clic en 'Aceptar todas las cookies', también permites utilizar cookies para ofrecerte anuncios y comunicaciones adaptados a tus intereses. Si haces clic en 'Rechazar cookies no necesarias', no utilizaremos las cookies para recopilar datos adicionales para mostrar anuncios y comunicaciones personalizados. Para obtener más información visite la página de cookies.",
+  "dialogs.cookies.acceptBtn": "Aceptar todas las cookies",
+  "dialogs.cookies.refuseBtn": "Rechazar cookies no necesarias",
+
   "ES": "España"
 }

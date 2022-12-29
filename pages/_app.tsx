@@ -93,7 +93,7 @@ function MyApp(props: MyAppProps) {
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <SnackbarProvider maxSnack={3}>
-                  <LocalizationProvider dateAdapter={AdapterMoment}>
+                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={locale || 'en'}>
                     
                     <ErrorBoundary>
                       <AppProvider>

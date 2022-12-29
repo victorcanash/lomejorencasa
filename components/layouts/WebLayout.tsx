@@ -1,10 +1,12 @@
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
+import useCookies from '@lib/hooks/useCookies';
 import Header from '@components/NavBar';
 import Footer from '@components/Footer';
 
 const WebLayout = ({ children }: { children: React.ReactNode }) => {
+  const { CookiesConsent } = useCookies();
 
   return (
     <>
@@ -22,6 +24,7 @@ const WebLayout = ({ children }: { children: React.ReactNode }) => {
         </Box>
       </Container>
       <Footer />
+      <CookiesConsent />
     </>
   )
 }
