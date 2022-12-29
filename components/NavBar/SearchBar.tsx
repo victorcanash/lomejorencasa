@@ -57,19 +57,21 @@ const SearchBar = () => {
   const router = useRouter();
   const intl = useIntl();
 
-  const inputRef = useRef(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const inputRef = useRef<any>(null);
 
   const handleClick = () => {
-    setTimeout(() => inputRef.current.focus());
+    setTimeout(() => inputRef.current?.focus());
   };
 
-  const handleOnKeyDown = (e) => {
-    if (e.key !== 'Enter') {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleOnKeyDown = (e: any) => {
+    if (e?.key !== 'Enter') {
       return;
     }
-    inputRef.current.blur();
-    let categoryName = router.query.category ? router.query.category : allProductsName;
-    router.push(getHref(categoryName, 1, inputRef.current.value));
+    inputRef.current?.blur();
+    const categoryName = typeof router.query.category == 'string' ? router.query.category : allProductsName;
+    router.push(getHref(categoryName, 1, inputRef.current?.value || ''));
   };
 
   return (
