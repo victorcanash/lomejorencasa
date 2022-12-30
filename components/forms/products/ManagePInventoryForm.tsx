@@ -249,7 +249,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                     onClick={handleClickDeleteBtn}
                   >
                     <FormattedMessage 
-                      id="forms.deleteBtn" 
+                      id="app.deleteBtn" 
                     />
                   </Button>
               }

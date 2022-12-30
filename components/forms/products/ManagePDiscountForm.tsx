@@ -240,7 +240,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                     onClick={handleClickDeleteBtn}
                   >
                     <FormattedMessage 
-                      id="forms.deleteBtn" 
+                      id="app.deleteBtn" 
                     />
                   </Button>
               }
@@ -254,7 +254,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
                     onClick={handleCancelBtn}
                   >
                     <FormattedMessage 
-                      id="forms.cancelBtn" 
+                      id="app.cancelBtn" 
                     />
                   </Button>
               }

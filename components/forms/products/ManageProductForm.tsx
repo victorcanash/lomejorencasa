@@ -291,14 +291,14 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                           </Typography>
                           <Button variant="contained" onClick={()=>handleClickRecoverExistingImgBtn(srcImgIndex)}>
                             <FormattedMessage 
-                              id="forms.recoverBtn" 
+                              id="app.recoverBtn" 
                             />
                           </Button>
                         </>
                       :
                         <Button variant="contained" onClick={()=>handleClickDeleteExistingImgBtn(srcImgIndex)}>
                           <FormattedMessage 
-                            id="forms.deleteBtn" 
+                            id="app.deleteBtn" 
                           />
                         </Button>
                       return component;
