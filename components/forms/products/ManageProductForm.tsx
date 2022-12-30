@@ -334,7 +334,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                     onClick={handleClickDeleteBtn}
                   >
                     <FormattedMessage 
-                      id="forms.deleteBtn" 
+                      id="app.deleteBtn" 
                     />
                   </Button>
               }
