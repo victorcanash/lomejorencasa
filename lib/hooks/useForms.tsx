@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { useIntl } from 'react-intl';
+import dayjs from 'dayjs';
 
 import { CountryOptions } from '@core/constants/addresses'
 import { subtractYears } from '@core/utils/dates';
@@ -81,7 +82,7 @@ const useForms = () => {
     confirm: '',
     firstName: '',
     lastName: '',
-    birthday: subtractYears(18),
+    birthday: dayjs(subtractYears(18)),
     getEmails: false,
     remember: true,
   };

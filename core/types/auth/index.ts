@@ -1,3 +1,5 @@
+import { Dayjs } from 'dayjs';
+
 export type AuthLogin = {
   email: string,
   password: string,
@@ -10,7 +12,7 @@ export type AuthRegister = {
   confirm: string,
   firstName: string,
   lastName: string,
-  birthday: Date,
+  birthday: Date | Dayjs,
   getEmails: boolean,
 };
 

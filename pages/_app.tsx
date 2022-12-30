@@ -20,7 +20,9 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/en';
+import 'dayjs/locale/es';
 import { SnackbarProvider } from 'notistack';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
@@ -93,7 +95,7 @@ function MyApp(props: MyAppProps) {
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <SnackbarProvider maxSnack={3}>
-                  <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale={locale || 'en'}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale === 'es' ? 'es' : 'en'}>
                     
                     <ErrorBoundary>
                       <AppProvider>
