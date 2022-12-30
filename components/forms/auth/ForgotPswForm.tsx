@@ -99,7 +99,6 @@ const ForgotPswForm = () => {
                 name="email"
                 autoComplete="email"
                 label={intl.formatMessage({ id: "forms.email" })}
-                autoFocus
                 value={props.values.email}
                 onChange={props.handleChange}
                 error={props.touched.email && Boolean(props.errors.email)}

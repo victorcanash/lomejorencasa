@@ -51,7 +51,7 @@ const UpdateUserForm = () => {
             firstName: user?.firstName || userFieldsInitValues.firstName,
             lastName: user?.lastName || userFieldsInitValues.lastName,
             birthday: user?.birthday || userFieldsInitValues.birthday,
-            getEmails: userFieldsInitValues.getEmails,
+            getEmails: user?.getEmails || userFieldsInitValues.getEmails,
           } as User}
           validationSchema={updateUserFormValidation}
           onSubmit={handleSubmit}
@@ -69,7 +69,6 @@ const UpdateUserForm = () => {
                 name="firstName"
                 autoComplete="firstName"        
                 label={intl.formatMessage({ id: "forms.firstName" })}
-                autoFocus
                 value={props.values.firstName}
                 onChange={props.handleChange}
                 error={props.touched.firstName && Boolean(props.errors.firstName)}
@@ -118,12 +117,16 @@ const UpdateUserForm = () => {
 
               {/* Get Emails Field */}
               <FormControlLabel
-                id="getEmails"
-                name="getEmails"
-                control={<Checkbox value="getEmails" color="primary" />}
                 label={intl.formatMessage({ id: "forms.getEmails" })}
-                value={props.values.getEmails}
-                onChange={props.handleChange}
+                control={
+                  <Checkbox 
+                    id="getEmails"
+                    name="getEmails"
+                    checked={props.values.getEmails} 
+                    onChange={props.handleChange}
+                  />
+                }
+                sx={{ mt: 1 }}
               />
 
               <Button
