@@ -3,15 +3,18 @@ import { useRef, useState, useEffect } from 'react';
 import { Storages } from '@core/constants/storage';
 import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
-import CookiesDialog from '@components/dialogs/CookiesDialog';
+import { useAppContext } from '@lib/contexts/AppContext';
+import CookiesBanner from '@components/banners/CookiesBanner';
 
 const useCookies = () => {
+  const { initialized } = useAppContext();
+
   const firstRenderRef = useRef(false);
 
-  const [openCookiesDialog, setOpenCookiesDialog] = useState(false);
+  const [openCookiesBanner, setOpenCookiesBanner] = useState(false);
 
-  const handleCookiesDialog = () => {
-    setOpenCookiesDialog(!openCookiesDialog);
+  const handleCookiesBanner = () => {
+    setOpenCookiesBanner(!openCookiesBanner);
   };
 
   const onRefuseCookies = () => {
@@ -23,27 +26,27 @@ const useCookies = () => {
   };
 
   useEffect(() => {
-    if (!firstRenderRef.current) {
+    if (!firstRenderRef.current && initialized) {
       firstRenderRef.current = true;
       if (!getStorageItem(Storages.local, CookiesConsentKey)) {
-        setOpenCookiesDialog(true);
+        setOpenCookiesBanner(true);
       } else {
-        setOpenCookiesDialog(false);
+        setOpenCookiesBanner(false);
       }
     }    
-  }, []);
+  }, [initialized]);
 
-  const CookiesConsent = () => (
-    <CookiesDialog
-      open={openCookiesDialog}
-      handleDialog={handleCookiesDialog}
+  const CookiesBannerComponent = () => (
+    <CookiesBanner
+      open={openCookiesBanner}
+      handleBanner={handleCookiesBanner}
       onRefuse={onRefuseCookies}
       onAccept={onAcceptCookies}
     />
   )
 
   return {
-    CookiesConsent,
+    CookiesBannerComponent,
   };
 };
 

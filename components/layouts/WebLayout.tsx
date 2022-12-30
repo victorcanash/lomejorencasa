@@ -6,7 +6,7 @@ import Header from '@components/NavBar';
 import Footer from '@components/Footer';
 
 const WebLayout = ({ children }: { children: React.ReactNode }) => {
-  const { CookiesConsent } = useCookies();
+  const { CookiesBannerComponent } = useCookies();
 
   return (
     <>
@@ -24,7 +24,7 @@ const WebLayout = ({ children }: { children: React.ReactNode }) => {
         </Box>
       </Container>
       <Footer />
-      <CookiesConsent />
+      <CookiesBannerComponent />
     </>
   )
 }
