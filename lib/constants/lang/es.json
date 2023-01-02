@@ -108,6 +108,7 @@
   "cart.errors.add": "Error al intentar añadirlo al carrito, inténtalo otra vez",
   "cart.errors.update": "Error al intentar actualizar el carrito, inténtalo otra vez",
   "cart.errors.check": "Error al intentar actualizar el carrito, inténtalo otra vez",
+  "cart.errors.maxQuantity": "Cantidad máxima alcanzada en el carrito",
   
   "checkout.metas.title": "Pago",
   "checkout.metas.description": "Página de pago",

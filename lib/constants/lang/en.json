@@ -108,6 +108,7 @@
   "cart.errors.add": "Failed adding to the cart, try again",
   "cart.errors.update": "Failed updating to the cart, try again",
   "cart.errors.check": "Failed checking to the cart, try again",
+  "cart.errors.maxQuantity": "Maximum quantity reached in the cart",
   
   "checkout.metas.title": "Checkout",
   "checkout.metas.description": "Checkout page",

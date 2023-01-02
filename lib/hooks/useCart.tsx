@@ -5,8 +5,9 @@ import { useSnackbar } from 'notistack';
 
 import { pages } from '@core/config/navigation.config';
 import { ManageActions } from '@core/constants/auth';
-import { Cart, CartItem } from '@core/types/cart';
-import { ProductInventory } from '@core/types/products';
+import { maxQuantity } from '@core/constants/cart';
+import type { Cart, CartItem } from '@core/types/cart';
+import type { ProductInventory } from '@core/types/products';
 import { manageCartItem, checkCart as checkCartMW } from '@core/utils/cart';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -26,6 +27,12 @@ const useCart = () => {
       router.push(pages.login.path);
       return;
     };
+
+    if (totalQuantity + 1 > maxQuantity) {
+      onMaxCartQuantityError();
+      return;
+    }
+
     setLoading(true);
 
     const cartItem = {
@@ -49,10 +56,10 @@ const useCart = () => {
     // Update cart item
     if (cartItemIndex > -1) {
       manageCartItem(ManageActions.update, token, cartItem)
-        .then((response: { cartItem: CartItem }) => {
+        .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
           onAddCartItemSuccess(inventory.realPrice);
-        }).catch((error: Error) => {
+        }).catch((_error: Error) => {
           onAddCartItemError();
         });
 
@@ -63,7 +70,7 @@ const useCart = () => {
           cartItem.id = response.cartItem.id;
           cart.items.push(cartItem);
           onAddCartItemSuccess(inventory.realPrice);
-        }).catch((error: Error) => {
+        }).catch((_error: Error) => {
           onAddCartItemError();
         });
     };
@@ -92,9 +99,17 @@ const useCart = () => {
       router.push(pages.login.path);
       return;
     };
+
     if (cartItem.quantity == quantity && !forceUpdate) {
       return;
     };
+
+    if (((totalQuantity - cartItem.quantity) + quantity > maxQuantity) && 
+        (cartItem.quantity < quantity)) {
+      onMaxCartQuantityError();
+      return;
+    }
+
     setLoading(true);
 
     const cartItemIndex = cart.items.indexOf(cartItem);
@@ -105,10 +120,10 @@ const useCart = () => {
       const addedPrice = cartItem.inventory.realPrice * addedQuantity;
       cartItem.quantity = quantity;
       manageCartItem(ManageActions.update, token, cartItem)
-        .then((response: { cartItem: CartItem }) => {
+        .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
           onUpdateCartItemSuccess(addedQuantity, addedPrice);
-        }).catch((error: Error) => {
+        }).catch((_error: Error) => {
           onUpdateCartItemError();
         });
 
@@ -120,7 +135,7 @@ const useCart = () => {
         .then(() => {
           cart.items.splice(cartItemIndex, 1);
           onUpdateCartItemSuccess(addedQuantity, addedPrice);
-        }).catch((error: Error) => {
+        }).catch((_error: Error) => {
           onUpdateCartItemError();
         });
     };
@@ -178,6 +193,13 @@ const useCart = () => {
     setLoading(false);
     enqueueSnackbar(
       intl.formatMessage({ id: 'cart.errors.check' }), 
+      { variant: 'error' }
+    );
+  };
+
+  const onMaxCartQuantityError = () => {
+    enqueueSnackbar(
+      intl.formatMessage({ id: 'cart.errors.maxQuantity' }), 
       { variant: 'error' }
     );
   };
