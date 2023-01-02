@@ -135,7 +135,7 @@ const NavBar = () => {
                 component={Link}
                 href={pages.cart.path}
               >
-                <Badge badgeContent={totalQuantity} color='error'>
+                <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity} color='error'>
                   <ShoppingCartIcon sx={{ fontSize: 30 }} />
                 </Badge>
               </IconButton>
