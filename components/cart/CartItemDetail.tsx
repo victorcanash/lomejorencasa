@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Image from 'next/image';
 
 import { useIntl } from 'react-intl';
@@ -11,7 +12,8 @@ import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { pages } from '@core/config/navigation.config';
-import { CartItem } from '@core/types/cart';
+import { rangeChangeItemQuantity } from '@core/constants/cart';
+import type { CartItem } from '@core/types/cart';
 import { getProductImgUrl } from '@core/utils/products';
 import Link from '@core/components/Link';
 
@@ -38,32 +40,43 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     }
   };
 
-  const getMenuItems = () => {
-    const menuItems = [];
-    if (item.quantity == 0) {
-      menuItems.push(
-        <MenuItem key={0} value={0}>
-          {0}
-        </MenuItem>
-      );
+  const menuItems = useMemo(() => {
+    const menuItems = [] as JSX.Element[];
+    const menuItemsValues = [] as number[];
+    const bigbuyQuantity = item.inventory.bigbuy.quantity;
+    let maxBigbuyQuantity = item.quantity + rangeChangeItemQuantity;
+    if (maxBigbuyQuantity > bigbuyQuantity) {
+      maxBigbuyQuantity = bigbuyQuantity;
     }
-    if (item.inventory.bigbuy.quantity > 0) {
-      for (let i = 0; i < item.inventory.bigbuy.quantity; i++) {
-        menuItems.push(
-          <MenuItem key={i+1} value={i+1}>
-            {i+1}
-          </MenuItem>
-        );
+    let minBigbuyQuantity = item.quantity - rangeChangeItemQuantity;
+    if (minBigbuyQuantity < 0) {
+      minBigbuyQuantity = 0;
+    }
+
+    if (item.quantity == 0) {
+      menuItemsValues.push(0);
+    }
+    if (bigbuyQuantity > 0) {
+      if (minBigbuyQuantity > 2) {
+        menuItemsValues.push(1);
+        menuItemsValues.push(2);
+      }
+      for (let i = minBigbuyQuantity; i < maxBigbuyQuantity; i++) {
+        menuItemsValues.push(i + 1);
       }
     } else if (item.quantity != 0){
+      menuItemsValues.push(item.quantity);
+    }
+
+    for (let i = 0; i < menuItemsValues.length; i++) {
       menuItems.push(
-        <MenuItem key={item.quantity} value={item.quantity}>
-          {item.quantity}
+        <MenuItem key={menuItemsValues[i]} value={menuItemsValues[i]}>
+          {menuItemsValues[i]}
         </MenuItem>
       );
     }
     return menuItems;
-  }
+  }, [item.inventory.bigbuy.quantity, item.quantity]);
 
   return (
     <>
@@ -112,7 +125,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   onChange={handleSelectQuantity}
                   disabled={item.inventory.bigbuy.quantity <= 0}
                 >
-                  {getMenuItems()}
+                  {menuItems}
                 </Select>
 
                 <Tooltip 
