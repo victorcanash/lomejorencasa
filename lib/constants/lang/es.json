@@ -196,6 +196,7 @@
   "forms.email": "Dirección de correo",
   "forms.newEmail": "Nueva dirección de correo",
   "forms.rememberMe": "Recuérdame",
+  "forms.rememberPayment": "Guardar datos de pago",
   "forms.firstName": "Nombre",
   "forms.lastName": "Apellido",
   "forms.birthday": "Fecha de cumpleaños",

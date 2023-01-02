@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction } from 'react';
+import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
@@ -8,6 +8,8 @@ import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Alert from '@mui/material/Alert';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -23,13 +25,18 @@ type CheckoutPaymentSectionProps = {
 const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
   const { next, back, transactionError, setTransactionError } = props;
 
-  const { braintreeToken, setPaymentPayload } = useAuthContext();
+  const { braintreeToken, setCheckoutPayment } = useAuthContext();
 
   const intl = useIntl();
 
   const { checkPaymentMethod, errorMsg, successMsg } = usePayments();
 
   const [dropinInstance, setDropinInstance] = useState<Dropin | undefined>(undefined)
+  const [rememberFieldValue, setRememberFieldValue] = useState(true)
+
+  const handleRememberField = (_event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    setRememberFieldValue(checked);
+  };
 
   const handleContinue = () => {
     if (!dropinInstance) {
@@ -40,7 +47,10 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
   };
 
   const onSuccessCheckPaymentMethod = (paymentPayload: PaymentMethodPayload) => {
-    setPaymentPayload(paymentPayload);
+    setCheckoutPayment({
+      methodPayload: paymentPayload,
+      remember: rememberFieldValue,
+    });
     setTimeout(() => { 
       next(); 
     }, 10);
@@ -49,7 +59,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
   const handleBack = () => {
     setTransactionError('');
     back();
-  }
+  };
 
   return (
     <Container maxWidth="md">
@@ -62,34 +72,52 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
             />
           </Typography>
           { braintreeToken &&
-            <div 
-              style={{ 
-                backgroundColor: 'white',
-                border: '1px solid black',
-                borderRadius: '10px',
-                padding: '13px 5px 0px 5px',
-                marginTop: '10px',
-              }}
-            >
-              <DropIn
-                options={{ 
-                  authorization: braintreeToken,
-                  locale: intl.locale,
-                  vaultManager: true,
-                  card: {
-                    cardholderName: {
-                      required: true,
+            <>
+
+              {/* Dropin field */}
+              <div 
+                style={{ 
+                  backgroundColor: 'white',
+                  border: '1px solid black',
+                  borderRadius: '10px',
+                  padding: '13px 5px 0px 5px',
+                  marginTop: '10px',
+                }}
+              >
+                <DropIn
+                  options={{ 
+                    authorization: braintreeToken,
+                    locale: intl.locale,
+                    vaultManager: true,
+                    card: {
+                      cardholderName: {
+                        required: true,
+                      },
                     },
-                  },
-                  paypal: {
-                    flow: 'vault',
-                  },
-                }}
-                onInstance={(instance) => {
-                  setDropinInstance(instance);
-                }}
+                    paypal: {
+                      flow: 'vault',
+                    },
+                  }}
+                  onInstance={(instance) => {
+                    setDropinInstance(instance);
+                  }}
+                />
+              </div>
+
+              {/* Remember Field */}
+              <FormControlLabel
+                label={intl.formatMessage({ id: "forms.rememberPayment" })}
+                control={
+                  <Checkbox 
+                    id="remember"
+                    name="remember"
+                    checked={rememberFieldValue} 
+                    onChange={handleRememberField}
+                  />
+                }
               />
-            </div>
+
+            </>
           }
         </Grid>
       </Grid>

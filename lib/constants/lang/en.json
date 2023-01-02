@@ -196,6 +196,7 @@
   "forms.email": "Email address",
   "forms.newEmail": "New email address",
   "forms.rememberMe": "Remember me",
+  "forms.rememberPayment": "Save payment data",
   "forms.firstName": "First name",
   "forms.lastName": "Last name",
   "forms.birthday": "Birthday",

@@ -27,7 +27,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
 
   const intl = useIntl();
 
-  const { updateUserAddresses: updateAddresses, errorMsg, successMsg } = useUser();
+  const { updateUserAddresses, errorMsg, successMsg } = useUser();
   const { checkoutAddressesFormValidation, addressFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: CheckoutAddresses, formikHelpers: FormikHelpers<CheckoutAddresses>) => {
@@ -45,7 +45,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
       formikHelpers.setFieldValue('billing.locality', values.shipping.locality);
       formikHelpers.setFieldValue('billing.country', values.shipping.country);
     }
-    updateAddresses(user, checkoutAddresses, onSubmitSuccess);
+    updateUserAddresses(user, checkoutAddresses, onSubmitSuccess);
   };
 
   const handleSubmitWithoutSave = () => {

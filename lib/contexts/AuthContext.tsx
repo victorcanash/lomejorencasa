@@ -1,11 +1,12 @@
 import { createContext, useContext, useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 
-import { PaymentMethodPayload, cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
+import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
 
 import { pages } from '@core/config/navigation.config';
 import { Protections } from '@core/constants/auth';
 import type { User } from '@core/types/user';
+import type { CheckoutPayment } from '@core/types/checkout';
 
 type ContextType = {
   token: string,
@@ -14,8 +15,8 @@ type ContextType = {
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
   user?: User,
   setUser: Dispatch<SetStateAction<User | undefined>>,
-  paymentPayload?: PaymentMethodPayload,
-  setPaymentPayload: Dispatch<SetStateAction<PaymentMethodPayload | undefined>>,
+  checkoutPayment?: CheckoutPayment,
+  setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment | undefined>>,
   getCardPayload: () => cardPaymentMethodPayload | undefined,
   getPaypalPayload: () => paypalPaymentMethodPayload | undefined,
   prevLoginPath?: string,
@@ -31,8 +32,8 @@ export const AuthContext = createContext<ContextType>({
   setBraintreeToken: () => {},
   user: undefined,
   setUser: () => {},
-  paymentPayload: undefined,
-  setPaymentPayload: () => {},
+  checkoutPayment: undefined,
+  setCheckoutPayment: () => {},
   getCardPayload: () => undefined,
   getPaypalPayload: () => undefined,
   prevLoginPath: undefined,
@@ -56,15 +57,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [paymentPayload, setPaymentPayload] = useState<PaymentMethodPayload | undefined>(undefined);
+  const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment | undefined>(undefined);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
   const getCardPayload = () => {
-    return paymentPayload as cardPaymentMethodPayload;
+    return checkoutPayment?.methodPayload as cardPaymentMethodPayload;
   };
 
   const getPaypalPayload = () => {
-    return paymentPayload as paypalPaymentMethodPayload;
+    return checkoutPayment?.methodPayload as paypalPaymentMethodPayload;
   };
 
   const isLogged = () => {
@@ -122,8 +123,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setBraintreeToken,
         user, 
         setUser,
-        paymentPayload,
-        setPaymentPayload,
+        checkoutPayment,
+        setCheckoutPayment,
         getCardPayload,
         getPaypalPayload,
         prevLoginPath: prevLoginPathRef.current,

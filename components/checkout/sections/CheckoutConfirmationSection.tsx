@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
-import { CartItem } from '@core/types/cart';
+import type { CartItem } from '@core/types/cart';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -28,7 +28,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   const { back, setTransactionError } = props;
 
   const { setLoading } = useAppContext();
-  const { user, paymentPayload, getCardPayload, getPaypalPayload } = useAuthContext();
+  const { user, checkoutPayment, getCardPayload, getPaypalPayload } = useAuthContext();
   const { cart, totalPrice } = useCartContext();
 
   const intl = useIntl();
@@ -53,7 +53,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
     setChangedCart(changedCart);
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
-      createTransaction(paymentPayload?.nonce || '', onErrorCreateTransaction);
+      createTransaction(onErrorCreateTransaction);
     } else {
       setLoading(false);
       handleDialog();
@@ -110,7 +110,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                     <FormattedMessage 
                       id="orderDetail.paidCard" 
                       values={{
-                        cardType: paymentPayload?.type,
+                        cardType: checkoutPayment?.methodPayload.type,
                         last4: getCardPayload()?.details.lastFour,
                       }}
                     />

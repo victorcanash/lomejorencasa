@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
 import { pages } from '@core/config/navigation.config';
-import { Order } from '@core/types/orders';
+import type { Order } from '@core/types/orders';
 import { 
   checkPaymentMethod as checkPaymentMethodMW, 
   createTransaction as createTransactionMW, 
@@ -17,7 +17,7 @@ import useAuth from '@lib/hooks/useAuth';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
-  const { token } = useAuthContext();
+  const { token, checkoutPayment } = useAuthContext();
 
   const router = useRouter();
   const intl = useIntl();
@@ -51,11 +51,15 @@ const usePayments = () => {
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
   };
 
-  const createTransaction = async (paymentMethodNonce: string, onError?: (message: string) => void) => {
+  const createTransaction = async (onError?: (message: string) => void) => {
+    if (!checkoutPayment) {
+      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      return;
+    }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await createTransactionMW(token, intl.locale, paymentMethodNonce)
+    await createTransactionMW(token, intl.locale, checkoutPayment)
       .then((_response: { order: Order }) => {
         onCreateTransactionSuccess();
       }).catch((error) => {

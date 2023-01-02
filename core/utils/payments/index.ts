@@ -4,7 +4,8 @@ import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { Order } from '@core/types/orders';
+import type { Order } from '@core/types/orders';
+import type { CheckoutPayment } from '@core/types/checkout';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const checkPaymentMethod = (dropin: Dropin) => {
@@ -23,7 +24,7 @@ export const checkPaymentMethod = (dropin: Dropin) => {
   });
 };
 
-export const createTransaction = (token: string, currentLocale: string, paymentMethodNonce: string) => {
+export const createTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment) => {
   return new Promise<{order: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
@@ -36,7 +37,10 @@ export const createTransaction = (token: string, currentLocale: string, paymentM
       },
       timeout: 15000,
     };
-    axios.post('/payments/transaction', { paymentMethodNonce }, options)
+    axios.post('/payments/transaction', { 
+      paymentMethodNonce: checkoutPayment.methodPayload.nonce,
+      remember: checkoutPayment.remember,
+    }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({

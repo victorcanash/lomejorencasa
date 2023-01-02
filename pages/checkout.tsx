@@ -57,23 +57,23 @@ const Checkout: NextPage = () => {
       />
 
       { currentCheckoutSection() == CheckoutSections.address &&
-          <CheckoutAddressesSection 
-            next={nextStep}
-          />
+        <CheckoutAddressesSection 
+          next={nextStep}
+        />
       }
       { currentCheckoutSection() == CheckoutSections.payment &&
-          <CheckoutPaymentSection 
-            next={nextStep}
-            back={prevStep}
-            transactionError={transactionError}
-            setTransactionError={setTransactionError}
-          />
+        <CheckoutPaymentSection 
+          next={nextStep}
+          back={prevStep}
+          transactionError={transactionError}
+          setTransactionError={setTransactionError}
+        />
       }
       { currentCheckoutSection() == CheckoutSections.confirmation &&
-          <CheckoutConfirmationSection
-            back={prevStep}
-            setTransactionError={setTransactionError}
-          />
+        <CheckoutConfirmationSection
+          back={prevStep}
+          setTransactionError={setTransactionError}
+        />
       }
     </>
   );
