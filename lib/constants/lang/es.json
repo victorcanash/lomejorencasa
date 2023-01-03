@@ -100,7 +100,7 @@
   "cart.metas.description": "Página del carrito",
   "cart.h1": "Carrito",
   "cart.checkoutBtn": "Procede al pago",
-  "cart.noItems": "No has añadido ningún producto",
+  "cart.noItems": "Ningún producto añadido",
   "cart.total": "Total",
   "cart.inventoryAvailable": "Inventario disponible justo ahora",
   "cart.inventoryUnavailable": "Inventory no disponible justo ahora",
