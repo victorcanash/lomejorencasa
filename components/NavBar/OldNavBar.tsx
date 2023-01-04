@@ -1,10 +1,12 @@
+import Image from 'next/image';
+
 import { useIntl } from 'react-intl';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import Badge from '@mui/material/Badge';
@@ -21,8 +23,9 @@ import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';
 import SearchBar from '@components/NavBar/SearchBar';
 import Drawer from '@components/NavBar/Drawer';
+import logo from 'public/images/lanus-logo.svg';
 
-const NavBar = () => {
+const OldNavBar = () => {
   const { getHref } = useSearchContext();
   const { totalQuantity } = useCartContext();
 
@@ -50,31 +53,83 @@ const NavBar = () => {
     <Box component="header">
 
       <HideOnScroll direction="down">
-        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'secondary.main' }} onClick={closeDrawers}>
-          <Toolbar variant="dense" disableGutters>
+        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'primary.main' }} onClick={closeDrawers}>
+          <Toolbar variant="dense">
 
-            <IconButton
-              size="large"
-              color="inherit"
-              aria-controls={Drawers.categoriesDrawer}
-              aria-haspopup="true"
-              sx={{ mx: 1 }}
-              onClick={handleCategoriesDrawer}
+            <Tooltip title={intl.formatMessage({ id: 'header.tooltips.logo' })}>
+              <IconButton
+                sx={{ p: 0 }}
+                size='large'
+                color='inherit'
+                component={Link}
+                href={pages.home.path}
+              >
+                <Image
+                  src={logo}
+                  alt="Logo"
+                  width="64"
+                  height="64"
+                  layout="fixed"
+                  objectFit="cover"
+                  priority
+                />
+              </IconButton>
+            </Tooltip>
+
+            <Tooltip 
+              title={
+                categoriesDrawer.open ? 
+                  intl.formatMessage({ id: 'header.tooltips.hideCategoriesMenu' }) :
+                  intl.formatMessage({ id: 'header.tooltips.showCategoriesMenu' })
+              }
             >
-              <MenuIcon sx={{ fontSize: 30 }} />
-            </IconButton>
+              <Box
+                sx={{
+                  display: { xs: 'flex', md: 'none' },
+                }}
+              >
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  aria-controls={Drawers.categoriesDrawer}
+                  aria-haspopup="true"
+                  sx={{ mx: 1 }}
+                  onClick={handleCategoriesDrawer}
+                >
+                  <MenuIcon sx={{ fontSize: 30 }} />
+                </IconButton>
+              </Box>
+            </Tooltip>
+            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+              {categoriesDrawer.items.map((category) => (
+                <Tooltip 
+                  key={category.textId}
+                  title={intl.formatMessage({ id: 'header.tooltips.category' }, { name: category.textId })}
+                >
+                  <Button
+                    component={Link}
+                    href={getHref(category.textId)}
+                    sx={{
+                      color: 'text.disabled',
+                      '&.active': { color: 'text.primary' },
+                      '&:hover': { color: 'text.primary' },
+                    }}
+                  >
+                    {category.textId}
+                  </Button>
+                </Tooltip>
+              ))}
+            </Box>
 
-            <Container maxWidth={false} disableGutters>
-              <Typography component="div" variant="subtitle1" sx={{ textAlign: 'center' }}>
-                La Envasadora
-              </Typography>
+            <Container maxWidth='xs' disableGutters>
+              <SearchBar />
             </Container>
 
             <Box sx={{ flexGrow: 1 }} />
 
             <Tooltip title={intl.formatMessage({ id: 'header.tooltips.cart' })}>
               <IconButton
-                sx={{ ml: 1 }}
+                sx={{ mx: 1 }}
                 size='large'
                 color='inherit'
                 component={Link}
@@ -127,4 +182,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default OldNavBar;
