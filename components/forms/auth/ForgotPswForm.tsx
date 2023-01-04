@@ -50,8 +50,7 @@ const ForgotPswForm = () => {
           !isLogged &&
             <Avatar 
               sx={{ 
-                m: 1, 
-                bgcolor: 'secondary.main' 
+                m: 1,
               }}
             >
               <LockOutlinedIcon />
@@ -60,13 +59,13 @@ const ForgotPswForm = () => {
 
         {
           !isLogged ?
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h1">
               <FormattedMessage 
                 id="forms.forgotPassword.title" 
               />
             </Typography>
             :
-            <Typography component="h2" variant="h6">
+            <Typography component="h3" variant="h1">
               <FormattedMessage 
                 id="forms.forgotPassword.subtitle" 
               />
@@ -84,7 +83,7 @@ const ForgotPswForm = () => {
           {props => (
             <Form>
 
-              <Typography component={!isLogged() ? 'h2' : 'h3'} variant="subtitle1" mt={1}>
+              <Typography component={!isLogged() ? 'h2' : 'h4'} variant="body1" mt={1}>
                 <FormattedMessage 
                   id="forms.forgotPassword.description" 
                 />
@@ -118,18 +117,18 @@ const ForgotPswForm = () => {
 
               {
                 errorMsg && errorMsg !== '' &&
-                  <Alert severity="error">{ errorMsg }</Alert>
+                  <Alert severity="error" sx={{ mb: 1 }}>{ errorMsg }</Alert>
               }  
               {
                 successMsg && successMsg !== '' &&
-                  <Alert>{ successMsg }</Alert>
+                  <Alert sx={{ mb: 1 }}>{ successMsg }</Alert>
               }  
 
               {
                 !isLogged() &&
                   <Grid container>
                     <Grid item>
-                      <Link href={pages.login.path} variant="body2">
+                      <Link href={pages.login.path} variant="body1">
                         <FormattedMessage 
                           id="forms.forgotPassword.loginLink" 
                         />

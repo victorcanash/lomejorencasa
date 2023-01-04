@@ -48,14 +48,13 @@ const LoginForm = (props: LoginFormProps) => {
 
         <Avatar 
           sx={{ 
-            m: 1, 
-            bgcolor: 'secondary.main' 
+            m: 1,
           }}
         >
           <LockOutlinedIcon />
         </Avatar>
 
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h1">
           <FormattedMessage 
             id="forms.login.title" 
           />
@@ -122,7 +121,7 @@ const LoginForm = (props: LoginFormProps) => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 2, mb: 2 }}
               >
                 <FormattedMessage 
                   id="forms.login.successBtn" 
@@ -131,19 +130,19 @@ const LoginForm = (props: LoginFormProps) => {
 
               {
                 errorMsg && errorMsg !== '' &&
-                  <Alert severity="error">{ errorMsg }</Alert>
+                  <Alert severity="error" sx={{ mb: 1 }}>{ errorMsg }</Alert>
               } 
 
               <Grid container>
                 <Grid item xs>
-                  <Link href={pages.forgot.path} variant="body2">
+                  <Link href={pages.forgot.path} variant="body1">
                     <FormattedMessage 
                       id="forms.login.forgotLink" 
                     />
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href={pages.register.path} variant="body2">
+                  <Link href={pages.register.path} variant="body1">
                     <FormattedMessage 
                       id="forms.login.registerLink" 
                     />

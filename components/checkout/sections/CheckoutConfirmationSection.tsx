@@ -77,7 +77,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
 
           <Grid container spacing={5} mt={1}>
             <Grid item xs={12} sm={6}>
-              <Typography component="h3" variant="h6">
+              <Typography component="h3" variant="h1">
                 <FormattedMessage 
                   id="forms.shipping" 
                 />
@@ -85,10 +85,10 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
               <Box mt={1}>
                 <AddressDetail 
                   address={user.shipping}
-                  variant="subtitle1"
+                  variant="body1"
                 />
               </Box>
-              <Typography component="h3" variant="h6" mt={3}>
+              <Typography component="h3" variant="h1" mt={3}>
                 <FormattedMessage 
                   id="forms.billing" 
                 />
@@ -96,17 +96,17 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
               <Box mt={1}>
                 <AddressDetail 
                   address={user.billing}
-                  variant="subtitle1"
+                  variant="body1"
                 />
               </Box>
-              <Typography component="h3" variant="h6" mt={3}>
+              <Typography component="h3" variant="h1" mt={3}>
                 <FormattedMessage 
                   id="checkout.sections.payment" 
                 />
               </Typography>
               <Box mt={1}>
                 { getCardPayload()?.details.lastFour &&
-                  <Typography component="div" variant="subtitle1">
+                  <Typography component="div" variant="body1">
                     <FormattedMessage 
                       id="orderDetail.paidCard" 
                       values={{
@@ -117,7 +117,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                   </Typography>
                 }
                 { getPaypalPayload()?.details.email &&
-                  <Typography component="div" variant="subtitle1">
+                  <Typography component="div" variant="body1">
                     <FormattedMessage 
                       id="orderDetail.paidPaypal" 
                       values={{
@@ -130,7 +130,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Typography component="h3" variant="h6">
+              <Typography component="h3" variant="h1">
                 <FormattedMessage 
                   id="checkout.order" 
                 />
@@ -143,7 +143,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 </>
               :
                 <>
-                  <Typography component='div' variant='subtitle1' mt={1}>
+                  <Typography component='div' variant='body1' mt={1}>
                     <FormattedMessage 
                       id="cart.noItems" 
                     />

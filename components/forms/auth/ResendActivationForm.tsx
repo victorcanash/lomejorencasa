@@ -41,13 +41,13 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
         }}
       >
 
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h1">
           <FormattedMessage 
             id="forms.resendActivation.title" 
           />
         </Typography>
 
-        <Typography component="h2" variant="subtitle1" my={2}>
+        <Typography component="h2" variant="body1" my={2}>
           <FormattedMessage 
             id="forms.resendActivation.description" 
             values={{ email }}
@@ -60,7 +60,7 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
           />
         </LinkButton>
 
-        <Typography component="h3" variant="subtitle2" sx={{ mt: 4, mb: 2}}>
+        <Typography component="h3" variant="body1" sx={{ mt: 4, mb: 2}}>
           <FormattedMessage 
             id="forms.resendActivation.received" 
           />

@@ -26,7 +26,7 @@ const MyAccount: NextPage = () => {
         <meta name="description" content={description} />
       </Head>
 
-      <Typography component="h1" variant="h5" className='animate__animated animate__fadeInLeft'>
+      <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
         <FormattedMessage id="myaccount.h1" />
       </Typography>
       <Divider sx={{ my: 3 }} />

@@ -49,14 +49,13 @@ const RegisterForm = (props: RegisterFormProps) => {
 
         <Avatar 
           sx={{ 
-            m: 1, 
-            bgcolor: 'secondary.main' 
+            m: 1,
           }}
         >
           <LockOutlinedIcon />
         </Avatar>
 
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h1">
           <FormattedMessage 
             id="forms.register.title" 
           />
@@ -208,12 +207,12 @@ const RegisterForm = (props: RegisterFormProps) => {
 
               {
                 errorMsg && errorMsg !== '' &&
-                  <Alert severity="error">{ errorMsg }</Alert>
+                  <Alert severity="error" sx={{ mb: 1 }}>{ errorMsg }</Alert>
               }       
 
               <Grid container>
                 <Grid item xs>
-                  <Link href={pages.login.path} variant="body2">
+                  <Link href={pages.login.path} variant="body1">
                     <FormattedMessage 
                       id="forms.register.loginLink" 
                     />

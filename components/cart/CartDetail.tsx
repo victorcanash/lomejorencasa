@@ -44,7 +44,7 @@ const CartDetail = (props: CartDetailProps) => {
 
           <Typography
             component="div"
-            variant='h6'
+            variant='h1'
             align='right'
             className='animate__animated animate__fadeInUp'
           >

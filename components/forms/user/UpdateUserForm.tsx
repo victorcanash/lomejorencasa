@@ -40,7 +40,7 @@ const UpdateUserForm = () => {
         }}
       >
 
-        <Typography component="h2" variant="h6">
+        <Typography component="h3" variant="h1">
           <FormattedMessage id="forms.updateUser.title" />
         </Typography>
 

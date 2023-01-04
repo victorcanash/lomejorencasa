@@ -93,7 +93,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
           <Form>
             <Grid container spacing={5} mt={1}>
               <Grid item xs={12} sm={6}>
-                <Typography component="h3" variant="h6">
+                <Typography component="h3" variant="h1">
                   <FormattedMessage 
                     id="forms.shipping" 
                   />
@@ -108,7 +108,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Typography component="h3" variant="h6">
+                <Typography component="h3" variant="h1">
                   <FormattedMessage 
                     id="forms.billing" 
                   />
@@ -141,7 +141,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
                   type="button"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
+                  sx={{ mb: 2 }}
                   disabled
                 >
                   <FormattedMessage 
@@ -157,7 +157,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
                     type="submit"
                     fullWidth
                     variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
+                    sx={{ mb: 2 }}
                     >
                       <FormattedMessage 
                         id="app.continueBtn" 
@@ -167,11 +167,11 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
                 {
                   (!props.dirty && user?.shipping && user?.billing) &&
                     <Button
-                    type="button"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                    onClick={handleSubmitWithoutSave}
+                      type="button"
+                      fullWidth
+                      variant="contained"
+                      sx={{ mb: 2 }}
+                      onClick={handleSubmitWithoutSave}
                     >
                       <FormattedMessage 
                         id="app.continueBtn" 

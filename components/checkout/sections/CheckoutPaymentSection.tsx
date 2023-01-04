@@ -66,7 +66,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
 
       <Grid container spacing={5} mt={1}>
         <Grid item xs={12}>
-          <Typography component="h3" variant="h6">
+          <Typography component="h3" variant="h1">
             <FormattedMessage
               id="checkout.paymentMethod"
             />
@@ -76,10 +76,8 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
 
               {/* Dropin field */}
               <div 
-                style={{ 
-                  backgroundColor: 'white',
-                  border: '1px solid black',
-                  borderRadius: '10px',
+                id="dropinPayment"
+                style={{           
                   padding: '13px 5px 0px 5px',
                   marginTop: '10px',
                 }}
@@ -128,7 +126,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
             type="button"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mb: 2 }}
             onClick={handleBack}
           >
             <FormattedMessage 
@@ -142,7 +140,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
             type="button"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mb: 2 }}
             onClick={handleContinue}
             disabled={!dropinInstance}
           >

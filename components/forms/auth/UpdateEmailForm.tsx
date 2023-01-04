@@ -36,7 +36,7 @@ const UpdateEmailForm = () => {
         }}
       >
 
-        <Typography component="h2" variant="h6">
+        <Typography component="h3" variant="h1">
           <FormattedMessage 
             id="forms.updateEmail.title" 
           />
@@ -53,7 +53,7 @@ const UpdateEmailForm = () => {
           {props => (
             <Form>
 
-              <Typography component="h3" variant="subtitle1" mt={1}>
+              <Typography component="h4" variant="body1" mt={1}>
                 <FormattedMessage 
                   id="forms.updateEmail.description" 
                 />

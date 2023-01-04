@@ -4,7 +4,7 @@ import { UserAddress } from '@core/types/user';
 
 type AddressDetailProps = {
   address: UserAddress,
-  variant: 'subtitle1' | 'body2'
+  variant: 'body1' | 'body2'
 };
 
 const AddressDetail = (props: AddressDetailProps) => {
