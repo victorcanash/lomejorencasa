@@ -139,6 +139,24 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          '&:hover': {
+            backgroundColor: '#c4d1b3',
+          },
+        },
+      },
+    },
+    MuiListItemText: {
+      styleOverrides: {
+        primary: {
+          fontSize: '17px',
+          lineHeight: '19px',
+          fontWeight: '400',
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

@@ -32,7 +32,7 @@ const OldNavBar = () => {
   const intl = useIntl();
 
   const userDrawer = useDrawer(Drawers.userDrawer);
-  const categoriesDrawer = useDrawer(Drawers.categoriesDrawer);
+  const categoriesDrawer = useDrawer(Drawers.appDrawer);
 
   const handleUserDrawer = () => {
     userDrawer.setOpen(!userDrawer.open);
@@ -91,7 +91,7 @@ const OldNavBar = () => {
                 <IconButton
                   size="large"
                   color="inherit"
-                  aria-controls={Drawers.categoriesDrawer}
+                  aria-controls={Drawers.appDrawer}
                   aria-haspopup="true"
                   sx={{ mx: 1 }}
                   onClick={handleCategoriesDrawer}
@@ -171,8 +171,8 @@ const OldNavBar = () => {
         handleDrawer={handleUserDrawer}
       />
       <Drawer
-        key={Drawers.categoriesDrawer}
-        id={Drawers.categoriesDrawer}
+        key={Drawers.appDrawer}
+        id={Drawers.appDrawer}
         anchor={'left'}
         open={categoriesDrawer.open}
         handleDrawer={handleCategoriesDrawer}

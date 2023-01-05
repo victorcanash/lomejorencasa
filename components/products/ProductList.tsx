@@ -6,8 +6,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
-import { Product, ProductCategory } from '@core/types/products';
 import { allProductsName } from '@core/constants/products';
+import type { Product, ProductCategory } from '@core/types/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import ProductItem from '@components/products/ProductItem';

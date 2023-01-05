@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { limitByPageSearch, orderRemainsSearch } from '@core/constants/products';
+import { limitByPageSearch, orderRemainsSearch, categoriesIds } from '@core/constants/products';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
@@ -97,14 +97,16 @@ export const getProductImgUrl = (product: Product, index = 0) => {
   return placeholder;
 };
 
-export const getAllProductCategories = async (currentLocale: string, sortBy?: string, order?: string) => {
+export const getAllProductCategories = async (currentLocale: string, adminData = false, sortBy?: string, order?: string) => {
   return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
+    const ids = !adminData ? categoriesIds : undefined;
     const options: AxiosRequestConfig = {
       params: {
         page: 1,
         limit: 1000,
         sortBy,
         order,
+        ids,
       },
       headers: getLanguageHeaders(currentLocale),
     }

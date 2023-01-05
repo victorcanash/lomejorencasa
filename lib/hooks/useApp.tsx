@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 
@@ -8,8 +8,10 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import useAuth from '@lib/hooks/useAuth';
 import useForms from '@lib/hooks/useForms';
+import LinkLayout from '@components/layouts/LinkLayout';
+import AdminLayout from '@components/layouts/AdminLayout';
 
-const useApp = (fromLinkLayout: boolean) => {
+const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.Element) => {
   const { setInitialized } = useAppContext();
   const { setProductCategories } = useSearchContext();
 
@@ -22,18 +24,19 @@ const useApp = (fromLinkLayout: boolean) => {
 
   const initData = useCallback(async () => {
     initForms();
-    if (!fromLinkLayout) {
+    if (layoutComponent !== LinkLayout) {
       await getLogged();
-      await getAllProductCategories(intl.locale).then((response: {productCategories: ProductCategory[]}) => {
-        setProductCategories(response.productCategories);
-        setInitialized(true);
-      }).catch((error: Error) => {
-        throw error;
-      });
+      await getAllProductCategories(intl.locale, layoutComponent === AdminLayout)
+        .then((response: {productCategories: ProductCategory[]}) => {
+          setProductCategories(response.productCategories);
+          setInitialized(true);
+        }).catch((error: Error) => {
+          throw error;
+        });
     } else {
       setInitialized(true);
     }
-  }, [initForms, fromLinkLayout, getLogged, intl.locale, setProductCategories, setInitialized]);
+  }, [initForms, layoutComponent, getLogged, intl.locale, setProductCategories, setInitialized]);
 
   useEffect(() => {
     if (!firstRenderRef.current) {

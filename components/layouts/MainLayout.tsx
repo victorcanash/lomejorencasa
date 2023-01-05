@@ -4,7 +4,6 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import useApp from '@lib/hooks/useApp';
 import useLayout from '@lib/hooks/useLayout';
 import Loading from '@components/Loading';
-import LinkLayout from '@components/layouts/LinkLayout';
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const { initialized } = useAppContext();
@@ -13,7 +12,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
 
   const { LayoutComponent } = useLayout(router.pathname);
 
-  const app = useApp(LayoutComponent === LinkLayout);
+  const app = useApp(LayoutComponent);
 
   return (
     <div className="app" style={initialized ? {pointerEvents: 'auto'} : {pointerEvents: 'none'}}>

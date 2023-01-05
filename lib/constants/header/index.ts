@@ -3,8 +3,31 @@ import { DrawerItem } from '@core/types/header';
 
 export enum Drawers {
   userDrawer = 'user-drawer',
-  categoriesDrawer = 'categories-drawer',
+  appDrawer = 'app-drawer',
 }
+
+export const appDrawerItems: DrawerItem[] = [
+  {
+    textId: 'home',
+    path: pages.home.path,
+  },
+  {
+    textId: 'everfresh',
+    path: pages.home.path,
+  },
+  {
+    textId: 'contact',
+    path: pages.home.path,
+  },
+  {
+    textId: 'about',
+    path: pages.about.path,
+  },
+  {
+    textId: 'faq',
+    path: pages.home.path,
+  },
+];
 
 export const loggedUserDrawerItems: DrawerItem[] = [
   {
