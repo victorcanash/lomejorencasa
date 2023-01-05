@@ -19,7 +19,7 @@ const GoBackBtn = (props: ButtonProps & GoBackBtnProps) => {
   }
 
   return (
-    <Button {...props} startIcon={<ArrowBackIcon />} onClick={onClick || onClickDefault}>
+    <Button variant="contained" {...props} startIcon={<ArrowBackIcon />} onClick={onClick || onClickDefault}>
       <FormattedMessage id="app.goBackBtn" />
     </Button>
   );

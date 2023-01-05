@@ -64,8 +64,8 @@ const Cart: NextPage = () => {
         <meta name="description" content={description} />
       </Head>
 
-      <Typography component='h1' variant='h5' className='animate__animated animate__fadeInLeft'>
-        <FormattedMessage id="cart.h1" />{`(${totalQuantity})`}
+      <Typography component='h1' variant='h1' className='animate__animated animate__fadeInLeft'>
+        <FormattedMessage id="cart.h1" />{` (${totalQuantity})`}
       </Typography>
       <Divider sx={{ my: 3 }} />
 
@@ -89,7 +89,7 @@ const Cart: NextPage = () => {
         </>
       :
         <>
-          <Typography component='div' variant='h5' align='center' sx={{ my: 5 }}>
+          <Typography component='div' variant='body1' align='center' sx={{ my: 5 }}>
             <FormattedMessage id="cart.noItems" />
           </Typography>
         </>

@@ -102,14 +102,14 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           <Grid item xs container direction="column" spacing={2}>
 
             <Grid item xs style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
-              <Typography gutterBottom variant="subtitle1" component="div">
+              <Typography gutterBottom component="div" variant="body1">
                 {item.inventory.product.name.current}
               </Typography>
-              <Typography variant="body2">
+              <Typography component="div" variant="body2">
                 {item.inventory.name.current || ''}
               </Typography>
               { !updateQuantity &&
-                <Typography variant="body2">
+                <Typography component="div" variant="body2">
                   {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
                 </Typography>
               }
@@ -118,10 +118,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             { updateQuantity &&
               <Grid item>
                 <Select
-                  labelId="quantity-select-label"
                   id="quantity-select"
                   value={item.quantity.toString()}
-                  label={intl.formatMessage({ id: 'forms.quantity' })}
                   onChange={handleSelectQuantity}
                   disabled={item.inventory.bigbuy.quantity <= 0}
                 >
@@ -153,7 +151,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           </Grid>
 
           <Grid item>
-            <Typography variant="subtitle1" component="div" style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
+            <Typography component="div" variant="body1" style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
               {(item.inventory.realPrice * item.quantity).toFixed(2)} €
             </Typography>
           </Grid>
