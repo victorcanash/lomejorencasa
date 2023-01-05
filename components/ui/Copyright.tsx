@@ -7,7 +7,7 @@ import Link from '@core/components/Link';
 const Copyright = () => {
 
   return (
-    <Typography variant="body2" color="text.primary">
+    <Typography variant="body1">
       {'Copyright © '}
       <Link color="inherit" href="https://mui.com/">
         <FormattedMessage id="app.metas.title" />

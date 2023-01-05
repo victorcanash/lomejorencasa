@@ -27,7 +27,7 @@ const About: NextPage = () => {
         <meta name="description" content={description} />
       </Head>
 
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h1" component="h1" gutterBottom>
         <FormattedMessage id="about.h1" />
       </Typography>
       <Box maxWidth="sm">

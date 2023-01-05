@@ -34,7 +34,7 @@ const ProductList = (props: ProductListProps) => {
 
   return (
     <>
-      <Typography component="h1" variant="h5" className='animate__animated animate__fadeInLeft'>
+      <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
         { category?.name ?
           capitalizeFirstLetter(category.name.current) 
           :
@@ -47,7 +47,7 @@ const ProductList = (props: ProductListProps) => {
 
       {
         category &&
-          <Typography component="h2" variant="h6" className='animate__animated animate__fadeInLeft'>
+          <Typography component="h2" variant="body1" className='animate__animated animate__fadeInLeft'>
             { capitalizeFirstLetter(category.description.current) }
           </Typography>
       }
@@ -63,7 +63,7 @@ const ProductList = (props: ProductListProps) => {
             ))}
           </Grid>
           :
-          <Typography component="h3" variant="subtitle1" sx={{ textAlign: "center" }}>
+          <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
             <FormattedMessage
               id="productList.noItems"
             />

@@ -29,7 +29,7 @@ const Home: NextPage = () => {
         <meta name="description" content={description} />
       </Head>
 
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h1" component="h1" gutterBottom>
         <FormattedMessage id="home.welcome" />
       </Typography>
       <Box maxWidth="sm">

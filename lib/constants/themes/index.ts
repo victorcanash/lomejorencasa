@@ -132,6 +132,13 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#ecf7dc',
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {

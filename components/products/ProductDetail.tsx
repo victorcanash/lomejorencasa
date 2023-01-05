@@ -52,6 +52,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               />
             </CardMedia>
           </Card>
+          <br/>
           <GoBackBtn />
         </Grid>
         <Grid 

@@ -26,23 +26,23 @@ const OrderDetail = (props: OrderDetailProps) => {
 
   return (
     <>
-      <Typography variant="h5" component="h1" className='animate__animated animate__fadeInLeft' mb={1}>
+      <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft' mb={1}>
         {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.id}`}
       </Typography>
 
-      <Typography component="div" variant="subtitle1" pt={2}>
+      <Typography component="div" variant="body1" pt={2}>
         {`${intl.formatMessage({ id: "orderDetail.status" })}: ${order.bigbuy.status}`}
       </Typography>
 
       <Grid container spacing={1} py={3}>
         <Grid item xs={12} sm={6}>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString()}`}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           { order.braintree.creditCard.cardType != '' &&
-            <Typography component="div" variant="subtitle1">
+            <Typography component="div" variant="body1">
               <FormattedMessage 
                 id="orderDetail.paidCard" 
                 values={{
@@ -53,7 +53,7 @@ const OrderDetail = (props: OrderDetailProps) => {
             </Typography>
           }
           { order.braintree.paypalAccount.payerEmail != '' &&
-            <Typography component="div" variant="subtitle1">
+            <Typography component="div" variant="body1">
               <FormattedMessage 
                 id="orderDetail.paidPaypal" 
                 values={{
@@ -67,7 +67,7 @@ const OrderDetail = (props: OrderDetailProps) => {
 
       <Grid container spacing={1} pb={3}>
         <Grid item xs={6}>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             <FormattedMessage 
               id="forms.shipping" 
             />
@@ -92,9 +92,11 @@ const OrderDetail = (props: OrderDetailProps) => {
         </Grid>
         { order.braintree.billing.addressLine1 != '' &&
           <Grid item xs={6}>
-            <FormattedMessage 
-              id="forms.billing" 
-            />
+            <Typography component="div" variant="body1">
+              <FormattedMessage 
+                id="forms.billing" 
+              />
+            </Typography>
             <Box mt={1}>
               <AddressDetail 
                 address={{
@@ -116,7 +118,7 @@ const OrderDetail = (props: OrderDetailProps) => {
         }
       </Grid>
 
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
       </Typography>
       <Divider sx={{ mb: 3, mt: 2 }} />
@@ -133,7 +135,7 @@ const OrderDetail = (props: OrderDetailProps) => {
       
       <Typography
         component="div"
-        variant='h6'
+        variant='h1'
         align='right'
         className='animate__animated animate__fadeInUp'
       >

@@ -25,7 +25,7 @@ const OrderList = (props: OrderListProps) => {
 
   return (
     <>
-      <Typography variant="h5" component="h1" className='animate__animated animate__fadeInLeft'>
+      <Typography variant="h1" component="h1" className='animate__animated animate__fadeInLeft'>
         <FormattedMessage id="orderList.h1" />
       </Typography>
 
@@ -41,7 +41,7 @@ const OrderList = (props: OrderListProps) => {
             ))}
           </Grid>
           :
-          <Typography component="h3" variant="subtitle1" sx={{ textAlign: "center" }}>
+          <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
             <FormattedMessage id="orderList.noItems" />
           </Typography>
       }

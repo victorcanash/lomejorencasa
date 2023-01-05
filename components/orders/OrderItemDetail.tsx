@@ -44,7 +44,7 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
           </Link>
         </Grid>
         :
-        <Typography variant="subtitle1" component="div">
+        <Typography component="div" variant="body1">
           <FormattedMessage 
             id="orderDetail.noProductReference" 
           />
@@ -54,23 +54,23 @@ const OrderItemDetail = (props: OrderItemDetailProps) => {
       <Grid item xs={12} sm container>
         <Grid item xs container direction="column" spacing={2}>
           <Grid item xs style={orderItem.quantity <= 0 ? {color: 'grey'} : undefined}>
-            <Typography gutterBottom variant="subtitle1" component="div">
+            <Typography gutterBottom component="div" variant="body1">
               {orderItem.inventory?.product.name.current || orderItem.name}
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="body2">
               {orderItem.inventory?.name.current || undefined}
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="body2">
               {`${intl.formatMessage({ id: "forms.quantity" })}: ${orderItem.quantity.toString()}`}
             </Typography>
-            <Typography variant="body2">
+            <Typography component="div" variant="body2">
               {`${intl.formatMessage({ id: "forms.sku" })}: ${orderItem.reference}`}
             </Typography>
           </Grid>
         </Grid>
 
         <Grid item>
-          <Typography variant="subtitle1" component="div" style={orderItem.quantity <= 0 ? {color: 'grey'} : undefined}>
+          <Typography variant="body1" component="div" style={orderItem.quantity <= 0 ? {color: 'grey'} : undefined}>
             {`${orderItem.inventory ? ((orderItem.inventory?.realPrice * orderItem.quantity).toFixed(2)) : undefined} €`}
           </Typography>
         </Grid>

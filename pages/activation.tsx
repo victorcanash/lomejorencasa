@@ -45,22 +45,22 @@ const Activation: NextPage<ActivationProps> = (props) => {
       <Avatar 
         sx={{ 
           mb: 1, 
-          bgcolor: 'secondary.main' 
+          backgroundColor: "transparent",
         }}
       >
         {
           successMsg ?
-            <CheckCircleIcon />
+            <CheckCircleIcon fontSize="large" />
             :
-            <ErrorIcon />
+            <ErrorIcon fontSize="large" />
         }
       </Avatar>
 
-      <Typography component="h1" variant="h5">
+      <Typography component="h1" variant="h1">
         <FormattedMessage id="activation.h1" />
       </Typography>
 
-      <Typography component="h2" variant="subtitle1" mt={4}>
+      <Typography component="h2" variant="body1" mt={4}>
         { successMsg &&
           getSuccessTxt()
         }

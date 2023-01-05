@@ -27,12 +27,12 @@ const OrderItem = (props: OrderItemProps) => {
   return (
     <>
       <Divider sx={{ mb: 3 }} />
-      <Typography component="h3" variant="h6">
+      <Typography component="h3" variant="h1">
         {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.id}`}
       </Typography>
       <Grid container spacing={1} py={3}>
         <Grid item xs={6}>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString()}`}
           </Typography>
         </Grid>

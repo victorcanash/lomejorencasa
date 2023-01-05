@@ -21,13 +21,12 @@ const ErrorPage = (props: ErrorPageProps) => {
       maxWidth={false}
       className="centeredPage"
       sx={{
-        backgroundColor: 'background.default',
         top: '0px',
         left: '0px',
         zIndex: 10000,
       }}
     >
-      <Typography variant="h4" component="h1" gutterBottom>
+      <Typography variant="h1" component="h1" gutterBottom>
         {title}
       </Typography>
       <Box maxWidth="sm">
