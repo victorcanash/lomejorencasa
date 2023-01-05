@@ -52,7 +52,7 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
         }}
       >
 
-        <Typography component="h1" variant="h5" mb={3}>
+        <Typography component="h1" variant="h1" mb={3}>
           <FormattedMessage 
             id="forms.sendFailedOrderEmail.title" 
           />

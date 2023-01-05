@@ -128,7 +128,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
         }}
       >
 
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h1">
           {
             action == ManageActions.create ?
               <FormattedMessage 
@@ -248,7 +248,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
 
               { uploadImgs && uploadImgs.length > 0 &&
                 <>
-                  <Typography component="h3" variant="subtitle1" sx={{ mt: 2 }}>
+                  <Typography component="h3" variant="body1" sx={{ mt: 2 }}>
                     <FormattedMessage 
                       id="forms.manageProductImgs.newImgs" 
                     />
@@ -276,7 +276,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
 
               { product?.imageNames && product?.imageNames.length > 0 &&
                 <>
-                  <Typography component="h3" variant="subtitle1" sx={{ mt: 2 }}>
+                  <Typography component="h3" variant="body1" sx={{ mt: 2 }}>
                     <FormattedMessage 
                       id="forms.manageProductImgs.existingImgs" 
                     />
@@ -286,7 +286,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                     getImgActionComponent={(srcImgIndex: number) => {
                       const component = deleteExistingImgs.includes(srcImgIndex) ?
                         <>
-                          <Typography component="div" variant="subtitle2">
+                          <Typography component="div" variant="body2">
                             <FormattedMessage 
                               id="forms.manageProductImgs.deleted" 
                             />

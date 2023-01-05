@@ -39,7 +39,7 @@ const CheckCategoriesSection = () => {
       { !selected ?
 
         <>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h1">
             <FormattedMessage
               id="admin.productCategories"
             />

@@ -90,7 +90,7 @@ const CreateProductSection = () => {
               alignItems: 'center',
             }}
           >
-            <Typography component="h1" variant="h5">
+            <Typography component="h1" variant="h1">
               <FormattedMessage
                 id="admin.createdProduct"
               />
@@ -99,7 +99,7 @@ const CreateProductSection = () => {
               product={product}
               created={false}
             />
-            <Typography component="div" variant="subtitle1">
+            <Typography component="div" variant="body1">
               <FormattedMessage
                 id="forms.manageProductImgs.newImgs"
               />

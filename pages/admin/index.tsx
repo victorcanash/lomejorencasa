@@ -38,7 +38,7 @@ const Admin: NextPage = () => {
         <>
           {
             section == AdminSections.home ?
-              <Typography variant="h4" component="h1" gutterBottom>
+              <Typography variant="h1" component="h1" gutterBottom>
                 <FormattedMessage id="admin.h1" />
               </Typography>
               :

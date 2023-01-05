@@ -264,7 +264,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     <>           
       { !anySelectedModel() ?
         <>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h1">
             <FormattedMessage
               id="admin.products"
             />
@@ -273,7 +273,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
           <Grid container spacing={4} py={3}>
             {checkProducts?.map((item, index) => (
               <Grid item xs={12} key={index}>
-                <Typography component="div" variant="h6">
+                <Typography component="div" variant="h1">
                   <FormattedMessage
                     id="admin.productDetail"
                   />

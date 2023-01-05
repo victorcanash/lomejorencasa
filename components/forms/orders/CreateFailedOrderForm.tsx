@@ -74,7 +74,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         }}
       >
 
-        <Typography component="h1" variant="h5" mb={3}>
+        <Typography component="h1" variant="h1" mb={3}>
           <FormattedMessage 
             id="forms.createFailedOrder.title" 
           />
@@ -86,16 +86,16 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         />
         { orderProducts && orderProducts.length > 0 &&
           <>
-            <Typography component="h3" variant="subtitle1" mt={3}>
+            <Typography component="h3" variant="body1" mt={3}>
               {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
             </Typography>
             <Grid container spacing={1} pt={2} pb={5}>
               { orderProducts.map((product, productIndex) => (
                 <Grid item xs={6} key={productIndex}>
-                  <Typography component="div" variant="subtitle1">
+                  <Typography component="div" variant="body1">
                     {`${intl.formatMessage({ id: "forms.quantity" })}: ${product.quantity}`}
                   </Typography>
-                  <Typography component="div" variant="subtitle1">
+                  <Typography component="div" variant="body1">
                     {`${intl.formatMessage({ id: "forms.inventoryId" })}: ${product.inventoryId}`}
                   </Typography>
                   <Button 

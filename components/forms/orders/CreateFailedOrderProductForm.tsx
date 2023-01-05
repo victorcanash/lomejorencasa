@@ -36,7 +36,7 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
         }}
       >
 
-        <Typography component="h3" variant="subtitle1">
+        <Typography component="h3" variant="body1">
           <FormattedMessage 
             id="forms.createFailedOrderProduct.title" 
           />

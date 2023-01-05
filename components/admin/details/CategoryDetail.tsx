@@ -17,20 +17,20 @@ const CategoryDetail = (props: CategoryDetailProps) => {
   return (
     <>
       { created &&
-        <Typography component="div" variant="subtitle1">
+        <Typography component="div" variant="body1">
           {`${intl.formatMessage({ id: 'forms.id' })}: ${category.id}`}
         </Typography>
       }
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.name.en' })}: ${category.name.en}`}
       </Typography>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.name.es' })}: ${category.name.es}`}
       </Typography>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.description.en' })}: ${category.description.en}`}
       </Typography>
-      <Typography component="div" variant="subtitle1">
+      <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.description.es' })}: ${category.description.es}`}
       </Typography>
     </>

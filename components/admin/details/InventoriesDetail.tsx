@@ -35,35 +35,35 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
         <Grid item xs={6} key={inventoryIndex}>
           { created &&
             <>
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`${intl.formatMessage({ id: 'forms.id' })}: ${inventory.id}`}
               </Typography>
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`${intl.formatMessage({ id: 'forms.productId' })}: ${inventory.productId}`}
               </Typography>
             </>
           }
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.sku' })}: ${inventory.sku}`}
           </Typography>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.name.en' })}: ${inventory.name.en}`}
           </Typography>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.name.es' })}: ${inventory.name.es}`}
           </Typography>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.description.en' })}: ${inventory.description.en}`}
           </Typography>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.description.es' })}: ${inventory.description.es}`}
           </Typography>
-          <Typography component="div" variant="subtitle1">
+          <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.price' })}: ${inventory.price}`}
           </Typography>
           { created &&
             <>
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`${intl.formatMessage({ id: 'forms.realPrice' })}: ${inventory.realPrice}`}
               </Typography>
               <Button 
@@ -74,19 +74,19 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
                   id="admin.refreshBigbuyBtn"
                 />
               </Button> 
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`Bigbuy ${intl.formatMessage({ id: 'forms.id' })}: ${inventory.bigbuy.id}`}
               </Typography>
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`Bigbuy ${intl.formatMessage({ id: 'forms.name' })}: ${inventory.bigbuy.name}`}
               </Typography>
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`Bigbuy ${intl.formatMessage({ id: 'forms.description' })}: ${inventory.bigbuy.description}`}
               </Typography>
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`Bigbuy ${intl.formatMessage({ id: 'forms.price' })}: ${inventory.bigbuy.price}`}
               </Typography>
-              <Typography component="div" variant="subtitle1">
+              <Typography component="div" variant="body1">
                 {`Bigbuy ${intl.formatMessage({ id: 'forms.quantity' })}: ${inventory.bigbuy.quantity}`}
               </Typography>
             </>

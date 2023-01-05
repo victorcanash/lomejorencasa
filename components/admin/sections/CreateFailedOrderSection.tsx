@@ -31,7 +31,7 @@ const CreateFailedOrderSection = () => {
               backBtn={false}
             />
             :
-            <Typography variant="h5" component="h1">
+            <Typography variant="h1" component="h1">
               <FormattedMessage
                 id="forms.createFailedOrder.createdWithoutEmail"
               />

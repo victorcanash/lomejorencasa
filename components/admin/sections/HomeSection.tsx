@@ -25,7 +25,7 @@ const HomeSection = () => {
       <Box maxWidth="sm">
 
         <Box sx={{ m: 2 }}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography variant="h1" component="h2" gutterBottom>
             <FormattedMessage
               id="admin.check"
             />
@@ -53,7 +53,7 @@ const HomeSection = () => {
         <Divider sx={{ my: 3 }} />
 
         <Box sx={{ m: 2 }}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography variant="h1" component="h2" gutterBottom>
             <FormattedMessage
               id="admin.create"
             />
@@ -82,7 +82,7 @@ const HomeSection = () => {
         <Divider sx={{ my: 3 }} />
 
         <Box sx={{ m: 2 }}>
-          <Typography variant="h6" component="h2" gutterBottom>
+          <Typography variant="h1" component="h2" gutterBottom>
             <FormattedMessage
               id="admin.manageErrors"
             />
