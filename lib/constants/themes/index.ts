@@ -116,6 +116,22 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: '#F1F4ED',
+        },
+      },
+    },
+    MuiDialogTitle: {
+      styleOverrides: {
+        root: {
+          fontSize: '25px',
+          lineHeight: '28px',
+          fontWeight: '500',
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
