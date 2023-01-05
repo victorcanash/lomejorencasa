@@ -15,7 +15,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const app = useApp(LayoutComponent);
 
   return (
-    <div className="app" style={initialized ? {pointerEvents: 'auto'} : {pointerEvents: 'none'}}>
+    <div style={initialized ? { pointerEvents: 'auto' } : { pointerEvents: 'none' }}>
       <Loading />
       <LayoutComponent>
         {children}
