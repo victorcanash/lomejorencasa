@@ -1,4 +1,4 @@
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -58,16 +58,27 @@ const NavBar = () => {
               color="inherit"
               aria-controls={Drawers.categoriesDrawer}
               aria-haspopup="true"
-              sx={{ mx: 1 }}
+              sx={{ mr: 1 }}
               onClick={handleCategoriesDrawer}
             >
               <MenuIcon sx={{ fontSize: 30 }} />
             </IconButton>
 
-            <Container maxWidth={false} disableGutters>
+            <Container 
+              maxWidth={false} 
+              disableGutters
+            >
+              
               <Typography component="div" variant="subtitle1" sx={{ textAlign: 'center' }}>
-                La Envasadora
+                <Link 
+                  href={pages.home.path} 
+                  sx={{ textDecoration: 'none' }}>
+                  <FormattedMessage
+                    id="header.title"
+                  />
+                </Link>
               </Typography>
+              
             </Container>
 
             <Box sx={{ flexGrow: 1 }} />

@@ -11,6 +11,7 @@
   "app.successes.default": "Succeeded",
   "app.errors.default": "Something went wrong, try again",
 
+  "header.title": "The Packaging Machine",
   "header.drawerItems.profile": "Your profile",
   "header.drawerItems.orders": "Orders",
   "header.drawerItems.signOut": "Sign out",
