@@ -5,6 +5,7 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -158,31 +159,32 @@ const ManageProductForm = (props: ManageProductFormProps) => {
             <Form>
 
               {/* Category ID Field */}
-              <InputLabel id="categpory-select-label">
-                <FormattedMessage 
-                  id="forms.category" 
-                />
-              </InputLabel>
-              <Select
-                margin="dense"
-                required
-                fullWidth
-                id="categoryId"
-                name="categoryId"
-                autoComplete="categoryId"
-                labelId="category-select-label"
-                label={intl.formatMessage({ id: "forms.category" })}
-                autoFocus
-                value={props.values.categoryId}
-                onChange={props.handleChange}
-                error={props.touched.categoryId && Boolean(props.errors.categoryId)}
-              >
-                { productCategories.map((item) => (
-                  <MenuItem key={item.id} value={item.id}>
-                    {item.name.current}
-                  </MenuItem>
-                ))}
-              </Select>
+              <FormControl fullWidth margin="normal">
+                <InputLabel id="categpory-select-label">
+                  <FormattedMessage 
+                    id="forms.category" 
+                  />
+                </InputLabel>
+                <Select
+                  required
+                  fullWidth
+                  id="categoryId"
+                  name="categoryId"
+                  autoComplete="categoryId"
+                  labelId="category-select-label"
+                  label={intl.formatMessage({ id: "forms.category" })}
+                  autoFocus
+                  value={props.values.categoryId}
+                  onChange={props.handleChange}
+                  error={props.touched.categoryId && Boolean(props.errors.categoryId)}
+                >
+                  { productCategories.map((item) => (
+                    <MenuItem key={item.id} value={item.id}>
+                      {item.name.current}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
 
               {/* Name EN Field */}
               <TextField

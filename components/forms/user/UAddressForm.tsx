@@ -4,13 +4,14 @@ import { FormikErrors, FormikTouched } from 'formik';
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import TextField from '@mui/material/TextField';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 import { CountryOptions } from '@core/constants/addresses'
 import { UserAddress } from '@core/types/user';
 import { getCountryName } from '@core/utils/addresses';
-import InputLabel from '@mui/material/InputLabel';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 
 type UAddressFormProps = {
   autoFocus: boolean,
@@ -126,28 +127,31 @@ const UAddressForm = (props: UAddressFormProps) => {
       />
 
       {/* Country Field */}
-      <InputLabel id="country-select-label">
-        <FormattedMessage id="forms.country" />
-      </InputLabel>
-      <Select
-        labelId="country-select-label"
-        required
-        fullWidth
-        id={`${getAddressType()}.country`}
-        name={`${getAddressType()}.country`}
-        value={props.values.country}
-        onChange={props.handleChange}
-        error={props.touched?.country && Boolean(props.errors?.country)}
-      >
-        { Object.keys(CountryOptions).map((countryKey) => (
-          <MenuItem key={countryKey} value={getCountryName(countryKey)}>
-            <FormattedMessage 
-              id={countryKey} 
-              defaultMessage={getCountryName(countryKey)}
-            />
-          </MenuItem>
-        ))}
-      </Select>
+      <FormControl fullWidth margin="normal">
+        <InputLabel id="country-select-label">
+          <FormattedMessage id="forms.country" />
+        </InputLabel>
+        <Select
+          labelId="country-select-label"
+          label={intl.formatMessage({ id: 'forms.country' })}
+          required
+          fullWidth
+          id={`${getAddressType()}.country`}
+          name={`${getAddressType()}.country`}
+          value={props.values.country}
+          onChange={props.handleChange}
+          error={props.touched?.country && Boolean(props.errors?.country)}
+        >
+          { Object.keys(CountryOptions).map((countryKey) => (
+            <MenuItem key={countryKey} value={getCountryName(countryKey)}>
+              <FormattedMessage 
+                id={countryKey} 
+                defaultMessage={getCountryName(countryKey)}
+              />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
     </>
   );

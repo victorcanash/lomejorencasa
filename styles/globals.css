@@ -14,8 +14,15 @@
   background-color: rgb(0, 0, 0);
 }
 
-/* TextFields outlined */
+/* MuiTextFields outlined */
 .mui-style-dpjew8-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #000000;
+}
+/* MuiSelect outlined */
+.mui-style-16lbtcw-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border: 1px solid #000000;
+}
+.mui-style-4419p5-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root.Mui-focused .MuiOutlinedInput-notchedOutline {
   border: 1px solid #000000;
 }
 

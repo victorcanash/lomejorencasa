@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 
@@ -68,9 +67,6 @@ const ProductDetail = (props: ProductDetailProps) => {
               sx={{ mt: 3, mb: 2 }} 
               className='animate__animated animate__fadeIn'
             >
-              <InputLabel id="inventory-select-label">
-                <FormattedMessage id="forms.selectInventory.label" />
-              </InputLabel>
               <Select />
               <Button
                 fullWidth

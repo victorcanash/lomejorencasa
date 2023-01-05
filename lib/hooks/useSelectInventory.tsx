@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import InputLabel from '@mui/material/InputLabel';
 import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -35,25 +36,30 @@ const useSelectInventory = (product: Product) => {
   const Select = () => {
     if (loaded) {
       return(
-        <MuiSelect
-          labelId="inventory-select-label"
-          id="inventory-select"
-          value={selectedInventory?.name.current || ''}
-          label={intl.formatMessage({ id: 'forms.selectInventory.label' })}
-          onChange={handleChange}
-        >
-          { product.inventories.map((item) => (
-            <MenuItem key={item.id} value={item.name.current}>
-              <FormattedMessage
-                id="forms.selectInventory.content"
-                values={{
-                  name: item.name.current,
-                  quantity: item.bigbuy.quantity,
-                }}
-              />
-            </MenuItem>
-          ))}
-        </MuiSelect>
+        <>
+          <InputLabel id="inventory-select-label">
+            <FormattedMessage id="forms.selectInventory.label" />
+          </InputLabel>
+          <MuiSelect
+            labelId="inventory-select-label"
+            id="inventory-select"
+            value={selectedInventory?.name.current || ''}
+            label={intl.formatMessage({ id: 'forms.selectInventory.label' })}
+            onChange={handleChange}
+          >
+            { product.inventories.map((item) => (
+              <MenuItem key={item.id} value={item.name.current}>
+                <FormattedMessage
+                  id="forms.selectInventory.content"
+                  values={{
+                    name: item.name.current,
+                    quantity: item.bigbuy.quantity,
+                  }}
+                />
+              </MenuItem>
+            ))}
+          </MuiSelect>
+        </>
       );
     } else {
       return (<></>)
