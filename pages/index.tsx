@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -17,7 +16,6 @@ import Copyright from '@components/ui/Copyright';
 const Home: NextPage = () => {
   const { getHref, productCategories } = useSearchContext();
 
-  const router = useRouter();
   const intl = useIntl();
 
   const page = usePage();
