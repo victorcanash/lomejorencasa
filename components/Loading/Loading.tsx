@@ -14,7 +14,7 @@ const Loading = () => {
       <CircularProgress
         size='60px' 
         sx={{
-          color: 'primary.main'
+          color: 'secondary.main'
         }}
       />
     </Backdrop>
