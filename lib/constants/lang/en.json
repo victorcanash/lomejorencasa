@@ -24,7 +24,14 @@
   "header.drawerItems.register": "Register",
   "header.searchBar.placeholder": "Search here",
 
-  "footer.content": "My footer can be found here",
+  "footer.contact.title": "Contact us",
+  "footer.contact.content": "Any questions? Do not hesitate to contact us. We will reply to you as soon as possible.",
+  "footer.utility.title": "Useful links",
+  "footer.utility.conditions": "Terms of Service",
+  "footer.utility.faq": "FAQ",
+  "footer.utility.privacy": "Privacy Policy",
+  "footer.utility.refund": "Refund Policy",
+  "footer.utility.shipping": "Shipping Policy",
 
   "home.metas.title": "Home",
   "home.metas.description": "Home page",

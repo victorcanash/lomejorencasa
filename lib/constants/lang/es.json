@@ -24,7 +24,14 @@
   "header.drawerItems.register": "Registrarse",
   "header.searchBar.placeholder": "Buscar aquí",
 
-  "footer.content": "Mi footer se encuentra aquí",
+  "footer.contact.title": "Contáctanos",
+  "footer.contact.content": "¿Alguna pregunta? No dudes en contactarnos. Te responderemos lo antes posible.",
+  "footer.utility.title": "Enlaces de utilidad",
+  "footer.utility.conditions": "Condiciones de servicio",
+  "footer.utility.faq": "Preguntas frequentes",
+  "footer.utility.privacy": "Política de privacidad",
+  "footer.utility.refund": "Política de reembolso",
+  "footer.utility.shipping": "Política de envíos",
 
   "home.metas.title": "Inicio",
   "home.metas.description": "Página de inicio",
