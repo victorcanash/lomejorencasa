@@ -44,39 +44,39 @@ const Footer = () => {
           />
         </Typography>
         <Box sx={{ mb: 2 }}>
-        <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
-          <FormattedMessage 
-            id="footer.utility.conditions" 
-          />
-        </Typography>
+          <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
+            <FormattedMessage 
+              id="footer.utility.conditions" 
+            />
+          </Typography>
         </Box>
         <Box sx={{ mb: 2 }}>
-        <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
-          <FormattedMessage 
-            id="footer.utility.faq" 
-          />
-        </Typography>
+          <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
+            <FormattedMessage 
+              id="footer.utility.faq" 
+            />
+          </Typography>
         </Box>
         <Box sx={{ mb: 2 }}>
-        <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
-          <FormattedMessage 
-            id="footer.utility.privacy" 
-          />
-        </Typography>
+          <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
+            <FormattedMessage 
+              id="footer.utility.privacy" 
+            />
+          </Typography>
         </Box>
         <Box sx={{ mb: 2 }}>
-        <Typography component={Link} href={pages.home.path} variant="body1"sx={{ color }}>
-          <FormattedMessage 
-            id="footer.utility.refund" 
-          />
-        </Typography>
+          <Typography component={Link} href={pages.home.path} variant="body1"sx={{ color }}>
+            <FormattedMessage 
+              id="footer.utility.refund" 
+            />
+          </Typography>
         </Box>
         <Box>
-        <Typography component={Link} href={pages.home.path} variant="body1"sx={{ color }}>
-          <FormattedMessage 
-            id="footer.utility.shipping" 
-          />
-        </Typography>
+          <Typography component={Link} href={pages.home.path} variant="body1"sx={{ color }}>
+            <FormattedMessage 
+              id="footer.utility.shipping" 
+            />
+          </Typography>
         </Box>
       </Grid>
     </Grid>
