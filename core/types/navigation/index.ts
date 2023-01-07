@@ -4,7 +4,9 @@ import { PageTypes } from '@core/constants/navigation';
 export type NavigationConfig = {
   pages: {
     home: Page,
+    landing: Page,
     about: Page,
+    faq: Page,
     productList: Page,
     productDetail: Page,
 

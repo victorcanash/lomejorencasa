@@ -51,7 +51,7 @@ const Footer = () => {
           </Typography>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
+          <Typography component={Link} href={pages.faq.path} variant="body1" sx={{ color }}>
             <FormattedMessage 
               id="footer.utility.faq" 
             />

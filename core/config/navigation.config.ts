@@ -10,9 +10,21 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.none,
       type: PageTypes.main,
     },
+    landing: {
+      path: '/landing',
+      filepath: '/landing',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
     about: {
       path: '/about',
       filepath: '/about',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
+    faq: {
+      path: '/faq',
+      filepath: '/faq',
       protection: Protections.none,
       type: PageTypes.main,
     },

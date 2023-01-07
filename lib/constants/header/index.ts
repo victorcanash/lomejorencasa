@@ -25,7 +25,7 @@ export const appDrawerItems: DrawerItem[] = [
   },
   {
     textId: 'faq',
-    path: pages.home.path,
+    path: pages.faq.path,
   },
 ];
 
