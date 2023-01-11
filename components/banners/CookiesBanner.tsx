@@ -34,6 +34,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
     <Backdrop
       sx={{ 
         backgroundColor: 'rgba(0, 0, 0, 1)', 
+        color: '#FFFFFF',
         zIndex: (theme) => theme.zIndex.drawer + 1,
         height: '30px',
         position: 'fixed',
@@ -54,10 +55,10 @@ const CookiesBanner = (props: CookiesBannerProps) => {
         }}
       >
         <Box sx={{ maxWidth: '500px' }}>
-          <Typography component='div' variant='subtitle1'>
+          <Typography component='div' variant='h1' sx={{ mb: 1 }}>
             <FormattedMessage id="dialogs.cookies.title" />
           </Typography>
-          <Typography component='div' variant='caption'>
+          <Typography component='div' variant='body1'>
             <FormattedMessage id="dialogs.cookies.content"/>
           </Typography>
         </Box>
