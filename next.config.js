@@ -4,7 +4,7 @@ const nextConfig = {
   images: {
     domains: [
       'localhost', 
-      'ecommerce-vc.osc-fr1.scalingo.io',
+      'ecommerce-vc-api-eqhxa.ondigitalocean.app',
     ],
   },
   i18n: {
