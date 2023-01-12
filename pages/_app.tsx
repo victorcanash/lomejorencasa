@@ -54,10 +54,11 @@ function MyApp(props: MyAppProps) {
     pageProps 
   } = props;
 
-  const { locale } = useRouter();
+  //const { locale } = useRouter();
+  const locale = 'es';
 
-  const title = locale === 'en' ? messages['en']['app.metas.title'] : messages['es']['app.metas.title'];
-  const description = locale === 'en'? messages['en']['app.metas.description'] : messages['es']['app.metas.description'];
+  const title = messages[locale]['app.metas.title'];
+  const description = messages[locale]['app.metas.description'];
 
   return (
     <>
@@ -85,7 +86,7 @@ function MyApp(props: MyAppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
-      <IntlProvider locale={locale || 'es'} messages={locale === 'en' ? messages['en'] : messages['es']}>
+      <IntlProvider locale={locale} messages={messages[locale]}>
         <CacheProvider value={emotionCache}>
           
           {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
@@ -95,7 +96,7 @@ function MyApp(props: MyAppProps) {
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
                 <SnackbarProvider maxSnack={3}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale === 'en' ? 'en' : 'es'}>
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
                     
                     <ErrorBoundary>
                       <AppProvider>

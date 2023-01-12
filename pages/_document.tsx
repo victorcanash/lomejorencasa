@@ -9,7 +9,7 @@ import theme from '@lib/constants/themes';
 export default class MyDocument extends Document {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="es">
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />
