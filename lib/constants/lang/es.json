@@ -291,10 +291,10 @@
 
   "forms.register.title": "Registrarse",
   "forms.register.successBtn": "Registrarse",
-  "forms.register.loginLink": "Ya tienes una cuenta? Inicia sessión",
+  "forms.register.loginLink": "Ya tienes una cuenta? Inicia sesión",
 
-  "forms.login.title": "Iniciar sessión",
-  "forms.login.successBtn": "Iniciar sessión",
+  "forms.login.title": "Iniciar sesión",
+  "forms.login.successBtn": "Iniciar sesión",
   "forms.login.forgotLink": "Contraseña olvidada?",
   "forms.login.registerLink": "No tienes una cuenta? Regístrate",
 
@@ -302,7 +302,7 @@
   "forms.forgotPassword.subtitle": "Cambia tu contraseña",                               
   "forms.forgotPassword.description": "Introduce tu dirección de correo y te enviaremos un correo con un link para poner tu nueva contraseña.",
   "forms.forgotPassword.successBtn": "Enviar correo",
-  "forms.forgotPassword.loginLink": "Volver a inicio de sessión",
+  "forms.forgotPassword.loginLink": "Volver a inicio de sesión",
 
   "forms.confirmNewEmail.title": "Enlace de confirmación de nuevo correo",
   "forms.confirmNewEmail.description": "Pulsa el botón de confirmación para actualizar y activar tu nuevo correo.",
@@ -320,9 +320,9 @@
   "forms.resetPassword.successBtn": "Resetear",
 
   "forms.resendActivation.title": "Activa tu cuenta",
-  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta antes de que puedas iniciar sessión. Una vez verifiques tu cuenta, procede a iniciar sessión.",
+  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta antes de que puedas iniciar sesión. Una vez verifiques tu cuenta, procede a iniciar sesión.",
   "forms.resendActivation.successBtn": "Reenviar",
-  "forms.resendActivation.loginLink": "Proceder a iniciar sessión",
+  "forms.resendActivation.loginLink": "Proceder a iniciar sesión",
   "forms.resendActivation.received": "No recibiste el correo?",
   "forms.resendActivation.resendTime": "Reenviar en {timeLeft} segundo/s",
   "forms.resendActivation.resendNow": "Reenviar ahora",
