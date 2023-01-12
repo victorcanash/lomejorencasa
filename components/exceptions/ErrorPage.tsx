@@ -32,7 +32,7 @@ const ErrorPage = (props: ErrorPageProps) => {
       <Box maxWidth="sm">
         <LinkButton href={pages.home.path}>
           <FormattedMessage 
-            id="about.homeBtn" 
+            id="home.explore" 
           />
         </LinkButton>
       </Box>
