@@ -1,10 +1,9 @@
-import { FormattedMessage, useIntl } from 'react-intl';
+import Image from 'next/image';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -12,16 +11,15 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { pages } from '@core/config/navigation.config';
-import { Drawers } from '@lib/constants/header';
 import Link from '@core/components/Link';
+import { Drawers } from '@lib/constants/header';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';
 import Drawer from '@components/NavBar/Drawer';
+import logo from 'public/images/navbar-logo.png';
 
 const NavBar = () => {
   const { totalQuantity } = useCartContext();
-
-  const intl = useIntl();
 
   const appDrawer = useDrawer(Drawers.appDrawer);
   const userDrawer = useDrawer(Drawers.userDrawer);
@@ -51,8 +49,8 @@ const NavBar = () => {
             color="inherit"
             aria-controls={Drawers.appDrawer}
             aria-haspopup="true"
-            sx={{ mr: 1 }}
             onClick={handleAppDrawer}
+            sx={{ mr: 1 }}
           >
             <MenuIcon sx={{ fontSize: 30 }} />
           </IconButton>
@@ -60,26 +58,37 @@ const NavBar = () => {
           <Container 
             maxWidth={false} 
             disableGutters
-          >        
-            <Typography component="div" variant="subtitle1" sx={{ textAlign: 'center' }}>
-              <Link 
-                href={pages.home.path} 
-                sx={{ textDecoration: 'none' }}>
-                <FormattedMessage
-                  id="header.title"
-                />
-              </Link>
-            </Typography>          
+            sx={{ 
+              display: 'flex',
+              justifyContent: 'center', 
+            }}
+          > 
+            <IconButton
+              size='large'
+              color='inherit'
+              component={Link}
+              href={pages.home.path}
+            >
+              <Image
+                src={logo}
+                alt="Logo"
+                height="50px"
+                width="156px"
+                layout="fixed"
+                objectFit="cover"
+                priority
+              />
+            </IconButton>
           </Container>
 
           <Box sx={{ flexGrow: 1 }} />
 
           <IconButton
-            sx={{ ml: 1 }}
             size='large'
             color='inherit'
             component={Link}
             href={pages.cart.path}
+            sx={{ ml: 1 }}
           >
             <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity} color='error'>
               <ShoppingCartIcon sx={{ fontSize: 30 }} />
@@ -88,10 +97,10 @@ const NavBar = () => {
 
           <IconButton
             size="large"
+            color="inherit"
             aria-controls={Drawers.userDrawer}
             aria-haspopup="true"
             onClick={handleUserDrawer}
-            color="inherit"
           >
             <AccountCircle sx={{ fontSize: 30 }} />
           </IconButton>

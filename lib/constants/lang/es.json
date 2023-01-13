@@ -11,7 +11,6 @@
   "app.successes.default": "Logrado",
   "app.errors.default": "Algo falló, inténtalo otra vez",
 
-  "header.title": "La Envasadora",
   "header.drawerItems.home": "Inicio",
   "header.drawerItems.everfresh": "Everfresh",
   "header.drawerItems.contact": "Contáctanos",

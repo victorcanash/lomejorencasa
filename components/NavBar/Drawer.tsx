@@ -42,7 +42,7 @@ const Drawer = (props: DrawerProps) => {
           flexShrink: 0,
         }}
       >
-        <Toolbar />
+        <Toolbar variant="dense" disableGutters sx={{ minHeight: '75px' }} />
         <Box
           sx={{ 
             overflow: 'auto',
