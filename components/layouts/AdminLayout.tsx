@@ -13,8 +13,8 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <Box
           sx={{
-            mt: 10,
-            mb: 4,
+            mt: 12,
+            mb: 6,
           }}
         >
           {children}

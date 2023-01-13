@@ -16,7 +16,7 @@ const WebLayout = ({ children }: { children: React.ReactNode }) => {
       >
         <Box
           sx={{
-            mt: 10,
+            mt: 12,
             mb: 6,
           }}
         >

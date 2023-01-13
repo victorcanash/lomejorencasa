@@ -40,7 +40,6 @@ const ProductDetail = (props: ProductDetailProps) => {
     <>
       <Grid
         container
-        mt={5}
         className='animate__animated animate__fadeIn'
         spacing={3}
       >
