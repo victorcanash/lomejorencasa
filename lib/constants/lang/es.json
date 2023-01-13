@@ -8,6 +8,7 @@
   "app.removeBtn": "Quitar",
   "app.cancelBtn": "Cancelar",
   "app.recoverBtn": "Recuperar",
+  "app.exploreBtn": "Explorar tienda",
   "app.successes.default": "Logrado",
   "app.errors.default": "Algo falló, inténtalo otra vez",
 
@@ -95,7 +96,7 @@
 
   "everfresh.metas.title": "Everfresh",
   "everfresh.metas.description": "Página de Everfresh",
-  "everfresh.h1": "EverFresh",
+  "everfresh.h1": "Everfresh",
   "everfresh.description": "Prolonga la vida de tus alimentos en un solo click.",
   "everfresh.comment": "Olvídate de tirar comida en mal estado y ayuda a la concienciación sobre el cuidado de los alimentos.",
   "everfresh.details.title": "Detalles del producto",
@@ -121,6 +122,7 @@
 
   "bags.metas.title": "Bolsas Everfresh",
   "bags.metas.description": "Página de bolsas Everfresh",
+  "bags.h1": "Bolsas de Everfresh",
 
   "login.metas.title": "Iniciar Sesión",
   "login.metas.description": "Página de iniciar sesión",

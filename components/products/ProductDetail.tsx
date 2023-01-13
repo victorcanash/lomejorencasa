@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
+import { everfreshProductId, bagProductId } from '@core/constants/products';
 import { Product } from '@core/types/products';
 import { getProductImgUrl } from '@core/utils/products';
 import useCart from '@lib/hooks/useCart';
@@ -36,14 +37,27 @@ const ProductDetail = (props: ProductDetailProps) => {
     marginBottom: '10px',
   };
 
+  const everfreshProduct = () => {
+    return everfreshProductId === product.id;
+  }
+
+  const bagProduct = () => {
+    return bagProductId === product.id;
+  }
+
+  const otherProduct = () => {
+    return everfreshProductId !== product.id && bagProductId !== product.id;
+  }
+
   return (
     <>
+      {/* Main Section */}
       <Grid
         container
         className='animate__animated animate__fadeIn'
         spacing={3}
       >
-
+        {/* Images */}
         <Grid
           item
           sm={12}
@@ -59,7 +73,7 @@ const ProductDetail = (props: ProductDetailProps) => {
             </CardMedia>
           </Card>
         </Grid>
-
+        {/* Texts */}
         <Grid 
           item 
           sm={12} 
@@ -67,7 +81,15 @@ const ProductDetail = (props: ProductDetailProps) => {
           className='animate__animated animate__fadeInRight'
         >
           <Typography component={"h1"} variant={"h1"} sx={{ mb: 2 }}>
-            <FormattedMessage id="everfresh.h1" />
+            {
+              everfreshProduct() && <FormattedMessage id="everfresh.h1" />
+            }
+            {
+              bagProduct() && <FormattedMessage id="bags.h1" />
+            }
+            {
+              otherProduct() && `${product.name.current}`
+            }
           </Typography>    
           { product.activeDiscount ?
             <Box sx={{ mb: 2 }}>
@@ -89,7 +111,12 @@ const ProductDetail = (props: ProductDetailProps) => {
             </Box>
           }
           <Typography component="h2" variant="body1" sx={{ mb: 3 }}>
-            <FormattedMessage id="everfresh.description" />
+            {
+              (everfreshProduct() || bagProduct()) && <FormattedMessage id="everfresh.description" />
+            }
+            {
+              otherProduct() && `${product.description.current}`
+            }
           </Typography>
           { loaded &&
             <FormControl 
@@ -109,12 +136,15 @@ const ProductDetail = (props: ProductDetailProps) => {
             </FormControl>
           }
           <Typography component="div" variant="body1" sx={{ mb: 1 }}>
-            <FormattedMessage id="everfresh.comment" />
+            {
+              (everfreshProduct() || bagProduct()) && <FormattedMessage id="everfresh.comment" />
+            }
           </Typography>
-        </Grid>
-      
+        </Grid> 
       </Grid>
 
+      {/* Everfresh Details Section */}
+      { (everfreshProduct() || bagProduct()) &&
         <Grid 
           item 
           xs={12} 
@@ -147,7 +177,9 @@ const ProductDetail = (props: ProductDetailProps) => {
             </Typography>
           </ul>
         </Grid>
-        
+      }
+      {/* Everfresh Characteristics Section */}
+      { (everfreshProduct() || bagProduct()) &&
         <Grid 
           item 
           xs={12} 
@@ -174,31 +206,33 @@ const ProductDetail = (props: ProductDetailProps) => {
             </Typography>
           </ul>
         </Grid>
-        
-        <Grid 
-          item 
-          xs={12} 
-          sm={12} 
-          md={6}
-          className='animate__animated animate__fadeInRight'
-        >
-          {divider}
-          <Typography component="div" variant="h1">
-            <FormattedMessage id="productDetail.shipping.title" />
+      }
+      {/* Shipping Section */}
+      <Grid 
+        item 
+        xs={12} 
+        sm={12} 
+        md={6}
+        className='animate__animated animate__fadeInRight'
+      >
+        {divider}
+        <Typography component="div" variant="h1">
+          <FormattedMessage id="productDetail.shipping.title" />
+        </Typography>
+        <ul>
+          <Typography component="li" variant="body1" style={liStyle}>
+            <FormattedMessage id="productDetail.shipping.1" />
           </Typography>
-          <ul>
-            <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.shipping.1" />
-            </Typography>
-            <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.shipping.2" />
-            </Typography>
-            <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.shipping.3" />
-            </Typography>
-          </ul>
-        </Grid>
-
+          <Typography component="li" variant="body1" style={liStyle}>
+            <FormattedMessage id="productDetail.shipping.2" />
+          </Typography>
+          <Typography component="li" variant="body1" style={liStyle}>
+            <FormattedMessage id="productDetail.shipping.3" />
+          </Typography>
+        </ul>
+      </Grid>
+      {/* Everfresh Dimensions Section */}
+      { (everfreshProduct() || bagProduct()) &&
         <Grid 
           item 
           xs={12} 
@@ -217,7 +251,7 @@ const ProductDetail = (props: ProductDetailProps) => {
             <Typography component="li" variant="body1" style={liStyle}>
               <FormattedMessage id="everfresh.dimensions.bags" />
               <ul>
-                <Typography component="li" variant="body1" style={liStyle}>
+                <Typography component="li" variant="body1" style={liStyle} sx={{ mt: 1 }}>
                   <FormattedMessage id="everfresh.dimensions.bags.1" />
                 </Typography>
                 <Typography component="li" variant="body1" style={liStyle}>
@@ -227,7 +261,10 @@ const ProductDetail = (props: ProductDetailProps) => {
             </Typography>
           </ul>
         </Grid>
-        
+      } 
+      
+      {/* Everfresh Video 1 */}
+      { (everfreshProduct() || bagProduct()) &&
         <Grid 
           item 
           xs={12} 
@@ -240,7 +277,10 @@ const ProductDetail = (props: ProductDetailProps) => {
             <FormattedMessage id="everfresh.videoComment.1" />
           </Typography>
         </Grid>
-        
+      }
+
+      {/* Everfresh Video 2 */}
+      { (everfreshProduct() || bagProduct()) &&
         <Grid 
           item 
           xs={12} 
@@ -253,7 +293,10 @@ const ProductDetail = (props: ProductDetailProps) => {
             <FormattedMessage id="everfresh.videoComment.2" />
           </Typography>
         </Grid>
+      }
 
+      {/* Everfresh Bags Section */}
+      { everfreshProduct() &&
         <Grid 
           item 
           xs={12} 
@@ -266,6 +309,7 @@ const ProductDetail = (props: ProductDetailProps) => {
             <FormattedMessage id="everfresh.bags" />
           </Typography>
         </Grid>
+      }
     </>
   );
 };

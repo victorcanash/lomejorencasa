@@ -8,9 +8,10 @@ import { Navigation, EffectCoverflow, Pagination } from 'swiper';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import { pages } from '@core/config/navigation.config';
+import LinkButton from '@core/components/LinkButton';
 import usePage from '@lib/hooks/usePage';
 import placeholder from 'public/images/placeholder.jpeg';
 import microorganismIcon from 'public/images/microorganism-icon.png';
@@ -77,11 +78,11 @@ const Home: NextPage = () => {
                   <Typography component={"h1"} variant={"h2"} sx={{ mb: '15px' }}>
                     <FormattedMessage id="home.h1" />
                   </Typography>  
-                  <Button
-                    variant="contained"
+                  <LinkButton
+                    href={pages.everfresh.path}
                   >
                     <FormattedMessage id="home.buyBtn" />
-                  </Button>
+                  </LinkButton>
                 </Box>
             </div>
           </SwiperSlide>
