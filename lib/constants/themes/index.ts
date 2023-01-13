@@ -172,11 +172,11 @@ export const themeOptions: ThemeOptions = {
       lineHeight: '28px',
       fontWeight: '500',
     },
-    // Navbar title
-    subtitle1: {
-      fontSize: '30px',
-      lineHeight: '33px',
-      fontWeight: '800',
+    // Page subtitle
+    h2: {
+      fontSize: '20px',
+      lineHeight: '23px',
+      fontWeight: '500',
     },
     // Page content
     body1: {

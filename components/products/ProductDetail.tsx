@@ -46,13 +46,12 @@ const ProductDetail = (props: ProductDetailProps) => {
 
         <Grid
           item
-          xs={12}
           sm={12}
           md={6}
           className='animate__animated animate__fadeInLeft'
           sx= {{ mb: 1 }}
         >
-          <Card raised>
+          <Card raised sx={{ maxWidth: '600px', margin: 'auto' }}>
             <CardMedia>
               <Carousel 
                 imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })} 
@@ -63,12 +62,11 @@ const ProductDetail = (props: ProductDetailProps) => {
 
         <Grid 
           item 
-          xs={12} 
           sm={12} 
           md={6}
           className='animate__animated animate__fadeInRight'
         >
-          <Typography component={"h1"} variant={"subtitle1"} sx={{ mb: 2 }}>
+          <Typography component={"h1"} variant={"h1"} sx={{ mb: 2 }}>
             <FormattedMessage id="productDetail.h1" />
           </Typography>    
           { product.activeDiscount ?
