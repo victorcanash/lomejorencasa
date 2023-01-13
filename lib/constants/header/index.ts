@@ -13,7 +13,7 @@ export const appDrawerItems: DrawerItem[] = [
   },
   {
     textId: 'everfresh',
-    path: pages.home.path,
+    path: pages.everfresh.path,
   },
   {
     textId: 'contact',

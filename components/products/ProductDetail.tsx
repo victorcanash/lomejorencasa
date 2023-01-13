@@ -67,7 +67,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           className='animate__animated animate__fadeInRight'
         >
           <Typography component={"h1"} variant={"h1"} sx={{ mb: 2 }}>
-            <FormattedMessage id="productDetail.h1" />
+            <FormattedMessage id="everfresh.h1" />
           </Typography>    
           { product.activeDiscount ?
             <Box sx={{ mb: 2 }}>
@@ -89,7 +89,7 @@ const ProductDetail = (props: ProductDetailProps) => {
             </Box>
           }
           <Typography component="h2" variant="body1" sx={{ mb: 3 }}>
-            <FormattedMessage id="productDetail.description" />
+            <FormattedMessage id="everfresh.description" />
           </Typography>
           { loaded &&
             <FormControl 
@@ -109,7 +109,7 @@ const ProductDetail = (props: ProductDetailProps) => {
             </FormControl>
           }
           <Typography component="div" variant="body1" sx={{ mb: 1 }}>
-            <FormattedMessage id="productDetail.comment" />
+            <FormattedMessage id="everfresh.comment" />
           </Typography>
         </Grid>
       
@@ -124,26 +124,26 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           {divider}
           <Typography component="div" variant="h1">
-            <FormattedMessage id="productDetail.details.title" />
+            <FormattedMessage id="everfresh.details.title" />
           </Typography>
           <ul>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.details.1" />
+              <FormattedMessage id="everfresh.details.1" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.details.2" />
+              <FormattedMessage id="everfresh.details.2" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.details.3" />
+              <FormattedMessage id="everfresh.details.3" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.details.4" />
+              <FormattedMessage id="everfresh.details.4" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.details.5" />
+              <FormattedMessage id="everfresh.details.5" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.details.6" />
+              <FormattedMessage id="everfresh.details.6" />
             </Typography>
           </ul>
         </Grid>
@@ -157,20 +157,20 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           {divider}
           <Typography component="div" variant="h1">
-            <FormattedMessage id="productDetail.characteristics.title" />
+            <FormattedMessage id="everfresh.characteristics.title" />
           </Typography>
           <ul>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.characteristics.1" />
+              <FormattedMessage id="everfresh.characteristics.1" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.characteristics.2" />
+              <FormattedMessage id="everfresh.characteristics.2" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.characteristics.3" />
+              <FormattedMessage id="everfresh.characteristics.3" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.characteristics.4" />
+              <FormattedMessage id="everfresh.characteristics.4" />
             </Typography>
           </ul>
         </Grid>
@@ -208,20 +208,20 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           {divider}
           <Typography component="div" variant="h1">
-            <FormattedMessage id="productDetail.dimensions.title" />
+            <FormattedMessage id="everfresh.dimensions.title" />
           </Typography>
           <ul>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.dimensions.packaging" />
+              <FormattedMessage id="everfresh.dimensions.packaging" />
             </Typography>
             <Typography component="li" variant="body1" style={liStyle}>
-              <FormattedMessage id="productDetail.dimensions.bags" />
+              <FormattedMessage id="everfresh.dimensions.bags" />
               <ul>
                 <Typography component="li" variant="body1" style={liStyle}>
-                  <FormattedMessage id="productDetail.dimensions.bags.1" />
+                  <FormattedMessage id="everfresh.dimensions.bags.1" />
                 </Typography>
                 <Typography component="li" variant="body1" style={liStyle}>
-                  <FormattedMessage id="productDetail.dimensions.bags.2" />
+                  <FormattedMessage id="everfresh.dimensions.bags.2" />
                 </Typography>
               </ul>
             </Typography>
@@ -237,7 +237,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           {divider}
           <Typography component="div" variant="body1" sx={{ mb: 2 }}>
-            <FormattedMessage id="productDetail.videoComment.1" />
+            <FormattedMessage id="everfresh.videoComment.1" />
           </Typography>
         </Grid>
         
@@ -250,7 +250,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           {divider}
           <Typography component="div" variant="body1">
-            <FormattedMessage id="productDetail.videoComment.2" />
+            <FormattedMessage id="everfresh.videoComment.2" />
           </Typography>
         </Grid>
 
@@ -263,7 +263,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           {divider}
           <Typography component="div" variant="h1">
-            <FormattedMessage id="productDetail.bags" />
+            <FormattedMessage id="everfresh.bags" />
           </Typography>
         </Grid>
     </>

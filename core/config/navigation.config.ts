@@ -10,9 +10,15 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.none,
       type: PageTypes.main,
     },
-    landing: {
-      path: '/landing',
-      filepath: '/landing',
+    everfresh: {
+      path: '/everfresh',
+      filepath: '/everfresh',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
+    bags: {
+      path: '/bags',
+      filepath: '/bags',
       protection: Protections.none,
       type: PageTypes.main,
     },
