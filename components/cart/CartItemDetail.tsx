@@ -13,6 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { pages } from '@core/config/navigation.config';
 import { rangeChangeItemQuantity } from '@core/constants/cart';
+import { everfreshProductId, bagProductId } from '@core/constants/products';
 import type { CartItem } from '@core/types/cart';
 import { getProductImgUrl } from '@core/utils/products';
 import Link from '@core/components/Link';
@@ -39,6 +40,14 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       updateQuantity(item, quantity);
     }
   };
+
+  const itemHref = () => {
+    let href = `${pages.productDetail.path}/${item.inventory.product.name.current}?id=${item.inventory.product.id}`;
+    if (item.inventory.product.id === everfreshProductId || item.inventory.product.id === bagProductId) {
+      href = `${pages.everfresh.path}`;
+    }
+    return href;
+  }
 
   const menuItems = useMemo(() => {
     const menuItems = [] as JSX.Element[];
@@ -83,7 +92,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       <Grid container spacing={2}>
 
         <Grid item>
-          <Link href={`${pages.productDetail.path}/${item.inventory.product.name.current}?id=${item.inventory.product.id}`} noLinkStyle>
+          <Link href={itemHref()} noLinkStyle>
             <div style={{ position: 'relative', minWidth: '100px' }}>
               <Image
                 src={getProductImgUrl(item.inventory.product)}
