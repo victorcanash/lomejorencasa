@@ -13,7 +13,7 @@
   "app.errors.default": "Something went wrong, try again",
 
   "header.drawerItems.home": "Home",
-  "header.drawerItems.everfresh": "Everfresh",
+  "header.drawerItems.everfresh": "EverFresh",
   "header.drawerItems.contact": "Contact us",
   "header.drawerItems.about": "About us",
   "header.drawerItems.faq": "Frequent questions",
@@ -35,7 +35,7 @@
 
   "home.metas.title": "Home",
   "home.metas.description": "Home page",
-  "home.h1": "Conserve sus alimentos de manera eficiente con la envasadora al vacío Everfresh",
+  "home.h1": "Conserve sus alimentos de manera eficiente con la envasadora al vacío EverFresh",
   "home.buyBtn": "Comprar ahora",
   "home.advantages.title": "¿Qué ventajas tiene el envasado al vacío?",
   "home.advantages.1": "Evitamos fermentaciones y reacciones oxidativas para mentener el sabor y aroma originales de los alimentos.",
@@ -50,7 +50,7 @@
   "home.conservation.title": "Tabla sobre tiempos de conservación",
   "home.conservation.description1": "Estos son los tiempos de duración promedio y pueden variar según el tipo de alimento, las condiciones de almacenamiento y el proceso de envasado al vacío.",
   "home.conservation.description2": "Siempre es recomendable revisar las fechas de caducidad y seguir las instrucciones de almacenamiento del fabricante y prestar atención a los cambios en el olor, textura y apariencia del alimento antes de consumirlo.",
-  "home.characteristics.title": "Características Everfresh",
+  "home.characteristics.title": "Características EverFresh",
 
   "about.metas.title": "About Us",
   "about.metas.description": "About us page",
@@ -94,9 +94,9 @@
   "productDetail.shipping.2": "Enviado mediante correos express en 24-48h.",
   "productDetail.shipping.3": "Consulta  el estado del pedido con nuestro tracking.",
 
-  "everfresh.metas.title": "Everfresh",
-  "everfresh.metas.description": "Página de Everfresh",
-  "everfresh.h1": "Everfresh",
+  "everfresh.metas.title": "EverFresh",
+  "everfresh.metas.description": "Página de EverFresh",
+  "everfresh.h1": "EverFresh",
   "everfresh.description": "Prolonga la vida de tus alimentos en un solo click.",
   "everfresh.comment": "Olvídate de tirar comida en mal estado y ayuda a la concienciación sobre el cuidado de los alimentos.",
   "everfresh.details.title": "Detalles del producto",
@@ -118,9 +118,9 @@
   "everfresh.videoComment.2": "Portátil y resistente ideal para llevar en tus viajes y poder envasar productos frescos al momento. Su pequeño tamaño es perfecto ya que cabe en cualquier tipo de cocina o habitáculo.",
   "everfresh.bags": "Añade bolsas al carrito",
 
-  "bags.metas.title": "Everfresh Bags",
-  "bags.metas.description": "Everfresh bags page",
-  "bags.h1": "Everfresh Bags",
+  "bags.metas.title": "EverFresh Bags",
+  "bags.metas.description": "EverFresh bags page",
+  "bags.h1": "EverFresh Bags",
 
   "login.metas.title": "Login",
   "login.metas.description": "Login page",
