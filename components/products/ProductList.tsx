@@ -1,16 +1,24 @@
 import { useRouter } from 'next/router';
+import Image from 'next/image'
 
 import { FormattedMessage } from 'react-intl';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
+import Card from '@mui/material/Card';
+import CardActionArea from '@mui/material/CardActionArea';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Box from '@mui/material/Box';
 
+import { pages } from '@core/config/navigation.config';
 import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
+import { getProductImgUrl } from '@core/utils/products';
+import Link from '@core/components/Link';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import ProductItem from '@components/products/ProductItem';
 import Pagination from '@components/ui/Pagination';
 
 type ProductListProps = {
@@ -58,7 +66,52 @@ const ProductList = (props: ProductListProps) => {
           <Grid container spacing={1} py={3}>
             {products?.map((item) => (
               <Grid item xs={6} sm={4} lg={3} key={item.id}>
-                <ProductItem product={item} />
+
+                <Card className='animate__animated animate__fadeIn' raised>
+                  <CardActionArea component={Link} href={`${pages.productDetail.path}/${item.name.current}?id=${item.id}`} noLinkStyle>
+        
+                    <CardMedia>
+                      <div>
+                        <Image
+                          src={getProductImgUrl(item)}
+                          alt="Product image"
+                          width="500"
+                          height="500"
+                          layout="responsive"
+                          objectFit="cover"
+                        />
+                      </div>
+                    </CardMedia>
+                    
+                    <CardContent>
+                      <Box>
+                        <Typography component="div" variant="body1">
+                          {capitalizeFirstLetter(item.name.current)}
+                        </Typography>
+                        
+                        { item.activeDiscount ?
+                          <>
+                            <Typography component="div" variant="body1" color="error">
+                              {`${item.lowestRealPrice} €`}
+                            </Typography>
+                            <Typography component="span" variant="body2">
+                              <FormattedMessage id="productDetail.original" />: <s>{`${item.lowestPrice} €`}</s>
+                            </Typography> 
+                            <Typography component="span" variant="body2" color="error">
+                              {` -${item.activeDiscount.discountPercent}%`}
+                            </Typography> 
+                          </>
+                          :
+                          <Typography component="span" variant="body1">
+                            {`${item.lowestRealPrice} €`}
+                          </Typography>
+                        }
+                      </Box>
+                    </CardContent>
+
+                  </CardActionArea>
+                </Card>
+
               </Grid>
             ))}
           </Grid>
