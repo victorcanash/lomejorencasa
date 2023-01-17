@@ -88,7 +88,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                   variant="body1"
                 />
               </Box>
-              <Typography component="h3" variant="h1" mt={3}>
+              <Typography component="h3" variant="h1" mt={5}>
                 <FormattedMessage 
                   id="forms.billing" 
                 />
@@ -99,7 +99,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                   variant="body1"
                 />
               </Box>
-              <Typography component="h3" variant="h1" mt={3}>
+              <Typography component="h3" variant="h1" mt={5}>
                 <FormattedMessage 
                   id="checkout.sections.payment" 
                 />
@@ -130,7 +130,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Typography component="h3" variant="h1">
+              <Typography component="h3" variant="h1" mb={2}>
                 <FormattedMessage 
                   id="checkout.order" 
                 />
@@ -159,7 +159,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 type="button"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 1, mb: 2 }}
                 onClick={handleBack}
               >
                 <FormattedMessage 
@@ -173,7 +173,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
                 type="button"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mt: 1, mb: 2 }}
                 onClick={handleConfirm}
                 disabled={totalPrice <= 0}
               >
