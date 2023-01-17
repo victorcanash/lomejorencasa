@@ -52,7 +52,6 @@ const ProductList = (props: ProductListProps) => {
           />
         } 
       </Typography>
-
       {
         category &&
           <Typography component="h2" variant="body1" className='animate__animated animate__fadeInLeft'>
@@ -61,66 +60,63 @@ const ProductList = (props: ProductListProps) => {
       }
       <Divider sx={{ my: 3 }} />
 
-      {
-        products.length > 0 ?
-          <Grid container spacing={1} py={3}>
-            {products?.map((item) => (
-              <Grid item xs={6} sm={4} lg={3} key={item.id}>
-
-                <Card className='animate__animated animate__fadeIn' raised>
-                  <CardActionArea component={Link} href={`${pages.productDetail.path}/${item.name.current}?id=${item.id}`} noLinkStyle>
-        
-                    <CardMedia>
-                      <div>
-                        <Image
-                          src={getProductImgUrl(item)}
-                          alt="Product image"
-                          width="500"
-                          height="500"
-                          layout="responsive"
-                          objectFit="cover"
-                        />
-                      </div>
-                    </CardMedia>
-                    
-                    <CardContent>
-                      <Box>
-                        <Typography component="div" variant="body1">
-                          {capitalizeFirstLetter(item.name.current)}
-                        </Typography>
-                        
-                        { item.activeDiscount ?
-                          <>
-                            <Typography component="div" variant="body1" color="error">
-                              {`${item.lowestRealPrice} €`}
-                            </Typography>
-                            <Typography component="span" variant="body2">
-                              <FormattedMessage id="productDetail.original" />: <s>{`${item.lowestPrice} €`}</s>
-                            </Typography> 
-                            <Typography component="span" variant="body2" color="error">
-                              {` -${item.activeDiscount.discountPercent}%`}
-                            </Typography> 
-                          </>
-                          :
-                          <Typography component="span" variant="body1">
+      { products.length > 0 ?
+        <Grid container spacing={1} py={3}>
+          {products?.map((item) => (
+            <Grid item xs={6} sm={4} lg={3} key={item.id}>
+              <Card className='animate__animated animate__fadeIn' raised>
+                <CardActionArea component={Link} href={`${pages.productDetail.path}/${item.name.current}?id=${item.id}`} noLinkStyle>
+      
+                  <CardMedia>
+                    <div>
+                      <Image
+                        src={getProductImgUrl(item)}
+                        alt="Product image"
+                        width="500"
+                        height="500"
+                        layout="responsive"
+                        objectFit="cover"
+                      />
+                    </div>
+                  </CardMedia>
+                  
+                  <CardContent>
+                    <Box>
+                      <Typography component="div" variant="body1">
+                        {capitalizeFirstLetter(item.name.current)}
+                      </Typography>
+                      
+                      { item.activeDiscount ?
+                        <>
+                          <Typography component="div" variant="body1" color="error">
                             {`${item.lowestRealPrice} €`}
                           </Typography>
-                        }
-                      </Box>
-                    </CardContent>
+                          <Typography component="span" variant="body2">
+                            <FormattedMessage id="productDetail.original" />: <s>{`${item.lowestPrice} €`}</s>
+                          </Typography> 
+                          <Typography component="span" variant="body2" color="error">
+                            {` -${item.activeDiscount.discountPercent}%`}
+                          </Typography> 
+                        </>
+                        :
+                        <Typography component="span" variant="body1">
+                          {`${item.lowestRealPrice} €`}
+                        </Typography>
+                      }
+                    </Box>
+                  </CardContent>
 
-                  </CardActionArea>
-                </Card>
-
-              </Grid>
-            ))}
-          </Grid>
-          :
-          <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
-            <FormattedMessage
-              id="productList.noItems"
-            />
-          </Typography>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+        :
+        <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
+          <FormattedMessage
+            id="productList.noItems"
+          />
+        </Typography>
       }
 
       <Pagination
