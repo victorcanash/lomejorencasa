@@ -8,13 +8,13 @@ import ListItemText from '@mui/material/ListItemText';
 
 const EverfreshDetail = () => {
   const list = (textId: string, itemsCount: number) => {
-    const items = [];
+    const items = [] as JSX.Element[];
     for (let i = 0; i < itemsCount; i++) {
       items.push(   
         <ListItem key={i} sx={{"&:hover": {backgroundColor: "transparent", }}}>
           <ListItemText 
             primary={
-              <Typography component="li" variant="body1" key={i}>
+              <Typography component="div" variant="body1" key={i}>
                 <FormattedMessage id={`${textId}.${i + 1}`} />
               </Typography>
             } 
