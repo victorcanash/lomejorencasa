@@ -6,11 +6,11 @@ export const themeOptions: ThemeOptions = {
       main: '#F1F4ED',
     },
     secondary: {
-      main: '#ecf7dc',
+      main: '#e5ecdc',
     },
     background: {
       default: '#F1F4ED',
-      paper: '#ecf7dc',
+      paper: '#e5ecdc',
     },
     text: {
       primary: '#000000',
@@ -50,10 +50,10 @@ export const themeOptions: ThemeOptions = {
         root: {
           backgroundColor: '#FFFFFF',
           '&:hover': {
-            backgroundColor: '#ecf7dc',
+            backgroundColor: '#e5ecdc',
           },
           '&.Mui-focused': {
-            backgroundColor: '#ecf7dc',
+            backgroundColor: '#e5ecdc',
           },
         },
       },
@@ -135,7 +135,7 @@ export const themeOptions: ThemeOptions = {
     MuiPaginationItem: {
       styleOverrides: {
         root: {
-          backgroundColor: '#ecf7dc',
+          backgroundColor: '#e5ecdc',
         },
       },
     },

@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(even)': {
-    backgroundColor: '#e2ebd7',
+    backgroundColor: '#ecf7dc',
   },
   '&:last-child td, &:last-child th': {
     border: 0,

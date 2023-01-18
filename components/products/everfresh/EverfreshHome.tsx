@@ -27,7 +27,7 @@ const EverfreshHome = () => {
         <Box
           sx={{
             borderRadius: '100%', 
-            backgroundColor: '#ecf7dc',
+            backgroundColor: '#e5ecdc',
             width: '200px',
             maxWidth: '100%',
             height: '200px',
