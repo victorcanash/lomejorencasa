@@ -8,24 +8,22 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 
-import { Drawers } from '@lib/constants/header';
 import Link from '@core/components/Link';
 import useDrawer from '@lib/hooks/useDrawer';
 import useAuth from '@lib/hooks/useAuth';
 
 type DrawerProps = {
-  id: Drawers;
   anchor: 'top' | 'left' | 'bottom' | 'right';
   open: boolean;
   handleDrawer: () => void;
 };
 
 const Drawer = (props: DrawerProps) => {
-  const { id, anchor, open, handleDrawer } = props;
+  const { anchor, open, handleDrawer } = props;
 
   const intl = useIntl();
 
-  const { items } = useDrawer(id);
+  const { items } = useDrawer();
   const { logout } = useAuth();
 
   const handleClickLogout = () => {

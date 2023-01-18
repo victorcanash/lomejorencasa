@@ -1,3 +1,4 @@
+/*
 import Image from 'next/image';
 
 import { useIntl } from 'react-intl';
@@ -183,3 +184,4 @@ const OldNavBar = () => {
 };
 
 export default OldNavBar;
+*/

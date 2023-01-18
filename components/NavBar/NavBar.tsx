@@ -12,7 +12,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { pages } from '@core/config/navigation.config';
 import Link from '@core/components/Link';
-import { Drawers } from '@lib/constants/header';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';
 import Drawer from '@components/NavBar/Drawer';
@@ -21,20 +20,14 @@ import logo from 'public/images/navbar-logo.png';
 const NavBar = () => {
   const { totalQuantity } = useCartContext();
 
-  const appDrawer = useDrawer(Drawers.appDrawer);
-  const userDrawer = useDrawer(Drawers.userDrawer);
+  const appDrawer = useDrawer();
 
   const handleAppDrawer = () => {
     appDrawer.setOpen(!appDrawer.open);
   };
-  const handleUserDrawer = () => {
-    userDrawer.setOpen(!userDrawer.open);
-  };
   const closeDrawers = () => {
     if (appDrawer.open) {
       appDrawer.setOpen(false);
-    } else if (userDrawer.open) {
-      userDrawer.setOpen(false);
     }
   }
 
@@ -47,7 +40,7 @@ const NavBar = () => {
           <IconButton
             size="large"
             color="inherit"
-            aria-controls={Drawers.appDrawer}
+            aria-controls="app-drawer"
             aria-haspopup="true"
             onClick={handleAppDrawer}
             sx={{ mr: 1 }}
@@ -95,32 +88,14 @@ const NavBar = () => {
             </Badge>
           </IconButton>
 
-          <IconButton
-            size="large"
-            color="inherit"
-            aria-controls={Drawers.userDrawer}
-            aria-haspopup="true"
-            onClick={handleUserDrawer}
-          >
-            <AccountCircle sx={{ fontSize: 30 }} />
-          </IconButton>
-
         </Toolbar>
       </AppBar>
 
       <Drawer
-        key={Drawers.appDrawer}
-        id={Drawers.appDrawer}
+        key="app-drawer"
         anchor={'left'}
         open={appDrawer.open}
         handleDrawer={handleAppDrawer}
-      />
-      <Drawer
-        key={Drawers.userDrawer}
-        id={Drawers.userDrawer}
-        anchor={'right'}
-        open={userDrawer.open}
-        handleDrawer={handleUserDrawer}
       />
 
     </Box>

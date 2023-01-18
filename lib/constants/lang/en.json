@@ -14,14 +14,15 @@
 
   "header.drawerItems.home": "Home",
   "header.drawerItems.everfresh": "EverFresh",
-  "header.drawerItems.contact": "Contact us",
-  "header.drawerItems.about": "About us",
-  "header.drawerItems.faq": "Frequent questions",
+  "header.drawerItems.bags": "Bags",
   "header.drawerItems.profile": "Your profile",
   "header.drawerItems.orders": "Orders",
   "header.drawerItems.signOut": "Sign out",
   "header.drawerItems.signIn": "Sign in",
   "header.drawerItems.register": "Register",
+  "header.drawerItems.contact": "Contact us",
+  "header.drawerItems.about": "About us",
+  "header.drawerItems.faq": "Frequent questions",
   "header.searchBar.placeholder": "Search here",
 
   "footer.contact.title": "Contact us",

@@ -1,26 +1,29 @@
 import { useEffect, useState } from 'react';
 
-import { Drawers, appDrawerItems, loggedUserDrawerItems, unloggedUserDrawerItems } from '@lib/constants/header';
-import { DrawerItem } from '@core/types/header';
+import type { DrawerItem } from '@core/types/header';
+import { 
+  mainDrawerItems, 
+  loggedUserDrawerItems, 
+  unloggedUserDrawerItems, 
+  infoDrawerItems,
+  signOutDrawerItem,
+} from '@lib/constants/header';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
-const useDrawer = (drawer: Drawers) => {
+const useDrawer = () => {
   const { isLogged } = useAuthContext();
 
   const [items, setItems] = useState<DrawerItem[]>([]);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    if (drawer == Drawers.userDrawer) {
-      if (isLogged()) {
-        setItems(loggedUserDrawerItems);
-      } else {
-        setItems(unloggedUserDrawerItems);
-      }
-    } else if (drawer == Drawers.appDrawer) {
-      setItems(appDrawerItems);
+    if (isLogged()) {
+      setItems(mainDrawerItems.concat(loggedUserDrawerItems, infoDrawerItems));
+      setItems(items => [...items, signOutDrawerItem])
+    } else {
+      setItems(mainDrawerItems.concat(unloggedUserDrawerItems, infoDrawerItems));
     }
-  }, [drawer, isLogged]);
+  }, [isLogged]);
 
   return {
     items,
