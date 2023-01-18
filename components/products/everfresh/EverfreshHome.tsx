@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import { pages } from '@core/config/navigation.config';
 import LinkButton from '@core/components/LinkButton';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
+import EverfreshConservation from '@components/products/everfresh/EverfreshConservation';
 import placeholder from 'public/images/placeholder.jpeg';
 import microorganismIcon from 'public/images/microorganism-icon.png';
 import frezzerIcon from 'public/images/frezzer-icon.png';
@@ -171,13 +172,14 @@ const EverfreshHome = () => {
           sx={{ textAlign: 'center' }}
         >
           <Box className='centered-container-img'>
-            <Typography component={"h2"} variant={"h1"} sx={{ mt: 1, mb: 3 }}>
+            <Typography component={"h2"} variant={"h1"} sx={{ mt: 1, mb: 4 }}>
               <FormattedMessage id="home.conservation.title" />
             </Typography> 
-            <Typography component={"div"} variant={"body1"} sx={{ textAlign: 'left', mb: 2 }}>
+            <EverfreshConservation />
+            <Typography component={"div"} variant={"body1"} sx={{ mt: 2, mb: 2 }}>
               <FormattedMessage id="home.conservation.description1" />
             </Typography> 
-            <Typography component={"div"} variant={"body1"} sx={{ textAlign: 'left', mb: 3 }}>
+            <Typography component={"div"} variant={"body1"} sx={{ mb: 3 }}>
               <FormattedMessage id="home.conservation.description2" />
             </Typography> 
           </Box>

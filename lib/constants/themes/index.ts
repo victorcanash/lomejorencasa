@@ -157,6 +157,13 @@ export const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiTableHead: {
+      styleOverrides: {
+        root: {
+          backgroundColor: '#A7AC93',
+        },
+      },
+    },
     MuiTypography: {
       styleOverrides: {
         root: {
