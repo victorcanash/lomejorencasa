@@ -1,3 +1,7 @@
+html {
+  white-space: pre-line;
+}
+
 /* Swiper */
 
 .swiper-button-next { 
