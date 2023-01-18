@@ -1,4 +1,3 @@
-/*
 import Image from 'next/image';
 
 import { useIntl } from 'react-intl';
@@ -16,7 +15,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { pages } from '@core/config/navigation.config';
-import { Drawers } from '@lib/constants/header';
+//import { Drawers } from '@lib/constants/header';
 import HideOnScroll from '@core/components/HideOnScroll';
 import Link from '@core/components/Link';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -32,7 +31,7 @@ const OldNavBar = () => {
 
   const intl = useIntl();
 
-  const userDrawer = useDrawer(Drawers.userDrawer);
+  /*const userDrawer = useDrawer(Drawers.userDrawer);
   const categoriesDrawer = useDrawer(Drawers.appDrawer);
 
   const handleUserDrawer = () => {
@@ -48,13 +47,13 @@ const OldNavBar = () => {
     else if (categoriesDrawer.open) {
       categoriesDrawer.setOpen(false);
     }
-  }
+  }*/
 
   return (
     <Box component="header">
 
       <HideOnScroll direction="down">
-        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'primary.main' }} onClick={closeDrawers}>
+        <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'primary.main' }} /*onClick={closeDrawers}*/>
           <Toolbar variant="dense">
 
             <Tooltip title={intl.formatMessage({ id: 'header.tooltips.logo' })}>
@@ -77,7 +76,7 @@ const OldNavBar = () => {
               </IconButton>
             </Tooltip>
 
-            <Tooltip 
+            {/*<Tooltip 
               title={
                 categoriesDrawer.open ? 
                   intl.formatMessage({ id: 'header.tooltips.hideCategoriesMenu' }) :
@@ -100,8 +99,8 @@ const OldNavBar = () => {
                   <MenuIcon sx={{ fontSize: 30 }} />
                 </IconButton>
               </Box>
-            </Tooltip>
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            </Tooltip>*/}
+            {/*<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
               {categoriesDrawer.items.map((category) => (
                 <Tooltip 
                   key={category.textId}
@@ -120,7 +119,7 @@ const OldNavBar = () => {
                   </Button>
                 </Tooltip>
               ))}
-            </Box>
+            </Box>*/}
 
             <Container maxWidth='xs' disableGutters>
               <SearchBar />
@@ -142,7 +141,7 @@ const OldNavBar = () => {
               </IconButton>
             </Tooltip>
 
-            <Tooltip 
+            {/*<Tooltip 
               title={
                 userDrawer.open ? 
                   intl.formatMessage({ id: 'header.tooltips.hideUserMenu' }) :
@@ -158,13 +157,13 @@ const OldNavBar = () => {
               >
                 <AccountCircle sx={{ fontSize: 30 }} />
               </IconButton>
-            </Tooltip>
+            </Tooltip>*/}
 
           </Toolbar>
         </AppBar>
       </HideOnScroll>
 
-      <Drawer
+      {/*<Drawer
         key={Drawers.userDrawer}
         id={Drawers.userDrawer}
         anchor={'right'}
@@ -177,11 +176,10 @@ const OldNavBar = () => {
         anchor={'left'}
         open={categoriesDrawer.open}
         handleDrawer={handleCategoriesDrawer}
-      />
+      />*/}
 
     </Box>
   );
 };
 
 export default OldNavBar;
-*/
