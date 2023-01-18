@@ -10,15 +10,13 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
       <Header />
       <Container 
         component="main"
+        sx={{
+          mt: 12,
+          mb: 6,
+          minHeight: '50vh',
+        }}
       >
-        <Box
-          sx={{
-            mt: 12,
-            mb: 6,
-          }}
-        >
-          {children}
-        </Box>
+        {children}
       </Container>
     </>
   )
