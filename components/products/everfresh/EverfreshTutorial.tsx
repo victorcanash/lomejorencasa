@@ -26,7 +26,8 @@ const EverfreshTutorial = (props: EverfreshTutorialProps) => {
         xs={12}
       >
         <Box 
-          className="centered-container-img"  
+          className="centered-container-img"
+          sx={{ textAlign: 'center' }}
         >
           <Typography component="div" variant="body1" sx={{ mb: 3 }}>
             <FormattedMessage id={textId} />

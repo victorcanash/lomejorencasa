@@ -78,7 +78,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           item 
           xs={12}
           md={6}
-          className='animate__animated animate__fadeInRight'
+          className='animate__animated animate__fadeIn'
         >
           <Box className="centered-container-img">
             <Typography component={"h1"} variant={"h1"} sx={{ mb: 2 }}>
@@ -150,7 +150,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </LinkButton>
             }
           </Box>
-        </Grid> 
+        </Grid>
 
       </Grid>
 
