@@ -24,9 +24,11 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
 
   const initData = useCallback(async () => {
     initForms();
-    if (layoutComponent !== LinkLayout) {
+    if (layoutComponent != LinkLayout) {
       await getLogged();
-      await getAllProductCategories(intl.locale, layoutComponent === AdminLayout)
+    }
+    if (layoutComponent == AdminLayout) {
+      await getAllProductCategories(intl.locale, true)
         .then((response: {productCategories: ProductCategory[]}) => {
           setProductCategories(response.productCategories);
           setInitialized(true);
