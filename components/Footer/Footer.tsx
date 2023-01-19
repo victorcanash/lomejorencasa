@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import envConfig from '@core/config/env.config';
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import Link from '@core/components/Link';
 
 const Footer = () => {

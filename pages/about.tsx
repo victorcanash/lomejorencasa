@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import Link from '@core/components/Link';
 import usePage from '@lib/hooks/usePage';
 

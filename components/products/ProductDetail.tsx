@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { everfreshProductId, bagProductId } from '@core/constants/products';
 import { Product } from '@core/types/products';
 import { getProductImgUrl } from '@core/utils/products';

@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import Link from '@core/components/Link';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';

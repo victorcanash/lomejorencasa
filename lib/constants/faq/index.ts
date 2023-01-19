@@ -1,4 +1,4 @@
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import type { Question } from '@core/types/faq';
 
 export const questions: Question[] = [

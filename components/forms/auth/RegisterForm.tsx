@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { AuthRegister } from '@core/types/auth';
 import Link from '@core/components/Link';
 import useAuth from '@lib/hooks/useAuth';

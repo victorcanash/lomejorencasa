@@ -10,7 +10,7 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { CartItem } from '@core/types/cart';
 import LinkButton from '@core/components/LinkButton';
 import { useAppContext } from '@lib/contexts/AppContext';

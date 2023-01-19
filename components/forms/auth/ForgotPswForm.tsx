@@ -12,7 +12,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Alert from '@mui/material/Alert';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import Link from '@core/components/Link';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useAuth from '@lib/hooks/useAuth';

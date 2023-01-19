@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import LinkButton from '@core/components/LinkButton';
 import ProTip from '@components/ui/ProTip';
 import Copyright from '@components/ui/Copyright';

@@ -1,4 +1,4 @@
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { DrawerItem } from '@core/types/header';
 
 export const mainDrawerItems: DrawerItem[] = [

@@ -11,7 +11,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { rangeChangeItemQuantity } from '@core/constants/cart';
 import { everfreshProductId, bagProductId } from '@core/constants/products';
 import type { CartItem } from '@core/types/cart';

@@ -14,7 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 //import { Drawers } from '@lib/constants/header';
 import HideOnScroll from '@core/components/HideOnScroll';
 import Link from '@core/components/Link';

@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import type { Order } from '@core/types/orders';
 import { 
   checkPaymentMethod as checkPaymentMethodMW, 

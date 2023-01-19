@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { ManageActions } from '@core/constants/auth';
 import { maxQuantity } from '@core/constants/cart';
 import type { Cart, CartItem } from '@core/types/cart';

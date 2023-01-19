@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import { useIntl } from 'react-intl';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { Order } from '@core/types/orders';
 import usePage from '@lib/hooks/usePage';
 import useOrders from '@lib/hooks/useOrders';

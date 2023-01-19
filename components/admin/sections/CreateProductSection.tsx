@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { AdminSections } from '@core/constants/admin';
 import { ManageActions } from '@core/constants/auth';
 import { Product, ProductInventory, ProductDiscount } from '@core/types/products';

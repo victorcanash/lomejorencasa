@@ -1,6 +1,6 @@
 import { createContext, useState, Dispatch, SetStateAction, useContext } from 'react';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { allProductsName } from '@core/constants/products';
 import type { ProductCategory } from '@core/types/products';
 import { AdminSections } from '@core/constants/admin';

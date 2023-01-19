@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { AdminSections } from '@core/constants/admin';
 import { ManageActions } from '@core/constants/auth';
 import ManagePCategoryForm from '@components/forms/products/ManagePCategoryForm';

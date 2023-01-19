@@ -1,4 +1,4 @@
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { PageTypes } from '@core/constants/navigation';
 import WebLayout from '@components/layouts/WebLayout';
 import LinkLayout from '@components/layouts/LinkLayout';

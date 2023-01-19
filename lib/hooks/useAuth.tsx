@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { useIntl } from 'react-intl';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import type { User } from '@core/types/user';
 import type { 
   AuthRegister, 
@@ -65,7 +65,7 @@ const useAuth = () => {
   };
 
   const onRegisterSuccess = async (email: string, onSuccess?: (email: string) => void) => {
-    await sendUserActivationEmail(intl.locale, email);
+    await sendUserActivationEmail(intl.locale, email, pages.activation);
     if (onSuccess) {
       onSuccess(email);
     }
@@ -195,7 +195,7 @@ const useAuth = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserActivationEmail(intl.locale, email).then(() => {
+    sendUserActivationEmail(intl.locale, email, pages.activation).then(() => {
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'activation.successes.email' }));
       if (onSuccess) {
@@ -221,7 +221,7 @@ const useAuth = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserResetPswEmail(intl.locale, email).then(() => {
+    sendUserResetPswEmail(intl.locale, email, pages.reset).then(() => {
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'reset.successes.email' }));
     }).catch((error: Error) => {
@@ -240,7 +240,7 @@ const useAuth = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserUpdateEmail(token, intl.locale, authUpdateEmail).then(() => {
+    sendUserUpdateEmail(token, intl.locale, authUpdateEmail, pages.newemail).then(() => {
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'newemail.successes.email' }));
     }).catch((error: Error) => {

@@ -1,6 +1,6 @@
 import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
-import { NavigationConfig } from '@core/types/navigation';
+import type { NavigationConfig } from '@lib/types/navigation';
 
 const navigationConfig: NavigationConfig = {
   pages: {

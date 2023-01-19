@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { pages } from '@core/config/navigation.config';
 import { JWTTokenKey } from '@core/constants/auth';
 import { Storages } from '@core/constants/storage';
 import type { User } from '@core/types/user';
@@ -14,6 +13,7 @@ import type {
   AuthResetPsw 
 } from '@core/types/auth';
 import type { Cart } from '@core/types/cart';
+import type { Page } from '@core/types/navigation';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 
@@ -221,14 +221,14 @@ export const resetUserPsw = async (updateToken: string, authResetPassword: AuthR
   })
 };
 
-export const sendUserActivationEmail = async (currentLocale: string, email: string) => {
+export const sendUserActivationEmail = async (currentLocale: string, email: string, urlPage: Page) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getLanguageHeaders(currentLocale),
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-        url: `${envConfig.NEXT_PUBLIC_APP_URL}${pages.activation.path}`,
+        url: `${envConfig.NEXT_PUBLIC_APP_URL}${urlPage.path}`,
       }
     };
     axios.post('auth/send-email/activation', { email }, options)
@@ -246,14 +246,14 @@ export const sendUserActivationEmail = async (currentLocale: string, email: stri
   })
 };
 
-export const sendUserResetPswEmail = async (currentLocale: string, email: string) => {
+export const sendUserResetPswEmail = async (currentLocale: string, email: string, urlPage: Page) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getLanguageHeaders(currentLocale),
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-        url: `${envConfig.NEXT_PUBLIC_APP_URL}${pages.reset.path}`,
+        url: `${envConfig.NEXT_PUBLIC_APP_URL}${urlPage.path}`,
       }
     };
     axios.post('auth/send-email/reset', { email }, options)
@@ -271,7 +271,7 @@ export const sendUserResetPswEmail = async (currentLocale: string, email: string
   })
 };
 
-export const sendUserUpdateEmail = async (token: string, currentLocale: string, authUpdateEmail: AuthUpdateEmail, revertEmail = false) => {
+export const sendUserUpdateEmail = async (token: string, currentLocale: string, authUpdateEmail: AuthUpdateEmail, urlPage: Page, revertEmail = false) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
@@ -281,7 +281,7 @@ export const sendUserUpdateEmail = async (token: string, currentLocale: string, 
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-        url: `${envConfig.NEXT_PUBLIC_APP_URL}${pages.newemail.path}`,
+        url: `${envConfig.NEXT_PUBLIC_APP_URL}${urlPage.path}`,
         revertEmail,
       }
     };

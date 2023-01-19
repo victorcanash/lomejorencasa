@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import { Protections } from '@core/constants/auth';
 import type { User } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';

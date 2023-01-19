@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { pages } from '@core/config/navigation.config';
+import { pages } from '@lib/constants/navigation';
 import LinkButton from '@core/components/LinkButton';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
 import EverfreshConservation from '@components/products/everfresh/EverfreshConservation';
