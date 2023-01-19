@@ -10,6 +10,9 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
+import { pages } from '@core/config/navigation.config';
+import Link from '@core/components/Link';
+import { questions } from '@lib/constants/faq';
 import usePage from '@lib/hooks/usePage';
 
 const Faq: NextPage = () => {
@@ -20,32 +23,33 @@ const Faq: NextPage = () => {
   const title = intl.formatMessage({ id: 'faq.metas.title' });
   const description = intl.formatMessage({ id: 'faq.metas.description' });
 
-  const questions = () => {
-    const items = [];
-    for (let i = 0; i < 19; i++) {
+  const questionElements = () => {
+    const items = [] as JSX.Element[];
+    for (let i = 0; i < questions.length; i++) {
       items.push(
         <Accordion key={i}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
           >
-            <Typography>
-              <FormattedMessage id={`faq.q${i + 1}`} />
+            <Typography component="div" variant="body1">
+              <FormattedMessage id={`faq.q.${questions[i].textId}`} />
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-              malesuada lacus ex, sit amet blandit leo lobortis eget.
+            <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+              <FormattedMessage id={`faq.r.${questions[i].textId}`} />
             </Typography>
+            { questions[i].path &&
+              <Link href={questions[i].path || pages.home.path}>
+                <FormattedMessage id="faq.link" />
+              </Link>
+            }           
           </AccordionDetails>
         </Accordion>
       );
     }
     return items;
   };
-
 
   return (
     <>
@@ -61,7 +65,7 @@ const Faq: NextPage = () => {
       <Divider sx={{ mt: 1, mb: 3 }} />
       
       <div>
-        { questions() }
+        { questionElements() }
       </div>
     </>
   );
