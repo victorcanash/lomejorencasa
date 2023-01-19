@@ -37,11 +37,11 @@ const useProducts = () => {
     const totalImgs = product.imageNames.length - 
       (deleteImgs ? deleteImgs.length : 0) + 
       ((uploadImgs ? uploadImgs.length : 0));
-    if (totalImgs < 1) {
+    /*if (totalImgs < 1) {
       setSuccessMsg('');
       setErrorMsg(intl.formatMessage({ id: 'admin.errors.validateProductImgs' }));
       return false;
-    } 
+    }*/
     if (onSuccess) {
       onSuccess(product, uploadImgs);
     }
@@ -67,8 +67,10 @@ const useProducts = () => {
     try {
       productId = await (await manageProductMW(ManageActions.create, token, intl.locale, product)).product.id;
 
-      productImages = await (await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productId)).productImages;
-
+      if (uploadImgs.length > 0) {
+        productImages = await (await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productId)).productImages;
+      }
+      
       for (const inventory of inventories) {
         inventory.productId = productId;
         await manageProductInventoryMW(ManageActions.create, token, intl.locale, inventory);

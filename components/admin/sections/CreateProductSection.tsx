@@ -81,7 +81,7 @@ const CreateProductSection = () => {
         />
       }
       
-      { product && uploadImgs && uploadImgs.length > 0 &&
+      { product &&
         <Container maxWidth="xs">
           <Box
             sx={{
@@ -99,14 +99,18 @@ const CreateProductSection = () => {
               product={product}
               created={false}
             />
-            <Typography component="div" variant="body1">
-              <FormattedMessage
-                id="forms.manageProductImgs.newImgs"
-              />
-            </Typography>
-            <ImagesDetail
-              imgSources={uploadImgs.map((item) => { return item.url })}
-            />
+            { uploadImgs && uploadImgs.length > 0 &&
+              <>
+                <Typography component="div" variant="body1">
+                  <FormattedMessage
+                    id="forms.manageProductImgs.newImgs"
+                  />
+                </Typography>
+                <ImagesDetail
+                  imgSources={uploadImgs.map((item) => { return item.url })}
+                />
+              </>
+            }
 
             <Divider sx={{ my: 2 }} />
 

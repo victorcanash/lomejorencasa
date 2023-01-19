@@ -172,11 +172,11 @@ const useForms = () => {
   const localizedTextsFieldsValidation = {
     en: Yup
       .string()
-      .min(3)
+      .min(1)
       .required(),
     es: Yup
       .string()
-      .min(3)
+      .min(1)
       .required(),
   };
 
