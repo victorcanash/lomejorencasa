@@ -19,7 +19,10 @@ import useSelectInventory from '@lib/hooks/useSelectInventory';
 import Carousel from '@components/ui/Carousel';
 import EverfreshDetail from '@components/products/everfresh/EverfreshDetail';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
+
 import placeholder from 'public/images/placeholder.jpeg';
+import everfresh1 from 'public/images/everfresh/everfresh1.jpeg';
+import everfresh2 from 'public/images/everfresh/everfresh2.jpeg';
 
 type ProductDetailProps = {
   product: Product,
@@ -49,6 +52,18 @@ const ProductDetail = (props: ProductDetailProps) => {
     return everfreshProductId !== product.id && bagProductId !== product.id;
   };
 
+  const getCarouselSrcs = () => {
+    if (everfreshProduct()) {
+      return [everfresh1, everfresh2];
+    } else if (bagProduct()) {
+      return [everfresh1, everfresh2];
+    } else {
+      return product.imageNames.map((_item, index) => { 
+        return getProductImgUrl(product, index); 
+      });
+    }
+  };
+
   return (
     <>
       {/* General Product Section */}
@@ -67,7 +82,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           <Card raised className='centered-container-img'>
             <CardMedia>
               <Carousel 
-                imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })} 
+                imgSources={getCarouselSrcs()} 
               />
             </CardMedia>
           </Card>
