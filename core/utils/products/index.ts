@@ -3,11 +3,20 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { limitByPageSearch, orderRemainsSearch, categoriesIds } from '@core/constants/products';
+import { 
+  limitByPageSearch, 
+  orderRemainsSearch, 
+  categoriesIds,
+  everfreshProductId,
+  bagProductId, 
+} from '@core/constants/products';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+
 import placeholder from 'public/images/placeholder.jpeg';
+import everfresh1 from 'public/images/everfresh/everfresh1.jpeg';
+import everfresh2 from 'public/images/everfresh/everfresh2.jpeg';
 
 export const getAllProducts = async (
   token: string, 
@@ -91,10 +100,27 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
 };
 
 export const getProductImgUrl = (product: Product, index = 0) => {
-  if (product.imageNames.length > index && product.imageNames[index]) {
+  if (everfreshProductId === product.id) {
+    return everfresh1;
+  } else if (bagProductId === product.id) {
+    return everfresh1;
+  }
+  else if (product.imageNames.length > index && product.imageNames[index]) {
     return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`
   }
   return placeholder;
+};
+
+export const getAllProductImgsUrl = (product: Product) => {
+  if (everfreshProductId === product.id) {
+    return [everfresh1, everfresh2];
+  } else if (bagProductId === product.id) {
+    return [everfresh1, everfresh2];
+  } else {
+    return product.imageNames.map((_item, index) => { 
+      return getProductImgUrl(product, index); 
+    });
+  }
 };
 
 export const getAllProductCategories = async (currentLocale: string, adminData = false, sortBy?: string, order?: string) => {

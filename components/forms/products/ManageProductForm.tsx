@@ -17,7 +17,7 @@ import Alert from '@mui/material/Alert';
 import { ManageActions } from '@core/constants/auth';
 import { Product } from '@core/types/products';
 import { UploadFile } from '@core/types/upload';
-import { getProductImgUrl } from '@core/utils/products';
+import { getAllProductImgsUrl } from '@core/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import useProducts from '@lib/hooks/useProducts';
 import useForms from '@lib/hooks/useForms';
@@ -282,7 +282,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                     />
                   </Typography>
                   <ImagesDetail
-                    imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })}
+                    imgSources={getAllProductImgsUrl(product)}
                     getImgActionComponent={(srcImgIndex: number) => {
                       const component = deleteExistingImgs.includes(srcImgIndex) ?
                         <>

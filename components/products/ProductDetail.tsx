@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import { pages } from '@lib/constants/navigation';
 import { everfreshProductId, bagProductId } from '@core/constants/products';
 import { Product } from '@core/types/products';
-import { getProductImgUrl } from '@core/utils/products';
+import { getAllProductImgsUrl } from '@core/utils/products';
 import LinkButton from '@core/components/LinkButton';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
@@ -21,8 +21,6 @@ import EverfreshDetail from '@components/products/everfresh/EverfreshDetail';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
 
 import placeholder from 'public/images/placeholder.jpeg';
-import everfresh1 from 'public/images/everfresh/everfresh1.jpeg';
-import everfresh2 from 'public/images/everfresh/everfresh2.jpeg';
 
 type ProductDetailProps = {
   product: Product,
@@ -52,18 +50,6 @@ const ProductDetail = (props: ProductDetailProps) => {
     return everfreshProductId !== product.id && bagProductId !== product.id;
   };
 
-  const getCarouselSrcs = () => {
-    if (everfreshProduct()) {
-      return [everfresh1, everfresh2];
-    } else if (bagProduct()) {
-      return [everfresh1, everfresh2];
-    } else {
-      return product.imageNames.map((_item, index) => { 
-        return getProductImgUrl(product, index); 
-      });
-    }
-  };
-
   return (
     <>
       {/* General Product Section */}
@@ -82,7 +68,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           <Card raised className='centered-container-img'>
             <CardMedia>
               <Carousel 
-                imgSources={getCarouselSrcs()} 
+                imgSources={getAllProductImgsUrl(product)} 
               />
             </CardMedia>
           </Card>
@@ -156,13 +142,19 @@ const ProductDetail = (props: ProductDetailProps) => {
                 (everfreshProduct() || bagProduct()) && <FormattedMessage id="everfresh.comment" />
               }
             </Typography>
-            { 
-              (everfreshProduct() || bagProduct()) && 
-                <LinkButton href={pages.register.path}>
-                  <FormattedMessage 
-                    id="everfresh.bags" 
-                  />
-                </LinkButton>
+            { everfreshProduct() && 
+              <LinkButton href={pages.bags.path}>
+                <FormattedMessage 
+                  id="everfresh.bags" 
+                />
+              </LinkButton>
+            }
+            { bagProduct() && 
+              <LinkButton href={pages.everfresh.path}>
+                <FormattedMessage
+                  id="bags.everfresh" 
+                />
+              </LinkButton>
             }
           </Box>
         </Grid>

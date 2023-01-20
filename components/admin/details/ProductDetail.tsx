@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { Product } from '@core/types/products';
-import { getProductImgUrl } from '@core/utils/products';
+import { getAllProductImgsUrl } from '@core/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import Carousel from '@components/ui/Carousel';
 
@@ -53,7 +53,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           </Typography>
           <Box sx={{width: "360px"}}>
             <Carousel 
-              imgSources={product.imageNames.map((_item, index) => { return getProductImgUrl(product, index); })} 
+              imgSources={getAllProductImgsUrl(product)} 
             />
           </Box>
         </>

@@ -43,8 +43,10 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
   const itemHref = () => {
     let href = `${pages.productDetail.path}/${item.inventory.product.name.current}?id=${item.inventory.product.id}`;
-    if (item.inventory.product.id === everfreshProductId || item.inventory.product.id === bagProductId) {
+    if (item.inventory.product.id === everfreshProductId) {
       href = `${pages.everfresh.path}`;
+    } else if (item.inventory.product.id === bagProductId) {
+      href = `${pages.bags.path}`;
     }
     return href;
   }
