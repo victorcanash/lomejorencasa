@@ -148,7 +148,7 @@ const useForms = () => {
 
   const orderFieldsInitValues = {
     id: 0,
-    locale: intl.defaultLocale,
+    locale: 'es',// intl.defaultLocale,
     userId: 0,
     braintreeTransactionId: '',
   }

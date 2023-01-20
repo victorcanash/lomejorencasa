@@ -89,11 +89,14 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
                 onChange={props.handleChange}
                 error={props.touched.locale && Boolean(props.errors.locale)}
               >
-                { router.locales?.map((locale) => (
+                {/* router.locales?.map((locale) => (
                   <MenuItem key={locale} value={locale}>
                     {locale}
                   </MenuItem>
-                ))}
+                ))*/}
+                <MenuItem key={'es'} value={'es'}>
+                  es
+                </MenuItem>
               </Select>
 
               {/* OrderID Field */}
