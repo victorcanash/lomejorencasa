@@ -32,7 +32,7 @@ const EverfreshHome = () => {
           sx={{
             width: '200px',
             height: '200px',
-            borderRadius: '100%', 
+            borderRadius: '100%',
             backgroundColor: '#e5ecdc',
             maxWidth: '100%',
             position: 'relative',
@@ -70,13 +70,13 @@ const EverfreshHome = () => {
         <Typography component="div" variant="body1">
           <Box
             sx={{
-              width: '180px',
-              height: '180px',
-              borderRadius: '100%', 
-              backgroundColor: '#e5ecdc',
               maxWidth: '100%',
               position: 'relative',
               m: 'auto',
+              width: { xs: '180px', sm: '200px' },
+              height: { xs: '180px', sm: '200px' },
+              borderRadius: '100%', 
+              backgroundColor: '#e5ecdc',
               mt: 2,
               mb: 2,
             }} 
@@ -100,7 +100,16 @@ const EverfreshHome = () => {
               />
             </Box>
           </Box>
+          <Box
+            sx={{
+              maxWidth: '100%',
+              position: 'relative',
+              m: 'auto',
+              width: { xs: '150px', sm: '200px' },
+            }}
+          >
           <FormattedMessage id={textId} />
+          </Box>
         </Typography>
       </Grid>
     );
