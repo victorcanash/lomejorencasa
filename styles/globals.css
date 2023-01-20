@@ -51,6 +51,7 @@ html {
   background-color: white;
   border: 1px solid black;
   border-radius: 10px;
+  white-space: normal;
 }
 .braintree-placeholder, .braintree-heading {
   font-size: 15px;
