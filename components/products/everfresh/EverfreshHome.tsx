@@ -118,6 +118,7 @@ const EverfreshHome = () => {
                     </Typography>  
                     <LinkButton
                       href={pages.everfresh.path}
+                      id="advantages"
                     >
                       <FormattedMessage id="home.buyBtn" />
                     </LinkButton>
@@ -153,6 +154,7 @@ const EverfreshHome = () => {
           xs={12}
           className='animate__animated animate__fadeInLeft'
           sx={{ textAlign: 'center' }}
+          id="use"
         >
           <Box className='centered-container-img'>
             <Typography component={"h2"} variant={"h1"} sx={{ mt: 2, mb: 3 }}>
@@ -170,6 +172,7 @@ const EverfreshHome = () => {
           xs={12}
           className='animate__animated animate__fadeInLeft'
           sx={{ textAlign: 'center' }}
+          id="convervation"
         >
           <Box className='centered-container-img'>
             <Typography component={"h2"} variant={"h1"} sx={{ mt: 1, mb: 4 }}>
@@ -191,6 +194,7 @@ const EverfreshHome = () => {
           xs={12}
           className='animate__animated animate__fadeInLeft'
           sx={{ textAlign: 'center' }}
+          id="characteristics"
         >
           <Box className='centered-container-img'>
             <Typography component={"h2"} variant={"h1"}>

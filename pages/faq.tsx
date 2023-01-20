@@ -3,6 +3,7 @@ import Head from 'next/head';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Accordion from '@mui/material/Accordion';
@@ -36,13 +37,15 @@ const Faq: NextPage = () => {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+            <Typography component="div" variant="body1">
               <FormattedMessage id={`faq.r.${questions[i].textId}`} />
             </Typography>
             { questions[i].path &&
-              <Link href={questions[i].path || pages.home.path}>
-                <FormattedMessage id="faq.link" />
-              </Link>
+              <Box sx={{ mt: 2 }}>
+                <Link href={questions[i].path || pages.home.path}>
+                  <FormattedMessage id="faq.link" />
+                </Link>
+              </Box>
             }           
           </AccordionDetails>
         </Accordion>
