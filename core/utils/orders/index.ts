@@ -71,6 +71,7 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
+      timeout: 15000,
     };
     axios.post('/orders', order, options)
       .then(async (response: AxiosResponse) => {
@@ -97,6 +98,7 @@ export const sendFailedOrderEmail = (token: string, id: number, locale: string) 
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
+      timeout: 15000,
     };
     axios.post(`/orders/${id}/send-email/check`, { locale }, options)
       .then(async (response: AxiosResponse) => {
