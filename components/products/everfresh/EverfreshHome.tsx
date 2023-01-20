@@ -18,6 +18,10 @@ import frezzerIcon from 'public/images/frezzer-icon.png';
 import dietIcon from 'public/images/diet-icon.png';
 import shieldIcon from 'public/images/shield-icon.png';
 import timeIcon from 'public/images/time-icon.png';
+import airplaneIcon from 'public/images/airplane-icon.png';
+import breezeIcon from 'public/images/breeze-icon.png';
+import cableIcon from 'public/images/cable-icon.png';
+import shoppingbagIcon from 'public/images/shoppingbag-icon.png';
 
 const EverfreshHome = () => {
   const advantage = (textId: string, src: StaticImageData, widthSrc = '100px', heightSrc = '100px') => {
@@ -26,11 +30,11 @@ const EverfreshHome = () => {
         <FormattedMessage id={textId} />
         <Box
           sx={{
+            width: '200px',
+            height: '200px',
             borderRadius: '100%', 
             backgroundColor: '#e5ecdc',
-            width: '200px',
             maxWidth: '100%',
-            height: '200px',
             position: 'relative',
             m: 'auto',
             mt: 2,
@@ -57,6 +61,48 @@ const EverfreshHome = () => {
           </Box>
         </Box>
       </Typography>
+    );
+  };
+
+  const characteristic = (textId: string, src: StaticImageData, widthSrc = '100px', heightSrc = '100px') => {
+    return (
+      <Grid item xs={6}>
+        <Typography component="div" variant="body1">
+          <Box
+            sx={{
+              width: '180px',
+              height: '180px',
+              borderRadius: '100%', 
+              backgroundColor: '#e5ecdc',
+              maxWidth: '100%',
+              position: 'relative',
+              m: 'auto',
+              mt: 2,
+              mb: 2,
+            }} 
+          >   
+            <Box
+              sx={{
+                m: 0,
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+              }}
+            >
+              <Image 
+                src={src} 
+                alt="Advantage" 
+                width={widthSrc}
+                height={heightSrc}
+                layout="fixed" 
+                objectFit="cover" 
+              />
+            </Box>
+          </Box>
+          <FormattedMessage id={textId} />
+        </Typography>
+      </Grid>
     );
   };
 
@@ -143,7 +189,7 @@ const EverfreshHome = () => {
             { advantage('home.advantages.1', microorganismIcon) }
             { advantage('home.advantages.2', shieldIcon, '81px') }
             { advantage('home.advantages.3', dietIcon) }
-            { advantage('home.advantages.4', frezzerIcon, '73px') }
+            { advantage('home.advantages.4', frezzerIcon) }
             { advantage('home.advantages.5', timeIcon, '76px') }
           </Box>
         </Grid>
@@ -197,9 +243,17 @@ const EverfreshHome = () => {
           id="characteristics"
         >
           <Box className='centered-container-img'>
-            <Typography component={"h2"} variant={"h1"}>
+            <Typography component={"h2"} variant={"h1"} sx={{ mb: 2 }}>
               <FormattedMessage id="home.characteristics.title" />
             </Typography> 
+            <Grid container>     
+              { characteristic('home.characteristics.1', breezeIcon) }
+              { characteristic('home.characteristics.2', airplaneIcon) }
+              { characteristic('home.characteristics.3', airplaneIcon) }
+              { characteristic('home.characteristics.4', cableIcon) }
+              { characteristic('home.characteristics.5', shoppingbagIcon) }
+              { characteristic('home.characteristics.6', frezzerIcon) }
+            </Grid>
           </Box>
         </Grid>
 
