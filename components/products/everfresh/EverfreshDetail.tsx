@@ -6,6 +6,9 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 
+import Link from '@core/components/Link';
+import { pages } from '@lib/constants/navigation';
+
 const EverfreshDetail = () => {
   const list = (textId: string, itemsCount: number) => {
     const items = [] as JSX.Element[];
@@ -14,9 +17,14 @@ const EverfreshDetail = () => {
         <ListItem key={i} sx={{"&:hover": {backgroundColor: "transparent", }}}>
           <ListItemText 
             primary={
-              <Typography component="div" variant="body1" key={i}>
-                <FormattedMessage id={`${textId}.${i + 1}`} />
-              </Typography>
+              (textId == 'productDetail.shipping' && i == itemsCount -1) ?
+                <Link href={pages.orderList.path} variant="body1" key={i}>
+                  <FormattedMessage id={`${textId}.${i + 1}`} />
+                </Link>
+                :
+                <Typography component="div" variant="body1" key={i}>
+                  <FormattedMessage id={`${textId}.${i + 1}`} />
+                </Typography>
             } 
           />
         </ListItem>
