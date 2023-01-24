@@ -44,13 +44,6 @@ const Footer = () => {
           />
         </Typography>
         <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
-            <FormattedMessage 
-              id="footer.utility.conditions" 
-            />
-          </Typography>
-        </Box>
-        <Box sx={{ mb: 2 }}>
           <Typography component={Link} href={pages.faq.path} variant="body1" sx={{ color }}>
             <FormattedMessage 
               id="footer.utility.faq" 
@@ -58,23 +51,30 @@ const Footer = () => {
           </Typography>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.home.path} variant="body1" sx={{ color }}>
+          <Typography component={Link} href={pages.privacy.path} variant="body1" sx={{ color }}>
             <FormattedMessage 
-              id="footer.utility.privacy" 
+              id="footer.utility.privacy"
             />
           </Typography>
         </Box>
         <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.home.path} variant="body1"sx={{ color }}>
+          <Typography component={Link} href={pages.cookies.path} variant="body1" sx={{ color }}>
             <FormattedMessage 
-              id="footer.utility.refund" 
+              id="footer.utility.cookies" 
+            />
+          </Typography>
+        </Box>
+        <Box sx={{ mb: 2 }}>
+          <Typography component={Link} href={pages.legal.path} variant="body1"sx={{ color }}>
+            <FormattedMessage 
+              id="footer.utility.legal" 
             />
           </Typography>
         </Box>
         <Box>
-          <Typography component={Link} href={pages.home.path} variant="body1"sx={{ color }}>
+          <Typography component={Link} href={pages.conditions.path} variant="body1"sx={{ color }}>
             <FormattedMessage 
-              id="footer.utility.shipping" 
+              id="footer.utility.conditions" 
             />
           </Typography>
         </Box>

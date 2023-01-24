@@ -10,6 +10,18 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.none,
       type: PageTypes.main,
     },
+    productList: {
+      path: '/collections',
+      filepath: '/collections/[category]',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
+    productDetail: {
+      path: '/products',
+      filepath: '/products/[product]',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
     everfresh: {
       path: '/everfresh',
       filepath: '/everfresh',
@@ -34,15 +46,28 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.none,
       type: PageTypes.main,
     },
-    productList: {
-      path: '/collections',
-      filepath: '/collections/[category]',
+
+    privacy: {
+      path: '/privacy',
+      filepath: '/privacy',
       protection: Protections.none,
       type: PageTypes.main,
     },
-    productDetail: {
-      path: '/products',
-      filepath: '/products/[product]',
+    cookies: {
+      path: '/cookies',
+      filepath: '/cookies',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
+    legal: {
+      path: '/legal',
+      filepath: '/legal',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
+    conditions: {
+      path: '/conditions',
+      filepath: '/conditions',
       protection: Protections.none,
       type: PageTypes.main,
     },
@@ -65,32 +90,7 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.none,
       type: PageTypes.main,
     },
-
-    activation: {
-      path: '/activation',
-      filepath: '/activation',
-      protection: Protections.none,
-      type: PageTypes.link,
-    },
-    reset: {
-      path: '/reset',
-      filepath: '/reset',
-      protection: Protections.none,
-      type: PageTypes.link,
-    },
-    newemail: {
-      path: '/newemail',
-      filepath: '/newemail',
-      protection: Protections.none,
-      type: PageTypes.link,
-    },
     
-    settings: {
-      path: '/myaccount',
-      filepath: '/myaccount',
-      protection: Protections.user,
-      type: PageTypes.main,
-    },
     cart: {
       path: '/cart',
       filepath: '/cart',
@@ -114,6 +114,31 @@ const navigationConfig: NavigationConfig = {
       filepath: '/orders/[id]',
       protection: Protections.user,
       type: PageTypes.main,
+    },
+    settings: {
+      path: '/myaccount',
+      filepath: '/myaccount',
+      protection: Protections.user,
+      type: PageTypes.main,
+    },
+
+    activation: {
+      path: '/activation',
+      filepath: '/activation',
+      protection: Protections.none,
+      type: PageTypes.link,
+    },
+    reset: {
+      path: '/reset',
+      filepath: '/reset',
+      protection: Protections.none,
+      type: PageTypes.link,
+    },
+    newemail: {
+      path: '/newemail',
+      filepath: '/newemail',
+      protection: Protections.none,
+      type: PageTypes.link,
     },
     
     admin: {
