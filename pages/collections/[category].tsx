@@ -1,10 +1,9 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
-import { useIntl } from 'react-intl';
-
+import { PageTypes } from '@core/constants/navigation';
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 import ProductList from '@components/products/ProductList';
 
 const Search: NextPage<CollectionProps> = (props) => {
@@ -16,19 +15,17 @@ const Search: NextPage<CollectionProps> = (props) => {
     keywords 
   } = props;
 
-  const intl = useIntl();
-
   const page = usePage();
-
-  const title = intl.formatMessage({ id: 'productList.metas.title' });
-  const description = intl.formatMessage({ id: 'productList.metas.description' });
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'productList.metas.title',
+          descriptionId: 'productList.metas.description',
+        }}
+      />
 
       <ProductList 
         category={productCategory}

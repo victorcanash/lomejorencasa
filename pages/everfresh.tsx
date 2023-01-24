@@ -1,28 +1,25 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
-import { useIntl } from 'react-intl';
-
+import { PageTypes } from '@core/constants/navigation';
 import { EverfreshProps, getEverfreshProps } from '@lib/server/everfresh';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 import ProductDetail from '@components/products/ProductDetail';
 
 const Everfresh: NextPage<EverfreshProps> = (props) => {
   const { product } = props;
 
-  const intl = useIntl();
-
   const page = usePage();
-
-  const title = intl.formatMessage({ id: 'everfresh.metas.title' });
-  const description = intl.formatMessage({ id: 'everfresh.metas.description' });
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'everfresh.metas.title',
+          descriptionId: 'everfresh.metas.description',
+        }}
+      />
 
       <ProductDetail product={product} />
     </>

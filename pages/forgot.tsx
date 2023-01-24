@@ -1,25 +1,22 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
-import { useIntl } from 'react-intl';
-
+import { PageTypes } from '@core/constants/navigation';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
 
 const Forgot: NextPage = () => { 
-  const intl = useIntl();
-
   const page = usePage();
-
-  const title = intl.formatMessage({ id: 'forgot.metas.title' });
-  const description = intl.formatMessage({ id: 'forgot.metas.description' });
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'forgot.metas.title',
+          descriptionId: 'forgot.metas.description',
+        }}
+      />
       
       <ForgotPswForm />
     </>

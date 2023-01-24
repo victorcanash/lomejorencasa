@@ -1,28 +1,23 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-import { pages } from '@lib/constants/navigation';
+import { PageTypes } from '@core/constants/navigation';
 import Link from '@core/components/Link';
+import { pages } from '@lib/constants/navigation';
 import { questions } from '@lib/constants/faq';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 
 const Faq: NextPage = () => {
-  const intl = useIntl();
-
   const page = usePage();
-
-  const title = intl.formatMessage({ id: 'faq.metas.title' });
-  const description = intl.formatMessage({ id: 'faq.metas.description' });
 
   const questionElements = () => {
     const items = [] as JSX.Element[];
@@ -56,16 +51,16 @@ const Faq: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
-
-      <Typography variant="h1" component="h1" gutterBottom>
-        <FormattedMessage id="faq.h1" />
-      </Typography>
-
-      <Divider sx={{ mt: 1, mb: 3 }} />
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'faq.metas.title',
+          descriptionId: 'faq.metas.description',
+        }}
+        texts={{
+          titleId: 'faq.h1',
+        }}
+      />
       
       <div>
         { questionElements() }

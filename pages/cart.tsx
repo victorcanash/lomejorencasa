@@ -1,15 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
+import { PageTypes } from '@core/constants/navigation';
 import { pages } from '@lib/constants/navigation';
 import { CartItem } from '@core/types/cart';
 import LinkButton from '@core/components/LinkButton';
@@ -17,6 +16,7 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import usePage from '@lib/hooks/usePage';
 import useCart from '@lib/hooks/useCart';
+import PageHeader from '@components/ui/PageHeader';
 import CartDetail from '@components/cart/CartDetail';
 import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 import GoBackBtn from '@components/ui/GoBackBtn';
@@ -25,14 +25,11 @@ const Cart: NextPage = () => {
   const { setLoading } = useAppContext();
   const { cart, totalPrice, totalQuantity } = useCartContext();
 
+  const page = usePage();
   const router = useRouter();
   const intl = useIntl();
 
-  const page = usePage();
   const { checkCart, updateCartItemQuantity } = useCart();
-
-  const title = intl.formatMessage({ id: 'cart.metas.title' });
-  const description = intl.formatMessage({ id: 'cart.metas.description' });
 
   const [openDialog, setOpenDialog] = useState(false);
   const [checkedCart, setCheckedCart] = useState(false);
@@ -59,15 +56,17 @@ const Cart: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
-
-      <Typography component='h1' variant='h1' className='animate__animated animate__fadeInLeft'>
-        <FormattedMessage id="cart.h1" />{` (${totalQuantity})`}
-      </Typography>
-      <Divider sx={{ my: 3 }} />
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'cart.metas.title',
+          descriptionId: 'cart.metas.description',
+        }}
+        texts={{
+          titleId: 'cart.h1',
+          titleAdd: ` (${totalQuantity})`,
+        }}
+      />
 
       { cart && cart.items && cart.items.length > 0 ?
         <>

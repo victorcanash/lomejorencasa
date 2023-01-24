@@ -1,35 +1,27 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
-import { FormattedMessage, useIntl } from 'react-intl';
-
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-
+import { PageTypes } from '@core/constants/navigation';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 import UpdateUserForm from '@components/forms/user/UpdateUserForm';
 import UpdateEmailForm from '@components/forms/auth/UpdateEmailForm';
 import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
 
 const Settings: NextPage = () => { 
-  const intl = useIntl();
-
   const page = usePage();
-
-  const title = intl.formatMessage({ id: 'settings.metas.title' });
-  const description = intl.formatMessage({ id: 'settings.metas.description' });
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
-
-      <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
-        <FormattedMessage id="settings.h1" />
-      </Typography>
-      <Divider sx={{ my: 3 }} />
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'settings.metas.title',
+          descriptionId: 'settings.metas.description',
+        }}
+        texts={{
+          titleId: 'settings.h1',
+        }}
+      />
       
       <UpdateUserForm />
 

@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -8,8 +7,10 @@ import Typography from '@mui/material/Typography';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 
+import { PageTypes } from '@core/constants/navigation';
 import { ActivationProps, getActivationProps } from '@lib/server/activation';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 
 const Activation: NextPage<ActivationProps> = (props) => {
   const { successMsg, errorMsg } = props;
@@ -17,9 +18,6 @@ const Activation: NextPage<ActivationProps> = (props) => {
   const intl = useIntl();
 
   const page = usePage();
-
-  const title = intl.formatMessage({ id: 'activation.metas.title' });
-  const description = intl.formatMessage({ id: 'activation.metas.description' });
 
   const getSuccessTxt = () => {
     return intl.formatMessage({ id: 'activation.successes.default' });
@@ -37,15 +35,18 @@ const Activation: NextPage<ActivationProps> = (props) => {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+      <PageHeader
+        pageType={PageTypes.link}
+        metas={{
+          titleId: 'activation.metas.title',
+          descriptionId: 'activation.metas.description',
+        }}
+      />
 
       <Avatar 
         sx={{ 
           mb: 1, 
-          backgroundColor: "transparent",
+          backgroundColor: 'transparent',
         }}
       >
         {

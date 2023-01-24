@@ -1,25 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { NextPage } from 'next';
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
-import { useIntl } from 'react-intl';
-
+import { PageTypes } from '@core/constants/navigation';
+import type { Order } from '@core/types/orders';
 import { pages } from '@lib/constants/navigation';
-import { Order } from '@core/types/orders';
 import usePage from '@lib/hooks/usePage';
 import useOrders from '@lib/hooks/useOrders';
+import PageHeader from '@components/ui/PageHeader';
 import OrderList from '@components/orders/OrderList';
 
 const Orders: NextPage = () => {
   const router = useRouter();
-  const intl = useIntl();
 
   const page = usePage();
   const { getOrders } = useOrders();
-
-  const title = intl.formatMessage({ id: 'orderList.metas.title' });
-  const description = intl.formatMessage({ id: 'orderList.metas.description' });
 
   const [loadedOrders, setLoadedOrders] = useState(false);
   const [orders, setOrders] = useState<Order[]>([]);
@@ -49,10 +44,13 @@ const Orders: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'orderList.metas.title',
+          descriptionId: 'orderList.metas.description',
+        }}
+      />
 
     { loadedOrders &&
       <OrderList 

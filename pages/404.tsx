@@ -1,9 +1,10 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
 import { useIntl } from 'react-intl';
 
+import { PageTypes } from '@core/constants/navigation';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 import ErrorPage from '@components/exceptions/ErrorPage';
 
 const NotFound: NextPage = () => {
@@ -11,15 +12,15 @@ const NotFound: NextPage = () => {
 
   const page = usePage();
 
-  const title = intl.formatMessage({ id: 'notfound.metas.title' });
-  const description = intl.formatMessage({ id: 'notfound.metas.description' });
-  
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+      <PageHeader
+        pageType={PageTypes.notFound}
+        metas={{
+          titleId: 'notfound.metas.title',
+          descriptionId: 'notfound.metas.description',
+        }}
+      />
 
       <ErrorPage title={intl.formatMessage({ id: 'notfound.h1' })} />
     </>

@@ -1,36 +1,31 @@
 import type { NextPage } from 'next';
-import Head from 'next/head';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 
-import { pages } from '@lib/constants/navigation';
+import { PageTypes } from '@core/constants/navigation';
 import Link from '@core/components/Link';
+import { pages } from '@lib/constants/navigation';
 import usePage from '@lib/hooks/usePage';
+import PageHeader from '@components/ui/PageHeader';
 
 const About: NextPage = () => {
-  const intl = useIntl();
-
   const page = usePage();
-
-  const title = intl.formatMessage({ id: 'about.metas.title' });
-  const description = intl.formatMessage({ id: 'about.metas.description' });
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
-
-      <Typography variant="h1" component="h1" gutterBottom>
-        <FormattedMessage id="about.h1" />
-      </Typography>
-
-      <Divider sx={{ mt: 1, mb: 3 }} />
+      <PageHeader
+        pageType={PageTypes.main}
+        metas={{
+          titleId: 'about.metas.title',
+          descriptionId: 'about.metas.description',
+        }}
+        texts={{
+          titleId: 'about.h1',
+        }}
+      />
       
       <Typography variant="body1" component="p" gutterBottom sx={{ mb: 2 }}>
         <FormattedMessage id="about.content" />
