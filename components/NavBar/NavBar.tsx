@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { pages } from '@lib/constants/navigation';
@@ -22,19 +21,10 @@ const NavBar = () => {
 
   const appDrawer = useDrawer();
 
-  const handleAppDrawer = () => {
-    appDrawer.setOpen(!appDrawer.open);
-  };
-  const closeDrawers = () => {
-    if (appDrawer.open) {
-      appDrawer.setOpen(false);
-    }
-  }
-
   return (
     <Box component="header">
 
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'secondary.main' }} onClick={closeDrawers}>
+      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'secondary.main' }} onClick={appDrawer.close}>
         <Toolbar variant="dense" disableGutters>
 
           <IconButton
@@ -42,7 +32,7 @@ const NavBar = () => {
             color="inherit"
             aria-controls="app-drawer"
             aria-haspopup="true"
-            onClick={handleAppDrawer}
+            onClick={appDrawer.handleOpen}
             sx={{ mr: 1 }}
           >
             <MenuIcon sx={{ fontSize: 30 }} />
@@ -95,7 +85,9 @@ const NavBar = () => {
         key="app-drawer"
         anchor={'left'}
         open={appDrawer.open}
-        handleDrawer={handleAppDrawer}
+        items={appDrawer.items}
+        handleOpen={appDrawer.handleOpen}
+        handleCollapse={appDrawer.handleCollapse}
       />
 
     </Box>

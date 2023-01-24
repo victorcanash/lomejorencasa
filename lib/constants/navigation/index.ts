@@ -85,7 +85,7 @@ const navigationConfig: NavigationConfig = {
       type: PageTypes.link,
     },
     
-    myaccount: {
+    settings: {
       path: '/myaccount',
       filepath: '/myaccount',
       protection: Protections.user,

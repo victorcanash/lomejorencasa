@@ -11,13 +11,13 @@ import UpdateUserForm from '@components/forms/user/UpdateUserForm';
 import UpdateEmailForm from '@components/forms/auth/UpdateEmailForm';
 import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
 
-const MyAccount: NextPage = () => { 
+const Settings: NextPage = () => { 
   const intl = useIntl();
 
   const page = usePage();
 
-  const title = intl.formatMessage({ id: 'myaccount.metas.title' });
-  const description = intl.formatMessage({ id: 'myaccount.metas.description' });
+  const title = intl.formatMessage({ id: 'settings.metas.title' });
+  const description = intl.formatMessage({ id: 'settings.metas.description' });
 
   return (
     <>
@@ -27,7 +27,7 @@ const MyAccount: NextPage = () => {
       </Head>
 
       <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
-        <FormattedMessage id="myaccount.h1" />
+        <FormattedMessage id="settings.h1" />
       </Typography>
       <Divider sx={{ my: 3 }} />
       
@@ -40,4 +40,4 @@ const MyAccount: NextPage = () => {
   )
 };
 
-export default MyAccount;
+export default Settings;

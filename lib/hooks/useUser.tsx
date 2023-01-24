@@ -43,10 +43,10 @@ const useUser = () => {
     if (action == ManageActions.update) {
       setUser(user);
       setLoading(false);
-      setSuccessMsg(intl.formatMessage({ id: 'myaccount.successes.updateUser' }));
+      setSuccessMsg(intl.formatMessage({ id: 'settings.successes.updateUser' }));
     } else if (action == ManageActions.delete) {
       logout();
-      setSuccessMsg(intl.formatMessage({ id: 'myaccount.successes.deleteUser' }));
+      setSuccessMsg(intl.formatMessage({ id: 'settings.successes.deleteUser' }));
     }
   };
 

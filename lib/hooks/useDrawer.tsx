@@ -1,34 +1,71 @@
 import { useEffect, useState } from 'react';
 
-import type { DrawerItem } from '@core/types/header';
+import type { DrawerItems } from '@core/types/header';
 import { 
   mainDrawerItems, 
-  loggedUserDrawerItems, 
-  unloggedUserDrawerItems, 
-  infoDrawerItems,
-  signOutDrawerItem,
+  loggedDrawerItems, 
+  unloggedDrawerItems,
 } from '@lib/constants/header';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useDrawer = () => {
   const { isLogged } = useAuthContext();
 
-  const [items, setItems] = useState<DrawerItem[]>([]);
+  const [items, setItems] = useState<DrawerItems[]>([]);
   const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+    closeCollapses();
+  };
+
+  const close  = () => {
+    if (open) {
+      setOpen(false);
+      closeCollapses();
+    }
+  }
+
+  const handleCollapse = (item: DrawerItems) => {
+    setItems(
+      items.map((current) => {
+        if (current.textId == item.textId) {
+          return { 
+            ...current, 
+            open: !current.open 
+          };
+        } else {
+          return current;
+        }
+      })
+    );
+  };
+
+  const closeCollapses = () => {
+    setItems(
+      items.map((current) => {
+        return {
+          ...current,
+          open: false,
+        }
+      })
+    );
+  };
 
   useEffect(() => {
     if (isLogged()) {
-      setItems(mainDrawerItems.concat(loggedUserDrawerItems, infoDrawerItems));
-      setItems(items => [...items, signOutDrawerItem])
+      setItems(mainDrawerItems.concat(loggedDrawerItems));
     } else {
-      setItems(mainDrawerItems.concat(unloggedUserDrawerItems, infoDrawerItems));
+      setItems(mainDrawerItems.concat(unloggedDrawerItems));
     }
   }, [isLogged]);
 
   return {
     items,
     open,
-    setOpen
+    handleOpen,
+    close,
+    handleCollapse,
   };
 };
 

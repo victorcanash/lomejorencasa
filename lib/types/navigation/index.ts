@@ -18,7 +18,7 @@ export type NavigationConfig = {
     reset: Page,
     newemail: Page,
     
-    myaccount: Page,
+    settings: Page,
     cart: Page,
     checkout: Page,
     orderList: Page,

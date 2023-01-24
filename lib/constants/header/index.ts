@@ -1,59 +1,85 @@
 import { pages } from '@lib/constants/navigation';
-import { DrawerItem } from '@core/types/header';
+import { DrawerItems } from '@core/types/header';
 
-export const mainDrawerItems: DrawerItem[] = [
+export const mainDrawerItems: DrawerItems[] = [
   {
     textId: 'home',
     path: pages.home.path,
+    items: [],
+    open: false,
   },
   {
-    textId: 'everfresh',
-    path: pages.everfresh.path,
+    textId: 'shop',
+    path: undefined,
+    items: [
+      {
+        textId: 'everfresh',
+        path: pages.everfresh.path,
+      },
+      {
+        textId: 'bags',
+        path: pages.bags.path,
+      },
+    ],
+    open: false,
   },
   {
-    textId: 'bags',
-    path: pages.bags.path,
+    textId: 'help',
+    path: undefined,
+    items: [
+      {
+        textId: 'contact',
+        path: pages.home.path,
+      },
+      {
+        textId: 'about',
+        path: pages.about.path,
+      },
+      {
+        textId: 'faq',
+        path: pages.faq.path,
+      },
+    ],
+    open: false,
   },
 ];
 
-export const loggedUserDrawerItems: DrawerItem[] = [
+export const loggedDrawerItems: DrawerItems[] = [
   {
     textId: 'profile',
-    path: pages.myaccount.path,
-  },
-  {
-    textId: 'orders',
-    path: pages.orderList.path,
-  },
-];
-
-export const unloggedUserDrawerItems: DrawerItem[] = [
-  {
-    textId: 'signIn',
-    path: pages.login.path,
-  },
-  {
-    textId: 'register',
-    path: pages.register.path,
-  },
-];
-
-export const infoDrawerItems: DrawerItem[] = [
-  {
-    textId: 'contact',
-    path: pages.home.path,
-  },
-  {
-    textId: 'about',
-    path: pages.about.path,
-  },
-  {
-    textId: 'faq',
-    path: pages.faq.path,
+    path: undefined,
+    items: [
+      {
+        textId: 'orders',
+        path: pages.orderList.path,
+      },
+      {
+        textId: 'settings',
+        path: pages.settings.path,
+      },
+      {
+        textId: 'signOut',
+        path: undefined,
+      },
+    ],
+    open: false,
   },
 ];
 
-export const signOutDrawerItem: DrawerItem = {
-  textId: 'signOut',
-  path: undefined,
-}
+export const unloggedDrawerItems: DrawerItems[] = [
+  {
+    textId: 'profile',
+    path: undefined,
+    items: [
+      {
+        textId: 'signIn',
+        path: pages.login.path,
+      },
+      {
+        textId: 'register',
+        path: pages.register.path,
+      },
+    ],
+    open: false,
+  },
+];
