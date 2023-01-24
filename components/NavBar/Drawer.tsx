@@ -9,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Toolbar from '@mui/material/Toolbar';
+import Divider from '@mui/material/Divider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import type { DrawerItems } from '@core/types/header';
@@ -103,7 +104,7 @@ const Drawer = (props: DrawerProps) => {
         flexShrink: 0,
       }}
     >
-      <Toolbar variant="dense" disableGutters sx={{ minHeight: '75px' }} />
+      <Toolbar variant="dense" disableGutters sx={{ minHeight: '66px' }} />
       <Box
         sx={{ 
           overflow: 'auto',
@@ -129,6 +130,7 @@ const Drawer = (props: DrawerProps) => {
                   </List>
                 </Collapse>
               }
+              <Divider sx={{ borderColor: '#ecf7dc' }} />
             </Fragment>
           ))}
         </List>
