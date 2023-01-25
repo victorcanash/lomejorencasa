@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { PageTypes } from '@core/constants/navigation';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import ContactForm from '@components/forms/user/ContactForm';
+import UContactForm from '@components/forms/user/UContactForm';
 
 const Contact: NextPage = () => {
   const page = usePage();
@@ -21,7 +21,7 @@ const Contact: NextPage = () => {
         }}
       />
 
-      <ContactForm />
+      <UContactForm />
     </>
   );
 };

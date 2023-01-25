@@ -13,7 +13,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import useUser from '@lib/hooks/useUser';
 import useForms from '@lib/hooks/useForms';
 
-const ContactForm = () => {
+const UContactForm = () => {
   const intl = useIntl();
   const { user } = useAuthContext();
   const { sendUserContactEmail, errorMsg, successMsg } = useUser();
@@ -141,4 +141,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default UContactForm;
