@@ -74,6 +74,16 @@ const useForms = () => {
       .boolean(),
     remember: Yup
       .boolean(),
+    tlf: Yup
+      .string()
+      .matches(
+        /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+      ),
+    comments: Yup
+      .string()
+      .min(1)
+      .max(99)
+      .required(),
   };
 
   const userFieldsInitValues = { 
@@ -85,6 +95,8 @@ const useForms = () => {
     birthday: dayjs(subtractYears(18)),
     getEmails: false,
     remember: true,
+    tlf: '',
+    comments: '',
   };
 
   const addressFieldsValidation = {
@@ -286,6 +298,13 @@ const useForms = () => {
     getEmails: userFieldsValidation.getEmails,
   });
 
+  const contactUserFormValidation = Yup.object().shape({
+    email: userFieldsValidation.email,
+    firstName: userFieldsValidation.firstName,
+    tlf: userFieldsValidation.tlf,
+    comments: userFieldsValidation.comments,
+  });
+
   const checkoutAddressesFormValidation = Yup.object().shape({
     shipping: Yup.object().shape(addressFieldsValidation),
     billing: Yup
@@ -357,6 +376,7 @@ const useForms = () => {
     updateEmailFormValidation,
     resetPasswordFormValidation,
     updateUserFormValidation,
+    contactUserFormValidation,
     checkoutAddressesFormValidation,
     createFailedOrderFormValidation,
     createFailedOrderProductFormValidation,

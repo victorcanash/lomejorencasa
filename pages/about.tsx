@@ -32,6 +32,13 @@ const About: NextPage = () => {
       </Typography>
 
       <Box sx={{ mb: 2 }}>
+        <Typography component={Link} href={pages.contact.path} variant="body1">
+          <FormattedMessage 
+            id="header.drawerItems.contact" 
+          />
+        </Typography>
+      </Box>
+      <Box sx={{ mb: 2 }}>
         <Typography component={Link} href={pages.faq.path} variant="body1">
           <FormattedMessage 
             id="footer.utility.faq" 

@@ -29,7 +29,7 @@ export const mainDrawerItems: DrawerItems[] = [
     items: [
       {
         textId: 'contact',
-        path: pages.home.path,
+        path: pages.contact.path,
       },
       {
         textId: 'about',

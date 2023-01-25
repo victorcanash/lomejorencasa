@@ -1,14 +1,18 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { useIntl } from 'react-intl';
+import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/auth';
-import type { User, UserAddress } from '@core/types/user';
+import type { User, UserAddress, UserContact } from '@core/types/user';
 import { CheckoutAddresses } from '@core/types/checkout';
 import { 
   manageUser as manageUserMW, 
   updateUserAddresses as updateUserAddressesMW,
+  sendUserContactEmail as sendUserContactEmailMW,
 } from '@core/utils/user';
+import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useAuth from '@lib/hooks/useAuth';
@@ -17,7 +21,9 @@ const useUser = () => {
   const { setLoading } = useAppContext();
   const { token, setUser } = useAuthContext();
 
+  const router = useRouter();
   const intl = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { logout } = useAuth();
 
@@ -77,9 +83,31 @@ const useUser = () => {
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.updateAddresses' }));
   };
 
+  const sendUserContactEmail = async (userContact: UserContact) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    sendUserContactEmailMW(intl.locale, userContact).then(() => {
+      onSendUserContactEmailSuccess(userContact);
+    }).catch((_error: Error) => {
+      const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
+
+  const onSendUserContactEmailSuccess = (userContact: UserContact) => {
+    router.push(pages.home.path);
+    enqueueSnackbar(
+      intl.formatMessage({ id: 'contact.successes.default' }), 
+      { variant: 'success' }
+    );
+  };
+
   return {
     manageUser,
     updateUserAddresses,
+    sendUserContactEmail,
     errorMsg,
     successMsg,
   };

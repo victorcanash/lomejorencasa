@@ -46,6 +46,12 @@ const navigationConfig: NavigationConfig = {
       protection: Protections.none,
       type: PageTypes.main,
     },
+    contact: {
+      path: '/contact',
+      filepath: '/contact',
+      protection: Protections.none,
+      type: PageTypes.main,
+    },
 
     privacy: {
       path: '/privacy',
@@ -116,8 +122,8 @@ const navigationConfig: NavigationConfig = {
       type: PageTypes.main,
     },
     settings: {
-      path: '/myaccount',
-      filepath: '/myaccount',
+      path: '/settings',
+      filepath: '/settings',
       protection: Protections.user,
       type: PageTypes.main,
     },

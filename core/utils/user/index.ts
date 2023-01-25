@@ -1,10 +1,11 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
-import axios, { getAuthHeaders } from '@core/config/axios.config';
+import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
+import envConfig from '@core/config/env.config';
 import { ManageActions } from '@core/constants/auth';
-import type { User, UserAddress } from '@core/types/user';
-import { CheckoutAddresses } from '@core/types/checkout';
+import type { User, UserAddress, UserContact } from '@core/types/user';
+import type { CheckoutAddresses } from '@core/types/checkout';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const manageUser = (action: ManageActions.update | ManageActions.delete, token: string, user: User) => {
@@ -75,4 +76,28 @@ export const updateUserAddresses = (token: string, user: User, checkoutAddresses
         reject(new Error(errorMsg));
       }); 
   });
+};
+
+export const sendUserContactEmail = (currentLocale: string, userContact: UserContact) => {
+  return new Promise<true>((resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: getLanguageHeaders(currentLocale),
+      params: {
+        appName: envConfig.NEXT_PUBLIC_APP_NAME,
+        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
+      }
+    };
+    axios.post('users/send-email/contact', userContact, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve(true);
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Send User Contact Email ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      });
+  })
 };

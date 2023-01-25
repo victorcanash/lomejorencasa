@@ -23,3 +23,10 @@ export type UserAddress = {
   locality: string,
   country: CountryOptions,
 };
+
+export type UserContact = {
+  email: string,
+  firstName: string,
+  tlf?: string,
+  comments: string,
+};

@@ -9,6 +9,7 @@ export type NavigationConfig = {
     bags: Page,
     about: Page,
     faq: Page,
+    contact: Page,
 
     privacy: Page,
     cookies: Page,
