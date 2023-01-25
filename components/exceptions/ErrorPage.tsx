@@ -4,10 +4,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import { pages } from '@lib/constants/navigation';
 import LinkButton from '@core/components/LinkButton';
-import ProTip from '@components/ui/ProTip';
-import Copyright from '@components/ui/Copyright';
+import { pages } from '@lib/constants/navigation';
 
 type ErrorPageProps = {
   title: string,
@@ -19,12 +17,6 @@ const ErrorPage = (props: ErrorPageProps) => {
   return (
     <Container 
       maxWidth={false}
-      className="centeredPage"
-      sx={{
-        top: '0px',
-        left: '0px',
-        zIndex: 10000,
-      }}
     >
       <Typography variant="h1" component="h1" gutterBottom>
         {title}
@@ -36,8 +28,6 @@ const ErrorPage = (props: ErrorPageProps) => {
           />
         </LinkButton>
       </Box>
-      <ProTip />
-      <Copyright />
     </Container>
   );
 };
