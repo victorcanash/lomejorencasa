@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import type { DrawerItems } from '@core/types/header';
+import type { DrawerItems } from '@core/types/navigation';
 import { 
   mainDrawerItems, 
   loggedDrawerItems, 
   unloggedDrawerItems,
-} from '@lib/constants/header';
+} from '@lib/constants/navigation';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useDrawer = () => {

@@ -12,7 +12,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-import type { DrawerItems } from '@core/types/header';
+import type { DrawerItems } from '@core/types/navigation';
 import Link from '@core/components/Link';
 import useAuth from '@lib/hooks/useAuth';
 

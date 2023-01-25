@@ -1,7 +1,7 @@
 import { pages } from '@lib/constants/navigation';
-import type { Question } from '@core/types/faq';
+import type { NavItem } from '@core/types/navigation';
 
-export const questions: Question[] = [
+export const questions: NavItem[] = [
   {
     textId: '1',
     path: undefined,

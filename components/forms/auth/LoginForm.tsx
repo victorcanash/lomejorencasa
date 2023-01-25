@@ -141,7 +141,7 @@ const LoginForm = (props: LoginFormProps) => {
                     />
                   </Link>
                 </Grid>
-                <Grid item>
+                <Grid item xs>
                   <Link href={pages.register.path} variant="body1">
                     <FormattedMessage 
                       id="forms.login.registerLink" 

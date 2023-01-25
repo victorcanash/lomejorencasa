@@ -7,3 +7,13 @@ export type Page = {
   protection: Protections,
   type: PageTypes,
 };
+
+export type NavItem = {
+  path?: string,
+  textId: string,
+};
+
+export type DrawerItems = NavItem & {
+  items: NavItem[],
+  open: boolean,
+};
