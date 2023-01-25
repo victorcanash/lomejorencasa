@@ -130,7 +130,7 @@
   "contact.metas.title": "Contáctanos",
   "contact.metas.description": "Página de contáctanos",
   "contact.h1": "Contacta con nosotros",
-  "contact.description": "Rellena el formulario y te responderemos tan pronto como sea posible. También puedes enviarnos un correo a laenvasadora@gmail.com",
+  "contact.description": "Rellena el formulario y te responderemos tan pronto como sea posible. También puedes enviarnos un correo a {email}",
   "contact.successes.default": "Correo enviado correctamente. Nos pondremos en contacto contigo lo antes posible.",
 
   "productList.metas.title": "Buscar",

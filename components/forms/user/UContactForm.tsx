@@ -8,16 +8,18 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
+import envConfig from '@core/config/env.config';
 import type { UserContact } from '@core/types/user';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useUser from '@lib/hooks/useUser';
 import useForms from '@lib/hooks/useForms';
 
 const UContactForm = () => {
-  const intl = useIntl();
   const { user } = useAuthContext();
-  const { sendUserContactEmail, errorMsg, successMsg } = useUser();
+
+  const intl = useIntl();
   const { contactUserFormValidation, userFieldsInitValues } = useForms();
+  const { sendUserContactEmail, errorMsg, successMsg } = useUser();
 
   const handleSubmit = async (values: UserContact) => {
     sendUserContactEmail(values);
@@ -49,7 +51,10 @@ const UContactForm = () => {
 
               <Typography component="h4" variant="body1">
                 <FormattedMessage 
-                  id="contact.description" 
+                  id="contact.description"
+                  values={{
+                    email: envConfig.NEXT_PUBLIC_EMAIL,
+                  }} 
                 />
               </Typography>
 

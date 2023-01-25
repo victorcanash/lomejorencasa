@@ -130,7 +130,7 @@
   "contact.metas.title": "Contact us",
   "contact.metas.description": "Contact us page",
   "contact.h1": "Contact us",
-  "contact.description": "Fill out the form and we will reply to you as soon as possible. You can also send us an email to laenvasadora@gmail.com",
+  "contact.description": "Fill out the form and we will reply to you as soon as possible. You can also send us an email to {email}",
   "contact.successes.default": "Email sent successfully. We will reply to you as soon as possible.",
 
   "productList.metas.title": "Search",
