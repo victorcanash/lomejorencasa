@@ -9,48 +9,72 @@ export const pages: Pages = {
     filepath: '/',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   productList: {
     path: '/collections',
     filepath: '/collections/[category]',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   productDetail: {
     path: '/products',
     filepath: '/products/[product]',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   everfresh: {
     path: '/everfresh',
     filepath: '/everfresh',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   bags: {
     path: '/bags',
     filepath: '/bags',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   about: {
     path: '/about',
     filepath: '/about',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   faq: {
     path: '/faq',
     filepath: '/faq',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   contact: {
     path: '/contact',
     filepath: '/contact',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
 
   privacy: {
@@ -58,24 +82,36 @@ export const pages: Pages = {
     filepath: '/privacy',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   cookies: {
     path: '/cookies',
     filepath: '/cookies',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   legal: {
     path: '/legal',
     filepath: '/legal',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   conditions: {
     path: '/conditions',
     filepath: '/conditions',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
 
   login: {
@@ -83,18 +119,27 @@ export const pages: Pages = {
     filepath: '/login',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: false,
+    },
   },
   register: {
     path: '/register',
     filepath: '/register',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: false,
+    },
   },
   forgot: {
     path: '/forgot',
     filepath: '/forgot',
     protection: Protections.none,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: false,
+    },
   },
   
   cart: {
@@ -102,30 +147,47 @@ export const pages: Pages = {
     filepath: '/cart',
     protection: Protections.user,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   checkout: {
     path: '/checkout',
     filepath: '/checkout',
     protection: Protections.user,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+      path: '/cart',
+    },
   },
   orderList: {
     path: '/orders',
     filepath: '/orders',
     protection: Protections.user,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
   orderDetail: {
     path: '/orders',
     filepath: '/orders/[id]',
     protection: Protections.user,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+      path: '/orders',
+    },
   },
   settings: {
     path: '/settings',
     filepath: '/settings',
     protection: Protections.user,
     type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
   },
 
   activation: {
@@ -133,18 +195,27 @@ export const pages: Pages = {
     filepath: '/activation',
     protection: Protections.none,
     type: PageTypes.link,
+    savePathOnLogin: {
+      enabled: false,
+    },
   },
   reset: {
     path: '/reset',
     filepath: '/reset',
     protection: Protections.none,
     type: PageTypes.link,
+    savePathOnLogin: {
+      enabled: false,
+    },
   },
   newemail: {
     path: '/newemail',
     filepath: '/newemail',
     protection: Protections.none,
     type: PageTypes.link,
+    savePathOnLogin: {
+      enabled: false,
+    },
   },
   
   admin: {
@@ -152,6 +223,9 @@ export const pages: Pages = {
     filepath: '/admin',
     protection: Protections.admin,
     type: PageTypes.admin,
+    savePathOnLogin: {
+      enabled: false,
+    },
   },
 };
 

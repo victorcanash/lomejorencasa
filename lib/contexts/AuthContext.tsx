@@ -100,19 +100,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    if (router.asPath != pages.login.path &&
-        router.asPath != pages.register.path &&
-        router.asPath != pages.forgot.path &&
-        router.asPath != pages.activation.path &&
-        router.asPath != pages.reset.path &&
-        router.asPath != pages.newemail.path &&
-        router.asPath != pages.checkout.path &&
-        router.asPath != pages.orderList.path &&
-        router.asPath != pages.orderDetail.path &&
-        router.asPath != pages.admin.path) {
-      prevLoginPathRef.current = router.asPath;
-    }
-  }, [router.asPath])
+    Object.entries(pages).forEach(([_key, page]) => {
+      if (page.filepath == router.pathname) {
+        if (page.savePathOnLogin.enabled) {
+          prevLoginPathRef.current = page.savePathOnLogin?.path || router.asPath;
+        }
+        return;
+      }
+    });
+  }, [router.asPath, router.pathname])
 
   return (
     <AuthContext.Provider

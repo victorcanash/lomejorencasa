@@ -6,6 +6,10 @@ export type Page = {
   filepath: string,
   protection: Protections,
   type: PageTypes,
+  savePathOnLogin: {
+    enabled: boolean,
+    path?: string,
+  }
 };
 
 export type NavItem = {
