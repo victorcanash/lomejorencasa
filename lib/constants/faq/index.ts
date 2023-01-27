@@ -1,5 +1,5 @@
-import { pages } from '@lib/constants/navigation';
 import type { NavItem } from '@core/types/navigation';
+import { pages } from '@lib/constants/navigation';
 
 export const questions: NavItem[] = [
   {

@@ -11,12 +11,13 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { pages } from '@lib/constants/navigation';
 import { rangeChangeItemQuantity } from '@core/constants/cart';
-import { everfreshProductId, bagProductId } from '@core/constants/products';
 import type { CartItem } from '@core/types/cart';
-import { getProductImgUrl } from '@core/utils/products';
 import Link from '@core/components/Link';
+
+import { pages } from '@lib/constants/navigation';
+import { everfreshProductId, bagProductId } from '@lib/constants/products';
+import { getProductImgUrl } from '@lib/utils/products';
 
 type CartItemDetailProps = {
   item: CartItem,

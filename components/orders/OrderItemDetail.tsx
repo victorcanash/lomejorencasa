@@ -6,7 +6,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 
 import type { ProductInventory } from '@core/types/products';
-import { getProductImgUrl } from '@core/utils/products';
+
+import { getProductImgUrl } from '@lib/utils/products';
 
 type OrderItemDetailProps = {
   orderItem: {

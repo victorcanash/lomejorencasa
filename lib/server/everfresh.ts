@@ -1,8 +1,9 @@
 import type { GetServerSideProps } from 'next';
 
-import { everfreshProductId } from '@core/constants/products';
 import type { Product } from '@core/types/products';
 import { getProduct } from '@core/utils/products';
+
+import { everfreshProductId } from '@lib/constants/products';
 
 export type EverfreshProps = {
   product: Product,

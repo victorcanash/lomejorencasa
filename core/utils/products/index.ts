@@ -3,29 +3,22 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { 
-  limitByPageSearch, 
-  orderRemainsSearch, 
-  categoriesIds,
-  everfreshProductId,
-  bagProductId, 
-} from '@core/constants/products';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 import placeholder from 'public/images/placeholder.jpeg';
-import everfresh1 from 'public/images/everfresh/everfresh1.jpeg';
-import everfresh2 from 'public/images/everfresh/everfresh2.jpeg';
 
 export const getAllProducts = async (
   token: string, 
   currentLocale: string, 
-  page: number, 
+  page: number,
+  limit: number,
   sortBy: string, 
   order: string, 
   keywords: string, 
-  categoryName: string, 
+  categoryName: string,
+  ordersRemain: boolean, 
   adminData = false
 ) => {
   return new Promise<{
@@ -38,12 +31,12 @@ export const getAllProducts = async (
     const options: AxiosRequestConfig = {
       params: {
         page,
-        limit: limitByPageSearch,
+        limit,
         sortBy,
         order,
         keywords,
         categoryName: categoryNameValue,
-        ordersRemain: orderRemainsSearch,
+        ordersRemain,
         adminData,
       },
       headers: {
@@ -100,36 +93,25 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
 };
 
 export const getProductImgUrl = (product: Product, index = 0) => {
-  if (everfreshProductId === product.id) {
-    return everfresh1;
-  } else if (bagProductId === product.id) {
-    return everfresh1;
-  }
-  else if (product.imageNames.length > index && product.imageNames[index]) {
+  if (product.imageNames.length > index && product.imageNames[index]) {
     return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`
   }
   return placeholder;
 };
 
 export const getAllProductImgsUrl = (product: Product) => {
-  if (everfreshProductId === product.id) {
-    return [everfresh1, everfresh2];
-  } else if (bagProductId === product.id) {
-    return [everfresh1, everfresh2];
-  } else {
-    return product.imageNames.map((_item, index) => { 
-      return getProductImgUrl(product, index); 
-    });
-  }
+  return product.imageNames.map((_item, index) => { 
+    return getProductImgUrl(product, index); 
+  });
 };
 
-export const getAllProductCategories = async (currentLocale: string, adminData = false, sortBy?: string, order?: string) => {
+export const getAllProductCategories = async (categoriesIds: number[], currentLocale: string, adminData = false, sortBy?: string, order?: string) => {
   return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
     const ids = !adminData ? categoriesIds : undefined;
     const options: AxiosRequestConfig = {
       params: {
         page: 1,
-        limit: 1000,
+        limit: 100,
         sortBy,
         order,
         ids,

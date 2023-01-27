@@ -6,6 +6,8 @@ import { useIntl } from 'react-intl';
 import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductCategory } from '@core/types/products';
 import { getAllProducts, getProduct } from '@core/utils/products';
+
+import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { CheckProductsSectionProps } from '@components/admin/sections/CheckProductsSection';
@@ -39,7 +41,7 @@ const useAdmin = (checkedPage: boolean) => {
     const orderSearch = typeof order == 'string' ? order : 'asc';
     const keywordsSearch = typeof keywords == 'string' ? keywords : '';
 
-    await getAllProducts(token, intl.locale, pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, true)
+    await getAllProducts(token, intl.locale, pageSearch, limitByPageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, orderRemainsSearch, true)
     .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
       setCheckProductsProps({
         category: response.productCategory,

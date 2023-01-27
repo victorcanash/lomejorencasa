@@ -3,8 +3,9 @@ import { useIntl } from 'react-intl';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { Product } from '@core/types/products';
-import { getAllProductImgsUrl } from '@core/utils/products';
+import type { Product } from '@core/types/products';
+
+import { getAllProductImgsUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import Carousel from '@components/ui/Carousel';
 

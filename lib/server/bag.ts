@@ -1,8 +1,9 @@
 import type { GetServerSideProps } from 'next';
 
-import { bagProductId } from '@core/constants/products';
 import type { Product } from '@core/types/products';
 import { getProduct } from '@core/utils/products';
+
+import { bagProductId } from '@lib/constants/products';
 
 export type BagProps = {
   product: Product,

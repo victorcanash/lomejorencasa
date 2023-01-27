@@ -9,11 +9,12 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
-import { pages } from '@lib/constants/navigation';
-import { everfreshProductId, bagProductId } from '@core/constants/products';
-import { Product } from '@core/types/products';
-import { getAllProductImgsUrl } from '@core/utils/products';
+import type { Product } from '@core/types/products';
 import LinkButton from '@core/components/LinkButton';
+
+import { pages } from '@lib/constants/navigation';
+import { everfreshProductId, bagProductId } from '@lib/constants/products';
+import { getAllProductImgsUrl } from '@lib/utils/products';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import Carousel from '@components/ui/Carousel';

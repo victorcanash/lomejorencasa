@@ -12,12 +12,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 
-import { pages } from '@lib/constants/navigation';
 import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
-import { getProductImgUrl } from '@core/utils/products';
 import Link from '@core/components/Link';
+
+import { pages } from '@lib/constants/navigation';
+import { getProductImgUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import Pagination from '@components/ui/Pagination';
 

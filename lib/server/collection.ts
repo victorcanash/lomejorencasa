@@ -3,6 +3,8 @@ import type { GetServerSideProps } from 'next';
 import type { Product, ProductCategory } from '@core/types/products';
 import { getAllProducts } from '@core/utils/products';
 
+import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/products';
+
 export type CollectionProps = {
   products: Product[],
   currentPage: number,
@@ -22,7 +24,7 @@ export const getCollectionProps: GetServerSideProps = async (context) => {
 
   let result: { props: CollectionProps } | { notFound: boolean } = { props: {} as CollectionProps };
   
-  await getAllProducts('', context.locale || '', pageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch)
+  await getAllProducts('', context.locale || '', pageSearch, limitByPageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, orderRemainsSearch)
     .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
       result = {
         props: {
