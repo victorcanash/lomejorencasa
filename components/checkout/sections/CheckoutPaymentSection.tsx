@@ -7,7 +7,7 @@ import DropIn from 'braintree-web-drop-in-react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Alert from '@mui/material/Alert';
@@ -62,7 +62,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Box>
 
       <Grid container spacing={5} mt={1}>
         <Grid item xs={12}>
@@ -164,7 +164,7 @@ const CheckoutPaymentSection = (props: CheckoutPaymentSectionProps) => {
           <Alert>{ successMsg }</Alert>
       }         
 
-    </Container>
+    </Box>
   );
 };
 

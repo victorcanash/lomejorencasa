@@ -13,8 +13,8 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import { ManageActions } from '@core/constants/auth';
 import { allProductsName } from "@core/constants/products";
-import { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
-import { CheckProduct, SelectedModel } from '@core/types/admin';
+import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
+import type { CheckProduct, SelectedModel } from '@core/types/admin';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import ManageProductForm from '@components/forms/products/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/products/ManagePInventoryForm';

@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
 
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -11,11 +10,11 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { pages } from '@lib/constants/navigation';
 import { AdminSections } from '@core/constants/admin';
 import { ManageActions } from '@core/constants/auth';
-import { Product, ProductInventory, ProductDiscount } from '@core/types/products';
-import { UploadFile } from '@core/types/upload';
+import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
+import type { UploadFile } from '@core/types/upload';
+import { pages } from '@lib/constants/navigation';
 import useProducts from '@lib/hooks/useProducts';
 import ManageProductForm from '@components/forms/products/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/products/ManagePInventoryForm';
@@ -82,56 +81,83 @@ const CreateProductSection = () => {
       }
       
       { product &&
-        <Container maxWidth="xs">
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            <Typography component="h1" variant="h1">
-              <FormattedMessage
-                id="admin.createdProduct"
-              />
-            </Typography>
-            <ProductDetail
-              product={product}
-              created={false}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Typography component="h1" variant="h1">
+            <FormattedMessage
+              id="admin.createdProduct"
             />
-            { uploadImgs && uploadImgs.length > 0 &&
-              <>
-                <Typography component="div" variant="body1">
-                  <FormattedMessage
-                    id="forms.manageProductImgs.newImgs"
-                  />
-                </Typography>
-                <ImagesDetail
-                  imgSources={uploadImgs.map((item) => { return item.url })}
+          </Typography>
+          <ProductDetail
+            product={product}
+            created={false}
+          />
+          { uploadImgs && uploadImgs.length > 0 &&
+            <>
+              <Typography component="div" variant="body1">
+                <FormattedMessage
+                  id="forms.manageProductImgs.newImgs"
                 />
-              </>
-            }
+              </Typography>
+              <ImagesDetail
+                imgSources={uploadImgs.map((item) => { return item.url })}
+              />
+            </>
+          }
 
-            <Divider sx={{ my: 2 }} />
+          <Divider sx={{ my: 2 }} />
 
-            <ManagePInventoryForm
-              action={ManageActions.create}
-              product={product}
-              manageOnSubmit={false}
-              onSubmitSuccess={onSuccessCreateInventory}
-            />
+          <ManagePInventoryForm
+            action={ManageActions.create}
+            product={product}
+            manageOnSubmit={false}
+            onSubmitSuccess={onSuccessCreateInventory}
+          />
 
-            { inventories && inventories.length > 0 &&
-              <>
-                <InventoriesDetail
-                  inventories={inventories}
+          { inventories && inventories.length > 0 &&
+            <>
+              <InventoriesDetail
+                inventories={inventories}
+                created={false}
+                getInventoryActionComponent={(inventoryIndex: number) => {
+                  return (
+                    <Button 
+                      variant="contained"  
+                      startIcon={<DeleteIcon />}                    
+                      onClick={() => onClickDeleteInventoryBtn(inventoryIndex)}
+                    >
+                      <FormattedMessage
+                        id="app.deleteBtn"
+                      />
+                    </Button>
+                  );
+                }}
+              />
+
+              <Divider sx={{ my: 2 }} />
+
+              <ManagePDiscountForm
+                action={ManageActions.create}
+                product={product}
+                manageOnSubmit={false}
+                onSubmitSuccess={onSuccessCreateDiscount}
+              />
+
+              { discounts && discounts.length > 0 && 
+                <DiscountsDetail
+                  discounts={discounts}
                   created={false}
-                  getInventoryActionComponent={(inventoryIndex: number) => {
+                  getDiscountActionComponent={(discountIndex: number) => {
                     return (
                       <Button 
                         variant="contained"  
                         startIcon={<DeleteIcon />}                    
-                        onClick={() => onClickDeleteInventoryBtn(inventoryIndex)}
+                        onClick={() => onClickDeleteDiscountBtn(discountIndex)}
                       >
                         <FormattedMessage
                           id="app.deleteBtn"
@@ -140,60 +166,31 @@ const CreateProductSection = () => {
                     );
                   }}
                 />
+              }
 
-                <Divider sx={{ my: 2 }} />
+              <Divider sx={{ my: 2 }} />
 
-                <ManagePDiscountForm
-                  action={ManageActions.create}
-                  product={product}
-                  manageOnSubmit={false}
-                  onSubmitSuccess={onSuccessCreateDiscount}
+              <Button
+                variant="contained"
+                onClick={onClickConfirmBtn}
+                sx={{  mb: 2 }}
+              >
+                <FormattedMessage
+                  id="admin.confirmBtn"
                 />
+              </Button>
 
-                { discounts && discounts.length > 0 && 
-                  <DiscountsDetail
-                    discounts={discounts}
-                    created={false}
-                    getDiscountActionComponent={(discountIndex: number) => {
-                      return (
-                        <Button 
-                          variant="contained"  
-                          startIcon={<DeleteIcon />}                    
-                          onClick={() => onClickDeleteDiscountBtn(discountIndex)}
-                        >
-                          <FormattedMessage
-                            id="app.deleteBtn"
-                          />
-                        </Button>
-                      );
-                    }}
-                  />
-                }
-
-                <Divider sx={{ my: 2 }} />
-
-                <Button
-                  variant="contained"
-                  onClick={onClickConfirmBtn}
-                  sx={{  mb: 2 }}
-                >
-                  <FormattedMessage
-                    id="admin.confirmBtn"
-                  />
-                </Button>
-
-                {
-                  errorMsg && errorMsg !== '' &&
-                    <Alert severity="error">{ errorMsg }</Alert>
-                } 
-                {
-                  successMsg && successMsg !== '' &&
-                    <Alert>{ successMsg }</Alert>
-                }  
-              </>
-            }
-          </Box>
-        </Container>
+              {
+                errorMsg && errorMsg !== '' &&
+                  <Alert severity="error">{ errorMsg }</Alert>
+              } 
+              {
+                successMsg && successMsg !== '' &&
+                  <Alert>{ successMsg }</Alert>
+              }  
+            </>
+          }
+        </Box>
       }
     </>
   );

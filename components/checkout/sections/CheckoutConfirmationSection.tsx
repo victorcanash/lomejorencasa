@@ -5,7 +5,6 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
@@ -73,7 +72,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
   return (
     <>
       { user && cart && user.billing && user.shipping &&
-        <Container maxWidth="md">
+        <Box>
 
           <Grid container spacing={5} mt={1}>
             <Grid item xs={12} sm={6}>
@@ -201,7 +200,7 @@ const CheckoutConfirmationSection = (props: CheckoutConfirmationSectionProps) =>
             message={intl.formatMessage({ id: 'dialogs.checkedCart.content.checkoutPage' })}
           />
 
-        </Container>
+        </Box>
       }
     </>
   );

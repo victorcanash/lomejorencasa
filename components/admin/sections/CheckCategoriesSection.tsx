@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import UpdateIcon from '@mui/icons-material/Update';
 
 import { ManageActions } from '@core/constants/auth';
-import { ProductCategory } from '@core/types/products';
+import type { ProductCategory } from '@core/types/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import ManagePCategoryForm from '@components/forms/products/ManagePCategoryForm';
 import CategoryDetail from '@components/admin/details/CategoryDetail';

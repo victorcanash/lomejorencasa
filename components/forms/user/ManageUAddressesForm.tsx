@@ -6,7 +6,7 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 
 import { AddressTypes } from '@core/constants/addresses';
@@ -55,7 +55,13 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
   };
 
   return (
-    <Container maxWidth="md">
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
+    >
 
       <Formik
         initialValues={{
@@ -193,7 +199,7 @@ const ManageUAddressesForm = (props: ManageUAddressesFormProps) => {
         )}
       </Formik>
 
-    </Container>
+    </Box>
   );
 };
 

@@ -160,7 +160,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
 
               {/* Category ID Field */}
               <FormControl fullWidth margin="normal">
-                <InputLabel id="categpory-select-label">
+                <InputLabel id="category-select-label">
                   <FormattedMessage 
                     id="forms.category" 
                   />

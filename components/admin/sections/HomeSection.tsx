@@ -7,8 +7,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
-import { pages } from '@lib/constants/navigation';
 import { AdminSections } from '@core/constants/admin';
+import { pages } from '@lib/constants/navigation';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 
 const HomeSection = () => {
@@ -22,7 +22,7 @@ const HomeSection = () => {
 
   return (
     <>
-      <Box maxWidth="sm">
+      <Box>
 
         <Box sx={{ m: 2 }}>
           <Typography variant="h1" component="h2" gutterBottom>

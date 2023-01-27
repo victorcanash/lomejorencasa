@@ -1,8 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 import LinkButton from '@core/components/LinkButton';
 import { pages } from '@lib/constants/navigation';
@@ -15,10 +14,14 @@ const ErrorPage = (props: ErrorPageProps) => {
   const { title } = props;
 
   return (
-    <Container 
-      maxWidth={false}
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}
     >
-      <Typography variant="h1" component="h1" gutterBottom>
+      <Typography variant="h1" component="h1" mb={2}>
         {title}
       </Typography>
       <Box maxWidth="sm">
@@ -28,7 +31,7 @@ const ErrorPage = (props: ErrorPageProps) => {
           />
         </LinkButton>
       </Box>
-    </Container>
+    </Box>
   );
 };
 
