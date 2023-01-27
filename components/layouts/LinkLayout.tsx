@@ -8,13 +8,9 @@ const LinkLayout = ({ children }: { children: React.ReactNode }) => {
         component="main" 
         maxWidth={false} 
         sx={{
-          position: 'fixed',
-          width: '100vw',
-          height: '100vh',
-          display: 'flex',
-          placeContent: 'center',
-          flexDirection: 'column',
-          alignItems: 'center',
+          mt: 12,
+          mb: 6,
+          minHeight: '50vh',
         }}
       >
         {children}
