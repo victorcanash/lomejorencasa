@@ -20,7 +20,6 @@ import useSelectInventory from '@lib/hooks/useSelectInventory';
 import Carousel from '@components/ui/Carousel';
 import EverfreshDetail from '@components/products/everfresh/EverfreshDetail';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
-
 import placeholder from 'public/images/placeholder.jpeg';
 
 type ProductDetailProps = {

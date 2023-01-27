@@ -13,6 +13,7 @@ import LinkButton from '@core/components/LinkButton';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
 import EverfreshConservation from '@components/products/everfresh/EverfreshConservation';
 import placeholder from 'public/images/placeholder.jpeg';
+import everfresh1 from 'public/images/home/everfresh1.jpg';
 import microorganismIcon from 'public/images/microorganism-icon.png';
 import frezzerIcon from 'public/images/frezzer-icon.png';
 import dietIcon from 'public/images/diet-icon.png';
@@ -128,9 +129,6 @@ const EverfreshHome = () => {
         >  
           <Box 
             className='centered-container-img'
-            sx={{ 
-              border: '1px solid black' 
-            }}
           >
             <Swiper
               modules={[Navigation, EffectCoverflow, Pagination]}
@@ -150,7 +148,7 @@ const EverfreshHome = () => {
               <SwiperSlide>
                 <div>
                   <Image 
-                    src={placeholder} 
+                    src={everfresh1} 
                     alt="Product image" 
                     width="500"
                     height="500"
@@ -168,7 +166,7 @@ const EverfreshHome = () => {
                       pb: '10px',
                     }}
                   >
-                    <Typography component={"h1"} variant={"h2"} sx={{ mb: 2 }}>
+                    <Typography component={"h1"} variant={"h2"} sx={{ mb: 2, color: 'white' }}>
                       <FormattedMessage id="home.h1" />
                     </Typography>  
                     <LinkButton
