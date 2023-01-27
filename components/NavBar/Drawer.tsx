@@ -61,7 +61,7 @@ const Drawer = (props: DrawerProps) => {
     <>
       <ListItemText 
         primary={
-          intl.formatMessage({ id: `header.drawerItems.${item.text}`, defaultMessage: item.text.id }, item.text.values)
+          intl.formatMessage({ id: `header.drawerItems.${item.text.id}`, defaultMessage: item.text.id }, item.text.values)
         }
       />
       { item.items?.length > 0 &&
