@@ -5,8 +5,11 @@ import {
 } from '@core/utils/products';
 
 import { everfreshProductId, bagProductId } from '@lib/constants/products';
-import everfresh1 from 'public/images/everfresh/everfresh1.jpeg';
-import everfresh2 from 'public/images/everfresh/everfresh2.jpeg';
+import everfresh1 from 'public/images/everfresh/everfresh1.jpg';
+import everfresh2 from 'public/images/everfresh/everfresh2.jpg';
+import everfresh3 from 'public/images/everfresh/everfresh3.jpg';
+import everfresh4 from 'public/images/everfresh/everfresh4.jpg';
+import everfresh5 from 'public/images/everfresh/everfresh5.jpg';
 
 export const getProductImgUrl = (product: Product, index = 0) => {
   if (everfreshProductId === product.id) {
@@ -19,9 +22,9 @@ export const getProductImgUrl = (product: Product, index = 0) => {
 
 export const getAllProductImgsUrl = (product: Product) => {
   if (everfreshProductId === product.id) {
-    return [everfresh1, everfresh2];
+    return [everfresh1, everfresh2, everfresh3, everfresh4, everfresh5];
   } else if (bagProductId === product.id) {
-    return [everfresh1, everfresh2];
+    return [everfresh1, everfresh2, everfresh3, everfresh4, everfresh5];
   }
   return getAllProductImgsUrlMW(product);
 };
