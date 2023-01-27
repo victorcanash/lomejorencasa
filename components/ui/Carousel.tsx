@@ -37,8 +37,6 @@ const Carousel = (props: CarouselProps) => {
                 <Image 
                   src={imgSrc} 
                   alt="Product image" 
-                  width="500"
-                  height="500"
                   layout="responsive" 
                   objectFit="cover" 
                   priority
