@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import type { DrawerItems } from '@core/types/navigation';
+
 import { 
   mainDrawerItems, 
   loggedDrawerItems, 
@@ -29,7 +30,7 @@ const useDrawer = () => {
   const handleCollapse = (item: DrawerItems) => {
     setItems(
       items.map((current) => {
-        if (current.textId == item.textId) {
+        if (current.text == item.text) {
           return { 
             ...current, 
             open: !current.open 

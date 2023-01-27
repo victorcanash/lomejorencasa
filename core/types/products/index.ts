@@ -1,4 +1,4 @@
-import { LocalizedText } from '@core/types/localizedTexts';
+import { LocalizedText } from '@core/types/texts';
 
 export type Product = {
   id: number,

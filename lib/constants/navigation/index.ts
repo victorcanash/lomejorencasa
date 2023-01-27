@@ -231,40 +231,56 @@ export const pages: Pages = {
 
 export const mainDrawerItems: DrawerItems[] = [
   {
-    textId: 'home',
+    text: {
+      id: 'home',
+    },
     path: pages.home.path,
     items: [],
     open: false,
   },
   {
-    textId: 'shop',
+    text: {
+      id: 'shop',
+    },
     path: undefined,
     items: [
       {
-        textId: 'everfresh',
+        text: {
+          id: 'everfresh',
+        },
         path: pages.everfresh.path,
       },
       {
-        textId: 'bags',
+        text: {
+          id: 'bags',
+        },
         path: pages.bags.path,
       },
     ],
     open: false,
   },
   {
-    textId: 'help',
+    text: {
+      id: 'help',
+    },
     path: undefined,
     items: [
       {
-        textId: 'contact',
+        text: {
+          id: 'contact',
+        },
         path: pages.contact.path,
       },
       {
-        textId: 'about',
+        text: {
+          id: 'about',
+        },
         path: pages.about.path,
       },
       {
-        textId: 'faq',
+        text: {
+          id: 'faq',
+        },
         path: pages.faq.path,
       },
     ],
@@ -274,19 +290,27 @@ export const mainDrawerItems: DrawerItems[] = [
 
 export const loggedDrawerItems: DrawerItems[] = [
   {
-    textId: 'profile',
+    text: {
+      id: 'profile',
+    },
     path: undefined,
     items: [
       {
-        textId: 'orders',
+        text: {
+          id: 'orders',
+        },
         path: pages.orderList.path,
       },
       {
-        textId: 'settings',
+        text: {
+          id: 'settings',
+        },
         path: pages.settings.path,
       },
       {
-        textId: 'signOut',
+        text: {
+          id: 'signOut',
+        },
         path: undefined,
       },
     ],
@@ -296,15 +320,21 @@ export const loggedDrawerItems: DrawerItems[] = [
 
 export const unloggedDrawerItems: DrawerItems[] = [
   {
-    textId: 'profile',
+    text: {
+      id: 'profile',
+    },
     path: undefined,
     items: [
       {
-        textId: 'signIn',
+        text: {
+          id: 'signIn',
+        },
         path: pages.login.path,
       },
       {
-        textId: 'register',
+        text: {
+          id: 'register',
+        },
         path: pages.register.path,
       },
     ],

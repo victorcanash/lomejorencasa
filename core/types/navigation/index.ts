@@ -1,5 +1,6 @@
-import { Protections } from '@core/constants/auth';
 import { PageTypes } from '@core/constants/navigation';
+import { Protections } from '@core/constants/auth';
+import type { FormatText } from '@core/types/texts';
 
 export type Page = {
   path: string,
@@ -14,7 +15,7 @@ export type Page = {
 
 export type NavItem = {
   path?: string,
-  textId: string,
+  text: FormatText,
 };
 
 export type DrawerItems = NavItem & {

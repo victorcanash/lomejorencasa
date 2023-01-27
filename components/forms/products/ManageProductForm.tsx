@@ -15,9 +15,10 @@ import Container from '@mui/material/Container';
 import Alert from '@mui/material/Alert';
 
 import { ManageActions } from '@core/constants/auth';
-import { Product } from '@core/types/products';
-import { UploadFile } from '@core/types/upload';
-import { getAllProductImgsUrl } from '@core/utils/products';
+import type { Product } from '@core/types/products';
+import type { UploadFile } from '@core/types/upload';
+
+import { getAllProductImgsUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import useProducts from '@lib/hooks/useProducts';
 import useForms from '@lib/hooks/useForms';

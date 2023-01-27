@@ -61,7 +61,7 @@ const Drawer = (props: DrawerProps) => {
     <>
       <ListItemText 
         primary={
-          intl.formatMessage({ id: `header.drawerItems.${item.textId}`, defaultMessage: item.textId })
+          intl.formatMessage({ id: `header.drawerItems.${item.text}`, defaultMessage: item.text.id }, item.text.values)
         }
       />
       { item.items?.length > 0 &&
@@ -123,7 +123,7 @@ const Drawer = (props: DrawerProps) => {
                 >
                   <List component="div" disablePadding>
                     { item.items.map((subitem) => (
-                      <Fragment key={subitem.textId}>
+                      <Fragment key={subitem.text.id}>
                         { listItemBtn(subitem as DrawerItems) }
                       </Fragment>
                     ))}

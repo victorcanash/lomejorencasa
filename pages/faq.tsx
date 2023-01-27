@@ -11,6 +11,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { PageTypes } from '@core/constants/navigation';
 import Link from '@core/components/Link';
+
 import { pages } from '@lib/constants/navigation';
 import { questions } from '@lib/constants/faq';
 import usePage from '@lib/hooks/usePage';
@@ -28,12 +29,12 @@ const Faq: NextPage = () => {
             expandIcon={<ExpandMoreIcon />}
           >
             <Typography component="div" variant="body1">
-              <FormattedMessage id={`faq.q.${questions[i].textId}`} />
+              <FormattedMessage id={`faq.q.${questions[i].text.id}`} values={questions[i].text.values} />
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <Typography component="div" variant="body1">
-              <FormattedMessage id={`faq.r.${questions[i].textId}`} />
+              <FormattedMessage id={`faq.r.${questions[i].text.id}`} values={questions[i].text.values} />
             </Typography>
             { questions[i].path &&
               <Box sx={{ mt: 2 }}>
