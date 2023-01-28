@@ -155,6 +155,7 @@ const EverfreshHome = () => {
                     layout="responsive" 
                     objectFit="cover" 
                     priority
+                    style={{ borderRadius: '4px' }}
                   />
                   <Box               
                     sx={{ 
