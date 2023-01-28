@@ -217,21 +217,21 @@ const EverfreshHome = () => {
               textId="home.use.1" 
               source={{ 
                 type: 'video',
-                src: require('../../public/videos/everfresh/everfresh1.mp4'),
+                src: require('../../../public/videos/everfresh/everfresh1.mp4'),
               }} 
             />
             <EverfreshTutorial 
               textId="home.use.2" 
               source={{ 
                 type: 'video',
-                src: require('../../public/videos/everfresh/everfresh1.mp4'),
+                src: require('../../../public/videos/everfresh/everfresh1.mp4'),
               }} 
             />
             <EverfreshTutorial 
               textId="home.use.3" 
               source={{ 
                 type: 'video',
-                src: require('../../public/videos/everfresh/everfresh1.mp4'),
+                src: require('../../../public/videos/everfresh/everfresh1.mp4'),
               }} 
             />
           </Box>
