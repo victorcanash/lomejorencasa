@@ -8,11 +8,14 @@ import Box from '@mui/material/Box';
 
 type EverfreshTutorialProps = {
   textId: string,
-  src: StaticImageData,
+  source: {
+    type?: 'video' | 'image',
+    src: StaticImageData | 'string',
+  },
 };
 
 const EverfreshTutorial = (props: EverfreshTutorialProps) => {
-  const { textId, src } = props;
+  const { textId, source } = props;
 
   return (
     <Grid
@@ -36,18 +39,31 @@ const EverfreshTutorial = (props: EverfreshTutorialProps) => {
         <Box 
           className='centered-container-img'
           sx={{ 
-            border: '1px solid black',
             mb: 3,
           }}
         >
-          <Image 
-            src={src} 
-            alt="Tutorial" 
-            width={500}
-            height={500}
-            layout="responsive" 
-            objectFit="cover" 
-          />
+          { source.type == 'video' ?
+            <video 
+              loop
+              muted
+              autoPlay={true}  
+              style={{ 
+                position: 'relative',
+                width: '100%', 
+                height: '100%', 
+              }}
+            >
+              <source src={source.src as string} />
+            </video> :
+            <Image 
+              src={source.src} 
+              alt="Tutorial" 
+              width={500}
+              height={500}
+              layout="responsive" 
+              objectFit="cover" 
+            />
+          }
         </Box>
       </Grid>
     </Grid>

@@ -12,7 +12,6 @@ import { pages } from '@lib/constants/navigation';
 import LinkButton from '@core/components/LinkButton';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
 import EverfreshConservation from '@components/products/everfresh/EverfreshConservation';
-import placeholder from 'public/images/placeholder.jpeg';
 import everfresh1 from 'public/images/home/everfresh1.jpg';
 import microorganismIcon from 'public/images/microorganism-icon.png';
 import frezzerIcon from 'public/images/frezzer-icon.png';
@@ -214,9 +213,27 @@ const EverfreshHome = () => {
             <Typography component={"h2"} variant={"h1"} sx={{ mt: 2, mb: 3 }}>
               <FormattedMessage id="home.use.title" />
             </Typography> 
-            <EverfreshTutorial textId="home.use.1" src={placeholder} />
-            <EverfreshTutorial textId="home.use.2" src={placeholder} />
-            <EverfreshTutorial textId="home.use.3" src={placeholder} />
+            <EverfreshTutorial 
+              textId="home.use.1" 
+              source={{ 
+                type: 'video',
+                src: require('../../public/videos/everfresh/everfresh1.mp4'),
+              }} 
+            />
+            <EverfreshTutorial 
+              textId="home.use.2" 
+              source={{ 
+                type: 'video',
+                src: require('../../public/videos/everfresh/everfresh1.mp4'),
+              }} 
+            />
+            <EverfreshTutorial 
+              textId="home.use.3" 
+              source={{ 
+                type: 'video',
+                src: require('../../public/videos/everfresh/everfresh1.mp4'),
+              }} 
+            />
           </Box>
         </Grid>
 

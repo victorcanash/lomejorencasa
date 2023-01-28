@@ -20,7 +20,6 @@ import useSelectInventory from '@lib/hooks/useSelectInventory';
 import Carousel from '@components/ui/Carousel';
 import EverfreshDetail from '@components/products/everfresh/EverfreshDetail';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
-import placeholder from 'public/images/placeholder.jpeg';
 
 type ProductDetailProps = {
   product: Product,
@@ -170,8 +169,27 @@ const ProductDetail = (props: ProductDetailProps) => {
 
           <Divider sx={{ mt: 3, mb: 5 }}/>
           
-          <EverfreshTutorial textId="everfresh.videoComment.1" src={placeholder} />
-          <EverfreshTutorial textId="everfresh.videoComment.2" src={placeholder} />
+          <EverfreshTutorial 
+            textId="everfresh.videoComment.1" 
+            source={{ 
+              type: 'video',
+              src: require('../../public/videos/everfresh/everfresh1.mp4'),
+            }} 
+          />
+          <EverfreshTutorial
+            textId="everfresh.videoComment.2" 
+            source={{ 
+              type: 'video',
+              src: require('../../public/videos/everfresh/everfresh2.mp4'),
+            }} 
+          />
+          <EverfreshTutorial
+            textId="everfresh.videoComment.2" 
+            source={{ 
+              type: 'video',
+              src: require('../../public/videos/everfresh/everfresh3.mp4'),
+            }} 
+          />
         </>
       }
     </>

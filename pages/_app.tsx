@@ -8,7 +8,7 @@ import 'styles/globals.css';
 
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
