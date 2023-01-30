@@ -8,8 +8,9 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { pages } from '@lib/constants/navigation';
 import LinkButton from '@core/components/LinkButton';
+
+import { pages } from '@lib/constants/navigation';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
 import EverfreshConservation from '@components/products/everfresh/EverfreshConservation';
 import everfresh1 from 'public/images/home/everfresh1.jpg';
@@ -217,21 +218,21 @@ const EverfreshHome = () => {
               textId="home.use.1" 
               source={{ 
                 type: 'video',
-                src: require('../../../public/videos/everfresh/everfresh1.mp4'),
+                src: require('../../../public/videos/home/everfresh1.mp4'),
               }} 
             />
             <EverfreshTutorial 
               textId="home.use.2" 
               source={{ 
                 type: 'video',
-                src: require('../../../public/videos/everfresh/everfresh1.mp4'),
+                src: require('../../../public/videos/home/everfresh1.mp4'),
               }} 
             />
             <EverfreshTutorial 
               textId="home.use.3" 
               source={{ 
                 type: 'video',
-                src: require('../../../public/videos/everfresh/everfresh1.mp4'),
+                src: require('../../../public/videos/home/everfresh1.mp4'),
               }} 
             />
           </Box>
