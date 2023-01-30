@@ -147,13 +147,12 @@ const EverfreshHome = () => {
             >
               <SwiperSlide>
                 <div>
-                  <Image 
+                  <Image
                     src={everfresh1} 
                     alt="Product image" 
-                    width="500"
-                    height="500"
                     layout="responsive" 
-                    objectFit="cover" 
+                    objectFit="cover"
+                    quality="100"
                     priority
                     style={{ borderRadius: '4px' }}
                   />
