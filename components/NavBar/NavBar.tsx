@@ -51,6 +51,7 @@ const NavBar = () => {
               color='inherit'
               component={Link}
               href={pages.home.path}
+              sx={{ borderRadius: '10px' }}
             >
               <Image
                 src={logo}
