@@ -50,7 +50,8 @@ const EverfreshTutorial = (props: EverfreshTutorialProps) => {
               style={{ 
                 position: 'relative',
                 width: '100%', 
-                height: '100%', 
+                height: '100%',
+                borderRadius: '4px',
               }}
             >
               <source src={source.src as string} />
@@ -60,8 +61,10 @@ const EverfreshTutorial = (props: EverfreshTutorialProps) => {
               alt="Tutorial" 
               width={500}
               height={500}
+              quality={100}
               layout="responsive" 
-              objectFit="cover" 
+              objectFit="cover"
+              style={{ borderRadius: '4px' }}
             />
           }
         </Box>

@@ -104,6 +104,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 height="500"
                 layout="responsive"
                 objectFit="cover"
+                style={{ borderRadius: '4px' }}
               />
             </div>
           </Link>
