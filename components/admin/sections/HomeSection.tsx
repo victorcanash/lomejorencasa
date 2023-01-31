@@ -8,6 +8,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
 import { AdminSections } from '@core/constants/admin';
+
 import { pages } from '@lib/constants/navigation';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 

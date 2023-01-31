@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Typography from '@mui/material/Typography';
 
 import type { Order } from '@core/types/orders';
+
 import CreateFailedOrderForm from '@components/forms/orders/CreateFailedOrderForm';
 import OrderDetail from '@components/orders/OrderDetail';
 

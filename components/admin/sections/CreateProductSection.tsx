@@ -14,6 +14,7 @@ import { AdminSections } from '@core/constants/admin';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
 import type { UploadFile } from '@core/types/upload';
+
 import { pages } from '@lib/constants/navigation';
 import useProducts from '@lib/hooks/useProducts';
 import ManageProductForm from '@components/forms/products/ManageProductForm';
@@ -73,14 +74,12 @@ const CreateProductSection = () => {
 
   return (
     <>           
-      { !product &&
+      { !product ?
         <ManageProductForm
           action={ManageActions.create}
           onSubmitSuccess={onSuccessCreateProduct}
         />
-      }
-      
-      { product &&
+        :
         <Box
           sx={{
             display: 'flex',

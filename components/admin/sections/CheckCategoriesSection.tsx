@@ -9,6 +9,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 
 import { ManageActions } from '@core/constants/auth';
 import type { ProductCategory } from '@core/types/products';
+
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import ManagePCategoryForm from '@components/forms/products/ManagePCategoryForm';
 import CategoryDetail from '@components/admin/details/CategoryDetail';
@@ -37,7 +38,6 @@ const CheckCategoriesSection = () => {
   return (
     <>           
       { !selected ?
-
         <>
           <Typography component="h1" variant="h1">
             <FormattedMessage
@@ -64,9 +64,7 @@ const CheckCategoriesSection = () => {
             ))}
           </Grid>
         </>
-
-      :
-
+        :
         <ManagePCategoryForm
           action={ManageActions.update}
           productCategory={selected}
@@ -75,7 +73,6 @@ const CheckCategoriesSection = () => {
           onDeleteSuccess={onSuccessDelete}
           onCancel={onCancel}
         />
-
       }
     </>
   );

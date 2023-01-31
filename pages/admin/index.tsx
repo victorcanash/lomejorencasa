@@ -7,6 +7,7 @@ import Divider from '@mui/material/Divider';
 
 import { PageTypes } from '@core/constants/navigation';
 import { AdminSections } from '@core/constants/admin';
+
 import usePage from '@lib/hooks/usePage';
 import useAdmin from '@lib/hooks/useAdmin';
 import PageHeader from '@components/ui/PageHeader';
@@ -23,6 +24,34 @@ const Admin: NextPage = () => {
   const page = usePage();
   const { section, checkProductsProps } = useAdmin(page.checked);
 
+  const getCurrentSection = () => {
+    if (section == AdminSections.home) {
+      return (<HomeSection />);
+    } else if (section == AdminSections.checkProductCategories) {
+      return (<CheckCategoriesSection />);
+    } else if (section == AdminSections.checkProducts && checkProductsProps) { 
+      return (
+        <CheckProductsSection 
+          category={checkProductsProps.category}
+          products={checkProductsProps.products}
+          totalPages={checkProductsProps.totalPages}
+          currentPage={checkProductsProps.currentPage}
+          keywords={checkProductsProps.keywords}
+          getAdminProduct={checkProductsProps.getAdminProduct}
+        />
+      );
+    } else if (section == AdminSections.createProductCategory) {
+      return (<CreateCategorySection />);
+    } else if (section == AdminSections.createProduct) {
+      return (<CreateProductSection />);
+    } else if (section == AdminSections.createFailedOrder) {
+      return (<CreateFailedOrderSection />);
+    } else if (section == AdminSections.sendFailedOrderEmail) {
+      return (<SendFailedOrderEmailSection />);
+    }
+    return undefined;
+  };
+
   return (
     <>
       <PageHeader
@@ -35,52 +64,16 @@ const Admin: NextPage = () => {
 
       { page.checked && section &&
         <>
-          {
-            section == AdminSections.home ?
-              <Typography variant="h1" component="h1" gutterBottom>
-                <FormattedMessage id="admin.h1" />
-              </Typography>
-              :
-              <GoBackBtn />
+          { section == AdminSections.home ?
+            <Typography component="h1" variant="h1" className="animate__animated animate__fadeInLeft">
+              <FormattedMessage id="admin.h1" />
+            </Typography>
+            :
+            <GoBackBtn />
           }
-
           <Divider sx={{ mt: 1, mb: 3 }} />
 
-          {
-            section == AdminSections.home &&
-              <HomeSection />
-          }
-          {
-            section == AdminSections.checkProductCategories &&
-              <CheckCategoriesSection />
-          }
-          {
-            section == AdminSections.checkProducts && checkProductsProps && 
-              <CheckProductsSection 
-                category={checkProductsProps.category}
-                products={checkProductsProps.products}
-                totalPages={checkProductsProps.totalPages}
-                currentPage={checkProductsProps.currentPage}
-                keywords={checkProductsProps.keywords}
-                getAdminProduct={checkProductsProps.getAdminProduct}
-              />
-          }
-          {
-            section == AdminSections.createProductCategory &&
-              <CreateCategorySection />
-          }
-          {
-            section == AdminSections.createProduct &&
-              <CreateProductSection />
-          }
-          {
-            section == AdminSections.createFailedOrder &&
-              <CreateFailedOrderSection />
-          }
-          {
-            section == AdminSections.sendFailedOrderEmail &&
-              <SendFailedOrderEmailSection />
-          }
+          { getCurrentSection() }
         </>
       }
     </>

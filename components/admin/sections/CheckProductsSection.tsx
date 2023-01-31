@@ -15,6 +15,7 @@ import { ManageActions } from '@core/constants/auth';
 import { allProductsName } from "@core/constants/products";
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import type { CheckProduct, SelectedModel } from '@core/types/admin';
+
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import ManageProductForm from '@components/forms/products/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/products/ManagePInventoryForm';
@@ -388,7 +389,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
             onChangePage={handleChangePage}
           />
         </>
-      :
+        :
         getManageForm()
       }
     </>
