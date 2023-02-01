@@ -1,8 +1,7 @@
 import Image, { StaticImageData } from 'next/image';
-// import Zoom from 'react-medium-image-zoom'
 
+import { Pagination/*, Navigation, EffectCoverflow,*/ } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, EffectCoverflow, Pagination } from 'swiper';
 
 import Box from '@mui/material/Box';
 
@@ -16,33 +15,35 @@ const Carousel = (props: CarouselProps) => {
   return (
     <Box>
       <Swiper
-        modules={[Navigation, EffectCoverflow, Pagination]}
-        navigation
+        modules={[Pagination/*, Navigation, EffectCoverflow, */]}
+        loop
         pagination={{
           clickable: true
         }}
-        effect="coverflow"
+        //navigation
+        /*effect="coverflow"
         coverflowEffect={{
           rotate: 50,
           stretch: 0,
           depth: 100,
           modifier: 1,
           slideShadows: true,
-        }}
+        }}*/
       >
         { imgSources.map((imgSrc, imgSrcIndex) => (
           <SwiperSlide key={imgSrcIndex}>
-            <div style={{ marginBottom: "40px"}}>
-              {/*<Zoom>*/}
-                <Image 
-                  src={imgSrc} 
-                  alt="Product image" 
-                  layout="responsive" 
-                  objectFit="cover"
-                  quality="100"
-                  priority
-                />
-              {/*</Zoom>*/}
+            <div 
+              style={{ marginBottom: "40px"}}
+            >
+              <Image 
+                src={imgSrc}
+                alt="Product image" 
+                layout="responsive" 
+                objectFit="cover"
+                quality="100"
+                priority
+                style={{ borderRadius: '10px' }}
+              />
             </div>
           </SwiperSlide>
         ))}

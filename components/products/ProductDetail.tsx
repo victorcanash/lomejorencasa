@@ -1,8 +1,7 @@
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Card from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -50,11 +49,13 @@ const ProductDetail = (props: ProductDetailProps) => {
   };
 
   return (
-    <>
+    <Container>
+
       {/* General Product Section */}
       <Grid
         container
         spacing={3}
+        mt={1}
       >
 
         {/* Images */}
@@ -64,13 +65,11 @@ const ProductDetail = (props: ProductDetailProps) => {
           md={6}
           className='animate__animated animate__fadeInLeft'
         >
-          <Card raised className='centered-container-img'>
-            <CardMedia>
+          <Box className='centered-container-img'>
               <Carousel 
                 imgSources={getAllProductImgsUrl(product)} 
               />
-            </CardMedia>
-          </Card>
+          </Box>
         </Grid>
 
         {/* Texts */}
@@ -192,7 +191,8 @@ const ProductDetail = (props: ProductDetailProps) => {
           />
         </>
       }
-    </>
+
+    </Container>
   );
 };
 
