@@ -122,7 +122,7 @@ function MyApp(props: MyAppProps) {
         </CacheProvider>
       </IntlProvider>
     </>
-  )
-}
+  );
+};
 
-export default MyApp
+export default MyApp;

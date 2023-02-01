@@ -34,8 +34,8 @@ export default class MyDocument extends Document {
         </body>
       </Html>
     );
-  }
-}
+  };
+};
 
 // `getInitialProps` belongs to `_document` (instead of `_app`),
 // it's compatible with static-site generation (SSG).

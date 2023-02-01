@@ -22,7 +22,7 @@ const NavBar = () => {
   const appDrawer = useDrawer();
 
   return (
-    <Box component="header">
+    <>
 
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'secondary.main' }} onClick={appDrawer.close}>
         <Toolbar variant="dense" disableGutters>
@@ -91,7 +91,7 @@ const NavBar = () => {
         handleCollapse={appDrawer.handleCollapse}
       />
 
-    </Box>
+    </>
   );
 };
 
