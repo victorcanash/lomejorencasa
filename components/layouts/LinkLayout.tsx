@@ -1,20 +1,19 @@
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 const LinkLayout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <>
-      <Container 
+      <Box 
         component="main" 
-        maxWidth={false} 
         sx={{
-          mt: 12,
-          mb: 6,
+          mt: '74px',
+          mb: '48px',
           minHeight: '50vh',
         }}
       >
         {children}
-      </Container>
+      </Box>
     </>
   )
 }
