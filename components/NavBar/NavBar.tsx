@@ -40,7 +40,6 @@ const NavBar = () => {
 
           <Container 
             maxWidth={false} 
-            disableGutters
             sx={{ 
               display: 'flex',
               justifyContent: 'center', 
