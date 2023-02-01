@@ -1,8 +1,8 @@
 import Image, { StaticImageData } from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
+import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, EffectCoverflow, Pagination } from 'swiper';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -15,6 +15,9 @@ import { pages } from '@lib/constants/navigation';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
 import EverfreshConservation from '@components/products/everfresh/EverfreshConservation';
 import everfresh1 from 'public/images/home/everfresh1.jpg';
+import everfresh2 from 'public/images/home/everfresh2.jpg';
+import everfresh3 from 'public/images/home/everfresh3.jpg';
+import everfresh4 from 'public/images/home/everfresh4.jpg';
 import microorganismIcon from 'public/images/microorganism-icon.png';
 import frezzerIcon from 'public/images/frezzer-icon.png';
 import dietIcon from 'public/images/diet-icon.png';
@@ -134,78 +137,75 @@ const EverfreshHome = () => {
               m: 'auto',
             }}
           >
-            <Swiper
-              modules={[Navigation, EffectCoverflow, Pagination]}
-              navigation
-              pagination={{
-                clickable: true
-              }}
-              effect="coverflow"
-              coverflowEffect={{
-                rotate: 50,
-                stretch: 0,
-                depth: 100,
-                modifier: 1,
-                slideShadows: true,
+            <Swiper 
+              modules={[Autoplay]}
+              speed={1000} 
+              loop
+              centeredSlides
+              autoplay={{
+                delay: 6000,
+                disableOnInteraction: false,
               }}
             >
-              <SwiperSlide>
-                <div>
-                  <Image
-                    src={everfresh1} 
-                    alt="Product image" 
-                    layout="responsive" 
-                    objectFit="cover"
-                    quality="100"
-                    priority
-                  />
-                  <Grid 
-                    container
-                    rowSpacing={2}          
-                    sx={{
-                      position: 'absolute',
-                      height: '100%',
-                      width: {
-                        xs: '50%',
-                      },
-                      top: '0px',
-                      px: '20px',
-                      py: '10px',
-                      flexWrap: 'nowrap',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Grid item>
-                      <Typography 
-                        component={"h1"} 
-                        sx={{ 
-                          typography: { 
-                            xs: 'home_h3', 
-                            xs_sm: 'home_h2',
-                            sm_md: 'home_h1', 
-                          },
-                          color: 'white',
-                        }}
-                      >
-                        <FormattedMessage id="home.h1" />
-                      </Typography>
+              { [everfresh1, everfresh2, everfresh3, everfresh4].map((src, index) => (
+                <SwiperSlide key={index}>
+                  <div>
+                    <Image
+                      src={src} 
+                      alt="Product image" 
+                      layout="responsive" 
+                      objectFit="cover"
+                      quality="100"
+                      priority
+                    />
+                    <Grid 
+                      container
+                      rowSpacing={2}          
+                      sx={{
+                        position: 'absolute',
+                        height: '100%',
+                        width: {
+                          xs: '50%',
+                        },
+                        top: '0px',
+                        px: '20px',
+                        py: '10px',
+                        flexWrap: 'nowrap',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Grid item>
+                        <Typography 
+                          component={"h1"} 
+                          sx={{ 
+                            typography: { 
+                              xs: 'home_h3', 
+                              xs_sm: 'home_h2',
+                              sm_md: 'home_h1', 
+                            },
+                            color: 'white',
+                          }}
+                        >
+                          <FormattedMessage id="home.h1" />
+                        </Typography>
+                      </Grid>
+                      <Grid item>
+                        <LinkButton
+                          href={pages.everfresh.path}
+                          id="advantages"
+                          sx={{
+                            backgroundColor: '#6f9c7d',
+                            color: 'white',
+                          }}
+                        >
+                          <FormattedMessage id="home.buyBtn" />
+                        </LinkButton>
+                      </Grid>
                     </Grid>
-                    <Grid item>
-                      <LinkButton
-                        href={pages.everfresh.path}
-                        id="advantages"
-                        sx={{
-                          backgroundColor: '#6f9c7d',
-                          color: 'white',
-                        }}
-                      >
-                        <FormattedMessage id="home.buyBtn" />
-                      </LinkButton>
-                    </Grid>
-                  </Grid>
-                </div>
-              </SwiperSlide>
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </Box>
         </Grid>
