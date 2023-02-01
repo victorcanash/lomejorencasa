@@ -1,6 +1,41 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
+declare module '@mui/material/styles' {
+  interface BreakpointOverrides {
+    xs: true;
+    xs_sm: true;
+    sm: true;
+    sm_md: true;
+    md: true;
+    lg: true;
+    xl: true;
+  }
+
+  interface TypographyVariants {
+    home_h1: React.CSSProperties;
+    home_h2: React.CSSProperties;
+    home_h3: React.CSSProperties;
+  }
+
+  interface TypographyVariantsOptions {
+    home_h1: React.CSSProperties;
+    home_h2: React.CSSProperties;
+    home_h3: React.CSSProperties;
+  }
+};
+
 export const themeOptions: ThemeOptions = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      xs_sm: 450,
+      sm: 600,
+      sm_md: 700,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
   palette: {
     primary: {
       main: '#F1F4ED',
@@ -187,6 +222,22 @@ export const themeOptions: ThemeOptions = {
       fontSize: '13px',
       lineHeight: '16px',
       fontWeight: '300',
+    },
+    // Home title
+    home_h1: {
+      fontSize: '30px',
+      lineHeight: '33px',
+      fontWeight: '700',
+    },
+    home_h2: {
+      fontSize: '25px',
+      lineHeight: '28px',
+      fontWeight: '700',
+    },
+    home_h3: {
+      fontSize: '20px',
+      lineHeight: '23px',
+      fontWeight: '700',
     },
     fontFamily: [
       'Roboto',
