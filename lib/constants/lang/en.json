@@ -130,7 +130,6 @@
   "contact.metas.title": "Contact us",
   "contact.metas.description": "Contact us page",
   "contact.h1": "Contact us",
-  "contact.description": "Fill out the form and we will reply to you as soon as possible. You can also send us an email to {email}",
   "contact.successes.default": "Email sent successfully. We will reply to you as soon as possible.",
 
   "productList.metas.title": "Search",
@@ -192,7 +191,6 @@
 
   "activation.metas.title": "Account Activation",
   "activation.metas.description": "Account activation link",
-  "activation.h1": "Account activation link",
   "activation.successes.default": "Your account is activated and you can login now. You can close this window.",
   "activation.successes.email": "Sent activation email",
   "activation.errors.default": "Something went wrong, try again or resend another email",
@@ -243,7 +241,7 @@
   "checkout.metas.description": "Checkout page",
   "checkout.sections.address": "Address",
   "checkout.sections.payment": "Payment",
-  "checkout.sections.confirmation": "Confirmation",
+  "checkout.sections.confirm": "Confirmation",
   "checkout.paymentMethod": "Payment method",
   "checkout.order": "Order",
   "checkout.confirmBtn": "Confirm",
@@ -342,24 +340,39 @@
 
   "forms.password": "Password",
   "forms.newPassword": "New password",
-  "forms.confirmPassword": "Confirm password",
+  "forms.confirm": "Confirm password",
+  "forms.newConfirm": "Confirm new password",
   "forms.email": "Email address",
   "forms.newEmail": "New email address",
   "forms.tlf": "Número de teléfono",
   "forms.comments": "Comentarios",
-  "forms.rememberMe": "Remember me",
+  "forms.remember": "Remember me",
   "forms.rememberPayment": "Save payment data",
   "forms.firstName": "First name",
+  "forms.shipping.firstName": "First name",
+  "forms.billing.firstName": "First name",
   "forms.lastName": "Last name",
+  "forms.shipping.lastName": "Last name",
+  "forms.billing.lastName": "Last name",
   "forms.birthday": "Birthday",
   "forms.getEmails": "I want to receive inspiration, marketing promotions and updates via email",
   "forms.shipping": "Shipping address",
   "forms.billing": "Billing address",
   "forms.addressLine1": "Address line 1",
+  "forms.shipping.addressLine1": "Address line 1",
+  "forms.billing.addressLine1": "Address line 1",
   "forms.addressLine2": "Address line 2",
+  "forms.shipping.addressLine2": "Address line 2",
+  "forms.billing.addressLine2": "Address line 2",
   "forms.postalCode": "Postal code",
+  "forms.shipping.postalCode": "Postal code",
+  "forms.billing.postalCode": "Postal code",
   "forms.locality": "Locality",
+  "forms.shipping.locality": "Locality",
+  "forms.billing.locality": "Locality",
   "forms.country": "Country",
+  "forms.shipping.country": "Country",
+  "forms.billing.country": "Country",
   "forms.sameAsShipping": "Same as shipping address",
   "forms.name": "Name",
   "forms.name.en": "Name (EN)",
@@ -368,6 +381,7 @@
   "forms.description.en": "Description (EN)",
   "forms.description.es": "Description (ES)",
   "forms.category": "Category",
+  "forms.categoryName": "{name}",
   "forms.quantity": "Quantity",
   "forms.sku": "SKU",
   "forms.price": "Price",
@@ -378,11 +392,14 @@
   "forms.locale": "Language code",
   "forms.id": "ID",
   "forms.userId": "User ID",
+  "forms.categoryId": "Category ID",
   "forms.productId": "Product ID",
   "forms.inventoryId": "Inventory ID",
   "forms.activeDiscountId": "Active discount ID",
   "forms.orderId": "Order ID",
   "forms.braintreeTransactionId": "BraintreeTransaction ID",
+  "forms.selectInventory.label": "Type",
+  "forms.selectInventory.content": "{name} ({quantity} left)",
 
   "forms.register.title": "Sign up",
   "forms.register.successBtn": "Sign up",
@@ -394,10 +411,15 @@
   "forms.login.registerLink": "Don't have an account? Sign up",
 
   "forms.forgotPassword.title": "Forgotten password",
-  "forms.forgotPassword.subtitle": "Change your password",
   "forms.forgotPassword.description": "Introduce your email address and we will send you an email with a link to set your new password.",
   "forms.forgotPassword.successBtn": "Send email",
   "forms.forgotPassword.loginLink": "Back to sign in",
+
+  "forms.activation.title": "Account activation link",
+
+  "forms.updatePassword.title": "Change your password",
+  "forms.updatePassword.description": "Introduce your email address and we will send you an email with a link to set your new password.",
+  "forms.updatePassword.successBtn": "Send email",
 
   "forms.confirmNewEmail.title": "Confirm new email link",
   "forms.confirmNewEmail.description": "Click the confirm button to update and activate your new email.",
@@ -421,6 +443,8 @@
   "forms.resendActivation.received": "Didn't received the email?",
   "forms.resendActivation.resendTime": "Resend in {timeLeft} second/s",
   "forms.resendActivation.resendNow": "Resend now",
+
+  "forms.contact.description": "Fill out the form and we will reply to you as soon as possible. You can also send us an email to {email}",
 
   "forms.createProduct.title": "Create new product",
   "forms.createProduct.successBtn": "Create",
@@ -448,16 +472,12 @@
   "forms.updateDiscount.successBtn": "Update",
   
   "forms.sendFailedOrderEmail.title": "Send failed order email",
-  "forms.sendFailedOrderEmail.successBtn": "Send",
 
   "forms.createFailedOrder.title": "Create failed order",
   "forms.createFailedOrder.successBtn": "Create",
   "forms.createFailedOrder.createdWithoutEmail": "Order created successfully but an error was occurred sending the order email",
   "forms.createFailedOrderProduct.title": "Add order product",
   "forms.createFailedOrderProduct.successBtn": "Add order product",
-  
-  "forms.selectInventory.label": "Type",
-  "forms.selectInventory.content": "{name} ({quantity} left)",
 
   "forms.errors.default": "Invalid field",
   "forms.errors.required": "Required field",
@@ -487,5 +507,6 @@
   "dialogs.cookies.acceptBtn": "Accept all cookies",
   "dialogs.cookies.refuseBtn": "Refuse non-essential cookies",
 
-  "ES": "Spain"
+  "ES": "Spain",
+  "es": "Spain"
 }

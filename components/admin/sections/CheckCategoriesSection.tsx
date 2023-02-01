@@ -11,7 +11,7 @@ import { ManageActions } from '@core/constants/auth';
 import type { ProductCategory } from '@core/types/products';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import ManagePCategoryForm from '@components/forms/products/ManagePCategoryForm';
+import ManagePCategoryForm from '@components/forms/admin/ManagePCategoryForm';
 import CategoryDetail from '@components/admin/details/CategoryDetail';
 
 const CheckCategoriesSection = () => {

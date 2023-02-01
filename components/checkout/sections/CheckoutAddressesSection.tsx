@@ -1,4 +1,4 @@
-import ManageUAddressesForm from '@components/forms/user/ManageUAddressesForm';
+import CheckoutAddressesForm from '@components/forms/checkout/CheckoutAddressesForm';
 
 type CheckoutAddressesSectionProps = {
   next: () => void,
@@ -8,8 +8,8 @@ const CheckoutAddressesSection = (props: CheckoutAddressesSectionProps) => {
   const { next } = props;
 
   return (
-    <ManageUAddressesForm 
-      onSubmitSuccess={next}
+    <CheckoutAddressesForm 
+      next={next}
     />
   );
 };

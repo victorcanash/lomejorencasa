@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import type { Order } from '@core/types/orders';
 
-import SendFailedOrderEmailForm from '@components/forms/orders/SendFailedOrderEmailForm';
+import SendFailedOrderEmailForm from '@components/forms/admin/SendFailedOrderEmailForm';
 import OrderDetail from '@components/orders/OrderDetail';
 
 const SendFailedOrderEmailSection = () => {

@@ -1,15 +1,14 @@
 import { FormattedMessage } from 'react-intl';
 
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Alert from '@mui/material/Alert';
+
+import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
-import LinkButton from '@core/components/LinkButton';
+import type { FormButtonsNormal } from '@lib/types/forms';
 import useAuth from '@lib/hooks/useAuth';
 import useCountdown from '@lib/hooks/useCountdown';
+import BaseForm from '@components/forms/BaseForm';
 
 type ResendActivationFormProps = {
   email: string,
@@ -24,83 +23,61 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
 
   const onSendActivationEmailSuccess = () => {
     trigger();
-  }
+  };
 
-  const onClickResend = () => {
+  const handleSubmit = async () => {
     sendActivationEmail(email, onSendActivationEmailSuccess);
-  }
+  };
 
   return (
-    <Container maxWidth="xs">
-
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-
-        <Typography component="h1" variant="h1">
-          <FormattedMessage 
-            id="forms.resendActivation.title" 
-          />
-        </Typography>
-
-        <Typography component="h2" variant="body1" my={2}>
-          <FormattedMessage 
-            id="forms.resendActivation.description" 
-            values={{ email }}
-          />
-        </Typography>
-
-        <LinkButton href={pages.login.path} fullWidth onClick={onClickProceedBtn}>
-          <FormattedMessage 
-            id="forms.resendActivation.loginLink" 
-          />
-        </LinkButton>
-
-        <Typography component="h3" variant="body1" sx={{ mt: 4, mb: 2}}>
-          <FormattedMessage 
-            id="forms.resendActivation.received" 
-          />
-          {" "}
-          { timeLeft ?
-            <FormattedMessage 
-              id="forms.resendActivation.resendTime"
-              values={{ timeLeft }}
-            />
-            :
-            <FormattedMessage 
-              id="forms.resendActivation.resendNow"
-            />
-          }
-        </Typography>
-
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={onClickResend}
-          sx={{ mb: 2 }}
-          disabled={active}
-        >
-          <FormattedMessage 
-            id="forms.resendActivation.successBtn" 
-          />
-        </Button>
-
+    <BaseForm
+      formFieldGroups={[
         {
-          errorMsg && errorMsg !== '' &&
-            <Alert severity="error">{ errorMsg }</Alert>
-        }  
-        {
-          successMsg && successMsg !== '' &&
-            <Alert>{ successMsg }</Alert>
+          titleTxt: {
+            id: 'forms.resendActivation.title',
+          },
+          descriptionTxt: {
+            id: 'forms.resendActivation.description',
+            values: { email },
+          },
+          extraElements: <>
+            <LinkButton href={pages.login.path} onClick={onClickProceedBtn}>
+              <FormattedMessage 
+                id="forms.resendActivation.loginLink" 
+              />
+            </LinkButton>
+  
+            <Typography component="h3" variant="body1" sx={{ mt: 4 }}>
+              <FormattedMessage 
+                id="forms.resendActivation.received" 
+              />
+              {" "}
+              { timeLeft ?
+                <FormattedMessage 
+                  id="forms.resendActivation.resendTime"
+                  values={{ timeLeft }}
+                />
+                :
+                <FormattedMessage 
+                  id="forms.resendActivation.resendNow"
+                />
+              }
+            </Typography>
+          </>,
         }
-
-      </Box>
-
-    </Container>
+      ]}
+      formButtons={{
+        submit: {
+          text: {
+            id: 'forms.resendActivation.successBtn',
+          },
+          onSubmit: handleSubmit,
+          disabled: active,
+        },
+      } as FormButtonsNormal}
+      successMsg={successMsg}
+      errorMsg={errorMsg}
+    />
   );
 };
 

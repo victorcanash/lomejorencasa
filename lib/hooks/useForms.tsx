@@ -2,7 +2,10 @@ import * as Yup from 'yup';
 import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 
-import { CountryOptions } from '@core/constants/addresses'
+import { FormFieldTypes } from '@core/constants/forms';
+import { CountryOptions } from '@core/constants/addresses';
+import type { FormField } from '@core/types/forms';
+import { getCountryName } from '@core/utils/addresses';
 import { subtractYears } from '@core/utils/dates';
 
 const useForms = () => {
@@ -26,7 +29,7 @@ const useForms = () => {
     });
   };
 
-  // Custom fields
+  // Custom fields validation and init values
 
   const userFieldsValidation = {
     email: Yup
@@ -135,7 +138,7 @@ const useForms = () => {
     addressLine2: '',
     postalCode: '',
     locality: '',
-    country: CountryOptions.ES,
+    country: getCountryName(Object.keys(CountryOptions)[0]),
   };
 
   const orderFieldsValidation = {
@@ -259,7 +262,7 @@ const useForms = () => {
     active: false,
   };
 
-  // Custom forms
+  // Custom forms validation
 
   const loginFormValidation = Yup.object().shape({
     email: userFieldsValidation.email,
@@ -358,6 +361,62 @@ const useForms = () => {
     active: discountFieldsValidation.active,
   });
 
+  // Custom form fields
+
+  const addressFormFields = (name: string, autoFocus?: boolean) => {
+    return [
+      {
+        name: `${name}.firstName`,
+        type: FormFieldTypes.text,
+        required: true,
+        autoFocus: autoFocus,
+        autoComplete: 'firstName',
+      },
+      {
+        name: `${name}.lastName`,
+        type: FormFieldTypes.text,
+        required: true,
+        autoComplete: 'lastName',
+      },
+      {
+        name: `${name}.addressLine1`,
+        type: FormFieldTypes.text,
+        required: true,
+        autoComplete: 'addressLine1',
+      },
+      {
+        name: `${name}.addressLine2`,
+        type: FormFieldTypes.text,
+        autoComplete: 'addressLine2',
+      },
+      {
+        name: `${name}.postalCode`,
+        type: FormFieldTypes.text,
+        required: true,
+        autoComplete: 'postalCode',
+      },
+      {
+        name: `${name}.locality`,
+        type: FormFieldTypes.text,
+        required: true,
+        autoComplete: 'city',
+      },
+      {
+        name: `${name}.country`,
+        type: FormFieldTypes.select,
+        required: true,
+        menuItems: Object.keys(CountryOptions).map((countryKey) => {
+          return {
+            text: {
+              id: countryKey,
+            },
+            value: getCountryName(countryKey),
+          };
+        }),
+      }
+    ] as FormField[];
+  };
+
   return {
     initForms,
     
@@ -385,6 +444,8 @@ const useForms = () => {
     manageCategoryFormValidation,
     manageInventoryFormValidation,
     manageDiscountFormValidation,
+
+    addressFormFields,
   }
 };
 

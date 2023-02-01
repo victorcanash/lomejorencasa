@@ -1,11 +1,13 @@
 import type { NextPage } from 'next';
 
+import Divider from '@mui/material/Divider';
+
 import { PageTypes } from '@core/constants/navigation';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import UpdateUserForm from '@components/forms/user/UpdateUserForm';
 import UpdateEmailForm from '@components/forms/auth/UpdateEmailForm';
-import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
+import UpdatePswForm from '@components/forms/auth/UpdatePswForm';
 
 const Settings: NextPage = () => { 
   const page = usePage();
@@ -25,9 +27,13 @@ const Settings: NextPage = () => {
       
       <UpdateUserForm />
 
+      <Divider sx={{ mb: 3, mt: 5 }} />
+
       <UpdateEmailForm />
 
-      <ForgotPswForm />
+      <Divider sx={{ mb: 3, mt: 5 }} />
+
+      <UpdatePswForm />
     </>
   )
 };

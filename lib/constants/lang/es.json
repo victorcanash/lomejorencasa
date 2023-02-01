@@ -130,7 +130,6 @@
   "contact.metas.title": "Contáctanos",
   "contact.metas.description": "Página de contáctanos",
   "contact.h1": "Contacta con nosotros",
-  "contact.description": "Rellena el formulario y te responderemos tan pronto como sea posible. También puedes enviarnos un correo a {email}",
   "contact.successes.default": "Correo enviado correctamente. Nos pondremos en contacto contigo lo antes posible.",
 
   "productList.metas.title": "Buscar",
@@ -192,7 +191,6 @@
   
   "activation.metas.title": "Activación de Cuenta",
   "activation.metas.description": "Link de activación de cuenta",
-  "activation.h1": "Link de activación de cuenta",
   "activation.successes.default": "Tu cuenta está activada y puedes logearte ahora. Puedes cerrar esta ventana.",
   "activation.successes.email": "Correo para activar tu cuenta enviado",
   "activation.errors.default": "Algo falló, inténtalo otra vez o vuelve a enviar otro correo",
@@ -243,7 +241,7 @@
   "checkout.metas.description": "Página de pago",
   "checkout.sections.address": "Dirección",
   "checkout.sections.payment": "Pago",
-  "checkout.sections.confirmation": "Confirmación",
+  "checkout.sections.confirm": "Confirmación",
   "checkout.paymentMethod": "Método de pago",
   "checkout.order": "Pedido",
   "checkout.confirmBtn": "Confirmar",
@@ -342,24 +340,39 @@
 
   "forms.password": "Contraseña",
   "forms.newPassword": "Nueva contraseña",
-  "forms.confirmPassword": "Confirmar contraseña",
+  "forms.confirm": "Confirmar contraseña",
+  "forms.newConfirm": "Confirmar nueva contraseña",
   "forms.email": "Dirección de correo",
   "forms.newEmail": "Nueva dirección de correo",
   "forms.tlf": "Número de teléfono",
   "forms.comments": "Comentarios",
-  "forms.rememberMe": "Recuérdame",
+  "forms.remember": "Recuérdame",
   "forms.rememberPayment": "Guardar datos de pago",
   "forms.firstName": "Nombre",
+  "forms.shipping.firstName": "Nombre",
+  "forms.billing.firstName": "Nombre",
   "forms.lastName": "Apellido",
+  "forms.shipping.lastName": "Apellido",
+  "forms.billing.lastName": "Apellido",
   "forms.birthday": "Fecha de cumpleaños",
   "forms.getEmails": "Quiero recibir inspiración, promociones de marketing y actualizaciones por correo electrónico",
   "forms.shipping": "Dirección de envío",
   "forms.billing": "Dirección de facturación",
   "forms.addressLine1": "Línea de dirección 1",
+  "forms.shipping.addressLine1": "Línea de dirección 1",
+  "forms.billing.addressLine1": "Línea de dirección 1",
   "forms.addressLine2": "Línea de dirección 2",
+  "forms.shipping.addressLine2": "Línea de dirección 2",
+  "forms.billing.addressLine2": "Línea de dirección 2",
   "forms.postalCode": "Código postal",
+  "forms.shipping.postalCode": "Código postal",
+  "forms.billing.postalCode": "Código postal",
   "forms.locality": "Localidad",
+  "forms.shipping.locality": "Localidad",
+  "forms.billing.locality": "Localidad",
   "forms.country": "País",
+  "forms.shipping.country": "País",
+  "forms.billing.country": "País",
   "forms.sameAsShipping": "Igual que dirección de envío",
   "forms.name": "Nombre",
   "forms.name.en": "Nombre (EN)",
@@ -367,7 +380,8 @@
   "forms.description": "Descripción",
   "forms.description.en": "Descripción (EN)",
   "forms.description.es": "Descripción (ES)",
-  "forms.category": "Categoría",
+  "forms.category": "Categoria",
+  "forms.categoryName": "{name}",
   "forms.quantity": "Cantidad",
   "forms.sku": "SKU",
   "forms.price": "Precio",
@@ -378,11 +392,14 @@
   "forms.locale": "Código de idioma",
   "forms.id": "ID",
   "forms.userId": "ID del usuario",
+  "forms.categoryId": "ID de la categoría",
   "forms.productId": "ID del producto",
   "forms.inventoryId": "ID del inventario",
   "forms.activeDiscountId": "ID del descuento activo",
   "forms.orderId": "ID del pedido",
   "forms.braintreeTransactionId": "ID de BraintreeTransaction",
+  "forms.selectInventory.label": "Tipo",
+  "forms.selectInventory.content": "{name} (quedan {quantity})",
 
   "forms.register.title": "Registrarse",
   "forms.register.successBtn": "Registrarse",
@@ -393,11 +410,16 @@
   "forms.login.forgotLink": "Contraseña olvidada?",
   "forms.login.registerLink": "No tienes una cuenta? Regístrate",
 
-  "forms.forgotPassword.title": "Contraseña olvidada",
-  "forms.forgotPassword.subtitle": "Cambia tu contraseña",                               
+  "forms.forgotPassword.title": "Contraseña olvidada",                            
   "forms.forgotPassword.description": "Introduce tu dirección de correo y te enviaremos un correo con un link para poner tu nueva contraseña.",
   "forms.forgotPassword.successBtn": "Enviar correo",
   "forms.forgotPassword.loginLink": "Volver a inicio de sesión",
+
+  "forms.activation.title": "Link de activación de cuenta",
+
+  "forms.updatePassword.title": "Cambia tu contraseña",
+  "forms.updatePassword.description": "Introduce tu dirección de correo y te enviaremos un correo con un link para poner tu nueva contraseña.",
+  "forms.updatePassword.successBtn": "Enviar correo",
 
   "forms.confirmNewEmail.title": "Enlace de confirmación de nuevo correo",
   "forms.confirmNewEmail.description": "Pulsa el botón de confirmación para actualizar y activar tu nuevo correo.",
@@ -421,6 +443,8 @@
   "forms.resendActivation.received": "No recibiste el correo?",
   "forms.resendActivation.resendTime": "Reenviar en {timeLeft} segundo/s",
   "forms.resendActivation.resendNow": "Reenviar ahora",
+
+  "forms.contact.description": "Rellena el formulario y te responderemos tan pronto como sea posible. También puedes enviarnos un correo a {email}",
 
   "forms.createProduct.title": "Crear nuevo producto",
   "forms.createProduct.successBtn": "Crear",
@@ -448,7 +472,6 @@
   "forms.updateDiscount.successBtn": "Actualizar",
   
   "forms.sendFailedOrderEmail.title": "Enviar correo fallido de un pedido",
-  "forms.sendFailedOrderEmail.successBtn": "Enviado",
 
   "forms.createFailedOrder.title": "Crear pedido fallido",
   "forms.createFailedOrder.successBtn": "Crear",
@@ -456,11 +479,8 @@
   "forms.createFailedOrderProduct.title": "Añadir producto del pedido",
   "forms.createFailedOrderProduct.successBtn": "Añadir producto del pedido",
 
-  "forms.selectInventory.label": "Tipo",
-  "forms.selectInventory.content": "{name} (quedan {quantity})",
-
   "forms.errors.default": "Campo inválido",
-  "forms.errors.required": "Camp requerido",
+  "forms.errors.required": "Campo requerido",
   "forms.errors.minString": "Este campo tiene que contener como mínimo {min} carácteres",
   "forms.errors.maxString": "Este campo tiene que contener como mucho {max} carácteres",
   "forms.errors.email": "Formato de correo inválido",
@@ -487,5 +507,6 @@
   "dialogs.cookies.acceptBtn": "Aceptar todas las cookies",
   "dialogs.cookies.refuseBtn": "Rechazar cookies no necesarias",
 
-  "ES": "España"
+  "ES": "España",
+  "es": "España"
 }

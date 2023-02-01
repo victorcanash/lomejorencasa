@@ -1,15 +1,12 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-
 import { FormFieldTypes } from '@core/constants/forms';
 
-import { pages } from '@lib/constants/navigation';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
 
-const ForgotPswForm = () => {
+const UpdatePswForm = () => {
   const { user } = useAuthContext();
 
   const { sendEmailFormValidation, userFieldsInitValues } = useForms();
@@ -28,19 +25,17 @@ const ForgotPswForm = () => {
       enableReinitialize={true}
       formFieldGroups={[
         {
-          avatarIcon: <LockOutlinedIcon />,
           titleTxt: {
-            id: 'forms.forgotPassword.title',
+            id: 'forms.updatePassword.title',
           },
           descriptionTxt: {
-            id: 'forms.forgotPassword.description',
+            id: 'forms.updatePassword.description',
           },
           formFields: [
             {
               name: 'email',
               type: FormFieldTypes.text,
               required: true,
-              autoFocus: true,
             }
           ],
         }
@@ -48,23 +43,15 @@ const ForgotPswForm = () => {
       formButtons={{
         submit: {
           text: {
-            id: 'forms.forgotPassword.successBtn',
+            id: 'forms.updatePassword.successBtn',
           },
           onSubmit: handleSubmit,
         },
       } as FormButtonsNormal}
       successMsg={successMsg}
       errorMsg={errorMsg}
-      linksItems={[
-        {
-          text: {
-            id: 'forms.forgotPassword.loginLink',
-          },
-          path: pages.login.path,
-        }
-      ]}
     />
   );
 };
 
-export default ForgotPswForm;
+export default UpdatePswForm;

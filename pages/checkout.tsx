@@ -5,12 +5,13 @@ import { useIntl } from 'react-intl';
 
 import { PageTypes } from '@core/constants/navigation';
 import { CheckoutSections } from '@core/constants/checkout';
+
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import Stepper from '@components/ui/Stepper';
 import CheckoutAddressesSection from '@components/checkout/sections/CheckoutAddressesSection';
 import CheckoutPaymentSection from '@components/checkout/sections/CheckoutPaymentSection';
-import CheckoutConfirmationSection from '@components/checkout/sections/CheckoutConfirmationSection';
+import CheckoutConfirmSection from '@components/checkout/sections/CheckoutConfirmSection';
 
 const Checkout: NextPage = () => {
   const page = usePage();
@@ -54,6 +55,7 @@ const Checkout: NextPage = () => {
         steps={Object.values(CheckoutSections).map((section) => {
           return intl.formatMessage({ id: `checkout.sections.${section}` });
         })}
+        mb={4}
       />
 
       { currentCheckoutSection() == CheckoutSections.address &&
@@ -69,8 +71,8 @@ const Checkout: NextPage = () => {
           setTransactionError={setTransactionError}
         />
       }
-      { currentCheckoutSection() == CheckoutSections.confirmation &&
-        <CheckoutConfirmationSection
+      { currentCheckoutSection() == CheckoutSections.confirm &&
+        <CheckoutConfirmSection
           back={prevStep}
           setTransactionError={setTransactionError}
         />

@@ -17,9 +17,9 @@ import type { UploadFile } from '@core/types/upload';
 
 import { pages } from '@lib/constants/navigation';
 import useProducts from '@lib/hooks/useProducts';
-import ManageProductForm from '@components/forms/products/ManageProductForm';
-import ManagePInventoryForm from '@components/forms/products/ManagePInventoryForm';
-import ManagePDiscountForm from '@components/forms/products/ManagePDiscountForm';
+import ManageProductForm from '@components/forms/admin/ManageProductForm';
+import ManagePInventoryForm from '@components/forms/admin/ManagePInventoryForm';
+import ManagePDiscountForm from '@components/forms/admin/ManagePDiscountForm';
 import ProductDetail from '@components/admin/details/ProductDetail';
 import InventoriesDetail from '@components/admin/details/InventoriesDetail';
 import DiscountsDetail from '@components/admin/details/DiscountsDetail';

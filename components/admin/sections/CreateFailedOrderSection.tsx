@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import type { Order } from '@core/types/orders';
 
-import CreateFailedOrderForm from '@components/forms/orders/CreateFailedOrderForm';
+import CreateFailedOrderForm from '@components/forms/admin/CreateFailedOrderForm';
 import OrderDetail from '@components/orders/OrderDetail';
 
 const CreateFailedOrderSection = () => {

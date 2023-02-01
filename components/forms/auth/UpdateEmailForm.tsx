@@ -1,122 +1,59 @@
-import { Formik, Form } from 'formik';
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormFieldTypes } from '@core/constants/forms';
+import type { AuthUpdateEmail } from '@core/types/auth';
 
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Alert from '@mui/material/Alert';
-
-import { AuthUpdateEmail } from '@core/types/auth';
-import useAuth from '@lib/hooks/useAuth';
+import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
+import useAuth from '@lib/hooks/useAuth';
+import BaseForm from '@components/forms/BaseForm';
 
 const UpdateEmailForm = () => {
-  const intl = useIntl();
-
-  const { sendUpdateEmail, errorMsg, successMsg } = useAuth();
   const { updateEmailFormValidation, userFieldsInitValues } = useForms();
+  const { sendUpdateEmail, errorMsg, successMsg } = useAuth();
 
   const handleSubmit = async (values: AuthUpdateEmail) => {
     sendUpdateEmail(values);
   };
 
   return (
-    <Container maxWidth="xs">
-
-      <Divider sx={{ my: 3 }} />
-      
-      <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-
-        <Typography component="h3" variant="h1">
-          <FormattedMessage 
-            id="forms.updateEmail.title" 
-          />
-        </Typography>
-
-        <Formik
-          initialValues={{
-            password: userFieldsInitValues.password,
-            newEmail: userFieldsInitValues.email,
-          } as AuthUpdateEmail}
-          validationSchema={updateEmailFormValidation}
-          onSubmit={handleSubmit}
-        >
-          {props => (
-            <Form>
-
-              <Typography component="h4" variant="body1" mt={1}>
-                <FormattedMessage 
-                  id="forms.updateEmail.description" 
-                />
-              </Typography>
-
-              {/* Password Field */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="password1"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                label={intl.formatMessage({ id: "forms.password" })}
-                value={props.values.password}
-                onChange={props.handleChange}
-                error={props.touched.password && Boolean(props.errors.password)}
-                helperText={props.touched.password && props.errors.password}
-              />
-
-              {/* NewEmail Field */}
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="newEmail"
-                name="newEmail"
-                autoComplete="email"
-                label={intl.formatMessage({ id: "forms.newEmail" })}  
-                value={props.values.newEmail}
-                onChange={props.handleChange}
-                error={props.touched.newEmail && Boolean(props.errors.newEmail)}
-                helperText={props.touched.newEmail && props.errors.newEmail}
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                <FormattedMessage 
-                  id="forms.updateEmail.successBtn" 
-                />
-              </Button>
-
-              {
-                errorMsg && errorMsg !== '' &&
-                  <Alert severity="error">{ errorMsg }</Alert>
-              }  
-              {
-                successMsg && successMsg !== '' &&
-                  <Alert>{ successMsg }</Alert>
-              }         
-
-            </Form>
-          )}
-        </Formik>
-
-      </Box>
-
-    </Container>
+    <BaseForm
+      initialValues={{
+        password: userFieldsInitValues.password,
+        newEmail: userFieldsInitValues.email,
+      } as AuthUpdateEmail}
+      validationSchema={updateEmailFormValidation}
+      formFieldGroups={[
+        {
+          titleTxt: {
+            id: 'forms.updateEmail.title',
+          },
+          descriptionTxt: {
+            id: 'forms.updateEmail.description',
+          },
+          formFields: [
+            {
+              name: 'password',
+              type: FormFieldTypes.password,
+              required: true,
+            },
+            {
+              name: 'newEmail',
+              type: FormFieldTypes.text,
+              required: true,
+            }
+          ],
+        }
+      ]}
+      formButtons={{
+        submit: {
+          text: {
+            id: 'forms.updateEmail.successBtn',
+          },
+          onSubmit: handleSubmit,
+        },
+      } as FormButtonsNormal}
+      successMsg={successMsg}
+      errorMsg={errorMsg}
+    />
   );
 };
 
