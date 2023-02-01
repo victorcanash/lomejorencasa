@@ -121,7 +121,7 @@ const OldNavBar = () => {
               ))}
             </Box>*/}
 
-            <Container maxWidth='xs'>
+            <Container maxWidth='xs' disableGutters>
               <SearchBar />
             </Container>
 

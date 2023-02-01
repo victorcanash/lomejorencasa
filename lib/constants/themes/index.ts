@@ -19,11 +19,6 @@ export const themeOptions: ThemeOptions = {
     },
   },
   components: {
-    MuiContainer: {
-      defaultProps: {
-        disableGutters: true,
-      },
-    },
     MuiButton: {
       styleOverrides: {
         root: {
