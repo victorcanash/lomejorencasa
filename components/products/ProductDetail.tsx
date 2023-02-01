@@ -65,7 +65,12 @@ const ProductDetail = (props: ProductDetailProps) => {
           md={6}
           className='animate__animated animate__fadeInLeft'
         >
-          <Box className='centered-container-img'>
+          <Box
+            sx={{
+              maxWidth: '540px', 
+              m: 'auto',
+            }}  
+          >
               <Carousel 
                 imgSources={getAllProductImgsUrl(product)} 
               />
