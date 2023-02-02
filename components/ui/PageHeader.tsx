@@ -2,6 +2,8 @@ import Head from 'next/head';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
@@ -13,6 +15,7 @@ type PageHeaderProps = {
     titleId: string,
     descriptionId: string,
   },
+  marginTop?: boolean,
   texts?: {
     titleId?: string,
     titleAdd?: string,
@@ -23,6 +26,7 @@ const PageHeader = (props: PageHeaderProps) => {
   const {
     pageType,
     metas,
+    marginTop,
     texts,
   } = props;
 
@@ -38,15 +42,20 @@ const PageHeader = (props: PageHeaderProps) => {
         <meta name="description" content={description} />
       </Head>
 
-      { pageType == PageTypes.main &&
+      { (pageType == PageTypes.main || pageType == PageTypes.admin) &&
         <>
+          { marginTop &&
+            <Box sx={{height: '16px'}} />
+          }
           { texts?.titleId &&
             <>
-              <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
-                <FormattedMessage id={texts.titleId} defaultMessage={texts.titleId} />{texts.titleAdd}
-              </Typography>
+              <Container>
+                <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
+                  <FormattedMessage id={texts.titleId} defaultMessage={texts.titleId} />{texts.titleAdd}
+                </Typography>
 
-              <Divider sx={{ mt: 1, mb: 3 }} />
+                <Divider sx={{ mt: 1, mb: 3 }} />
+              </Container>
             </>
           }
         </>
