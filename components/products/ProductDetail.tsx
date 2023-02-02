@@ -16,6 +16,7 @@ import { everfreshProductId, bagProductId } from '@lib/constants/products';
 import { getAllProductImgsUrl } from '@lib/utils/products';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
+import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import Carousel from '@components/ui/Carousel';
 import EverfreshDetail from '@components/products/everfresh/EverfreshDetail';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
@@ -28,11 +29,12 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
   const { addCartItem } = useCart();
-  const { Select, selectedInventory, loaded } = useSelectInventory(product);
+  const { Select: SelectInventory, selectedInventory, loaded: selectInventoryLoaded } = useSelectInventory(product);
+  const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
   const onClickAddCartBtn = () => {
     if (selectedInventory) {
-      addCartItem(selectedInventory);
+      addCartItem(selectedInventory, selectedQuantity);
     }
   };
 
@@ -78,7 +80,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           </Box>
         </Grid>
 
-        {/* Texts */}
+        {/* Content */}
         <Grid 
           item 
           xs={12}
@@ -121,7 +123,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </Typography>
               </Box>
             }
-            <Typography component="h2" variant="body1" sx={{ mb: 3 }}>
+            <Typography component="h2" variant="body1" sx={{ mb: 2 }}>
               {
                 (everfreshProduct() || bagProduct()) && <FormattedMessage id="everfresh.description" />
               }
@@ -129,28 +131,36 @@ const ProductDetail = (props: ProductDetailProps) => {
                 otherProduct() && `${product.description.current}`
               }
             </Typography>
-            { loaded &&
-              <FormControl 
-                sx={{ mb: 3 }} 
-                className='animate__animated animate__fadeIn'
-              >
-                <Select />
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={onClickAddCartBtn}
-                  disabled={!selectedInventory || selectedInventory.bigbuy.quantity == 0}
-                  sx={{ mt: 1 }}
+            { selectInventoryLoaded &&
+              <>
+                <FormControl 
+                  sx={{ mb: 2 }} 
+                  className='animate__animated animate__fadeIn'
                 >
-                  <FormattedMessage id="productDetail.addCartBtn" />
-                </Button>
-              </FormControl>
+                  <SelectInventory />
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={onClickAddCartBtn}
+                    disabled={!selectedInventory || selectedInventory.bigbuy.quantity == 0}
+                    sx={{ mt: 1 }}
+                  >
+                    <FormattedMessage id="productDetail.addCartBtn" />
+                  </Button>
+                </FormControl>
+                <FormControl 
+                  sx={{ mb: 2 }} 
+                  className='animate__animated animate__fadeIn'
+                >
+                  <SelectQuantity />
+                </FormControl>
+              </>
             }
-            <Typography component="div" variant="body1" sx={{ mb: 3 }}>
-              {
-                (everfreshProduct() || bagProduct()) && <FormattedMessage id="everfresh.comment" />
-              }
-            </Typography>
+            { (everfreshProduct() || bagProduct()) &&
+              <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+                <FormattedMessage id="everfresh.comment" />
+              </Typography>
+            }
             { everfreshProduct() && 
               <LinkButton href={pages.bags.path}>
                 <FormattedMessage 

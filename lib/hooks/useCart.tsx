@@ -22,13 +22,13 @@ const useCart = () => {
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
-  const addCartItem = (inventory: ProductInventory) => {
+  const addCartItem = (inventory: ProductInventory, quantity: number) => {
     if (!isLogged() || !cart) {
       router.push(pages.login.path);
       return;
     };
 
-    if (totalQuantity + 1 > maxQuantity) {
+    if (totalQuantity + quantity > maxQuantity) {
       onMaxCartQuantityError();
       return;
     }
@@ -40,7 +40,7 @@ const useCart = () => {
       cartId: cart.id,
       inventoryId: inventory.id,
       inventory: inventory,
-      quantity: 1
+      quantity: quantity,
     } as CartItem;
 
     let cartItemIndex = -1;
@@ -48,7 +48,7 @@ const useCart = () => {
       if (item.inventoryId === inventory.id) {
         cartItemIndex = index;
         cartItem.id = item.id;
-        cartItem.quantity = item.quantity + 1;
+        cartItem.quantity += item.quantity;
         return;
       };
     });
@@ -58,7 +58,7 @@ const useCart = () => {
       manageCartItem(ManageActions.update, token, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
-          onAddCartItemSuccess(inventory.realPrice);
+          onAddCartItemSuccess(quantity, inventory.realPrice);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
@@ -69,15 +69,15 @@ const useCart = () => {
         .then((response: { cartItem: CartItem }) => {
           cartItem.id = response.cartItem.id;
           cart.items.push(cartItem);
-          onAddCartItemSuccess(inventory.realPrice);
+          onAddCartItemSuccess(quantity, inventory.realPrice);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
     };
   };
 
-  const onAddCartItemSuccess = (itemPrice: number) => {
-    setTotalQuantity(totalQuantity + 1);
+  const onAddCartItemSuccess = (quantity: number, itemPrice: number) => {
+    setTotalQuantity(totalQuantity + quantity);
     setTotalPrice(totalPrice + itemPrice);
     setLoading(false);
     enqueueSnackbar(
