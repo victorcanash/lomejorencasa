@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Accordion from '@mui/material/Accordion';
@@ -38,7 +39,7 @@ const Faq: NextPage = () => {
             </Typography>
             { questions[i].path &&
               <Box sx={{ mt: 2 }}>
-                <Link href={questions[i].path || pages.home.path}>
+                <Link href={questions[i].path || pages.home.path} variant="body1">
                   <FormattedMessage id="faq.link" />
                 </Link>
               </Box>
@@ -58,14 +59,15 @@ const Faq: NextPage = () => {
           titleId: 'faq.metas.title',
           descriptionId: 'faq.metas.description',
         }}
+        marginTop={true}
         texts={{
           titleId: 'faq.h1',
         }}
       />
       
-      <div>
+      <Container>
         { questionElements() }
-      </div>
+      </Container>
     </>
   );
 };
