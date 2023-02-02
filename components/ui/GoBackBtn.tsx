@@ -24,4 +24,5 @@ const GoBackBtn = (props: ButtonProps & GoBackBtnProps) => {
     </Button>
   );
 };
+
 export default GoBackBtn;

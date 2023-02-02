@@ -1,44 +1,45 @@
-import { useMemo } from 'react';
 import Image from 'next/image';
 
 import { useIntl } from 'react-intl';
 
-import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { rangeChangeItemQuantity } from '@core/constants/cart';
 import type { CartItem } from '@core/types/cart';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import { everfreshProductId, bagProductId } from '@lib/constants/products';
 import { getProductImgUrl } from '@lib/utils/products';
+import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 
 type CartItemDetailProps = {
   item: CartItem,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
+  priorityImg?: boolean,
 };
 
 const CartItemDetail = (props: CartItemDetailProps) => {
-  const { item, updateQuantity } = props;
+  const { item, updateQuantity, priorityImg } = props;
 
   const intl = useIntl();
+
+  const { Select: SelectQuantity } = useSelectInventoryQuantity(
+    item,
+    // On change
+    (quantity: number) => {
+      if (updateQuantity) {
+        updateQuantity(item, quantity);
+      }
+    }
+  );
 
   const handleRemoveItem = () => {
     if (updateQuantity) {
       updateQuantity(item, 0, true);
-    }
-  };
-
-  const handleSelectQuantity = (event: SelectChangeEvent) => {
-    if (updateQuantity) {
-      const quantity = parseInt(event.target.value);
-      updateQuantity(item, quantity);
     }
   };
 
@@ -50,71 +51,32 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       href = `${pages.bags.path}`;
     }
     return href;
-  }
-
-  const menuItems = useMemo(() => {
-    const menuItems = [] as JSX.Element[];
-    const menuItemsValues = [] as number[];
-    const bigbuyQuantity = item.inventory.bigbuy.quantity;
-    let maxBigbuyQuantity = item.quantity + rangeChangeItemQuantity;
-    if (maxBigbuyQuantity > bigbuyQuantity) {
-      maxBigbuyQuantity = bigbuyQuantity;
-    }
-    let minBigbuyQuantity = item.quantity - rangeChangeItemQuantity;
-    if (minBigbuyQuantity < 0) {
-      minBigbuyQuantity = 0;
-    }
-
-    if (item.quantity == 0) {
-      menuItemsValues.push(0);
-    }
-    if (bigbuyQuantity > 0) {
-      if (minBigbuyQuantity > 2) {
-        menuItemsValues.push(1);
-        menuItemsValues.push(2);
-      }
-      for (let i = minBigbuyQuantity; i < maxBigbuyQuantity; i++) {
-        menuItemsValues.push(i + 1);
-      }
-    } else if (item.quantity != 0){
-      menuItemsValues.push(item.quantity);
-    }
-
-    for (let i = 0; i < menuItemsValues.length; i++) {
-      menuItems.push(
-        <MenuItem key={menuItemsValues[i]} value={menuItemsValues[i]}>
-          {menuItemsValues[i]}
-        </MenuItem>
-      );
-    }
-    return menuItems;
-  }, [item.inventory.bigbuy.quantity, item.quantity]);
+  };
 
   return (
     <>
       <Grid container spacing={2}>
 
-        <Grid item>
+        <Grid item xs={4} sm={3} md={2}>
           <Link href={itemHref()} noLinkStyle>
-            <div style={{ position: 'relative', minWidth: '100px' }}>
+            <div>
               <Image
                 src={getProductImgUrl(item.inventory.product)}
                 alt="Product image"
-                width="500"
-                height="500"
                 layout="responsive"
                 objectFit="cover"
-                style={{ borderRadius: '4px' }}
+                style={{ borderRadius: '10px' }}
+                priority={priorityImg}
               />
             </div>
           </Link>
         </Grid>
 
-        <Grid item xs={12} sm container>
+        <Grid item xs={8} sm={9} md={10} container>
 
           <Grid item xs container direction="column" spacing={2}>
 
-            <Grid item xs style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
+            <Grid item xs sx={item.quantity <= 0 ? { color: 'grey' } : undefined}>
               <Typography gutterBottom component="div" variant="body1">
                 {item.inventory.product.name.current}
               </Typography>
@@ -130,14 +92,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
             { updateQuantity &&
               <Grid item>
-                <Select
-                  id="quantity-select"
-                  value={item.quantity.toString()}
-                  onChange={handleSelectQuantity}
-                  disabled={item.inventory.bigbuy.quantity <= 0}
-                >
-                  {menuItems}
-                </Select>
+                <SelectQuantity />
 
                 <Tooltip 
                   title={intl.formatMessage({ id: 'app.deleteBtn' })} 
@@ -151,7 +106,14 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 </Tooltip>
 
                 { item.quantity <= 0 &&
-                  <Typography variant="body2" style={item.inventory.bigbuy.quantity <= 0 ? {color: 'grey'} : undefined}>
+                  <Typography 
+                    variant="body2" 
+                    sx={
+                      item.inventory.bigbuy.quantity <= 0 ? 
+                        { color: 'grey' } : 
+                        undefined
+                    }
+                  >
                     { item.inventory.bigbuy.quantity <= 0 ? 
                       intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
                       intl.formatMessage({ id: 'cart.inventoryAvailable' })
@@ -164,8 +126,16 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           </Grid>
 
           <Grid item>
-            <Typography component="div" variant="body1" style={item.quantity <= 0 ? {color: 'grey'} : undefined}>
-              {(item.inventory.realPrice * item.quantity).toFixed(2)} €
+            <Typography 
+              component="div" 
+              variant="body1" 
+              sx={
+                item.inventory.bigbuy.quantity <= 0 ? 
+                  { color: 'grey', fontWeight: 500 } : 
+                  { fontWeight: 500 }
+              }
+            >
+              {`${(item.inventory.realPrice * item.quantity).toFixed(2)} €`}
             </Typography>
           </Grid>
 

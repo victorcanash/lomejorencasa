@@ -80,9 +80,16 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     }
   };
 
+  const emptyCart = () => {
+    if (cart && cart.items && cart.items.length > 0) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
-      { user && cart && user.billing && user.shipping &&
+      { user?.billing && user?.shipping && cart &&
         <>
           <BaseForm
             maxWidth="800px"
@@ -148,9 +155,11 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                           id="checkout.order" 
                         />
                       </Typography>
-                      { cart && cart.items && cart.items.length > 0 && totalPrice > 0 ?
+                      { !emptyCart() ?
                         <>
                           <CartDetail
+                            cart={cart}
+                            totalPrice={totalPrice}
                             showEmptyItems={false}
                           />  
                         </>
