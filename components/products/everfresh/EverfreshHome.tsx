@@ -143,7 +143,7 @@ const EverfreshHome = () => {
               loop
               centeredSlides
               autoplay={{
-                delay: 6000,
+                delay: 5000,
                 disableOnInteraction: false,
               }}
             >
@@ -197,6 +197,9 @@ const EverfreshHome = () => {
                           sx={{
                             backgroundColor: '#6f9c7d',
                             color: 'white',
+                            '&:hover': {
+                              backgroundColor: '#a0d2af',
+                            },
                           }}
                         >
                           <FormattedMessage id="home.buyBtn" />
