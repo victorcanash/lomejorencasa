@@ -2,9 +2,10 @@ import { FormattedMessage } from 'react-intl';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import Link from '@core/components/Link';
 import { pages } from '@lib/constants/navigation';
@@ -14,42 +15,42 @@ const EverfreshDetail = () => {
     const items = [] as JSX.Element[];
     for (let i = 0; i < itemsCount; i++) {
       items.push(   
-        <ListItem key={i} sx={{"&:hover": {backgroundColor: "transparent", }}}>
-          <ListItemText 
-            primary={
-              (textId == 'productDetail.shipping' && i == itemsCount -1) ?
-                <Link href={pages.orderList.path} variant="body1" key={i}>
-                  <FormattedMessage id={`${textId}.${i + 1}`} />
-                </Link>
-                :
-                <Typography component="div" variant="body1" key={i}>
-                  <FormattedMessage id={`${textId}.${i + 1}`} />
-                </Typography>
-            } 
-          />
-        </ListItem>
+        <AccordionDetails key={i}>
+          <Typography component="div" variant="body1">
+            <FormattedMessage id={`${textId}.${i + 1}`} />
+          </Typography>       
+        </AccordionDetails>
       );
+      if (textId == 'productDetail.shipping' && i == itemsCount -1) {
+        items.push(
+          <AccordionDetails key={`${i}.link`}>
+            <Link href={pages.orderList.path} variant="body1">
+              <FormattedMessage id={`${textId}.${i + 1}.link`} />
+            </Link>
+          </AccordionDetails>
+        );
+      }  
     }
     return (
-      <>
-        <Typography component="div" variant="h1">
-          <FormattedMessage id={`${textId}.title`} />
-        </Typography>
-        <List>
-          { items }
-        </List>
-      </>
+      <Accordion key={textId}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+        >
+          <Typography component="div" variant="body1">
+            <FormattedMessage id={`${textId}.title`} />
+          </Typography>
+        </AccordionSummary>
+        { items }
+      </Accordion>
     );
   };
 
   return (
     <>
-      {/* Everfresh Details & Charasteristics Section */}
       <Grid
         container
-        spacing={3}
         className='animate__animated animate__fadeIn'
-        mb={3}
+        spacing={1}
       >
         {/* Everfresh Details */}
         <Grid 
@@ -68,15 +69,7 @@ const EverfreshDetail = () => {
         >
           { list('everfresh.characteristics', 4) }
         </Grid>
-      </Grid>
-      
-      {/* Shipping & Everfresh Dimensions Section */}
-      <Grid
-        container
-        spacing={3}
-        className='animate__animated animate__fadeIn'
-        mb={3}
-      >
+
         {/* Shipping Section  */}
         <Grid 
           item 

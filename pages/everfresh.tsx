@@ -19,6 +19,7 @@ const Everfresh: NextPage<EverfreshProps> = (props) => {
           titleId: 'everfresh.metas.title',
           descriptionId: 'everfresh.metas.description',
         }}
+        marginTop={true}
       />
 
       <ProductDetail product={product} />

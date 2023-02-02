@@ -19,6 +19,7 @@ const Bags: NextPage<BagProps> = (props) => {
           titleId: 'bags.metas.title',
           descriptionId: 'bags.metas.description',
         }}
+        marginTop={true}
       />
 
       <ProductDetail product={product} />

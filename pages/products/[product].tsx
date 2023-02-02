@@ -19,6 +19,7 @@ const Product: NextPage<ProductProps> = (props) => {
           titleId: product.name.current,
           descriptionId: 'productDetail.metas.description',
         }}
+        marginTop={true}
       />
 
       <ProductDetail product={product} />

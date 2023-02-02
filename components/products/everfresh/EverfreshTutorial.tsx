@@ -17,29 +17,33 @@ type EverfreshTutorialProps = {
 const EverfreshTutorial = (props: EverfreshTutorialProps) => {
   const { textId, source } = props;
 
+  const maxWidth = '800px';
+
   return (
     <Grid
       container
-      spacing={3}
       className='animate__animated animate__fadeIn'
-      mb={3}
+      mb={2}
     >
       <Grid 
         item 
         xs={12}
       >
         <Box 
-          className="centered-container-img"
-          sx={{ textAlign: 'center' }}
+          sx={{ 
+            maxWidth: maxWidth, 
+            margin: 'auto',
+            textAlign: 'center',
+          }}
         >
           <Typography component="div" variant="body1" sx={{ mb: 3 }}>
             <FormattedMessage id={textId} />
           </Typography>
         </Box>
         <Box 
-          className='centered-container-img'
           sx={{ 
-            mb: 3,
+            maxWidth: maxWidth, 
+            margin: 'auto',
           }}
         >
           { source.type == 'video' ?
@@ -51,7 +55,7 @@ const EverfreshTutorial = (props: EverfreshTutorialProps) => {
                 position: 'relative',
                 width: '100%', 
                 height: '100%',
-                borderRadius: '4px',
+                borderRadius: '10px',
               }}
             >
               <source src={source.src as string} />
@@ -64,7 +68,7 @@ const EverfreshTutorial = (props: EverfreshTutorialProps) => {
               quality={100}
               layout="responsive" 
               objectFit="cover"
-              style={{ borderRadius: '4px' }}
+              style={{ borderRadius: '10px' }}
             />
           }
         </Box>

@@ -48,6 +48,8 @@ const ProductDetail = (props: ProductDetailProps) => {
     return everfreshProductId !== product.id && bagProductId !== product.id;
   };
 
+  const maxWidthCarousel = '540px';
+
   return (
     <Container>
 
@@ -55,7 +57,6 @@ const ProductDetail = (props: ProductDetailProps) => {
       <Grid
         container
         spacing={3}
-        mt={1}
       >
 
         {/* Images */}
@@ -67,13 +68,13 @@ const ProductDetail = (props: ProductDetailProps) => {
         >
           <Box
             sx={{
-              maxWidth: '540px', 
+              maxWidth: maxWidthCarousel, 
               m: 'auto',
             }}  
           >
-              <Carousel 
-                imgSources={getAllProductImgsUrl(product)} 
-              />
+            <Carousel 
+              imgSources={getAllProductImgsUrl(product)} 
+            />
           </Box>
         </Grid>
 
@@ -84,7 +85,12 @@ const ProductDetail = (props: ProductDetailProps) => {
           md={6}
           className='animate__animated animate__fadeIn'
         >
-          <Box className="centered-container-img">
+          <Box
+            sx={{
+              maxWidth: maxWidthCarousel, 
+              m: 'auto',
+            }}  
+          >
             <Typography component={"h1"} variant={"h1"} sx={{ mb: 2 }}>
               {
                 everfreshProduct() && <FormattedMessage id="everfresh.h1" />
@@ -164,14 +170,15 @@ const ProductDetail = (props: ProductDetailProps) => {
 
       </Grid>
 
-      <Divider sx={{ mt: 6, mb: 5 }}/>
 
       {/* Everfesh Product Section */}
       { (everfreshProduct() || bagProduct()) &&
         <>
+          <Divider sx={{ mt: 5, mb: 5 }}/>
+
           <EverfreshDetail />
 
-          <Divider sx={{ mt: 3, mb: 5 }}/>
+          <Divider sx={{ mt: 5, mb: 5 }}/>
           
           <EverfreshTutorial 
             textId="everfresh.videoComment.1" 
