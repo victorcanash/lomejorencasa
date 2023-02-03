@@ -13,7 +13,7 @@ import type { OrderItem } from '@core/types/orders';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
-import { everfreshProductId, bagProductId } from '@lib/constants/products';
+import { everfreshProductId, bagsProductId } from '@lib/constants/products';
 import { getProductImgUrl } from '@lib/utils/products';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import placeholder from 'public/images/placeholder.jpeg';
@@ -49,7 +49,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     let href = `${pages.productDetail.path}/${item.inventory?.product.name.current}?id=${item.inventory?.product.id}`;
     if (item.inventory?.product.id === everfreshProductId) {
       href = `${pages.everfresh.path}`;
-    } else if (item.inventory?.product.id === bagProductId) {
+    } else if (item.inventory?.product.id === bagsProductId) {
       href = `${pages.bags.path}`;
     }
     return href;

@@ -2,7 +2,7 @@ import Grid from '@mui/material/Grid';
 
 import ProductAccordion from '@components/products/ProductAccordion';
 
-const EverfreshDetail = () => {
+const BagsDetail = () => {
 
   return (
     <>
@@ -17,8 +17,8 @@ const EverfreshDetail = () => {
           sm={6}
         >
           <ProductAccordion
-            textId={'everfresh.details'}
-            itemsCount={6}
+            textId={'bags.small'}
+            itemsCount={1}
           />
         </Grid>
         <Grid 
@@ -27,8 +27,8 @@ const EverfreshDetail = () => {
           sm={6}
         >
           <ProductAccordion
-            textId={'everfresh.characteristics'}
-            itemsCount={4}
+            textId={'bags.medium'}
+            itemsCount={1}
           />
         </Grid>
         <Grid 
@@ -37,8 +37,8 @@ const EverfreshDetail = () => {
           sm={6}
         >
           <ProductAccordion
-            textId={'everfresh.dimensions'}
-            itemsCount={2}
+            textId={'bags.big'}
+            itemsCount={1}
           />
         </Grid>
         <Grid 
@@ -56,4 +56,4 @@ const EverfreshDetail = () => {
   );
 };
 
-export default EverfreshDetail;
+export default BagsDetail;

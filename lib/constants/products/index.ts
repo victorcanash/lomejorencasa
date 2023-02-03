@@ -5,4 +5,4 @@ export const orderRemainsSearch = false;
 export const categoriesIds = [];
 
 export const everfreshProductId = 2;
-export const bagProductId = 5;
+export const bagsProductId = 5;

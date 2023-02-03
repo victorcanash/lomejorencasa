@@ -1,4 +1,6 @@
-import { FormattedMessage } from 'react-intl';
+import { Fragment } from 'react';
+
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -12,7 +14,7 @@ import type { Product } from '@core/types/products';
 import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
-import { everfreshProductId, bagProductId } from '@lib/constants/products';
+import { everfreshProductId, bagsProductId } from '@lib/constants/products';
 import { getAllProductImgsUrl } from '@lib/utils/products';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
@@ -20,6 +22,7 @@ import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import Carousel from '@components/ui/Carousel';
 import EverfreshDetail from '@components/products/everfresh/EverfreshDetail';
 import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
+import BagsDetail from '@components/products/bags/BagsDetail';
 
 type ProductDetailProps = {
   product: Product,
@@ -27,6 +30,8 @@ type ProductDetailProps = {
 
 const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
+
+  const intl = useIntl();
 
   const { addCartItem } = useCart();
   const { Select: SelectInventory, selectedInventory, loaded: selectInventoryLoaded } = useSelectInventory(product);
@@ -42,12 +47,12 @@ const ProductDetail = (props: ProductDetailProps) => {
     return everfreshProductId === product.id;
   };
 
-  const bagProduct = () => {
-    return bagProductId === product.id;
+  const bagsProduct = () => {
+    return bagsProductId === product.id;
   };
 
   const otherProduct = () => {
-    return everfreshProductId !== product.id && bagProductId !== product.id;
+    return everfreshProductId !== product.id && bagsProductId !== product.id;
   };
 
   const maxWidthCarousel = '540px';
@@ -94,14 +99,14 @@ const ProductDetail = (props: ProductDetailProps) => {
             }}  
           >
             <Typography component={"h1"} variant={"h1"} sx={{ mb: 2 }}>
-              {
-                everfreshProduct() && <FormattedMessage id="everfresh.h1" />
+              { everfreshProduct() && 
+                <FormattedMessage id="everfresh.h1" />
               }
-              {
-                bagProduct() && <FormattedMessage id="bags.h1" />
+              { bagsProduct() && 
+                <FormattedMessage id="bags.h1" />
               }
-              {
-                otherProduct() && `${product.name.current}`
+              { otherProduct() && 
+                `${product.name.current}`
               }
             </Typography>    
             { product.activeDiscount ?
@@ -124,11 +129,14 @@ const ProductDetail = (props: ProductDetailProps) => {
               </Box>
             }
             <Typography component="h2" variant="body1" sx={{ mb: 2 }}>
-              {
-                (everfreshProduct() || bagProduct()) && <FormattedMessage id="everfresh.description" />
+              { everfreshProduct() &&
+                <FormattedMessage id="everfresh.description" />
               }
-              {
-                otherProduct() && `${product.description.current}`
+              { bagsProduct() &&
+                <FormattedMessage id="bags.description" />
+              }
+              { otherProduct() &&
+                `${product.description.current}`
               }
             </Typography>
             { selectInventoryLoaded &&
@@ -156,10 +164,27 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </FormControl>
               </>
             }
-            { (everfreshProduct() || bagProduct()) &&
+            { everfreshProduct() &&
               <Typography component="div" variant="body1" sx={{ mb: 2 }}>
                 <FormattedMessage id="everfresh.comment" />
               </Typography>
+            }
+            { bagsProduct() &&
+              <Box mb={2}>
+                <Typography component="div" variant="body1" sx={{ mb: 1, fontWeight: 500 }}>
+                  <FormattedMessage id="bags.types.title" />
+                </Typography>
+                { [1,2,3,4,5,6].map((_item, index) => (
+                  <Fragment key={index}>
+                    <Typography component="div" variant="body1" sx={{ mb: 1, marginInlineStart: '15px' }}>
+                      <Box sx={{ fontWeight: 500, display: 'inline-block' }}>
+                        {`${intl.formatMessage({ id: `bags.types.${index + 1}.title` })}:`}
+                      </Box>
+                      {` ${intl.formatMessage({ id: `bags.types.${index + 1}.content` })}`}
+                    </Typography>
+                  </Fragment>
+                ))}
+              </Box>
             }
             { everfreshProduct() && 
               <LinkButton href={pages.bags.path}>
@@ -168,7 +193,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 />
               </LinkButton>
             }
-            { bagProduct() && 
+            { bagsProduct() && 
               <LinkButton href={pages.everfresh.path}>
                 <FormattedMessage
                   id="bags.everfresh" 
@@ -182,35 +207,45 @@ const ProductDetail = (props: ProductDetailProps) => {
 
 
       {/* Everfesh Product Section */}
-      { (everfreshProduct() || bagProduct()) &&
+      { (everfreshProduct() || bagsProduct()) &&
         <>
           <Divider sx={{ mt: 5, mb: 5 }}/>
 
-          <EverfreshDetail />
+          { everfreshProduct() &&
+            <>
+              <EverfreshDetail />
 
-          <Divider sx={{ mt: 5, mb: 5 }}/>
+              <Divider sx={{ mt: 5, mb: 5 }}/>
           
-          <EverfreshTutorial 
-            textId="everfresh.videoComment.1" 
-            source={{ 
-              type: 'video',
-              src: require('../../public/videos/everfresh/everfresh1.mp4'),
-            }} 
-          />
-          <EverfreshTutorial
-            textId="everfresh.videoComment.2" 
-            source={{ 
-              type: 'video',
-              src: require('../../public/videos/everfresh/everfresh2.mp4'),
-            }} 
-          />
-          <EverfreshTutorial
-            textId="everfresh.videoComment.2" 
-            source={{ 
-              type: 'video',
-              src: require('../../public/videos/everfresh/everfresh3.mp4'),
-            }} 
-          />
+              <EverfreshTutorial 
+                textId="everfresh.videoComment.1" 
+                source={{ 
+                  type: 'video',
+                  src: require('../../public/videos/everfresh/everfresh1.mp4'),
+                }} 
+              />
+              <EverfreshTutorial
+                textId="everfresh.videoComment.2" 
+                source={{ 
+                  type: 'video',
+                  src: require('../../public/videos/everfresh/everfresh2.mp4'),
+                }} 
+              />
+              <EverfreshTutorial
+                textId="everfresh.videoComment.2" 
+                source={{ 
+                  type: 'video',
+                  src: require('../../public/videos/everfresh/everfresh3.mp4'),
+                }} 
+              />
+            </>
+          }
+
+          { bagsProduct() &&
+            <>
+              <BagsDetail />
+            </>
+          }
         </>
       }
 
