@@ -96,84 +96,87 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
             formFieldGroups={[
               {
                 extraElements:
-                  <Grid container columnSpacing={5} rowSpacing={3}>
-                    <Grid item xs={12} sm={6}>
-                      <Typography component="h3" variant="h1">
-                        <FormattedMessage 
-                          id="forms.shipping" 
-                        />
-                      </Typography>
-                      <Box mt={1}>
-                        <AddressDetail 
-                          address={user.shipping}
-                          variant="body1"
-                        />
-                      </Box>
-                      <Typography component="h3" variant="h1" mt={3}>
-                        <FormattedMessage 
-                          id="forms.billing" 
-                        />
-                      </Typography>
-                      <Box mt={1}>
-                        <AddressDetail 
-                          address={user.billing}
-                          variant="body1"
-                        />
-                      </Box>
-                      <Typography component="h3" variant="h1" mt={3}>
-                        <FormattedMessage 
-                          id="checkout.sections.payment" 
-                        />
-                      </Typography>
-                      <Box mt={1}>
-                        { getCardPayload()?.details.lastFour &&
-                          <Typography component="div" variant="body1">
-                            <FormattedMessage 
-                              id="orderDetail.paidCard" 
-                              values={{
-                                cardType: checkoutPayment?.methodPayload.type,
-                                last4: getCardPayload()?.details.lastFour,
-                              }}
-                            />
-                          </Typography>
+                  <>
+                    <Grid container columnSpacing={5} rowSpacing={3}>
+                      <Grid item xs={12} sm={6}>
+                        <Typography component="h3" variant="h1">
+                          <FormattedMessage 
+                            id="forms.shipping" 
+                          />
+                        </Typography>
+                        <Box mt={1}>
+                          <AddressDetail 
+                            address={user.shipping}
+                            variant="body1"
+                          />
+                        </Box>
+                        <Typography component="h3" variant="h1" mt={3}>
+                          <FormattedMessage 
+                            id="forms.billing" 
+                          />
+                        </Typography>
+                        <Box mt={1}>
+                          <AddressDetail 
+                            address={user.billing}
+                            variant="body1"
+                          />
+                        </Box>
+                        <Typography component="h3" variant="h1" mt={3}>
+                          <FormattedMessage 
+                            id="checkout.sections.payment" 
+                          />
+                        </Typography>
+                        <Box mt={1}>
+                          { getCardPayload()?.details.lastFour &&
+                            <Typography component="div" variant="body1">
+                              <FormattedMessage 
+                                id="orderDetail.paidCard" 
+                                values={{
+                                  cardType: checkoutPayment?.methodPayload.type,
+                                  last4: getCardPayload()?.details.lastFour,
+                                }}
+                              />
+                            </Typography>
+                          }
+                          { getPaypalPayload()?.details.email &&
+                            <Typography component="div" variant="body1">
+                              <FormattedMessage 
+                                id="orderDetail.paidPaypal" 
+                                values={{
+                                  payerEmail: getPaypalPayload()?.details.email
+                                }}
+                              />
+                            </Typography>
+                          }
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <Typography component="h3" variant="h1" mb={2}>
+                          <FormattedMessage 
+                            id="checkout.order" 
+                          />
+                        </Typography>
+                        { !emptyCart() ?
+                          <>
+                            <CartDetail
+                              cart={cart}
+                              totalPrice={totalPrice}
+                              showEmptyItems={false}
+                            />  
+                          </>
+                          :
+                          <>
+                            <Typography component='div' variant='body1' mt={1}>
+                              <FormattedMessage 
+                                id="cart.noItems" 
+                              />
+                            </Typography>
+                          </>
                         }
-                        { getPaypalPayload()?.details.email &&
-                          <Typography component="div" variant="body1">
-                            <FormattedMessage 
-                              id="orderDetail.paidPaypal" 
-                              values={{
-                                payerEmail: getPaypalPayload()?.details.email
-                              }}
-                            />
-                          </Typography>
-                        }
-                      </Box>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Typography component="h3" variant="h1" mb={2}>
-                        <FormattedMessage 
-                          id="checkout.order" 
-                        />
-                      </Typography>
-                      { !emptyCart() ?
-                        <>
-                          <CartDetail
-                            cart={cart}
-                            totalPrice={totalPrice}
-                            showEmptyItems={false}
-                          />  
-                        </>
-                        :
-                        <>
-                          <Typography component='div' variant='body1' mt={1}>
-                            <FormattedMessage 
-                              id="cart.noItems" 
-                            />
-                          </Typography>
-                        </>
-                      }
-                    </Grid>
-                  </Grid>,
+                    <Box sx={{ height: '5px' }}/>
+                  </>,
               }
             ]}
             formButtons={{
