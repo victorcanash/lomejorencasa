@@ -159,7 +159,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                         { !emptyCart() ?
                           <>
                             <CartDetail
-                              cart={cart}
+                              items={cart.items}
                               totalPrice={totalPrice}
                               showEmptyItems={false}
                             />  
