@@ -35,8 +35,8 @@ const EverfreshHome = () => {
         <FormattedMessage id={textId} />
         <Box
           sx={{
-            width: '200px',
-            height: '200px',
+            width: '150px',
+            height: '150px',
             borderRadius: '100%',
             backgroundColor: '#e5ecdc',
             maxWidth: '100%',
@@ -78,8 +78,8 @@ const EverfreshHome = () => {
               maxWidth: '100%',
               position: 'relative',
               m: 'auto',
-              width: { xs: '180px', sm: '200px' },
-              height: { xs: '180px', sm: '200px' },
+              width: '150px',
+              height: '150px',
               borderRadius: '100%', 
               backgroundColor: '#e5ecdc',
               mt: 2,
@@ -113,7 +113,7 @@ const EverfreshHome = () => {
               width: { xs: '150px', sm: '200px' },
             }}
           >
-          <FormattedMessage id={textId} />
+            <FormattedMessage id={textId} />
           </Box>
         </Typography>
       </Grid>
