@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 
+import Container from '@mui/material/Container';
+
 import { PageTypes } from '@core/constants/navigation';
+
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import LoginForm from '@components/forms/auth/LoginForm';
@@ -29,13 +32,16 @@ const Login: NextPage = () => {
           titleId: 'login.metas.title',
           descriptionId: 'login.metas.description',
         }}
+        marginTop={true}
       />
       
-      { !email ?
-        <LoginForm onFailByActivation={onLoginFailByActivation} />
-        :
-        <ResendActivationForm email={email} onClickProceedBtn={onClickProceedBtn} />
-      }
+      <Container>
+        { !email ?
+          <LoginForm onFailByActivation={onLoginFailByActivation} />
+          :
+          <ResendActivationForm email={email} onClickProceedBtn={onClickProceedBtn} />
+        }
+      </Container>
     </>
   );
 };

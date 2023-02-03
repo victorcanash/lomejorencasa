@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 
 import { PageTypes } from '@core/constants/navigation';
+
 import { EverfreshProps, getEverfreshProps } from '@lib/server/everfresh';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';

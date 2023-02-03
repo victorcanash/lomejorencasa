@@ -1,5 +1,7 @@
 import type { NextPage } from 'next';
 
+import Container from '@mui/material/Container';
+
 import { PageTypes } from '@core/constants/navigation';
 
 import { ActivationProps, getActivationProps } from '@lib/server/activation';
@@ -22,10 +24,12 @@ const Activation: NextPage<ActivationProps> = (props) => {
         }}
       />
 
-      <ActivationForm 
-        successMsg={successMsg}
-        errorMsg={errorMsg}
-      />
+      <Container>
+        <ActivationForm 
+          successMsg={successMsg}
+          errorMsg={errorMsg}
+        />
+      </Container>
     </>
   );
 };

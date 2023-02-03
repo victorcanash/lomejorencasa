@@ -2,9 +2,11 @@ import type { NextPage } from 'next';
 
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 import { PageTypes } from '@core/constants/navigation';
+
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 
@@ -22,11 +24,14 @@ const Privacy: NextPage = () => {
         texts={{
           titleId: 'privacy.h1',
         }}
+        marginTop={true}
       />
 
-      <Typography component="p" variant="body1">
-        <FormattedMessage id="privacy.content" />
-      </Typography>
+      <Container>
+        <Typography component="p" variant="body1">
+          <FormattedMessage id="privacy.content" />
+        </Typography>
+      </Container>
     </>
   );
 };

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import type { NextPage } from 'next';
 
+import Container from '@mui/material/Container';
+
 import { PageTypes } from '@core/constants/navigation';
+
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import RegisterForm from '@components/forms/auth/RegisterForm';
@@ -25,13 +28,16 @@ const Register: NextPage = () => {
           titleId: 'register.metas.title',
           descriptionId: 'register.metas.description',
         }}
+        marginTop={true}
       />
       
-      { !email ?
-        <RegisterForm onSuccess={onRegisterSuccess} />
-        :
-        <ResendActivationForm email={email} />
-      }
+      <Container>
+        { !email ?
+          <RegisterForm onSuccess={onRegisterSuccess} />
+          :
+          <ResendActivationForm email={email} />
+        }
+      </Container>
     </>
   );
 };

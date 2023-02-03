@@ -2,8 +2,11 @@ import { useState, useEffect, useCallback } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
+import Container from '@mui/material/Container';
+
 import { PageTypes } from '@core/constants/navigation';
 import type { Order } from '@core/types/orders';
+
 import { pages } from '@lib/constants/navigation';
 import usePage from '@lib/hooks/usePage';
 import useOrders from '@lib/hooks/useOrders';
@@ -44,13 +47,16 @@ const Order: NextPage = () => {
           titleId: 'orderDetail.metas.title',
           descriptionId: 'orderDetail.metas.description',
         }}
+        marginTop={true}
       />
 
       { loadedOrder && order &&
-        <OrderDetail 
-          order={order} 
-          backBtn={true}
-        />
+        <Container>
+          <OrderDetail 
+            order={order} 
+            backBtn={true}
+          />
+        </Container>
       }
     </>
   );

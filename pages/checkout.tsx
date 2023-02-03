@@ -3,6 +3,8 @@ import type { NextPage } from 'next';
 
 import { useIntl } from 'react-intl';
 
+import Container from '@mui/material/Container';
+
 import { PageTypes } from '@core/constants/navigation';
 import { CheckoutSections } from '@core/constants/checkout';
 
@@ -48,35 +50,37 @@ const Checkout: NextPage = () => {
           titleId: 'checkout.metas.title',
           descriptionId: 'checkout.metas.description',
         }}
+        marginTop={true}
       />
 
-      <Stepper 
-        activeStep={activeStep}
-        steps={Object.values(CheckoutSections).map((section) => {
-          return intl.formatMessage({ id: `checkout.sections.${section}` });
-        })}
-        mb={4}
-      />
-
-      { currentCheckoutSection() == CheckoutSections.address &&
-        <CheckoutAddressesSection 
-          next={nextStep}
+      <Container>
+        <Stepper 
+          activeStep={activeStep}
+          steps={Object.values(CheckoutSections).map((section) => {
+            return intl.formatMessage({ id: `checkout.sections.${section}` });
+          })}
+          mb={4}
         />
-      }
-      { currentCheckoutSection() == CheckoutSections.payment &&
-        <CheckoutPaymentSection 
-          next={nextStep}
-          back={prevStep}
-          transactionError={transactionError}
-          setTransactionError={setTransactionError}
-        />
-      }
-      { currentCheckoutSection() == CheckoutSections.confirm &&
-        <CheckoutConfirmSection
-          back={prevStep}
-          setTransactionError={setTransactionError}
-        />
-      }
+        { currentCheckoutSection() == CheckoutSections.address &&
+          <CheckoutAddressesSection 
+            next={nextStep}
+          />
+        }
+        { currentCheckoutSection() == CheckoutSections.payment &&
+          <CheckoutPaymentSection 
+            next={nextStep}
+            back={prevStep}
+            transactionError={transactionError}
+            setTransactionError={setTransactionError}
+          />
+        }
+        { currentCheckoutSection() == CheckoutSections.confirm &&
+          <CheckoutConfirmSection
+            back={prevStep}
+            setTransactionError={setTransactionError}
+          />
+        }
+      </Container>
     </>
   );
 };

@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 import { PageTypes } from '@core/constants/navigation';
@@ -19,14 +20,17 @@ const Cookies: NextPage = () => {
           titleId: 'cookies.metas.title',
           descriptionId: 'cookies.metas.description',
         }}
+        marginTop={true}
         texts={{
           titleId: 'cookies.h1',
         }}
       />
 
-      <Typography component="p" variant="body1">
-        <FormattedMessage id="cookies.content" />
-      </Typography>
+      <Container>
+        <Typography component="p" variant="body1">
+          <FormattedMessage id="cookies.content" />
+        </Typography>
+      </Container>
     </>
   );
 };

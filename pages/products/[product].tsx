@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 
 import { PageTypes } from '@core/constants/navigation';
+
 import { ProductProps, getProductProps } from '@lib/server/product';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';

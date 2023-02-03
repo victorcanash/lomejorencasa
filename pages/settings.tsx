@@ -1,8 +1,10 @@
 import type { NextPage } from 'next';
 
+import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 
 import { PageTypes } from '@core/constants/navigation';
+
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import UpdateUserForm from '@components/forms/user/UpdateUserForm';
@@ -20,20 +22,25 @@ const Settings: NextPage = () => {
           titleId: 'settings.metas.title',
           descriptionId: 'settings.metas.description',
         }}
+        marginTop={true}
         texts={{
           titleId: 'settings.h1',
         }}
       />
+
+      <Container>
       
-      <UpdateUserForm />
+        <UpdateUserForm />
 
-      <Divider sx={{ mb: 3, mt: 5 }} />
+        <Divider sx={{ mb: 3, mt: 5 }} />
 
-      <UpdateEmailForm />
+        <UpdateEmailForm />
 
-      <Divider sx={{ mb: 3, mt: 5 }} />
+        <Divider sx={{ mb: 3, mt: 5 }} />
 
-      <UpdatePswForm />
+        <UpdatePswForm />
+
+      </Container>
     </>
   )
 };

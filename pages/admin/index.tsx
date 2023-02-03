@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 
@@ -60,10 +61,11 @@ const Admin: NextPage = () => {
           titleId: 'admin.metas.title',
           descriptionId: 'admin.metas.description',
         }}
+        marginTop={true}
       />
 
       { page.checked && section &&
-        <>
+        <Container>
           { section == AdminSections.home ?
             <Typography component="h1" variant="h1" className="animate__animated animate__fadeInLeft">
               <FormattedMessage id="admin.h1" />
@@ -72,9 +74,8 @@ const Admin: NextPage = () => {
             <GoBackBtn />
           }
           <Divider sx={{ mt: 1, mb: 3 }} />
-
           { getCurrentSection() }
-        </>
+        </Container>
       }
     </>
   );
