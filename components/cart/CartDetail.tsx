@@ -6,12 +6,13 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
-import type { Cart, CartItem } from '@core/types/cart';
+import type { CartItem } from '@core/types/cart';
+import type { OrderItem } from '@core/types/orders';
 
 import CartItemDetail from '@components/cart/CartItemDetail';
 
 type CartDetailProps = {
-  cart: Cart,
+  items: CartItem[] | OrderItem[],
   totalPrice: number,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   showEmptyItems: boolean,
@@ -19,7 +20,7 @@ type CartDetailProps = {
 
 const CartDetail = (props: CartDetailProps) => {
   const { 
-    cart,
+    items,
     totalPrice,
     updateQuantity, 
     showEmptyItems
@@ -30,7 +31,7 @@ const CartDetail = (props: CartDetailProps) => {
   return (
     <>
       <Box className='animate__animated animate__fadeIn'>
-        {cart.items.map((item, index) => (
+        { items.map((item, index) => (
             <Fragment key={item.id}>
               { ((!showEmptyItems && item.quantity > 0) || (showEmptyItems)) &&
                 <>

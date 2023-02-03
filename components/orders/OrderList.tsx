@@ -1,12 +1,16 @@
 import { Fragment } from 'react';
+import { useRouter } from 'next/router';
 
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
 
-import { Order } from '@core/types/orders';
-import OrderItem from '@components/orders/OrderItem';
+import type { Order } from '@core/types/orders';
+
+import { pages } from '@lib/constants/navigation';
 import Pagination from '@components/ui/Pagination';
 
 type OrderListProps = {
@@ -19,31 +23,51 @@ type OrderListProps = {
 const OrderList = (props: OrderListProps) => {
   const { orders, totalPages, currentPage, onChangePage } = props;
 
+  const router = useRouter();
+  const intl = useIntl();
+
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
     onChangePage(page);
   };
 
+  const onClickShowOrder = (order: Order) => {
+    router.push(`${pages.orderDetail.path}/${order.id}`);
+  };
+
   return (
     <>
-      <Typography variant="h1" component="h1" className='animate__animated animate__fadeInLeft'>
-        <FormattedMessage id="orderList.h1" />
-      </Typography>
-
-      {
-        orders.length > 0 ?
-          <Grid container py={3}>
-            {orders?.map((item) => (
-              <Fragment key={item.id}>   
-                <Grid item xs={12}>
-                  <OrderItem order={item} />
+      { orders.length > 0 ?
+        <Grid container>
+          {orders?.map((order) => (
+            <Fragment key={order.id}>   
+              <Grid item xs={12}>
+                <Typography component="h3" variant="h1">
+                  {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.id}`}
+                </Typography>
+                <Grid container spacing={1} py={3}>
+                  <Grid item xs={6}>
+                    <Typography component="div" variant="body1">
+                      {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString()}`}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <Button
+                      variant="contained"
+                      onClick={() => onClickShowOrder(order)}
+                    >
+                      <FormattedMessage id="orderDetail.showBtn" />
+                    </Button>
+                  </Grid>
                 </Grid>
-              </Fragment>
-            ))}
-          </Grid>
-          :
-          <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
-            <FormattedMessage id="orderList.noItems" />
-          </Typography>
+                <Divider sx={{ mb: 3 }} />
+              </Grid>
+            </Fragment>
+          ))}
+        </Grid>
+        :
+        <Typography component="div" variant="body1" align='center' sx={{ my: 5 }}>
+          <FormattedMessage id="orderList.noItems" />
+        </Typography>
       }
 
       <Pagination

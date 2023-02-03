@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { useIntl } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -9,15 +9,17 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import type { CartItem } from '@core/types/cart';
+import type { OrderItem } from '@core/types/orders';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import { everfreshProductId, bagProductId } from '@lib/constants/products';
 import { getProductImgUrl } from '@lib/utils/products';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
+import placeholder from 'public/images/placeholder.jpeg';
 
 type CartItemDetailProps = {
-  item: CartItem,
+  item: CartItem | OrderItem,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   priorityImg?: boolean,
 };
@@ -28,48 +30,80 @@ const CartItemDetail = (props: CartItemDetailProps) => {
   const intl = useIntl();
 
   const { Select: SelectQuantity } = useSelectInventoryQuantity(
-    item,
+    item as CartItem,
     // On change
     (quantity: number) => {
       if (updateQuantity) {
-        updateQuantity(item, quantity);
+        updateQuantity(item as CartItem, quantity);
       }
     }
   );
 
   const handleRemoveItem = () => {
     if (updateQuantity) {
-      updateQuantity(item, 0, true);
+      updateQuantity(item as CartItem, 0, true);
     }
   };
 
   const itemHref = () => {
-    let href = `${pages.productDetail.path}/${item.inventory.product.name.current}?id=${item.inventory.product.id}`;
-    if (item.inventory.product.id === everfreshProductId) {
+    let href = `${pages.productDetail.path}/${item.inventory?.product.name.current}?id=${item.inventory?.product.id}`;
+    if (item.inventory?.product.id === everfreshProductId) {
       href = `${pages.everfresh.path}`;
-    } else if (item.inventory.product.id === bagProductId) {
+    } else if (item.inventory?.product.id === bagProductId) {
       href = `${pages.bags.path}`;
     }
     return href;
   };
 
+  const availableItemQuantity = () => {
+    if ((item as CartItem)?.cartId) {
+      if (item.inventory && item.inventory.bigbuy.quantity <= 0) {
+        return false;
+      }
+    } else if ((item as OrderItem)?.name) {
+      if (item.quantity <= 0) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   return (
     <>
       <Grid container spacing={2}>
-
         <Grid item xs={4} sm={3} md={2}>
-          <Link href={itemHref()} noLinkStyle>
-            <div>
-              <Image
-                src={getProductImgUrl(item.inventory.product)}
-                alt="Product image"
-                layout="responsive"
-                objectFit="cover"
-                style={{ borderRadius: '10px' }}
-                priority={priorityImg}
-              />
-            </div>
-          </Link>
+          { item.inventory ?
+            <Link href={itemHref()} noLinkStyle>
+              <div>
+                <Image
+                  src={getProductImgUrl(item.inventory.product)}
+                  alt="Product image"
+                  layout="responsive"
+                  objectFit="cover"
+                  style={{ borderRadius: '10px' }}
+                  priority={priorityImg}
+                />
+              </div>
+            </Link>
+            :
+            <>
+              <div>
+                <Image
+                  src={placeholder}
+                  alt="Product image"
+                  layout="responsive"
+                  objectFit="cover"
+                  style={{ borderRadius: '10px' }}
+                  priority={priorityImg}
+                />
+              </div>
+              <Typography component="div" variant="body1">
+                <FormattedMessage 
+                  id="orderDetail.noProductReference" 
+                />
+              </Typography>
+            </>
+          }
         </Grid>
 
         <Grid item xs={8} sm={9} md={10} container>
@@ -78,14 +112,19 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
             <Grid item xs sx={item.quantity <= 0 ? { color: 'grey' } : undefined}>
               <Typography gutterBottom component="div" variant="body1">
-                {item.inventory.product.name.current}
+                {item.inventory?.product.name.current || (item as OrderItem)?.name}
               </Typography>
               <Typography component="div" variant="body2">
-                {item.inventory.name.current || ''}
+                {item.inventory?.name.current || ''}
               </Typography>
               { !updateQuantity &&
                 <Typography component="div" variant="body2">
                   {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
+                </Typography>
+              }
+              { (item as OrderItem)?.reference &&
+                <Typography component="div" variant="body2">
+                  {`${intl.formatMessage({ id: "forms.sku" })}: ${(item as OrderItem).reference}`}
                 </Typography>
               }
             </Grid>
@@ -109,12 +148,12 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   <Typography 
                     variant="body2" 
                     sx={
-                      item.inventory.bigbuy.quantity <= 0 ? 
+                      !availableItemQuantity() ? 
                         { color: 'grey' } : 
                         undefined
                     }
                   >
-                    { item.inventory.bigbuy.quantity <= 0 ? 
+                    { !availableItemQuantity() ? 
                       intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
                       intl.formatMessage({ id: 'cart.inventoryAvailable' })
                     }
@@ -130,12 +169,12 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               component="div" 
               variant="body1" 
               sx={
-                item.inventory.bigbuy.quantity <= 0 ? 
+                !availableItemQuantity() ? 
                   { color: 'grey', fontWeight: 500 } : 
                   { fontWeight: 500 }
               }
             >
-              {`${(item.inventory.realPrice * item.quantity).toFixed(2)} €`}
+              { item.inventory ? `${(item.inventory?.realPrice * item.quantity).toFixed(2)} €` : undefined }
             </Typography>
           </Grid>
 

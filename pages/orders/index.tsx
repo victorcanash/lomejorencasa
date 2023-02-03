@@ -54,6 +54,9 @@ const Orders: NextPage = () => {
           descriptionId: 'orderList.metas.description',
         }}
         marginTop={true}
+        texts={{
+          titleId: 'orderList.h1',
+        }}
       />
 
       { loadedOrders &&

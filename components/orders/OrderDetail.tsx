@@ -1,16 +1,14 @@
-import { Fragment } from 'react';
-
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Divider from '@mui/material/Divider';
 
 import { AddressTypes } from '@core/constants/addresses'
-import { Order } from '@core/types/orders';
-import { UserAddress } from '@core/types/user';
-import OrderItemDetail from '@components/orders/OrderItemDetail';
+import type { Order } from '@core/types/orders';
+import type { UserAddress } from '@core/types/user';
+
+import CartDetail from '@components/cart/CartDetail';
 import AddressDetail from '@components/checkout/details/AddressDetail';
 import GoBackBtn from '@components/ui/GoBackBtn';
 
@@ -118,32 +116,28 @@ const OrderDetail = (props: OrderDetailProps) => {
         }
       </Grid>
 
-      <Typography component="div" variant="body1">
+      <Typography component="div" variant="body1" mb={2}>
         {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
       </Typography>
-      <Divider sx={{ mb: 3, mt: 2 }} />
-      <Box mt={1} className='animate__animated animate__fadeIn'>
-        {order.bigbuy.products.map((item) => (
-          <Fragment key={item.id}>
-            <OrderItemDetail 
-              orderItem={item} 
-            />
-            <Divider sx={{ my: 3 }} />
-          </Fragment>
-        ))}
-      </Box>
-      
-      <Typography
-        component="div"
-        variant='h1'
-        align='right'
-        className='animate__animated animate__fadeInUp'
-      >
-        {`${intl.formatMessage({ id: "cart.total" })}: ${Number(order.braintree.amount).toFixed(2)} €`}
-      </Typography>
+      <CartDetail
+        items={order.bigbuy.products}
+        totalPrice={Number(order.braintree.amount)}
+        showEmptyItems={true}
+      />
 
       { backBtn &&
-        <GoBackBtn />
+        <Grid
+          container
+          sx={{
+            flexWrap: 'nowrap',
+            justifyContent: 'space-between',
+          }}
+          mt={3}
+        >
+          <Grid item>
+            <GoBackBtn />
+          </Grid>
+        </Grid>
       }
     </>
   );

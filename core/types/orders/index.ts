@@ -19,13 +19,7 @@ export type Order = {
       country: string,
       phone: string,
     },
-    products: {
-      id: string
-      reference: string
-      quantity: number
-      name: string
-      inventory: ProductInventory | null
-    }[],
+    products: OrderItem[],
   },
   braintree: {
     amount: string,
@@ -46,6 +40,14 @@ export type Order = {
       payerEmail: string,
     },
   }
+};
+
+export type OrderItem = {
+  id: string,
+  reference: string,
+  quantity: number,
+  name: string,
+  inventory: ProductInventory | null,
 };
 
 export type OrderFailedCreate = {

@@ -82,7 +82,7 @@ const Cart: NextPage = () => {
 
         { cart && !emptyCart() ?
           <CartDetail
-            cart={cart}
+            items={cart.items}
             totalPrice={totalPrice}
             updateQuantity={updateCartItemQuantity}
             showEmptyItems={true}
