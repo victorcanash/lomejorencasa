@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import EverfreshIcon from '@components/products/ui/everfresh/EverfreshIcon';
-import microorganismIcon from 'public/images/microorganism-icon.png';
-import frezzerIcon from 'public/images/frezzer-icon.png';
-import dietIcon from 'public/images/diet-icon.png';
-import shieldIcon from 'public/images/shield-icon.png';
-import timeIcon from 'public/images/time-icon.png';
+import microorganismIcon from 'public/images/icons/microorganism-icon.png';
+import frezzerIcon from 'public/images/icons/frezzer-icon.png';
+import dietIcon from 'public/images/icons/diet-icon.png';
+import shieldIcon from 'public/images/icons/shield-icon.png';
+import timeIcon from 'public/images/icons/time-icon.png';
 
 const EverfreshAdvantages = () => {
   const advantage = (textId: string, src: StaticImageData, alt: string, widthSrc = '100px', heightSrc = '100px') => {

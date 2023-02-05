@@ -12,10 +12,10 @@ import detail_everfresh4 from 'public/images/everfresh/everfresh4.jpg';
 import detail_bags1 from 'public/images/bags/bags1.jpg';
 import detail_bags2 from 'public/images/bags/bags2.jpg';
 import detail_bags3 from 'public/images/bags/bags3.jpg';
-import banner_everfresh1 from 'public/images/home/everfresh1.jpg';
-import banner_everfresh2 from 'public/images/home/everfresh2.jpg';
-import banner_everfresh3 from 'public/images/home/everfresh3.jpg';
-import banner_everfresh4 from 'public/images/home/everfresh4.jpg';
+import banner_everfresh1 from 'public/images/banner/everfresh1.jpg';
+import banner_everfresh2 from 'public/images/banner/everfresh2.jpg';
+import banner_everfresh3 from 'public/images/banner/everfresh3.jpg';
+import banner_everfresh4 from 'public/images/banner/everfresh4.jpg';
 
 export const getProductImgUrl = (product: Product, index = 0) => {
   if (everfreshProductId === product.id) {

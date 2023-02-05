@@ -7,11 +7,11 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import EverfreshIcon from '@components/products/ui/everfresh/EverfreshIcon';
-import frezzerIcon from 'public/images/frezzer-icon.png';
-import airplaneIcon from 'public/images/airplane-icon.png';
-import breezeIcon from 'public/images/breeze-icon.png';
-import cableIcon from 'public/images/cable-icon.png';
-import shoppingbagIcon from 'public/images/shoppingbag-icon.png';
+import frezzerIcon from 'public/images/icons/frezzer-icon.png';
+import airplaneIcon from 'public/images/icons/airplane-icon.png';
+import breezeIcon from 'public/images/icons/breeze-icon.png';
+import cableIcon from 'public/images/icons/cable-icon.png';
+import shoppingbagIcon from 'public/images/icons/shoppingbag-icon.png';
 
 const EverfreshCharacteristics = () => {
   const characteristic = (textId: string, src: StaticImageData, alt: string, widthSrc = '100px', heightSrc = '100px') => {
