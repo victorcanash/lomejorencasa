@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 type ProductTutorialProps = {
+  titleId?: string,
   textId: string,
   source: {
     type?: 'video' | 'image',
@@ -15,7 +16,7 @@ type ProductTutorialProps = {
 };
 
 const ProductTutorial = (props: ProductTutorialProps) => {
-  const { textId, source } = props;
+  const { titleId, textId, source } = props;
 
   const maxWidth = '800px';
 
@@ -23,7 +24,6 @@ const ProductTutorial = (props: ProductTutorialProps) => {
     <Grid
       container
       className='animate__animated animate__fadeIn'
-      mb={2}
     >
       <Grid 
         item 
@@ -32,10 +32,15 @@ const ProductTutorial = (props: ProductTutorialProps) => {
         <Box 
           sx={{ 
             maxWidth: maxWidth, 
-            margin: 'auto',
+            m: 'auto',
             textAlign: 'center',
           }}
         >
+          { titleId &&
+            <Typography component="h2" variant="h1" sx={{ mt: 2, mb: 3 }}>
+              <FormattedMessage id={titleId} />
+            </Typography> 
+          }
           <Typography component="div" variant="body1" sx={{ mb: 3 }}>
             <FormattedMessage id={textId} />
           </Typography>
@@ -43,7 +48,8 @@ const ProductTutorial = (props: ProductTutorialProps) => {
         <Box 
           sx={{ 
             maxWidth: maxWidth, 
-            margin: 'auto',
+            m: 'auto',
+            mb: '2',
           }}
         >
           { source.type == 'video' ?
