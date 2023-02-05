@@ -5,9 +5,9 @@ import Box from '@mui/material/Box';
 
 import type { Product } from '@core/types/products';
 
-import { getAllProductImgsUrl } from '@lib/utils/products';
+import { getProductDetailImgsUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import Carousel from '@components/ui/Carousel';
+import ProductCarousel from '@components/products/ui/ProductCarousel';
 
 type ProductDetailProps = {
   product: Product,
@@ -53,8 +53,8 @@ const ProductDetail = (props: ProductDetailProps) => {
             {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
           </Typography>
           <Box sx={{width: "360px"}}>
-            <Carousel 
-              imgSources={getAllProductImgsUrl(product)} 
+            <ProductCarousel 
+              imgSources={getProductDetailImgsUrl(product)} 
             />
           </Box>
         </>

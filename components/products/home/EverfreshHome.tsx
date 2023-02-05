@@ -1,23 +1,15 @@
 import Image, { StaticImageData } from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
-import { Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import LinkButton from '@core/components/LinkButton';
-
-import { pages } from '@lib/constants/navigation';
-import EverfreshTutorial from '@components/products/everfresh/EverfreshTutorial';
-import EverfreshConservation from '@components/products/everfresh/EverfreshConservation';
-import everfresh1 from 'public/images/home/everfresh1.jpg';
-import everfresh2 from 'public/images/home/everfresh2.jpg';
-import everfresh3 from 'public/images/home/everfresh3.jpg';
-import everfresh4 from 'public/images/home/everfresh4.jpg';
+import ProductBanner from '@components/products/ui/ProductBanner';
+import ProductTutorial from '@components/products/ui/ProductTutorial';
+import EverfreshConservation from '@components/products/ui/EverfreshConservation';
 import microorganismIcon from 'public/images/microorganism-icon.png';
 import frezzerIcon from 'public/images/frezzer-icon.png';
 import dietIcon from 'public/images/diet-icon.png';
@@ -122,97 +114,7 @@ const EverfreshHome = () => {
 
   return (
     <>
-
-      {/* Swiper */}
-      <Grid container>
-        <Grid
-          item
-          xs={12}
-          className='animate__animated animate__fadeInLeft'
-          sx={{ mb: 4 }}
-        >  
-          <Box 
-            sx={{
-              maxWidth: '1075px',
-              m: 'auto',
-            }}
-          >
-            <Swiper 
-              modules={[Autoplay]}
-              speed={1000} 
-              loop
-              centeredSlides
-              autoplay={{
-                delay: 5000,
-                disableOnInteraction: false,
-              }}
-            >
-              { [everfresh1, everfresh2, everfresh3, everfresh4].map((src, index) => (
-                <SwiperSlide key={index}>
-                  <div>
-                    <Image
-                      src={src} 
-                      alt="Product image" 
-                      layout="responsive" 
-                      objectFit="cover"
-                      quality="100"
-                      priority
-                    />
-                    <Grid 
-                      container
-                      rowSpacing={2}          
-                      sx={{
-                        position: 'absolute',
-                        height: '100%',
-                        width: {
-                          xs: '50%',
-                        },
-                        top: '0px',
-                        px: '20px',
-                        py: '10px',
-                        flexWrap: 'nowrap',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                      }}
-                    >
-                      <Grid item>
-                        <Typography 
-                          component={"h1"} 
-                          sx={{ 
-                            typography: { 
-                              xs: 'home_h3', 
-                              xs_sm: 'home_h2',
-                              sm_md: 'home_h1', 
-                            },
-                            color: 'white',
-                          }}
-                        >
-                          <FormattedMessage id="home.h1" />
-                        </Typography>
-                      </Grid>
-                      <Grid item>
-                        <LinkButton
-                          href={pages.everfresh.path}
-                          id="advantages"
-                          sx={{
-                            backgroundColor: '#6f9c7d',
-                            color: 'white',
-                            '&:hover': {
-                              backgroundColor: '#a0d2af',
-                            },
-                          }}
-                        >
-                          <FormattedMessage id="home.buyBtn" />
-                        </LinkButton>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </Box>
-        </Grid>
-      </Grid>
+      <ProductBanner />
 
       <Container>
         <Grid container>
@@ -248,21 +150,21 @@ const EverfreshHome = () => {
               <Typography component={"h2"} variant={"h1"} sx={{ mt: 2, mb: 3 }}>
                 <FormattedMessage id="home.use.title" />
               </Typography> 
-              <EverfreshTutorial 
+              <ProductTutorial 
                 textId="home.use.1" 
                 source={{ 
                   type: 'video',
                   src: require('../../../public/videos/home/everfresh1.mp4'),
                 }} 
               />
-              <EverfreshTutorial 
+              <ProductTutorial 
                 textId="home.use.2" 
                 source={{ 
                   type: 'video',
                   src: require('../../../public/videos/home/everfresh1.mp4'),
                 }} 
               />
-              <EverfreshTutorial 
+              <ProductTutorial 
                 textId="home.use.3" 
                 source={{ 
                   type: 'video',
@@ -316,6 +218,7 @@ const EverfreshHome = () => {
               </Grid>
             </Box>
           </Grid>
+
         </Grid>
       </Container>
     </>

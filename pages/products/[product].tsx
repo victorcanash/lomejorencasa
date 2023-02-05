@@ -5,7 +5,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { ProductProps, getProductProps } from '@lib/server/product';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import ProductDetail from '@components/products/ProductDetail';
+import ProductDetail from '@components/products/detail';
 
 const Product: NextPage<ProductProps> = (props) => {
   const { product } = props;

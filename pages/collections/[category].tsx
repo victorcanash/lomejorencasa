@@ -1,13 +1,11 @@
 import type { NextPage } from 'next';
 
-import Container from '@mui/material/Container';
-
 import { PageTypes } from '@core/constants/navigation';
 
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import ProductList from '@components/products/ProductList';
+import ProductList from '@components/products/collection';
 
 const Search: NextPage<CollectionProps> = (props) => {
   const { 
@@ -31,15 +29,13 @@ const Search: NextPage<CollectionProps> = (props) => {
         marginTop={true}
       />
 
-      <Container>
-        <ProductList 
-          category={productCategory}
-          products={products} 
-          totalPages={totalPages}
-          currentPage={currentPage}
-          keywords={keywords}
-        />
-      </Container>
+      <ProductList 
+        category={productCategory}
+        products={products} 
+        totalPages={totalPages}
+        currentPage={currentPage}
+        keywords={keywords}
+      />
     </>
   );
 };

@@ -1,6 +1,8 @@
 import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
-import ProductAccordion from '@components/products/ProductAccordion';
+import ProductAccordion from '@components/products/ui/ProductAccordion';
+import ProductTutorial from '@components/products/ui/ProductTutorial';
 
 const EverfreshDetail = () => {
 
@@ -52,6 +54,30 @@ const EverfreshDetail = () => {
           />
         </Grid>
       </Grid>
+
+      <Divider sx={{ mt: 5, mb: 5 }}/>
+          
+      <ProductTutorial 
+        textId="everfresh.videoComment.1" 
+        source={{ 
+          type: 'video',
+          src: require('../../public/videos/everfresh/everfresh1.mp4'),
+        }} 
+      />
+      <ProductTutorial
+        textId="everfresh.videoComment.2" 
+        source={{ 
+          type: 'video',
+          src: require('../../public/videos/everfresh/everfresh2.mp4'),
+        }} 
+      />
+      <ProductTutorial
+        textId="everfresh.videoComment.2" 
+        source={{ 
+          type: 'video',
+          src: require('../../public/videos/everfresh/everfresh3.mp4'),
+        }} 
+      />
     </>
   );
 };

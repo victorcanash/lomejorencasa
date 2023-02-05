@@ -6,7 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-type EverfreshTutorialProps = {
+type ProductTutorialProps = {
   textId: string,
   source: {
     type?: 'video' | 'image',
@@ -14,7 +14,7 @@ type EverfreshTutorialProps = {
   },
 };
 
-const EverfreshTutorial = (props: EverfreshTutorialProps) => {
+const ProductTutorial = (props: ProductTutorialProps) => {
   const { textId, source } = props;
 
   const maxWidth = '800px';
@@ -77,4 +77,4 @@ const EverfreshTutorial = (props: EverfreshTutorialProps) => {
   );
 };
 
-export default EverfreshTutorial;
+export default ProductTutorial;

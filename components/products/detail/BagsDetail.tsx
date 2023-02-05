@@ -1,6 +1,6 @@
 import Grid from '@mui/material/Grid';
 
-import ProductAccordion from '@components/products/ProductAccordion';
+import ProductAccordion from '@components/products/ui/ProductAccordion';
 
 const BagsDetail = () => {
 

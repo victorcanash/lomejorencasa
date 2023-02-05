@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import EverfreshHome from '@components/products/everfresh/EverfreshHome';
+import EverfreshHome from '@components/products/home';
 
 const Home: NextPage = () => {
   const page = usePage();

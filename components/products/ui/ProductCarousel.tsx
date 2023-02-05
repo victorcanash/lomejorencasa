@@ -5,11 +5,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Box from '@mui/material/Box';
 
-type CarouselProps = {
+type ProductCarouselProps = {
   imgSources: (string | StaticImageData)[],
-}
+};
 
-const Carousel = (props: CarouselProps) => {
+const ProductCarousel = (props: ProductCarouselProps) => {
   const { imgSources } = props;
   
   return (
@@ -52,4 +52,4 @@ const Carousel = (props: CarouselProps) => {
   );
 };
 
-export default Carousel;
+export default ProductCarousel;

@@ -3,6 +3,7 @@ import Image from 'next/image'
 
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
@@ -42,7 +43,7 @@ const ProductList = (props: ProductListProps) => {
   };
 
   return (
-    <>
+    <Container>
       <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
         { category?.name ?
           capitalizeFirstLetter(category.name.current) 
@@ -125,7 +126,7 @@ const ProductList = (props: ProductListProps) => {
         currentPage={currentPage}
         onChangePage={handleChangePage}
       />
-    </>
+    </Container>
   );
 };
 

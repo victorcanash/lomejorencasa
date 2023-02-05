@@ -12,7 +12,7 @@ import type { Product } from '@core/types/products';
 import type { UploadFile } from '@core/types/upload';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
-import { getAllProductImgsUrl } from '@lib/utils/products';
+import { getProductDetailImgsUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import useForms from '@lib/hooks/useForms';
 import useProducts from '@lib/hooks/useProducts';
@@ -258,7 +258,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
             />
           </Typography>
           <ImagesDetail
-            imgSources={getAllProductImgsUrl(product)}
+            imgSources={getProductDetailImgsUrl(product)}
             getImgActionComponent={(srcImgIndex: number) => {
               const component = deleteExistingImgs.includes(srcImgIndex) ?
                 <>
