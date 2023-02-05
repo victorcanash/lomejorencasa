@@ -57,10 +57,3 @@ html {
 .braintree-placeholder, .braintree-heading {
   font-size: 15px;
 }
-
-
-/* Images */
-.centered-container-img {
-  max-width: 600px; 
-  margin: auto;
-}
