@@ -1,4 +1,8 @@
+import Image from 'next/image';
+
 import { useIntl } from 'react-intl';
+import { Pagination } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -7,7 +11,6 @@ import type { Product } from '@core/types/products';
 
 import { getProductDetailImgsUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import ProductCarousel from '@components/products/ui/ProductCarousel';
 
 type ProductDetailProps = {
   product: Product,
@@ -53,9 +56,31 @@ const ProductDetail = (props: ProductDetailProps) => {
             {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
           </Typography>
           <Box sx={{width: "360px"}}>
-            <ProductCarousel 
-              imgSources={getProductDetailImgsUrl(product)} 
-            />
+            <Box>
+              <Swiper
+                modules={[Pagination]}
+                loop
+                pagination={{
+                  clickable: true
+                }}
+              >
+                { getProductDetailImgsUrl(product).map((imgSrc, imgSrcIndex) => (
+                  <SwiperSlide key={imgSrcIndex}>
+                    <div style={{ marginBottom: "40px"}}>
+                      <Image 
+                        src={imgSrc}
+                        alt="Product image" 
+                        layout="responsive" 
+                        objectFit="cover"
+                        quality="100"
+                        priority
+                        style={{ borderRadius: '10px' }}
+                      />
+                    </div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </Box>
           </Box>
         </>
       }

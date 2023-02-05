@@ -6,6 +6,8 @@ import { FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import UpdateIcon from '@mui/icons-material/Update';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -23,7 +25,6 @@ import ManagePDiscountForm from '@components/forms/admin/ManagePDiscountForm';
 import ProductDetail from '@components/admin/details/ProductDetail';
 import InventoriesDetail from '@components/admin/details/InventoriesDetail';
 import DiscountsDetail from '@components/admin/details/DiscountsDetail';
-import Pagination from '@components/ui/Pagination';
 
 export type CheckProductsSectionProps = {
   category: ProductCategory | null,
@@ -383,11 +384,18 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
             ))}
           </Grid>
 
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onChangePage={handleChangePage}
-          />
+          <Stack spacing={2} sx={{ mt: 1 }} >
+            <Pagination
+              sx={{
+                display: "flex", flexDirection: "col", justifyContent: "center"
+              }}
+              count={totalPages}
+              page={currentPage}
+              onChange={handleChangePage}
+              variant="outlined"
+              shape="rounded"
+            />
+          </Stack>
         </>
         :
         getManageForm()
