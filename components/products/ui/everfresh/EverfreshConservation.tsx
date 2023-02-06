@@ -94,13 +94,15 @@ const EverfreshConservation = () => {
       sx={{
         maxWidth: '600px',
         margin: 'auto',
-        textAlign: 'center',
       }}
     >
 
-      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3 }}>
+      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3, textAlign: 'center'}}>
         <FormattedMessage id="home.conservation.title" />
-      </Typography> 
+      </Typography>
+      <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+        <FormattedMessage id="home.conservation.description" />
+      </Typography>
       
       <TableContainer component={Paper}>
         <Table aria-label="time-conservation-table">
@@ -142,14 +144,6 @@ const EverfreshConservation = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      <Typography component={"div"} variant={"body1"} sx={{ my: 2 }}>
-        <FormattedMessage id="home.conservation.description1" />
-      </Typography> 
-
-      <Typography component={"div"} variant={"body1"}>
-        <FormattedMessage id="home.conservation.description2" />
-      </Typography> 
 
     </Box>
   );

@@ -45,12 +45,14 @@ const EverfreshCharacteristics = () => {
       sx={{
         maxWidth: '600px',
         m: 'auto',
-        textAlign: 'center',
       }}
     >
-      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3 }}>
+      <Typography component={"div"} variant={"h1"} sx={{ mb: 3, textAlign: 'center' }}>
         <FormattedMessage id="home.characteristics.title" />
-      </Typography> 
+      </Typography>
+      <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+        <FormattedMessage id="home.characteristics.description" />
+      </Typography>
       <Grid container rowSpacing={2}>     
         { characteristic('home.characteristics.1', breezeIcon, "everfresh characteristic") }
         { characteristic('home.characteristics.2', airplaneIcon, "everfresh characteristic") }

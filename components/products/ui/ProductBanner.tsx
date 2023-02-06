@@ -35,7 +35,7 @@ const ProductBanner = () => {
       >
         <Grid item>
           <Typography 
-            component={"h1"} 
+            component="div" 
             sx={{ 
               typography: { 
                 xs: 'home_h3', 
