@@ -1,4 +1,5 @@
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 import ProductBanner from '@components/products/ui/ProductBanner';
 import ProductTutorial from '@components/products/ui/ProductTutorial';
@@ -12,36 +13,91 @@ const EverfreshHome = () => {
     <>
       <ProductBanner />
 
-      <Container>
+      <Container sx={{ mt: 4 }}>
 
-        <EverfreshAdvantages />
+        <Grid
+          container
+          className='animate__animated animate__fadeIn'
+          mt={4}
+        >
+          <Grid 
+            item 
+            xs={12} 
+          > 
+            <EverfreshAdvantages />
+          </Grid>
+        </Grid>
 
-        <ProductTutorial
-          titleId="home.use.title"
-          textId="home.use.1" 
-          source={{ 
-            type: 'video',
-            src: require('../../../public/videos/home/everfresh1.mp4'),
-          }} 
-        />
-        <ProductTutorial 
-          textId="home.use.2" 
-          source={{ 
-            type: 'video',
-            src: require('../../../public/videos/home/everfresh1.mp4'),
-          }} 
-        />
-        <ProductTutorial 
-          textId="home.use.3" 
-          source={{ 
-            type: 'video',
-            src: require('../../../public/videos/home/everfresh1.mp4'),
-          }} 
-        />
+        <Grid
+          container
+          className='animate__animated animate__fadeIn'
+          spacing={1}
+          mt={4}
+        >
+          <Grid 
+            item 
+            xs={12} 
+          > 
+            <ProductTutorial
+              titleId="home.use.title"
+              textId="home.use.1" 
+              source={{ 
+                type: 'video',
+                src: require('../../../public/videos/home/everfresh1.mp4'),
+              }} 
+            />
+          </Grid>
+          <Grid 
+            item 
+            xs={12} 
+          >
+            <ProductTutorial 
+              textId="home.use.2" 
+              source={{ 
+                type: 'video',
+                src: require('../../../public/videos/home/everfresh1.mp4'),
+              }} 
+            />
+          </Grid>
+          <Grid 
+            item 
+            xs={12} 
+          >
+            <ProductTutorial 
+              textId="home.use.3" 
+              source={{ 
+                type: 'video',
+                src: require('../../../public/videos/home/everfresh1.mp4'),
+              }} 
+            />
+          </Grid>
+        </Grid>
 
-        <EverfreshCharacteristics />
+        <Grid
+          container
+          className='animate__animated animate__fadeIn'
+          mt={4}
+        >
+          <Grid 
+            item 
+            xs={12} 
+          > 
+            <EverfreshCharacteristics />
+          </Grid>
+        </Grid>
 
-        <EverfreshConservation />
+        <Grid
+          container
+          className='animate__animated animate__fadeIn'
+          mt={4}
+        >
+          <Grid 
+            item 
+            xs={12} 
+          > 
+            <EverfreshConservation />
+          </Grid>
+        </Grid>
 
       </Container>
     </>

@@ -1,7 +1,6 @@
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import { styled } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -91,78 +90,68 @@ const EverfreshConservation = () => {
   ];
 
   return (
-    <Grid
-      container
-      className='animate__animated animate__fadeInLeft'
+    <Box
+      sx={{
+        maxWidth: '600px',
+        margin: 'auto',
+        textAlign: 'center',
+      }}
     >
-      <Grid
-        item
-        xs={12}
-      >
-        <Box
-          sx={{
-            maxWidth: '600px',
-            margin: 'auto',
-            textAlign: 'center',
-          }}
-        >
 
-          <Typography component={"h2"} variant={"h1"} sx={{ mt: 1, mb: 4 }}>
-            <FormattedMessage id="home.conservation.title" />
-          </Typography> 
-          
-          <TableContainer component={Paper}>
-            <Table aria-label="time-conservation-table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.food'} 
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.noVacuum'} 
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.vacuumFridge'} 
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.vacuumFrozen'} 
-                    />
-                  </TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <StyledTableRow key={row.food}>
-                    <TableCell component="th" scope="row">
-                      {row.food}
-                    </TableCell>
-                    <TableCell align="right">{row.noVacuum}</TableCell>
-                    <TableCell align="right">{row.vacuumFridge}</TableCell>
-                    <TableCell align="right">{row.vacuumFrozen}</TableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3 }}>
+        <FormattedMessage id="home.conservation.title" />
+      </Typography> 
+      
+      <TableContainer component={Paper}>
+        <Table aria-label="time-conservation-table">
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <FormattedMessage 
+                  id={'home.conservation.table.head.food'} 
+                />
+              </TableCell>
+              <TableCell align="right">
+                <FormattedMessage 
+                  id={'home.conservation.table.head.noVacuum'} 
+                />
+              </TableCell>
+              <TableCell align="right">
+                <FormattedMessage 
+                  id={'home.conservation.table.head.vacuumFridge'} 
+                />
+              </TableCell>
+              <TableCell align="right">
+                <FormattedMessage 
+                  id={'home.conservation.table.head.vacuumFrozen'} 
+                />
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <StyledTableRow key={row.food}>
+                <TableCell component="th" scope="row">
+                  {row.food}
+                </TableCell>
+                <TableCell align="right">{row.noVacuum}</TableCell>
+                <TableCell align="right">{row.vacuumFridge}</TableCell>
+                <TableCell align="right">{row.vacuumFrozen}</TableCell>
+              </StyledTableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
-          <Typography component={"div"} variant={"body1"} sx={{ mt: 2, mb: 2 }}>
-            <FormattedMessage id="home.conservation.description1" />
-          </Typography> 
+      <Typography component={"div"} variant={"body1"} sx={{ my: 2 }}>
+        <FormattedMessage id="home.conservation.description1" />
+      </Typography> 
 
-          <Typography component={"div"} variant={"body1"} sx={{ mb: 3 }}>
-            <FormattedMessage id="home.conservation.description2" />
-          </Typography> 
+      <Typography component={"div"} variant={"body1"}>
+        <FormattedMessage id="home.conservation.description2" />
+      </Typography> 
 
-        </Box>
-      </Grid>
-    </Grid>
+    </Box>
   );
 };
 

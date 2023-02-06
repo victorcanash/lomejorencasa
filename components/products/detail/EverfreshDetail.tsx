@@ -56,28 +56,49 @@ const EverfreshDetail = () => {
       </Grid>
 
       <Divider sx={{ mt: 5, mb: 5 }}/>
-          
-      <ProductTutorial 
-        textId="everfresh.videoComment.1" 
-        source={{ 
-          type: 'video',
-          src: require('../../public/videos/everfresh/everfresh1.mp4'),
-        }} 
-      />
-      <ProductTutorial
-        textId="everfresh.videoComment.2" 
-        source={{ 
-          type: 'video',
-          src: require('../../public/videos/everfresh/everfresh2.mp4'),
-        }} 
-      />
-      <ProductTutorial
-        textId="everfresh.videoComment.2" 
-        source={{ 
-          type: 'video',
-          src: require('../../public/videos/everfresh/everfresh3.mp4'),
-        }} 
-      />
+
+      <Grid
+        container
+        className='animate__animated animate__fadeIn'
+        spacing={1}
+      >
+        <Grid 
+          item 
+          xs={12} 
+        > 
+          <ProductTutorial 
+            textId="everfresh.videoComment.1" 
+            source={{ 
+              type: 'video',
+              src: require('../../../public/videos/everfresh/everfresh1.mp4'),
+            }} 
+          />
+        </Grid>
+        <Grid 
+          item 
+          xs={12} 
+        > 
+          <ProductTutorial
+            textId="everfresh.videoComment.2" 
+            source={{ 
+              type: 'video',
+              src: require('../../../public/videos/everfresh/everfresh2.mp4'),
+            }} 
+          />
+        </Grid>
+        <Grid 
+          item 
+          xs={12} 
+        > 
+          <ProductTutorial
+            textId="everfresh.videoComment.2" 
+            source={{ 
+              type: 'video',
+              src: require('../../../public/videos/everfresh/everfresh3.mp4'),
+            }} 
+          />
+        </Grid>
+      </Grid>
     </>
   );
 };

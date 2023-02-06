@@ -70,49 +70,40 @@ const ProductBanner = () => {
     }
   };
 
-  return (
-    <Grid container>
-      <Grid
-        item
-        xs={12}
-        className='animate__animated animate__fadeInLeft'
-        sx={{ mb: 4 }}
-      >  
-        <Box 
-          sx={{
-            maxWidth: '1075px',
-            m: 'auto',
-          }}
-        >
-          <Swiper 
-            modules={[Autoplay]}
-            speed={1000} 
-            loop
-            centeredSlides
-            autoplay={{
-              delay: 5000,
-              disableOnInteraction: false,
-            }}
-          >
-            { getProductBannerImgsUrl().map((src, index) => (
-              <SwiperSlide key={index}>
-                <div>
-                  <Image
-                    src={src} 
-                    alt="Product image" 
-                    layout="responsive" 
-                    objectFit="cover"
-                    quality="100"
-                    priority
-                  />
-                  { getContent(index) }
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </Box>
-      </Grid>
-    </Grid>
+  return ( 
+    <Box 
+      sx={{
+        maxWidth: '1075px',
+        m: 'auto',
+      }}
+    >
+      <Swiper 
+        modules={[Autoplay]}
+        speed={1000} 
+        loop
+        centeredSlides
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+      >
+        { getProductBannerImgsUrl().map((src, index) => (
+          <SwiperSlide key={index}>
+            <div>
+              <Image
+                src={src} 
+                alt="Product image" 
+                layout="responsive" 
+                objectFit="cover"
+                quality="100"
+                priority
+              />
+              { getContent(index) }
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </Box>
   );
 };
 

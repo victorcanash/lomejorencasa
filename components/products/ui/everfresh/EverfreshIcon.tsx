@@ -25,18 +25,16 @@ const EverfreshIcon = (props: EverfreshIconProps) => {
         maxWidth: '100%',
         height: '150px',           
         m: 'auto', 
-        mt: 2,
-        mb: 2,
         borderRadius: '100%', 
         backgroundColor: '#e5ecdc',
       }} 
     >   
       <Box
         sx={{
-          m: 0,
           position: 'absolute',
           top: '50%',
           left: '50%',
+          m: 0,
           transform: 'translate(-50%, -50%)',
         }}
       >

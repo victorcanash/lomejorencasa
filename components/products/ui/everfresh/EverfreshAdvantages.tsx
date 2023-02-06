@@ -2,8 +2,8 @@ import { StaticImageData } from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
-import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import EverfreshIcon from '@components/products/ui/everfresh/EverfreshIcon';
@@ -16,45 +16,39 @@ import timeIcon from 'public/images/icons/time-icon.png';
 const EverfreshAdvantages = () => {
   const advantage = (textId: string, src: StaticImageData, alt: string, widthSrc = '100px', heightSrc = '100px') => {
     return (
-      <Typography component="div" variant="body1">
-        <FormattedMessage id={textId} />
+      <Grid item xs={12}>
+        <Typography component="div" variant="body1" mb={2}>
+          <FormattedMessage id={textId} />
+        </Typography>
         <EverfreshIcon
           src={src}
           alt={alt}
           widthSrc={widthSrc}
           heightSrc={heightSrc}
         />
-      </Typography>
+      </Grid>
     );
   };
 
   return (
-    <Grid
-      container
-      className='animate__animated animate__fadeInLeft'
+    <Box
+      sx={{
+        maxWidth: '600px',
+        m: 'auto',
+        textAlign: 'center',
+      }}
     >
-      <Grid
-        item
-        xs={12}
-      >
-        <Box
-          sx={{
-            maxWidth: '600px',
-            m: 'auto',
-            textAlign: 'center',
-          }}
-        >
-          <Typography component={"h2"} variant={"h1"} sx={{ mb: 3 }}>
-            <FormattedMessage id="home.advantages.title" />
-          </Typography> 
-          { advantage('home.advantages.1', microorganismIcon, "everfresh advantage") }
-          { advantage('home.advantages.2', shieldIcon, "everfresh advantage", '81px') }
-          { advantage('home.advantages.3', dietIcon, "everfresh advantage") }
-          { advantage('home.advantages.4', frezzerIcon, "everfresh advantage") }
-          { advantage('home.advantages.5', timeIcon, "everfresh advantage", '76px') }
-        </Box>
+      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3 }}>
+        <FormattedMessage id="home.advantages.title" />
+      </Typography>
+      <Grid container rowSpacing={2}>   
+        { advantage('home.advantages.1', microorganismIcon, "everfresh advantage") }
+        { advantage('home.advantages.2', shieldIcon, "everfresh advantage", '81px') }
+        { advantage('home.advantages.3', dietIcon, "everfresh advantage") }
+        { advantage('home.advantages.4', frezzerIcon, "everfresh advantage") }
+        { advantage('home.advantages.5', timeIcon, "everfresh advantage", '76px') }
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 

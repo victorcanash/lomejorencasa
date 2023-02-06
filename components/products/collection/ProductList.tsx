@@ -60,6 +60,7 @@ const ProductList = (props: ProductListProps) => {
             { capitalizeFirstLetter(category.description.current) }
           </Typography>
       }
+      
       <Divider sx={{ my: 3 }} />
 
       { products.length > 0 ?
