@@ -15,59 +15,56 @@ import { getProductBannerImgsUrl } from '@lib/utils/products';
 
 const ProductBanner = () => {
   const getContent = (index: number) => {
-    switch (index) {
-      default:
-        return (
-          <Grid 
-            container
-            rowSpacing={2}          
-            sx={{
-              position: 'absolute',
-              height: '100%',
-              width: {
-                xs: '50%',
+    return (
+      <Grid 
+        container
+        rowSpacing={2}          
+        sx={{
+          position: 'absolute',
+          height: '100%',
+          width: {
+            xs: '50%',
+          },
+          top: '0px',
+          px: '20px',
+          py: '10px',
+          flexWrap: 'nowrap',
+          flexDirection: 'column',
+          justifyContent: 'center',
+        }}
+      >
+        <Grid item>
+          <Typography 
+            component={"h1"} 
+            sx={{ 
+              typography: { 
+                xs: 'home_h3', 
+                xs_sm: 'home_h2',
+                sm_md: 'home_h1', 
               },
-              top: '0px',
-              px: '20px',
-              py: '10px',
-              flexWrap: 'nowrap',
-              flexDirection: 'column',
-              justifyContent: 'center',
+              color: 'white',
             }}
           >
-            <Grid item>
-              <Typography 
-                component={"h1"} 
-                sx={{ 
-                  typography: { 
-                    xs: 'home_h3', 
-                    xs_sm: 'home_h2',
-                    sm_md: 'home_h1', 
-                  },
-                  color: 'white',
-                }}
-              >
-                <FormattedMessage id="home.h1" />
-              </Typography>
-            </Grid>
-            <Grid item>
-              <LinkButton
-                href={pages.everfresh.path}
-                id="advantages"
-                sx={{
-                  backgroundColor: '#6f9c7d',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: '#a0d2af',
-                  },
-                }}
-              >
-                <FormattedMessage id="home.buyBtn" />
-              </LinkButton>
-            </Grid>
-          </Grid>
-        );
-    }
+            <FormattedMessage id={`home.banner.${index + 1}`} />
+          </Typography>
+        </Grid>
+        <Grid item>
+          <LinkButton
+            href={pages.everfresh.path}
+            id="advantages"
+            sx={{
+              backgroundColor: '#6f9c7d',
+              color: 'white',
+              '&:hover': {
+                backgroundColor: '#a0d2af',
+              },
+            }}
+          >
+            <FormattedMessage id="home.buyBtn" />
+          </LinkButton>
+        </Grid>
+      </Grid>
+    );
   };
 
   return ( 
