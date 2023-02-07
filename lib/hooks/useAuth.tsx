@@ -3,14 +3,13 @@ import { useRouter } from 'next/router';
 
 import { useIntl } from 'react-intl';
 
-import { pages } from '@lib/constants/navigation';
-import type { User } from '@core/types/user';
 import type { 
   AuthRegister, 
   AuthLogin, 
   AuthUpdateEmail, 
   AuthResetPsw 
 } from '@core/types/auth';
+import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
 import { 
   registerUser, 
@@ -23,6 +22,10 @@ import {
   sendUserUpdateEmail,
   sendUserResetPswEmail,
 } from '@core/utils/auth';
+import { getBraintreeToken } from '@core/utils/payments';
+import { getGuestCart } from '@core/utils/cart';
+
+import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -39,7 +42,7 @@ const useAuth = () => {
     isProtectedPath, 
     isLogged 
   } = useAuthContext();
-  const { initCart, removeCart } = useCartContext();
+  const { cart, initCart, removeCart } = useCartContext();
 
   const router = useRouter();
   const intl = useIntl();
@@ -74,27 +77,28 @@ const useAuth = () => {
 
   const login = async (authLogin: AuthLogin, onFailByActivation?: (email: string) => void) => {
     setLoading(true);
-    loginUser(authLogin).then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
-      onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
-    }).catch((error: Error) => {
-      let errorMsg = error.message;
-      if (errorMsg.includes('activate')) {
-        errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
-        if (onFailByActivation) {
-          onFailByActivation(authLogin.email);
+    loginUser(authLogin, isLogged() ? undefined : cart)
+      .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
+        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
+      }).catch((error: Error) => {
+        let errorMsg = error.message;
+        if (errorMsg.includes('activate')) {
+          errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
+          if (onFailByActivation) {
+            onFailByActivation(authLogin.email);
+          }
+        } else if (errorMsg.includes('email')) {
+          errorMsg = intl.formatMessage({ id: 'login.errors.email' });
+        } else if (errorMsg.includes('password')) {
+          errorMsg = intl.formatMessage({ id: 'login.errors.password' });
+        } else if (errorMsg.includes('locked out')) {
+          errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
+        } else {
+          errorMsg = intl.formatMessage({ id: 'app.errors.default' });
         }
-      } else if (errorMsg.includes('email')) {
-        errorMsg = intl.formatMessage({ id: 'login.errors.email' });
-      } else if (errorMsg.includes('password')) {
-        errorMsg = intl.formatMessage({ id: 'login.errors.password' });
-      } else if (errorMsg.includes('locked out')) {
-        errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
-      } else {
-        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
-      }
-      setErrorMsg(errorMsg);
-      setLoading(false);
-    });
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
   };
 
   const onLoginSuccess = (token: string, user: User, braintreeToken: string, cart: Cart) => {
@@ -110,13 +114,22 @@ const useAuth = () => {
   };
 
   const logout = async () => {
+    if (!isLogged()) {
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
 
     await logoutUser(token);
     setToken('');
-    setBraintreeToken(undefined);
     setUser(undefined);
     removeCart();
+    await getBraintreeToken().then(async (response: {braintreeToken: string}) => {
+      setBraintreeToken(response.braintreeToken);
+    }).catch((error) => {
+      throw error;
+    });
 
     if (!isProtectedPath()) {
       setLoading(false);
@@ -132,7 +145,14 @@ const useAuth = () => {
       if (onSuccess) {
         onSuccess();
       }
-    }).catch((error: Error) => {
+    }).catch(async (error: Error) => {
+      await getBraintreeToken().then(async (response: {braintreeToken: string}) => {
+        setBraintreeToken(response.braintreeToken);
+      }).catch((error) => {
+        throw error;
+      });
+      const guestCart = await getGuestCart(intl.locale)
+      initCart(guestCart);
       if (onError) {
         onError(error.message);
       }

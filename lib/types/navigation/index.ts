@@ -15,12 +15,13 @@ export type Pages = {
   legal: Page,
   conditions: Page,
 
+  cart: Page,
+  checkout: Page,
+
   login: Page,
   register: Page,
   forgot: Page,
   
-  cart: Page,
-  checkout: Page,
   orderList: Page,
   orderDetail: Page,
   settings: Page,

@@ -3,7 +3,7 @@ import { createContext, Dispatch, SetStateAction, useContext, useState } from 'r
 import type { Cart } from '@core/types/cart';
 
 type ContextType = {
-  cart?: Cart,
+  cart: Cart,
   totalQuantity: number,
   setTotalQuantity: Dispatch<SetStateAction<number>>,
   totalPrice: number,
@@ -13,7 +13,11 @@ type ContextType = {
 };
 
 export const CartContext = createContext<ContextType>({
-  cart: undefined,
+  cart: {
+    id: -1,
+    userId: -1,
+    items: [],
+  },
   totalQuantity: 0,
   setTotalQuantity: () => {},
   totalPrice: 0,
@@ -32,7 +36,11 @@ export const useCartContext = () => {
 };
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<Cart | undefined>(undefined);
+  const [cart, setCart] = useState<Cart>({
+    id: -1,
+    userId: -1,
+    items: [],
+  });
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -62,7 +70,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const removeCart = () => {
-    setCart(undefined);
+    setCart({
+      id: -1,
+      userId: -1,
+      items: [],
+    });
     setTotalQuantity(0);
     setTotalPrice(0);
   };

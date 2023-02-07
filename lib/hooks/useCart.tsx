@@ -1,9 +1,6 @@
-import { useRouter } from 'next/router';
-
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import { pages } from '@lib/constants/navigation';
 import { ManageActions } from '@core/constants/auth';
 import { maxQuantity } from '@core/constants/cart';
 import type { Cart, CartItem } from '@core/types/cart';
@@ -18,16 +15,10 @@ const useCart = () => {
   const { token, isLogged } = useAuthContext();
   const { cart, initCart, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice } = useCartContext();
 
-  const router = useRouter();
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
   const addCartItem = (inventory: ProductInventory, quantity: number) => {
-    if (!isLogged() || !cart) {
-      router.push(pages.login.path);
-      return;
-    };
-
     if (totalQuantity + quantity > maxQuantity) {
       onMaxCartQuantityError();
       return;
@@ -95,11 +86,6 @@ const useCart = () => {
   };
 
   const updateCartItemQuantity = async (cartItem: CartItem, quantity: number, forceUpdate = false) => {
-    if (!isLogged() || !cart) {
-      router.push(pages.login.path);
-      return;
-    };
-
     if (cartItem.quantity == quantity && !forceUpdate) {
       return;
     };
@@ -156,11 +142,8 @@ const useCart = () => {
   };
 
   const checkCart = async (onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void) => {
-    if (!cart) {
-      return;
-    }
     setLoading(true);
-    checkCartMW(token, cart)
+    checkCartMW(isLogged() ? token : undefined, cart)
       .then((response: {cart: Cart, changedItemsByInventory: CartItem[]}) => {
         onCheckCartSuccess(response.cart, response.changedItemsByInventory, onSuccess);
       }).catch((_error: Error) => {

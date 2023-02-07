@@ -114,6 +114,26 @@ export const pages: Pages = {
     },
   },
 
+  cart: {
+    path: '/cart',
+    filepath: '/cart',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
+  checkout: {
+    path: '/checkout',
+    filepath: '/checkout',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+      path: '/cart',
+    },
+  },
+
   login: {
     path: '/login',
     filepath: '/login',
@@ -142,25 +162,6 @@ export const pages: Pages = {
     },
   },
   
-  cart: {
-    path: '/cart',
-    filepath: '/cart',
-    protection: Protections.user,
-    type: PageTypes.main,
-    savePathOnLogin: {
-      enabled: true,
-    },
-  },
-  checkout: {
-    path: '/checkout',
-    filepath: '/checkout',
-    protection: Protections.user,
-    type: PageTypes.main,
-    savePathOnLogin: {
-      enabled: true,
-      path: '/cart',
-    },
-  },
   orderList: {
     path: '/orders',
     filepath: '/orders',

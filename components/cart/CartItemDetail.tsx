@@ -28,7 +28,6 @@ const CartItemDetail = (props: CartItemDetailProps) => {
   const { item, updateQuantity, priorityImg } = props;
 
   const intl = useIntl();
-
   const { Select: SelectQuantity } = useSelectInventoryQuantity(
     item as CartItem,
     // On change
@@ -146,7 +145,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
                 { item.quantity <= 0 &&
                   <Typography 
-                    variant="body2" 
+                    variant="body2"
+                    mt="5px"
                     sx={
                       !availableItemQuantity() ? 
                         { color: 'grey' } : 

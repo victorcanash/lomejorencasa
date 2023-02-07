@@ -308,6 +308,35 @@ const deleteProductCategory = (token: string, currentLocale: string, productCate
   return axios.delete(`/product-categories/${productCategory.id}`, options)
 }
 
+export const getAllProductInventories = async (ids: number[], currentLocale: string, sortBy?: string, order?: string) => {
+  return new Promise<{productInventories: ProductInventory[]}>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      params: {
+        page: 1,
+        limit: 100,
+        sortBy,
+        order,
+        ids,
+      },
+      headers: getLanguageHeaders(currentLocale),
+    }
+    axios.get('/product-inventories', options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.productInventories) {
+          resolve({
+            productInventories: response.data.productInventories
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get All Product Inventories ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  })
+};
+
 export const manageProductInventory = (action: ManageActions, token: string, currentLocale: string, productInventory: ProductInventory) => {
   return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {
     let promiseMW = createProductInventory;

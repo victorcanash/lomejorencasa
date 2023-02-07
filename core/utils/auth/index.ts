@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import { JWTTokenKey } from '@core/constants/auth';
+import { GuestCartKey } from '@core/constants/cart';
 import { Storages } from '@core/constants/storage';
 import type { User } from '@core/types/user';
 import type { 
@@ -12,7 +13,7 @@ import type {
   AuthUpdateEmail, 
   AuthResetPsw 
 } from '@core/types/auth';
-import type { Cart } from '@core/types/cart';
+import type { Cart, GuestCart } from '@core/types/cart';
 import type { Page } from '@core/types/navigation';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
@@ -54,9 +55,17 @@ export const activateUser = async (activationToken: string) => {
   })
 };
 
-export const loginUser = async (authLogin: AuthLogin) => {
+export const loginUser = async (authLogin: AuthLogin, cart: Cart | undefined) => {
+  const guestCart = cart && cart.items.length > 0 ? {
+    items: cart.items.map((item) => {
+      return {
+        inventoryId: item.inventoryId,
+        quantity: item.quantity,
+      }
+    })
+  } as GuestCart : undefined;
   return new Promise<{token: string, user: User, braintreeToken: string, cart: Cart}>((resolve, reject) => {
-    axios.post('/login', authLogin)
+    axios.post('/login', { ...authLogin, guestCart})
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data?.user && response.data?.braintreeToken) {
           if (response.data?.token){
@@ -67,6 +76,7 @@ export const loginUser = async (authLogin: AuthLogin) => {
             if (authLogin.remember) {
               await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
             }
+            await removeStorageItem(Storages.local, GuestCartKey);
             resolve({
               token: response.data.token,
               user: response.data.user,
@@ -93,6 +103,7 @@ export const logoutUser = async (token: string) => {
   };
   await axios.post('/logout', undefined, options);
   await removeStorageItem(Storages.local, JWTTokenKey);
+  await removeStorageItem(Storages.local, GuestCartKey);
 };
 
 export const getLoggedUser = async () => {
@@ -123,7 +134,6 @@ export const getLoggedUser = async () => {
           throw new Error('Something went wrong');
         }
       }).catch(async (error) => {
-        // await removeStorageItem(Storages.local, JWTTokenKey);
         if (error.response?.status === StatusCodes.UNAUTHORIZED || 
             error.response?.status === StatusCodes.NOT_FOUND ||
             error.message.includes('You are locked out') ||

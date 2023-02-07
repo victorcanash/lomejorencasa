@@ -32,7 +32,7 @@ const CartDetail = (props: CartDetailProps) => {
     <>
       <Box className='animate__animated animate__fadeIn'>
         { items.map((item, index) => (
-            <Fragment key={item.id}>
+            <Fragment key={index}>
               { ((!showEmptyItems && item.quantity > 0) || (showEmptyItems)) &&
                 <>
                   <CartItemDetail 

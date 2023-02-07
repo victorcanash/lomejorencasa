@@ -8,6 +8,28 @@ import type { Order } from '@core/types/orders';
 import type { CheckoutPayment } from '@core/types/checkout';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
+export const getBraintreeToken = (token?: string) => {
+  return new Promise<{braintreeToken: string}>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: token ? getAuthHeaders(token) : undefined,
+    };
+    axios.get('/payments/braintree-token', options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK) {
+          resolve({
+            braintreeToken: response.data.braintreeToken,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get Braintree Token ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  })
+};
+
 export const checkPaymentMethod = (dropin: Dropin) => {
   return new Promise<{paymentPayload: PaymentMethodPayload}>(async (resolve, reject) => {
     dropin.requestPaymentMethod((error: object | null, payload: PaymentMethodPayload) => {
