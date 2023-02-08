@@ -9,6 +9,7 @@ export type FormField = {
   required?: boolean,
   autoFocus?: boolean,
   autoComplete?: string,
+  disabled?: boolean,
   min?: number,
   max?: number,
   adornment?: {

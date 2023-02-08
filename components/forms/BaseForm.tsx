@@ -123,6 +123,7 @@ const BaseForm = (props: FormBase) => {
           autoComplete={formField?.autoComplete || formField.name}
           label={intl.formatMessage({ id: `forms.${formField.name}` })}
           autoFocus={formField.autoFocus}
+          disabled={formField.disabled}
           value={getIn(props.values, formField.name)}
           onChange={props.handleChange}
           onBlur={props.handleBlur}
@@ -157,6 +158,7 @@ const BaseForm = (props: FormBase) => {
           autoComplete={formField?.autoComplete || formField.name}
           label={intl.formatMessage({ id: `forms.${formField.name}` })}
           autoFocus={formField.autoFocus}
+          disabled={formField.disabled}
           value={getIn(props.values, formField.name)}
           onChange={props.handleChange}
           onBlur={props.handleBlur}
@@ -172,6 +174,7 @@ const BaseForm = (props: FormBase) => {
             <Checkbox 
               id={formField.name}
               name={formField.name}
+              disabled={formField.disabled}
               checked={getIn(props.values, formField.name)}
               onChange={props.handleChange}
               onBlur={props.handleBlur}
@@ -186,6 +189,7 @@ const BaseForm = (props: FormBase) => {
           disableFuture
           openTo="year"
           views={['year', 'month', 'day']}
+          disabled={formField.disabled}
           value={getIn(props.values, formField.name)}
           onChange={(value) => {
             props.setFieldValue(formField.name, value, true);
@@ -225,6 +229,7 @@ const BaseForm = (props: FormBase) => {
               name={formField.name}
               labelId={`${formField.name}-select-label`}
               label={intl.formatMessage({ id: `forms.${formField.name}` })}
+              disabled={formField.disabled}
               value={getIn(props.values, formField.name)}
               onChange={props.handleChange}
               onBlur={props.handleBlur}

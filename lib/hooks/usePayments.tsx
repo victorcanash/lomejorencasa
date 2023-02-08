@@ -62,6 +62,7 @@ const usePayments = () => {
       if (onError) {
         onError(errorMsg);
       }
+      setLoading(false);
       return;
     }
     setLoading(true);

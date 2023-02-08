@@ -22,7 +22,7 @@ type CheckoutPaymentFormProps = {
 const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   const { next, back, transactionError, setTransactionError } = props;
 
-  const { braintreeToken, setCheckoutPayment } = useAuthContext();
+  const { braintreeToken, setCheckoutPayment, isLogged } = useAuthContext();
 
   const intl = useIntl();
 
@@ -84,6 +84,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
                 style={{           
                   padding: '13px 5px 0px 5px',
                   marginTop: '10px',
+                  marginBottom: !isLogged() ? '25px' : undefined,
                 }}
               >
                 <DropIn
@@ -106,6 +107,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
                 />
               </div>
               {/* Remember Field */}
+              { isLogged() &&
               <FormControlLabel
                 label={intl.formatMessage({ id: 'forms.rememberPayment' })}
                 control={
@@ -115,8 +117,9 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
                     checked={rememberFieldValue} 
                     onChange={handleRememberField}
                   />
-                }
+                }      
               />
+              }
             </> : undefined,
         }
       ]}
