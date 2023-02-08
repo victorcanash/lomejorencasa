@@ -6,6 +6,7 @@ import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.co
 import envConfig from '@core/config/env.config';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
+import type { Page } from '@core/types/navigation';
 import type { CheckoutPayment } from '@core/types/checkout';
 import type { Order } from '@core/types/orders';
 import type { GuestUser } from '@core/types/user';
@@ -49,6 +50,43 @@ export const checkPaymentMethod = (dropin: Dropin) => {
       }
     });
   });
+};
+
+export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayment: CheckoutPayment, guestUser: GuestUser, cart: Cart, urlPage: Page) => {
+  return new Promise<true>((resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: getLanguageHeaders(currentLocale),
+      params: {
+        appName: envConfig.NEXT_PUBLIC_APP_NAME,
+        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
+        url: `${envConfig.NEXT_PUBLIC_APP_URL}${urlPage.path}`,
+      }
+    };
+    const body = {
+      paymentMethodNonce: checkoutPayment.methodPayload.nonce,
+      guestUser,
+      guestCart: {
+        items: cart.items.map((item) => {
+          return {
+            inventoryId: item.inventoryId,
+            quantity: item.quantity,
+          }
+        })
+      } as GuestCart
+    }
+    axios.post('payments/send-email/transaction', body, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve(true);
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Send Confirm Transaction Email ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      });
+  })
 };
 
 export const createTransaction = (token: string | undefined, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {

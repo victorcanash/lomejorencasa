@@ -191,6 +191,15 @@ export const pages: Pages = {
     },
   },
 
+  confirmation: {
+    path: '/confirmation',
+    filepath: '/confirmation',
+    protection: Protections.none,
+    type: PageTypes.link,
+    savePathOnLogin: {
+      enabled: false,
+    },
+  },
   activation: {
     path: '/activation',
     filepath: '/activation',

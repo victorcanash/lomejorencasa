@@ -6,14 +6,16 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import { FormFieldTypes } from '@core/constants/forms';
 import type { CartItem } from '@core/types/cart';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useCart from '@lib/hooks/useCart';
+import useForms from '@lib/hooks/useForms';
 import usePayments from '@lib/hooks/usePayments';
+import useCart from '@lib/hooks/useCart';
 import BaseForm from '@components/forms/BaseForm';
 import AddressDetail from '@components/checkout/details/AddressDetail';
 import CartDetail from '@components/cart/CartDetail';
@@ -28,12 +30,13 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   const { back, setTransactionError } = props;
 
   const { setLoading } = useAppContext();
-  const { user, checkoutPayment, getCardPayload, getPaypalPayload } = useAuthContext();
+  const { user, setUser, checkoutPayment, getCardPayload, getPaypalPayload, isLogged } = useAuthContext();
   const { cart, totalPrice } = useCartContext();
 
   const intl = useIntl();
 
-  const { createTransaction, errorMsg, successMsg } = usePayments();
+  const { checkoutConfirmFormValidation, userFieldsInitValues } = useForms();
+  const { sendConfirmTransactionEmail, createTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
 
   const [openDialog, setOpenDialog] = useState(false);
@@ -53,9 +56,15 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (values: { email: string } | undefined) => {
     if (setTransactionError) {
       setTransactionError('');
+    }
+    if (!isLogged() && values?.email) {
+      setUser({
+        ...user,
+        email: values.email,
+      });
     }
     checkCart(onSuccessCheckCart);
   };
@@ -64,14 +73,18 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedCart(changedCart);
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
-      createTransaction(onErrorCreateTransaction);
+      if (!isLogged()) {
+        sendConfirmTransactionEmail(onErrorTransaction);
+      } else {
+        createTransaction(onErrorTransaction);
+      }
     } else {
       setLoading(false);
       handleDialog();
     }
   };
 
-  const onErrorCreateTransaction = (message: string) => {
+  const onErrorTransaction = (message: string) => {
     if (setTransactionError) {
       setTransactionError(message);
     }
@@ -93,9 +106,23 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
         <>
           <BaseForm
             maxWidth="800px"
-            initialValues={{}}
+            initialValues={ !isLogged() ? {
+              email: user?.email || userFieldsInitValues.email,
+            } : {}}
+            validationSchema={!isLogged() ? checkoutConfirmFormValidation : undefined}
+            enableReinitialize={!isLogged() ? true : undefined}
             formFieldGroups={[
               {
+                descriptionTxt: !isLogged() ? {
+                  id: 'checkout.confirmEmail',
+                } : undefined,
+                formFields: !isLogged() ? [
+                  {
+                    name: 'email',
+                    type: FormFieldTypes.text,
+                    required: true,
+                  }
+                ] : undefined,
                 extraElements:
                   <>
                     <Grid container columnSpacing={5} rowSpacing={3}>

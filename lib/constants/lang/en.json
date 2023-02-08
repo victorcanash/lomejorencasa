@@ -234,6 +234,9 @@
   "forgot.metas.title": "Forgot Password",
   "forgot.metas.description": "Forgot password page",
 
+  "confirmation.metas.title": "Order Confirmation",
+  "confirmation.metas.description": "Order confirmation link",
+
   "activation.metas.title": "Account Activation",
   "activation.metas.description": "Account activation link",
   "activation.successes.default": "Your account is activated and you can login now. You can close this window.",
@@ -288,13 +291,16 @@
   "checkout.sections.payment": "Payment",
   "checkout.sections.confirm": "Confirmation",
   "checkout.paymentMethod": "Payment method",
+  "checkout.confirmEmail": "Antes de acabar has de introducir tu correo y hacer click al botón de confirmar.\nEntonces te enviaremos un enlace para poder finalizar tu compra.",
   "checkout.order": "Order",
   "checkout.confirmBtn": "Confirm",
   "checkout.successes.updateAddresses": "Updated addresses",
   "checkout.successes.checkPaymentMethod": "Checked payment method",
+  "checkout.successes.sendConfirmTransactionEmail": "Email de verificación enviado, al recibirlo deberás hacer click al enlace de confirmación para finalizar tu compra",
   "checkout.successes.createTransaction": "Created transaction",
   "checkout.successes.createOrder": "Order completed, you will receive an email with all order details",
   "checkout.errors.checkPaymentMethod": "Something went wrong, try again or select a different payment method",
+  "checkout.errors.sendConfirmTransactionEmail": "No se ha podido enviar el correo de confirmación, modifica tus datos o selecciona otro método de pago",
   "checkout.errors.createTransaction": "Failed proceeding to payment, modify your data or select a different payment method",
   "checkout.errors.insufficientFunds": "Failed proceeding to payment, insufficient funds",
   

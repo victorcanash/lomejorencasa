@@ -7,8 +7,10 @@ import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
 import type { Order } from '@core/types/orders';
 import type { GuestUser } from '@core/types/user';
+import type { CheckoutPayment } from '@core/types/checkout';
 import { 
-  checkPaymentMethod as checkPaymentMethodMW, 
+  checkPaymentMethod as checkPaymentMethodMW,
+  sendConfirmTransactionEmail as sendConfirmTransactionEmailMW,
   createTransaction as createTransactionMW, 
 } from '@core/utils/payments';
 
@@ -55,7 +57,7 @@ const usePayments = () => {
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
   };
 
-  const createTransaction = async (onError?: (message: string) => void) => {
+  const missingTransactionData = (onError?: (message: string) => void) => {
     if (!checkoutPayment || !user.shipping || !user.billing || !user.email || cart.items.length <= 0) {
       const errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
       setErrorMsg(errorMsg);
@@ -63,6 +65,50 @@ const usePayments = () => {
         onError(errorMsg);
       }
       setLoading(false);
+      return true;
+    }
+    return false;
+  }
+
+  const sendConfirmTransactionEmail = async (onError?: (message: string) => void) => {
+    if (missingTransactionData(onError)) {
+      return;
+    }
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await sendConfirmTransactionEmailMW( 
+      intl.locale, 
+      checkoutPayment as CheckoutPayment,
+      user as GuestUser,
+      cart,
+      pages.confirmation,
+    )
+      .then(() => {
+        onSendConfirmTransactionEmailSuccess();
+      }).catch((_error) => {
+        const errorMsg = intl.formatMessage({ id: 'checkout.errors.sendConfirmTransactionEmail' });
+        setErrorMsg(errorMsg);
+        setLoading(false);
+        if (onError) {
+          onError(errorMsg);
+        }
+      });
+  };
+
+  const onSendConfirmTransactionEmailSuccess = async () => {
+    router.push(pages.home.path);
+    removeCart();
+    setLoading(false);
+    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.sendConfirmTransactionEmail'}));
+    enqueueSnackbar(intl.formatMessage(
+      { id: 'checkout.successes.sendConfirmTransactionEmail' }), 
+      { variant: 'success' }
+    );
+  };
+
+  const createTransaction = async (onError?: (message: string) => void) => {
+    if (missingTransactionData(onError)) {
       return;
     }
     setLoading(true);
@@ -71,7 +117,7 @@ const usePayments = () => {
     await createTransactionMW(
       isLogged() ? token : undefined, 
       intl.locale, 
-      checkoutPayment,
+      checkoutPayment as CheckoutPayment,
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )
@@ -117,6 +163,7 @@ const usePayments = () => {
     errorMsg,
     successMsg,
     checkPaymentMethod,
+    sendConfirmTransactionEmail,
     createTransaction,
   };
 };

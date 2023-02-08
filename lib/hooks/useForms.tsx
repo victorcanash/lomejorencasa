@@ -326,6 +326,10 @@ const useForms = () => {
       .boolean(),
   });
 
+  const checkoutConfirmFormValidation = Yup.object().shape({
+    email: userFieldsValidation.email,
+  });
+
   const createFailedOrderFormValidation = Yup.object().shape({
     locale: orderFieldsValidation.locale,
     userId: orderFieldsValidation.userId,
@@ -447,6 +451,7 @@ const useForms = () => {
     updateUserFormValidation,
     contactUserFormValidation,
     checkoutAddressesFormValidation,
+    checkoutConfirmFormValidation,
     createFailedOrderFormValidation,
     createFailedOrderProductFormValidation,
     sendFailedOrderEmailFormValidation,

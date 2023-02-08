@@ -233,6 +233,9 @@
   
   "forgot.metas.title": "Contraseña Olvidada",
   "forgot.metas.description": "Página de contraseña olvidada",
+
+  "confirmation.metas.title": "Confirmación de Pedido",
+  "confirmation.metas.description": "Link de confimación de pedido",
   
   "activation.metas.title": "Activación de Cuenta",
   "activation.metas.description": "Link de activación de cuenta",
@@ -288,13 +291,16 @@
   "checkout.sections.payment": "Pago",
   "checkout.sections.confirm": "Confirmación",
   "checkout.paymentMethod": "Método de pago",
+  "checkout.confirmEmail": "Antes de acabar has de introducir tu correo y hacer click al botón de confirmar.\nEntonces te enviaremos un enlace para poder finalizar tu compra.",
   "checkout.order": "Pedido",
   "checkout.confirmBtn": "Confirmar",
   "checkout.successes.updateAddresses": "Direcciones actualizadas",
   "checkout.successes.checkPaymentMethod": "Método de pago verificado",
+  "checkout.successes.sendConfirmTransactionEmail": "Email de verificación enviado, al recibirlo deberás hacer click al enlace de confirmación para finalizar tu compra",
   "checkout.successes.createTransaction": "Transacción creada",
   "checkout.successes.createOrder": "Pedido completado, recibirás un email con todos sus detalles",
   "checkout.errors.checkPaymentMethod": "Algo falló, inténtalo otra vez o selecciona otro método de pago",
+  "checkout.errors.sendConfirmTransactionEmail": "No se ha podido enviar el correo de confirmación, modifica tus datos o selecciona otro método de pago",
   "checkout.errors.createTransaction": "No se ha podido proceder al pago, modifica tus datos o selecciona otro método de pago",
   "checkout.errors.insufficientFunds": "No se ha podido proceder al pago, saldo insuficiente",
   
