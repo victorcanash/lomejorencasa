@@ -93,6 +93,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
         <>
           <BaseForm
             maxWidth="800px"
+            initialValues={{}}
             formFieldGroups={[
               {
                 extraElements:
