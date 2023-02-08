@@ -153,8 +153,13 @@ const useForms = () => {
       .required(),
     userId: Yup
       .number()
-      .min(0)
-      .required(),
+      .min(0),
+    userEmail: Yup
+      .string()
+      .min(1),
+    userFirstName: Yup
+      .string()
+      .min(1),
     braintreeTransactionId: Yup
       .string()
       .min(1)
@@ -165,6 +170,8 @@ const useForms = () => {
     id: 0,
     locale: 'es',// intl.defaultLocale,
     userId: 0,
+    userEmail: '',
+    userFirstName: '',
     braintreeTransactionId: '',
   }
 
@@ -322,6 +329,7 @@ const useForms = () => {
   const createFailedOrderFormValidation = Yup.object().shape({
     locale: orderFieldsValidation.locale,
     userId: orderFieldsValidation.userId,
+    userEmail: orderFieldsValidation.userEmail,
     braintreeTransactionId: orderFieldsValidation.braintreeTransactionId,
     shipping: Yup.object().shape(addressFieldsValidation),
   });
@@ -332,8 +340,10 @@ const useForms = () => {
   });
   
   const sendFailedOrderEmailFormValidation = Yup.object().shape({
-    locale: orderFieldsValidation.locale,
     orderId: orderFieldsValidation.id,
+    locale: orderFieldsValidation.locale,
+    userEmail: orderFieldsValidation.userEmail,
+    userFirstName: orderFieldsValidation.userFirstName,
   });
 
   const manageProductFormValidation = Yup.object().shape({

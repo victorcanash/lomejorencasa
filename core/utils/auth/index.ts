@@ -3,9 +3,9 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
+import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
-import { Storages } from '@core/constants/storage';
 import type { User } from '@core/types/user';
 import type { 
   AuthLogin, 

@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import { Order, OrderFailedCreate } from '@core/types/orders';
+import type { Order, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
+import type { User } from '@core/types/user';
 import { 
   getOrders as getOrdersMW, 
   getOrder as getOrderMW,
@@ -27,7 +28,7 @@ const useOrders = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await getOrdersMW(token, page, 'id', 'desc', user?.id || -1)
+    await getOrdersMW(token, page, 'id', 'desc', (user as User)?.id || -1)
       .then((response: { orders: Order[], totalPages: number, currentPage: number }) => {
         onGetOrdersSuccess(response.orders, response.totalPages, response.currentPage, onSuccess);
       }).catch((error) => {
@@ -86,14 +87,11 @@ const useOrders = () => {
     setErrorMsg('');
     setSuccessMsg('');
     await createFailedOrderMW(token, order)
-      .then((response: { order: Order }) => {
+      .then((response: { order?: Order }) => {
         onCreateFailedOrderSuccess(response.order, onSuccess);
       }).catch((error) => {
         let errorMsg = error.message;
-        if (errorMsg.includes('Get order info error')) {
-          onCreateFailedOrderSuccess(undefined, onSuccess);
-          return;
-        } else if (errorMsg.includes('Braintree error')) {
+        if (errorMsg.includes('Braintree error')) {
           errorMsg = intl.formatMessage({ id: 'admin.errors.invalidOrderTransactionId' })
         }
         setErrorMsg(errorMsg);
@@ -109,11 +107,11 @@ const useOrders = () => {
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createOrder' }));
   }
 
-  const sendFailedOrderEmail = async (id: number, locale: string, onSuccess?: (order: Order) => void) => {
+  const sendFailedOrderEmail = async (order: OrderFailedSendEmail, onSuccess?: (order: Order) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await sendFailedOrderEmailMW(token, id, locale)
+    await sendFailedOrderEmailMW(token, order)
       .then((response: { order: Order }) => {
         onSendFailedOrderEmailSuccess(response.order, onSuccess);
       }).catch((error) => {

@@ -1,5 +1,6 @@
 import { ProductInventory } from '@core/types/products';
 import { UserAddress } from '@core/types/user';
+import { GuestCartItem } from '@core/types/cart';
 
 export type Order = {
   id: number,
@@ -52,13 +53,16 @@ export type OrderItem = {
 
 export type OrderFailedCreate = {
   locale: string,
-  userId: number,
+  userId?: number,
+  userEmail?: string,
   braintreeTransactionId: string,
   shipping: UserAddress,
-  products: OrderProductFailedCreate[],
+  products: GuestCartItem[],
 };
 
-export type OrderProductFailedCreate = {
-  quantity: number,
-  inventoryId: number,
-}
+export type OrderFailedSendEmail = {
+  orderId: number,
+  locale: string,
+  userEmail?: string,
+  userFirstName?: string,
+};

@@ -10,7 +10,8 @@ import Typography from '@mui/material/Typography';
 
 import { FormFieldTypes } from '@core/constants/forms';
 import { AddressTypes } from '@core/constants/addresses';
-import type { Order, OrderFailedCreate, OrderProductFailedCreate } from '@core/types/orders';
+import type { Order, OrderFailedCreate } from '@core/types/orders';
+import type { GuestCartItem } from '@core/types/cart';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
@@ -37,9 +38,9 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
   } = useForms();
   const { createFailedOrder, errorMsg, successMsg } = useOrders();
 
-  const [orderProducts, setOrderProducts] = useState<OrderProductFailedCreate[]>([]);
+  const [orderProducts, setOrderProducts] = useState<GuestCartItem[]>([]);
 
-  const onSuccessCreateOrderProduct = (orderProduct: OrderProductFailedCreate) => {
+  const onSuccessCreateOrderProduct = (orderProduct: GuestCartItem) => {
     setOrderProducts(current => [...current, orderProduct]);
   };
 
@@ -70,6 +71,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         initialValues={{
           locale: orderFieldsInitValues.locale,
           userId: orderFieldsInitValues.userId,
+          userEmail: orderFieldsInitValues.userEmail,
           braintreeTransactionId: orderFieldsInitValues.braintreeTransactionId,
           shipping: {
             id: -1,
@@ -110,7 +112,10 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
               {
                 name: 'userId',
                 type: FormFieldTypes.numeric,
-                required: true, 
+              },
+              {
+                name: 'userEmail',
+                type: FormFieldTypes.text,
               },
               {
                 name: 'braintreeTransactionId',

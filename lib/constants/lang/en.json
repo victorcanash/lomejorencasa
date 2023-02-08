@@ -437,6 +437,8 @@
   "forms.locale": "Language code",
   "forms.id": "ID",
   "forms.userId": "User ID",
+  "forms.userEmail": "User email address",
+  "forms.userFirstName": "User first name",
   "forms.categoryId": "Category ID",
   "forms.productId": "Product ID",
   "forms.inventoryId": "Inventory ID",

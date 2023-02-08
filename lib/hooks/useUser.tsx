@@ -19,7 +19,7 @@ import useAuth from '@lib/hooks/useAuth';
 
 const useUser = () => {
   const { setLoading } = useAppContext();
-  const { token, setUser } = useAuthContext();
+  const { token, user, setUser, isLogged } = useAuthContext();
 
   const router = useRouter();
   const intl = useIntl();
@@ -31,11 +31,11 @@ const useUser = () => {
 
   const [successMsg, setSuccessMsg] = useState('');
 
-  const manageUser = async (action: ManageActions.update | ManageActions.delete, user: User) => {
+  const manageUser = async (action: ManageActions.update | ManageActions.delete, newUser: User) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    manageUserMW(action, token, user)
+    manageUserMW(action, token, newUser)
       .then((response: {user: User}) => {
         onManageUserSuccess(action, response.user);
       }).catch((_error: Error) => {
@@ -45,9 +45,9 @@ const useUser = () => {
       });
   };
 
-  const onManageUserSuccess = (action: ManageActions.update | ManageActions.delete, user: User) => {
+  const onManageUserSuccess = (action: ManageActions.update | ManageActions.delete, newUser: User) => {
     if (action == ManageActions.update) {
-      setUser(user);
+      setUser(newUser);
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'settings.successes.updateUser' }));
     } else if (action == ManageActions.delete) {
@@ -56,21 +56,25 @@ const useUser = () => {
     }
   };
 
-  const updateUserAddresses = async (user: User, checkoutAddresses: CheckoutAddresses, onSuccess?: () => void) => {
+  const updateUserAddresses = async (checkoutAddresses: CheckoutAddresses, onSuccess?: () => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    updateUserAddressesMW(token, user, checkoutAddresses)
-      .then((response: {shipping: UserAddress, billing: UserAddress}) => {
-        onUpdateUserAddressesSuccess(user, response.shipping, response.billing, onSuccess);
-      }).catch((_error: Error) => {
-        const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
+    if (isLogged()) {
+      updateUserAddressesMW(token, user as User, checkoutAddresses)
+        .then((response: {shipping: UserAddress, billing: UserAddress}) => {
+          onUpdateUserAddressesSuccess(response.shipping, response.billing, onSuccess);
+        }).catch((_error: Error) => {
+          const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+          setErrorMsg(errorMsg);
+          setLoading(false);
+        });
+    } else {
+      onUpdateUserAddressesSuccess(checkoutAddresses.shipping, checkoutAddresses.billing, onSuccess);
+    }
   };
 
-  const onUpdateUserAddressesSuccess = (user: User, shipping: UserAddress, billing: UserAddress, onSuccess?: () => void) => {
+  const onUpdateUserAddressesSuccess = (shipping: UserAddress, billing: UserAddress, onSuccess?: () => void) => {
     setUser({
       ...user,
       shipping: shipping,
@@ -96,7 +100,7 @@ const useUser = () => {
     });
   };
 
-  const onSendUserContactEmailSuccess = (userContact: UserContact) => {
+  const onSendUserContactEmailSuccess = (_userContact: UserContact) => {
     router.push(pages.home.path);
     enqueueSnackbar(
       intl.formatMessage({ id: 'contact.successes.default' }), 

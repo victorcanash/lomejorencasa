@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { Order, OrderFailedCreate } from '@core/types/orders';
+import type { Order, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const getOrders = (token: string, page: number, sortBy: string, order: string, userId: number) => {
@@ -64,7 +64,7 @@ export const getOrder = (token: string, id: number) => {
 };
 
 export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
-  return new Promise<{order: Order}>(async (resolve, reject) => {
+  return new Promise<{order?: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
       params: {
@@ -85,12 +85,16 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Create Failed Order ERROR', error);
         logBackendError(errorMsg);
-        reject(new Error(errorMsg));
+        if (errorMsg.includes('Get order info error')) {
+          resolve({});
+        } else {
+          reject(new Error(errorMsg));
+        }
       }); 
   })
 };
 
-export const sendFailedOrderEmail = (token: string, id: number, locale: string) => {
+export const sendFailedOrderEmail = (token: string, order: OrderFailedSendEmail) => {
   return new Promise<{order: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
@@ -100,7 +104,7 @@ export const sendFailedOrderEmail = (token: string, id: number, locale: string) 
       },
       timeout: 15000,
     };
-    axios.post(`/orders/${id}/send-email/check`, { locale }, options)
+    axios.post(`/orders/${order.orderId}/send-email/check`, order, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({

@@ -37,7 +37,8 @@ const useAuth = () => {
     setToken, 
     setBraintreeToken, 
     user, 
-    setUser, 
+    setUser,
+    removeUser,
     prevLoginPath, 
     isProtectedPath, 
     isLogged 
@@ -123,7 +124,7 @@ const useAuth = () => {
 
     await logoutUser(token);
     setToken('');
-    setUser(undefined);
+    removeUser();
     removeCart();
     await getBraintreeToken().then(async (response: {braintreeToken: string}) => {
       setBraintreeToken(response.braintreeToken);
@@ -132,7 +133,11 @@ const useAuth = () => {
     });
 
     if (!isProtectedPath()) {
-      setLoading(false);
+      if (pages.checkout.filepath === router.pathname) {
+        router.push(pages.cart.path);
+      } else {
+        setLoading(false);
+      }
     }
   };
 

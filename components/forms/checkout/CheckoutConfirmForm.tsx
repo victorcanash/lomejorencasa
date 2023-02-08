@@ -81,7 +81,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   };
 
   const emptyCart = () => {
-    if (cart && cart.items && cart.items.length > 0) {
+    if (cart.items.length > 0) {
       return false;
     }
     return true;
@@ -89,7 +89,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
 
   return (
     <>
-      { user?.billing && user?.shipping && cart &&
+      { user.billing && user.shipping &&
         <>
           <BaseForm
             maxWidth="800px"

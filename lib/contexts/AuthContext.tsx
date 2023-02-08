@@ -5,7 +5,7 @@ import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-
 
 import { pages } from '@lib/constants/navigation';
 import { Protections } from '@core/constants/auth';
-import type { User } from '@core/types/user';
+import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';
 
 type ContextType = {
@@ -13,10 +13,11 @@ type ContextType = {
   setToken: Dispatch<SetStateAction<string>>,
   braintreeToken?: string,
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
-  user?: User,
-  setUser: Dispatch<SetStateAction<User | undefined>>,
+  user: User | GuestUser,
+  setUser: Dispatch<SetStateAction<User | GuestUser>>,
   checkoutPayment?: CheckoutPayment,
   setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment | undefined>>,
+  removeUser: () => void,
   getCardPayload: () => cardPaymentMethodPayload | undefined,
   getPaypalPayload: () => paypalPaymentMethodPayload | undefined,
   prevLoginPath?: string,
@@ -30,10 +31,11 @@ export const AuthContext = createContext<ContextType>({
   setToken: () => {},
   braintreeToken: '',
   setBraintreeToken: () => {},
-  user: undefined,
+  user: { email: undefined, shipping: undefined, billing: undefined },
   setUser: () => {},
   checkoutPayment: undefined,
   setCheckoutPayment: () => {},
+  removeUser: () => {},
   getCardPayload: () => undefined,
   getPaypalPayload: () => undefined,
   prevLoginPath: undefined,
@@ -56,9 +58,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [user, setUser] = useState<User | GuestUser>({ 
+    email: undefined, 
+    shipping: undefined, 
+    billing: undefined,
+  });
   const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment | undefined>(undefined);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
+
+  const removeUser = () => {
+    setUser({
+      email: undefined, 
+      shipping: undefined, 
+      billing: undefined,
+    } as GuestUser);
+  };
 
   const getCardPayload = () => {
     return checkoutPayment?.methodPayload as cardPaymentMethodPayload;
@@ -69,7 +83,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const isLogged = () => {
-    if (!token || !user) {
+    if (!token || !(user as User)?.id) {
       return false;
     }
     return true;
@@ -121,6 +135,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser,
         checkoutPayment,
         setCheckoutPayment,
+        removeUser,
         getCardPayload,
         getPaypalPayload,
         prevLoginPath: prevLoginPathRef.current,

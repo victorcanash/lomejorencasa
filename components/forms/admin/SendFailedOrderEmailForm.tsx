@@ -1,7 +1,7 @@
 // import { useRouter } from 'next/router'
 
 import { FormFieldTypes } from '@core/constants/forms';
-import type { Order } from '@core/types/orders';
+import type { Order, OrderFailedSendEmail } from '@core/types/orders';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
@@ -21,8 +21,8 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
   const { sendFailedOrderEmailFormValidation, orderFieldsInitValues } = useForms();
   const { sendFailedOrderEmail, errorMsg, successMsg } = useOrders();
 
-  const handleSubmit = async (values: { locale: string, orderId: number }) => {
-    sendFailedOrderEmail(values.orderId, values.locale, onSubmitSuccess);
+  const handleSubmit = async (values: OrderFailedSendEmail) => {
+    sendFailedOrderEmail(values, onSubmitSuccess);
   };
 
   const handleCancelBtn = () => {
@@ -34,9 +34,11 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
   return (
     <BaseForm 
       initialValues={{
-        locale: orderFieldsInitValues.locale,
         orderId: orderFieldsInitValues.id,
-      }}
+        locale: orderFieldsInitValues.locale,
+        userEmail: orderFieldsInitValues.userEmail,
+        userFirstName: orderFieldsInitValues.userFirstName,
+      } as OrderFailedSendEmail}
       validationSchema={sendFailedOrderEmailFormValidation}
       formFieldGroups={[
         {
@@ -44,6 +46,11 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
             id: 'forms.sendFailedOrderEmail.title',
           },
           formFields: [
+            {
+              name: 'orderId',
+              type: FormFieldTypes.numeric,
+              required: true, 
+            },
             {
               name: 'locale',
               type: FormFieldTypes.select,
@@ -66,10 +73,13 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
               ],       
             },
             {
-              name: 'orderId',
-              type: FormFieldTypes.numeric,
-              required: true, 
-            }
+              name: 'userEmail',
+              type: FormFieldTypes.text,
+            },
+            {
+              name: 'userFirstName',
+              type: FormFieldTypes.text,
+            },
           ],
         }
       ]}

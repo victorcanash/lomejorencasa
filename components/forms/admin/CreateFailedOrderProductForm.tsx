@@ -1,12 +1,12 @@
 import { FormFieldTypes } from '@core/constants/forms';
-import type { OrderProductFailedCreate } from '@core/types/orders';
+import type { GuestCartItem } from '@core/types/cart';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import BaseForm from '@components/forms/BaseForm';
 
 type CreateFailedOrderProductFormProps = {
-  onSubmitSuccess: (orderProduct: OrderProductFailedCreate) => void,
+  onSubmitSuccess: (orderProduct: GuestCartItem) => void,
 };
 
 const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) => {
@@ -14,13 +14,13 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
 
   const { createFailedOrderProductFormValidation, orderProductFieldsInitValues } = useForms();
 
-  const handleSubmit = async (values: OrderProductFailedCreate) => {
+  const handleSubmit = async (values: GuestCartItem) => {
     onSubmitSuccess(values)
   };
 
   return (
     <BaseForm 
-      initialValues={orderProductFieldsInitValues as OrderProductFailedCreate}
+      initialValues={orderProductFieldsInitValues as GuestCartItem}
       validationSchema={createFailedOrderProductFormValidation}
       formFieldGroups={[
         {

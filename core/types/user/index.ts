@@ -30,3 +30,9 @@ export type UserContact = {
   tlf?: string,
   comments: string,
 };
+
+export type GuestUser = {
+  email?: string,
+  shipping?: UserAddress,
+  billing?: UserAddress,
+}

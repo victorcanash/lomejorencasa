@@ -5,19 +5,23 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
-import { pages } from '@lib/constants/navigation';
 import type { Order } from '@core/types/orders';
+import type { GuestUser } from '@core/types/user';
 import { 
   checkPaymentMethod as checkPaymentMethodMW, 
   createTransaction as createTransactionMW, 
 } from '@core/utils/payments';
+
+import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 import useAuth from '@lib/hooks/useAuth';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
-  const { token, checkoutPayment } = useAuthContext();
+  const { token, user, checkoutPayment, isLogged } = useAuthContext();
+  const { cart, removeCart } = useCartContext();
 
   const router = useRouter();
   const intl = useIntl();
@@ -52,24 +56,29 @@ const usePayments = () => {
   };
 
   const createTransaction = async (onError?: (message: string) => void) => {
-    if (!checkoutPayment) {
-      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+    if (!checkoutPayment || !user.shipping || !user.billing || !user.email || cart.items.length <= 0) {
+      const errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
+      setErrorMsg(errorMsg);
+      if (onError) {
+        onError(errorMsg);
+      }
       return;
     }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await createTransactionMW(token, intl.locale, checkoutPayment)
-      .then((_response: { order: Order }) => {
+    await createTransactionMW(
+      isLogged() ? token : undefined, 
+      intl.locale, 
+      checkoutPayment,
+      !isLogged() ? user as GuestUser : undefined,
+      !isLogged() ? cart : undefined
+    )
+      .then((_response: { order?: Order }) => {
         onCreateTransactionSuccess();
       }).catch((error) => {
         let errorMsg = error.message;
-        if (errorMsg.includes('Create bigbuy order error') || 
-            errorMsg.includes('Get order info error')) {
-          onCreateTransactionSuccess();
-          return;
-        }
-        else if (errorMsg.includes('Insufficient Funds')) {
+        if (errorMsg.includes('Insufficient Funds')) {
           errorMsg = intl.formatMessage({ id: 'checkout.errors.insufficientFunds' });
         } else {
           errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
@@ -84,13 +93,18 @@ const usePayments = () => {
 
   const onCreateTransactionSuccess = async () => {
     router.push(pages.home.path);
-    await getLogged(() => {
-      // On success
+    if (isLogged()) {
+      await getLogged(() => {
+        // On success
+        setLoading(false);
+      }, async (_message: string) => {
+        // On error
+        await logout()
+      })
+    } else {
+      removeCart();
       setLoading(false);
-    }, async (_message: string) => {
-      // On error
-      await logout()
-    })
+    }
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.createTransaction'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.createOrder' }), 
