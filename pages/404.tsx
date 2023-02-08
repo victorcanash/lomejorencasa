@@ -21,6 +21,7 @@ const NotFound: NextPage = () => {
           titleId: 'notfound.metas.title',
           descriptionId: 'notfound.metas.description',
         }}
+        marginTop={true}
       />
 
       <ErrorPage title={intl.formatMessage({ id: 'notfound.h1' })} />

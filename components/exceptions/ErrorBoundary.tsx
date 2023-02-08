@@ -2,6 +2,9 @@ import { Component } from 'react';
 
 import { injectIntl, IntlShape } from 'react-intl';
 
+import { PageTypes } from '@core/constants/navigation';
+
+import PageHeader from '@components/ui/PageHeader';
 import ErrorPage from '@components/exceptions/ErrorPage';
 
 type ErrorBoundaryProps = {
@@ -26,7 +29,18 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <ErrorPage title={this.props.intl.formatMessage({ id: 'error.h1' })}/>
+        <>
+          <PageHeader
+            pageType={PageTypes.error}
+            metas={{
+              titleId: 'error.metas.title',
+              descriptionId: 'error.metas.description',
+            }}
+            marginTop={true}
+          />
+
+          <ErrorPage title={this.props.intl.formatMessage({ id: 'error.h1' })}/>
+        </>
       );
     }
 

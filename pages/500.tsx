@@ -21,6 +21,7 @@ const Error: NextPage = () => {
           titleId: 'error.metas.title',
           descriptionId: 'error.metas.description',
         }}
+        marginTop={true}
       />
 
       <ErrorPage title={intl.formatMessage({ id: 'error.h1' })} />

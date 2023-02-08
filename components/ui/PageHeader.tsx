@@ -42,7 +42,10 @@ const PageHeader = (props: PageHeaderProps) => {
         <meta name="description" content={description} />
       </Head>
 
-      { (pageType == PageTypes.main || pageType == PageTypes.admin) &&
+      { (pageType == PageTypes.main || 
+         pageType == PageTypes.admin || 
+         pageType == PageTypes.notFound || 
+         pageType == PageTypes.error) &&
         <>
           { marginTop &&
             <Box sx={{height: '16px'}} />
