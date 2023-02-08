@@ -21,12 +21,12 @@ const UpdateUserForm = () => {
   return (
     <BaseForm
       initialValues={{
-        id: user?.id || -1,
-        email: user?.email || userFieldsInitValues.email,
-        firstName: user?.firstName || userFieldsInitValues.firstName,
-        lastName: user?.lastName || userFieldsInitValues.lastName,
-        birthday: user?.birthday || userFieldsInitValues.birthday,
-        getEmails: user?.getEmails || userFieldsInitValues.getEmails,
+        id: (user as User)?.id || -1,
+        email: (user as User)?.email || userFieldsInitValues.email,
+        firstName: (user as User)?.firstName || userFieldsInitValues.firstName,
+        lastName: (user as User)?.lastName || userFieldsInitValues.lastName,
+        birthday: (user as User)?.birthday || userFieldsInitValues.birthday,
+        getEmails: (user as User)?.getEmails || userFieldsInitValues.getEmails,
       } as User}
       validationSchema={updateUserFormValidation}
       enableReinitialize={true}
