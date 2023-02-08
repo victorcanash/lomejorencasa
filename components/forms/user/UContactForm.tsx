@@ -1,6 +1,6 @@
 import envConfig from '@core/config/env.config';
 import { FormFieldTypes } from '@core/constants/forms';
-import type { UserContact } from '@core/types/user';
+import type { User, UserContact } from '@core/types/user';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -21,8 +21,8 @@ const UContactForm = () => {
   return (
     <BaseForm
       initialValues={{
-        email: user?.email || userFieldsInitValues.email,
-        firstName: user?.firstName || userFieldsInitValues.firstName,
+        email: (user as User)?.email || userFieldsInitValues.email,
+        firstName: (user as User)?.firstName || userFieldsInitValues.firstName,
         tlf: userFieldsInitValues.tlf,
         comments: userFieldsInitValues.comments,
       } as UserContact}
