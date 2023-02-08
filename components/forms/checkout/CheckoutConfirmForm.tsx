@@ -152,7 +152,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                         </Box>
                       </Grid>
                       <Grid item xs={12} sm={6}>
-                        <Typography component="h3" variant="h1" mb={2}>
+                        <Typography component="h3" variant="h1" mb={!emptyCart() ? 2 : 1}>
                           <FormattedMessage 
                             id="checkout.order" 
                           />
@@ -167,7 +167,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                           </>
                           :
                           <>
-                            <Typography component='div' variant='body1' mt={1}>
+                            <Typography component='div' variant='body1'>
                               <FormattedMessage 
                                 id="cart.noItems" 
                               />

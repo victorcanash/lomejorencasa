@@ -134,7 +134,7 @@ const useAuth = () => {
 
     if (!isProtectedPath()) {
       if (pages.checkout.filepath === router.pathname) {
-        router.push(pages.cart.path);
+        router.push(pages.home.path);
       } else {
         setLoading(false);
       }
