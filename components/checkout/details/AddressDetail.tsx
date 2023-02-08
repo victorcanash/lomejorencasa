@@ -1,6 +1,9 @@
+import { FormattedMessage } from 'react-intl';
+
 import Typography from '@mui/material/Typography';
 
-import { UserAddress } from '@core/types/user';
+import type { UserAddress } from '@core/types/user';
+import { getCountryCode } from '@core/utils/addresses';
 
 type AddressDetailProps = {
   address: UserAddress,
@@ -25,7 +28,7 @@ const AddressDetail = (props: AddressDetailProps) => {
       {`${address.postalCode} ${address.locality}`}
       </Typography>
       <Typography component="div" variant={variant}>
-        {address.country}
+        <FormattedMessage id={getCountryCode(address.country)} />
       </Typography>
     </>
   );
