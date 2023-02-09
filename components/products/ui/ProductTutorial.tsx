@@ -23,23 +23,23 @@ const ProductTutorial = (props: ProductTutorialProps) => {
     <>
       <Box 
         sx={{ 
-          maxWidth: maxWidth, 
+          maxWidth, 
           m: 'auto',
-          textAlign: 'center',
+          px: 3,
         }}
       >
         { titleId &&
-          <Typography component={"h3"} variant="h1" sx={{ mb: 3 }}>
+          <Typography component={"h3"} variant="h1" sx={{ mb: 4 }} textAlign="center">
             <FormattedMessage id={titleId} />
           </Typography> 
         }
-        <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+        <Typography component="div" variant="body1" sx={{ mb: 4 }}>
           <FormattedMessage id={textId} />
         </Typography>
       </Box>
       <Box 
         sx={{ 
-          maxWidth: maxWidth, 
+          maxWidth, 
           m: 'auto',
         }}
       >
