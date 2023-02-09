@@ -20,7 +20,7 @@ const EverfreshDetail = () => {
         >
           <ProductAccordion
             textId={'everfresh.details'}
-            itemsCount={6}
+            itemsCount={8}
           />
         </Grid>
         <Grid 
@@ -40,7 +40,7 @@ const EverfreshDetail = () => {
         >
           <ProductAccordion
             textId={'everfresh.dimensions'}
-            itemsCount={2}
+            itemsCount={3}
           />
         </Grid>
         <Grid 
@@ -51,6 +51,16 @@ const EverfreshDetail = () => {
           <ProductAccordion
             textId={'productDetail.shipping'}
             itemsCount={3}
+          />
+        </Grid>
+        <Grid 
+          item 
+          xs={12} 
+          sm={6}
+        >
+          <ProductAccordion
+            textId={'productDetail.refund'}
+            itemsCount={2}
           />
         </Grid>
       </Grid>
@@ -91,7 +101,7 @@ const EverfreshDetail = () => {
           xs={12} 
         > 
           <ProductTutorial
-            textId="everfresh.videoComment.2" 
+            textId="everfresh.videoComment.3" 
             source={{ 
               type: 'video',
               src: require('../../../public/videos/everfresh/everfresh3.mp4'),

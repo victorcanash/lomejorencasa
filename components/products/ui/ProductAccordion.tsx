@@ -31,10 +31,14 @@ const ProductAccordion = (props: ProductAccordionProps) => {
           </Typography>       
         </AccordionDetails>
       );
-      if (textId == 'productDetail.shipping' && i == itemsCount -1) {
+      if ((textId == 'productDetail.shipping' || textId == 'productDetail.refund') 
+          && i == itemsCount -1) {
         items.push(
           <AccordionDetails key={`${i}.link`}>
-            <Link href={pages.orderList.path} variant="body1">
+            <Link 
+              href={textId == 'productDetail.shipping' ? pages.orderList.path : pages.contact.path} 
+              variant="body1"
+            >
               <FormattedMessage id={`${textId}.${i + 1}.link`} />
             </Link>
           </AccordionDetails>

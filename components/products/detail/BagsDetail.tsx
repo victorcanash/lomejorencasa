@@ -51,6 +51,16 @@ const BagsDetail = () => {
             itemsCount={3}
           />
         </Grid>
+        <Grid 
+          item 
+          xs={12} 
+          sm={6}
+        >
+          <ProductAccordion
+            textId={'productDetail.refund'}
+            itemsCount={2}
+          />
+        </Grid>
       </Grid>
     </>
   );
