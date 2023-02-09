@@ -7,6 +7,11 @@ const nextConfig = {
       'ecommerce-vc-api-eqhxa.ondigitalocean.app',
     ],
   },
+  i18n: {
+    locales: ['es'],
+    defaultLocale: 'es',
+    localeDetection: false,
+  },
 };
 
 import withVideos from 'next-videos';
