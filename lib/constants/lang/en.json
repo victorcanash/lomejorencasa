@@ -243,9 +243,6 @@
   "forgot.metas.title": "Forgot Password",
   "forgot.metas.description": "Forgot password page",
 
-  "confirmation.metas.title": "Order Confirmation",
-  "confirmation.metas.description": "Order confirmation link",
-
   "activation.metas.title": "Account Activation",
   "activation.metas.description": "Account activation link",
   "activation.successes.default": "Your account is activated and you can login now. You can close this window.",

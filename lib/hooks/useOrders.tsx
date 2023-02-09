@@ -105,7 +105,7 @@ const useOrders = () => {
     }
     setLoading(false);
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createOrder' }));
-  }
+  };
 
   const sendFailedOrderEmail = async (order: OrderFailedSendEmail, onSuccess?: (order: Order) => void) => {
     setLoading(true);
@@ -127,7 +127,7 @@ const useOrders = () => {
     }
     setLoading(false);
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.sendOrderEmail' }));
-  }
+  };
 
   return {
     errorMsg,

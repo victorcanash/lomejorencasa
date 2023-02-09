@@ -82,7 +82,7 @@ const usePayments = () => {
       checkoutPayment as CheckoutPayment,
       user as GuestUser,
       cart,
-      pages.confirmation,
+      pages.checkout,
     )
       .then(() => {
         onSendConfirmTransactionEmailSuccess();

@@ -26,7 +26,6 @@ export type Pages = {
   orderDetail: Page,
   settings: Page,
 
-  confirmation: Page,
   activation: Page,
   reset: Page,
   newemail: Page,
