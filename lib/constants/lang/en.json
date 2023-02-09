@@ -300,7 +300,7 @@
   "checkout.sections.payment": "Payment",
   "checkout.sections.confirm": "Confirmation",
   "checkout.paymentMethod": "Payment method",
-  "checkout.confirmEmail": "Antes de acabar has de introducir tu correo y hacer click al botón de confirmar.\nEntonces te enviaremos un enlace para poder finalizar tu compra.",
+  "checkout.confirmEmail": "Antes de acabar has de introducir tu correo y hacer click al botón de confirmar.\n\nEntonces te enviaremos un enlace para poder finalizar tu compra.",
   "checkout.order": "Order",
   "checkout.confirmBtn": "Confirm",
   "checkout.successes.updateAddresses": "Updated addresses",
