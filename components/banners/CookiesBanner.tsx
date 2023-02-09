@@ -33,7 +33,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
   return (
     <Backdrop
       sx={{ 
-        backgroundColor: 'rgba(0, 0, 0, 1)', 
+        backgroundColor: 'rgba(0, 0, 0, 0.8)', 
         color: '#FFFFFF',
         zIndex: (theme) => theme.zIndex.drawer + 1,
         height: '30px',
