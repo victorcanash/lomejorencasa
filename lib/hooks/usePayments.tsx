@@ -99,11 +99,10 @@ const usePayments = () => {
   const onSendConfirmTransactionEmailSuccess = async () => {
     router.push(pages.home.path);
     removeCart();
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.sendConfirmTransactionEmail'}));
+    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.sendEmail'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.sendConfirmTransactionEmail' }), 
-      { variant: 'success' }
+      { variant: 'success', autoHideDuration: 10000 }
     );
   };
 
@@ -141,21 +140,15 @@ const usePayments = () => {
   const onCreateTransactionSuccess = async () => {
     router.push(pages.home.path);
     if (isLogged()) {
-      await getLogged(() => {
-        // On success
-        setLoading(false);
-      }, async (_message: string) => {
+      await getLogged(undefined, async (_message: string) => {
         // On error
-        await logout()
-      })
-    } else {
-      removeCart();
-      setLoading(false);
+        await logout();
+      });
     }
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.createTransaction'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.createOrder' }), 
-      { variant: 'success' }
+      { variant: 'success', autoHideDuration: 10000 }
     );
   };
 

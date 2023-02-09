@@ -11,7 +11,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 
-import { CartItem } from '@core/types/cart';
+import type { CartItem } from '@core/types/cart';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {

@@ -94,7 +94,7 @@ function MyApp(props: MyAppProps) {
               <ThemeProvider theme={theme}>
                 {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
                 <CssBaseline />
-                <SnackbarProvider maxSnack={3}>
+                <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
                   <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
                     
                     <ErrorBoundary>

@@ -6,20 +6,19 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import { FormFieldTypes } from '@core/constants/forms';
 import type { CartItem } from '@core/types/cart';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useForms from '@lib/hooks/useForms';
 import usePayments from '@lib/hooks/usePayments';
 import useCart from '@lib/hooks/useCart';
 import BaseForm from '@components/forms/BaseForm';
 import AddressDetail from '@components/checkout/details/AddressDetail';
 import CartDetail from '@components/cart/CartDetail';
 import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
+import CheckoutEmailDialog from '@components/dialogs/CheckoutEmailDialog';
 
 type CheckoutConfirmFormProps = {
   back?: () => void,
@@ -35,16 +34,20 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
 
   const intl = useIntl();
 
-  const { checkoutConfirmFormValidation, userFieldsInitValues } = useForms();
   const { sendConfirmTransactionEmail, createTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
 
-  const [openDialog, setOpenDialog] = useState(false);
+  const [openCartDialog, setOpenCartDialog] = useState(false);
   const [changedCart, setChangedCart] = useState(false);
   const [changedItemsByInventory, setChangedItemsByInventory] = useState<CartItem[]>([]);
+  const [openEmailDialog, setOpenEmailDialog] = useState(false);
 
-  const handleDialog = () => {
-    setOpenDialog(!openDialog);
+  const handleCartDialog = () => {
+    setOpenCartDialog(!openCartDialog);
+  };
+
+  const handleEmailDialog = () => {
+    setOpenEmailDialog(!openEmailDialog);
   };
 
   const handleBack = () => {
@@ -56,15 +59,9 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     }
   };
 
-  const handleSubmit = async (values: { email: string } | undefined) => {
+  const handleSubmit = async () => {
     if (setTransactionError) {
       setTransactionError('');
-    }
-    if (!isLogged() && values?.email) {
-      setUser({
-        ...user,
-        email: values.email,
-      });
     }
     checkCart(onSuccessCheckCart);
   };
@@ -74,14 +71,23 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
       if (!isLogged()) {
-        sendConfirmTransactionEmail(onErrorTransaction);
+        setLoading(false);
+        handleEmailDialog();
       } else {
         createTransaction(onErrorTransaction);
       }
     } else {
       setLoading(false);
-      handleDialog();
+      handleCartDialog();
     }
+  };
+
+  const onSendEmail = (email: string) => {
+    setUser({
+      ...user,
+      email,
+    });
+    sendConfirmTransactionEmail(onErrorTransaction);
   };
 
   const onErrorTransaction = (message: string) => {
@@ -106,23 +112,9 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
         <>
           <BaseForm
             maxWidth="800px"
-            initialValues={ !isLogged() ? {
-              email: user?.email || userFieldsInitValues.email,
-            } : {}}
-            validationSchema={!isLogged() ? checkoutConfirmFormValidation : undefined}
-            enableReinitialize={!isLogged() ? true : undefined}
+            initialValues={{}}
             formFieldGroups={[
               {
-                descriptionTxt: !isLogged() ? {
-                  id: 'checkout.confirmEmail',
-                } : undefined,
-                formFields: !isLogged() ? [
-                  {
-                    name: 'email',
-                    type: FormFieldTypes.text,
-                    required: true,
-                  }
-                ] : undefined,
                 extraElements:
                   <>
                     <Grid container columnSpacing={5} rowSpacing={3}>
@@ -227,12 +219,20 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
           />
 
           <CheckedCartDialog
-            open={openDialog}
-            handleDialog={handleDialog}
+            open={openCartDialog}
+            handleDialog={handleCartDialog}
             changedCart={changedCart}
             changedItemsByInventory={changedItemsByInventory}
             message={intl.formatMessage({ id: 'dialogs.checkedCart.content.checkoutPage' })}
           />
+
+          { !isLogged() &&
+            <CheckoutEmailDialog
+              open={openEmailDialog}
+              handleDialog={handleEmailDialog}
+              onSend={onSendEmail}
+            />
+          }
         </>
       }
     </>
