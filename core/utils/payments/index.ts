@@ -63,7 +63,7 @@ export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayme
       }
     };
     const body = {
-      paymentMethodNonce: checkoutPayment.methodPayload.nonce,
+      paymentPayload: checkoutPayment.methodPayload,
       guestUser,
       guestCart: {
         items: cart.items.map((item) => {
