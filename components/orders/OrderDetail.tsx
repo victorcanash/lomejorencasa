@@ -75,7 +75,7 @@ const OrderDetail = (props: OrderDetailProps) => {
               address={{
                 id: 0,
                 userId: 0,
-                type: AddressTypes.SHIPPING,
+                type: AddressTypes.shipping,
                 firstName: order.bigbuy.shipping.firstName,
                 lastName: order.bigbuy.shipping.lastName,
                 addressLine1: order.bigbuy.shipping.addressLine1,
@@ -100,7 +100,7 @@ const OrderDetail = (props: OrderDetailProps) => {
                 address={{
                   id: 0,
                   userId: 0,
-                  type: AddressTypes.BILLING,
+                  type: AddressTypes.billing,
                   firstName: order.braintree.billing.firstName,
                   lastName: order.braintree.billing.lastName,
                   addressLine1: order.braintree.billing.addressLine1,

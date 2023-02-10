@@ -4,9 +4,11 @@ import dayjs from 'dayjs';
 
 import { FormFieldTypes } from '@core/constants/forms';
 import { CountryOptions } from '@core/constants/addresses';
+import { ContactTypes } from '@core/constants/contact';
 import type { FormField } from '@core/types/forms';
 import { getCountryName } from '@core/utils/addresses';
 import { subtractYears } from '@core/utils/dates';
+import { getContactTypeName } from '@core/utils/contact';
 
 const useForms = () => {
   const intl = useIntl();
@@ -100,6 +102,18 @@ const useForms = () => {
     remember: true,
     tlf: '',
     comments: '',
+  };
+
+  const contactFieldsValidation = {
+    type: Yup
+      .string()
+      .min(3)
+      .max(30)
+      .required(),
+  };
+
+  const contactFieldsInitValues = {
+    type: getContactTypeName(Object.keys(ContactTypes)[0]),
   };
 
   const addressFieldsValidation = {
@@ -309,10 +323,19 @@ const useForms = () => {
   });
 
   const contactUserFormValidation = Yup.object().shape({
+    type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
     firstName: userFieldsValidation.firstName,
-    tlf: userFieldsValidation.tlf,
     comments: userFieldsValidation.comments,
+  });
+
+  const contactOrderUserFormValidation = Yup.object().shape({
+    type: contactFieldsValidation.type,
+    email: userFieldsValidation.email,
+    firstName: userFieldsValidation.firstName,
+    orderId: orderFieldsValidation.id,
+    comments: userFieldsValidation.comments,
+    // imgs,
   });
 
   const checkoutAddressesFormValidation = Yup.object().shape({
@@ -435,6 +458,7 @@ const useForms = () => {
     initForms,
     
     userFieldsInitValues,
+    contactFieldsInitValues,
     addressFieldsInitValues,
     orderFieldsInitValues,
     orderProductFieldsInitValues,
@@ -450,6 +474,7 @@ const useForms = () => {
     resetPasswordFormValidation,
     updateUserFormValidation,
     contactUserFormValidation,
+    contactOrderUserFormValidation,
     checkoutAddressesFormValidation,
     checkoutConfirmFormValidation,
     createFailedOrderFormValidation,

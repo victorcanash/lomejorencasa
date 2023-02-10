@@ -1,6 +1,6 @@
 export enum AddressTypes {
-  SHIPPING = 'shipping',
-  BILLING = 'billing',
+  shipping = 'shipping',
+  billing = 'billing',
 }
 
 export enum CountryOptions {

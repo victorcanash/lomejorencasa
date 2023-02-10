@@ -212,41 +212,39 @@ const BaseForm = (props: FormBase) => {
       );
     } else if (formField.type == FormFieldTypes.select) {
       return (
-        <>
-          <FormControl
-            fullWidth 
-            margin="normal"
+        <FormControl
+          fullWidth 
+          margin="normal"
+        >
+          <InputLabel id={`${formField.name}-select-label`}>
+            <FormattedMessage 
+              id={`forms.${formField.name}`}
+            />
+          </InputLabel>
+          <Select
+            required={formField.required}
+            fullWidth
+            id={formField.name}
+            name={formField.name}
+            labelId={`${formField.name}-select-label`}
+            label={intl.formatMessage({ id: `forms.${formField.name}` })}
+            disabled={formField.disabled}
+            value={getIn(props.values, formField.name)}
+            onChange={(e: any) => { props.handleChange(e); handleChange(e); }}
+            onBlur={props.handleBlur}
+            error={getIn(props.touched, formField.name) && Boolean(getIn(props.errors, formField.name))}
           >
-            <InputLabel id={`${formField.name}-select-label`}>
-              <FormattedMessage 
-                id={`forms.${formField.name}`}
-              />
-            </InputLabel>
-            <Select
-              required={formField.required}
-              fullWidth
-              id={formField.name}
-              name={formField.name}
-              labelId={`${formField.name}-select-label`}
-              label={intl.formatMessage({ id: `forms.${formField.name}` })}
-              disabled={formField.disabled}
-              value={getIn(props.values, formField.name)}
-              onChange={props.handleChange}
-              onBlur={props.handleBlur}
-              error={getIn(props.touched, formField.name) && Boolean(getIn(props.errors, formField.name))}
-            >
-              { formField.menuItems?.map((menuItem) => (
-                <MenuItem key={menuItem.value} value={menuItem.value}>
-                  <FormattedMessage 
-                    id={menuItem.text?.id || menuItem.value.toString()} 
-                    defaultMessage={menuItem.value.toString()}
-                    values={menuItem.text?.values}
-                  />
-                </MenuItem>
-              ))}   
-            </Select>
-          </FormControl>
-        </>
+            { formField.menuItems?.map((menuItem) => (
+              <MenuItem key={menuItem.value} value={menuItem.value}>
+                <FormattedMessage 
+                  id={menuItem.text?.id || menuItem.value.toString()} 
+                  defaultMessage={menuItem.value.toString()}
+                  values={menuItem.text?.values}
+                />
+              </MenuItem>
+            ))}   
+          </Select>
+        </FormControl>
       );
     }
   };

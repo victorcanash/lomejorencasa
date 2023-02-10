@@ -34,7 +34,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
     if (event.target.id === 'sameAsShipping') {
-      setHiddenBilling(event.target.checked)
+      setHiddenBilling(event.target.checked);
     }
   };
 
@@ -66,7 +66,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
         shipping: {
           id: user.shipping?.id || -1,
           userId: user.shipping?.userId || (user as User)?.id || -1,
-          type: user.shipping?.type || AddressTypes.SHIPPING,
+          type: user.shipping?.type || AddressTypes.shipping,
           firstName: user.shipping?.firstName || (user as User)?.firstName || addressFieldsInitValues.firstName,
           lastName: user.shipping?.lastName || (user as User)?.lastName || addressFieldsInitValues.lastName,
           addressLine1: user.shipping?.addressLine1 || addressFieldsInitValues.addressLine1,
@@ -78,7 +78,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
         billing: {
           id: user.billing?.id || -1,
           userId: user.billing?.userId || (user as User)?.id || -1,
-          type: user.billing?.type || AddressTypes.BILLING,
+          type: user.billing?.type || AddressTypes.billing,
           firstName: user.billing?.firstName || (user as User)?.firstName || addressFieldsInitValues.firstName,
           lastName: user.billing?.lastName || (user as User)?.lastName || addressFieldsInitValues.lastName,
           addressLine1: user.billing?.addressLine1 || addressFieldsInitValues.addressLine1,
@@ -98,7 +98,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
             id: 'forms.shipping',
             textAlign: 'center',
           },
-          formFields: addressFormFields(AddressTypes.SHIPPING),
+          formFields: addressFormFields(AddressTypes.shipping),
         },
         {
           titleTxt: {
@@ -111,7 +111,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
                 name: 'sameAsShipping',
                 type: FormFieldTypes.checkbox,
               },
-              ...addressFormFields(AddressTypes.BILLING)
+              ...addressFormFields(AddressTypes.billing)
             ] : 
             [
               {

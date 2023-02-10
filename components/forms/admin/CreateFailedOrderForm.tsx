@@ -76,7 +76,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
           shipping: {
             id: -1,
             userId: -1,
-            type: AddressTypes.SHIPPING,
+            type: AddressTypes.shipping,
             ...addressFieldsInitValues,
           }, 
           products: [],
@@ -122,7 +122,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 type: FormFieldTypes.text,
                 required: true,
               },
-              ...addressFormFields(AddressTypes.SHIPPING)
+              ...addressFormFields(AddressTypes.shipping)
             ],
           }
         ]}

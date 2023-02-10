@@ -1,4 +1,5 @@
 import { AddressTypes, CountryOptions } from '@core/constants/addresses'
+import { ContactTypes } from '@core/constants/contact';
 
 export type User = {
   id: number,
@@ -25,10 +26,12 @@ export type UserAddress = {
 };
 
 export type UserContact = {
+  type: ContactTypes,
   email: string,
   firstName: string,
-  tlf?: string,
+  orderId?: number,
   comments: string,
+  imgs?: string[],
 };
 
 export type GuestUser = {
