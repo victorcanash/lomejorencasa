@@ -38,17 +38,7 @@ export const checkCart = (token: string | undefined, cart: Cart) => {
             });
           // Guest cart
           } else if ((response.data.cart as GuestCartCheck)?.items) {
-            // Update to local storage
-            const guestCart = {
-              items: (response.data.cart as GuestCartCheck).items.map((item) => {
-                return {
-                  inventoryId: item.inventory.id,
-                  quantity: item.quantity,
-                }
-              })
-            } as GuestCart
-            await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
-            // Convert GuestCartCheck and GuestCartCheckItem[] to Cart and CartItem[]
+            setGuestCart(response.data.cart as GuestCartCheck);
             resolve({
               cart: {
                 id: -1,
@@ -191,6 +181,18 @@ export const deleteGuestCartItem = async (guestCart: GuestCart, cartItem: CartIt
       return;
     }
   });
+  await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
+};
+
+export const setGuestCart = async (cart: Cart | GuestCartCheck) => {
+  const guestCart = {
+    items: cart.items.map((item) => {
+      return {
+        inventoryId: item.inventory.id,
+        quantity: item.quantity,
+      }
+    })
+  } as GuestCart
   await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
 };
 

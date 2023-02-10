@@ -9,6 +9,7 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 
 import { FormFieldTypes } from '@core/constants/forms';
+import type { AuthLogin } from '@core/types/auth';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
@@ -27,7 +28,7 @@ const Transition = forwardRef(function Transition(
 type CheckoutEmailDialogProps = {
   open: boolean,
   handleDialog: () => void,
-  onSend: (email: string) => void,
+  onSend: (authLogin: AuthLogin) => void,
 };
 
 const CheckoutEmailDialog = (props: CheckoutEmailDialogProps) => {
@@ -45,7 +46,10 @@ const CheckoutEmailDialog = (props: CheckoutEmailDialogProps) => {
 
   const handleSubmit = async (values: { email: string }) => {
     handleDialog();
-    onSend(values.email)
+    onSend({
+      email: values.email,
+      password: 'guest_user',
+    } as AuthLogin)
   };
 
   return (

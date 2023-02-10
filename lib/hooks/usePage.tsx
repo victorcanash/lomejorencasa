@@ -6,7 +6,7 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { isAdminUser } from '@core/utils/auth';
 
-const usePage = () => {
+const usePage = (setLoaded = true) => {
   const { initialized, setLoading } = useAppContext();
   const { token, isLogged, isProtectedPath, isAdminPath } = useAuthContext();
 
@@ -15,9 +15,11 @@ const usePage = () => {
   const router = useRouter();
 
   const onCheckSuccess = useCallback(() => {
-    setLoading(false); 
+    if (setLoaded) {
+      setLoading(false); 
+    }
     setChecked(true);
-  }, [setLoading]);
+  }, [setLoaded, setLoading]);
 
   const checkPage = useCallback(async () => {
     if (isProtectedPath() && !isLogged()) {

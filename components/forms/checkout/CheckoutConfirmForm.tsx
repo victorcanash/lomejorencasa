@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { CartItem } from '@core/types/cart';
+import type { AuthLogin } from '@core/types/auth';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -23,13 +24,14 @@ import CheckoutEmailDialog from '@components/dialogs/CheckoutEmailDialog';
 type CheckoutConfirmFormProps = {
   back?: () => void,
   setTransactionError?: Dispatch<SetStateAction<string>>,
+  confirmToken: string,
 };
 
 const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
-  const { back, setTransactionError } = props;
+  const { back, setTransactionError, confirmToken } = props;
 
   const { setLoading } = useAppContext();
-  const { user, setUser, checkoutPayment, getCardPayload, getPaypalPayload, isLogged } = useAuthContext();
+  const { user, checkoutPayment, getCardPayload, getPaypalPayload, isLogged } = useAuthContext();
   const { cart, totalPrice } = useCartContext();
 
   const intl = useIntl();
@@ -70,11 +72,11 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedCart(changedCart);
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
-      if (!isLogged()) {
+      if (!emptyConfirmToken() || isLogged()) {
+        createTransaction(onErrorTransaction);
+      } else {
         setLoading(false);
         handleEmailDialog();
-      } else {
-        createTransaction(onErrorTransaction);
       }
     } else {
       setLoading(false);
@@ -82,12 +84,8 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     }
   };
 
-  const onSendEmail = (email: string) => {
-    setUser({
-      ...user,
-      email,
-    });
-    sendConfirmTransactionEmail(onErrorTransaction);
+  const onSendEmail = (authLogin: AuthLogin) => {
+    sendConfirmTransactionEmail(authLogin, onErrorTransaction);
   };
 
   const onErrorTransaction = (message: string) => {
@@ -105,6 +103,13 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     }
     return true;
   };
+
+  const emptyConfirmToken = () => {
+    if (confirmToken !== '') {
+      return false;
+    }
+    return true;
+  }
 
   return (
     <>
@@ -226,7 +231,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
             message={intl.formatMessage({ id: 'dialogs.checkedCart.content.checkoutPage' })}
           />
 
-          { !isLogged() &&
+          { !isLogged() && emptyConfirmToken() &&
             <CheckoutEmailDialog
               open={openEmailDialog}
               handleDialog={handleEmailDialog}
