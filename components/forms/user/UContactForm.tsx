@@ -1,9 +1,15 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+
+import { FormattedMessage } from 'react-intl';
+
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 import { FormFieldTypes } from '@core/constants/forms';
-import { ContactTypes } from '@core/constants/contact';
+import { ContactTypes, maxContactFiles } from '@core/constants/contact';
 import type { User, UserContact } from '@core/types/user';
 import type { FormField } from '@core/types/forms';
+import type { UploadFile } from '@core/types/upload';
 import { getContactTypeName } from '@core/utils/contact';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
@@ -11,6 +17,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';
 import BaseForm from '@components/forms/BaseForm';
+import ImagesDetail from '@components/admin/details/ImagesDetail';
 
 const UContactForm = () => {
   const { user } = useAuthContext();
@@ -24,10 +31,40 @@ const UContactForm = () => {
   } = useForms();
   const { sendUserContactEmail, errorMsg, successMsg } = useUser();
 
+  const uploadImgsInputRef = useRef<HTMLInputElement | null>(null);
+
   const [contactType, setContactType] = useState(contactFieldsInitValues.type);
+  const [uploadImgs, setUploadImgs] = useState<UploadFile[]>([]);
+
+  const maxWidth = '500px';
+
+  // on set files to the upload input we add it in uploadFiles
+  const handleChangeUploadImgsInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = event.target.files;
+    if (files && files.length > 0) {
+      Array.from(files).forEach((file, index) => {
+        if (index < maxContactFiles) {
+          setUploadImgs(current => [...current, { 
+            url: URL.createObjectURL(file),
+            file: file,
+          }]);
+        }
+      })
+    }
+    if (uploadImgsInputRef.current) {
+      uploadImgsInputRef.current.value = '';
+    }
+  };
+
+  // on click the delete button from a uploaded img we remove it from uploadImgs
+  const handleClickDeleteUploadImgBtn = (uploadImgIndex: number) => {
+    setUploadImgs(
+      uploadImgs.filter((_item, index) => index !== uploadImgIndex)
+    );
+  };
 
   const handleSubmit = async (values: UserContact) => {
-    sendUserContactEmail(values);
+    sendUserContactEmail(values, uploadImgs);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -92,13 +129,13 @@ const UContactForm = () => {
 
   return (
     <BaseForm
+      maxWidth={maxWidth} 
       initialValues={{
         type: contactFieldsInitValues.type,
         email: (user as User)?.email || userFieldsInitValues.email,
         firstName: (user as User)?.firstName || userFieldsInitValues.firstName,
         orderId: orderFieldsInitValues.id,
         comments: userFieldsInitValues.comments,
-        // imgs
       } as UserContact}
       validationSchema={contactType === ContactTypes.normal ? contactUserFormValidation : contactOrderUserFormValidation}
       enableReinitialize={true}
@@ -109,6 +146,55 @@ const UContactForm = () => {
             id: getDescriptionTxtId(),
           },
           formFields: getFormFields(),
+          extraElements: contactType === ContactTypes.refundOrder ?
+          <>
+            { uploadImgs && uploadImgs.length > 0 &&
+              <Box
+                sx={{
+                  maxWidth: maxWidth, 
+                  margin: 'auto',
+                }}              
+              >
+                <ImagesDetail
+                  imgSources={uploadImgs.map((item) => { return item.url })}
+                  getImgActionComponent={(srcImgIndex: number) => {
+                    return (
+                      <Button variant="contained" onClick={()=>handleClickDeleteUploadImgBtn(srcImgIndex)}>
+                        <FormattedMessage 
+                          id="app.removeBtn" 
+                        />
+                      </Button>
+                    )
+                  }}
+                />
+              </Box>
+            }
+            <Box
+              sx={{
+                maxWidth: maxWidth,
+                margin: 'auto',
+              }}
+            >
+              <Button 
+                variant="contained" 
+                fullWidth
+                component="label" 
+                disabled={uploadImgs.length >= maxContactFiles}
+              >
+                <FormattedMessage 
+                  id="forms.manageProductImgs.upload" 
+                />
+                <input 
+                  ref={uploadImgsInputRef} 
+                  hidden
+                  accept=".png, .jpg, .jpeg"
+                  multiple 
+                  type="file" 
+                  onChange={handleChangeUploadImgsInput} 
+                />
+              </Button>
+            </Box>
+          </> : undefined,
         }
       ]}
       formButtons={{

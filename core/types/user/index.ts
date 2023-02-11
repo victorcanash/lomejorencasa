@@ -31,7 +31,6 @@ export type UserContact = {
   firstName: string,
   orderId?: number,
   comments: string,
-  imgs?: string[],
 };
 
 export type GuestUser = {

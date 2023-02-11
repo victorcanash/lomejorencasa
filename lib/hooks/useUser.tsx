@@ -5,13 +5,16 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/auth';
+import { ContactTypes, maxContactFiles } from '@core/constants/contact';
 import type { User, UserAddress, UserContact } from '@core/types/user';
-import { CheckoutAddresses } from '@core/types/checkout';
+import type { UploadFile } from '@core/types/upload';
+import type { CheckoutAddresses } from '@core/types/checkout';
 import { 
   manageUser as manageUserMW, 
   updateUserAddresses as updateUserAddressesMW,
   sendUserContactEmail as sendUserContactEmailMW,
 } from '@core/utils/user';
+
 import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -87,14 +90,30 @@ const useUser = () => {
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.updateAddresses' }));
   };
 
-  const sendUserContactEmail = async (userContact: UserContact) => {
+  const sendUserContactEmail = async (userContact: UserContact, uploadImgs: UploadFile[]) => {
+    if (userContact.type === ContactTypes.refundOrder) {
+      if (uploadImgs.length <= 0) {
+        setSuccessMsg('');
+        setErrorMsg(intl.formatMessage({ id: 'contact.errors.validateProductImgs' }));
+        return;
+      } else if (uploadImgs.length > maxContactFiles) {
+        uploadImgs.splice(uploadImgs.length, uploadImgs.length - maxContactFiles);
+      }
+    } else {
+      uploadImgs = [];
+    }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserContactEmailMW(intl.locale, userContact).then(() => {
+    sendUserContactEmailMW(intl.locale, userContact, uploadImgs.map((item) => { return item.file; })).then(() => {
       onSendUserContactEmailSuccess(userContact);
-    }).catch((_error: Error) => {
-      const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('orderId field')) {
+        errorMsg = intl.formatMessage({ id: 'contact.errors.orderId' });
+      } else {
+        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+      }
       setErrorMsg(errorMsg);
       setLoading(false);
     });

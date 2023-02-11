@@ -335,7 +335,6 @@ const useForms = () => {
     firstName: userFieldsValidation.firstName,
     orderId: orderFieldsValidation.id,
     comments: userFieldsValidation.comments,
-    // imgs,
   });
 
   const checkoutAddressesFormValidation = Yup.object().shape({
