@@ -134,7 +134,7 @@ const UContactForm = () => {
         type: contactFieldsInitValues.type,
         email: (user as User)?.email || userFieldsInitValues.email,
         firstName: (user as User)?.firstName || userFieldsInitValues.firstName,
-        orderId: orderFieldsInitValues.id,
+        orderId: orderFieldsInitValues.bigbuyId,
         comments: userFieldsInitValues.comments,
       } as UserContact}
       validationSchema={contactType === ContactTypes.normal ? contactUserFormValidation : contactOrderUserFormValidation}

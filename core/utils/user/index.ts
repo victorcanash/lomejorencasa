@@ -98,7 +98,7 @@ export const sendUserContactEmail = (currentLocale: string, userContact: UserCon
     data.append('email', userContact.email);
     data.append('firstName', userContact.firstName);
     if (userContact.orderId) {
-      data.append('orderId', userContact.orderId.toString());
+      data.append('orderBigbuyId', userContact.orderId);
     }
     data.append('comments', userContact.comments);
     axios.post('users/send-email/contact', data, options)

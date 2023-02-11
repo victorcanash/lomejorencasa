@@ -29,7 +29,7 @@ export type UserContact = {
   type: ContactTypes,
   email: string,
   firstName: string,
-  orderId?: number,
+  orderId?: string,
   comments: string,
 };
 

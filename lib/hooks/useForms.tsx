@@ -165,6 +165,9 @@ const useForms = () => {
       .number()
       .min(0)
       .required(),
+    bigbuyId: Yup
+      .string()
+      .min(1),
     userId: Yup
       .number()
       .min(0),
@@ -182,6 +185,7 @@ const useForms = () => {
 
   const orderFieldsInitValues = {
     id: 0,
+    bigbuyId: '',
     locale: 'es',// intl.defaultLocale,
     userId: 0,
     userEmail: '',
@@ -333,7 +337,7 @@ const useForms = () => {
     type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
     firstName: userFieldsValidation.firstName,
-    orderId: orderFieldsValidation.id,
+    orderId: orderFieldsValidation.bigbuyId,
     comments: userFieldsValidation.comments,
   });
 
