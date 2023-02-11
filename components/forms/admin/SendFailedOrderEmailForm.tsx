@@ -36,8 +36,6 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
       initialValues={{
         orderId: orderFieldsInitValues.id,
         locale: orderFieldsInitValues.locale,
-        userEmail: orderFieldsInitValues.userEmail,
-        userFirstName: orderFieldsInitValues.userFirstName,
       } as OrderFailedSendEmail}
       validationSchema={sendFailedOrderEmailFormValidation}
       formFieldGroups={[
@@ -71,14 +69,6 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
                   value: 'es',
                 }
               ],       
-            },
-            {
-              name: 'userEmail',
-              type: FormFieldTypes.text,
-            },
-            {
-              name: 'userFirstName',
-              type: FormFieldTypes.text,
             },
           ],
         }

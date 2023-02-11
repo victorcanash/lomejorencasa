@@ -4,11 +4,13 @@ import { GuestCartItem } from '@core/types/cart';
 
 export type Order = {
   id: number,
-  userId: number,
+  userId?: number,
+  guestUserId?: number,
   braintreeTransactionId: string,
+  bigbuyId?: string,
   createdAt: Date,
   bigbuy: {
-    id: number,
+    id: string,
     status: string,
     shipping: {
       firstName: string,
@@ -54,7 +56,7 @@ export type OrderItem = {
 export type OrderFailedCreate = {
   locale: string,
   userId?: number,
-  userEmail?: string,
+  guestUserEmail?: string,
   braintreeTransactionId: string,
   shipping: UserAddress,
   products: GuestCartItem[],
@@ -63,6 +65,4 @@ export type OrderFailedCreate = {
 export type OrderFailedSendEmail = {
   orderId: number,
   locale: string,
-  userEmail?: string,
-  userFirstName?: string,
 };

@@ -28,7 +28,7 @@ export type ProductInventory = {
   price: number,
   realPrice: number,
   bigbuy: {
-    id: number,
+    id: string,
     name: string,
     description: string,
     price: number,

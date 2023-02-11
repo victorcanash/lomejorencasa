@@ -71,7 +71,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         initialValues={{
           locale: orderFieldsInitValues.locale,
           userId: orderFieldsInitValues.userId,
-          userEmail: orderFieldsInitValues.userEmail,
+          guestUserEmail: orderFieldsInitValues.guestUserEmail,
           braintreeTransactionId: orderFieldsInitValues.braintreeTransactionId,
           shipping: {
             id: -1,
@@ -114,7 +114,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 type: FormFieldTypes.numeric,
               },
               {
-                name: 'userEmail',
+                name: 'guestUserEmail',
                 type: FormFieldTypes.text,
               },
               {

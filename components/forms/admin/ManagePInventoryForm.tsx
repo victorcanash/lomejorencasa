@@ -64,7 +64,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
         price: productInventory?.price || inventoryFieldsInitValues.price,
         realPrice: productInventory?.realPrice || 0,
         bigbuy: {
-          id: productInventory?.bigbuy.id || 0,
+          id: productInventory?.bigbuy.id || '',
           name: productInventory?.bigbuy.name || '',
           description: productInventory?.bigbuy.description || '',
           price: productInventory?.bigbuy.price || 0,
