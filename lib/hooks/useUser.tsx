@@ -109,7 +109,7 @@ const useUser = () => {
       onSendUserContactEmailSuccess(userContact);
     }).catch((error: Error) => {
       let errorMsg = error.message;
-      if (errorMsg.includes('orderId field')) {
+      if (errorMsg.includes('orderBigbuyId field')) {
         errorMsg = intl.formatMessage({ id: 'contact.errors.orderId' });
       } else {
         errorMsg = intl.formatMessage({ id: 'app.errors.default' });
