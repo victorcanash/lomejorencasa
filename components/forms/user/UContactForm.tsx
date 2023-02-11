@@ -120,7 +120,7 @@ const UContactForm = () => {
     if (contactType !== ContactTypes.normal) {
       formFields.splice(3, 0, {
         name: 'orderId',
-        type: FormFieldTypes.numeric,
+        type: FormFieldTypes.text,
         required: true,
       });
     }
