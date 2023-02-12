@@ -28,6 +28,7 @@ const Checkout: NextPage = () => {
 
   const { getGuestUserData } = usePayments();
 
+  const [loadedCheckout, setLoadedCheckout] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [transactionError, setTransactionError] = useState('');
   const [confirmToken, setConfirmToken] = useState<string | undefined>(undefined)
@@ -72,10 +73,11 @@ const Checkout: NextPage = () => {
   }, [getGuestUserData, router.query.token, setLoading]);
 
   useEffect(() => {
-    if (page.checked && confirmToken == undefined) {
+    if (page.checked && !loadedCheckout) {
+      setLoadedCheckout(true);
       checkConfirmToken();
     }
-  }, [checkConfirmToken, confirmToken, page.checked]);
+  }, [checkConfirmToken, loadedCheckout, page.checked]);
 
   return (
     <>
