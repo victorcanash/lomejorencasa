@@ -11,8 +11,10 @@ import { TransitionProps } from '@mui/material/transitions';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthLogin } from '@core/types/auth';
 
+import { pages } from '@lib/constants/navigation';
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
+import usePayments from '@lib/hooks/usePayments';
 import BaseForm from '@components/forms/BaseForm';
 
 const Transition = forwardRef(function Transition(
@@ -28,28 +30,29 @@ const Transition = forwardRef(function Transition(
 type CheckoutEmailDialogProps = {
   open: boolean,
   handleDialog: () => void,
-  onSend: (authLogin: AuthLogin) => void,
+  onErrorSend: (message: string) => void,
 };
 
 const CheckoutEmailDialog = (props: CheckoutEmailDialogProps) => {
   const { 
     open,
     handleDialog,
-    onSend, 
+    onErrorSend,
   } = props;
 
   const { checkoutConfirmFormValidation, userFieldsInitValues } = useForms();
+  const { sendConfirmTransactionEmail, errorMsg, successMsg } = usePayments();
 
   const handleBack = () => {
     handleDialog();
   }
 
   const handleSubmit = async (values: { email: string }) => {
-    handleDialog();
-    onSend({
+    const authLogin = {
       email: values.email,
       password: 'guest_user',
-    } as AuthLogin)
+    } as AuthLogin;
+    sendConfirmTransactionEmail(authLogin, onErrorSend);
   };
 
   return (
@@ -97,6 +100,16 @@ const CheckoutEmailDialog = (props: CheckoutEmailDialogProps) => {
               onClick: handleBack,
             },
           } as FormButtonsCheckout}
+          linksItems={[
+            {
+              text: {
+                id: 'dialogs.checkoutEmail.link',
+              },
+              path: pages.login.path,
+            }
+          ]}
+          successMsg={successMsg}
+          errorMsg={errorMsg}
         />
       </DialogContent>
     </Dialog>

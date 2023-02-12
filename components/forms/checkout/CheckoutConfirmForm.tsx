@@ -7,7 +7,6 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { CartItem } from '@core/types/cart';
-import type { AuthLogin } from '@core/types/auth';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -36,7 +35,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
 
   const intl = useIntl();
 
-  const { sendConfirmTransactionEmail, createTransaction, errorMsg, successMsg } = usePayments();
+  const { createTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
 
   const [openCartDialog, setOpenCartDialog] = useState(false);
@@ -84,11 +83,13 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     }
   };
 
-  const onSendEmail = (authLogin: AuthLogin) => {
-    sendConfirmTransactionEmail(authLogin, onErrorTransaction);
-  };
-
   const onErrorTransaction = (message: string) => {
+    if (message == intl.formatMessage({ id: 'checkout.errors.sendConfirmTransactionEmail.registered' })) {
+      return;
+    }
+    if (openEmailDialog) {
+      handleEmailDialog();
+    }
     if (setTransactionError) {
       setTransactionError(message);
     }
@@ -235,7 +236,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
             <CheckoutEmailDialog
               open={openEmailDialog}
               handleDialog={handleEmailDialog}
-              onSend={onSendEmail}
+              onErrorSend={onErrorTransaction}
             />
           }
         </>

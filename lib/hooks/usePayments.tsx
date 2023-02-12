@@ -124,8 +124,13 @@ const usePayments = () => {
     )
       .then(() => {
         onSendConfirmTransactionEmailSuccess();
-      }).catch((_error) => {
-        const errorMsg = intl.formatMessage({ id: 'checkout.errors.sendConfirmTransactionEmail' });
+      }).catch((error) => {
+        let errorMsg = error.message;
+        if (errorMsg.includes('The email entered belongs to a registered user')) {
+          errorMsg = intl.formatMessage({ id: 'checkout.errors.sendConfirmTransactionEmail.registered' });
+        } else {
+          errorMsg = intl.formatMessage({ id: 'checkout.errors.sendConfirmTransactionEmail.default' });
+        }
         setErrorMsg(errorMsg);
         setLoading(false);
         if (onError) {

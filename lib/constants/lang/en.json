@@ -310,7 +310,8 @@
   "checkout.successes.createOrder": "Order completed, you will receive an email with all order details",
   "checkout.errors.checkPaymentMethod": "Something went wrong, try again or select a different payment method",
   "checkout.errors.getGuestUserData": "No se ha podido verificado su correo. Lo sentimos mucho, inténtelo de nuevo.",
-  "checkout.errors.sendConfirmTransactionEmail": "No se ha podido enviar el correo de confirmación, modifica tus datos o selecciona otro método de pago",
+  "checkout.errors.sendConfirmTransactionEmail.default": "No se ha podido enviar el correo de confirmación, modifica tus datos o selecciona otro método de pago",
+  "checkout.errors.sendConfirmTransactionEmail.registered": "El correo introducido ya pertenece a un usuario registrado. Inicia sesión para usar este correo",
   "checkout.errors.createTransaction": "Failed proceeding to payment, modify your data or select a different payment method",
   "checkout.errors.insufficientFunds": "Failed proceeding to payment, insufficient funds",
   
@@ -574,7 +575,8 @@
   "dialogs.checkedCart.acceptBtn": "Accept",
 
   "dialogs.checkoutEmail.title": "Confirmar correo",
-  "dialogs.checkoutEmail.content": "Antes de acabar introduce tu correo y te enviaremos un enlace para poder finalizar la compra.",
+  "dialogs.checkoutEmail.content": "Antes de acabar introduce tu correo si no tienes una cuenta registrada y te enviaremos un enlace para poder finalizar la compra.\n\nSi ya tienes una cuenta registrada con tu correo deberás de iniciar sesión para usarlo.",
+  "dialogs.checkoutEmail.link": "Ya tienes una cuenta? Inicia sesión",
   "dialogs.checkoutEmail.sendBtn": "Enviar",
   "dialogs.checkoutEmail.cancelBtn": "Cancelar",
 

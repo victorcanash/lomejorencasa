@@ -56,7 +56,8 @@ const Orders: NextPage = () => {
 
   const onClickBack = () => {
     setUnloggedOrder(undefined);
-  }
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     if (page.checked && !loadedOrders) {
