@@ -176,10 +176,6 @@ export const updateUserEmail = async (updateToken: string, newEmail = '', userId
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data?.user) {
           if (response.data?.token) {
-            const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
-            if (prevToken !== '') {
-              await logoutUser(prevToken);
-            }
             await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
             resolve({
               token: response.data.token,
@@ -208,10 +204,6 @@ export const resetUserPsw = async (updateToken: string, authResetPassword: AuthR
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data?.user) {
           if (response.data?.token) {
-            const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
-            if (prevToken !== '') {
-              await logoutUser(prevToken);
-            }
             await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
             resolve({
               token: response.data.token,

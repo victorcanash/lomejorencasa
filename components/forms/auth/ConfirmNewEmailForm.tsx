@@ -15,6 +15,7 @@ const ConfirmNewEmailForm = () => {
 
   return (
     <BaseForm
+      initialValues={{}}
       formFieldGroups={[
         {
           titleTxt: {

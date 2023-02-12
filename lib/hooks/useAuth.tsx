@@ -169,7 +169,10 @@ const useAuth = () => {
     setErrorMsg('');
     setSuccessMsg('');
     updateUserEmail(updateToken).then((response: {token: string, user: User}) => {
-      onUpdateEmailSuccess(response.token, response.user);
+      setToken(response.token);
+      setUser(response.user);
+      setLoading(false);
+      setSuccessMsg(intl.formatMessage({ id: 'newemail.successes.default' }));
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Token is missing or has expirated')) {
@@ -184,19 +187,15 @@ const useAuth = () => {
     });
   };
 
-  const onUpdateEmailSuccess = (token: string, user: User) => {
-    setToken(token);
-    setUser(user);
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'newemail.successes.default' }));
-  };
-
   const resetPsw = async (updateToken: string, authResetPassword: AuthResetPsw) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     resetUserPsw(updateToken, authResetPassword).then((response: {token: string, user: User}) => {
-      onResetPasswordSuccess(response.token, response.user);
+      setToken(response.token);
+      setUser(response.user);
+      setLoading(false);
+      setSuccessMsg(intl.formatMessage({ id: 'reset.successes.default' }));
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Token is missing or has expirated')) {
@@ -207,13 +206,6 @@ const useAuth = () => {
       setErrorMsg(errorMsg);
       setLoading(false);
     });
-  };
-
-  const onResetPasswordSuccess = (token: string, user: User) => {
-    setToken(token);
-    setUser(user);
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'reset.successes.default' }));
   };
 
   const sendActivationEmail = (email: string, onSuccess?: () => void) => {
