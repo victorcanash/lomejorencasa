@@ -333,6 +333,9 @@
   "orderDetail.showBtn": "Show order",
   "orderDetail.successes.default": "Got order",
   "orderDetail.errors.default": "Failed getting order details, try again",
+  "orderDetail.errors.bigbuyId": "El número de pedido que has introducido no existe",
+  "orderDetail.errors.guestUserEmail": "El correo que has introducido no pertenece a este número de pedido",
+  "orderDetail.errors.loggedOrder": "Has de iniciar sesión para obtener los detalles de este pedido",
 
   "privacy.metas.title": "Privacy policy",
   "privacy.metas.description": "Privacy policy page",
@@ -459,7 +462,7 @@
   "forms.productId": "ID del producto",
   "forms.inventoryId": "ID del inventario",
   "forms.activeDiscountId": "ID del descuento activo",
-  "forms.orderId": "ID del pedido",
+  "forms.orderId": "Número de pedido",
   "forms.braintreeTransactionId": "ID de BraintreeTransaction",
   "forms.selectInventory.label": "Tipo",
   "forms.selectInventory.content": "{name} (quedan {quantity})",
@@ -514,9 +517,9 @@
   "forms.contact.normal.description": "Rellena el formulario y te responderemos tan pronto como sea posible.",
   "forms.contact.refundOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSi el motivo de la devolución es causada por esta dañado el paquete de mensajeria se puede notificar hasta pasadas 48 horas desde que llegó a su domicilio.\n\nSi es porque está defectuoso el producto se puede notificar hasta dos años.",
   "forms.contact.modifyOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSolo puede modificar su pedido si aun no ha salido del almacén.",
-  "forms.contact.cancelOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSolo puede modificar su pedido si aun no ha salido del almacén.",
+  "forms.contact.cancelOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSolo puede cancelar su pedido si aun no ha salido del almacén.",
 
-  "forms.getOrder.title": "Para solicitar la información de un pedido debes de introducir su ID y el correo que usaste",
+  "forms.getOrder.description": "Para solicitar la información de un pedido debes de introducir su número y el correo que usaste",
   "forms.getOrder.successBtn": "Solicitar",
 
   "forms.createProduct.title": "Create new product",

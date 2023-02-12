@@ -54,6 +54,10 @@ const Orders: NextPage = () => {
     setUnloggedOrder(order);
   };
 
+  const onClickBack = () => {
+    setUnloggedOrder(undefined);
+  }
+
   useEffect(() => {
     if (page.checked && !loadedOrders) {
       setLoadedOrders(true);
@@ -98,7 +102,8 @@ const Orders: NextPage = () => {
               :
               <OrderDetail 
                 order={unloggedOrder} 
-                backBtn={false}
+                backBtn={true}
+                onClickBack={onClickBack}
               />
             }
           </>

@@ -86,16 +86,16 @@ const useOrders = () => {
     await getUnloggedOrderMW(orderContact)
       .then((response: { order: Order }) => {
         onGetOrderSuccess(response.order, onSuccess);
-      }).catch((_error) => {
-        let errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+      }).catch((error) => {
+        let errorMsg = error.message; 
         if (errorMsg.includes('bigbuyId')) {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
-        } else if (errorMsg.includes('guestUserEmail')) {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.bigbuyId' });
+        } else if (errorMsg.includes('email')) {
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.guestUserEmail' });
         } else if (errorMsg.includes('be logged')) {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
-        } else if (errorMsg.includes('Bigbuy id does not pertain to the email')) {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.loggedOrder' });
+        } else {
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' });
         }
         setErrorMsg(errorMsg);
         setLoading(false);
@@ -123,7 +123,7 @@ const useOrders = () => {
       }).catch((error) => {
         let errorMsg = error.message;
         if (errorMsg.includes('Braintree error')) {
-          errorMsg = intl.formatMessage({ id: 'admin.errors.invalidOrderTransactionId' })
+          errorMsg = intl.formatMessage({ id: 'admin.errors.invalidOrderTransactionId' });
         }
         setErrorMsg(errorMsg);
         setLoading(false);

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
@@ -15,10 +16,13 @@ import GoBackBtn from '@components/ui/GoBackBtn';
 type OrderDetailProps = {
   order: Order,
   backBtn: boolean,
+  onClickBack?: () => void,
 };
 
 const OrderDetail = (props: OrderDetailProps) => {
-  const { order, backBtn } = props;
+  const { order, backBtn, onClickBack } = props;
+
+  const router = useRouter();
 
   const intl = useIntl();
 
@@ -35,7 +39,7 @@ const OrderDetail = (props: OrderDetailProps) => {
       <Grid container spacing={1} py={3}>
         <Grid item xs={12} sm={6}>
           <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString()}`}
+            {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString(router.locale)}`}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -135,7 +139,7 @@ const OrderDetail = (props: OrderDetailProps) => {
           mt={3}
         >
           <Grid item>
-            <GoBackBtn />
+            <GoBackBtn onClick={onClickBack} />
           </Grid>
         </Grid>
       }

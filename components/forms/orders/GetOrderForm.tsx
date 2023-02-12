@@ -29,8 +29,8 @@ const GetOrderForm = (props: GetOrderFormProps) => {
       validationSchema={getOrderFormValidation}
       formFieldGroups={[
         {
-          titleTxt: {
-            id: 'forms.getOrder.title',
+          descriptionTxt: {
+            id: 'forms.getOrder.description',
           },
           formFields: [
             {
