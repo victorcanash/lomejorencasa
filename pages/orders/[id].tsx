@@ -16,8 +16,8 @@ import OrderDetail from '@components/orders/OrderDetail';
 const Order: NextPage = () => {
   const router = useRouter();
 
-  const page = usePage();
-  const { getOrder } = useOrders();
+  const page = usePage(false);
+  const { getLoggedOrder } = useOrders();
 
   const [loadedOrder, setLoadedOrder] = useState(false);
   const [order, setOrder] = useState<Order | undefined>(undefined);
@@ -35,9 +35,9 @@ const Order: NextPage = () => {
       setLoadedOrder(true);
       const { id } = router.query;
       const idSearch = typeof id == 'string' && parseInt(id) >= 0 ? parseInt(id) : -1;
-      getOrder(idSearch, onSuccessGetOrder, onErrorGetOrder);
+      getLoggedOrder(idSearch, onSuccessGetOrder, onErrorGetOrder);
     }
-  }, [getOrder, loadedOrder, onErrorGetOrder, onSuccessGetOrder, page.checked, router.query]);
+  }, [getLoggedOrder, loadedOrder, onErrorGetOrder, onSuccessGetOrder, page.checked, router.query]);
 
   return (
     <>

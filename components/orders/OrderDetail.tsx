@@ -25,7 +25,7 @@ const OrderDetail = (props: OrderDetailProps) => {
   return (
     <>
       <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft' mb={1}>
-        {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.id}`}
+        {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.bigbuyId}`}
       </Typography>
 
       <Typography component="div" variant="body1" pt={2}>

@@ -453,7 +453,7 @@
   "forms.locale": "Language code",
   "forms.id": "ID",
   "forms.userId": "User ID",
-  "forms.guestUserEmail": "User email address",
+  "forms.guestUserEmail": "Email address",
   "forms.type": "Asunto",
   "forms.categoryId": "ID de la categoría",
   "forms.productId": "ID del producto",
@@ -515,6 +515,9 @@
   "forms.contact.refundOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSi el motivo de la devolución es causada por esta dañado el paquete de mensajeria se puede notificar hasta pasadas 48 horas desde que llegó a su domicilio.\n\nSi es porque está defectuoso el producto se puede notificar hasta dos años.",
   "forms.contact.modifyOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSolo puede modificar su pedido si aun no ha salido del almacén.",
   "forms.contact.cancelOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSolo puede modificar su pedido si aun no ha salido del almacén.",
+
+  "forms.getOrder.title": "Para solicitar la información de un pedido debes de introducir su ID y el correo que usaste",
+  "forms.getOrder.successBtn": "Solicitar",
 
   "forms.createProduct.title": "Create new product",
   "forms.createProduct.successBtn": "Create",

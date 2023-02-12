@@ -8,28 +8,36 @@ import { PageTypes } from '@core/constants/navigation';
 import type { Order } from '@core/types/orders';
 
 import { pages } from '@lib/constants/navigation';
+import { useAppContext } from '@lib/contexts/AppContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import useOrders from '@lib/hooks/useOrders';
 import PageHeader from '@components/ui/PageHeader';
 import OrderList from '@components/orders/OrderList';
+import GetOrderForm from '@components/forms/orders/GetOrderForm';
+import OrderDetail from '@components/orders/OrderDetail';
 
 const Orders: NextPage = () => {
   const router = useRouter();
 
-  const page = usePage();
+  const { setLoading } = useAppContext();
+  const { isLogged } = useAuthContext();
+
+  const page = usePage(false);
   const { getOrders } = useOrders();
 
   const [loadedOrders, setLoadedOrders] = useState(false);
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [loggedOrders, setLoggedOrders] = useState<Order[]>([]);
+  const [unloggedOrder, setUnloggedOrder] = useState<Order | undefined>(undefined);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
   const onChangePage = (page: number) => {
-    getOrders(page, onSuccessGetOrders);
+    getOrders(page, onSuccessGetOrders, onErrorGetOrders);
   };
 
   const onSuccessGetOrders = useCallback((orders: Order[], totalPages: number, currentPage: number) => {
-    setOrders(orders);
+    setLoggedOrders(orders);
     setTotalPages(totalPages);
     setCurrentPage(currentPage);
   }, []);
@@ -38,12 +46,24 @@ const Orders: NextPage = () => {
     router.push(pages.home.path);
   }, [router]);
 
+  const showOrder = (order: Order) => {
+    router.push(`${pages.orderDetail.path}/${order.id}`);
+  };
+
+  const onSuccessGetOrder = (order: Order) => {
+    setUnloggedOrder(order);
+  };
+
   useEffect(() => {
     if (page.checked && !loadedOrders) {
       setLoadedOrders(true);
-      getOrders(0, onSuccessGetOrders, onErrorGetOrders);
+      if (isLogged()) {
+        getOrders(0, onSuccessGetOrders, onErrorGetOrders);
+      } else {
+        setLoading(false);
+      }
     }
-  }, [getOrders, loadedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked]);
+  }, [getOrders, isLogged, loadedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked, setLoading]);
 
   return (
     <>
@@ -59,16 +79,31 @@ const Orders: NextPage = () => {
         }}
       />
 
-      { loadedOrders &&
-        <Container>
-          <OrderList 
-            orders={orders} 
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onChangePage={onChangePage}
-          />
-        </Container>
-      }
+      <Container>
+        { isLogged() &&
+            <OrderList 
+              orders={loggedOrders} 
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onChangePage={onChangePage}
+              onClickShowOrder={showOrder}
+            />
+        }
+        { !isLogged() &&
+          <>
+            { !unloggedOrder ?
+              <GetOrderForm 
+                onSuccess={onSuccessGetOrder}
+              />
+              :
+              <OrderDetail 
+                order={unloggedOrder} 
+                backBtn={false}
+              />
+            }
+          </>
+        }
+      </Container>
     </>
   );
 };

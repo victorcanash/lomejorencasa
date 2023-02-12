@@ -165,7 +165,7 @@ export const pages: Pages = {
   orderList: {
     path: '/orders',
     filepath: '/orders',
-    protection: Protections.user,
+    protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
       enabled: true,

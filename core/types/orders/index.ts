@@ -53,6 +53,11 @@ export type OrderItem = {
   inventory: ProductInventory | null,
 };
 
+export type OrderContact = {
+  orderId: string,
+  guestUserEmail: string,
+}
+
 export type OrderFailedCreate = {
   locale: string,
   userId?: number,

@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import { useRouter } from 'next/router';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
@@ -10,7 +9,6 @@ import Divider from '@mui/material/Divider';
 
 import type { Order } from '@core/types/orders';
 
-import { pages } from '@lib/constants/navigation';
 import Pagination from '@components/ui/Pagination';
 
 type OrderListProps = {
@@ -18,20 +16,20 @@ type OrderListProps = {
   totalPages: number,
   currentPage: number,
   onChangePage: (page: number) => void,
+  onClickShowOrder: (order: Order) => void,
 };
 
 const OrderList = (props: OrderListProps) => {
-  const { orders, totalPages, currentPage, onChangePage } = props;
+  const { orders, totalPages, currentPage, onChangePage, onClickShowOrder } = props;
 
-  const router = useRouter();
   const intl = useIntl();
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
     onChangePage(page);
   };
 
-  const onClickShowOrder = (order: Order) => {
-    router.push(`${pages.orderDetail.path}/${order.id}`);
+  const handleClickShowBtn = (order: Order) => {
+    onClickShowOrder(order);
   };
 
   return (
@@ -42,7 +40,7 @@ const OrderList = (props: OrderListProps) => {
             <Fragment key={order.id}>   
               <Grid item xs={12}>
                 <Typography component="h3" variant="h1">
-                  {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.id}`}
+                  {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.bigbuyId}`}
                 </Typography>
                 <Grid container spacing={1} py={3}>
                   <Grid item xs={6}>
@@ -53,7 +51,7 @@ const OrderList = (props: OrderListProps) => {
                   <Grid item xs={6}>
                     <Button
                       variant="contained"
-                      onClick={() => onClickShowOrder(order)}
+                      onClick={() => handleClickShowBtn(order)}
                     >
                       <FormattedMessage id="orderDetail.showBtn" />
                     </Button>

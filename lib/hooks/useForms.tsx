@@ -322,6 +322,21 @@ const useForms = () => {
     getEmails: userFieldsValidation.getEmails,
   });
 
+  const checkoutAddressesFormValidation = Yup.object().shape({
+    shipping: Yup.object().shape(addressFieldsValidation),
+    billing: Yup
+      .object().when('sameAsShipping', {
+        is: (sameAsShipping: boolean) => !sameAsShipping,
+        then: Yup.object().shape(addressFieldsValidation),
+      }),
+    sameAsShipping: Yup
+      .boolean(),
+  });
+
+  const checkoutConfirmFormValidation = Yup.object().shape({
+    email: userFieldsValidation.email,
+  });
+
   const contactUserFormValidation = Yup.object().shape({
     type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
@@ -337,19 +352,9 @@ const useForms = () => {
     comments: userFieldsValidation.comments,
   });
 
-  const checkoutAddressesFormValidation = Yup.object().shape({
-    shipping: Yup.object().shape(addressFieldsValidation),
-    billing: Yup
-      .object().when('sameAsShipping', {
-        is: (sameAsShipping: boolean) => !sameAsShipping,
-        then: Yup.object().shape(addressFieldsValidation),
-      }),
-    sameAsShipping: Yup
-      .boolean(),
-  });
-
-  const checkoutConfirmFormValidation = Yup.object().shape({
-    email: userFieldsValidation.email,
+  const getOrderFormValidation = Yup.object().shape({
+    orderId: orderFieldsValidation.bigbuyId,
+    guestUserEmail: orderFieldsValidation.guestUserEmail,
   });
 
   const createFailedOrderFormValidation = Yup.object().shape({
@@ -474,6 +479,7 @@ const useForms = () => {
     contactOrderUserFormValidation,
     checkoutAddressesFormValidation,
     checkoutConfirmFormValidation,
+    getOrderFormValidation,
     createFailedOrderFormValidation,
     createFailedOrderProductFormValidation,
     sendFailedOrderEmailFormValidation,

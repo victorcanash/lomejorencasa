@@ -3,20 +3,22 @@ import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import type { Order, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
+import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
 import type { User } from '@core/types/user';
 import { 
   getOrders as getOrdersMW, 
-  getOrder as getOrderMW,
+  getLoggedOrder as getLoggedOrderMW,
+  getUnloggedOrder as getUnloggedOrderMW,
   createFailedOrder as createFailedOrderMW,
   sendFailedOrderEmail as sendFailedOrderEmailMW,
 } from '@core/utils/orders';
+
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useOrders = () => {
   const { setLoading } = useAppContext();
-  const { token, user } = useAuthContext();
+  const { token, user, isLogged } = useAuthContext();
 
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
@@ -25,6 +27,9 @@ const useOrders = () => {
   const [successMsg, setSuccessMsg] = useState('');
 
   const getOrders = async (page: number, onSuccess?: (orders: Order[], totalPages: number, currentPage: number) => void, onError?: (errorMsg: string) => void) => {
+    if (!isLogged()) {
+      return;
+    }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
@@ -53,11 +58,11 @@ const useOrders = () => {
     setSuccessMsg(intl.formatMessage({ id: 'orderList.successes.default' }));
   }
 
-  const getOrder = async (id: number, onSuccess?: (order: Order) => void, onError?: (errorMsg: string) => void) => {
+  const getLoggedOrder = async (id: number, onSuccess?: (order: Order) => void, onError?: (errorMsg: string) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await getOrderMW(token, id)
+    await getLoggedOrderMW(token, id)
       .then((response: { order: Order }) => {
         onGetOrderSuccess(response.order, onSuccess);
       }).catch((error) => {
@@ -68,6 +73,32 @@ const useOrders = () => {
           intl.formatMessage({ id: 'orderDetail.errors.default' }), 
           { variant: 'error' }
         );
+        if (onError) {
+          onError(errorMsg);
+        }
+      });
+  };
+
+  const getUnloggedOrder = async (orderContact: OrderContact, onSuccess?: (order: Order) => void, onError?: (errorMsg: string) => void) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await getUnloggedOrderMW(orderContact)
+      .then((response: { order: Order }) => {
+        onGetOrderSuccess(response.order, onSuccess);
+      }).catch((_error) => {
+        let errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+        if (errorMsg.includes('bigbuyId')) {
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+        } else if (errorMsg.includes('guestUserEmail')) {
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+        } else if (errorMsg.includes('be logged')) {
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+        } else if (errorMsg.includes('Bigbuy id does not pertain to the email')) {
+          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' })
+        }
+        setErrorMsg(errorMsg);
+        setLoading(false);
         if (onError) {
           onError(errorMsg);
         }
@@ -133,7 +164,8 @@ const useOrders = () => {
     errorMsg,
     successMsg,
     getOrders,
-    getOrder,
+    getLoggedOrder,
+    getUnloggedOrder,
     createFailedOrder,
     sendFailedOrderEmail,
   };
