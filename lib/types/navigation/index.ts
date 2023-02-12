@@ -8,20 +8,19 @@ export type Pages = {
   bags: Page,
   about: Page,
   faq: Page,
-  contact: Page,
+  cart: Page,
+  checkout: Page,
 
   privacy: Page,
   cookies: Page,
   legal: Page,
   conditions: Page,
 
-  cart: Page,
-  checkout: Page,
-
   login: Page,
   register: Page,
   forgot: Page,
   
+  contact: Page,
   orderList: Page,
   orderDetail: Page,
   settings: Page,

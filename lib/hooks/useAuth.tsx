@@ -41,7 +41,8 @@ const useAuth = () => {
     removeUser,
     prevLoginPath, 
     isProtectedPath, 
-    isLogged 
+    isLogged,
+    getRedirectLogoutPath, 
   } = useAuthContext();
   const { cart, initCart, removeCart } = useCartContext();
 
@@ -132,12 +133,11 @@ const useAuth = () => {
       throw error;
     });
 
-    if (!isProtectedPath()) {
-      if (pages.checkout.filepath === router.pathname) {
-        router.push(pages.home.path);
-      } else {
-        setLoading(false);
-      }
+    const path = getRedirectLogoutPath();
+    if (path) {
+      router.push(path);
+    } else if (!isProtectedPath()) {
+      setLoading(false);
     }
   };
 

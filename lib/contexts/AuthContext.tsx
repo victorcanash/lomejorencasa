@@ -24,6 +24,8 @@ type ContextType = {
   isLogged: () => boolean,
   isProtectedPath: () => boolean,
   isAdminPath: () => boolean,
+  getRedirectProtectedPath: () => string,
+  getRedirectLogoutPath: () => string | undefined,
 };
 
 export const AuthContext = createContext<ContextType>({
@@ -42,6 +44,8 @@ export const AuthContext = createContext<ContextType>({
   isLogged: () => false,
   isProtectedPath: () => false,
   isAdminPath: () => false,
+  getRedirectProtectedPath: () => '',
+  getRedirectLogoutPath: () => undefined,
 });
 
 export const useAuthContext = () => {
@@ -113,6 +117,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return false;
   };
 
+  const getRedirectProtectedPath = () => {
+    for (const [, page] of Object.entries(pages)) {
+      if (page.filepath == router.pathname) {
+        return page.redirectPathOnProtected || pages.login.path;
+      }
+    }
+    return pages.login.path;
+  };
+
+  const getRedirectLogoutPath = () => {
+    for (const [, page] of Object.entries(pages)) {
+      if (page.filepath == router.pathname) {
+        return page.redirectPathOnLogout;
+      }
+    }
+    return undefined;
+  };
+
   useEffect(() => {
     Object.entries(pages).forEach(([_key, page]) => {
       if (page.filepath == router.pathname) {
@@ -142,6 +164,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isLogged,
         isProtectedPath,
         isAdminPath,
+        getRedirectProtectedPath,
+        getRedirectLogoutPath,
       }}
     >
       {children}

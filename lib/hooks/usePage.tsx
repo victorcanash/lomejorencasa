@@ -1,14 +1,15 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
+import { isAdminUser } from '@core/utils/auth';
+
 import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import { isAdminUser } from '@core/utils/auth';
 
 const usePage = (setLoaded = true) => {
   const { initialized, setLoading } = useAppContext();
-  const { token, isLogged, isProtectedPath, isAdminPath } = useAuthContext();
+  const { token, isLogged, isProtectedPath, isAdminPath, getRedirectProtectedPath } = useAuthContext();
 
   const [checked, setChecked] = useState(false);
 
@@ -23,7 +24,7 @@ const usePage = (setLoaded = true) => {
 
   const checkPage = useCallback(async () => {
     if (isProtectedPath() && !isLogged()) {
-      router.push(pages.login.path);
+      router.push(getRedirectProtectedPath());
 
     } else if (isAdminPath()) {
       await isAdminUser(token).then((response: boolean) => {
@@ -41,7 +42,7 @@ const usePage = (setLoaded = true) => {
       onCheckSuccess();
     }
     
-  }, [isAdminPath, isLogged, isProtectedPath, onCheckSuccess, router, token]);
+  }, [getRedirectProtectedPath, isAdminPath, isLogged, isProtectedPath, onCheckSuccess, router, token]);
 
   useEffect(() => {
     if (initialized) {      

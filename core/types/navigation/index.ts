@@ -10,7 +10,9 @@ export type Page = {
   savePathOnLogin: {
     enabled: boolean,
     path?: string,
-  }
+  },
+  redirectPathOnProtected?: string,
+  redirectPathOnLogout?: string,
 };
 
 export type NavItem = {

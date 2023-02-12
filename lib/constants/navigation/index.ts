@@ -67,14 +67,25 @@ export const pages: Pages = {
       enabled: true,
     },
   },
-  contact: {
-    path: '/contact',
-    filepath: '/contact',
+  cart: {
+    path: '/cart',
+    filepath: '/cart',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
       enabled: true,
     },
+  },
+  checkout: {
+    path: '/checkout',
+    filepath: '/checkout',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+      path: '/checkout',
+    },
+    redirectPathOnLogout: '/',
   },
 
   privacy: {
@@ -114,26 +125,6 @@ export const pages: Pages = {
     },
   },
 
-  cart: {
-    path: '/cart',
-    filepath: '/cart',
-    protection: Protections.none,
-    type: PageTypes.main,
-    savePathOnLogin: {
-      enabled: true,
-    },
-  },
-  checkout: {
-    path: '/checkout',
-    filepath: '/checkout',
-    protection: Protections.none,
-    type: PageTypes.main,
-    savePathOnLogin: {
-      enabled: true,
-      path: '/cart',
-    },
-  },
-
   login: {
     path: '/login',
     filepath: '/login',
@@ -162,6 +153,15 @@ export const pages: Pages = {
     },
   },
   
+  contact: {
+    path: '/contact',
+    filepath: '/contact',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
   orderList: {
     path: '/orders',
     filepath: '/orders',
@@ -180,6 +180,8 @@ export const pages: Pages = {
       enabled: true,
       path: '/orders',
     },
+    redirectPathOnProtected: '/orders',
+    redirectPathOnLogout: '/orders',
   },
   settings: {
     path: '/settings',
@@ -268,6 +270,12 @@ export const mainDrawerItems: DrawerItems[] = [
     items: [
       {
         text: {
+          id: 'orders',
+        },
+        path: pages.orderList.path,
+      },
+      {
+        text: {
           id: 'contact',
         },
         path: pages.contact.path,
@@ -296,12 +304,6 @@ export const loggedDrawerItems: DrawerItems[] = [
     },
     path: undefined,
     items: [
-      {
-        text: {
-          id: 'orders',
-        },
-        path: pages.orderList.path,
-      },
       {
         text: {
           id: 'settings',
