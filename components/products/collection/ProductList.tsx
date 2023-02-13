@@ -6,7 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
@@ -44,24 +43,11 @@ const ProductList = (props: ProductListProps) => {
 
   return (
     <Container>
-      <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
-        { category?.name ?
-          capitalizeFirstLetter(category.name.current) 
-          :
-          <FormattedMessage
-            id="productList.allCategories"
-            defaultMessage={allProductsName}
-          />
-        } 
-      </Typography>
-      {
-        category &&
-          <Typography component="h2" variant="body1" className='animate__animated animate__fadeInLeft'>
-            { capitalizeFirstLetter(category.description.current) }
-          </Typography>
+      { category &&
+        <Typography component="h2" variant="body1" className='animate__animated animate__fadeInLeft'>
+          { capitalizeFirstLetter(category.description.current) }
+        </Typography>
       }
-      
-      <Divider sx={{ my: 3 }} />
 
       { products.length > 0 ?
         <Grid container spacing={1} py={3}>
@@ -75,10 +61,10 @@ const ProductList = (props: ProductListProps) => {
                       <Image
                         src={getProductImgUrl(item)}
                         alt="Product image"
-                        width="500"
-                        height="500"
                         layout="responsive"
                         objectFit="cover"
+                        quality="100"
+                        priority
                       />
                     </div>
                   </CardMedia>

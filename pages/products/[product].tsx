@@ -17,7 +17,7 @@ const Product: NextPage<ProductProps> = (props) => {
       <PageHeader
         pageType={PageTypes.main}
         metas={{
-          titleId: product.name.current,
+          titleAdd: product.name.current,
           descriptionId: 'productDetail.metas.description',
         }}
         marginTop={true}

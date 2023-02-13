@@ -12,8 +12,10 @@ import { PageTypes } from '@core/constants/navigation';
 type PageHeaderProps = {
   pageType: PageTypes,
   metas: {
-    titleId: string,
-    descriptionId: string,
+    titleId?: string,
+    titleAdd?: string,
+    descriptionId?: string,
+    descriptionAdd?: string,
   },
   marginTop?: boolean,
   texts?: {
@@ -32,14 +34,32 @@ const PageHeader = (props: PageHeaderProps) => {
 
   const intl = useIntl();
 
-  const title = intl.formatMessage({ id: metas.titleId });
-  const description = intl.formatMessage({ id: metas.descriptionId });
+  const getTitle = () => {
+    let title = '';
+    if (metas.titleId) {
+      title = intl.formatMessage({ id: metas.titleId });
+    }
+    if (metas.titleAdd) {
+      title += metas.titleAdd;
+    }
+    return title;
+  };
+  const getDescription = () => {
+    let description = '';
+    if (metas.descriptionId) {
+      description = intl.formatMessage({ id: metas.descriptionId });
+    }
+    if (metas.descriptionAdd) {
+      description += metas.descriptionAdd;
+    }
+    return description;
+  };
 
   return (
     <>
       <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
+        <title>{getTitle()}</title>
+        <meta name="description" content={getDescription()} />
       </Head>
 
       { (pageType == PageTypes.main || 
@@ -50,11 +70,14 @@ const PageHeader = (props: PageHeaderProps) => {
           { marginTop &&
             <Box sx={{height: '16px'}} />
           }
-          { texts?.titleId &&
+          { (texts?.titleId || texts?.titleAdd) &&
             <>
               <Container>
                 <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
-                  <FormattedMessage id={texts.titleId} defaultMessage={texts.titleId} />{texts.titleAdd}
+                  { texts.titleId &&
+                    <FormattedMessage id={texts.titleId} defaultMessage={texts.titleId} />
+                  }
+                  { texts.titleAdd }
                 </Typography>
 
                 <Divider sx={{ mt: 1, mb: 3 }} />

@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 
 import { PageTypes } from '@core/constants/navigation';
+import { capitalizeFirstLetter } from '@core/utils/strings';
 
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
 import usePage from '@lib/hooks/usePage';
@@ -27,6 +28,10 @@ const Search: NextPage<CollectionProps> = (props) => {
           descriptionId: 'productList.metas.description',
         }}
         marginTop={true}
+        texts={{
+          titleId: productCategory?.name ? undefined : 'productList.allCategories',
+          titleAdd: productCategory?.name ? capitalizeFirstLetter(productCategory.name.current) : undefined,
+        }}
       />
 
       <ProductList 
