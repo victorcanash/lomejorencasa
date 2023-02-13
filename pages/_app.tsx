@@ -30,8 +30,9 @@ import { messages } from '@lib/constants/lang';
 import theme from '@lib/constants/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
-import { AuthProvider } from '@lib/contexts/AuthContext';
+import { ProductsProvider } from '@lib/contexts/ProductsContext';
 import { CartProvider } from '@lib/contexts/CartContext';
+import { AuthProvider } from '@lib/contexts/AuthContext';
 import ErrorBoundary from '@components/exceptions/ErrorBoundary';
 import MainLayout from '@components/layouts/MainLayout';
 
@@ -99,14 +100,16 @@ function MyApp(props: MyAppProps) {
                     
                     <ErrorBoundary>
                       <AppProvider>
-                        <SearchProvider> 
-                          <AuthProvider>
+                        <SearchProvider>
+                          <ProductsProvider>
                             <CartProvider>
-                              <MainLayout>
-                                <Component {...pageProps} />
-                              </MainLayout> 
+                              <AuthProvider>
+                                <MainLayout>
+                                  <Component {...pageProps} />
+                                </MainLayout> 
+                              </AuthProvider>
                             </CartProvider>
-                          </AuthProvider>          
+                          </ProductsProvider>          
                         </SearchProvider>
                       </AppProvider>
                     </ErrorBoundary>

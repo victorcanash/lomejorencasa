@@ -3,10 +3,11 @@ import { useRouter } from 'next/router';
 
 import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
 
-import { pages } from '@lib/constants/navigation';
 import { Protections } from '@core/constants/auth';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';
+
+import { pages } from '@lib/constants/navigation';
 
 type ContextType = {
   token: string,
@@ -33,7 +34,7 @@ export const AuthContext = createContext<ContextType>({
   setToken: () => {},
   braintreeToken: '',
   setBraintreeToken: () => {},
-  user: { email: undefined, shipping: undefined, billing: undefined },
+  user: {} as GuestUser,
   setUser: () => {},
   checkoutPayment: undefined,
   setCheckoutPayment: () => {},

@@ -2,16 +2,16 @@ import type { NextPage } from 'next';
 
 import { PageTypes } from '@core/constants/navigation';
 
-import { BagProps, getBagProps } from '@lib/server/bag';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ProductDetail from '@components/products/detail';
 
-const Bags: NextPage<BagProps> = (props) => {
-  const { product } = props;
+const Bags: NextPage = () => {
+  const { bagsProduct } = useProductsContext();
 
   const page = usePage();
-
+  
   return (
     <>
       <PageHeader
@@ -23,11 +23,11 @@ const Bags: NextPage<BagProps> = (props) => {
         marginTop={true}
       />
 
-      <ProductDetail product={product} />
+      { bagsProduct &&
+        <ProductDetail product={bagsProduct} />
+      }
     </>
   );
-}
+};
 
 export default Bags;
-
-export const getServerSideProps = getBagProps;

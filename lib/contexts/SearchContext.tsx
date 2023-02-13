@@ -1,9 +1,10 @@
 import { createContext, useState, Dispatch, SetStateAction, useContext } from 'react';
 
-import { pages } from '@lib/constants/navigation';
+import { AdminSections } from '@core/constants/admin';
 import { allProductsName } from '@core/constants/products';
 import type { ProductCategory } from '@core/types/products';
-import { AdminSections } from '@core/constants/admin';
+
+import { pages } from '@lib/constants/navigation';
 
 type SearchContext = {
   productCategories: ProductCategory[],
@@ -63,4 +64,4 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </SearchContext.Provider>
   );
-}
+};

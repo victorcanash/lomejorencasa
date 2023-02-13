@@ -1,9 +1,10 @@
 import type { GetServerSideProps } from 'next';
 
+import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
 import { getAllProducts } from '@core/utils/products';
 
-import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/products';
+import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/search';
 
 export type CollectionProps = {
   products: Product[],
@@ -16,7 +17,7 @@ export type CollectionProps = {
 export const getCollectionProps: GetServerSideProps = async (context) => {
   const categoryParam = context.params?.category;
   const { page, sortBy, order, keywords } = context.query;
-  const categorySearch = typeof categoryParam == 'string' ? categoryParam : 'all';
+  const categorySearch = typeof categoryParam == 'string' ? categoryParam : allProductsName;
   const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
   const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
   const orderSearch = typeof order == 'string' ? order : 'asc';
@@ -36,11 +37,11 @@ export const getCollectionProps: GetServerSideProps = async (context) => {
         }
       };
     })
-    .catch((error: Error) => {
+    .catch((_error: Error) => {
       result = { 
         notFound: true 
       };
-    })
+    });
 
   return result;
 };

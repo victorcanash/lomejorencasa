@@ -26,7 +26,7 @@ const Product: NextPage<ProductProps> = (props) => {
       <ProductDetail product={product} />
     </>
   );
-}
+};
 
 export default Product;
 

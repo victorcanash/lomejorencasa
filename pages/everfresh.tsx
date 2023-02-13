@@ -2,13 +2,13 @@ import type { NextPage } from 'next';
 
 import { PageTypes } from '@core/constants/navigation';
 
-import { EverfreshProps, getEverfreshProps } from '@lib/server/everfresh';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ProductDetail from '@components/products/detail';
 
-const Everfresh: NextPage<EverfreshProps> = (props) => {
-  const { product } = props;
+const Everfresh: NextPage = () => {
+  const { everfreshProduct } = useProductsContext();
 
   const page = usePage();
 
@@ -23,11 +23,11 @@ const Everfresh: NextPage<EverfreshProps> = (props) => {
         marginTop={true}
       />
 
-      <ProductDetail product={product} />
+      { everfreshProduct &&
+        <ProductDetail product={everfreshProduct} />
+      }
     </>
   );
-}
+};
 
 export default Everfresh;
-
-export const getServerSideProps = getEverfreshProps;

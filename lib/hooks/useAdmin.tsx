@@ -4,10 +4,11 @@ import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
 
 import { AdminSections } from '@core/constants/admin';
+import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
 import { getAllProducts, getProduct } from '@core/utils/products';
 
-import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/products';
+import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/search';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { CheckProductsSectionProps } from '@components/admin/sections/CheckProductsSection';
@@ -35,26 +36,26 @@ const useAdmin = (checkedPage: boolean) => {
 
   const getCheckProductsProps = useCallback(async (sectionSearch: AdminSections) => {
     const { category, page, sortBy, order, keywords } = router.query;
-    const categorySearch = typeof category == 'string' ? category : 'all';
+    const categorySearch = typeof category == 'string' ? category : allProductsName;
     const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
     const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
     const orderSearch = typeof order == 'string' ? order : 'asc';
     const keywordsSearch = typeof keywords == 'string' ? keywords : '';
 
     await getAllProducts(token, intl.locale, pageSearch, limitByPageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, orderRemainsSearch, true)
-    .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
-      setCheckProductsProps({
-        category: response.productCategory,
-        products: response.products,
-        totalPages: response.totalPages,
-        currentPage: response.currentPage,
-        keywords: keywordsSearch,
-        getAdminProduct: getAdminProduct,
+      .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
+        setCheckProductsProps({
+          category: response.productCategory,
+          products: response.products,
+          totalPages: response.totalPages,
+          currentPage: response.currentPage,
+          keywords: keywordsSearch,
+          getAdminProduct: getAdminProduct,
+        });
+        setSection(sectionSearch);
+      }).catch((_error: Error) => {
+        setSection(AdminSections.home);
       });
-      setSection(sectionSearch);
-    }).catch((_error: Error) => {
-      setSection(AdminSections.home);
-    })
   }, [getAdminProduct, intl.locale, router.query, token]);
   
   useEffect(() => {
