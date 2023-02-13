@@ -256,6 +256,10 @@ const useForms = () => {
       .number()
       .min(0)
       .required(),
+    quantity: Yup
+      .number()
+      .min(0)
+      .required(),
   };
 
   const inventoryFieldsInitValues = {
@@ -263,6 +267,7 @@ const useForms = () => {
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
     price: 0,
+    quantity: 0,
   };
 
   const discountFieldsValidation = {
@@ -391,6 +396,7 @@ const useForms = () => {
     name: inventoryFieldsValidation.name,
     description: productFieldsValidation.description,
     price: inventoryFieldsValidation.price,
+    quantity: inventoryFieldsValidation.quantity,
   });
 
   const manageDiscountFormValidation = Yup.object().shape({

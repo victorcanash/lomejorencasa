@@ -33,10 +33,10 @@ const useSelectInventoryQuantity = (
     }
     const menuItems = [] as JSX.Element[];
     const menuItemsValues = [] as number[];
-    const bigbuyQuantity = currentInventory.bigbuy.quantity;
+    const currentQuantity = currentInventory.quantity;
     let maxBigbuyQuantity = currentQuantity + rangeChangeItemQuantity;
-    if (maxBigbuyQuantity > bigbuyQuantity) {
-      maxBigbuyQuantity = bigbuyQuantity;
+    if (maxBigbuyQuantity > currentQuantity) {
+      maxBigbuyQuantity = currentQuantity;
     }
     let minBigbuyQuantity = currentQuantity - rangeChangeItemQuantity;
     if (minBigbuyQuantity < 0) {
@@ -46,7 +46,7 @@ const useSelectInventoryQuantity = (
     if (currentQuantity == 0) {
       menuItemsValues.push(0);
     }
-    if (bigbuyQuantity > 0) {
+    if (currentQuantity > 0) {
       if (minBigbuyQuantity > 2) {
         menuItemsValues.push(1);
         menuItemsValues.push(2);
@@ -66,7 +66,7 @@ const useSelectInventoryQuantity = (
       );
     }
     return menuItems;
-  }, [currentInventory?.bigbuy.quantity, currentQuantity, item]);
+  }, [currentInventory.quantity, item]);
 
   const handleSelectChange = (event: SelectChangeEvent) => {
     const quantity = parseInt(event.target.value);
@@ -84,7 +84,7 @@ const useSelectInventoryQuantity = (
             id="inventory-quantity-select"
             value={currentQuantity.toString()}
             onChange={handleSelectChange}
-            disabled={currentInventory.bigbuy.quantity <= 0}
+            disabled={currentInventory.quantity <= 0}
           >
             { menuItems }
           </MuiSelect>

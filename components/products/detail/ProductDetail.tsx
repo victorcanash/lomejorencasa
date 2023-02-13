@@ -190,7 +190,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                     fullWidth
                     variant="contained"
                     onClick={onClickAddCartBtn}
-                    disabled={!selectedInventory || selectedInventory.bigbuy.quantity == 0}
+                    disabled={!selectedInventory || selectedInventory.quantity == 0}
                     sx={{ mt: 1 }}
                   >
                     <FormattedMessage id="productDetail.addCartBtn" />

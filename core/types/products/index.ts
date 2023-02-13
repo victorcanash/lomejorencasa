@@ -26,6 +26,7 @@ export type ProductInventory = {
   name: LocalizedText,
   description: LocalizedText,
   price: number,
+  quantity: number,
   realPrice: number,
   bigbuy: {
     id: string,

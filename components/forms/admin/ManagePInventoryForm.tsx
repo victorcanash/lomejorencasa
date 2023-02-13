@@ -62,6 +62,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
         name: productInventory?.name || inventoryFieldsInitValues.name,
         description: productInventory?.description || inventoryFieldsInitValues.description,
         price: productInventory?.price || inventoryFieldsInitValues.price,
+        quantity: productInventory?.quantity || inventoryFieldsInitValues.quantity,
         realPrice: productInventory?.realPrice || 0,
         bigbuy: {
           id: productInventory?.bigbuy.id || '',
@@ -115,6 +116,11 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
                 value: '€',
                 position: 'end',
               },
+            },
+            {
+              name: 'quantity',
+              type: FormFieldTypes.numeric,
+              required: true,
             }
           ],
         }

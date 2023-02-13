@@ -56,7 +56,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
   const availableItemQuantity = () => {
     if ((item as CartItem)?.cartId) {
-      if (item.inventory && item.inventory.bigbuy.quantity <= 0) {
+      if (item.inventory && item.inventory.quantity <= 0) {
         return false;
       }
     } else if ((item as OrderItem)?.name) {

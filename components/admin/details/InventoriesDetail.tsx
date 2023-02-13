@@ -61,6 +61,9 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.price' })}: ${inventory.price}`}
           </Typography>
+          <Typography component="div" variant="body1">
+              {`${intl.formatMessage({ id: 'forms.quantity' })}: ${inventory.quantity}`}
+          </Typography>
           { created &&
             <>
               <Typography component="div" variant="body1">

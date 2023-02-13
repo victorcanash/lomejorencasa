@@ -58,7 +58,7 @@ const useSelectInventory = (product: Product, initInventory?: ProductInventory) 
                     id="forms.selectInventory.content"
                     values={{
                       name: item.name.current,
-                      quantity: item.bigbuy.quantity,
+                      quantity: item.quantity,
                     }}
                   />
                 </MenuItem>
