@@ -10,6 +10,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { CheckoutSections } from '@core/constants/checkout';
 
 import { useAppContext } from '@lib/contexts/AppContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import usePayments from '@lib/hooks/usePayments';
 import PageHeader from '@components/ui/PageHeader';
@@ -17,9 +18,11 @@ import Stepper from '@components/ui/Stepper';
 import CheckoutAddressesSection from '@components/checkout/sections/CheckoutAddressesSection';
 import CheckoutPaymentSection from '@components/checkout/sections/CheckoutPaymentSection';
 import CheckoutConfirmSection from '@components/checkout/sections/CheckoutConfirmSection';
+import LoginInfoDialog from '@components/dialogs/LoginInfoDialog';
 
 const Checkout: NextPage = () => {
   const { setLoading } = useAppContext();
+  const { isLogged } = useAuthContext();
 
   const router = useRouter();
 
@@ -32,6 +35,11 @@ const Checkout: NextPage = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [transactionError, setTransactionError] = useState('');
   const [confirmToken, setConfirmToken] = useState<string | undefined>(undefined)
+  const [openLoginInfoDialog, setOpenLoginInfoDialog] = useState(false);
+
+  const handleLoginInfoDialog = () => {
+    setOpenLoginInfoDialog(!openLoginInfoDialog);
+  };
 
   const nextStep = () => {
     if (Object.keys(CheckoutSections).length == activeStep + 1) {
@@ -68,9 +76,12 @@ const Checkout: NextPage = () => {
       });
     } else {
       setConfirmToken(queryToken);
+      if (!isLogged()) {
+        setOpenLoginInfoDialog(true);
+      }
       setLoading(false);
     }
-  }, [getGuestUserData, router.query.token, setLoading]);
+  }, [getGuestUserData, isLogged, router.query.token, setLoading]);
 
   useEffect(() => {
     if (page.checked && !loadedCheckout) {
@@ -117,6 +128,13 @@ const Checkout: NextPage = () => {
               back={prevStep}
               setTransactionError={setTransactionError}
               confirmToken={confirmToken}
+            />
+          }
+
+          { !isLogged() && confirmToken === '' &&
+            <LoginInfoDialog
+              open={openLoginInfoDialog}
+              handleDialog={handleLoginInfoDialog}
             />
           }
         </Container>

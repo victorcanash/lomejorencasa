@@ -581,12 +581,17 @@
 
   "dialogs.checkoutEmail.title": "Confirmar correo",
   "dialogs.checkoutEmail.content": "Antes de acabar introduce tu correo si no tienes una cuenta registrada y te enviaremos un enlace para poder finalizar la compra.\n\nSi ya tienes una cuenta registrada con tu correo deberás de iniciar sesión para usarlo.",
-  "dialogs.checkoutEmail.link": "Ya tienes una cuenta? Inicia sesión",
+  "dialogs.checkoutEmail.link": "¿Ya tienes una cuenta? Inicia sesión",
   "dialogs.checkoutEmail.sendBtn": "Enviar",
   "dialogs.checkoutEmail.cancelBtn": "Cancelar",
 
+  "dialogs.loginInfo.title": "Iniciar sesión",
+  "dialogs.loginInfo.content": "Antes de continuar has de saber que puedes registrar una cuenta para poder guardar tus datos para futuras compras.",
+  "dialogs.loginInfo.loginBtn": "Iniciar sesión",
+  "dialogs.loginInfo.continueBtn": "Continuar sin iniciar sesión",
+
   "dialogs.confirm.title": "Confirmar acción",
-  "dialogs.confirm.content": "Confirmar acción escribiendo {confirmTxt} y pulsando el botón de confirmar",
+  "dialogs.confirm.content": "Confirmar acción escribiendo {confirmTxt} y pulsando el botón de confirmar.",
   "dialogs.confirm.confirmBtn": "Confirmar",
   "dialogs.confirm.cancelBtn": "Cancelar",
 

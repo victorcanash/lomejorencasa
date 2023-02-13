@@ -576,19 +576,24 @@
 
   "dialogs.checkoutEmail.title": "Confirmar correo",
   "dialogs.checkoutEmail.content": "Antes de acabar introduce tu correo si no tienes una cuenta registrada y te enviaremos un enlace para poder finalizar la compra.\n\nSi ya tienes una cuenta registrada con tu correo deberás de iniciar sesión para usarlo.",
-  "dialogs.checkoutEmail.link": "Ya tienes una cuenta? Inicia sesión",
+  "dialogs.checkoutEmail.link": "¿Ya tienes una cuenta? Inicia sesión",
   "dialogs.checkoutEmail.sendBtn": "Enviar",
   "dialogs.checkoutEmail.cancelBtn": "Cancelar",
 
-  "dialogs.confirm.title": "Confirm action",
-  "dialogs.confirm.content": "Confirm action writing {confirmTxt} and clicking the confirm button",
-  "dialogs.confirm.confirmBtn": "Confirm",
-  "dialogs.confirm.cancelBtn": "Cancel",
+  "dialogs.loginInfo.title": "Iniciar sesión",
+  "dialogs.loginInfo.content": "Antes de continuar has de saber que puedes registrar una cuenta para poder guardar tus datos para futuras compras.",
+  "dialogs.loginInfo.loginBtn": "Iniciar sesión",
+  "dialogs.loginInfo.continueBtn": "Continuar sin iniciar sesión",
 
-  "dialogs.cookies.title": "Did someone say... cookies?",
-  "dialogs.cookies.content": "We use cookies to provide you with a better, safer and faster service and to support our business. Some cookies are necessary to use our services, improve our services, and make sure they work properly. If you click 'Accept all cookies', you also allow to use cookies to provide you with ads and communications tailored to your interests. If you click 'Refuse non-essential cookies', we won't use cookies to gather additional data for tailored ads and communications. To learn more visit the cookie page.",
-  "dialogs.cookies.acceptBtn": "Accept all cookies",
-  "dialogs.cookies.refuseBtn": "Refuse non-essential cookies",
+  "dialogs.confirm.title": "Confirmar acción",
+  "dialogs.confirm.content": "Confirmar acción escribiendo {confirmTxt} y pulsando el botón de confirmar.",
+  "dialogs.confirm.confirmBtn": "Confirmar",
+  "dialogs.confirm.cancelBtn": "Cancelar",
+
+  "dialogs.cookies.title": "Alguien dijo... cookies?",
+  "dialogs.cookies.content": "Utilizamos cookies para ofrecerte un servicio mejor, más seguro y más rápido y para apoyar nuestro negocio. Algunas cookies son necesarias para utilizar nuestros servicios, mejorarlos y asegurarse de que funcionan correctamente. Si haces clic en 'Aceptar todas las cookies', también permites utilizar cookies para ofrecerte anuncios y comunicaciones adaptados a tus intereses. Si haces clic en 'Rechazar cookies no necesarias', no utilizaremos las cookies para recopilar datos adicionales para mostrar anuncios y comunicaciones personalizados. Para obtener más información visite la página de cookies.",
+  "dialogs.cookies.acceptBtn": "Aceptar todas las cookies",
+  "dialogs.cookies.refuseBtn": "Rechazar cookies no necesarias",
 
   "ES": "Spain",
   "es": "Spain"
