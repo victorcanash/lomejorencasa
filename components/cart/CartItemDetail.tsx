@@ -1,3 +1,4 @@
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
 import { useIntl, FormattedMessage } from 'react-intl';
@@ -38,6 +39,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     }
   );
 
+  const [availableItemQuantity, setAvailableItemQuantity] = useState(true);
+
   const handleRemoveItem = () => {
     if (updateQuantity) {
       updateQuantity(item as CartItem, 0, true);
@@ -54,18 +57,24 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     return href;
   };
 
-  const availableItemQuantity = () => {
+  const checkAvailableItemQuantity = useCallback(() => {
     if ((item as CartItem)?.cartId) {
       if (item.inventory && item.inventory.quantity <= 0) {
-        return false;
+        setAvailableItemQuantity(false);
+        return;
       }
     } else if ((item as OrderItem)?.name) {
       if (item.quantity <= 0) {
-        return false;
+        setAvailableItemQuantity(false);
+        return;
       }
     }
-    return true;
-  };
+    setAvailableItemQuantity(true);
+  }, [item])
+
+  useEffect(() => {
+    checkAvailableItemQuantity();
+  }, [checkAvailableItemQuantity]);
 
   return (
     <>
@@ -147,13 +156,9 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   <Typography 
                     variant="body2"
                     mt="5px"
-                    sx={
-                      !availableItemQuantity() ? 
-                        { color: 'grey' } : 
-                        undefined
-                    }
+                    color={!availableItemQuantity ? { color: 'grey' } : undefined}
                   >
-                    { !availableItemQuantity() ? 
+                    { !availableItemQuantity ? 
                       intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
                       intl.formatMessage({ id: 'cart.inventoryAvailable' })
                     }
@@ -168,11 +173,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             <Typography 
               component="div" 
               variant="body1" 
-              sx={
-                !availableItemQuantity() ? 
-                  { color: 'grey', fontWeight: 500 } : 
-                  { fontWeight: 500 }
-              }
+              color={!availableItemQuantity ? { color: 'grey' } : undefined}
+              fontWeight={500}
             >
               { item.inventory ? `${(item.inventory?.realPrice * item.quantity).toFixed(2)} €` : undefined }
             </Typography>
