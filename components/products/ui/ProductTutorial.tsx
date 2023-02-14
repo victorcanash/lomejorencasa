@@ -47,7 +47,8 @@ const ProductTutorial = (props: ProductTutorialProps) => {
           <video 
             loop
             muted
-            autoPlay={true}  
+            autoPlay
+            playsInline
             style={{ 
               position: 'relative',
               width: '100%', 
@@ -55,7 +56,10 @@ const ProductTutorial = (props: ProductTutorialProps) => {
               borderRadius: '10px',
             }}
           >
-            <source src={source.src as string} />
+            <source 
+              src={source.src as string} 
+              type="video/mp4" 
+            />
           </video> :
           <Image 
             src={source.src} 
