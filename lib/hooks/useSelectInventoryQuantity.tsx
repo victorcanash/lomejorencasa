@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,45 +11,39 @@ const useSelectInventoryQuantity = (
   item: ProductInventory | CartItem | undefined, 
   onChange?: (quantity: number) => void,
 ) => {
-  const [selectedQuantity, setSelectedQuantity] = useState<number>(item?.quantity && item.quantity > 0 ? 1 : 0);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [menuItems, setMenuItems] = useState<JSX.Element[]>([]);
+  const [loaded, setLoaded] = useState(false);
+  const [prevItem, setPrevItem] = useState<ProductInventory | undefined>(undefined);
 
-  const currentInventory = useMemo(() => {
-    if (!item) {
-      return item
+  const currentInventory = useCallback(() => {
+    if ((item as ProductInventory)?.sku) {
+      return item as ProductInventory;
     } else if ((item as CartItem)?.inventory) {
       return (item as CartItem).inventory;
     }
-    return item as ProductInventory;
+    return undefined;
   }, [item]);
 
-  const currentQuantity = useMemo(() => {
-    if ((item as CartItem)?.inventory) {
-      return (item as CartItem).quantity;
-    }
-    return selectedQuantity;
-  }, [item, selectedQuantity]);
-
-  const menuItems = useMemo(() => {
-    const menuItems = [] as JSX.Element[];
+  const checkMenuItems = useCallback((newQuantity: number) => {
+    const newMenuItems = [] as JSX.Element[];
     const menuItemsValues = [] as number[];
-    const quantity = currentQuantity;
-    const inventoryQuantity = currentInventory?.quantity || 0;
-    let maxBigbuyQuantity = quantity + rangeChangeItemQuantity;
+    const inventoryQuantity = currentInventory()?.quantity || 0;
+    let maxBigbuyQuantity = newQuantity + rangeChangeItemQuantity;
     if (maxBigbuyQuantity > inventoryQuantity) {
       maxBigbuyQuantity = inventoryQuantity;
     }
-    let minBigbuyQuantity = quantity - rangeChangeItemQuantity;
+    let minBigbuyQuantity = newQuantity - rangeChangeItemQuantity;
     if (minBigbuyQuantity < 0) {
       minBigbuyQuantity = 0;
     }
 
-    if (quantity == 0) {
+    if (newQuantity == 0) {
       menuItemsValues.push(0);
     }
     if (inventoryQuantity > 0) {
       if (minBigbuyQuantity > 2) {
-        menuItemsValues.push(1);
-        menuItemsValues.push(2);
+        menuItemsValues.push(1, 2);
       }
       for (let i = minBigbuyQuantity; i < maxBigbuyQuantity; i++) {
         menuItemsValues.push(i + 1);
@@ -57,40 +51,69 @@ const useSelectInventoryQuantity = (
     }
 
     for (let i = 0; i < menuItemsValues.length; i++) {
-      menuItems.push(
+      newMenuItems.push(
         <MenuItem key={menuItemsValues[i]} value={menuItemsValues[i]}>
           {menuItemsValues[i]}
         </MenuItem>
       );
     }
-    return menuItems;
-  }, [currentInventory?.quantity, currentQuantity]);
+    return newMenuItems;
+  }, [currentInventory]);
+
+  const disabled = () => {
+    const inventory = currentInventory();
+    if (!inventory || inventory.quantity <= 0) {
+      return true;
+    }
+    return false;
+  };
 
   const handleSelectChange = (event: SelectChangeEvent) => {
     const quantity = parseInt(event.target.value);
     setSelectedQuantity(quantity);
+    setMenuItems(checkMenuItems(quantity));
     if (onChange) {
       onChange(quantity);
     }
   };
 
   useEffect(() => {
-    if (item?.quantity && item.quantity > 0) {
-      setSelectedQuantity(1);
-    } else {
-      setSelectedQuantity(0);
+    if (!loaded) {
+      let quantity = item?.quantity || 0;
+      if ((item as ProductInventory)?.sku) {
+        if (item?.quantity && item.quantity > 0) {
+          quantity = 1;
+        } else {
+          quantity = 0;
+        }
+      }
+      setSelectedQuantity(quantity);
+      setMenuItems(checkMenuItems(quantity));
+      setLoaded(true);
+    } else if ((item as ProductInventory)?.sku) {
+      if ((item as ProductInventory).sku !== prevItem?.sku){
+        let quantity = 0;
+        if (item?.quantity && item.quantity > 0) {
+          quantity = 1;
+        }
+        setSelectedQuantity(quantity);
+        setMenuItems(checkMenuItems(quantity));
+      }
     }
-  }, [item?.quantity]);
+    if ((item as ProductInventory)?.sku) {
+      setPrevItem(item as ProductInventory);
+    }
+  }, [checkMenuItems, item, item?.quantity, loaded, prevItem]);
 
   const Select = () => {
     return (
       <>
-        { item &&
+        { loaded && item &&
           <MuiSelect
             id="inventory-quantity-select"
-            value={currentQuantity.toString()}
+            value={selectedQuantity.toString()}
             onChange={handleSelectChange}
-            disabled={!currentInventory || currentInventory.quantity <= 0}
+            disabled={disabled()}
           >
             { menuItems }
           </MuiSelect>
@@ -101,7 +124,8 @@ const useSelectInventoryQuantity = (
 
   return {
     Select,
-    selectedQuantity: currentQuantity,
+    selectedQuantity,
+    loaded,
   };
 };
 
