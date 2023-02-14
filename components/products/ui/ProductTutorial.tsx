@@ -44,7 +44,7 @@ const ProductTutorial = (props: ProductTutorialProps) => {
         }}
       >
         { source.type == 'video' ?
-          <video 
+          <video
             loop
             muted
             autoPlay

@@ -17,7 +17,8 @@ const EverfreshUse = () => {
         <video 
           loop
           muted
-          autoPlay={true}  
+          autoPlay
+          playsInline
           style={{ 
             position: 'relative',
             width: '100%', 
@@ -25,7 +26,10 @@ const EverfreshUse = () => {
             borderRadius: '10px',
           }}
         >
-          <source src={src as string} />
+          <source 
+              src={src as string} 
+              type="video/mp4" 
+            />
         </video>
       );
     }
