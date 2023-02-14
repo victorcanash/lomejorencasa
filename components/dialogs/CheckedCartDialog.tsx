@@ -60,11 +60,12 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
           <>
             <DialogContentText 
               id="checked-cart-dialog"
+              mb={1}
             >
               <FormattedMessage id="dialogs.checkedCart.content.changedItems" />
             </DialogContentText>
             { changedItemsByInventory.map((item) => (
-              <DialogContentText key={item.id}>
+              <DialogContentText key={item.id} mb={1}>
                 {'-'}
                 <FormattedMessage
                   id="dialogs.checkedCart.content.changedItem"
@@ -79,7 +80,7 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
           </>
         }
         { changedItemsByInventory.length <= 0 && changedCart &&
-          <DialogContentText>
+          <DialogContentText mb={1}>
             <FormattedMessage id="dialogs.checkedCart.content.changedCart" />
           </DialogContentText>
         }
