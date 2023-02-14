@@ -34,8 +34,17 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
 
   const initProducts = (newProducts: Product[]) => {
     setProducts(newProducts);
-    setEverfreshProduct(products.find((item) => item.id === everfreshProductId));
-    setBagsProduct(products.find((item) => item.id === bagsProductId));
+    let newEverfreshProduct = undefined;
+    let newBagsProduct = undefined;
+    newProducts.forEach((item) => {
+      if (item.id === everfreshProductId) {
+        newEverfreshProduct = item;
+      } else if (item.id === bagsProductId) {
+        newBagsProduct = item;
+      }
+    })
+    setEverfreshProduct(newEverfreshProduct);
+    setBagsProduct(newBagsProduct);
   };
 
   return (

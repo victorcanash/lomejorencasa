@@ -34,6 +34,7 @@ const Cart: NextPage = () => {
   const { checkCart, updateCartItemQuantity } = useCart();
 
   const [openDialog, setOpenDialog] = useState(false);
+  const [initCart, setInitCart] = useState(true);
   const [checkedCart, setCheckedCart] = useState(false);
   const [changedItemsByInventory, setChangedItemsByInventory] = useState<CartItem[]>([]);
 
@@ -42,6 +43,7 @@ const Cart: NextPage = () => {
   }, [openDialog]);
 
   const onSuccessCheckCart = useCallback((_changedCart: boolean, changedItemsByInventory: CartItem[]) => {
+    setCheckedCart(true);
     setLoading(false);
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length > 0) {
@@ -57,11 +59,11 @@ const Cart: NextPage = () => {
   };
 
   useEffect(() => {
-    if (page.checked && !checkedCart) {
-      setCheckedCart(true);
+    if (page.checked && initCart) {
+      setInitCart(false);
       checkCart(onSuccessCheckCart);
     }
-  }, [checkCart, checkedCart, onSuccessCheckCart, page.checked, router.asPath]);
+  }, [initCart, checkCart, onSuccessCheckCart, page.checked, router.asPath]);
 
   return (
     <>
@@ -78,54 +80,56 @@ const Cart: NextPage = () => {
         }}
       />
 
-      <Container>
+      { checkedCart &&
+        <Container>
 
-        { cart && !emptyCart() ?
-          <CartDetail
-            items={cart.items}
-            totalPrice={totalPrice}
-            updateQuantity={updateCartItemQuantity}
-            showEmptyItems={true}
-          />
-          :
-          <Typography component='div' variant='body1' align='center' sx={{ my: 5 }}>
-            <FormattedMessage id="cart.noItems" />
-          </Typography>
-        }
-
-        <Grid
-          container
-          sx={{
-            flexWrap: 'nowrap',
-            justifyContent: 'space-between',
-          }}
-          mt={ !emptyCart() ? 3 : undefined }
-        >
-          <Grid item>
-            <GoBackBtn />
-          </Grid>
-          { !emptyCart() &&
-            <Grid item>
-              <LinkButton
-                href={pages.checkout.path}
-                startIcon={<PointOfSaleIcon />}
-                disabled={totalPrice <= 0}
-              >
-                <FormattedMessage id="cart.checkoutBtn" />
-              </LinkButton>
-            </Grid>
+          { cart && !emptyCart() ?
+            <CartDetail
+              items={cart.items}
+              totalPrice={totalPrice}
+              updateQuantity={updateCartItemQuantity}
+              showEmptyItems={true}
+            />
+            :
+            <Typography component='div' variant='body1' align='center' sx={{ my: 5 }}>
+              <FormattedMessage id="cart.noItems" />
+            </Typography>
           }
-        </Grid>
 
-        <CheckedCartDialog
-          open={openDialog}
-          handleDialog={handleDialog}
-          changedCart={false}
-          changedItemsByInventory={changedItemsByInventory}
-          message={intl.formatMessage({ id: 'dialogs.checkedCart.content.cartPage' })}
-        />
+          <Grid
+            container
+            sx={{
+              flexWrap: 'nowrap',
+              justifyContent: 'space-between',
+            }}
+            mt={ !emptyCart() ? 3 : undefined }
+          >
+            <Grid item>
+              <GoBackBtn />
+            </Grid>
+            { !emptyCart() &&
+              <Grid item>
+                <LinkButton
+                  href={pages.checkout.path}
+                  startIcon={<PointOfSaleIcon />}
+                  disabled={totalPrice <= 0}
+                >
+                  <FormattedMessage id="cart.checkoutBtn" />
+                </LinkButton>
+              </Grid>
+            }
+          </Grid>
 
-      </Container>
+          <CheckedCartDialog
+            open={openDialog}
+            handleDialog={handleDialog}
+            changedCart={false}
+            changedItemsByInventory={changedItemsByInventory}
+            message={intl.formatMessage({ id: 'dialogs.checkedCart.content.cartPage' })}
+          />
+
+        </Container>
+      }
     </>
   );
 };

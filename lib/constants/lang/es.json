@@ -286,7 +286,7 @@
   "cart.noItems": "Ningún producto añadido",
   "cart.total": "Total",
   "cart.inventoryAvailable": "Inventario disponible justo ahora",
-  "cart.inventoryUnavailable": "Inventory no disponible justo ahora",
+  "cart.inventoryUnavailable": "Inventario no disponible justo ahora",
   "cart.successes.add": "Añadido al carrito",
   "cart.errors.add": "Error al intentar añadirlo al carrito, inténtalo otra vez",
   "cart.errors.update": "Error al intentar actualizar el carrito, inténtalo otra vez",
