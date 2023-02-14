@@ -32,7 +32,7 @@ export type CheckProductsSectionProps = {
   totalPages: number,
   currentPage: number,
   keywords: string,
-  getAdminProduct: (id: number, onSuccess: (product: Product) => void) => Promise<void>,
+  getAdminProduct: (id: number, bigbuyData: boolean, onSuccess: (product: Product) => void) => Promise<void>,
 };
 
 const CheckProductsSection = (props: CheckProductsSectionProps) => {
@@ -85,8 +85,8 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     router.push(getHref(category?.name.current || allProductsName, page, keywords));
   };
 
-  const refreshProduct = (productId: number) => {
-    getAdminProduct(productId, onRefreshProductSuccess);
+  const refreshProduct = (productId: number, bigbuyData = false) => {
+    getAdminProduct(productId, bigbuyData, onRefreshProductSuccess);
   };
 
   const onRefreshProductSuccess = (product: Product) => {
@@ -218,7 +218,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
   };
 
   const onClickRefreshBigbuyBtn = (productId: number) => {
-    refreshProduct(productId);
+    refreshProduct(productId, true);
   }
 
   const getManageForm = () => {

@@ -23,9 +23,9 @@ const useAdmin = (checkedPage: boolean) => {
   const [section, setSection] = useState<AdminSections | undefined>(undefined);
   const [checkProductsProps, setCheckProductsProps] = useState<CheckProductsSectionProps | undefined>(undefined);
 
-  const getAdminProduct = useCallback(async (id: number, onSuccess: (product: Product) => void) => {
+  const getAdminProduct = useCallback(async (id: number, bigbuyData: boolean, onSuccess: (product: Product) => void) => {
     setLoading(true);
-    await getProduct(token, intl.locale, id, true)
+    await getProduct(token, intl.locale, id, true, bigbuyData)
       .then((response: { product: Product }) => {
         onSuccess(response.product);
         setLoading(false);

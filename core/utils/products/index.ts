@@ -64,11 +64,12 @@ export const getAllProducts = async (
   });
 };
 
-export const getProduct = (token: string, currentLocale: string, id: number, adminData = false) => {
+export const getProduct = (token: string, currentLocale: string, id: number, adminData = false, bigbuyData = false) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       params: {
         adminData,
+        bigbuyData,
       },
       headers: {
         ...getAuthHeaders(token),
