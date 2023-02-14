@@ -217,8 +217,8 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     );
   };
 
-  const onClickRefreshBigbuyBtn = (productId: number) => {
-    refreshProduct(productId, true);
+  const handleClickRefreshBigbuyBtn = (product: Product) => {
+    refreshProduct(product.id, true);
   }
 
   const getManageForm = () => {
@@ -350,6 +350,16 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                   </Button>  
                 </div>
                 <div>
+                  <Button 
+                    variant="contained"                    
+                    onClick={() => handleClickRefreshBigbuyBtn(item.product)}
+                  >
+                    <FormattedMessage
+                      id="admin.refreshBigbuyBtn"
+                    />
+                  </Button> 
+                </div>
+                <div>
                   <Button
                     variant="contained"
                     onClick={() => onClickCheckInventoriesBtn(item.product)}
@@ -364,7 +374,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                   <InventoriesDetail
                     inventories={item.product.inventories}
                     created={true}
-                    onClickRefreshBigbuyBtn={onClickRefreshBigbuyBtn}
                     getInventoryActionComponent={(inventoryIndex: number) => {
                       return (
                         <Button 

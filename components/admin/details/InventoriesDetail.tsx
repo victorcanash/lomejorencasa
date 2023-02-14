@@ -10,7 +10,6 @@ type InventoriesDetailProps = {
   inventories: ProductInventory[],
   created: boolean,
   getInventoryActionComponent: (inventoryIndex: number) => JSX.Element,
-  onClickRefreshBigbuyBtn?: (productId: number) => void,
 };
 
 const InventoriesDetail = (props: InventoriesDetailProps) => {
@@ -18,16 +17,9 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
     inventories, 
     created,
     getInventoryActionComponent,
-    onClickRefreshBigbuyBtn,
   } = props;
 
   const intl = useIntl();
-
-  const handleClickRefreshBigbuyBtn = (productId: number) => {
-    if (onClickRefreshBigbuyBtn) {
-      onClickRefreshBigbuyBtn(productId)
-    }
-  };
 
   return (
     <Grid container spacing={1} py={3}>
@@ -69,14 +61,6 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
               <Typography component="div" variant="body1">
                 {`${intl.formatMessage({ id: 'forms.realPrice' })}: ${inventory.realPrice}`}
               </Typography>
-              <Button 
-                variant="contained"                    
-                onClick={() => handleClickRefreshBigbuyBtn(inventory.productId)}
-              >
-                <FormattedMessage
-                  id="admin.refreshBigbuyBtn"
-                />
-              </Button> 
               <Typography component="div" variant="body1">
                 {`Bigbuy ${intl.formatMessage({ id: 'forms.id' })}: ${inventory.bigbuy.id}`}
               </Typography>
