@@ -13,8 +13,8 @@ const useSelectInventory = (product: Product, initInventory?: ProductInventory) 
   const router = useRouter();
   const intl = useIntl();
 
-  const [selectedInventory, setSelectedInventory] = useState<ProductInventory | undefined>(undefined);
   const [loaded, setLoaded] = useState(false);
+  const [selectedInventory, setSelectedInventory] = useState<ProductInventory | undefined>(undefined);
 
   useEffect(() => {
     if (!loaded) {

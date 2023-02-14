@@ -33,7 +33,7 @@ const ProductDetail = (props: ProductDetailProps) => {
   const intl = useIntl();
 
   const { addCartItem } = useCart();
-  const { Select: SelectInventory, selectedInventory, loaded: selectInventoryLoaded } = useSelectInventory(product);
+  const { Select: SelectInventory, selectedInventory } = useSelectInventory(product);
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
   const onClickAddCartBtn = () => {
@@ -179,31 +179,27 @@ const ProductDetail = (props: ProductDetailProps) => {
               <FormattedMessage id={productDescriptionId()} />
             </Typography>
             {/* Cart inputs */}
-            { selectInventoryLoaded &&
-              <>
-                <FormControl 
-                  sx={{ mb: 2 }} 
-                  className='animate__animated animate__fadeIn'
-                >
-                  <SelectInventory />
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={onClickAddCartBtn}
-                    disabled={!selectedInventory || selectedInventory.quantity == 0}
-                    sx={{ mt: 1 }}
-                  >
-                    <FormattedMessage id="productDetail.addCartBtn" />
-                  </Button>
-                </FormControl>
-                <FormControl 
-                  sx={{ mb: 2 }} 
-                  className='animate__animated animate__fadeIn'
-                >
-                  <SelectQuantity />
-                </FormControl>
-              </>
-            }
+            <FormControl 
+              sx={{ mb: 2 }} 
+              className='animate__animated animate__fadeIn'
+            >
+              <SelectInventory />
+              <Button
+                fullWidth
+                variant="contained"
+                onClick={onClickAddCartBtn}
+                disabled={!selectedInventory || selectedInventory.quantity == 0}
+                sx={{ mt: 1 }}
+              >
+                <FormattedMessage id="productDetail.addCartBtn" />
+              </Button>
+            </FormControl>
+            <FormControl 
+              sx={{ mb: 2 }} 
+              className='animate__animated animate__fadeIn'
+            >
+              <SelectQuantity />
+            </FormControl>
             {/* Comments */}
             { productComments() }
           </Box>
