@@ -1,8 +1,6 @@
 import 'swiper/css';
 import 'swiper/css/bundle';
 import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
-// import 'swiper/css/effect-coverflow';
 import 'styles/globals.css';
 
 import type { AppProps } from 'next/app';
@@ -12,6 +10,7 @@ import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { SnackbarProvider } from 'notistack';
 // import { GoogleOAuthProvider } from '@react-oauth/google';
 // import { Elements } from '@stripe/react-stripe-js';
 // import { loadStripe } from '@stripe/stripe-js';
@@ -22,10 +21,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import 'dayjs/locale/en';
 import 'dayjs/locale/es';
-import { SnackbarProvider } from 'notistack';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
 import envConfig from '@core/config/env.config';
+
 import { messages } from '@lib/constants/lang';
 import theme from '@lib/constants/themes';
 import { AppProvider } from '@lib/contexts/AppContext';
@@ -81,23 +80,21 @@ function MyApp(props: MyAppProps) {
         }}
       />
       <Head>
-        <meta name="keywords" content="ecommerce, shop, nextjs" />
-        <meta name="author" content="Victor Canas" />
+        <meta name="keywords" content="ecommerce, shop, nextjs, laenvasadora, la envasadora" />
+        <meta name="author" content="La Envasadora" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 
       <IntlProvider locale={locale} messages={messages[locale]}>
         <CacheProvider value={emotionCache}>
-          
-          {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
-            {/*<Elements stripe={stripePromise}>*/}
+          <SnackbarProvider maxSnack={3} autoHideDuration={5000}>     
+            {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
+              {/*<Elements stripe={stripePromise}>*/}
             
-              <ThemeProvider theme={theme}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
-                <SnackbarProvider maxSnack={3} autoHideDuration={5000}>
+                <ThemeProvider theme={theme}>
+                  <CssBaseline />
                   <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
-                    
+                      
                     <ErrorBoundary>
                       <AppProvider>
                         <SearchProvider>
@@ -114,13 +111,12 @@ function MyApp(props: MyAppProps) {
                       </AppProvider>
                     </ErrorBoundary>
 
-                  </LocalizationProvider>
-                </SnackbarProvider>
-              </ThemeProvider>
+                  </LocalizationProvider>    
+                </ThemeProvider>
 
-            {/*</Elements>*/}
-          {/*</GoogleOAuthProvider>*/}
-          
+              {/*</Elements>*/}
+            {/*</GoogleOAuthProvider>*/}   
+          </SnackbarProvider>
         </CacheProvider>
       </IntlProvider>
     </>

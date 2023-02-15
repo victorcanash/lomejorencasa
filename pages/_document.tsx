@@ -4,6 +4,7 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
+
 import theme from '@lib/constants/themes';
 
 export default class MyDocument extends Document {
@@ -13,7 +14,7 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />
-          <link rel="icon" type="image/png" href="/favicon.png" />
+          <link rel="shortcut icon" type="image/png" href="/favicon.png" />
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
