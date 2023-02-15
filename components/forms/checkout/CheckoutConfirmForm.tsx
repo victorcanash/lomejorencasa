@@ -15,7 +15,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 import usePayments from '@lib/hooks/usePayments';
 import useCart from '@lib/hooks/useCart';
 import BaseForm from '@components/forms/BaseForm';
-import AddressDetail from '@components/checkout/details/AddressDetail';
+import AddressDetail from '@components/addresses/AddressDetail';
 import CartDetail from '@components/cart/CartDetail';
 import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 import CheckoutEmailDialog from '@components/dialogs/CheckoutEmailDialog';

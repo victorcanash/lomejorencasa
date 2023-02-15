@@ -573,7 +573,7 @@
 
   "dialogs.checkedCart.title": "Carrito actualizado",
   "dialogs.checkedCart.content.changedItems": "La cantidad de algunos productos del carrito han sido actualizados por no haber suficiente inventario:",
-  "dialogs.checkedCart.content.changedItem": "Cantidad de {productName} {inventoryName}: {quantity}",
+  "dialogs.checkedCart.content.changedItem": "Cantidad de {productName}({inventoryName}): {quantity}",
   "dialogs.checkedCart.content.changedCart": "Tu carrito ha sido actualizado.",
   "dialogs.checkedCart.content.cartPage": "Repasa tu carrito.",
   "dialogs.checkedCart.content.checkoutPage": "Repasa tu pedido y vuelve a darle al botón de confirmación.",

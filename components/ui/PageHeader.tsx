@@ -73,7 +73,7 @@ const PageHeader = (props: PageHeaderProps) => {
           { (texts?.titleId || texts?.titleAdd) &&
             <>
               <Container>
-                <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft'>
+                <Typography component="h1" variant="h1">
                   { texts.titleId &&
                     <FormattedMessage id={texts.titleId} defaultMessage={texts.titleId} />
                   }

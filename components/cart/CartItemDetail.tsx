@@ -156,7 +156,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   <Typography 
                     variant="body2"
                     mt="5px"
-                    color={!availableItemQuantity ? { color: 'grey' } : undefined}
+                    //color={!availableItemQuantity ? { color: 'text.disabled' } : undefined}
                   >
                     { !availableItemQuantity ? 
                       intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
@@ -173,7 +173,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             <Typography 
               component="div" 
               variant="body1" 
-              color={!availableItemQuantity ? { color: 'grey' } : undefined}
+              color={!availableItemQuantity ? { color: 'text.disabled' } : undefined}
               fontWeight={500}
             >
               { item.inventory ? `${(item.inventory?.realPrice * item.quantity).toFixed(2)} €` : undefined }

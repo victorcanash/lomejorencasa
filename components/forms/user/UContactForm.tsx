@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react';
+import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
 import { FormFieldTypes } from '@core/constants/forms';
@@ -17,7 +19,6 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';
 import BaseForm from '@components/forms/BaseForm';
-import ImagesDetail from '@components/admin/details/ImagesDetail';
 
 const UContactForm = () => {
   const { user } = useAuthContext();
@@ -155,18 +156,25 @@ const UContactForm = () => {
                   margin: 'auto',
                 }}              
               >
-                <ImagesDetail
-                  imgSources={uploadImgs.map((item) => { return item.url })}
-                  getImgActionComponent={(srcImgIndex: number) => {
-                    return (
-                      <Button variant="contained" onClick={()=>handleClickDeleteUploadImgBtn(srcImgIndex)}>
+                <Grid container spacing={1} py={3}>
+                  { uploadImgs.map((item, index) => (
+                    <Grid item xs={6} key={index}>
+                      <Image
+                        src={item.url}
+                        alt="Image"
+                        width="500"
+                        height="500"
+                        layout="responsive"
+                        objectFit="cover"
+                      />
+                      <Button variant="contained" onClick={()=>handleClickDeleteUploadImgBtn(index)}>
                         <FormattedMessage 
                           id="app.removeBtn" 
                         />
                       </Button>
-                    )
-                  }}
-                />
+                    </Grid>
+                  ))}
+                </Grid>
               </Box>
             }
             <Box

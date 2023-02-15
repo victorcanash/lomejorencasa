@@ -46,8 +46,6 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   const [uploadImgs, setUploadImgs] = useState<UploadFile[]>([]);
   const [deleteExistingImgs, setDeleteExistingImgs] = useState<number[]>([]);
 
-  const maxWidth = '500px';
-
   // on set files to the upload input we add it in uploadFiles
   const handleChangeUploadImgsInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -102,6 +100,8 @@ const ManageProductForm = (props: ManageProductFormProps) => {
       onCancel();
     }
   };
+
+  const maxWidth = '500px';
 
   return (
     <>
@@ -251,7 +251,12 @@ const ManageProductForm = (props: ManageProductFormProps) => {
       </Box>
 
       { product?.imageNames && product?.imageNames.length > 0 &&
-        <Box className="centered-container-img">
+        <Box
+          sx={{
+            maxWidth: maxWidth,
+            margin: 'auto',
+          }}
+        >
           <Typography component="h3" variant="body1">
             <FormattedMessage 
               id="forms.manageProductImgs.existingImgs" 

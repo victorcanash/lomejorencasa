@@ -63,7 +63,7 @@ const OrderList = (props: OrderListProps) => {
           ))}
         </Grid>
         :
-        <Typography component="div" variant="body1" align='center' sx={{ my: 5 }}>
+        <Typography component="div" variant="body1" align="center" sx={{ my: 5 }}>
           <FormattedMessage id="orderList.noItems" />
         </Typography>
       }

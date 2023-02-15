@@ -1,4 +1,4 @@
-import PaginationMUI from '@mui/material/Pagination';
+import MuiPagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
 type PaginationProps = {
@@ -16,9 +16,11 @@ const Pagination = (props: PaginationProps) => {
 
   return (
     <Stack spacing={2} sx={{ mt: 1 }} >
-      <PaginationMUI
+      <MuiPagination
         sx={{
-          display: "flex", flexDirection: "col", justifyContent: "center"
+          display: 'flex', 
+          flexDirection: 'col',
+          justifyContent: 'center',
         }}
         count={totalPages}
         page={currentPage}

@@ -568,7 +568,7 @@
 
   "dialogs.checkedCart.title": "Updated cart",
   "dialogs.checkedCart.content.changedItems": "The quantity of some products in your cart has been updated due to insufficient inventory:",
-  "dialogs.checkedCart.content.changedItem": "Quantity of {productName} {inventoryName}: {quantity}",
+  "dialogs.checkedCart.content.changedItem": "Quantity of {productName}({inventoryName}): {quantity}",
   "dialogs.checkedCart.content.changedCart": "Your cart has been updated.",
   "dialogs.checkedCart.content.cartPage": "Check your cart.",
   "dialogs.checkedCart.content.checkoutPage": "Check your order and click the confirm button again.",

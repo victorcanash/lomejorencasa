@@ -15,9 +15,9 @@ import usePage from '@lib/hooks/usePage';
 import usePayments from '@lib/hooks/usePayments';
 import PageHeader from '@components/ui/PageHeader';
 import Stepper from '@components/ui/Stepper';
-import CheckoutAddressesSection from '@components/checkout/sections/CheckoutAddressesSection';
-import CheckoutPaymentSection from '@components/checkout/sections/CheckoutPaymentSection';
-import CheckoutConfirmSection from '@components/checkout/sections/CheckoutConfirmSection';
+import CheckoutAddressesForm from '@components/forms/checkout/CheckoutAddressesForm';
+import CheckoutPaymentForm from '@components/forms/checkout/CheckoutPaymentForm';
+import CheckoutConfirmForm from '@components/forms/checkout/CheckoutConfirmForm';
 import LoginInfoDialog from '@components/dialogs/LoginInfoDialog';
 
 const Checkout: NextPage = () => {
@@ -111,12 +111,12 @@ const Checkout: NextPage = () => {
             mb={4}
           />
           { currentCheckoutSection() == CheckoutSections.address &&
-            <CheckoutAddressesSection 
+            <CheckoutAddressesForm 
               next={nextStep}
             />
           }
           { currentCheckoutSection() == CheckoutSections.payment &&
-            <CheckoutPaymentSection 
+            <CheckoutPaymentForm 
               next={nextStep}
               back={prevStep}
               transactionError={transactionError}
@@ -124,7 +124,7 @@ const Checkout: NextPage = () => {
             />
           }
           { currentCheckoutSection() == CheckoutSections.confirm &&
-            <CheckoutConfirmSection
+            <CheckoutConfirmForm 
               back={prevStep}
               setTransactionError={setTransactionError}
               confirmToken={confirmToken}

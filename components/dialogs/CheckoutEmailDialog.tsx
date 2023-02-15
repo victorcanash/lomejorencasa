@@ -1,12 +1,8 @@
-import { forwardRef } from 'react';
-
 import { FormattedMessage } from 'react-intl';
 
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import Slide from '@mui/material/Slide';
-import { TransitionProps } from '@mui/material/transitions';
 
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthLogin } from '@core/types/auth';
@@ -15,17 +11,8 @@ import { pages } from '@lib/constants/navigation';
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import usePayments from '@lib/hooks/usePayments';
+import Transition from '@components/animations/Transition';
 import BaseForm from '@components/forms/BaseForm';
-
-const Transition = forwardRef(function Transition(
-  props: TransitionProps & {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    children: React.ReactElement<any, any>;
-  },
-  ref: React.Ref<unknown>,
-) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 type CheckoutEmailDialogProps = {
   open: boolean,

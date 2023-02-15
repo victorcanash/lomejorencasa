@@ -44,7 +44,7 @@ const ProductList = (props: ProductListProps) => {
   return (
     <Container>
       { category &&
-        <Typography component="h2" variant="body1" className='animate__animated animate__fadeInLeft'>
+        <Typography component="h2" variant="body1">
           { capitalizeFirstLetter(category.description.current) }
         </Typography>
       }
@@ -53,7 +53,7 @@ const ProductList = (props: ProductListProps) => {
         <Grid container spacing={1} py={3}>
           {products?.map((item) => (
             <Grid item xs={6} sm={4} lg={3} key={item.id}>
-              <Card className='animate__animated animate__fadeIn' raised>
+              <Card>
                 <CardActionArea component={Link} href={`${pages.productDetail.path}/${item.name.current}?id=${item.id}`} noLinkStyle>
       
                   <CardMedia>
@@ -77,13 +77,13 @@ const ProductList = (props: ProductListProps) => {
                       
                       { item.activeDiscount ?
                         <>
-                          <Typography component="div" variant="body1" color="error">
+                          <Typography component="div" variant="body1">
                             {`${item.lowestRealPrice} €`}
                           </Typography>
                           <Typography component="span" variant="body2">
                             <FormattedMessage id="productDetail.original" />: <s>{`${item.lowestPrice} €`}</s>
                           </Typography> 
-                          <Typography component="span" variant="body2" color="error">
+                          <Typography component="span" variant="body2">
                             {` -${item.activeDiscount.discountPercent}%`}
                           </Typography> 
                         </>

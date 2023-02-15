@@ -57,6 +57,13 @@ const themeOptions: ThemeOptions = {
     },
   },
   components: {
+    MuiAppBar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: colors.background.appBar.primary,
+        },
+      },
+    },
     MuiInputLabel: {
       styleOverrides: {
         root: {
@@ -105,6 +112,20 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: {
+          color: colors.text.backdrop.primary,
+        },
+      },
+    },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: {
+          color: colors.fill.circularProgress,
+        },
+      },
+    },
     MuiAvatar: {
       styleOverrides: {
         root: {
@@ -132,7 +153,7 @@ const themeOptions: ThemeOptions = {
     MuiDivider: {
       styleOverrides: {
         root: {
-          border: `1px solid ${colors.border.divider}`,
+          border: `1px solid ${colors.border.divider.primary}`,
         },
       },
     },
@@ -140,7 +161,7 @@ const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           textDecoration: 'underline',
-          color: colors.text.link,
+          color: colors.text.link.primary,
         },
       },
     },
@@ -188,6 +209,13 @@ const themeOptions: ThemeOptions = {
           fontSize: typographies.listItem.fontSize,
           fontWeight: typographies.listItem.fontWeight,
           lineHeight: typographies.listItem.lineHeight,
+        },
+      },
+    },
+    MuiBadge: {
+      styleOverrides: {
+        root: {
+          color: colors.text.badge.primary,
         },
       },
     },

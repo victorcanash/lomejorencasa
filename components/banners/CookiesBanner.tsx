@@ -33,8 +33,6 @@ const CookiesBanner = (props: CookiesBannerProps) => {
   return (
     <Backdrop
       sx={{ 
-        backgroundColor: 'rgba(0, 0, 0, 0.8)', 
-        color: '#FFFFFF',
         zIndex: (theme) => theme.zIndex.drawer + 1,
         height: '30px',
         position: 'fixed',
@@ -75,14 +73,12 @@ const CookiesBanner = (props: CookiesBannerProps) => {
           <Button 
             onClick={handleClickAcceptBtn}
             variant="contained"
-            sx={{ fontSize: '12px' }}
           >
             <FormattedMessage id="dialogs.cookies.acceptBtn" />
           </Button>
           <Button 
             onClick={handleClickRefuseBtn}
             variant="contained"
-            sx={{ fontSize: '12px' }}
           >
             <FormattedMessage id="dialogs.cookies.refuseBtn" />
           </Button>

@@ -8,6 +8,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { allProductsName } from '@core/constants/products';
+
 import { useSearchContext } from '@lib/contexts/SearchContext';
 
 const Search = styled('div')(({ theme }) => ({

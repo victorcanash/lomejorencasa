@@ -67,7 +67,7 @@ const Admin: NextPage = () => {
       { page.checked && section &&
         <Container>
           { section == AdminSections.home ?
-            <Typography component="h1" variant="h1" className="animate__animated animate__fadeInLeft">
+            <Typography component="h1" variant="h1">
               <FormattedMessage id="admin.h1" />
             </Typography>
             :

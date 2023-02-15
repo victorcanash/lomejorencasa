@@ -16,6 +16,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
+import colors from '@lib/constants/themes/colors';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';
 import Drawer from '@components/NavBar/Drawer';
@@ -30,12 +31,20 @@ const NavBar = () => {
 
   return (
     <>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, backgroundColor: 'secondary.main' }} onClick={appDrawer.close}>
-        <Toolbar variant="dense" disableGutters>
+      <AppBar 
+        position="fixed" 
+        sx={{ 
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }} 
+        onClick={appDrawer.close}
+      >
+        <Toolbar 
+          variant="dense" 
+          disableGutters
+        >
 
           <IconButton
             size="large"
-            color="inherit"
             aria-controls="app-drawer"
             aria-haspopup="true"
             onClick={appDrawer.handleOpen}
@@ -54,7 +63,6 @@ const NavBar = () => {
           > 
             <IconButton
               size='large'
-              color='inherit'
               component={Link}
               href={pages.home.path}
               sx={{ borderRadius: '10px' }}
@@ -80,12 +88,11 @@ const NavBar = () => {
 
           <IconButton
             size='large'
-            color='inherit'
             component={Link}
             href={pages.cart.path}
             sx={{ ml: 1 }}
           >
-            <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity} color='error'>
+            <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity}>
               <ShoppingCartIcon sx={{ fontSize: 30 }} />
             </Badge>
           </IconButton>
@@ -95,7 +102,7 @@ const NavBar = () => {
 
       <Drawer
         key="app-drawer"
-        anchor={'left'}
+        anchor="left"
         open={appDrawer.open}
         items={appDrawer.items}
         handleOpen={appDrawer.handleOpen}

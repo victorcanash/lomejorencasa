@@ -30,7 +30,7 @@ const CartDetail = (props: CartDetailProps) => {
 
   return (
     <>
-      <Box className='animate__animated animate__fadeIn'>
+      <Box>
         { items.map((item, index) => (
             <Fragment key={index}>
               { ((!showEmptyItems && item.quantity > 0) || (showEmptyItems)) &&
@@ -51,7 +51,6 @@ const CartDetail = (props: CartDetailProps) => {
         component="div"
         variant='h1'
         align='right'
-        className='animate__animated animate__fadeInUp'
       >
         {`${intl.formatMessage({ id: "cart.total" })}: ${totalPrice.toFixed(2)} €`}
       </Typography>

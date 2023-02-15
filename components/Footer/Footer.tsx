@@ -5,11 +5,13 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import envConfig from '@core/config/env.config';
-import { pages } from '@lib/constants/navigation';
 import Link from '@core/components/Link';
 
+import { pages } from '@lib/constants/navigation';
+import colors from '@lib/constants/themes/colors';
+
 const Footer = () => {
-  const color = "#E1E8CB";
+  const color = colors.text.footer.primary;
   
   return (
     <Grid
@@ -18,7 +20,7 @@ const Footer = () => {
       sx={{
         py: 3,
         px: 4,
-        backgroundColor: "#30343C",
+        backgroundColor: colors.background.footer.primary,
         color,
       }}
     >

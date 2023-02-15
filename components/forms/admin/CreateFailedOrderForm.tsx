@@ -65,9 +65,12 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
     };
   };
 
+  const maxWidth = '500px';
+
   return (
     <>
-      <BaseForm 
+      <BaseForm
+        maxWidth={maxWidth}
         initialValues={{
           locale: orderFieldsInitValues.locale,
           userId: orderFieldsInitValues.userId,
@@ -151,7 +154,12 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         onSubmitSuccess={onSuccessCreateOrderProduct}
       />
       { orderProducts && orderProducts.length > 0 &&
-        <Box className="centered-container-img">
+        <Box
+          sx={{
+            maxWidth: maxWidth,
+            margin: 'auto',
+          }}
+        >
           <Typography component="h3" variant="body1" mt={3}>
             {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
           </Typography>

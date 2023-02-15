@@ -396,7 +396,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
           <Stack spacing={2} sx={{ mt: 1 }} >
             <Pagination
               sx={{
-                display: "flex", flexDirection: "col", justifyContent: "center"
+                display: 'flex', 
+                flexDirection: 'col', 
+                justifyContent: 'center',
               }}
               count={totalPages}
               page={currentPage}

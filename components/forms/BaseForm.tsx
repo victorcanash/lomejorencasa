@@ -308,7 +308,7 @@ const BaseForm = (props: FormBase) => {
                               component={formFieldGroups.length > 1 ? 'h2' : 'h1'}
                               variant="h1" 
                               mb={2}
-                              textAlign={group.titleTxt.textAlign ? group.titleTxt.textAlign : undefined}
+                              textAlign={group.titleTxt.textAlign}
                             >
                               <FormattedMessage 
                                 id={group.titleTxt.id}

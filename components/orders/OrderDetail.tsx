@@ -10,7 +10,7 @@ import type { Order } from '@core/types/orders';
 import type { UserAddress } from '@core/types/user';
 
 import CartDetail from '@components/cart/CartDetail';
-import AddressDetail from '@components/checkout/details/AddressDetail';
+import AddressDetail from '@components/addresses/AddressDetail';
 import GoBackBtn from '@components/ui/GoBackBtn';
 
 type OrderDetailProps = {
@@ -28,7 +28,7 @@ const OrderDetail = (props: OrderDetailProps) => {
 
   return (
     <>
-      <Typography component="h1" variant="h1" className='animate__animated animate__fadeInLeft' mb={1}>
+      <Typography component="h1" variant="h1" mb={1}>
         {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.bigbuyId}`}
       </Typography>
 

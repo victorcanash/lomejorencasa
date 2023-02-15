@@ -1,7 +1,16 @@
 const colors = {
   background: {
+    // Mui
     primary: '#F1F4ED',
     secondary: '#E5ECDC',
+
+    // Custom
+    appBar: {
+      primary: '#E5ECDC',
+    },
+    footer: {
+      primary: '#30343C',
+    },
     input: {
       primary: '#FFFFFF',
       hover: '#E5ECDC',
@@ -29,10 +38,18 @@ const colors = {
     },
   },
   text: {
+    // Mui
     primary: '#000000',
     secondary: '#000000',
-    disabled: '#000000',
-    link: '#000000',
+    disabled: 'grey',
+
+    // Custom
+    footer: {
+      primary: '#E1E8CB',
+    },
+    link: {
+      primary: '#000000',
+    },
     input: {
       primary: '#000000',
       hover: '#000000',
@@ -42,13 +59,23 @@ const colors = {
       primary: '#000000',
       hover: '#000000',
     },
+    backdrop: {
+      primary: '#FFFFFF',
+    },
+    badge: {
+      primary: 'red',
+    },
   },
   fill: {
+    circularProgress: '#FFFFFF',
     svgIcon: '#000000',
     stepIcon: '#D1E7B1',
   },
   border: {
-    divider: '#B0B0B0',
+    divider: {
+      primary: '#B0B0B0',
+      drawer: '#ECF7DC',
+    },
   },
 };
 
