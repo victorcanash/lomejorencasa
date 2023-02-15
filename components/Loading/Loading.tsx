@@ -8,7 +8,7 @@ const Loading = () => {
 
   return (
     <Backdrop
-      sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.modal + 5 }}
+      sx={{ zIndex: (theme) => theme.zIndex.modal + 5 }}
       open={loading}
     >
       <CircularProgress
