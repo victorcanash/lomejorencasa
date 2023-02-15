@@ -1,5 +1,8 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
+import colors from '@lib/constants/themes/colors';
+import typographies from '@lib/constants/themes/typographies';
+
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
     xs: true;
@@ -11,7 +14,7 @@ declare module '@mui/material/styles' {
     xl: true;
   }
 
-  interface TypographyVariants {
+  /*interface TypographyVariants {
     home_h1: React.CSSProperties;
     home_h2: React.CSSProperties;
     home_h3: React.CSSProperties;
@@ -21,10 +24,10 @@ declare module '@mui/material/styles' {
     home_h1: React.CSSProperties;
     home_h2: React.CSSProperties;
     home_h3: React.CSSProperties;
-  }
+  }*/
 };
 
-export const themeOptions: ThemeOptions = {
+const themeOptions: ThemeOptions = {
   breakpoints: {
     values: {
       xs: 0,
@@ -38,44 +41,31 @@ export const themeOptions: ThemeOptions = {
   },
   palette: {
     primary: {
-      main: '#F1F4ED',
+      main: colors.background.primary,
     },
     secondary: {
-      main: '#e5ecdc',
+      main: colors.background.secondary,
     },
     background: {
-      default: '#F1F4ED',
-      paper: '#e5ecdc',
+      default: colors.background.primary,
+      paper: colors.background.secondary,
     },
     text: {
-      primary: '#000000',
-      secondary: '#000000',
-      disabled: '#000000',
+      primary: colors.text.primary,
+      secondary: colors.text.secondary,
+      disabled: colors.text.disabled,
     },
   },
   components: {
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          fontSize: '15px',
-          lineHeight: '18px',
-          fontWeight: '700',
-          textTransform: 'none',
-          backgroundColor: '#FFFFFF',
-          '&:hover': {
-            backgroundColor: '#ecf7dc',
-          },
-        },
-      },
-    },
     MuiInputLabel: {
       styleOverrides: {
         root: {
-          fontSize: '15px',
-          lineHeight: '1.5em',
-          fontWeight: '300',
+          fontSize: typographies.input.fontSize,
+          fontWeight: typographies.input.fontWeight,
+          lineHeight: typographies.input.lineHeight,
+          color: colors.text.input.primary,
           '&.Mui-focused': {
-            color: '#000000',
+            color: colors.text.input.focus,
           },
         },
       },
@@ -83,12 +73,34 @@ export const themeOptions: ThemeOptions = {
     MuiInputBase: {
       styleOverrides: {
         root: {
-          backgroundColor: '#FFFFFF',
+          fontSize: typographies.input.fontSize,
+          fontWeight: typographies.input.fontWeight,
+          lineHeight: typographies.input.lineHeight,
+          color: colors.text.input.primary,
+          backgroundColor: colors.background.input.primary,
           '&:hover': {
-            backgroundColor: '#e5ecdc',
+            color: colors.text.input.hover,
+            backgroundColor: colors.background.input.hover,
           },
           '&.Mui-focused': {
-            backgroundColor: '#e5ecdc',
+            color: colors.text.input.focus,
+            backgroundColor: colors.background.input.focus,
+          },
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontSize: typographies.button.fontSize,
+          fontWeight: typographies.button.fontWeight,
+          lineHeight: typographies.button.lineHeight,
+          textTransform: 'none',
+          color: colors.text.button.primary,
+          backgroundColor: colors.background.button.primary,
+          '&:hover': {
+            color: colors.text.button.hover,
+            backgroundColor: colors.background.button.hover,
           },
         },
       },
@@ -96,36 +108,31 @@ export const themeOptions: ThemeOptions = {
     MuiAvatar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#d7e4c5',
+          backgroundColor: colors.background.avatar.primary,
         },
       },
     },
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          fill: '#000000',
+          fill: colors.fill.svgIcon,
         },
       },
     },
     MuiStepIcon: {
       styleOverrides: {
         root: {
-          fill: '#d1e7b1',
-          fontSize: '25px',
-        },
-      },
-    },
-    MuiStepLabel: {
-      styleOverrides: {
-        label: {
-          fontSize: '20px',
+          fontSize: typographies.stepIcon.fontSize,
+          fontWeight: typographies.stepIcon.fontWeight,
+          lineHeight: typographies.stepIcon.lineHeight,
+          fill: colors.fill.stepIcon,
         },
       },
     },
     MuiDivider: {
       styleOverrides: {
         root: {
-          border: '1px solid #b0b0b0',
+          border: `1px solid ${colors.border.divider}`,
         },
       },
     },
@@ -133,125 +140,94 @@ export const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           textDecoration: 'underline',
-          color: '#000000',
+          color: colors.text.link,
         },
       },
     },
     MuiAlert: {
       styleOverrides: {
         root: {
-          fontSize: '15px',
-          lineHeight: '20px',     
+          fontSize: typographies.alert.fontSize,
+          fontWeight: typographies.alert.fontWeight,
+          lineHeight: typographies.alert.lineHeight,
         },
         standardSuccess: {
-          backgroundColor: 'rgb(209 255 209)',
+          backgroundColor: colors.background.alert.success,
         },
         standardError: {
-          backgroundColor: 'rgb(255 199 199)',
+          backgroundColor: colors.background.alert.error,
         },
       },
     },
     MuiDialog: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#F1F4ED',
+          backgroundColor: colors.background.dialog.primary,
         },
       },
     },
     MuiDialogTitle: {
       styleOverrides: {
         root: {
-          fontSize: '25px',
-          lineHeight: '28px',
-          fontWeight: '500',
+          fontSize: typographies.dialog.title.fontSize,
+          fontWeight: typographies.dialog.title.fontWeight,
+          lineHeight: typographies.dialog.title.lineHeight,
         },
       },
     },
     MuiPaginationItem: {
       styleOverrides: {
         root: {
-          backgroundColor: '#e5ecdc',
+          backgroundColor: colors.background.pagination.primary,
         },
       },
     },
     MuiListItemText: {
       styleOverrides: {
         primary: {
-          fontSize: '17px',
-          lineHeight: '19px',
-          fontWeight: '400',
+          fontSize: typographies.listItem.fontSize,
+          fontWeight: typographies.listItem.fontWeight,
+          lineHeight: typographies.listItem.lineHeight,
         },
       },
     },
     MuiTableHead: {
       styleOverrides: {
         root: {
-          backgroundColor: '#A7AC93',
+          backgroundColor: colors.background.table.head,
         },
       },
     },
     MuiTypography: {
       styleOverrides: {
         root: {
-          letterSpacing: '-0.33px',
+          letterSpacing: typographies.letterSpacing,
         },
       },
     },
   },
   typography: {
-    // Page title
     h1: {
-      fontSize: '25px',
-      lineHeight: '28px',
-      fontWeight: '500',
+      fontSize: typographies.h1.fontSize,
+      fontWeight: typographies.h1.fontWeight,
+      lineHeight: typographies.h1.lineHeight,
     },
-    // Page subtitle
     h2: {
-      fontSize: '20px',
-      lineHeight: '23px',
-      fontWeight: '500',
+      fontSize: typographies.h2.fontSize,
+      fontWeight: typographies.h2.fontWeight,
+      lineHeight: typographies.h2.lineHeight,
     },
-    // Page content
     body1: {
-      fontSize: '15px',
-      lineHeight: '18px',
-      fontWeight: '300',
+      fontSize: typographies.body1.fontSize,
+      fontWeight: typographies.body1.fontWeight,
+      lineHeight: typographies.body1.lineHeight,
     },
-    // Page content 2
     body2: {
-      fontSize: '13px',
-      lineHeight: '16px',
-      fontWeight: '300',
+      fontSize: typographies.body2.fontSize,
+      fontWeight: typographies.body2.fontWeight,
+      lineHeight: typographies.body2.lineHeight,
     },
-    // Home title
-    home_h1: {
-      fontSize: '30px',
-      lineHeight: '33px',
-      fontWeight: '700',
-    },
-    home_h2: {
-      fontSize: '25px',
-      lineHeight: '28px',
-      fontWeight: '700',
-    },
-    home_h3: {
-      fontSize: '20px',
-      lineHeight: '23px',
-      fontWeight: '700',
-    },
-    fontFamily: [
-      'Roboto',
-      '-apple-system', 
-      'BlinkMacSystemFont', 
-      'Segoe UI', 
-      'Oxygen',
-      'Ubuntu', 
-      'Cantarell', 
-      'Fira Sans', 
-      'Droid Sans', 
-      'Helvetica Neue',
-      'sans-serif',
-    ].join(','),
+    fontFamily: typographies.fontFamily.join(','),
   },
 };
 
