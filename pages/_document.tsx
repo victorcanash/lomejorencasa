@@ -11,7 +11,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="es">
         <Head>
-          <meta name="google-site-verification" content="yuO6eVgzzmazX7pHjG-VmBAt4CrmBFndNz5R1WGZogA" />
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />
           <link rel="icon" type="image/png" href="/favicon.png" />
