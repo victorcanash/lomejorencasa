@@ -47,10 +47,10 @@ const EverfreshCharacteristics = () => {
         m: 'auto',
       }}
     >
-      <Typography component={"div"} variant={"h1"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="div" variant="h1" align="center" mb={3}>
         <FormattedMessage id="home.characteristics.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+      <Typography component="div" variant="body1" mb={2}>
         <FormattedMessage id="home.characteristics.description" />
       </Typography>
       <Grid container rowSpacing={2}>     

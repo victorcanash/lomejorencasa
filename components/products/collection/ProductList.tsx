@@ -74,7 +74,6 @@ const ProductList = (props: ProductListProps) => {
                       <Typography component="div" variant="body1">
                         {capitalizeFirstLetter(item.name.current)}
                       </Typography>
-                      
                       { item.activeDiscount ?
                         <>
                           <Typography component="div" variant="body1">

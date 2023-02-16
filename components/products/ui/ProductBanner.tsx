@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
+import colors from '@lib/constants/themes/colors';
 import { getProductBannerImgsUrl } from '@lib/utils/products';
 
 const ProductBanner = () => {
@@ -37,12 +38,12 @@ const ProductBanner = () => {
           <Typography 
             component="div" 
             sx={{ 
-              typography: { 
+              /*typography: { 
                 xs: 'home_h3', 
                 xs_sm: 'home_h2',
                 sm_md: 'home_h1', 
-              },
-              color: 'white',
+              },*/
+              color: colors.text.home.banner.primary,
             }}
           >
             <FormattedMessage id={`home.banner.${index + 1}`} />
@@ -53,10 +54,11 @@ const ProductBanner = () => {
             href={pages.everfresh.path}
             id="advantages"
             sx={{
-              backgroundColor: '#6f9c7d',
-              color: 'white',
+              backgroundColor: colors.background.button.action.primary,
+              color: colors.text.button.action.primary,
               '&:hover': {
-                backgroundColor: '#a0d2af',
+                backgroundColor: colors.background.button.action.hover,
+                color: colors.text.button.action.hover,
               },
             }}
           >

@@ -132,7 +132,7 @@ const Drawer = (props: DrawerProps) => {
                   </List>
                 </Collapse>
               }
-              <Divider sx={{ borderColor: colors.border.divider.drawer }} />
+              <Divider sx={{ borderColor: colors.border.divider.drawer.primary }} />
             </Fragment>
           ))}
         </List>

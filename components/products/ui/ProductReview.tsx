@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import { FormattedMessage } from 'react-intl';
 
 type ProductReviewProps = {
   imgSrc: string | StaticImageData,
@@ -31,13 +32,12 @@ const ProductReview = (props: ProductReviewProps) => {
   const router = useRouter();
 
   const starsImgs = () => {
-    const fontSize = 20;
     const starsIcons: JSX.Element[] = [];
     for (let i = 0; i < 5; i++) {
       if (stars > i) {
-        starsIcons.push(<StarOutlinedIcon key={i} sx={{ fontSize }}/>);
+        starsIcons.push(<StarOutlinedIcon key={i} fontSize="medium" />);
       } else {
-        starsIcons.push(<StarBorderOutlinedIcon key={i} sx={{ fontSize }}/>);
+        starsIcons.push(<StarBorderOutlinedIcon key={i} fontSize="medium" />);
       }
     }
     return starsIcons;
@@ -79,10 +79,10 @@ const ProductReview = (props: ProductReviewProps) => {
             { title }
           </Typography>
           <Typography component="div" variant="body2" mb={1}>
-            {`Revisado en España el ${date.toLocaleDateString(router.locale)}`}
-          </Typography>
-          <Typography component="div" variant="body2" color="#005874" mb={1}>
-            {'Compra verificada'}
+            <FormattedMessage
+              id="productDetail.reviews.date"
+              values={{ date: date.toLocaleDateString(router.locale) }}
+            />
           </Typography>
           <Typography component="div" variant="body2">
             { description }

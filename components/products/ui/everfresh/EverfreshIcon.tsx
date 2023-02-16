@@ -2,6 +2,8 @@ import Image, { StaticImageData } from 'next/image';
 
 import Box from '@mui/material/Box';
 
+import colors from '@lib/constants/themes/colors';
+
 type EverfreshIconProps = {
   src: StaticImageData,
   alt: string,
@@ -26,7 +28,7 @@ const EverfreshIcon = (props: EverfreshIconProps) => {
         height: '150px',           
         m: 'auto', 
         borderRadius: '100%', 
-        backgroundColor: '#e5ecdc',
+        backgroundColor: colors.background.avatar.home.primary,
       }} 
     >   
       <Box

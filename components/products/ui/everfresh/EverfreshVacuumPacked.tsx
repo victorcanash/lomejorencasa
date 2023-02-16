@@ -17,7 +17,7 @@ const EverfreshVacuumPacked = () => {
   const advantage = (textId: string, src: StaticImageData, alt: string, widthSrc = '100px', heightSrc = '100px') => {
     return (
       <Grid item xs={12}>
-        <Typography component="div" variant="body1" sx={{ mb: 2, textAlign: 'center' }}>
+        <Typography component="div" variant="body1" align="center" mb={2}>
           <FormattedMessage id={textId} />
         </Typography>
         <EverfreshIcon
@@ -37,28 +37,28 @@ const EverfreshVacuumPacked = () => {
         m: 'auto',
       }}
     >
-      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h2" variant="h1" align="center" mb={3}>
         <FormattedMessage id="home.vacuumPacked.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 3 }}>
+      <Typography component="div" variant="body1" mb={3}>
         <FormattedMessage id="home.vacuumPacked.description" />
       </Typography>
 
-      <Typography component={"h3"} variant={"h2"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h3" variant="h2" align="center" mb={3}>
         <FormattedMessage id="home.vacuumPacked.whatIs.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 3 }}>
+      <Typography component="div" variant="body1" mb={3}>
         <FormattedMessage id="home.vacuumPacked.whatIs.description" />
       </Typography>
 
-      <Typography component={"h3"} variant={"h2"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h3" variant="h2" align="center" mb={3}>
         <FormattedMessage id="home.vacuumPacked.why.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 3 }}>
+      <Typography component="div" variant="body1" mb={3}>
         <FormattedMessage id="home.vacuumPacked.why.description" />
       </Typography>
 
-      <Typography component={"h3"} variant={"h2"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h3" variant="h2" align="center" mb={3}>
         <FormattedMessage id="home.vacuumPacked.advantages.title" />
       </Typography>
       <Grid container rowSpacing={2}>   

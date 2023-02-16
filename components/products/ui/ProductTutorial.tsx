@@ -29,7 +29,7 @@ const ProductTutorial = (props: ProductTutorialProps) => {
         }}
       >
         { titleId &&
-          <Typography component={"h3"} variant="h1" sx={{ mb: 4 }} textAlign="center">
+          <Typography component="h3" variant="h1" sx={{ mb: 4 }} textAlign="center">
             <FormattedMessage id={titleId} />
           </Typography> 
         }

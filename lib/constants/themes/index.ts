@@ -122,7 +122,7 @@ const themeOptions: ThemeOptions = {
     MuiCircularProgress: {
       styleOverrides: {
         root: {
-          color: colors.fill.circularProgress,
+          color: colors.fill.circularProgress.primary,
         },
       },
     },
@@ -136,7 +136,7 @@ const themeOptions: ThemeOptions = {
     MuiSvgIcon: {
       styleOverrides: {
         root: {
-          fill: colors.fill.svgIcon,
+          fill: colors.fill.svgIcon.primary,
         },
       },
     },
@@ -146,7 +146,7 @@ const themeOptions: ThemeOptions = {
           fontSize: typographies.stepIcon.fontSize,
           fontWeight: typographies.stepIcon.fontWeight,
           lineHeight: typographies.stepIcon.lineHeight,
-          fill: colors.fill.stepIcon,
+          fill: colors.fill.stepIcon.primary,
         },
       },
     },
@@ -173,10 +173,10 @@ const themeOptions: ThemeOptions = {
           lineHeight: typographies.alert.lineHeight,
         },
         standardSuccess: {
-          backgroundColor: colors.background.alert.success,
+          backgroundColor: colors.background.alert.primary.success,
         },
         standardError: {
-          backgroundColor: colors.background.alert.error,
+          backgroundColor: colors.background.alert.primary.error,
         },
       },
     },
@@ -214,15 +214,28 @@ const themeOptions: ThemeOptions = {
     },
     MuiBadge: {
       styleOverrides: {
-        root: {
+        badge: {
           color: colors.text.badge.primary,
+          backgroundColor: colors.background.badge.primary,
         },
       },
     },
     MuiTableHead: {
       styleOverrides: {
         root: {
-          backgroundColor: colors.background.table.head,
+          backgroundColor: colors.background.table.primary.head,
+        },
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: {
+          '&:nth-of-type(even)': {
+            backgroundColor: colors.background.table.primary.evenRow,
+          },
+          '&:last-child td, &:last-child th': {
+            border: 0,
+          },
         },
       },
     },

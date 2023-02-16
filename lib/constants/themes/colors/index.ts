@@ -19,13 +19,25 @@ const colors = {
     button: {
       primary: '#FFFFFF',
       hover: '#ECF7DC',
+      action: {
+        primary: '#6F9C7D',
+        hover: '#A0D2AF',
+      },
     },
     avatar: {
       primary: '#D7E4C5',
+      home: {
+        primary: '#E5ECDC',
+      },
+    },
+    badge: {
+      primary: '#D20D0D',
     },
     alert: {
-      success: 'rgb(209 255 209)',
-      error: 'rgb(255 199 199)',
+      primary: {
+        success: 'rgb(209 255 209)',
+        error: 'rgb(255 199 199)',
+      }
     },
     dialog: {
       primary: '#F1F4ED',
@@ -34,7 +46,10 @@ const colors = {
       primary: '#E5ECDC',
     },
     table: {
-      head: '#A7AC93',
+      primary: {
+        head: '#A7AC93',
+        evenRow: '#ECF7DC',
+      },
     },
   },
   text: {
@@ -47,6 +62,11 @@ const colors = {
     footer: {
       primary: '#E1E8CB',
     },
+    home: {
+      banner: {
+        primary: '#FFFFFF',
+      },
+    },
     link: {
       primary: '#000000',
     },
@@ -58,23 +78,35 @@ const colors = {
     button: {
       primary: '#000000',
       hover: '#000000',
+      action: {
+        primary: '#FFFFFF',
+        hover: '#000000',
+      },
     },
     backdrop: {
       primary: '#FFFFFF',
     },
     badge: {
-      primary: 'red',
+      primary: '#FFFFFF',
     },
   },
   fill: {
-    circularProgress: '#FFFFFF',
-    svgIcon: '#000000',
-    stepIcon: '#D1E7B1',
+    circularProgress: {
+      primary: '#FFFFFF',
+    },
+    svgIcon: {
+      primary: '#000000',
+    },
+    stepIcon: {
+      primary: '#D1E7B1',
+    },
   },
   border: {
     divider: {
       primary: '#B0B0B0',
-      drawer: '#ECF7DC',
+      drawer: {
+        primary: '#ECF7DC',
+      },
     },
   },
 };

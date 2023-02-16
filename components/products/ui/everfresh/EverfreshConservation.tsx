@@ -1,6 +1,5 @@
 import { useIntl, FormattedMessage } from 'react-intl';
 
-import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
@@ -10,15 +9,6 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(even)': {
-    backgroundColor: '#ecf7dc',
-  },
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
 
 const EverfreshConservation = () => {
   const intl = useIntl();
@@ -96,11 +86,10 @@ const EverfreshConservation = () => {
         margin: 'auto',
       }}
     >
-
-      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3, textAlign: 'center'}}>
+      <Typography component="h2" variant="h1" align="center" mb={3}>
         <FormattedMessage id="home.conservation.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+      <Typography component="div" variant="body1" mb={2}>
         <FormattedMessage id="home.conservation.description" />
       </Typography>
       
@@ -132,19 +121,18 @@ const EverfreshConservation = () => {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <StyledTableRow key={row.food}>
+              <TableRow key={row.food}>
                 <TableCell component="th" scope="row">
                   {row.food}
                 </TableCell>
                 <TableCell align="right">{row.noVacuum}</TableCell>
                 <TableCell align="right">{row.vacuumFridge}</TableCell>
                 <TableCell align="right">{row.vacuumFrozen}</TableCell>
-              </StyledTableRow>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-
     </Box>
   );
 };

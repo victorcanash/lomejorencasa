@@ -24,7 +24,7 @@ const ProductCarousel = (props: ProductCarouselProps) => {
         { imgSources.map((imgSrc, imgSrcIndex) => (
           <SwiperSlide key={imgSrcIndex}>
             <div 
-              style={{ marginBottom: "40px"}}
+              style={{ marginBottom: '40px' }}
             >
               <Image 
                 src={imgSrc}

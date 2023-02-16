@@ -17,7 +17,6 @@ const BagsDetail = () => {
     <>
       <Grid
         container
-        className='animate__animated animate__fadeIn'
         spacing={1}
       >
         <Grid 
@@ -74,13 +73,12 @@ const BagsDetail = () => {
 
       <Divider sx={{ mt: 5, mb: 5 }}/>
 
-      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h2" variant="h1" align="center" mb={3}>
         <FormattedMessage id="productDetail.reviews.title" />
       </Typography>
       <Grid
         container
         spacing={2}
-        className='animate__animated animate__fadeIn'
       >
         <Grid
           item 

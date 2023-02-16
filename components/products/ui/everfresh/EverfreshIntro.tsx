@@ -12,7 +12,7 @@ const EverfreshIntro = () => {
         m: 'auto',
       }}
     >
-      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h2" variant="h1" align="center" mb={3}>
         <FormattedMessage id="home.intro.title" />
       </Typography>
       <Typography component="div" variant="body1">

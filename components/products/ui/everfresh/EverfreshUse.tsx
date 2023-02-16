@@ -27,9 +27,9 @@ const EverfreshUse = () => {
           }}
         >
           <source 
-              src={src as string} 
-              type="video/mp4" 
-            />
+            src={src as string} 
+            type="video/mp4" 
+          />
         </video>
       );
     }
@@ -54,46 +54,46 @@ const EverfreshUse = () => {
         m: 'auto',
       }}
     >
-      <Typography component={"h2"} variant={"h1"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h2" variant="h1" align="center" mb={3}>
         <FormattedMessage id="home.use.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 3 }}>
+      <Typography component="div" variant="body1" mb={3}>
         <FormattedMessage id="home.use.description" />
       </Typography>
 
-      <Typography component={"h3"} variant={"h2"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h3" variant="h2" align="center" mb={3}>
         <FormattedMessage id="home.use.foodPreparation.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 3 }}>
+      <Typography component="div" variant="body1" mb={3}>
         <FormattedMessage id="home.use.foodPreparation.description" />
       </Typography>
 
-      <Typography component={"h3"} variant={"h2"} sx={{ mb: 3, textAlign: 'center' }}>
+      <Typography component="h3" variant="h2" align="center" mb={3}>
         <FormattedMessage id="home.use.bagSelection.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+      <Typography component="div" variant="body1" mb={2}>
         <FormattedMessage id="home.use.bagSelection.description" />
       </Typography>
       <Typography component={Link} href={pages.bags.path} variant="body1">
         <FormattedMessage id="home.use.bagSelection.link" />
       </Typography>
 
-      <Typography component={"h3"} variant={"h2"} sx={{ my: 3, textAlign: 'center' }}>
+      <Typography component="h3" variant="h2" align="center" my={3}>
         <FormattedMessage id="home.use.packingMachine.title" />
       </Typography>
-      <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+      <Typography component="div" variant="body1" mb={2}>
         <FormattedMessage id="home.use.packingMachine.1" />
       </Typography>
       { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
-      <Typography component="div" variant="body1" sx={{ mt: 1, mb: 2 }}>
+      <Typography component="div" variant="body1" mt={1} mb={2}>
         <FormattedMessage id="home.use.packingMachine.2" />
       </Typography>
       { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
-      <Typography component="div" variant="body1" sx={{ mt: 1, mb: 2 }}>
+      <Typography component="div" variant="body1" mt={1} mb={2}>
         <FormattedMessage id="home.use.packingMachine.3" />
       </Typography>
       { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
-      <Typography component="div" variant="body1" sx={{ mt: 1, mb: 2 }}>
+      <Typography component="div" variant="body1" mt={1} mb={2}>
         <FormattedMessage id="home.use.packingMachine.4" />
       </Typography>
       { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
