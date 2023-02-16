@@ -15,9 +15,13 @@ export default class MyDocument extends Document {
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />
           <link rel="shortcut icon" type="image/png" href="/favicon.png" />
-          <link
+          {/*<link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />*/}
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;0,800;0,900;1,500&display=swap" 
           />
           <link
             rel="stylesheet"
