@@ -1,6 +1,7 @@
 const typographies = {
+  // Mui
   fontFamily: [
-    'Roboto',
+    'Poppins',
     '-apple-system', 
     'BlinkMacSystemFont', 
     'Segoe UI', 
@@ -13,29 +14,51 @@ const typographies = {
     'sans-serif',
   ],
   letterSpacing: '-0.33px',
-  // Page title
+  lineHeight: '26px',
   h1: {
-    fontSize: '25px',
+    fontSize: '24px',
+    fontWeight: '800',
+    lineHeight: '28px',
+    textAlign: 'left',
+  },
+  h2: {
+    fontSize: '24px',
+    fontWeight: '800',
+    lineHeight: '28px',
+    textAlign: 'left',
+  },
+  h3: {
+    fontSize: '20px',
+    fontWeight: '700',
+    lineHeight: '26px',
+    textAlign: 'left',
+  },
+  body1: {
+    fontSize: '16px',
     fontWeight: '500',
     lineHeight: '28px',
+    textAlign: 'left',
   },
-  // Page subtitle
-  h2: {
-    fontSize: '20px',
-    fontWeight: '500',
-    lineHeight: '23px',
-  },
-  // Page content
-  body1: {
-    fontSize: '15px',
-    fontWeight: '300',
-    lineHeight: '18px',
-  },
-  // Page content 2
   body2: {
-    fontSize: '13px',
-    fontWeight: '300',
-    lineHeight: '16px',
+    fontSize: '16px',
+    fontWeight: '500',
+    lineHeight: '28px',
+    textAlign: 'left',
+  },
+
+  // Custom
+  footer: {
+    title: {
+      fontSize: '20px',
+      fontWeight: '700',
+    },
+  },
+  home: {
+    banner: {
+      fontSize: '28px',
+      fontWeight: '900',
+      lineHeight: '28px',
+    },
   },
   input: {
     fontSize: '15px',
@@ -43,9 +66,12 @@ const typographies = {
     lineHeight: '1.5em',
   },
   button: {
-    fontSize: '15px',
+    fontSize: '16px',
     fontWeight: '700',
-    lineHeight: '18px',
+    action: {
+      fontSize: '16px',
+      fontWeight: '700',
+    }
   },
   stepIcon: {
     fontSize: '25px',

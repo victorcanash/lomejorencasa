@@ -101,7 +101,6 @@ const themeOptions: ThemeOptions = {
         root: {
           fontSize: typographies.button.fontSize,
           fontWeight: typographies.button.fontWeight,
-          lineHeight: typographies.button.lineHeight,
           textTransform: 'none',
           color: colors.text.button.primary,
           backgroundColor: colors.background.button.primary,
@@ -252,21 +251,25 @@ const themeOptions: ThemeOptions = {
       fontSize: typographies.h1.fontSize,
       fontWeight: typographies.h1.fontWeight,
       lineHeight: typographies.h1.lineHeight,
+      textAlign: typographies.h1.textAlign as 'left'|'right'|'center',
     },
     h2: {
       fontSize: typographies.h2.fontSize,
       fontWeight: typographies.h2.fontWeight,
       lineHeight: typographies.h2.lineHeight,
+      textAlign: typographies.h2.textAlign as 'left'|'right'|'center',
     },
     body1: {
       fontSize: typographies.body1.fontSize,
       fontWeight: typographies.body1.fontWeight,
       lineHeight: typographies.body1.lineHeight,
+      textAlign: typographies.body1.textAlign as 'left'|'right'|'center',
     },
     body2: {
       fontSize: typographies.body2.fontSize,
       fontWeight: typographies.body2.fontWeight,
       lineHeight: typographies.body2.lineHeight,
+      textAlign: typographies.body2.textAlign as 'left'|'right'|'center',
     },
     fontFamily: typographies.fontFamily.join(','),
   },
