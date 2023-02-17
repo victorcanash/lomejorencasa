@@ -1,7 +1,8 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
-import colors from '@lib/constants/themes/colors';
-import typographies from '@lib/constants/themes/typographies';
+import { convertElementToSx, convertFontElementToSx } from '@core/utils/themes';
+
+import { themeDefaultElements } from '@lib/constants/themes/elements';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -19,7 +20,6 @@ declare module '@mui/material/styles' {
     home_h2: React.CSSProperties;
     home_h3: React.CSSProperties;
   }
-
   interface TypographyVariantsOptions {
     home_h1: React.CSSProperties;
     home_h2: React.CSSProperties;
@@ -39,239 +39,143 @@ const themeOptions: ThemeOptions = {
       xl: 1536,
     },
   },
+
   palette: {
     primary: {
-      main: colors.background.primary,
+      main: themeDefaultElements.default.backgroundColor.primary,
     },
     secondary: {
-      main: colors.background.secondary,
+      main: themeDefaultElements.default.backgroundColor.secondary,
     },
     background: {
-      default: colors.background.primary,
-      paper: colors.background.secondary,
+      default: themeDefaultElements.default.backgroundColor.primary,
+      paper: themeDefaultElements.paper.backgroundColor?.default || themeDefaultElements.default.backgroundColor.secondary,
     },
     text: {
-      primary: colors.text.primary,
-      secondary: colors.text.secondary,
-      disabled: colors.text.disabled,
+      primary: themeDefaultElements.default.text.color.primary,
+      secondary: themeDefaultElements.default.text.color.secondary,
+      disabled: themeDefaultElements.default.text.color.disabled,
     },
   },
+
+  typography: {
+    fontFamily: themeDefaultElements.default.text.font.fontFamily.join(','),
+    h1: convertFontElementToSx(themeDefaultElements.default.text.font.h1),
+    h2: convertFontElementToSx(themeDefaultElements.default.text.font.h2),
+    h3: convertFontElementToSx(themeDefaultElements.default.text.font.h3),
+    body1: convertFontElementToSx(themeDefaultElements.default.text.font.body1),
+    body2: convertFontElementToSx(themeDefaultElements.default.text.font.body2),
+  },
+
   components: {
-    MuiAppBar: {
+    MuiTypography: {
       styleOverrides: {
-        root: {
-          backgroundColor: colors.background.appBar.primary,
-        },
-      },
-    },
-    MuiInputLabel: {
-      styleOverrides: {
-        root: {
-          fontSize: typographies.input.fontSize,
-          fontWeight: typographies.input.fontWeight,
-          lineHeight: typographies.input.lineHeight,
-          color: colors.text.input.primary,
-          '&.Mui-focused': {
-            color: colors.text.input.focus,
-          },
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          fontSize: typographies.input.fontSize,
-          fontWeight: typographies.input.fontWeight,
-          lineHeight: typographies.input.lineHeight,
-          color: colors.text.input.primary,
-          backgroundColor: colors.background.input.primary,
-          '&:hover': {
-            color: colors.text.input.hover,
-            backgroundColor: colors.background.input.hover,
-          },
-          '&.Mui-focused': {
-            color: colors.text.input.focus,
-            backgroundColor: colors.background.input.focus,
-          },
-        },
-      },
-    },
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          fontSize: typographies.button.fontSize,
-          fontWeight: typographies.button.fontWeight,
-          textTransform: 'none',
-          color: colors.text.button.primary,
-          backgroundColor: colors.background.button.primary,
-          '&:hover': {
-            color: colors.text.button.hover,
-            backgroundColor: colors.background.button.hover,
-          },
-        },
-      },
-    },
-    MuiBackdrop: {
-      styleOverrides: {
-        root: {
-          color: colors.text.backdrop.primary,
-        },
-      },
-    },
-    MuiCircularProgress: {
-      styleOverrides: {
-        root: {
-          color: colors.fill.circularProgress.primary,
-        },
-      },
-    },
-    MuiAvatar: {
-      styleOverrides: {
-        root: {
-          backgroundColor: colors.background.avatar.primary,
-        },
-      },
-    },
-    MuiSvgIcon: {
-      styleOverrides: {
-        root: {
-          fill: colors.fill.svgIcon.primary,
-        },
-      },
-    },
-    MuiStepIcon: {
-      styleOverrides: {
-        root: {
-          fontSize: typographies.stepIcon.fontSize,
-          fontWeight: typographies.stepIcon.fontWeight,
-          lineHeight: typographies.stepIcon.lineHeight,
-          fill: colors.fill.stepIcon.primary,
-        },
-      },
-    },
-    MuiDivider: {
-      styleOverrides: {
-        root: {
-          border: `1px solid ${colors.border.divider.primary}`,
-        },
+        root: convertElementToSx(themeDefaultElements.typography),
       },
     },
     MuiLink: {
       styleOverrides: {
         root: {
           textDecoration: 'underline',
-          color: colors.text.link.primary,
+          ...convertElementToSx(themeDefaultElements.link),
         },
       },
     },
-    MuiAlert: {
+    MuiAppBar: {
       styleOverrides: {
-        root: {
-          fontSize: typographies.alert.fontSize,
-          fontWeight: typographies.alert.fontWeight,
-          lineHeight: typographies.alert.lineHeight,
-        },
-        standardSuccess: {
-          backgroundColor: colors.background.alert.primary.success,
-        },
-        standardError: {
-          backgroundColor: colors.background.alert.primary.error,
-        },
+        root: convertElementToSx(themeDefaultElements.appBar),
       },
     },
     MuiDialog: {
       styleOverrides: {
-        paper: {
-          backgroundColor: colors.background.dialog.primary,
-        },
+        paper: convertElementToSx(themeDefaultElements.dialog),
       },
     },
     MuiDialogTitle: {
       styleOverrides: {
-        root: {
-          fontSize: typographies.dialog.title.fontSize,
-          fontWeight: typographies.dialog.title.fontWeight,
-          lineHeight: typographies.dialog.title.lineHeight,
-        },
+        root: convertElementToSx(themeDefaultElements.dialogTitle),
       },
     },
-    MuiPaginationItem: {
+    MuiDivider: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.divider),
+      },
+    },
+    MuiTableHead: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.tableHead),
+      },
+    },
+    MuiTableRow: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.tableRow),
+      },
+    },
+    MuiBackdrop: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.backdrop),
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.inputLabel),
+      },
+    },
+    MuiInputBase: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.inputBase),
+      },
+    },
+    MuiButton: {
       styleOverrides: {
         root: {
-          backgroundColor: colors.background.pagination.primary,
+          textTransform: 'capitalize',
+          ...convertElementToSx(themeDefaultElements.button),
         },
       },
     },
     MuiListItemText: {
       styleOverrides: {
-        primary: {
-          fontSize: typographies.listItem.fontSize,
-          fontWeight: typographies.listItem.fontWeight,
-          lineHeight: typographies.listItem.lineHeight,
-        },
+        primary: convertElementToSx(themeDefaultElements.listItem),
+      },
+    },
+    MuiPaginationItem: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.paginationItem),
+      },
+    },
+    MuiCircularProgress: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.circularProgress),
+      },
+    },
+    MuiAvatar: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.avatar),
+      },
+    },
+    MuiSvgIcon: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.svgIcon),
+      },
+    },
+    MuiStepIcon: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.stepIcon),
       },
     },
     MuiBadge: {
       styleOverrides: {
-        badge: {
-          color: colors.text.badge.primary,
-          backgroundColor: colors.background.badge.primary,
-        },
+        badge: convertElementToSx(themeDefaultElements.badge),
       },
     },
-    MuiTableHead: {
+    MuiAlert: {
       styleOverrides: {
-        root: {
-          backgroundColor: colors.background.table.primary.head,
-        },
+        root: convertElementToSx(themeDefaultElements.alert.default),
+        standardSuccess: convertElementToSx(themeDefaultElements.alert.success),
+        standardError: convertElementToSx(themeDefaultElements.alert.error),
       },
     },
-    MuiTableRow: {
-      styleOverrides: {
-        root: {
-          '&:nth-of-type(even)': {
-            backgroundColor: colors.background.table.primary.evenRow,
-          },
-          '&:last-child td, &:last-child th': {
-            border: 0,
-          },
-        },
-      },
-    },
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          letterSpacing: typographies.letterSpacing,
-        },
-      },
-    },
-  },
-  typography: {
-    h1: {
-      fontSize: typographies.h1.fontSize,
-      fontWeight: typographies.h1.fontWeight,
-      lineHeight: typographies.h1.lineHeight,
-      textAlign: typographies.h1.textAlign as 'left'|'right'|'center',
-    },
-    h2: {
-      fontSize: typographies.h2.fontSize,
-      fontWeight: typographies.h2.fontWeight,
-      lineHeight: typographies.h2.lineHeight,
-      textAlign: typographies.h2.textAlign as 'left'|'right'|'center',
-    },
-    body1: {
-      fontSize: typographies.body1.fontSize,
-      fontWeight: typographies.body1.fontWeight,
-      lineHeight: typographies.body1.lineHeight,
-      textAlign: typographies.body1.textAlign as 'left'|'right'|'center',
-    },
-    body2: {
-      fontSize: typographies.body2.fontSize,
-      fontWeight: typographies.body2.fontWeight,
-      lineHeight: typographies.body2.lineHeight,
-      textAlign: typographies.body2.textAlign as 'left'|'right'|'center',
-    },
-    fontFamily: typographies.fontFamily.join(','),
   },
 };
 
