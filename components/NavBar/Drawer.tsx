@@ -13,9 +13,10 @@ import Divider from '@mui/material/Divider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import type { DrawerItems } from '@core/types/navigation';
+import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 
-import colors from '@lib/constants/themes/colors';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import useAuth from '@lib/hooks/useAuth';
 
 type DrawerProps = {
@@ -132,7 +133,7 @@ const Drawer = (props: DrawerProps) => {
                   </List>
                 </Collapse>
               }
-              <Divider sx={{ borderColor: colors.border.divider.drawer.primary }} />
+              <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider)} />
             </Fragment>
           ))}
         </List>

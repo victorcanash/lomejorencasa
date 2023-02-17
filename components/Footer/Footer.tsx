@@ -5,32 +5,28 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import envConfig from '@core/config/env.config';
+import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
-import colors from '@lib/constants/themes/colors';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 
-const Footer = () => {
-  const color = colors.text.footer.primary;
-  
+const Footer = () => {  
   return (
     <Grid
       component="footer"
       container
-      sx={{
-        py: 3,
-        px: 4,
-        backgroundColor: colors.background.footer.primary,
-        color,
-      }}
+      py={3}
+      px={4}
+      sx={convertElementToSx(themeCustomElements.footer.content)}
     >
-      <Grid item xs={12} sm={6} sx={{ p: 2 }}>
-        <Typography component="div" variant="h1" sx={{ mb: 2 }}>
+      <Grid item xs={12} sm={6} p={2}>
+        <Typography component="div" variant="h1" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
           <FormattedMessage 
             id="footer.contact.title" 
           />
         </Typography>
-        <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+        <Typography component="div" variant="body1" mb={2}>
           <FormattedMessage 
             id="footer.contact.content" 
           />
@@ -39,42 +35,42 @@ const Footer = () => {
           {envConfig.NEXT_PUBLIC_EMAIL}
         </Typography>
       </Grid>
-      <Grid item xs={12} sm={6} sx={{ p: 2 }}>
-        <Typography component="div" variant="h1" sx={{ mb: 2 }}>
+      <Grid item xs={12} sm={6} p={2}>
+        <Typography component="div" variant="h1" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
           <FormattedMessage 
             id="footer.utility.title" 
           />
         </Typography>
-        <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.faq.path} variant="body1" sx={{ color }}>
+        <Box mb={2}>
+          <Typography component={Link} href={pages.faq.path} variant="body1">
             <FormattedMessage 
               id="footer.utility.faq" 
             />
           </Typography>
         </Box>
-        <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.privacy.path} variant="body1" sx={{ color }}>
+        <Box mb={2}>
+          <Typography component={Link} href={pages.privacy.path} variant="body1">
             <FormattedMessage 
               id="footer.utility.privacy"
             />
           </Typography>
         </Box>
-        <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.cookies.path} variant="body1" sx={{ color }}>
+        <Box mb={2}>
+          <Typography component={Link} href={pages.cookies.path} variant="body1">
             <FormattedMessage 
               id="footer.utility.cookies" 
             />
           </Typography>
         </Box>
-        <Box sx={{ mb: 2 }}>
-          <Typography component={Link} href={pages.legal.path} variant="body1"sx={{ color }}>
+        <Box mb={2}>
+          <Typography component={Link} href={pages.legal.path} variant="body1">
             <FormattedMessage 
               id="footer.utility.legal" 
             />
           </Typography>
         </Box>
         <Box>
-          <Typography component={Link} href={pages.conditions.path} variant="body1"sx={{ color }}>
+          <Typography component={Link} href={pages.conditions.path} variant="body1">
             <FormattedMessage 
               id="footer.utility.conditions" 
             />

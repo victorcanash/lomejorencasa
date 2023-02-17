@@ -2,7 +2,9 @@ import Image, { StaticImageData } from 'next/image';
 
 import Box from '@mui/material/Box';
 
-import colors from '@lib/constants/themes/colors';
+import { convertElementToSx } from '@core/utils/themes';
+
+import { themeCustomElements } from '@lib/constants/themes/elements';
 
 type EverfreshIconProps = {
   src: StaticImageData,
@@ -22,13 +24,13 @@ const EverfreshIcon = (props: EverfreshIconProps) => {
   return (
     <Box
       sx={{
+        ...convertElementToSx(themeCustomElements.home.icons),
         position: 'relative', 
         width: '150px',
         maxWidth: '100%',
         height: '150px',           
         m: 'auto', 
-        borderRadius: '100%', 
-        backgroundColor: colors.background.avatar.home.primary,
+        borderRadius: '100%',
       }} 
     >   
       <Box

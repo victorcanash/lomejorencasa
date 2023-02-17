@@ -8,10 +8,11 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
-import colors from '@lib/constants/themes/colors';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import { getProductBannerImgsUrl } from '@lib/utils/products';
 
 const ProductBanner = () => {
@@ -37,13 +38,13 @@ const ProductBanner = () => {
         <Grid item>
           <Typography 
             component="div" 
-            sx={{ 
+            sx={{
+              ...convertElementToSx(themeCustomElements.home.banner),
               /*typography: { 
                 xs: 'home_h3', 
                 xs_sm: 'home_h2',
                 sm_md: 'home_h1', 
               },*/
-              color: colors.text.home.banner.primary,
             }}
           >
             <FormattedMessage id={`home.banner.${index + 1}`} />
@@ -53,14 +54,7 @@ const ProductBanner = () => {
           <LinkButton
             href={pages.everfresh.path}
             id="advantages"
-            sx={{
-              backgroundColor: colors.background.button.action.primary,
-              color: colors.text.button.action.primary,
-              '&:hover': {
-                backgroundColor: colors.background.button.action.hover,
-                color: colors.text.button.action.hover,
-              },
-            }}
+            sx={convertElementToSx(themeCustomElements.button.action)}
           >
             <FormattedMessage id="home.buyBtn" />
           </LinkButton>
