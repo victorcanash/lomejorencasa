@@ -27,7 +27,7 @@ const convertElementToEventSx = (
       letterSpacing: themeElement.text?.font?.[themeElementType]?.letterSpacing,
       fill: themeElement.fill?.[themeElementType],
       border: themeElement.border?.[themeElementType]?.border,
-      radius: themeElement.border?.[themeElementType]?.radius,
+      borderRadius: themeElement.border?.[themeElementType]?.radius,
     }
   );
 };

@@ -21,7 +21,7 @@ const Footer = () => {
       sx={convertElementToSx(themeCustomElements.footer.content)}
     >
       <Grid item xs={12} sm={6} p={2}>
-        <Typography component="div" variant="h1" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
+        <Typography component="div" variant="h3" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
           <FormattedMessage 
             id="footer.contact.title" 
           />
@@ -36,41 +36,41 @@ const Footer = () => {
         </Typography>
       </Grid>
       <Grid item xs={12} sm={6} p={2}>
-        <Typography component="div" variant="h1" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
+        <Typography component="div" variant="h3" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
           <FormattedMessage 
             id="footer.utility.title" 
           />
         </Typography>
         <Box mb={2}>
-          <Typography component={Link} href={pages.faq.path} variant="body1">
+          <Typography component={Link} href={pages.faq.path} variant="body1" color="inherit">
             <FormattedMessage 
               id="footer.utility.faq" 
             />
           </Typography>
         </Box>
         <Box mb={2}>
-          <Typography component={Link} href={pages.privacy.path} variant="body1">
+          <Typography component={Link} href={pages.privacy.path} variant="body1" color="inherit">
             <FormattedMessage 
               id="footer.utility.privacy"
             />
           </Typography>
         </Box>
         <Box mb={2}>
-          <Typography component={Link} href={pages.cookies.path} variant="body1">
+          <Typography component={Link} href={pages.cookies.path} variant="body1" color="inherit">
             <FormattedMessage 
               id="footer.utility.cookies" 
             />
           </Typography>
         </Box>
         <Box mb={2}>
-          <Typography component={Link} href={pages.legal.path} variant="body1">
+          <Typography component={Link} href={pages.legal.path} variant="body1" color="inherit">
             <FormattedMessage 
               id="footer.utility.legal" 
             />
           </Typography>
         </Box>
         <Box>
-          <Typography component={Link} href={pages.conditions.path} variant="body1">
+          <Typography component={Link} href={pages.conditions.path} variant="body1" color="inherit">
             <FormattedMessage 
               id="footer.utility.conditions" 
             />

@@ -8,7 +8,7 @@ export type ThemeElement = {
   border?: ThemeBorderElement,
 };
 
-type ThemeColorElement = {
+export type ThemeColorElement = {
   default?: string,
   disabled?: string,
   hover?: string,
@@ -18,7 +18,7 @@ type ThemeColorElement = {
   lastChild?: string,
 };
 
-type ThemeBorderElement = {
+export type ThemeBorderElement = {
   default?: ThemeBorderPropertyElement,
   disabled?: ThemeBorderPropertyElement,
   hover?: ThemeBorderPropertyElement,
@@ -28,7 +28,7 @@ type ThemeBorderElement = {
   lastChild?: ThemeBorderPropertyElement,
 };
 
-type ThemeFontElement = {
+export type ThemeFontElement = {
   default?: ThemeFontPropertyElement,
   disabled?: ThemeFontPropertyElement,
   hover?: ThemeFontPropertyElement,
@@ -38,12 +38,12 @@ type ThemeFontElement = {
   lastChild?: ThemeFontPropertyElement,
 };
 
-type ThemeBorderPropertyElement = {
+export type ThemeBorderPropertyElement = {
   border?: string,
   radius?: string,
 };
 
-type ThemeFontPropertyElement = {
+export type ThemeFontPropertyElement = {
   fontSize?: string,
   fontWeight?: string,
   textAlign?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent',

@@ -1,16 +1,18 @@
+import colors from '@lib/constants/themes/colors';
+import typographies from '@lib/constants/themes/typographies';
 import type { ThemeDefaultElements, ThemeCustomElements } from '@lib/types/themes';
 
 export const themeDefaultElements: ThemeDefaultElements = {
   default: {
     backgroundColor: {
-      primary: '#F1F4ED',
-      secondary: '#E5ECDC',
+      primary: colors.background.primary,
+      secondary: colors.background.secondary,
     },
     text: {
       color: {
-        primary: '#000000',
-        secondary: '#000000',
-        disabled: 'grey',
+        primary: colors.text.black,
+        secondary: colors.text.white,
+        disabled: colors.text.disabled,
       },
       font: {
         fontFamily: [
@@ -29,61 +31,41 @@ export const themeDefaultElements: ThemeDefaultElements = {
         h1: {
           text: {
             font: { 
-              default: {
-                fontSize: '24px',
-                fontWeight: '800',
-                lineHeight: '28px', 
-              },
+              default: typographies.title,
             },
             color: {
-              default: '#1F4F2F',
+              default: colors.text.title,
             },
           },
         },
         h2: {
           text: {
             font: { 
-              default: {
-                fontSize: '24px',
-                fontWeight: '800',
-                lineHeight: '28px',
-              },
+              default: typographies.title,
             },
             color: {
-              default: '#1F4F2F',
+              default: colors.text.title,
             },
           },
         },
         h3: {
           text: {
             font: { 
-              default: {
-                fontSize: '20px',
-                fontWeight: '700',
-                lineHeight: '26px',
-              },
+              default: typographies.secondTitle,
             },
           },
         },
         body1: {
           text: {
             font: { 
-              default: {
-                fontSize: '16px',
-                fontWeight: '500',
-                lineHeight: '24px',
-              },
+              default: typographies.content,
             },
           },
         },
         body2: {
           text: {
             font: { 
-              default: {
-                fontSize: '14px',
-                fontWeight: '500',
-                lineHeight: '22px',
-              },
+              default: typographies.secondContent,
             },
           },
         },
@@ -93,62 +75,54 @@ export const themeDefaultElements: ThemeDefaultElements = {
   typography: {
     text: {
       font: { 
-        default: {
-          textAlign: 'left',
-          lineHeight: '24px',
-          letterSpacing: '-0.33px',   
-        },
+        default: typographies.default,
       },
     },
   },
   link: {
     text: {
       color: {
-        default: '#000000',
+        default: colors.text.black,
       },
     },
   },
   paper: {
     backgroundColor: {
-      default: '#E5ECDC',
+      default: colors.background.secondary,
     },
   },
   appBar: {
     backgroundColor: {
-      default: '#E5ECDC',
+      default: colors.background.secondary,
     },
   },
   dialog: {
     backgroundColor: {
-      default: '#F1F4ED',
+      default: colors.background.primary,
     },
   },
   dialogTitle: {
     text: {
       font: {
-        default: {
-          fontSize: '25px',
-          fontWeight: '500',
-          lineHeight: '28px',
-        },
+        default: typographies.title,
       },
     },
   },
   divider: {
     border: {
       default: {
-        border: '1px solid #B0B0B0',
+        border: `1px solid ${colors.border.divider}`,
       },
     },
   },
   tableHead: {
     backgroundColor: {
-      default: '#A7AC93',
+      default: colors.background.tableHead,
     },
   },
   tableRow: {
     backgroundColor: {
-      even: '#ECF7DC',
+      even: colors.background.tableRowEven,
     },
     border: {
       lastChild: {
@@ -159,116 +133,102 @@ export const themeDefaultElements: ThemeDefaultElements = {
   backdrop: {
     text: {
       color: {
-        default: '#FFFFFF',
+        default: colors.text.white,
       },
     },
   },
   inputLabel: {
     text: {
       font: {
-        default: {
-          fontSize: '15px',
-          fontWeight: '300',
-          lineHeight: '1.5em',
-        }
+        default: typographies.content,
       },
       color: {
-        default: '#000000',
-        focus: '#000000',
+        default: colors.text.black,
+        focus: colors.text.black,
       },
     },
   },
   inputBase: {
     backgroundColor: {
-      default: '#FFFFFF',
-      hover: '#E5ECDC',
-      focus: '#E5ECDC',
+      default: colors.background.input,
+      hover: colors.background.inputHover,
+      focus: colors.background.inputHover,
     },
     text: {
       font: {
-        default: {
-          fontSize: '15px',
-          fontWeight: '300',
-          lineHeight: '1.5em',
-        }
+        default: typographies.content,
       },
       color: {
-        default: '#000000',
-        hover: '#000000',
-        focus: '#000000',
+        default: colors.text.black,
+        hover: colors.text.black,
+        focus: colors.text.black,
       },
     },
   },
   button: {
     backgroundColor: {
-      default: '#FFFFFF',
-      hover: '#ECF7DC',
+      default: colors.background.input,
+      hover: colors.background.inputHover,
     },
     text: {
       font: {
-        default: {
-          fontSize: '16px',
-          fontWeight: '700',
-        },
+        default: typographies.button,
       },
       color: {
-        default: '#000000',
-        hover: '#000000',
+        default: colors.text.black,
+        hover: colors.text.black,
+      },
+    },
+    border: {
+      default: {
+        radius: '12px',
       },
     },
   },
   listItem: {
     text: {
       font: {
-        default: {
-          fontSize: '17px',
-          fontWeight: '400',
-          lineHeight: '19px',
-        },
+        default: typographies.content,
       },
     },
   },
   paginationItem: {
     backgroundColor: {
-      default: '#E5ECDC',
+      default: colors.background.secondary,
     },
   },
   circularProgress: {
     fill: {
-      default: '#FFFFFF',
+      default: colors.background.third,
     },
   },
   avatar: {
     backgroundColor: {
-      default: '#D7E4C5',
+      default: colors.background.third,
     },
   },
   svgIcon: {
     fill: {
-      default: '#000000',
+      default: colors.text.black,
     },
   },
   stepIcon: {
     text: {
       font: {
-        default: {
-          fontSize: '25px',
-          fontWeight: '300',
-          lineHeight: '18px',
-        }
+        default: typographies.title,
       }
     },
     fill: {
-      default: '#D1E7B1',
+      default: colors.text.black,
     },
   },
   badge: {
     backgroundColor: {
-      default: '#D20D0D',
+      default: colors.background.action,
     },
     text: {
       color: {
-        default: '#FFFFFF',
+        default: colors.text.white,
       },
     },
   },
@@ -276,22 +236,18 @@ export const themeDefaultElements: ThemeDefaultElements = {
     default: {
       text: {
         font: {
-          default: {
-            fontSize: '15px',
-            fontWeight: '300',
-            lineHeight: '20px',
-          }
+          default: typographies.content,
         },
       },
     },
     success: {
       backgroundColor: {
-        default: 'rgb(209 255 209)',
+        default: colors.background.success,
       },
     },
     error: {
       backgroundColor: {
-        default: 'rgb(255 199 199)',
+        default: colors.background.error,
       },
     },
   },
@@ -303,7 +259,7 @@ export const themeCustomElements: ThemeCustomElements = {
       divider: {
         border: {
           default: {
-            border: '1px solid #ECF7DC',
+            border: `1px solid ${colors.border.dividerDrawer}`,
           },
         },
       },
@@ -312,16 +268,18 @@ export const themeCustomElements: ThemeCustomElements = {
   footer: {
     content: {
       backgroundColor: {
-        default: '#30343C',
-      }
+        default: colors.background.footer,
+      },
+      text: {
+        color: {
+          default: colors.text.footer,
+        },
+      },
     },
     title: {
       text: {
-        font: {
-          default: {
-            fontSize: '20px',
-            fontWeight: '700',
-          },
+        color: {
+          default: colors.text.footer,
         },
       },
     },
@@ -330,21 +288,16 @@ export const themeCustomElements: ThemeCustomElements = {
     banner: {
       text: {
         color: {
-          default: '#FFFFFF',
+          default: colors.text.white,
         },
         font: {
-          default: {
-            fontSize: '28px',
-            fontWeight: '900',
-            lineHeight: '28px',
-            letterSpacing: '0.17px',
-          },
+          default: typographies.homeBanner,
         },
       },
     },
     icons: {
       backgroundColor: {
-        default: '#E5ECDC',
+        default: colors.background.third,
       },
       border: {
         default: {
@@ -356,25 +309,13 @@ export const themeCustomElements: ThemeCustomElements = {
   button: {
     action: {
       backgroundColor: {
-        default: '#E85D4A',
-        hover: '#DC867A', 
+        default: colors.background.action,
+        hover: colors.background.actionHover, 
       },
       text: {
         color: {
-          default: '#FFFFFF',
-          hover: '#FFFFFF',
-        },
-        font: {
-          default: {
-            fontSize: '16px',
-            fontWeight: '700',
-            lineHeight: '24px',
-          },
-        },
-      },
-      border: {
-        default: {
-          radius: '12px',
+          default: colors.text.white,
+          hover: colors.text.white,
         },
       },
     },
