@@ -26,12 +26,12 @@ const EverfreshCharacteristics = () => {
         <Typography 
           component="div" 
           variant="body1"
+          m="auto"
+          mt={2}
           sx={{
             position: 'relative',
             width: { xs: '150px', sm: '200px' },
             maxWidth: '100%',
-            m: 'auto',
-            mt: 2,
           }}
         >
           <FormattedMessage id={textId} />

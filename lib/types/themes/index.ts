@@ -1,4 +1,4 @@
-import type { ThemeElement, ThemeFontPropertyElement } from '@core/types/themes';
+import type { ThemeElement } from '@core/types/themes';
 
 export type ThemeDefaultElements = {
   default: {
@@ -14,11 +14,11 @@ export type ThemeDefaultElements = {
       },
       font: {
         fontFamily: string[],
-        h1: ThemeFontPropertyElement,
-        h2: ThemeFontPropertyElement,
-        h3: ThemeFontPropertyElement,
-        body1: ThemeFontPropertyElement,
-        body2: ThemeFontPropertyElement,
+        h1: ThemeElement,
+        h2: ThemeElement,
+        h3: ThemeElement,
+        body1: ThemeElement,
+        body2: ThemeElement,
       },
     },
   },

@@ -17,7 +17,11 @@ const EverfreshVacuumPacked = () => {
   const advantage = (textId: string, src: StaticImageData, alt: string, widthSrc = '100px', heightSrc = '100px') => {
     return (
       <Grid item xs={12}>
-        <Typography component="div" variant="body1" align="center" mb={2}>
+        <Typography 
+          component="div" 
+          variant="body1" 
+          mb={2}
+        >
           <FormattedMessage id={textId} />
         </Typography>
         <EverfreshIcon

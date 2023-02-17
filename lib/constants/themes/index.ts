@@ -1,6 +1,6 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
 
-import { convertElementToSx, convertFontElementToSx } from '@core/utils/themes';
+import { convertElementToSx } from '@core/utils/themes';
 
 import { themeDefaultElements } from '@lib/constants/themes/elements';
 
@@ -60,11 +60,11 @@ const themeOptions: ThemeOptions = {
 
   typography: {
     fontFamily: themeDefaultElements.default.text.font.fontFamily.join(','),
-    h1: convertFontElementToSx(themeDefaultElements.default.text.font.h1),
-    h2: convertFontElementToSx(themeDefaultElements.default.text.font.h2),
-    h3: convertFontElementToSx(themeDefaultElements.default.text.font.h3),
-    body1: convertFontElementToSx(themeDefaultElements.default.text.font.body1),
-    body2: convertFontElementToSx(themeDefaultElements.default.text.font.body2),
+    h1: convertElementToSx(themeDefaultElements.default.text.font.h1),
+    h2: convertElementToSx(themeDefaultElements.default.text.font.h2),
+    h3: convertElementToSx(themeDefaultElements.default.text.font.h3),
+    body1: convertElementToSx(themeDefaultElements.default.text.font.body1),
+    body2: convertElementToSx(themeDefaultElements.default.text.font.body2),
   },
 
   components: {

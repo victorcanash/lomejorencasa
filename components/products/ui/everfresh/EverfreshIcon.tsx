@@ -30,7 +30,6 @@ const EverfreshIcon = (props: EverfreshIconProps) => {
         maxWidth: '100%',
         height: '150px',           
         m: 'auto', 
-        borderRadius: '100%',
       }} 
     >   
       <Box

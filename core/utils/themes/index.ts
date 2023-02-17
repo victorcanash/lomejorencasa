@@ -1,4 +1,4 @@
-import type { ThemeElement, ThemeFontElement, ThemeFontPropertyElement } from '@core/types/themes';
+import type { ThemeElement } from '@core/types/themes';
 
 export const convertElementToSx = (themeElement: ThemeElement) => {
   return ({
@@ -12,42 +12,22 @@ export const convertElementToSx = (themeElement: ThemeElement) => {
   });
 };
 
-export const convertFontElementToSx = (fontElement: ThemeFontPropertyElement) => {
-  return ({
-    ...convertFontElementToEventSx(fontElement, 'default'),
-  });
-};
-
 const convertElementToEventSx = (
   themeElement: ThemeElement,
   themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'lastChild',
 ) => {
-  const fontCssProperties = themeElement.text?.font ? 
-    convertFontElementToEventSx(themeElement.text?.font, themeElementType) : {};
   return (
     {
       backgroundColor: themeElement.backgroundColor?.[themeElementType],
       color: themeElement.text?.color?.[themeElementType],
-      ...fontCssProperties,
+      fontSize: themeElement.text?.font?.[themeElementType]?.fontSize,
+      fontWeight: themeElement.text?.font?.[themeElementType]?.fontWeight,
+      textAlign: themeElement.text?.font?.[themeElementType]?.textAlign,
+      lineHeight: themeElement.text?.font?.[themeElementType]?.lineHeight,
+      letterSpacing: themeElement.text?.font?.[themeElementType]?.letterSpacing,
       fill: themeElement.fill?.[themeElementType],
-      border: themeElement.border?.[themeElementType],
-    }
-  );
-};
-
-const convertFontElementToEventSx = (
-  fontElement: ThemeFontElement | ThemeFontPropertyElement,
-  themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'lastChild',
-) => {
-  const propertyElement = (fontElement as ThemeFontElement)?.default ? 
-    (fontElement as ThemeFontElement)[themeElementType] : fontElement as ThemeFontPropertyElement;
-  return (
-    {
-      fontSize: propertyElement?.fontSize,
-      fontWeight: propertyElement?.fontWeight,
-      textAlign: propertyElement?.textAlign,
-      lineHeight: propertyElement?.lineHeight,
-      letterSpacing: propertyElement?.letterSpacing,
+      border: themeElement.border?.[themeElementType]?.border,
+      radius: themeElement.border?.[themeElementType]?.radius,
     }
   );
 };

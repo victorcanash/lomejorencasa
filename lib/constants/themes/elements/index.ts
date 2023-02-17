@@ -27,29 +27,65 @@ export const themeDefaultElements: ThemeDefaultElements = {
           'sans-serif',
         ],
         h1: {
-          fontSize: '24px',
-          fontWeight: '800',
-          lineHeight: '28px',
+          text: {
+            font: { 
+              default: {
+                fontSize: '24px',
+                fontWeight: '800',
+                lineHeight: '28px', 
+              },
+            },
+            color: {
+              default: '#1F4F2F',
+            },
+          },
         },
         h2: {
-          fontSize: '24px',
-          fontWeight: '800',
-          lineHeight: '28px',
+          text: {
+            font: { 
+              default: {
+                fontSize: '24px',
+                fontWeight: '800',
+                lineHeight: '28px',
+              },
+            },
+            color: {
+              default: '#1F4F2F',
+            },
+          },
         },
         h3: {
-          fontSize: '20px',
-          fontWeight: '700',
-          lineHeight: '26px',
+          text: {
+            font: { 
+              default: {
+                fontSize: '20px',
+                fontWeight: '700',
+                lineHeight: '26px',
+              },
+            },
+          },
         },
         body1: {
-          fontSize: '16px',
-          fontWeight: '500',
-          lineHeight: '28px',
+          text: {
+            font: { 
+              default: {
+                fontSize: '16px',
+                fontWeight: '500',
+                lineHeight: '24px',
+              },
+            },
+          },
         },
         body2: {
-          fontSize: '16px',
-          fontWeight: '500',
-          lineHeight: '28px',
+          text: {
+            font: { 
+              default: {
+                fontSize: '14px',
+                fontWeight: '500',
+                lineHeight: '22px',
+              },
+            },
+          },
         },
       },
     },
@@ -59,7 +95,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
       font: { 
         default: {
           textAlign: 'left',
-          lineHeight: '26px',
+          lineHeight: '24px',
           letterSpacing: '-0.33px',   
         },
       },
@@ -100,7 +136,9 @@ export const themeDefaultElements: ThemeDefaultElements = {
   },
   divider: {
     border: {
-      default: '1px solid #B0B0B0',
+      default: {
+        border: '1px solid #B0B0B0',
+      },
     },
   },
   tableHead: {
@@ -113,7 +151,9 @@ export const themeDefaultElements: ThemeDefaultElements = {
       even: '#ECF7DC',
     },
     border: {
-      lastChild: '0',
+      lastChild: {
+        border: '0',
+      },
     },
   },
   backdrop: {
@@ -262,7 +302,9 @@ export const themeCustomElements: ThemeCustomElements = {
     drawer: {
       divider: {
         border: {
-          default: '1px solid #ECF7DC',
+          default: {
+            border: '1px solid #ECF7DC',
+          },
         },
       },
     },
@@ -287,11 +329,15 @@ export const themeCustomElements: ThemeCustomElements = {
   home: {
     banner: {
       text: {
+        color: {
+          default: '#FFFFFF',
+        },
         font: {
           default: {
             fontSize: '28px',
             fontWeight: '900',
             lineHeight: '28px',
+            letterSpacing: '0.17px',
           },
         },
       },
@@ -300,24 +346,35 @@ export const themeCustomElements: ThemeCustomElements = {
       backgroundColor: {
         default: '#E5ECDC',
       },
+      border: {
+        default: {
+          radius: '100%',
+        },
+      },
     },
   },
   button: {
     action: {
       backgroundColor: {
-        default: '#6F9C7D',
-        hover: '#A0D2AF', 
+        default: '#E85D4A',
+        hover: '#DC867A', 
       },
       text: {
         color: {
           default: '#FFFFFF',
-          hover: '#000000',
+          hover: '#FFFFFF',
         },
         font: {
           default: {
             fontSize: '16px',
             fontWeight: '700',
+            lineHeight: '24px',
           },
+        },
+      },
+      border: {
+        default: {
+          radius: '12px',
         },
       },
     },
