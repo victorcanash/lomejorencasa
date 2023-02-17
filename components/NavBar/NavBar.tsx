@@ -16,7 +16,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
-import colors from '@lib/constants/themes/colors';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useDrawer from '@lib/hooks/useDrawer';
 import Drawer from '@components/NavBar/Drawer';
