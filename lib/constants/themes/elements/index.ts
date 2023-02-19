@@ -132,6 +132,9 @@ export const themeDefaultElements: ThemeDefaultElements = {
     },
   },
   backdrop: {
+    backgroundColor: {
+      default: `${colors.text.black}bf`,
+    },
     text: {
       color: {
         default: colors.text.white,

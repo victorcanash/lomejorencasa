@@ -53,7 +53,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
         }}
       >
         <Box sx={{ maxWidth: '500px' }}>
-          <Typography component='div' variant='h1' sx={{ mb: 1 }}>
+          <Typography component='div' variant='h3' sx={{ mb: 1 }}>
             <FormattedMessage id="dialogs.cookies.title" />
           </Typography>
           <Typography component='div' variant='body1'>
