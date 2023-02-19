@@ -111,7 +111,8 @@ export const themeDefaultElements: ThemeDefaultElements = {
   divider: {
     border: {
       default: {
-        border: `1px solid ${colors.border.divider}`,
+        border: `2px solid ${colors.border.divider}`,
+        radius: '12px',
       },
     },
   },

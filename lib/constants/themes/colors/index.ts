@@ -22,7 +22,7 @@ const colors = {
     footer: '#E1E8CB',
   },
   border: {
-    divider: '#B0B0B0',
+    divider: 'rgb(88 100 83 / 60%)',
     dividerDrawer: '#ECF7DC',
   },
 };
