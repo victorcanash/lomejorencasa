@@ -267,6 +267,9 @@ export const themeCustomElements: ThemeCustomElements = {
   },
   footer: {
     content: {
+      background: {
+        default: `linear-gradient(0deg, ${colors.background.footer} 0%, ${colors.background.footer} 455px, ${colors.background.primary} 100%)`,
+      },
       backgroundColor: {
         default: colors.background.footer,
       },

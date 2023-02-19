@@ -16,7 +16,8 @@ const Footer = () => {
     <Grid
       component="footer"
       container
-      py={3}
+      pt={25}
+      pb={3}
       px={4}
       sx={convertElementToSx(themeCustomElements.footer.content)}
     >
