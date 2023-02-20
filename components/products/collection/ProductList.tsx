@@ -14,10 +14,12 @@ import Box from '@mui/material/Box';
 
 import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
+import { convertElementToSx } from '@core/utils/themes';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import { getProductImgUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import Pagination from '@components/ui/Pagination';
@@ -76,18 +78,18 @@ const ProductList = (props: ProductListProps) => {
                       </Typography>
                       { item.activeDiscount ?
                         <>
-                          <Typography component="div" variant="body1">
+                          <Typography component="div" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                             {`${item.lowestRealPrice} €`}
                           </Typography>
                           <Typography component="span" variant="body2">
                             <FormattedMessage id="productDetail.original" />: <s>{`${item.lowestPrice} €`}</s>
                           </Typography> 
-                          <Typography component="span" variant="body2">
+                          <Typography component="span" variant="body2" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}>
                             {` -${item.activeDiscount.discountPercent}%`}
                           </Typography> 
                         </>
                         :
-                        <Typography component="span" variant="body1">
+                        <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                           {`${item.lowestRealPrice} €`}
                         </Typography>
                       }

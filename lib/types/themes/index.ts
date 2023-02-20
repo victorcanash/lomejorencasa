@@ -63,6 +63,13 @@ export type ThemeCustomElements = {
     banner: ThemeElement,
     icons: ThemeElement,
   },
+  landing: {
+    priceContent: {
+      priceText: ThemeElement,
+      //originalText: ThemeElement,
+      discountText: ThemeElement,
+    },
+  },
   button: {
     action: ThemeElement,
   },

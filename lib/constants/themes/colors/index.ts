@@ -11,8 +11,8 @@ const colors = {
     inputHover: '#E5ECDC',
     action: '#E85D4A',
     actionHover: '#DC867A',
-    success: 'rgb(209 255 209)',
-    error: 'rgb(255 199 199)',
+    success: '#D1FFD1',
+    error: '#FFC7C7',
   },
   text: {
     black: '#000000',
@@ -20,9 +20,10 @@ const colors = {
     disabled: '#858585',
     title: '#1F4F2F',
     footer: '#E1E8CB',
+    action: '#CF0707',
   },
   border: {
-    divider: 'rgb(88 100 83 / 60%)',
+    divider: '#586453',
     dividerDrawer: '#ECF7DC',
   },
 };

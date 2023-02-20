@@ -111,7 +111,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
   divider: {
     border: {
       default: {
-        border: `2px solid ${colors.border.divider}`,
+        border: `2px solid ${colors.border.divider}99`,
         radius: '12px',
       },
     },
@@ -309,6 +309,25 @@ export const themeCustomElements: ThemeCustomElements = {
       border: {
         default: {
           radius: '100%',
+        },
+      },
+    },
+  },
+  landing: {
+    priceContent: {
+      priceText: {
+        text: {
+          color: {
+            default: colors.text.action,
+          },
+        },
+      },
+      // originalTxt: undefined,
+      discountText: {
+        text: {
+          color: {
+            default: colors.text.action,
+          },
         },
       },
     },

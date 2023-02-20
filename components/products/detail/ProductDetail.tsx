@@ -11,9 +11,11 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 
 import type { Product } from '@core/types/products';
+import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import { everfreshProductId, bagsProductId } from '@lib/constants/products';
 import { getProductDetailImgsUrl } from '@lib/utils/products';
 import useCart from '@lib/hooks/useCart';
@@ -158,19 +160,19 @@ const ProductDetail = (props: ProductDetailProps) => {
             {/* Price */}  
             { product.activeDiscount ?
               <Box sx={{ mb: 2 }}>
-                <Typography component="h2" variant="h1">
+                <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                   {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
                 </Typography>
                 <Typography component="span" variant="body1">
                   <FormattedMessage id="productDetail.original" />: <s>{selectedInventory ? selectedInventory.price : product.lowestPrice} €</s>
                 </Typography> 
-                <Typography component="span" variant="body1"> 
+                <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
                   {` -${product.activeDiscount.discountPercent}%`}
                 </Typography> 
               </Box>
               :
               <Box sx={{ mb: 2 }}>
-                <Typography component="h2" variant="h1">
+                <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                   {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
                 </Typography>
               </Box>
@@ -189,7 +191,10 @@ const ProductDetail = (props: ProductDetailProps) => {
                 variant="contained"
                 onClick={onClickAddCartBtn}
                 disabled={!selectedInventory || selectedInventory.quantity == 0}
-                sx={{ mt: 1 }}
+                sx={{
+                  ...convertElementToSx(themeCustomElements.button.action),
+                  mt: 1,
+                }}
               >
                 <FormattedMessage id="productDetail.addCartBtn" />
               </Button>
