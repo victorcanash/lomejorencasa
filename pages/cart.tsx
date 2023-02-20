@@ -75,7 +75,9 @@ const Cart: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'cart.h1',
+          title: {
+            id: 'cart.h1',
+          },
           titleAdd: ` (${totalQuantity})`,
         }}
       />

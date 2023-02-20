@@ -21,7 +21,9 @@ const Contact: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'contact.h1',
+          title: {
+            id: 'contact.h1',
+          },
         }}
       />
 

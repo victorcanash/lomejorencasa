@@ -29,7 +29,9 @@ const Search: NextPage<CollectionProps> = (props) => {
         }}
         marginTop={true}
         texts={{
-          titleId: productCategory?.name ? undefined : 'productList.allCategories',
+          title: {
+            id: productCategory?.name ? undefined : 'productList.allCategories',
+          },
           titleAdd: productCategory?.name ? capitalizeFirstLetter(productCategory.name.current) : undefined,
         }}
       />

@@ -178,7 +178,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               </Box>
             }
             {/* Description */}
-            <Typography component="h2" variant="body1" sx={{ mb: 2 }}>
+            <Typography component="h3" variant="body1" sx={{ mb: 2 }}>
               <FormattedMessage id={productDescriptionId()} />
             </Typography>
             {/* Cart inputs */}

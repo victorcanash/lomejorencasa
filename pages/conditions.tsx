@@ -23,7 +23,9 @@ const Conditions: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'conditions.h1',
+          title: {
+            id: 'conditions.h1',
+          },
         }}
       />
 

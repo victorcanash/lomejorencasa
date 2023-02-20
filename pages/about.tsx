@@ -26,7 +26,9 @@ const About: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'about.h1',
+          title: {
+            id: 'about.h1',
+          },
         }}
       />
       

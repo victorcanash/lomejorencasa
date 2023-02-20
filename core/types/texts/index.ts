@@ -5,8 +5,8 @@ export type LocalizedText = {
 };
 
 export type FormatText = {
-  id: string,
+  id?: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   values?:  any,
-  textAlign?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent',
+  textAlign?: 'left' | 'right' | 'center' | 'justify' | 'inherit',
 };

@@ -1,13 +1,14 @@
 import Head from 'next/head';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useIntl } from 'react-intl';
 
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
+import Container from '@mui/material/Container';
 
 import { PageTypes } from '@core/constants/navigation';
+import type { FormatText } from '@core/types/texts';
+
+import Title from '@components/ui/Title';
 
 type PageHeaderProps = {
   pageType: PageTypes,
@@ -19,7 +20,7 @@ type PageHeaderProps = {
   },
   marginTop?: boolean,
   texts?: {
-    titleId?: string,
+    title?: FormatText,
     titleAdd?: string,
   },
 };
@@ -70,19 +71,15 @@ const PageHeader = (props: PageHeaderProps) => {
           { marginTop &&
             <Box sx={{height: '16px'}} />
           }
-          { (texts?.titleId || texts?.titleAdd) &&
-            <>
-              <Container>
-                <Typography component="h1" variant="h1">
-                  { texts.titleId &&
-                    <FormattedMessage id={texts.titleId} defaultMessage={texts.titleId} />
-                  }
-                  { texts.titleAdd }
-                </Typography>
-
-                <Divider sx={{ mt: 1, mb: 3 }} />
-              </Container>
-            </>
+          { (texts?.title?.id || texts?.titleAdd) &&
+            <Container>
+              <Title
+                type="h1"
+                noMarginTop={true}
+                texts={texts}
+                divider={true}
+              />
+            </Container>
           }
         </>
       }

@@ -5,9 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import type { FormatText } from '@core/types/texts';
+
+import Title from '@components/ui/Title';
+
 type ProductTutorialProps = {
-  titleId?: string,
-  textId: string,
+  title?: FormatText,
+  text: FormatText,
   source: {
     type?: 'video' | 'image',
     src: StaticImageData | 'string',
@@ -15,7 +19,7 @@ type ProductTutorialProps = {
 };
 
 const ProductTutorial = (props: ProductTutorialProps) => {
-  const { titleId, textId, source } = props;
+  const { title, text, source } = props;
 
   const maxWidth = '800px';
 
@@ -25,16 +29,19 @@ const ProductTutorial = (props: ProductTutorialProps) => {
         sx={{ 
           maxWidth, 
           m: 'auto',
-          px: 3,
         }}
       >
-        { titleId &&
-          <Typography component="h3" variant="h1" sx={{ mb: 4 }} textAlign="center">
-            <FormattedMessage id={titleId} />
-          </Typography> 
+        { title?.id &&
+          <Title
+            type="h2"
+            texts={{
+              title: title,
+            }}
+            divider={true}
+          />
         }
         <Typography component="div" variant="body1" sx={{ mb: 4 }}>
-          <FormattedMessage id={textId} />
+          <FormattedMessage id={text.id} />
         </Typography>
       </Box>
       <Box 

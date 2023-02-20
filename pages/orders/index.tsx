@@ -80,7 +80,9 @@ const Orders: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'orderList.h1',
+          title: {
+            id: 'orderList.h1',
+          },
         }}
       />
 

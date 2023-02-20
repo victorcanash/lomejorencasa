@@ -22,7 +22,9 @@ const Privacy: NextPage = () => {
           descriptionId: 'privacy.metas.description',
         }}
         texts={{
-          titleId: 'privacy.h1',
+          title: {
+            id: 'privacy.h1',
+          },
         }}
         marginTop={true}
       />

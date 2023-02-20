@@ -22,7 +22,9 @@ const Cookies: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'cookies.h1',
+          title: {
+            id: 'cookies.h1',
+          },
         }}
       />
 

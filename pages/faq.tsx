@@ -61,7 +61,9 @@ const Faq: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'faq.h1',
+          title: {
+            id: 'faq.h1',
+          },
         }}
       />
       

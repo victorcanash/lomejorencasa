@@ -24,7 +24,9 @@ const Settings: NextPage = () => {
         }}
         marginTop={true}
         texts={{
-          titleId: 'settings.h1',
+          title: {
+            id: 'settings.h1',
+          },
         }}
       />
 

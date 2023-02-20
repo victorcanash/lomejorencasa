@@ -22,7 +22,9 @@ const Legal: NextPage = () => {
           descriptionId: 'legal.metas.description',
         }}
         texts={{
-          titleId: 'legal.h1',
+          title: {
+            id: 'legal.h1',
+          },
         }}
         marginTop={true}
       />
