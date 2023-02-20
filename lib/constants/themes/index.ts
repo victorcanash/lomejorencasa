@@ -96,19 +96,20 @@ const themeOptions: ThemeOptions = {
         root: convertElementToSx(themeDefaultElements.dialogTitle),
       },
     },
+    MuiAccordion: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.accordion),
+      },
+    },
     MuiDivider: {
       styleOverrides: {
         root: convertElementToSx(themeDefaultElements.divider),
       },
     },
-    MuiTableHead: {
-      styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.tableHead),
-      },
-    },
     MuiTableRow: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.tableRow),
+        root: convertElementToSx(themeDefaultElements.tableRow.default),
+        head: convertElementToSx(themeDefaultElements.tableRow.head),
       },
     },
     MuiBackdrop: {

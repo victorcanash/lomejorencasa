@@ -28,9 +28,12 @@ export type ThemeDefaultElements = {
   appBar: ThemeElement,
   dialog: ThemeElement,
   dialogTitle: ThemeElement,
+  accordion: ThemeElement,
   divider: ThemeElement,
-  tableHead: ThemeElement,
-  tableRow: ThemeElement,
+  tableRow: {
+    default: ThemeElement,
+    head: ThemeElement,
+  },
   backdrop: ThemeElement,
   inputLabel: ThemeElement,
   inputBase: ThemeElement,
@@ -68,6 +71,11 @@ export type ThemeCustomElements = {
       priceText: ThemeElement,
       //originalText: ThemeElement,
       discountText: ThemeElement,
+    },
+    accordion: {
+      default: ThemeElement,
+      head: ThemeElement,
+      //content: ThemeElement,
     },
   },
   button: {

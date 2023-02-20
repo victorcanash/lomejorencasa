@@ -108,26 +108,28 @@ export const themeDefaultElements: ThemeDefaultElements = {
       },
     },
   },
+  accordion: {
+    backgroundColor: {
+      default: colors.background.secondary,
+    },
+  },
   divider: {
     border: {
       default: {
         border: `2px solid ${colors.border.divider}99`,
-        radius: '12px',
+        radius: { all: '12px' },
       },
     },
   },
-  tableHead: {
-    backgroundColor: {
-      default: colors.background.tableHead,
-    },
-  },
   tableRow: {
-    backgroundColor: {
-      even: colors.background.tableRowEven,
+    default: {
+      backgroundColor: {
+        even: colors.background.tableRowEven,
+      },
     },
-    border: {
-      lastChild: {
-        border: '0',
+    head: {
+      backgroundColor: {
+        default: colors.background.tableHead,
       },
     },
   },
@@ -185,7 +187,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
     },
     border: {
       default: {
-        radius: '12px',
+        radius: { all: '12px' },
       },
     },
   },
@@ -271,9 +273,6 @@ export const themeCustomElements: ThemeCustomElements = {
   },
   footer: {
     content: {
-      background: {
-        default: `linear-gradient(0deg, ${colors.background.footer} 0%, ${colors.background.footer} 455px, ${colors.background.primary} 100%)`,
-      },
       backgroundColor: {
         default: colors.background.footer,
       },
@@ -308,7 +307,7 @@ export const themeCustomElements: ThemeCustomElements = {
       },
       border: {
         default: {
-          radius: '100%',
+          radius: { all: '100%' },
         },
       },
     },
@@ -331,6 +330,52 @@ export const themeCustomElements: ThemeCustomElements = {
         },
       },
     },
+    accordion: {
+      default: {
+        border: {
+          default: {
+            radius: {
+              topRight: '25px',
+              topLeft: '6px',
+              bottomRight: '6px',
+              bottomLeft: '6px',
+            },
+          },
+          firstChild: {
+            radius: {
+              topRight: '25px',
+              topLeft: '6px',
+              bottomRight: '6px',
+              bottomLeft: '6px',
+            },
+          },
+          lastChild: {
+            radius: {
+              topRight: '25px',
+              topLeft: '6px',
+              bottomRight: '6px',
+              bottomLeft: '6px',
+            },
+          },
+        },
+      },
+      head: {
+        backgroundColor: {
+          default: colors.background.third,
+        },
+        border: {
+          default: {
+            radius: {
+              topRight: '25px',
+              topLeft: '6px',
+              bottomRight: '0px',
+              bottomLeft: '0px',
+            },
+          },
+        },
+      },
+      // content: undefined,
+    }
   },
   button: {
     action: {

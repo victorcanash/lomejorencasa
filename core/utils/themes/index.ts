@@ -8,17 +8,18 @@ export const convertElementToSx = (themeElement: ThemeElement) => {
     '&.Mui-focused': convertElementToEventSx(themeElement, 'focus'),
     '&:nth-of-type(even)': convertElementToEventSx(themeElement, 'even'),
     '&:nth-of-type(odd)': convertElementToEventSx(themeElement, 'odd'),
-    '&:last-child td, &:last-child th': convertElementToEventSx(themeElement, 'lastChild'),
+    '&:first-of-type': convertElementToEventSx(themeElement, 'firstChild'),
+    '&:last-child': convertElementToEventSx(themeElement, 'lastChild'),
+    '&:last-of-type': convertElementToEventSx(themeElement, 'lastChild'),
   });
 };
 
 const convertElementToEventSx = (
   themeElement: ThemeElement,
-  themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'lastChild',
+  themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'firstChild' | 'lastChild',
 ) => {
   return (
     {
-      background: themeElement.background?.[themeElementType],
       backgroundColor: themeElement.backgroundColor?.[themeElementType],
       color: themeElement.text?.color?.[themeElementType],
       fontSize: themeElement.text?.font?.[themeElementType]?.fontSize,
@@ -28,7 +29,11 @@ const convertElementToEventSx = (
       letterSpacing: themeElement.text?.font?.[themeElementType]?.letterSpacing,
       fill: themeElement.fill?.[themeElementType],
       border: themeElement.border?.[themeElementType]?.border,
-      borderRadius: themeElement.border?.[themeElementType]?.radius,
+      borderRadius: themeElement.border?.[themeElementType]?.radius?.all,
+      borderTopRightRadius: themeElement.border?.[themeElementType]?.radius?.topRight,
+      borderTopLeftRadius: themeElement.border?.[themeElementType]?.radius?.topLeft,
+      borderBottomRightRadius: themeElement.border?.[themeElementType]?.radius?.bottomRight,
+      borderBottomLeftRadius: themeElement.border?.[themeElementType]?.radius?.bottomLeft,
     }
   );
 };

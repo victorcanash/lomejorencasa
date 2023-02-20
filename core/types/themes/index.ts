@@ -1,5 +1,4 @@
 export type ThemeElement = {
-  background?: ThemeColorElement,
   backgroundColor?: ThemeColorElement,
   text?: {
     color?: ThemeColorElement,
@@ -16,6 +15,7 @@ export type ThemeColorElement = {
   focus?: string,
   even?: string,
   odd?: string,
+  firstChild?: string,
   lastChild?: string,
 };
 
@@ -26,6 +26,7 @@ export type ThemeBorderElement = {
   focus?: ThemeBorderPropertyElement,
   even?: ThemeBorderPropertyElement,
   odd?: ThemeBorderPropertyElement,
+  firstChild?: ThemeBorderPropertyElement,
   lastChild?: ThemeBorderPropertyElement,
 };
 
@@ -36,12 +37,19 @@ export type ThemeFontElement = {
   focus?: ThemeFontPropertyElement,
   even?: ThemeFontPropertyElement,
   odd?: ThemeFontPropertyElement,
+  firstChild?: ThemeFontPropertyElement,
   lastChild?: ThemeFontPropertyElement,
 };
 
 export type ThemeBorderPropertyElement = {
   border?: string,
-  radius?: string,
+  radius?: {
+    all?: string,
+    topRight?: string,
+    topLeft?: string,
+    bottomRight?: string,
+    bottomLeft?: string,
+  },
 };
 
 export type ThemeFontPropertyElement = {
