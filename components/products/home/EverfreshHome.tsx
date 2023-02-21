@@ -1,8 +1,7 @@
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 
-import ProductBanner from '@components/products/ui/ProductBanner';
-import EverfreshIntro from '@components/products/ui/everfresh/EverfreshIntro';
+import HomeBanner from '@components/products/sections/HomeBanner';
+import HomeIntro from '@components/products/sections/HomeIntro';
 import EverfreshPackingMachine from '@components/products/ui/everfresh/EverfreshPackingMachine';
 import EverfreshVacuumPacked from '@components/products/ui/everfresh/EverfreshVacuumPacked';
 import EverfreshUse from '@components/products/ui/everfresh/EverfreshUse';
@@ -10,59 +9,24 @@ import EverfreshConservation from '@components/products/ui/everfresh/EverfreshCo
 import EverfreshCharacteristics from '@components/products/ui/everfresh/EverfreshCharacteristics';
 
 const EverfreshHome = () => {
-  const section = (content: JSX.Element, spacing?: number) => {
-    return (
-      <Grid
-        container
-        spacing={spacing}
-        mt={4}
-      >
-        { content }
-      </Grid>
-    );
-  };
 
   return (
     <>
-      <ProductBanner />
+      <HomeBanner />
 
       <Container>
 
-        { section(
-          <Grid item xs={12}> 
-            <EverfreshIntro />
-          </Grid>
-        )}
+        <HomeIntro />
 
-        { section(
-          <Grid item xs={12}> 
-            <EverfreshPackingMachine />
-          </Grid>
-        )}
+        <EverfreshPackingMachine />
 
-        { section(
-          <Grid item xs={12}> 
-            <EverfreshVacuumPacked />
-          </Grid>
-        )}
+        <EverfreshVacuumPacked />
 
-        { section(
-          <Grid item xs={12}> 
-            <EverfreshUse />
-          </Grid>
-        )}
+        <EverfreshUse />
 
-        { section(
-          <Grid item xs={12}> 
-            <EverfreshConservation />
-          </Grid>
-        )}
+        <EverfreshConservation />
 
-        { section(
-          <Grid item xs={12}> 
-            <EverfreshCharacteristics />
-          </Grid>
-        )}
+        <EverfreshCharacteristics />
 
       </Container>
     </>

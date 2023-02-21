@@ -28,7 +28,7 @@ const Title = (props: TitleProps) => {
       <Typography 
         component={type} 
         variant={type} 
-        align={texts.title?.textAlign ? texts.title.textAlign : 'left'}
+        align={texts.title?.textAlign}
         mt={noMarginTop ? undefined : 6}
         mb={divider ? undefined : 4}
       >

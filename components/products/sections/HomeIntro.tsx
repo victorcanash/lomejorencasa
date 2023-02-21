@@ -3,7 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const EverfreshIntro = () => {
+import Title from '@components/ui/Title';
+
+const HomeIntro = () => {
 
   return (
     <Box
@@ -12,9 +14,15 @@ const EverfreshIntro = () => {
         m: 'auto',
       }}
     >
-      <Typography component="h2" variant="h1" align="center" mb={3}>
-        <FormattedMessage id="home.intro.title" />
-      </Typography>
+      <Title
+        type="h2"
+        texts={{
+          title: {
+            id: 'home.intro.title',
+          },
+        }}
+        divider={true}
+      />
       <Typography component="div" variant="body1">
         <FormattedMessage id="home.intro.description" />
       </Typography>
@@ -22,4 +30,4 @@ const EverfreshIntro = () => {
   );
 };
 
-export default EverfreshIntro;
+export default HomeIntro;

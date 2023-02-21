@@ -1,16 +1,16 @@
 import { bagsProductId } from '@lib/constants/products';
-import ProductCharacteristics from '@components/products/sections/ProductCharacteristics';
-import ProductReviews from '@components/products/sections/ProductReviews';
+import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
+import DetailReviews from '@components/products/sections/DetailReviews';
 
 const BagsDetail = () => {
 
   return (
     <>
-      <ProductCharacteristics
+      <DetailCharacteristics
         productId={bagsProductId}
       />
 
-      <ProductReviews />
+      <DetailReviews />
     </>
   );
 };

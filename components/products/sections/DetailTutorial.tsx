@@ -6,26 +6,24 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { FormatText } from '@core/types/texts';
+import type { NavItem } from '@core/types/navigation';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 
-type ProductTutorialProps = {
+type DetailTutorialProps = {
   title?: FormatText,
   content: FormatText,
-  button?: {
-    text: FormatText,
-    path: string,
-  },
+  button?: NavItem,
   source: {
     type?: 'video' | 'image',
     src: StaticImageData | 'string',
   },
 };
 
-const ProductTutorial = (props: ProductTutorialProps) => {
+const DetailTutorial = (props: DetailTutorialProps) => {
   const { title, content, button, source } = props;
 
   const maxWidth = '800px';
@@ -78,13 +76,14 @@ const ProductTutorial = (props: ProductTutorialProps) => {
         />
       }
 
-      <Typography component="div" variant="body1" sx={{ mt: 3 }}>
-        <FormattedMessage id={content.id} values={content.values} />
+      <Typography component="div" variant="body1" sx={{ mt: 3 }} align={content.textAlign}>
+        <FormattedMessage id={content.id} values={content.values} defaultMessage={content.id} />
       </Typography>
 
-      { button?.text.id &&
-        <LinkButton 
+      { button?.text.id && button?.path &&
+        <LinkButton
           href={button.path}
+          align={button.text.textAlign}
           sx={{
             ...convertElementToSx(themeCustomElements.button.action),
             mt: 3,
@@ -93,6 +92,7 @@ const ProductTutorial = (props: ProductTutorialProps) => {
           <FormattedMessage 
             id={button.text.id}
             values={button.text.values}
+            defaultMessage={button.text.id}
           />
         </LinkButton>
       }
@@ -101,4 +101,4 @@ const ProductTutorial = (props: ProductTutorialProps) => {
   );
 };
 
-export default ProductTutorial;
+export default DetailTutorial;

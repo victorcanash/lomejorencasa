@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
@@ -15,8 +16,18 @@ import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { getProductBannerImgsUrl } from '@lib/utils/products';
 
-const ProductBanner = () => {
+const HomeBanner = () => {
   const getContent = (index: number) => {
+    const text: FormatText = {
+      id: 'home.banner.1',
+    };
+    if (index == 1) {
+      text.id = 'home.banner.2';
+    } else if (index == 2) {
+      text.id = 'home.banner.3';
+    } else if (index == 3) {
+      text.id = 'home.banner.4';
+    }
     return (
       <Grid 
         container
@@ -37,7 +48,8 @@ const ProductBanner = () => {
       >
         <Grid item>
           <Typography 
-            component="div" 
+            component="div"
+            align={text.textAlign}
             sx={{
               ...convertElementToSx(themeCustomElements.home.banner),
               /*typography: { 
@@ -47,7 +59,7 @@ const ProductBanner = () => {
               },*/
             }}
           >
-            <FormattedMessage id={`home.banner.${index + 1}`} />
+            <FormattedMessage id={text.id} values={text.values} defaultMessage={text.id} />
           </Typography>
         </Grid>
         <Grid item>
@@ -56,7 +68,7 @@ const ProductBanner = () => {
             id="advantages"
             sx={convertElementToSx(themeCustomElements.button.action)}
           >
-            <FormattedMessage id="home.buyBtn" />
+            <FormattedMessage id="home.banner.buyBtn" />
           </LinkButton>
         </Grid>
       </Grid>
@@ -100,4 +112,4 @@ const ProductBanner = () => {
   );
 };
 
-export default ProductBanner;
+export default HomeBanner;

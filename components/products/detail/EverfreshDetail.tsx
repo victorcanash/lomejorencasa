@@ -1,18 +1,18 @@
 import { pages } from '@lib/constants/navigation';
 import { everfreshProductId } from '@lib/constants/products';
-import ProductCharacteristics from '@components/products/sections/ProductCharacteristics';
-import ProductTutorial from '@components/products/sections/ProductTutorial';
-import ProductReviews from '@components/products/sections/ProductReviews';
+import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
+import DetailTutorial from '@components/products/sections/DetailTutorial';
+import DetailReviews from '@components/products/sections/DetailReviews';
 
 const EverfreshDetail = () => {
 
   return (
     <>
-      <ProductCharacteristics
+      <DetailCharacteristics
         productId={everfreshProductId}
       />
 
-      <ProductTutorial
+      <DetailTutorial
         title={{
           id: 'everfresh.videoComment.1.title',
         }}
@@ -31,7 +31,7 @@ const EverfreshDetail = () => {
         }} 
       />
 
-      <ProductTutorial
+      <DetailTutorial
         title={{
           id: 'everfresh.videoComment.2.title',
         }}
@@ -44,7 +44,7 @@ const EverfreshDetail = () => {
         }} 
       />
 
-      <ProductTutorial
+      <DetailTutorial
         title={{
           id: 'everfresh.videoComment.3.title',
         }}
@@ -57,7 +57,7 @@ const EverfreshDetail = () => {
         }} 
       />
       
-      <ProductReviews />
+      <DetailReviews />
     </>
   );
 };
