@@ -3,7 +3,9 @@ import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const EverfreshPackingMachine = () => {
+import Title from '@components/ui/Title';
+
+const HomePackingMachine = () => {
 
   return (
     <Box
@@ -12,9 +14,15 @@ const EverfreshPackingMachine = () => {
         m: 'auto',
       }}
     >
-      <Typography component="h2" variant="h1" align="center" mb={3}>
-        <FormattedMessage id="home.packingMachine.title" />
-      </Typography>
+      <Title
+        type="h2"
+        texts={{
+          title: {
+            id: 'home.packingMachine.title',
+          },
+        }}
+        divider={true}
+      />
       <Typography component="div" variant="body1">
         <FormattedMessage id="home.packingMachine.description" />
       </Typography>
@@ -22,4 +30,4 @@ const EverfreshPackingMachine = () => {
   );
 };
 
-export default EverfreshPackingMachine;
+export default HomePackingMachine;
