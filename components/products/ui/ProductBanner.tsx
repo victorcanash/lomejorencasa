@@ -20,7 +20,12 @@ const ProductBanner = () => {
     return (
       <Grid 
         container
-        rowSpacing={2}          
+        rowSpacing={2}
+        direction="column"
+        wrap="nowrap"
+        justifyContent="center"
+        px="20px"
+        py="10px" 
         sx={{
           position: 'absolute',
           height: '100%',
@@ -28,11 +33,6 @@ const ProductBanner = () => {
             xs: '50%',
           },
           top: '0px',
-          px: '20px',
-          py: '10px',
-          flexWrap: 'nowrap',
-          flexDirection: 'column',
-          justifyContent: 'center',
         }}
       >
         <Grid item>
