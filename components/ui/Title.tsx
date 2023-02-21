@@ -29,8 +29,8 @@ const Title = (props: TitleProps) => {
         component={type} 
         variant={type} 
         align={texts.title?.textAlign ? texts.title.textAlign : 'left'}
-        mt={noMarginTop ? undefined : 3}
-        mb={divider ? undefined : 3}
+        mt={noMarginTop ? undefined : 6}
+        mb={divider ? undefined : 4}
       >
         { texts.title?.id &&
           <FormattedMessage id={texts.title.id} defaultMessage={texts.title.id} values={texts.title.values} />
@@ -39,7 +39,7 @@ const Title = (props: TitleProps) => {
       </Typography>
       
       { divider &&
-        <Divider sx={{ mt: 1, mb: 3 }} />
+        <Divider sx={{ mt: 1, mb: 4 }} />
       }
     </>
   );

@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import { pages } from '@lib/constants/navigation';
 import ProductAccordion from '@components/products/ui/ProductAccordion';
 import ProductTutorial from '@components/products/ui/ProductTutorial';
 import ProductReview from '@components/products/ui/ProductReview';
@@ -19,6 +20,7 @@ const EverfreshDetail = () => {
       <Grid
         container
         spacing={1}
+        mt={6}
       >
         <Grid 
           item 
@@ -72,57 +74,50 @@ const EverfreshDetail = () => {
         </Grid>
       </Grid>
 
-      <Divider sx={{ mt: 5, mb: 5 }}/>
-
-      <Grid
-        container
-        spacing={3}
-      >
-        <Grid 
-          item 
-          xs={12} 
-        > 
-          <ProductTutorial 
-            text={{
-              id: 'everfresh.videoComment.1',
+          <ProductTutorial
+            title={{
+              id: 'everfresh.videoComment.1.title',
+            }}
+            content={{
+              id: 'everfresh.videoComment.1.content',
+            }}
+            button={{
+              text: {
+                id: 'everfresh.videoComment.1.button',
+              },
+              path: pages.home.path,
             }}
             source={{ 
               type: 'video',
               src: require('../../../public/videos/everfresh/everfresh1.mp4'),
             }} 
           />
-        </Grid>
-        <Grid 
-          item 
-          xs={12} 
-        > 
+
           <ProductTutorial
-            text={{
-              id: 'everfresh.videoComment.2',
+            title={{
+              id: 'everfresh.videoComment.2.title',
+            }}
+            content={{
+              id: 'everfresh.videoComment.2.content',
             }}
             source={{ 
               type: 'video',
               src: require('../../../public/videos/everfresh/everfresh2.mp4'),
             }} 
           />
-        </Grid>
-        <Grid 
-          item 
-          xs={12} 
-        > 
+
           <ProductTutorial
-            text={{
-              id: 'everfresh.videoComment.3',
+            title={{
+              id: 'everfresh.videoComment.3.title',
+            }}
+            content={{
+              id: 'everfresh.videoComment.3.content',
             }}
             source={{ 
               type: 'video',
               src: require('../../../public/videos/everfresh/everfresh3.mp4'),
             }} 
           />
-        </Grid>
-      </Grid>
-
-      <Divider sx={{ mt: 5, mb: 5 }}/>
 
       <Typography component="h2" variant="h1" align="center" mb={3}>
         <FormattedMessage id="productDetail.reviews.title" />

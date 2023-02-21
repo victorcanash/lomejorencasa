@@ -78,7 +78,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           </Typography>
           <LinkButton href={pages.bags.path}>
             <FormattedMessage 
-              id="everfresh.bags" 
+              id="everfresh.bagsButton" 
             />
           </LinkButton>
         </>
@@ -103,7 +103,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           </Box>
           <LinkButton href={pages.everfresh.path}>
             <FormattedMessage
-              id="bags.everfresh" 
+              id="bags.everfreshButton" 
             />
           </LinkButton>
         </>
@@ -214,8 +214,6 @@ const ProductDetail = (props: ProductDetailProps) => {
       {/* Type Product Section */}
       { (everfreshProduct() || bagsProduct()) &&
         <>
-          <Divider sx={{ mt: 5, mb: 5 }}/>
-
           { everfreshProduct() &&
             <EverfreshDetail />      
           }

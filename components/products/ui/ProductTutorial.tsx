@@ -6,12 +6,19 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { FormatText } from '@core/types/texts';
+import { convertElementToSx } from '@core/utils/themes';
+import LinkButton from '@core/components/LinkButton';
 
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 
 type ProductTutorialProps = {
   title?: FormatText,
-  text: FormatText,
+  content: FormatText,
+  button?: {
+    text: FormatText,
+    path: string,
+  },
   source: {
     type?: 'video' | 'image',
     src: StaticImageData | 'string',
@@ -19,7 +26,7 @@ type ProductTutorialProps = {
 };
 
 const ProductTutorial = (props: ProductTutorialProps) => {
-  const { title, text, source } = props;
+  const { title, content, button, source } = props;
 
   const maxWidth = '800px';
 
@@ -31,6 +38,7 @@ const ProductTutorial = (props: ProductTutorialProps) => {
           m: 'auto',
         }}
       >
+
         { title?.id &&
           <Title
             type="h2"
@@ -40,16 +48,7 @@ const ProductTutorial = (props: ProductTutorialProps) => {
             divider={true}
           />
         }
-        <Typography component="div" variant="body1" sx={{ mb: 4 }}>
-          <FormattedMessage id={text.id} />
-        </Typography>
-      </Box>
-      <Box 
-        sx={{ 
-          maxWidth, 
-          m: 'auto',
-        }}
-      >
+
         { source.type == 'video' ?
           <video
             loop
@@ -79,6 +78,26 @@ const ProductTutorial = (props: ProductTutorialProps) => {
             style={{ borderRadius: '10px' }}
           />
         }
+
+        <Typography component="div" variant="body1" sx={{ mt: 3 }}>
+          <FormattedMessage id={content.id} values={content.values} />
+        </Typography>
+
+        { button?.text.id &&
+          <LinkButton 
+            href={button.path}
+            sx={{
+              ...convertElementToSx(themeCustomElements.button.action),
+              mt: 3,
+            }}
+          >
+            <FormattedMessage 
+              id={button.text.id}
+              values={button.text.values}
+            />
+          </LinkButton>
+        }
+
       </Box>
     </>
   );
