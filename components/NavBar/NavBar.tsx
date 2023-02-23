@@ -61,10 +61,14 @@ const NavBar = () => {
             }}
           > 
             <IconButton
-              size='large'
+              size="small"
               component={Link}
               href={pages.home.path}
-              sx={{ borderRadius: '10px' }}
+              sx={{
+                p: 0,
+                pt: 1,
+                borderRadius: '10px',
+              }}
             >
               { pages.home.filepath === router.pathname &&
                 <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
@@ -74,11 +78,12 @@ const NavBar = () => {
               <Image
                 src={logo}
                 alt="Logo"
-                height="50px"
+                height="70px"
                 width="156px"
                 layout="fixed"
                 objectFit="cover"
                 priority
+                style={{border: '1px solid black'}}
               />
             </IconButton>
           </Container>
