@@ -12,7 +12,7 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
         sx={{
           mt: '74px',
           mb: '48px',
-          minHeight: '50vh',
+          minHeight: '51vh',
         }}
       >
         {children}

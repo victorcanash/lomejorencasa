@@ -16,8 +16,10 @@ const ErrorPage = (props: ErrorPageProps) => {
   return (
     <Box
       sx={{
+        height: '330px',
         display: 'flex',
         flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center',
       }}
     >
