@@ -76,9 +76,9 @@ const HomeBanner = () => {
   };
 
   return ( 
-    <Box 
+    <Box
+      maxWidth="md_lg"
       sx={{
-        maxWidth: '1075px',
         m: 'auto',
       }}
     >
