@@ -24,7 +24,7 @@ const EverfreshIcon = (props: EverfreshIconProps) => {
   return (
     <Box
       sx={{
-        ...convertElementToSx(themeCustomElements.home.icons),
+        ...convertElementToSx(themeCustomElements.home.advantagesVacuumPacked.icons),
         position: 'relative', 
         width: '150px',
         maxWidth: '100%',
@@ -37,7 +37,7 @@ const EverfreshIcon = (props: EverfreshIconProps) => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          m: 0,
+          m: 'auto',
           transform: 'translate(-50%, -50%)',
         }}
       >

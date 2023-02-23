@@ -78,7 +78,10 @@ export type ThemeCustomElements = {
         second: ThemeElement,
       },
     },
-    icons: ThemeElement,
+    advantagesVacuumPacked: {
+      content: ThemeElement,
+      icons: ThemeElement,
+    },
   },
   landing: {
     priceContent: {

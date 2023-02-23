@@ -306,9 +306,7 @@ export const themeCustomElements: ThemeCustomElements = {
         default: {
           border: {
             default: {
-              radius: {
-                all: '8px',
-              },
+              radius: { all: '8px' },
             },
           },
         },
@@ -363,13 +361,25 @@ export const themeCustomElements: ThemeCustomElements = {
         },
       },
     },
-    icons: {
-      backgroundColor: {
-        default: colors.background.third,
+    advantagesVacuumPacked: {
+      content: {
+        backgroundColor: {
+          default: colors.background.homeSection,
+        },
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+        },
       },
-      border: {
-        default: {
-          radius: { all: '100%' },
+      icons: {
+        backgroundColor: {
+          default: colors.background.third,
+        },
+        border: {
+          default: {
+            radius: { all: '100%' },
+          },
         },
       },
     },
