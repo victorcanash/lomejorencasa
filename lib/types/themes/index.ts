@@ -64,6 +64,20 @@ export type ThemeCustomElements = {
   },
   home: {
     banner: ThemeElement,
+    packingMachine: {
+      card: {
+        default: ThemeElement,
+        first: ThemeElement,
+        second: ThemeElement,
+        third: ThemeElement,
+      },
+    },
+    whyVacuumPacked: {
+      description: {
+        first: ThemeElement,
+        second: ThemeElement,
+      },
+    },
     icons: ThemeElement,
   },
   landing: {

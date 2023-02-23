@@ -1,6 +1,7 @@
 import 'swiper/css';
 import 'swiper/css/bundle';
 import 'swiper/css/pagination';
+import 'swiper/css/effect-cards';
 import 'styles/globals.css';
 
 import type { AppProps } from 'next/app';

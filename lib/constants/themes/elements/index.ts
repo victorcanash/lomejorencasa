@@ -301,6 +301,68 @@ export const themeCustomElements: ThemeCustomElements = {
         },
       },
     },
+    packingMachine: {
+      card: {
+        default: {
+          border: {
+            default: {
+              radius: {
+                all: '8px',
+              },
+            },
+          },
+        },
+        first: {
+          backgroundColor: {
+            default: colors.background.third,
+          },
+        },
+        second: {
+          backgroundColor: {
+            default: colors.background.secondary,
+          },
+        },
+        third: {
+          backgroundColor: {
+            default: colors.background.tableHead,
+          },
+        },
+      },
+    },
+    whyVacuumPacked: {
+      description: {
+        first: {
+          backgroundColor: {
+            default: colors.background.secondary,
+          },
+          border: {
+            default: {
+              radius: {
+                topRight: '45px',
+                topLeft: '0px',
+                bottomRight: '45px',
+                bottomLeft: '0px',
+              },
+            },
+          },
+        },
+        second: {
+          backgroundColor: {
+            default: colors.background.third,
+          },
+          border: {
+            default: {
+              radius: {
+                topRight: '0px',
+                topLeft: '45px',
+                bottomRight: '0px',
+                bottomLeft: '45px',
+              },
+            },
+          },
+        },
+      },
+    },
     icons: {
       backgroundColor: {
         default: colors.background.third,

@@ -16,25 +16,22 @@ const EverfreshHome = () => {
     <>
       <HomeBanner />
 
-      <Container>
+      <HomeIntro />
 
-        <HomeIntro />
+      <HomePackingMachine />
 
-        <HomePackingMachine />
+      <HomeWhatIsVacuumPacked />
 
-        <HomeWhatIsVacuumPacked />
+      <HomeWhyVacuumPacked />
 
-        <HomeWhyVacuumPacked />
+      <HomeAdvantagesVacuumPacked />
 
-        <HomeAdvantagesVacuumPacked />
+      <EverfreshUse />
 
-        <EverfreshUse />
+      <EverfreshConservation />
 
-        <EverfreshConservation />
+      <EverfreshCharacteristics />
 
-        <EverfreshCharacteristics />
-
-      </Container>
     </>
   );
 };
