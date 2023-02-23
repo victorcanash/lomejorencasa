@@ -57,10 +57,8 @@ const HomeAdvantagesVacuumPacked = () => {
     <>
       <Container>
         <Box
-          sx={{
-            maxWidth: '600px',
-            m: 'auto',
-          }}
+          maxWidth="sm"
+          m="auto"
         >
           <Title
             type="h2"

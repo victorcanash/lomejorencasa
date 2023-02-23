@@ -98,7 +98,10 @@ const DetailReviews = () => {
   };
 
   return (
-    <>
+    <Box 
+      maxWidth="md"
+      m="auto"
+    >
       <Title
         type="h2"
         texts={{
@@ -150,7 +153,7 @@ const DetailReviews = () => {
           )
         }
       </Grid>
-    </>
+    </Box>
   );
 };
 

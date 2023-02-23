@@ -26,16 +26,11 @@ type DetailTutorialProps = {
 const DetailTutorial = (props: DetailTutorialProps) => {
   const { title, content, button, source } = props;
 
-  const maxWidth = '800px';
-
   return (
     <Box 
-      sx={{ 
-        maxWidth, 
-        m: 'auto',
-      }}
+      maxWidth="md"
+      m="auto"
     >
-
       { title?.id &&
         <Title
           type="h2"
@@ -96,7 +91,6 @@ const DetailTutorial = (props: DetailTutorialProps) => {
           />
         </LinkButton>
       }
-
     </Box>
   );
 };

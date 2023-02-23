@@ -78,9 +78,7 @@ const HomeBanner = () => {
   return ( 
     <Box
       maxWidth="md_lg"
-      sx={{
-        m: 'auto',
-      }}
+      m="auto"
     >
       <Swiper 
         modules={[Autoplay]}
