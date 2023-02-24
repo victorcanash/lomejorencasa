@@ -91,25 +91,36 @@ const HomePackingMachine = () => {
       </Container>
 
       <Box
-        maxWidth="md_lg"
         sx={{
-          width: {
-            xs: '765px',
-            sm_md: '900px',
-            md: '1085px',
-          },
-          m: 'auto',
-          mt: 17,
+          width: '100%',
+          overflow: 'hidden',
         }}
       >
-        <Image
-          src={packing_machine} 
-          alt="Packing machine" 
-          layout="responsive" 
-          objectFit="cover"
-          quality="100"
-          priority
-        />
+        <Box
+          maxWidth="md_lg"
+          sx={{
+            width: {
+              xs: '765px',
+              sm_md: '900px',
+              md: '1085px',
+            },
+            m: 'auto',
+            mt: {
+              xs: 17,
+              sm_md: 14,
+              md: 10,
+            },
+          }}
+        >
+          <Image
+            src={packing_machine} 
+            alt="Packing machine" 
+            layout="responsive" 
+            objectFit="cover"
+            quality="100"
+            priority
+          />
+        </Box>
       </Box>
     </>
   );
