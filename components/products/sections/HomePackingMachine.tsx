@@ -49,7 +49,8 @@ const HomePackingMachine = () => {
             position: 'absolute',
             width: '225px',
             left: {
-              xs: '5%',
+              xs: '8%',
+              sm: '5%',
               sm_md: '10%',
               lg: '15%',
               lg_xl: '20%',
@@ -98,6 +99,7 @@ const HomePackingMachine = () => {
             md: '1085px',
           },
           m: 'auto',
+          mt: 17,
         }}
       >
         <Image
