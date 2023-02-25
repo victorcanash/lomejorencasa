@@ -7,7 +7,8 @@ import HomeWhatIsVacuumPacked from '@components/products/sections/HomeWhatIsVacu
 import HomeWhyVacuumPacked from '@components/products/sections/HomeWhyVacuumPacked';
 import HomeAdvantagesVacuumPacked from '@components/products/sections/HomeAdvantagesVacuumPacked';
 import HomeUse from '@components/products/sections/HomeUse';
-import EverfreshConservation from '@components/products/ui/everfresh/EverfreshConservation';
+import HomeFoodStorage from '@components/products/sections/HomeFoodStorage';
+import HomeConservation from '@components/products/sections/HomeConservation';
 import EverfreshCharacteristics from '@components/products/ui/everfresh/EverfreshCharacteristics';
 
 const EverfreshHome = () => {
@@ -28,7 +29,9 @@ const EverfreshHome = () => {
 
       <HomeUse />
 
-      <EverfreshConservation />
+      <HomeFoodStorage />
+
+      <HomeConservation />
 
       <EverfreshCharacteristics />
 
