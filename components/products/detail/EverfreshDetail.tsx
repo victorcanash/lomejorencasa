@@ -27,7 +27,7 @@ const EverfreshDetail = () => {
         }}
         source={{ 
           type: 'video',
-          src: require('../../../public/videos/everfresh/everfresh1.mp4'),
+          src: require('../../../public/videos/home/use-packing-machine-step4.mp4'),
         }} 
       />
 
@@ -40,7 +40,7 @@ const EverfreshDetail = () => {
         }}
         source={{ 
           type: 'video',
-          src: require('../../../public/videos/everfresh/everfresh2.mp4'),
+          src: require('../../../public/videos/everfresh/everfresh-tutorial1.mp4'),
         }} 
       />
 
@@ -53,7 +53,7 @@ const EverfreshDetail = () => {
         }}
         source={{ 
           type: 'video',
-          src: require('../../../public/videos/everfresh/everfresh3.mp4'),
+          src: require('../../../public/videos/everfresh/everfresh-tutorial2.mp4'),
         }} 
       />
       
