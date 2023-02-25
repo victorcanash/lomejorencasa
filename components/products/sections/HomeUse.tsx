@@ -68,7 +68,7 @@ const HomeUse = () => {
       );
     }
     return (
-      <Fragment key={index}>
+      <>
         { texts }
         <Image 
           src={src} 
@@ -78,7 +78,7 @@ const HomeUse = () => {
           objectFit="cover"
           style={{ borderRadius: imgRadius }}
         />
-      </Fragment>
+      </>
     );
   };
 
@@ -263,7 +263,9 @@ const HomeUse = () => {
               type: 'video' | 'image', 
               src: StaticImageData | 'string' 
             }[]).map((item, index) => (
-              <>{ getPackingMachineStep(index, item.type, item.src) }</>
+              <Fragment key={index}>
+                { getPackingMachineStep(index, item.type, item.src) }
+              </Fragment>
             ))
           }
         </Box>
