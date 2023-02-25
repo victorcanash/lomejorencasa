@@ -20,7 +20,7 @@ import { getProductDetailImgsUrl } from '@lib/utils/products';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
-import ProductCarousel from '@components/products/ui/ProductCarousel';
+import ProductCarousel from '@components/products/detail/ProductCarousel';
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
 

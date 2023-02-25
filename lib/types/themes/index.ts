@@ -79,7 +79,7 @@ export type ThemeCustomElements = {
         second: ThemeElement,
       },
     },
-    advantagesVacuumPacked: {
+    characteristics: {
       content: ThemeElement,
       icons: ThemeElement,
     },

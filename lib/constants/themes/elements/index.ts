@@ -394,7 +394,7 @@ export const themeCustomElements: ThemeCustomElements = {
         },
       },
     },
-    advantagesVacuumPacked: {
+    characteristics: {
       content: {
         backgroundColor: {
           default: colors.background.homeSection,
