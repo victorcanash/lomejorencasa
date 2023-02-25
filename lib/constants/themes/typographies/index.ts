@@ -33,11 +33,31 @@ const typographies = {
     textTransform: 'uppercase',
   } as ThemeFontPropertyElement,
   homeBanner: {
-    fontSize: '28px',
-    fontWeight: '900',
-    lineHeight: '28px',
-    letterSpacing: '0.17px',
-  } as ThemeFontPropertyElement,
+    xl: {
+      fontSize: '36px',
+      fontWeight: '900',
+      lineHeight: '35px',
+      letterSpacing: '0.17px',
+    } as ThemeFontPropertyElement,
+    lg: {
+      fontSize: '33px',
+      fontWeight: '900',
+      lineHeight: '35px',
+      letterSpacing: '0.17px',
+    } as ThemeFontPropertyElement,
+    md: {
+      fontSize: '28px',
+      fontWeight: '900',
+      lineHeight: '30px',
+      letterSpacing: '0.17px',
+    } as ThemeFontPropertyElement,
+    sm: {
+      fontSize: '24px',
+      fontWeight: '900',
+      lineHeight: '28px',
+      letterSpacing: '0.17px',
+    } as ThemeFontPropertyElement,
+  },
 };
 
 export default typographies;

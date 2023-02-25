@@ -64,7 +64,12 @@ export type ThemeCustomElements = {
     title: ThemeElement,
   },
   home: {
-    banner: ThemeElement,
+    banner: {
+      xl: ThemeElement,
+      lg: ThemeElement,
+      md: ThemeElement,
+      sm: ThemeElement,
+    },
     packingMachine: {
       card: {
         default: ThemeElement,

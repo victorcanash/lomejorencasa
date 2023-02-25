@@ -27,7 +27,7 @@ const convertElementToEventSx = (
       textAlign: themeElement.text?.font?.[themeElementType]?.textAlign,
       lineHeight: themeElement.text?.font?.[themeElementType]?.lineHeight,
       letterSpacing: themeElement.text?.font?.[themeElementType]?.letterSpacing,
-      textTransform: themeElement.text?.font?.[themeElementType]?.textTransform,
+      transform: themeElement.text?.font?.[themeElementType]?.textTransform,
       fill: themeElement.fill?.[themeElementType],
       border: themeElement.border?.[themeElementType]?.border,
       borderRadius: themeElement.border?.[themeElementType]?.radius?.all,

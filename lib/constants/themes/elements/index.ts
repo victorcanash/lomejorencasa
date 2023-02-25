@@ -328,13 +328,45 @@ export const themeCustomElements: ThemeCustomElements = {
   },
   home: {
     banner: {
-      text: {
-        color: {
-          default: colors.text.white,
-        },
-        font: {
-          default: typographies.homeBanner,
-        },
+      xl: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+          font: {
+            default: typographies.homeBanner.xl,
+          },
+        }, 
+      },
+      lg: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+          font: {
+            default: typographies.homeBanner.lg,
+          },
+        }, 
+      },
+      md: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+          font: {
+            default: typographies.homeBanner.md,
+          },
+        }, 
+      },
+      sm: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+          font: {
+            default: typographies.homeBanner.sm,
+          },
+        }, 
       },
     },
     packingMachine: {

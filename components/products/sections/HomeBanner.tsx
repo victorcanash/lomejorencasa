@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
@@ -17,6 +18,21 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { getProductBannerImgsUrl } from '@lib/utils/products';
 
 const HomeBanner = () => {
+  const isXsBreakpoint = useMediaQuery('(max-width:500px)');
+  const isMdBreakpoint = useMediaQuery('(max-width:600px)');
+  const isLgBreakpoint = useMediaQuery('(max-width:750px)');
+
+  const getSxContent = () => {
+    if (isXsBreakpoint) {
+      return convertElementToSx(themeCustomElements.home.banner.sm);
+    } else if (isMdBreakpoint) {
+      return convertElementToSx(themeCustomElements.home.banner.md);
+    } else if (isLgBreakpoint) {
+      return convertElementToSx(themeCustomElements.home.banner.lg);
+    }
+    return convertElementToSx(themeCustomElements.home.banner.xl);
+  };
+
   const getContent = (index: number) => {
     const text: FormatText = {
       id: 'home.banner.1',
@@ -41,7 +57,8 @@ const HomeBanner = () => {
           position: 'absolute',
           height: '100%',
           width: {
-            xs: '50%',
+            xs: '75%',
+            sm: '50%'
           },
           top: '0px',
         }}
@@ -50,14 +67,7 @@ const HomeBanner = () => {
           <Typography 
             component="div"
             align={text.textAlign}
-            sx={{
-              ...convertElementToSx(themeCustomElements.home.banner),
-              /*typography: { 
-                xs: 'home_h3', 
-                xs_sm: 'home_h2',
-                sm_md: 'home_h1', 
-              },*/
-            }}
+            sx={getSxContent()}
           >
             <FormattedMessage id={text.id} values={text.values} defaultMessage={text.id} />
           </Typography>
@@ -81,14 +91,14 @@ const HomeBanner = () => {
       m="auto"
     >
       <Swiper 
-        modules={[Autoplay]}
+        //modules={[Autoplay]}
         speed={1000} 
-        loop
+        //loop
         centeredSlides
-        autoplay={{
+        /*autoplay={{
           delay: 5000,
           disableOnInteraction: false,
-        }}
+        }}*/
       >
         { getProductBannerImgsUrl().map((src, index) => (
           <SwiperSlide key={index}>
