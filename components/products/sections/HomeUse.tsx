@@ -3,14 +3,16 @@ import Image, { StaticImageData } from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
+import Title from '@components/ui/Title';
 
-const EverfreshUse = () => {
+const HomeUse = () => {
   const source = (type: 'video' | 'image', src: StaticImageData | 'string') => {
     if (type == 'video') {
       return (
@@ -48,19 +50,27 @@ const EverfreshUse = () => {
   };
 
   return (
-    <Box
-      sx={{
-        maxWidth: '600px',
-        m: 'auto',
-      }}
-    >
-      <Typography component="h2" variant="h1" align="center" mb={3}>
-        <FormattedMessage id="home.use.title" />
-      </Typography>
+    <>
+      <Container>
+        <Box
+          maxWidth="sm"
+          m="auto"
+        >
+          <Title
+            type="h2"
+            texts={{
+              title: {
+                id: 'home.use.title',
+              },
+            }}
+            divider={true}
+          />
+        </Box>
+      </Container>
       <Typography component="div" variant="body1" mb={3}>
         <FormattedMessage id="home.use.description" />
       </Typography>
-
+      {/*
       <Typography component="h3" variant="h2" align="center" mb={3}>
         <FormattedMessage id="home.use.foodPreparation.title" />
       </Typography>
@@ -84,21 +94,22 @@ const EverfreshUse = () => {
       <Typography component="div" variant="body1" mb={2}>
         <FormattedMessage id="home.use.packingMachine.1" />
       </Typography>
-      { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
+      { source('video', require('../../../public/videos/home/use-packing-machine-step1.mp4')) }
       <Typography component="div" variant="body1" mt={1} mb={2}>
         <FormattedMessage id="home.use.packingMachine.2" />
       </Typography>
-      { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
+      { source('video', require('../../../public/videos/home/use-packing-machine-step1.mp4')) }
       <Typography component="div" variant="body1" mt={1} mb={2}>
         <FormattedMessage id="home.use.packingMachine.3" />
       </Typography>
-      { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
+      { source('video', require('../../../public/videos/home/use-packing-machine-step3.mp4')) }
       <Typography component="div" variant="body1" mt={1} mb={2}>
         <FormattedMessage id="home.use.packingMachine.4" />
       </Typography>
-      { source('video', require('../../../../public/videos/home/everfresh1.mp4')) }
-    </Box>
+      { source('video', require('../../../public/videos/home/use-packing-machine-step4.mp4')) }
+      */}
+    </>
   );
 };
 
-export default EverfreshUse;
+export default HomeUse;
