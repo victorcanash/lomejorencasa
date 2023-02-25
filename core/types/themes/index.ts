@@ -58,4 +58,5 @@ export type ThemeFontPropertyElement = {
   textAlign?: 'start' | 'end' | 'left' | 'right' | 'center' | 'justify' | 'match-parent',
   lineHeight?: string,
   letterSpacing?: string,
+  textTransform?: string,
 };

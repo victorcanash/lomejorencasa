@@ -2,24 +2,25 @@ import type { ThemeElement } from '@core/types/themes';
 
 export type ThemeDefaultElements = {
   default: {
-    backgroundColor: {
-      primary: string,
-      secondary: string,
-    },
-    text: {
-      color: {
+    palette: {
+      backgroundColor: {
+        primary: string,
+        secondary: string,
+      },
+      textColor: {
         primary: string,
         secondary: string,
         disabled: string,
       },
-      font: {
-        fontFamily: string[],
-        h1: ThemeElement,
-        h2: ThemeElement,
-        h3: ThemeElement,
-        body1: ThemeElement,
-        body2: ThemeElement,
-      },
+    }
+    typography: {
+      fontFamily: string[],
+      h1: ThemeElement,
+      h2: ThemeElement,
+      h3: ThemeElement,
+      h4: ThemeElement,
+      body1: ThemeElement,
+      body2: ThemeElement,
     },
   },
   typography: ThemeElement,

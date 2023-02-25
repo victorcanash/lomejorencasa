@@ -4,69 +4,102 @@ import type { ThemeDefaultElements, ThemeCustomElements } from '@lib/types/theme
 
 export const themeDefaultElements: ThemeDefaultElements = {
   default: {
-    backgroundColor: {
-      primary: colors.background.primary,
-      secondary: colors.background.secondary,
-    },
-    text: {
-      color: {
+    palette: {
+      backgroundColor: {
+        primary: colors.background.primary,
+        secondary: colors.background.secondary,
+      },
+      textColor: {
         primary: colors.text.black,
         secondary: colors.text.white,
         disabled: colors.text.disabled,
       },
-      font: {
-        fontFamily: [
-          'Poppins',
-          '-apple-system', 
-          'BlinkMacSystemFont', 
-          'Segoe UI', 
-          'Oxygen',
-          'Ubuntu', 
-          'Cantarell', 
-          'Fira Sans', 
-          'Droid Sans', 
-          'Helvetica Neue',
-          'sans-serif',
-        ],
-        h1: {
-          text: {
-            font: { 
-              default: typographies.title,
-            },
-            color: {
-              default: colors.text.title,
+    },
+    typography: {
+      fontFamily: [
+        'Poppins',
+        '-apple-system', 
+        'BlinkMacSystemFont', 
+        'Segoe UI', 
+        'Oxygen',
+        'Ubuntu', 
+        'Cantarell', 
+        'Fira Sans', 
+        'Droid Sans', 
+        'Helvetica Neue',
+        'sans-serif',
+      ],
+      h1: {
+        text: {
+          font: { 
+            default: typographies.title,
+          },
+          color: {
+            default: colors.text.title,
+          },
+        },
+      },
+      h2: {
+        text: {
+          font: { 
+            default: typographies.title,
+          },
+          color: {
+            default: colors.text.title,
+          },
+        },
+      },
+      h3: {
+        text: {
+          font: { 
+            default: typographies.secondTitle,
+          },
+        },
+        backgroundColor: {
+          default: colors.background.third,
+        },
+        border: {
+          default: {
+            radius: {
+              topRight: '15px',
+              topLeft: '0px',
+              bottomRight: '15px',
+              bottomLeft: '0px',
             },
           },
         },
-        h2: {
-          text: {
-            font: { 
-              default: typographies.title,
-            },
-            color: {
-              default: colors.text.title,
+      },
+      h4: {
+        text: {
+          font: { 
+            default: typographies.secondTitle,
+          },
+        },
+        backgroundColor: {
+          default: colors.background.secondary,
+        },
+        border: {
+          default: {
+            radius: {
+              topRight: '15px',
+              topLeft: '0px',
+              bottomRight: '15px',
+              bottomLeft: '0px',
             },
           },
         },
-        h3: {
-          text: {
-            font: { 
-              default: typographies.secondTitle,
-            },
+      },
+      body1: {
+        text: {
+          font: { 
+            default: typographies.content,
           },
         },
-        body1: {
-          text: {
-            font: { 
-              default: typographies.content,
-            },
-          },
-        },
-        body2: {
-          text: {
-            font: { 
-              default: typographies.secondContent,
-            },
+      },
+      body2: {
+        text: {
+          font: { 
+            default: typographies.secondContent,
           },
         },
       },

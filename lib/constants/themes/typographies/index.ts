@@ -30,6 +30,7 @@ const typographies = {
     fontSize: '16px',
     fontWeight: '700',
     lineHeight: '24px',
+    textTransform: 'uppercase',
   } as ThemeFontPropertyElement,
   homeBanner: {
     fontSize: '28px',

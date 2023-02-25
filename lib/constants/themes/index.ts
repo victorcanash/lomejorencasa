@@ -46,31 +46,30 @@ const themeOptions: ThemeOptions = {
 
   palette: {
     primary: {
-      main: themeDefaultElements.default.backgroundColor.primary,
+      main: themeDefaultElements.default.palette.backgroundColor.primary,
     },
     secondary: {
-      main: themeDefaultElements.default.backgroundColor.secondary,
+      main: themeDefaultElements.default.palette.backgroundColor.secondary,
     },
     background: {
-      default: themeDefaultElements.default.backgroundColor.primary,
-      paper: themeDefaultElements.paper.backgroundColor?.default || themeDefaultElements.default.backgroundColor.secondary,
+      default: themeDefaultElements.default.palette.backgroundColor.primary,
+      paper: themeDefaultElements.paper.backgroundColor?.default || themeDefaultElements.default.palette.backgroundColor.secondary,
     },
     text: {
-      primary: themeDefaultElements.default.text.color.primary,
-      secondary: themeDefaultElements.default.text.color.secondary,
-      disabled: themeDefaultElements.default.text.color.disabled,
+      primary: themeDefaultElements.default.palette.textColor.primary,
+      secondary: themeDefaultElements.default.palette.textColor.secondary,
+      disabled: themeDefaultElements.default.palette.textColor.disabled,
     },
   },
-
   typography: {
-    fontFamily: themeDefaultElements.default.text.font.fontFamily.join(','),
-    h1: convertElementToSx(themeDefaultElements.default.text.font.h1),
-    h2: convertElementToSx(themeDefaultElements.default.text.font.h2),
-    h3: convertElementToSx(themeDefaultElements.default.text.font.h3),
-    body1: convertElementToSx(themeDefaultElements.default.text.font.body1),
-    body2: convertElementToSx(themeDefaultElements.default.text.font.body2),
+    fontFamily: themeDefaultElements.default.typography.fontFamily.join(','),
+    h1: convertElementToSx(themeDefaultElements.default.typography.h1),
+    h2: convertElementToSx(themeDefaultElements.default.typography.h2),
+    h3: convertElementToSx(themeDefaultElements.default.typography.h3),
+    h4: convertElementToSx(themeDefaultElements.default.typography.h4),
+    body1: convertElementToSx(themeDefaultElements.default.typography.body1),
+    body2: convertElementToSx(themeDefaultElements.default.typography.body2),
   },
-
   components: {
     MuiTypography: {
       styleOverrides: {
@@ -133,10 +132,7 @@ const themeOptions: ThemeOptions = {
     },
     MuiButton: {
       styleOverrides: {
-        root: {
-          textTransform: 'capitalize',
-          ...convertElementToSx(themeDefaultElements.button),
-        },
+        root: convertElementToSx(themeDefaultElements.button),
       },
     },
     MuiListItemText: {

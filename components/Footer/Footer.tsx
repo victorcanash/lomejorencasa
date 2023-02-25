@@ -13,7 +13,7 @@ import { themeCustomElements, themeDefaultElements } from '@lib/constants/themes
 
 const Footer = () => {  
   const getDefaultBgColor = () => {
-    return themeDefaultElements.default.backgroundColor.primary;
+    return themeDefaultElements.default.palette.backgroundColor.primary;
   };
   const getFooterBgColor = () => {
     return themeCustomElements.footer.content.backgroundColor?.default || getDefaultBgColor();
