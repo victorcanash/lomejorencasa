@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { Fragment } from 'react';
 import Image, { StaticImageData } from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
@@ -67,7 +68,7 @@ const HomeUse = () => {
       );
     }
     return (
-      <>
+      <Fragment key={index}>
         { texts }
         <Image 
           src={src} 
@@ -77,7 +78,7 @@ const HomeUse = () => {
           objectFit="cover"
           style={{ borderRadius: imgRadius }}
         />
-      </>
+      </Fragment>
     );
   };
 

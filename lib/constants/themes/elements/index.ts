@@ -316,6 +316,9 @@ export const themeCustomElements: ThemeCustomElements = {
       },
     },
     title: {
+      backgroundColor: {
+        default: 'transparent',
+      },
       text: {
         color: {
           default: colors.text.footer,
