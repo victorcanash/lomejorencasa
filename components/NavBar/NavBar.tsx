@@ -83,7 +83,6 @@ const NavBar = () => {
                 layout="fixed"
                 objectFit="cover"
                 priority
-                style={{border: '1px solid black'}}
               />
             </IconButton>
           </Container>
