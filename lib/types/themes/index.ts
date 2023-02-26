@@ -64,6 +64,10 @@ export type ThemeCustomElements = {
     title: ThemeElement,
   },
   home: {
+    title: {
+      h3: ThemeElement,
+      h4: ThemeElement,
+    },
     banner: {
       xl: ThemeElement,
       lg: ThemeElement,
@@ -99,6 +103,14 @@ export type ThemeCustomElements = {
       default: ThemeElement,
       head: ThemeElement,
       //content: ThemeElement,
+    },
+  },
+  faq: {
+    accordeon: {
+      head: {
+        content: ThemeElement,
+        title: ThemeElement,
+      },
     },
   },
   button: {

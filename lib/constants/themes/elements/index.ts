@@ -55,37 +55,11 @@ export const themeDefaultElements: ThemeDefaultElements = {
             default: typographies.secondTitle,
           },
         },
-        backgroundColor: {
-          default: colors.background.third,
-        },
-        border: {
-          default: {
-            radius: {
-              topRight: '15px',
-              topLeft: '0px',
-              bottomRight: '15px',
-              bottomLeft: '0px',
-            },
-          },
-        },
       },
       h4: {
         text: {
           font: { 
             default: typographies.secondTitle,
-          },
-        },
-        backgroundColor: {
-          default: colors.background.secondary,
-        },
-        border: {
-          default: {
-            radius: {
-              topRight: '15px',
-              topLeft: '0px',
-              bottomRight: '15px',
-              bottomLeft: '0px',
-            },
           },
         },
       },
@@ -316,9 +290,6 @@ export const themeCustomElements: ThemeCustomElements = {
       },
     },
     title: {
-      backgroundColor: {
-        default: 'transparent',
-      },
       text: {
         color: {
           default: colors.text.footer,
@@ -327,6 +298,38 @@ export const themeCustomElements: ThemeCustomElements = {
     },
   },
   home: {
+    title: {
+      h3: {
+        backgroundColor: {
+          default: colors.background.third,
+        },
+        border: {
+          default: {
+            radius: {
+              topRight: '15px',
+              topLeft: '0px',
+              bottomRight: '15px',
+              bottomLeft: '0px',
+            },
+          },
+        },
+      },
+      h4: {
+        backgroundColor: {
+          default: colors.background.secondary,
+        },
+        border: {
+          default: {
+            radius: {
+              topRight: '15px',
+              topLeft: '0px',
+              bottomRight: '15px',
+              bottomLeft: '0px',
+            },
+          },
+        },
+      },
+    },
     banner: {
       xl: {
         text: {
@@ -516,6 +519,30 @@ export const themeCustomElements: ThemeCustomElements = {
       },
       // content: undefined,
     }
+  },
+  faq: {
+    accordeon: {
+      head: {
+        content: {
+          backgroundColor: {
+            default: colors.background.faqAccordeonHeadContent,
+          },
+        },
+        title: {
+          backgroundColor: {
+            default: colors.background.third,
+          },
+          text: {
+            color: {
+              default: colors.text.black,
+            },
+            font: { 
+              default: typographies.secondTitle,
+            },
+          },
+        },
+      },
+    },
   },
   button: {
     action: {

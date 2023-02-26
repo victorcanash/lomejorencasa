@@ -27,7 +27,7 @@ const HomeUse = () => {
     const texts = (
       <>
         <Title
-          type="h4"
+          type="h4Home"
           texts={{
             title: {
               id: 'home.use.packingMachine.steps.title',
@@ -108,7 +108,7 @@ const HomeUse = () => {
           m="auto"
         >
           <Title
-            type="h3"
+            type="h3Home"
             texts={{
               title: {
                 id: 'home.use.foodPreparation.title',
@@ -159,7 +159,7 @@ const HomeUse = () => {
           m="auto"
         >
           <Title
-            type="h3"
+            type="h3Home"
             texts={{
               title: {
                 id: 'home.use.bagSelection.title',
@@ -192,7 +192,7 @@ const HomeUse = () => {
           m="auto"
         >
           <Title
-            type="h4"
+            type="h4Home"
             texts={{
               title: {
                 id: 'home.use.bagSelection.sizes.title',
@@ -230,7 +230,7 @@ const HomeUse = () => {
           m="auto"
         >
           <Title
-            type="h3"
+            type="h3Home"
             texts={{
               title: {
                 id: 'home.use.packingMachine.title',

@@ -7,10 +7,10 @@ import Box from '@mui/material/Box';
 import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeDefaultElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 
 type TitleProps = {
-  type: 'h1' | 'h2' | 'h3' | 'h4',
+  type: 'h1' | 'h2' | 'h3Home' | 'h4Home',
   noMarginTop?: boolean,
   texts: {
     title?: FormatText,
@@ -49,12 +49,12 @@ const Title = (props: TitleProps) => {
           }
         </>
       }
-      { (type === 'h3' || type === 'h4') &&
+      { (type === 'h3Home' || type === 'h4Home') &&
         <>
           <Box
             sx={{
-              ...convertElementToSx(type == 'h3' ? 
-                themeDefaultElements.default.typography.h3 : themeDefaultElements.default.typography.h4),
+              ...convertElementToSx(type == 'h3Home' ? 
+                themeCustomElements.home.title.h3 : themeCustomElements.home.title.h4),
               width: 'max-content',
               mt: noMarginTop ? undefined : 4,
               mb: 4,
@@ -63,8 +63,8 @@ const Title = (props: TitleProps) => {
             }}
           >
             <Typography 
-              component={type} 
-              variant={type} 
+              component={type == 'h3Home' ? 'h3' : 'h4'} 
+              variant={type == 'h3Home' ? 'h3' : 'h4'} 
               align={texts.title?.textAlign}
             >
               { texts.title?.id &&
