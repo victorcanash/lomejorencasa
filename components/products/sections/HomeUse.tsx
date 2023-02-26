@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Fragment } from 'react';
+import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -15,7 +16,7 @@ import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 import use_food_preparation_bg from 'public/images/home/use-food-preparation-bg.jpg';
-// import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
+import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
 import use_bag_selection from 'public/images/home/use-bag-selection.png';
 import use_bag_selection_sizes from 'public/images/home/use-bag-selection-sizes.png';
 import use_packing_machine_step2 from 'public/images/home/use-packing-machine-step2.jpg';
@@ -94,11 +95,20 @@ const HomeUse = () => {
           </Typography>
         </Box>
       </Container>
-      {/*<Box
+      <Box
         sx={{     
           position: 'absolute',
-          width: '470px',
-          left: '30px',
+          width: '200px',
+          left: {
+            xs: '5%',
+            sm: '12%',
+            sm_md: '20%',
+            md: '25%',
+            md_lg: '30%',
+            lg: '35%',
+            xl: '40%',
+          },
+          pt: 2,
           zIndex: 1,
         }}
       >
@@ -109,13 +119,14 @@ const HomeUse = () => {
           objectFit="cover"
           quality="100"
         />
-      </Box>*/}
+      </Box>
       <MultimediaContainer
         type="default"
         source={{ 
           src: use_food_preparation_bg,
           alt: 'Use food preparation image',
         }}
+        mt={10}
       />
 
       {/* Bag Selection Section */}
@@ -166,6 +177,7 @@ const HomeUse = () => {
               alt: 'Use bag selection sizes image',
             }}
             borderRadius="0px"
+            maxWidth="xs_sm"
           />
           <LinkButton
             href={pages.bags.path}
