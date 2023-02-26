@@ -1,119 +1,143 @@
-import type { NavItem } from '@core/types/navigation';
 import { pages } from '@lib/constants/navigation';
+import type { Questions } from '@lib/types/faq';
 
-export const questions: NavItem[] = [
-  {
-    text: { 
-      id: '1',
+export const questions: Questions = {
+  packing: [
+    {
+      text: { 
+        id: '1',
+      },
+      path: undefined,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '2',
+    {
+      text: { 
+        id: '2',
+      },
+      path: undefined,
     },
-    path: `${pages.home.path}#convervation`,
-  },
-  {
-    text: { 
-      id: '3',
+    {
+      text: { 
+        id: '3',
+      },
+      path: `${pages.home.path}#advantages`,
     },
-    path: `${pages.home.path}#use`,
-  },
-  {
-    text: { 
-      id: '4',
+    {
+      text: { 
+        id: '4',
+      },
+      path: `${pages.home.path}#use`,
     },
-    path: `${pages.home.path}#advantages`,
-  },
-  {
-    text: { 
-      id: '5',
+    {
+      text: { 
+        id: '5',
+      },
+      path: pages.bags.path,
     },
-    path: `${pages.home.path}#convervation`,
-  },
-  {
-    text: { 
-      id: '6',
+    {
+      text: { 
+        id: '6',
+      },
+      path: undefined,
     },
-    path: `${pages.home.path}#convervation`,
-  },
-  {
-    text: { 
-      id: '7',
+    {
+      text: { 
+        id: '7',
+      },
+      path: pages.home.path,
     },
-    path: pages.bags.path,
-  },
-  {
-    text: { 
-      id: '8',
+    {
+      text: { 
+        id: '8',
+      },
+      path: undefined,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '9',
+    {
+      text: { 
+        id: '9',
+      },
+      path: undefined,
+    }
+  ],
+  conservation: [
+    {
+      text: { 
+        id: '1',
+      },
+      path: `${pages.home.path}#conservation`,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '10',
+    {
+      text: { 
+        id: '2',
+      },
+      path: `${pages.home.path}#convervation`,
     },
-    path: pages.home.path,
-  },
-  {
-    text: { 
-      id: '11',
+    {
+      text: { 
+        id: '3',
+      },
+      path: `${pages.home.path}#conservation`,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '12',
+    {
+      text: { 
+        id: '4',
+      },
+      path: `${pages.home.path}#convervation`,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '13',
+    {
+      text: { 
+        id: '5',
+      },
+      path: `${pages.home.path}#convervation`,
     },
-    path: `${pages.home.path}#convervation`,
-  },
-  {
-    text: { 
-      id: '14',
+    {
+      text: { 
+        id: '6',
+      },
+      path: undefined,
     },
-    path: `${pages.home.path}#convervation`,
-  },
-  {
-    text: { 
-      id: '15',
+    {
+      text: { 
+        id: '7',
+      },
+      path: undefined,
     },
-    path: `${pages.home.path}#convervation`,
-  },
-  {
-    text: { 
-      id: '16',
+    {
+      text: { 
+        id: '8',
+      },
+      path: `${pages.home.path}#convervation`,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '17',
+    {
+      text: { 
+        id: '9',
+      },
+      path: undefined,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '18',
+    {
+      text: { 
+        id: '10',
+      },
+      path: `${pages.home.path}#convervation`,
+    }
+  ],
+  shipping: [
+    {
+      text: { 
+        id: '1',
+      },
+      path: pages.conditions.path,
     },
-    path: undefined,
-  },
-  {
-    text: { 
-      id: '19',
+    {
+      text: { 
+        id: '2',
+      },
+      path: pages.orderList.path,
     },
-    path: `${pages.home.path}#characteristics`,
-  },
-];
+    {
+      text: { 
+        id: '3',
+      },
+      path: pages.conditions.path,
+    },
+  ],
+};

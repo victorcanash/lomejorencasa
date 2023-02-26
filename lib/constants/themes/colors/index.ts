@@ -5,6 +5,7 @@ const colors = {
     third: '#E9D9B1',
     footer: '#30343C',
     homeSection: '#586453',
+    faqAccordeonHeadContent: '#E4E7DF',
     tableHead: '#A7AC93',
     tableRowEven: '#ECF7DC',
     input: '#FFFFFF',
