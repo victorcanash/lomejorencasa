@@ -1,7 +1,6 @@
-import Image from 'next/image';
-
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
@@ -13,6 +12,7 @@ import LinkButton from '@core/components/LinkButton';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
+import MultimediaContainer from '@components/ui/MultimediaContainer';
 
 type DetailTutorialProps = {
   title?: FormatText,
@@ -25,71 +25,58 @@ const DetailTutorial = (props: DetailTutorialProps) => {
   const { title, content, button, source } = props;
 
   return (
-    <Box 
-      maxWidth="md"
-      m="auto"
-    >
-      { title?.id &&
-        <Title
-          type="h2"
-          texts={{
-            title: title,
-          }}
-          divider={true}
-        />
-      }
-
-      { source.type == 'video' ?
-        <video
-          loop
-          muted
-          autoPlay
-          playsInline
-          style={{ 
-            position: 'relative',
-            width: '100%', 
-            height: '100%',
-            borderRadius: '10px',
-          }}
+    <>
+      <Container>
+        <Box 
+          maxWidth="sm"
+          m="auto"
         >
-          <source 
-            src={source.src as string} 
-            type="video/mp4" 
-          />
-        </video> :
-        <Image 
-          src={source.src} 
-          alt="Tutorial" 
-          width={500}
-          height={500}
-          quality={100}
-          layout="responsive" 
-          objectFit="cover"
-          style={{ borderRadius: '10px' }}
-        />
-      }
+          { title?.id &&
+            <Title
+              type="h2"
+              texts={{
+                title: title,
+              }}
+              divider={true}
+            />
+          }
+        </Box>
+      </Container>
 
-      <Typography component="div" variant="body1" sx={{ mt: 3 }} align={content.textAlign}>
-        <FormattedMessage id={content.id} values={content.values} defaultMessage={content.id} />
-      </Typography>
+      <MultimediaContainer
+        type="default"
+        source={source}
+        mt={0}
+      />
 
-      { button?.text.id && button?.path &&
-        <LinkButton
-          href={button.path}
-          align={button.text.textAlign}
-          sx={{
-            ...convertElementToSx(themeCustomElements.button.action),
-            mt: 3,
-          }}
+      <Container>
+        <Box 
+          maxWidth="sm"
+          m="auto"
         >
-          <FormattedMessage 
-            id={button.text.id}
-            values={button.text.values}
-            defaultMessage={button.text.id}
-          />
-        </LinkButton>
-      }
-    </Box>
+          <Typography component="div" variant="body1" sx={{ mt: 3 }} align={content.textAlign}>
+            <FormattedMessage id={content.id} values={content.values} defaultMessage={content.id} />
+          </Typography>
+
+          { button?.text.id && button?.path &&
+            <LinkButton
+              href={button.path}
+              align={button.text.textAlign}
+              sx={{
+                ...convertElementToSx(themeCustomElements.button.action),
+                mt: 3,
+              }}
+            >
+              <FormattedMessage 
+                id={button.text.id}
+                values={button.text.values}
+                defaultMessage={button.text.id}
+              />
+            </LinkButton>
+          }
+        </Box>
+      </Container>
+    </>
   );
 };
 

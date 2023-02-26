@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { FormattedMessage } from 'react-intl';
 import { Autoplay, EffectCards } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -14,6 +12,7 @@ import { convertElementToSx } from '@core/utils/themes';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
+import MultimediaContainer from '@components/ui/MultimediaContainer';
 import packing_machine from 'public/images/home/packing-machine.png';
 
 const HomePackingMachine = () => {
@@ -96,31 +95,14 @@ const HomePackingMachine = () => {
           overflow: 'hidden',
         }}
       >
-        <Box
-          maxWidth="md_lg"
-          sx={{
-            width: {
-              xs: '765px',
-              sm_md: '900px',
-              md: '1085px',
-            },
-            m: 'auto',
-            mt: {
-              xs: 17,
-              sm_md: 14,
-              md: 10,
-            },
+        <MultimediaContainer
+          type="homePackingMachine"
+          source={{ 
+            src: packing_machine,
+            alt: 'Packing machine',
+            priority: true,
           }}
-        >
-          <Image
-            src={packing_machine} 
-            alt="Packing machine" 
-            layout="responsive" 
-            objectFit="cover"
-            quality="100"
-            priority
-          />
-        </Box>
+        />
       </Box>
     </>
   );

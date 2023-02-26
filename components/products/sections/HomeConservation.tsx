@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -14,6 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import Title from '@components/ui/Title';
+import MultimediaContainer from '@components/ui/MultimediaContainer';
 import everfresh from 'public/images/banner/everfresh2.jpg';
 
 const HomeConservation = () => {
@@ -86,81 +85,80 @@ const HomeConservation = () => {
   ];
 
   return (
-    <Container>
-      <Box
-        maxWidth="sm"
-        m="auto"
-      >
-        <Title
-          type="h2"
-          texts={{
-            title: {
-              id: 'home.conservation.title',
-            },
-          }}
-          divider={true}
-        />
-        <Typography component="div" variant="body1" mb={4}>
-          <FormattedMessage id="home.conservation.description" />
-        </Typography>
-        
-        <TableContainer component={Paper}>
-          <Table aria-label="time-conservation-table">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <FormattedMessage 
-                    id={'home.conservation.table.head.food'} 
-                  />
-                </TableCell>
-                <TableCell align="right">
-                  <FormattedMessage 
-                    id={'home.conservation.table.head.noVacuum'} 
-                  />
-                </TableCell>
-                <TableCell align="right">
-                  <FormattedMessage 
-                    id={'home.conservation.table.head.vacuumFridge'} 
-                  />
-                </TableCell>
-                <TableCell align="right">
-                  <FormattedMessage 
-                    id={'home.conservation.table.head.vacuumFrozen'} 
-                  />
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <TableRow key={row.food}>
-                  <TableCell component="th" scope="row">
-                    {row.food}
-                  </TableCell>
-                  <TableCell align="right">{row.noVacuum}</TableCell>
-                  <TableCell align="right">{row.vacuumFridge}</TableCell>
-                  <TableCell align="right">{row.vacuumFrozen}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <Typography component="div" variant="body1" my={4}>
-          <FormattedMessage id="home.conservation.comments" />
-        </Typography>
-
-        <Box>
-          <Image
-            src={everfresh}
-            alt="Food conservation"
-            layout="responsive"
-            objectFit="cover"
-            quality="100"
-            style={{ borderRadius: '17px' }}
+    <>
+      <Container>
+        <Box
+          maxWidth="sm"
+          m="auto"
+        >
+          <Title
+            type="h2"
+            texts={{
+              title: {
+                id: 'home.conservation.title',
+              },
+            }}
+            divider={true}
           />
+          <Typography component="div" variant="body1" mb={4}>
+            <FormattedMessage id="home.conservation.description" />
+          </Typography>
+          
+          <TableContainer component={Paper}>
+            <Table aria-label="time-conservation-table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>
+                    <FormattedMessage 
+                      id={'home.conservation.table.head.food'} 
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    <FormattedMessage 
+                      id={'home.conservation.table.head.noVacuum'} 
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    <FormattedMessage 
+                      id={'home.conservation.table.head.vacuumFridge'} 
+                    />
+                  </TableCell>
+                  <TableCell align="right">
+                    <FormattedMessage 
+                      id={'home.conservation.table.head.vacuumFrozen'} 
+                    />
+                  </TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow key={row.food}>
+                    <TableCell component="th" scope="row">
+                      {row.food}
+                    </TableCell>
+                    <TableCell align="right">{row.noVacuum}</TableCell>
+                    <TableCell align="right">{row.vacuumFridge}</TableCell>
+                    <TableCell align="right">{row.vacuumFrozen}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+
+          <Typography component="div" variant="body1" mt={4}>
+            <FormattedMessage id="home.conservation.comments" />
+          </Typography>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+
+      <MultimediaContainer
+        type="default"
+        source={{ 
+          src: everfresh,
+          alt: 'Food conservation',
+        }}
+      />
+    </>
   );
 };
 

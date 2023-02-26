@@ -1,3 +1,5 @@
+import Container from '@mui/material/Container';
+
 import { pages } from '@lib/constants/navigation';
 import { everfreshProductId } from '@lib/constants/products';
 import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
@@ -8,9 +10,11 @@ const EverfreshDetail = () => {
 
   return (
     <>
-      <DetailCharacteristics
-        productId={everfreshProductId}
-      />
+      <Container>
+        <DetailCharacteristics
+          productId={everfreshProductId}
+        />
+      </Container>
 
       <DetailTutorial
         title={{
@@ -28,6 +32,7 @@ const EverfreshDetail = () => {
         source={{ 
           type: 'video',
           src: require('../../../public/videos/home/use-packing-machine-step4.mp4'),
+          alt: "Packing machine tutorial 1",
         }} 
       />
 
@@ -41,6 +46,7 @@ const EverfreshDetail = () => {
         source={{ 
           type: 'video',
           src: require('../../../public/videos/everfresh/everfresh-tutorial1.mp4'),
+          alt: "Packing machine tutorial 2",
         }} 
       />
 
@@ -54,10 +60,13 @@ const EverfreshDetail = () => {
         source={{ 
           type: 'video',
           src: require('../../../public/videos/everfresh/everfresh-tutorial2.mp4'),
+          alt: "Packing machine tutorial 3",
         }} 
       />
       
-      <DetailReviews />
+      <Container>
+        <DetailReviews />
+      </Container>
     </>
   );
 };

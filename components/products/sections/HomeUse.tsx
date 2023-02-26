@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Fragment } from 'react';
-import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -18,66 +17,39 @@ import Title from '@components/ui/Title';
 import use_food_preparation_bg from 'public/images/home/use-food-preparation-bg.jpg';
 // import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
 import use_bag_selection from 'public/images/home/use-bag-selection.png';
-import detail_bags3 from 'public/images/bags/bags3.jpg';
+import use_bag_selection_sizes from 'public/images/home/use-bag-selection-sizes.png';
 import use_packing_machine_step2 from 'public/images/home/use-packing-machine-step2.jpg';
+import MultimediaContainer from '@components/ui/MultimediaContainer';
 
 const HomeUse = () => {
-  const imgRadius = '17px';
-
   const getPackingMachineStep = (index: number, source: Source) => {
-    const texts = (
-      <>
-        <Title
-          type="h4Home"
-          texts={{
-            title: {
-              id: 'home.use.packingMachine.steps.title',
-              values: {
-                step: index + 1,
-              },
-            },
-          }}
-          divider={false}
-        />
-        <Typography component="div" variant="body1" mb={4}>
-          <FormattedMessage id={`home.use.packingMachine.steps.${index + 1}`} />
-        </Typography>
-      </>
-    );
-    if (source.type == 'video') {
-      return (
-        <>
-          { texts }
-          <video 
-            loop
-            muted
-            autoPlay
-            playsInline
-            style={{
-              position: 'relative',
-              width: '100%', 
-              height: '100%',
-              borderRadius: imgRadius,
-            }}
-          >
-            <source 
-              src={source.src as string} 
-              type="video/mp4" 
-            />
-          </video>
-        </>
-      );
-    }
     return (
       <>
-        { texts }
-        <Image 
-          src={source.src} 
-          alt="Tutorial" 
-          quality="100"
-          layout="responsive" 
-          objectFit="cover"
-          style={{ borderRadius: imgRadius }}
+        <Container>
+          <Box
+            maxWidth="sm"
+            m="auto"
+          >
+            <Title
+              type="h4Home"
+              texts={{
+                title: {
+                  id: 'home.use.packingMachine.steps.title',
+                  values: {
+                    step: index + 1,
+                  },
+                },
+              }}
+              divider={false}
+            />
+            <Typography component="div" variant="body1">
+              <FormattedMessage id={`home.use.packingMachine.steps.${index + 1}`} />
+            </Typography>
+          </Box>
+        </Container>
+        <MultimediaContainer
+          type="default"
+          source={source}
         />
       </>
     );
@@ -138,20 +110,13 @@ const HomeUse = () => {
           quality="100"
         />
       </Box>*/}
-      <Box
-        maxWidth="sm"
-        m="auto"
-        mt={4}
-      >
-        <Image
-          src={use_food_preparation_bg} 
-          alt="Use food preparation background" 
-          layout="responsive" 
-          objectFit="cover"
-          quality="100"
-          style={{ borderRadius: imgRadius }}
-        />
-      </Box>
+      <MultimediaContainer
+        type="default"
+        source={{ 
+          src: use_food_preparation_bg,
+          alt: 'Use food preparation image',
+        }}
+      />
 
       {/* Bag Selection Section */}
       <Container>
@@ -173,20 +138,13 @@ const HomeUse = () => {
           </Typography>
         </Box>
       </Container>
-      <Box
-        maxWidth="sm"
-        m="auto"
-        mt={4}
-      >
-        <Image
-          src={use_bag_selection} 
-          alt="Use bag selection image" 
-          layout="responsive" 
-          objectFit="cover"
-          quality="100"
-          style={{ borderRadius: imgRadius }}
-        />
-      </Box>
+      <MultimediaContainer
+        type="default"
+        source={{ 
+          src: use_bag_selection,
+          alt: 'Use bag selection image',
+        }}
+      />
       <Container>
         <Box
           maxWidth="sm"
@@ -201,16 +159,14 @@ const HomeUse = () => {
             }}
             divider={false}
           />
-          <Box>
-            <Image
-              src={detail_bags3} 
-              alt="Use bag selection sizes image" 
-              layout="responsive" 
-              objectFit="cover"
-              quality="100"
-              style={{ borderRadius: imgRadius }}
-            />
-          </Box>
+          <MultimediaContainer
+            type="default"
+            source={{ 
+              src: use_bag_selection_sizes,
+              alt: 'Use bag selection sizes image',
+            }}
+            borderRadius="0px"
+          />
           <LinkButton
             href={pages.bags.path}
             id="advantages"
@@ -242,32 +198,36 @@ const HomeUse = () => {
           <Typography component="div" variant="body1">
             <FormattedMessage id="home.use.packingMachine.description" />
           </Typography>
-          { 
-            ([
-              {
-                type: 'video',
-                src: require('../../../public/videos/home/use-packing-machine-step1.mp4'),
-              },
-              {
-                type: 'image',
-                src: use_packing_machine_step2,
-              },
-              {
-                type: 'video',
-                src: require('../../../public/videos/home/use-packing-machine-step3.mp4'),
-              },
-              {
-                type: 'video',
-                src: require('../../../public/videos/home/use-packing-machine-step4.mp4'),
-              }
-            ] as Source[]).map((item, index) => (
-              <Fragment key={index}>
-                { getPackingMachineStep(index, item) }
-              </Fragment>
-            ))
-          }
         </Box>
       </Container>
+      { 
+        ([
+          {
+            type: 'video',
+            src: require('../../../public/videos/home/use-packing-machine-step1.mp4'),
+            alt: 'Use packing machine step 1',
+          },
+          {
+            type: 'image',
+            src: use_packing_machine_step2,
+            alt: 'Use packing machine step 2',
+          },
+          {
+            type: 'video',
+            src: require('../../../public/videos/home/use-packing-machine-step3.mp4'),
+            alt: 'Use packing machine step 3',
+          },
+          {
+            type: 'video',
+            src: require('../../../public/videos/home/use-packing-machine-step4.mp4'),
+            alt: 'Use packing machine step 4',
+          }
+        ] as Source[]).map((item, index) => (
+          <Fragment key={index}>
+            { getPackingMachineStep(index, item) }
+          </Fragment>
+        ))
+      }
     </>
   );
 };

@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -7,6 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Title from '@components/ui/Title';
+import MultimediaContainer from '@components/ui/MultimediaContainer';
 import food_storage from 'public/images/home/food-storage.png';
 
 const HomeFoodStorage = () => {
@@ -29,15 +28,15 @@ const HomeFoodStorage = () => {
         <Typography component="div" variant="body1">
           <FormattedMessage id="home.foodStorage.description" />
         </Typography>
-        <Box>
-          <Image
-            src={food_storage} 
-            alt="Food storage" 
-            layout="responsive" 
-            objectFit="cover"
-            quality="100"
-          />
-        </Box>
+        <MultimediaContainer
+          type="default"
+          source={{ 
+            src: food_storage,
+            alt: 'Food storage',
+          }}
+          mt={0}
+          borderRadius="0px"
+        />
       </Box>
     </Container>
   );

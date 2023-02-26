@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { FormattedMessage } from 'react-intl';
 import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,6 +14,7 @@ import LinkButton from '@core/components/LinkButton';
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { getProductBannerImgsUrl } from '@lib/utils/products';
+import MultimediaContainer from '@components/ui/MultimediaContainer';
 
 const HomeBanner = () => {
   const isXsBreakpoint = useMediaQuery('(max-width:500px)');
@@ -91,28 +90,26 @@ const HomeBanner = () => {
       m="auto"
     >
       <Swiper 
-        //modules={[Autoplay]}
+        modules={[Autoplay]}
         speed={1000} 
-        //loop
+        loop
         centeredSlides
-        /*autoplay={{
+        autoplay={{
           delay: 5000,
           disableOnInteraction: false,
-        }}*/
+        }}
       >
         { getProductBannerImgsUrl().map((src, index) => (
           <SwiperSlide key={index}>
-            <div>
-              <Image
-                src={src} 
-                alt="Product image" 
-                layout="responsive" 
-                objectFit="cover"
-                quality="100"
-                priority
-              />
-              { getContent(index) }
-            </div>
+            <MultimediaContainer
+              type="banner"
+              source={{ 
+                src,
+                alt: 'Everfresh banner images',
+                priority: true,
+              }}
+            />
+            { getContent(index) }
           </SwiperSlide>
         ))}
       </Swiper>

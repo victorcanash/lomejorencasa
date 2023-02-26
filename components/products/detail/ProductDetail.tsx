@@ -115,103 +115,106 @@ const ProductDetail = (props: ProductDetailProps) => {
   const maxWidthCarousel = '540px';
 
   return (
-    <Container>
+    <>
+      <Container>
 
-      {/* General Product Section */}
-      <Grid 
-        container 
-        spacing={3}
-      >
-
-        {/* Images */}
-        <Grid
-          item
-          xs={12}
-          md={6}
-        >
-          <Box
-            sx={{
-              maxWidth: maxWidthCarousel, 
-              m: 'auto',
-            }}  
-          >
-            <ProductCarousel 
-              sources={getProductDetailImgsUrl(product).map((item) => { 
-                return { src: item } as Source;
-              })}
-            />
-          </Box>
-        </Grid>
-
-        {/* Content */}
+        {/* General Product Section */}
         <Grid 
-          item 
-          xs={12}
-          md={6}
+          container 
+          spacing={3}
         >
-          <Box
-            sx={{
-              maxWidth: maxWidthCarousel, 
-              m: 'auto',
-            }}  
-          >
-            {/* Title */}
-            <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
-              <FormattedMessage id={productTitleId()} />
-            </Typography>
-            {/* Price */}  
-            { product.activeDiscount ?
-              <Box sx={{ mb: 2 }}>
-                <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-                  {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
-                </Typography>
-                <Typography component="span" variant="body1">
-                  <FormattedMessage id="productDetail.original" />: <s>{selectedInventory ? selectedInventory.price : product.lowestPrice} €</s>
-                </Typography> 
-                <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
-                  {` -${product.activeDiscount.discountPercent}%`}
-                </Typography> 
-              </Box>
-              :
-              <Box sx={{ mb: 2 }}>
-                <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-                  {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
-                </Typography>
-              </Box>
-            }
-            {/* Description */}
-            <Typography component="h3" variant="body1" sx={{ mb: 2 }}>
-              <FormattedMessage id={productDescriptionId()} />
-            </Typography>
-            {/* Cart inputs */}
-            <FormControl 
-              sx={{ mb: 2 }} 
-            >
-              <SelectInventory />
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={onClickAddCartBtn}
-                disabled={!selectedInventory || selectedInventory.quantity == 0}
-                sx={{
-                  ...convertElementToSx(themeCustomElements.button.action),
-                  mt: 1,
-                }}
-              >
-                <FormattedMessage id="productDetail.addCartBtn" />
-              </Button>
-            </FormControl>
-            <FormControl 
-              sx={{ mb: 2 }} 
-            >
-              <SelectQuantity />
-            </FormControl>
-            {/* Comments */}
-            { productComments() }
-          </Box>
-        </Grid>
 
-      </Grid>
+          {/* Images */}
+          <Grid
+            item
+            xs={12}
+            md={6}
+          >
+            <Box
+              sx={{
+                maxWidth: maxWidthCarousel, 
+                m: 'auto',
+              }}  
+            >
+              <ProductCarousel 
+                sources={getProductDetailImgsUrl(product).map((item) => { 
+                  return { src: item } as Source;
+                })}
+              />
+            </Box>
+          </Grid>
+
+          {/* Content */}
+          <Grid 
+            item 
+            xs={12}
+            md={6}
+          >
+            <Box
+              sx={{
+                maxWidth: maxWidthCarousel, 
+                m: 'auto',
+              }}  
+            >
+              {/* Title */}
+              <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
+                <FormattedMessage id={productTitleId()} />
+              </Typography>
+              {/* Price */}  
+              { product.activeDiscount ?
+                <Box sx={{ mb: 2 }}>
+                  <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+                    {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
+                  </Typography>
+                  <Typography component="span" variant="body1">
+                    <FormattedMessage id="productDetail.original" />: <s>{selectedInventory ? selectedInventory.price : product.lowestPrice} €</s>
+                  </Typography> 
+                  <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
+                    {` -${product.activeDiscount.discountPercent}%`}
+                  </Typography> 
+                </Box>
+                :
+                <Box sx={{ mb: 2 }}>
+                  <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+                    {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
+                  </Typography>
+                </Box>
+              }
+              {/* Description */}
+              <Typography component="h3" variant="body1" sx={{ mb: 2 }}>
+                <FormattedMessage id={productDescriptionId()} />
+              </Typography>
+              {/* Cart inputs */}
+              <FormControl 
+                sx={{ mb: 2 }} 
+              >
+                <SelectInventory />
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={onClickAddCartBtn}
+                  disabled={!selectedInventory || selectedInventory.quantity == 0}
+                  sx={{
+                    ...convertElementToSx(themeCustomElements.button.action),
+                    mt: 1,
+                  }}
+                >
+                  <FormattedMessage id="productDetail.addCartBtn" />
+                </Button>
+              </FormControl>
+              <FormControl 
+                sx={{ mb: 2 }} 
+              >
+                <SelectQuantity />
+              </FormControl>
+              {/* Comments */}
+              { productComments() }
+            </Box>
+          </Grid>
+
+        </Grid>
+        
+      </Container>
 
       {/* Type Product Section */}
       { (everfreshProduct() || bagsProduct()) &&
@@ -225,8 +228,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           }
         </>
       }
-
-    </Container>
+    </>
   );
 };
 
