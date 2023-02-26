@@ -121,7 +121,7 @@ const HomeUse = () => {
           </Typography>
         </Box>
       </Container>
-      <Box
+      {/*<Box
         sx={{     
           position: 'absolute',
           width: '470px',
@@ -136,7 +136,7 @@ const HomeUse = () => {
           objectFit="cover"
           quality="100"
         />
-      </Box>
+      </Box>*/}
       <Box
         maxWidth="sm"
         m="auto"
