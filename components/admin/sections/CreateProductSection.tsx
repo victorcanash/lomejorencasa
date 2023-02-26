@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { AdminSections } from '@core/constants/admin';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
-import type { UploadFile } from '@core/types/upload';
+import type { Source, UploadFile } from '@core/types/multimedia';
 
 import { pages } from '@lib/constants/navigation';
 import useProducts from '@lib/hooks/useProducts';
@@ -104,7 +104,9 @@ const CreateProductSection = () => {
                 />
               </Typography>
               <ImagesDetail
-                imgSources={uploadImgs.map((item) => { return item.url })}
+                sources={uploadImgs.map((item) => { 
+                  return { src: item.url } as Source; 
+                })}
               />
             </>
           }

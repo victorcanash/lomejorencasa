@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
+import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
@@ -34,7 +35,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
   const { type } = props;
 
   const characteristicIcon = (
-    src: StaticImageData,
+    source: Source,
     alt: string,
     widthSrc?: string, 
     heightSrc?: string,
@@ -60,7 +61,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
           }}
         >
           <Image 
-            src={src} 
+            src={source.src} 
             alt={alt} 
             width={widthSrc || '100px'}
             height={heightSrc || '100px'}
@@ -74,7 +75,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
 
   const characteristic = (
     textId: string, 
-    src: StaticImageData, 
+    source: Source, 
     alt: string, 
     widthSrc = '100px', 
     heightSrc = '100px'
@@ -86,7 +87,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
       >   
         { type == 'characteristics' ?
           <Box maxWidth="xs_sm" ml="auto">
-            { characteristicIcon(src, alt, widthSrc, heightSrc) }
+            { characteristicIcon(source, alt, widthSrc, heightSrc) }
             <Typography 
               component="div" 
               variant="body1"
@@ -105,7 +106,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
             >
               <FormattedMessage id={textId} />
             </Typography>
-            { characteristicIcon(src, alt, widthSrc, heightSrc) }
+            { characteristicIcon(source, alt, widthSrc, heightSrc) }
           </Box>
         }
       </Grid>
@@ -193,20 +194,20 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
         >
           { type == 'characteristics' ?
             <>
-              { characteristic('home.characteristics.description.1', breeze_icon, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.2', hand_icon, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.3', airplane_icon, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.4', cable_icon, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.5', frezzer_icon, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.6', shoppingbag_icon, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.1', { src: breeze_icon } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.2', { src: hand_icon } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.3', { src: airplane_icon } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.4', { src: cable_icon } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.5', { src: frezzer_icon } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.6', {src: shoppingbag_icon } as Source, 'everfresh characteristic') }
             </>
             :
             <>
-              { characteristic('home.advantages.description.1', microorganism_icon, 'everfresh advantage') }
-              { characteristic('home.advantages.description.2', shield_icon, 'everfresh advantage', '81px') }
-              { characteristic('home.advantages.description.3', diet_icon, 'everfresh advantage') }
-              { characteristic('home.advantages.description.4', frezzer_icon, 'everfresh advantage') }
-              { characteristic('home.advantages.description.5', time_icon, 'everfresh advantage', '76px') }
+              { characteristic('home.advantages.description.1', { src: microorganism_icon } as Source, 'everfresh advantage') }
+              { characteristic('home.advantages.description.2', { src: shield_icon } as Source, 'everfresh advantage', '81px') }
+              { characteristic('home.advantages.description.3', { src: diet_icon } as Source, 'everfresh advantage') }
+              { characteristic('home.advantages.description.4', { src: frezzer_icon } as Source, 'everfresh advantage') }
+              { characteristic('home.advantages.description.5', { src: time_icon } as Source, 'everfresh advantage', '76px') }
             </>
           }
           <Grid 

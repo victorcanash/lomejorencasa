@@ -1,4 +1,4 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 
 import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
+import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
@@ -17,10 +18,7 @@ type DetailTutorialProps = {
   title?: FormatText,
   content: FormatText,
   button?: NavItem,
-  source: {
-    type?: 'video' | 'image',
-    src: StaticImageData | 'string',
-  },
+  source: Source,
 };
 
 const DetailTutorial = (props: DetailTutorialProps) => {

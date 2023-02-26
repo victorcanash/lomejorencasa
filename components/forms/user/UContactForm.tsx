@@ -11,7 +11,7 @@ import { FormFieldTypes } from '@core/constants/forms';
 import { ContactTypes, maxContactFiles } from '@core/constants/contact';
 import type { User, UserContact } from '@core/types/user';
 import type { FormField } from '@core/types/forms';
-import type { UploadFile } from '@core/types/upload';
+import type { UploadFile } from '@core/types/multimedia';
 import { getContactTypeName } from '@core/utils/contact';
 
 import type { FormButtonsNormal } from '@lib/types/forms';

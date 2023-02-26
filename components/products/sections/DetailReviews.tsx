@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -11,6 +11,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+
+import type { Source } from '@core/types/multimedia';
 
 import Title from '@components/ui/Title';
 import review1 from 'public/images/reviews/review1.jpg';
@@ -34,7 +36,7 @@ const DetailReviews = () => {
   };
 
   const review = (
-    imgSrc: string | StaticImageData,
+    source: Source,
     username: string,
     title: string,
     description: string,
@@ -61,7 +63,7 @@ const DetailReviews = () => {
             <CardMedia>
               <div style={{ position: 'relative', width: '100%' }}>
                 <Image
-                  src={imgSrc}
+                  src={source.src}
                   alt="Product image"
                   layout="responsive" 
                   objectFit="cover"
@@ -117,7 +119,7 @@ const DetailReviews = () => {
         spacing={2}
       >
         { review(
-            review1,
+            { src: review1 } as Source,
             'Jose Antonio',
             'Cumple lo especificado.',
             'La máquina está bastante bien. Tanto el vendedor como el servicio de atención al cliente se podrian puntuar con la máxima puntuación. En principio me llegó una máquina que no funcionaba correctamente, lo comuniqué, el vendedor se puso en contacto conmigo ofreciéndome varias soluciones, le propuse el cambio, y en 2 días tenía en mi poder la nueva máquina. Así da gusto comprar.',
@@ -126,7 +128,7 @@ const DetailReviews = () => {
           )
         }
         { review(
-            review2,
+            { src: review2 } as Source,
             'Alba Sanchez',
             'Muy práctico para no gran cantidad de bolsas.',
             'Me ha gustado su tamaño y su facilidad de ubicarlo, y su eficacia. Hay que tener cuidado con cerrar bien las bolsas.',
@@ -135,7 +137,7 @@ const DetailReviews = () => {
           )
         }
         { review(
-            review3,
+            { src: review3 } as Source,
             'Casinero',
             'Recomendable.',
             'Relación calidad precio inmejorable.',
@@ -144,7 +146,7 @@ const DetailReviews = () => {
           )
         }
         { review(
-            review4,
+            { src: review4 } as Source,
             'Ramón Álvarez',
             'Envasa bien.',
             'Funciona bien, envasa bien. Por ponerle una pega que a veces se escapa el vacío.',

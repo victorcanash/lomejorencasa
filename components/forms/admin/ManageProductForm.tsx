@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { FormFieldTypes } from '@core/constants/forms';
 import { ManageActions } from '@core/constants/auth';
 import type { Product } from '@core/types/products';
-import type { UploadFile } from '@core/types/upload';
+import type { Source, UploadFile } from '@core/types/multimedia';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { getProductDetailImgsUrl } from '@lib/utils/products';
@@ -210,7 +210,9 @@ const ManageProductForm = (props: ManageProductFormProps) => {
             />
           </Typography>
           <ImagesDetail
-            imgSources={uploadImgs.map((item) => { return item.url })}
+            sources={uploadImgs.map((item) => { 
+              return { src: item.url } as Source;
+            })}
             getImgActionComponent={(srcImgIndex: number) => {
               return (
                 <Button variant="contained" onClick={()=>handleClickDeleteUploadImgBtn(srcImgIndex)}>
@@ -263,7 +265,9 @@ const ManageProductForm = (props: ManageProductFormProps) => {
             />
           </Typography>
           <ImagesDetail
-            imgSources={getProductDetailImgsUrl(product)}
+            sources={getProductDetailImgsUrl(product).map((item) => { 
+              return { src: item } as Source;
+            })}
             getImgActionComponent={(srcImgIndex: number) => {
               const component = deleteExistingImgs.includes(srcImgIndex) ?
                 <>

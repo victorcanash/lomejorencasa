@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
-import { UploadFile } from '@core/types/upload';
+import type { UploadFile } from '@core/types/multimedia';
 import { 
   manageProduct as manageProductMW,
   uploadProductImgs,
@@ -13,6 +13,7 @@ import {
   manageProductInventory as manageProductInventoryMW,
   manageProductDiscount as manageProductDiscountMW,
 } from '@core/utils/products';
+
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';

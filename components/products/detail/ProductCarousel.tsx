@@ -1,16 +1,18 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Box from '@mui/material/Box';
 
+import type { Source } from '@core/types/multimedia';
+
 type ProductCarouselProps = {
-  imgSources: (string | StaticImageData)[],
+  sources: Source[],
 };
 
 const ProductCarousel = (props: ProductCarouselProps) => {
-  const { imgSources } = props;
+  const { sources } = props;
   
   return (
     <Box>
@@ -21,13 +23,13 @@ const ProductCarousel = (props: ProductCarouselProps) => {
           clickable: true
         }}
       >
-        { imgSources.map((imgSrc, imgSrcIndex) => (
-          <SwiperSlide key={imgSrcIndex}>
+        { sources.map((source, sourceIndex) => (
+          <SwiperSlide key={sourceIndex}>
             <div 
               style={{ marginBottom: '40px' }}
             >
               <Image 
-                src={imgSrc}
+                src={source.src}
                 alt="Product image" 
                 layout="responsive" 
                 objectFit="cover"

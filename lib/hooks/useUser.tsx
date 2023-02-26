@@ -7,7 +7,7 @@ import { useSnackbar } from 'notistack';
 import { ManageActions } from '@core/constants/auth';
 import { ContactTypes, maxContactFiles } from '@core/constants/contact';
 import type { User, UserAddress, UserContact } from '@core/types/user';
-import type { UploadFile } from '@core/types/upload';
+import type { UploadFile } from '@core/types/multimedia';
 import type { CheckoutAddresses } from '@core/types/checkout';
 import { 
   manageUser as manageUserMW, 

@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { Product } from '@core/types/products';
+import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
@@ -135,7 +136,9 @@ const ProductDetail = (props: ProductDetailProps) => {
             }}  
           >
             <ProductCarousel 
-              imgSources={getProductDetailImgsUrl(product)} 
+              sources={getProductDetailImgsUrl(product).map((item) => { 
+                return { src: item } as Source;
+              })}
             />
           </Box>
         </Grid>

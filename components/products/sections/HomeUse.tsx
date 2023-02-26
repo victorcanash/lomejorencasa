@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Fragment } from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
@@ -15,7 +16,7 @@ import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 import use_food_preparation_bg from 'public/images/home/use-food-preparation-bg.jpg';
-import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
+// import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
 import use_bag_selection from 'public/images/home/use-bag-selection.png';
 import detail_bags3 from 'public/images/bags/bags3.jpg';
 import use_packing_machine_step2 from 'public/images/home/use-packing-machine-step2.jpg';
@@ -23,7 +24,7 @@ import use_packing_machine_step2 from 'public/images/home/use-packing-machine-st
 const HomeUse = () => {
   const imgRadius = '17px';
 
-  const getPackingMachineStep = (index: number, type: 'video' | 'image', src: StaticImageData | 'string') => {
+  const getPackingMachineStep = (index: number, source: Source) => {
     const texts = (
       <>
         <Title
@@ -43,7 +44,7 @@ const HomeUse = () => {
         </Typography>
       </>
     );
-    if (type == 'video') {
+    if (source.type == 'video') {
       return (
         <>
           { texts }
@@ -60,7 +61,7 @@ const HomeUse = () => {
             }}
           >
             <source 
-              src={src as string} 
+              src={source.src as string} 
               type="video/mp4" 
             />
           </video>
@@ -71,7 +72,7 @@ const HomeUse = () => {
       <>
         { texts }
         <Image 
-          src={src} 
+          src={source.src} 
           alt="Tutorial" 
           quality="100"
           layout="responsive" 
@@ -259,12 +260,9 @@ const HomeUse = () => {
                 type: 'video',
                 src: require('../../../public/videos/home/use-packing-machine-step4.mp4'),
               }
-            ] as { 
-              type: 'video' | 'image', 
-              src: StaticImageData | 'string' 
-            }[]).map((item, index) => (
+            ] as Source[]).map((item, index) => (
               <Fragment key={index}>
-                { getPackingMachineStep(index, item.type, item.src) }
+                { getPackingMachineStep(index, item) }
               </Fragment>
             ))
           }

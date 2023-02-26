@@ -1,24 +1,26 @@
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 
 import Grid from '@mui/material/Grid';
 
+import type { Source } from '@core/types/multimedia';
+
 type ImagesDetailProps = {
-  imgSources: (string | StaticImageData)[],
-  getImgActionComponent?: (srcImgIndex: number) => JSX.Element,
+  sources: Source[],
+  getImgActionComponent?: (sourceIndex: number) => JSX.Element,
 };
 
 const ImagesDetail = (props: ImagesDetailProps) => {
   const { 
-    imgSources, 
+    sources, 
     getImgActionComponent,
   } = props;
 
   return (
     <Grid container spacing={1} py={3}>
-      { imgSources.map((imgSrc, imgSrcIndex) => (
-        <Grid item xs={6} key={imgSrcIndex}>
+      { sources.map((source, sourceIndex) => (
+        <Grid item xs={6} key={sourceIndex}>
           <Image
-            src={imgSrc}
+            src={source.src}
             alt="Image"
             width="500"
             height="500"
@@ -26,7 +28,7 @@ const ImagesDetail = (props: ImagesDetailProps) => {
             objectFit="cover"
           />
           { getImgActionComponent &&
-            getImgActionComponent(imgSrcIndex) 
+            getImgActionComponent(sourceIndex) 
           }
         </Grid>
       ))}
