@@ -69,7 +69,7 @@ const PageHeader = (props: PageHeaderProps) => {
          pageType == PageTypes.error) &&
         <>
           { marginTop &&
-            <Box sx={{height: '16px'}} />
+            <Box sx={{height: '20px'}} />
           }
           { (texts?.title?.id || texts?.titleAdd) &&
             <Container>
