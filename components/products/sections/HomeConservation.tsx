@@ -55,7 +55,7 @@ const HomeConservation = () => {
     createData(
       intl.formatMessage({ id: 'home.conservation.table.food.5' }),
       `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `2-32 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
       `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
     ),
     createData(
