@@ -1,5 +1,6 @@
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -80,104 +81,106 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
   };
 
   return (
-    <Grid
-      container
-      spacing={1}
-      mt={5}
-    >
-      { productId === everfreshProductId &&
-        <>
-          { characteristicsGroup(
-              {
-                id: 'everfresh.details.title', 
-              },
-              [
-                { id: 'everfresh.details.1' }, { id: 'everfresh.details.2' }, { id: 'everfresh.details.3' }, { id: 'everfresh.details.4' }, { id: 'everfresh.details.5' }, { id: 'everfresh.details.6' }, { id: 'everfresh.details.7' }, { id: 'everfresh.details.8' }
-              ]
-            ) 
-          }
-          { characteristicsGroup(
-              {
-                id: 'everfresh.characteristics.title',
-              },
-              [
-                { id: 'everfresh.characteristics.1' }, { id: 'everfresh.characteristics.2' }, { id: 'everfresh.characteristics.3' }, { id: 'everfresh.characteristics.4' }
-              ]
-            ) 
-          }
-          { characteristicsGroup(
-              {
-                id: 'everfresh.dimensions.title',
-              },
-              [
-                { id: 'everfresh.dimensions.1' }, { id: 'everfresh.dimensions.2' }, { id: 'everfresh.dimensions.3' }
-              ]
-            ) 
-          }
-        </>
-      }
-      { productId === bagsProductId &&
-        <>
-          { characteristicsGroup(
-              {
-                id: 'bags.small.title',
-              },
-              [
-                { id: 'bags.small.1' }
-              ]
-            ) 
-          }
-          { characteristicsGroup(
-              {
-                id: 'bags.medium.title',
-              },
-              [
-                { id: 'bags.medium.1' }
-              ]
-            ) 
-          }
-          { characteristicsGroup(
-              {
-                id: 'bags.big.title',
-              },
-              [
-                { id: 'bags.big.1' }
-              ]
-            ) 
-          }
-        </>
-      }
-      { characteristicsGroup(
-          {
-            id: 'productDetail.shipping.title',
-          },
-          [
-            { id: 'productDetail.shipping.1' }, { id: 'productDetail.shipping.2' }, { id: 'productDetail.shipping.3' }
-          ],
-          {
-            path: pages.orderList.path,
-            text: {
-              id: 'productDetail.shipping.link',
+    <Container>
+      <Grid
+        container
+        spacing={1}
+        mt={5}
+      >
+        { productId === everfreshProductId &&
+          <>
+            { characteristicsGroup(
+                {
+                  id: 'everfresh.details.title', 
+                },
+                [
+                  { id: 'everfresh.details.1' }, { id: 'everfresh.details.2' }, { id: 'everfresh.details.3' }, { id: 'everfresh.details.4' }, { id: 'everfresh.details.5' }, { id: 'everfresh.details.6' }, { id: 'everfresh.details.7' }, { id: 'everfresh.details.8' }
+                ]
+              ) 
+            }
+            { characteristicsGroup(
+                {
+                  id: 'everfresh.characteristics.title',
+                },
+                [
+                  { id: 'everfresh.characteristics.1' }, { id: 'everfresh.characteristics.2' }, { id: 'everfresh.characteristics.3' }, { id: 'everfresh.characteristics.4' }
+                ]
+              ) 
+            }
+            { characteristicsGroup(
+                {
+                  id: 'everfresh.dimensions.title',
+                },
+                [
+                  { id: 'everfresh.dimensions.1' }, { id: 'everfresh.dimensions.2' }, { id: 'everfresh.dimensions.3' }
+                ]
+              ) 
+            }
+          </>
+        }
+        { productId === bagsProductId &&
+          <>
+            { characteristicsGroup(
+                {
+                  id: 'bags.small.title',
+                },
+                [
+                  { id: 'bags.small.1' }
+                ]
+              ) 
+            }
+            { characteristicsGroup(
+                {
+                  id: 'bags.medium.title',
+                },
+                [
+                  { id: 'bags.medium.1' }
+                ]
+              ) 
+            }
+            { characteristicsGroup(
+                {
+                  id: 'bags.big.title',
+                },
+                [
+                  { id: 'bags.big.1' }
+                ]
+              ) 
+            }
+          </>
+        }
+        { characteristicsGroup(
+            {
+              id: 'productDetail.shipping.title',
             },
-          }
-        ) 
-      }
-      { characteristicsGroup(
-          {
-            id: 'productDetail.refund.title',
-          },
-          [
-            { id: 'productDetail.refund.1' }, { id: 'productDetail.refund.2' }
-          ],
-          {
-            path: pages.contact.path,
-            text: {
-              id: 'productDetail.refund.link',
+            [
+              { id: 'productDetail.shipping.1' }, { id: 'productDetail.shipping.2' }, { id: 'productDetail.shipping.3' }
+            ],
+            {
+              path: pages.orderList.path,
+              text: {
+                id: 'productDetail.shipping.link',
+              },
+            }
+          ) 
+        }
+        { characteristicsGroup(
+            {
+              id: 'productDetail.refund.title',
             },
-          }
-        ) 
-      }
-    </Grid>
+            [
+              { id: 'productDetail.refund.1' }, { id: 'productDetail.refund.2' }
+            ],
+            {
+              path: pages.contact.path,
+              text: {
+                id: 'productDetail.refund.link',
+              },
+            }
+          ) 
+        }
+      </Grid>
+    </Container>
   );
 };
 

@@ -9,6 +9,8 @@ import HomeCharacteristics from '@components/products/sections/HomeCharacteristi
 import HomeUse from '@components/products/sections/HomeUse';
 import HomeFoodStorage from '@components/products/sections/HomeFoodStorage';
 import HomeConservation from '@components/products/sections/HomeConservation';
+import HomeFaq from '@components/products/sections/HomeFaq';
+import DetailReviews from '@components/products/sections/DetailReviews';
 
 const EverfreshHome = () => {
 
@@ -41,6 +43,10 @@ const EverfreshHome = () => {
       <HomeCharacteristics
         type="characteristics"
       />
+      
+      <HomeFaq />
+
+      <DetailReviews />
     </Box>
   );
 };

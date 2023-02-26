@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
+import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -100,62 +101,64 @@ const DetailReviews = () => {
   };
 
   return (
-    <Box 
-      maxWidth="md"
-      m="auto"
-    >
-      <Title
-        type="h2"
-        texts={{
-          title: {
-            id: 'productDetail.reviews.title'
-          },
-        }}
-        divider={true}
-      />
-
-      <Grid
-        container
-        spacing={2}
+    <Container>
+      <Box 
+        maxWidth="md"
+        m="auto"
       >
-        { review(
-            { src: review1 } as Source,
-            'Jose Antonio',
-            'Cumple lo especificado.',
-            'La máquina está bastante bien. Tanto el vendedor como el servicio de atención al cliente se podrian puntuar con la máxima puntuación. En principio me llegó una máquina que no funcionaba correctamente, lo comuniqué, el vendedor se puso en contacto conmigo ofreciéndome varias soluciones, le propuse el cambio, y en 2 días tenía en mi poder la nueva máquina. Así da gusto comprar.',
-            4,
-            new Date('2022-06-02')
-          )
-        }
-        { review(
-            { src: review2 } as Source,
-            'Alba Sanchez',
-            'Muy práctico para no gran cantidad de bolsas.',
-            'Me ha gustado su tamaño y su facilidad de ubicarlo, y su eficacia. Hay que tener cuidado con cerrar bien las bolsas.',
-            5,
-            new Date('2020-12-05')
-          )
-        }
-        { review(
-            { src: review3 } as Source,
-            'Casinero',
-            'Recomendable.',
-            'Relación calidad precio inmejorable.',
-            5,
-            new Date('2021-03-22')
-          )
-        }
-        { review(
-            { src: review4 } as Source,
-            'Ramón Álvarez',
-            'Envasa bien.',
-            'Funciona bien, envasa bien. Por ponerle una pega que a veces se escapa el vacío.',
-            4,
-            new Date('2021-01-02')
-          )
-        }
-      </Grid>
-    </Box>
+        <Title
+          type="h2"
+          texts={{
+            title: {
+              id: 'productDetail.reviews.title'
+            },
+          }}
+          divider={true}
+        />
+
+        <Grid
+          container
+          spacing={2}
+        >
+          { review(
+              { src: review1 } as Source,
+              'Jose Antonio',
+              'Cumple lo especificado.',
+              'La máquina está bastante bien. Tanto el vendedor como el servicio de atención al cliente se podrian puntuar con la máxima puntuación. En principio me llegó una máquina que no funcionaba correctamente, lo comuniqué, el vendedor se puso en contacto conmigo ofreciéndome varias soluciones, le propuse el cambio, y en 2 días tenía en mi poder la nueva máquina. Así da gusto comprar.',
+              4,
+              new Date('2022-06-02')
+            )
+          }
+          { review(
+              { src: review2 } as Source,
+              'Alba Sanchez',
+              'Muy práctico para no gran cantidad de bolsas.',
+              'Me ha gustado su tamaño y su facilidad de ubicarlo, y su eficacia. Hay que tener cuidado con cerrar bien las bolsas.',
+              5,
+              new Date('2020-12-05')
+            )
+          }
+          { review(
+              { src: review3 } as Source,
+              'Casinero',
+              'Recomendable.',
+              'Relación calidad precio inmejorable.',
+              5,
+              new Date('2021-03-22')
+            )
+          }
+          { review(
+              { src: review4 } as Source,
+              'Ramón Álvarez',
+              'Envasa bien.',
+              'Funciona bien, envasa bien. Por ponerle una pega que a veces se escapa el vacío.',
+              4,
+              new Date('2021-01-02')
+            )
+          }
+        </Grid>
+      </Box>
+    </Container>
   );
 };
 

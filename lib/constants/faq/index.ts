@@ -1,3 +1,4 @@
+import { NavItem } from '@core/types/navigation';
 import { pages } from '@lib/constants/navigation';
 import type { Questions } from '@lib/types/faq';
 
@@ -141,3 +142,9 @@ export const questions: Questions = {
     },
   ],
 };
+
+export const homeQuestions: NavItem[] = [
+  questions.packing[0],
+  questions.conservation[0],
+  questions.shipping[1],
+];

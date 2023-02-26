@@ -1,5 +1,3 @@
-import Container from '@mui/material/Container';
-
 import { pages } from '@lib/constants/navigation';
 import { everfreshProductId } from '@lib/constants/products';
 import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
@@ -10,11 +8,9 @@ const EverfreshDetail = () => {
 
   return (
     <>
-      <Container>
-        <DetailCharacteristics
-          productId={everfreshProductId}
-        />
-      </Container>
+      <DetailCharacteristics
+        productId={everfreshProductId}
+      />
 
       <DetailTutorial
         title={{
@@ -64,9 +60,7 @@ const EverfreshDetail = () => {
         }} 
       />
       
-      <Container>
-        <DetailReviews />
-      </Container>
+      <DetailReviews />
     </>
   );
 };

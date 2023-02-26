@@ -24,7 +24,7 @@ import PageHeader from '@components/ui/PageHeader';
 const Faq: NextPage = () => {
   const page = usePage();
 
-  const questionElements = (textBaseId: string, questions: NavItem[]) => {
+  const questionsElements = (textBaseId: string, questions: NavItem[]) => {
     const items = [] as JSX.Element[];
     for (let i = 0; i < questions.length; i++) {
       items.push(
@@ -54,6 +54,7 @@ const Faq: NextPage = () => {
     return (
       <Accordion
         key={textBaseId}
+        defaultExpanded={textBaseId == 'packing' ? true : false}
         sx={convertElementToSx(themeCustomElements.faq.accordeon.head.title)}
       >
         <AccordionSummary
@@ -92,9 +93,14 @@ const Faq: NextPage = () => {
         }}
       /> 
       <Container>
-        { questionElements('packing', questions.packing) }
-        { questionElements('conservation', questions.conservation) }
-        { questionElements('shipping', questions.shipping) }
+        <Box
+          maxWidth="md"
+          m="auto"
+        >
+          { questionsElements('packing', questions.packing) }
+          { questionsElements('conservation', questions.conservation) }
+          { questionsElements('shipping', questions.shipping) }
+        </Box>
       </Container>
     </>
   );
