@@ -281,7 +281,7 @@ export const themeCustomElements: ThemeCustomElements = {
   footer: {
     content: {
       backgroundColor: {
-        default: colors.background.footer,
+        default: colors.background.footerContent,
       },
       text: {
         color: {

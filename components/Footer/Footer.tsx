@@ -10,27 +10,31 @@ import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements, themeDefaultElements } from '@lib/constants/themes/elements';
+import colors from '@lib/constants/themes/colors';
 
 const Footer = () => {  
   const getDefaultBgColor = () => {
     return themeDefaultElements.default.palette.backgroundColor.primary;
   };
-  const getFooterBgColor = () => {
+  const getFooterContentBgColor = () => {
     return themeCustomElements.footer.content.backgroundColor?.default || getDefaultBgColor();
+  };
+  const getFooterGradientBgColor = () => {
+    return colors.background.footerGradient;
   };
 
   return (
     <Box component="footer">
       <Box
         sx={{ 
-          background: `linear-gradient(0deg, ${getFooterBgColor()} 0%, ${getDefaultBgColor()} 100%)`,
-          height: '175px',
+          background: `linear-gradient(0deg, ${getFooterContentBgColor()} 7%, ${getFooterGradientBgColor()} 53%, ${getDefaultBgColor()} 98%)`,
+          height: '300px',
         }}
       />
       <Grid
         container
-        py={3}
         px={4}
+        pb={3}
         sx={convertElementToSx(themeCustomElements.footer.content)}
       >
         
