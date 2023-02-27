@@ -45,7 +45,10 @@ export type ThemeDefaultElements = {
   circularProgress: ThemeElement,
   avatar: ThemeElement,
   svgIcon: ThemeElement,
-  stepIcon: ThemeElement,
+  stepIcon: {
+    default: ThemeElement,
+    text: ThemeElement,
+  },
   badge: ThemeElement,
   alert: { 
     default: ThemeElement,

@@ -248,13 +248,20 @@ export const themeDefaultElements: ThemeDefaultElements = {
     },
   },
   stepIcon: {
-    text: {
-      font: {
-        default: typographies.title,
-      }
+    default: {
+      text: {
+        font: {
+          default: typographies.title,
+        },
+      },
+      fill: {
+        default: colors.text.title,
+      },
     },
-    fill: {
-      default: colors.text.black,
+    text: {
+      fill: {
+        default: colors.background.primary,
+      },
     },
   },
   badge: {

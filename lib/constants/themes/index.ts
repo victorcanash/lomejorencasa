@@ -167,7 +167,8 @@ const themeOptions: ThemeOptions = {
     },
     MuiStepIcon: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.stepIcon),
+        root: convertElementToSx(themeDefaultElements.stepIcon.default),
+        text: convertElementToSx(themeDefaultElements.stepIcon.text),
       },
     },
     MuiBadge: {
