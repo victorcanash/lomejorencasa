@@ -29,6 +29,7 @@ export type ThemeDefaultElements = {
   appBar: ThemeElement,
   dialog: ThemeElement,
   dialogTitle: ThemeElement,
+  dialogContentText: ThemeElement,
   accordion: ThemeElement,
   divider: ThemeElement,
   tableRow: {

@@ -99,6 +99,11 @@ const themeOptions: ThemeOptions = {
         root: convertElementToSx(themeDefaultElements.dialogTitle),
       },
     },
+    MuiDialogContentText: {
+      styleOverrides: {
+        root: convertElementToSx(themeDefaultElements.dialogContentText),
+      },
+    },
     MuiAccordion: {
       styleOverrides: {
         root: convertElementToSx(themeDefaultElements.accordion),
