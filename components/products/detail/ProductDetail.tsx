@@ -73,7 +73,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     if (everfreshProduct()) {
       return (
         <>
-          <Typography component="div" variant="body1" sx={{ mb: 2 }}>
+          <Typography component="div" variant="body1" sx={{ mb: 4 }}>
             <FormattedMessage id="everfresh.comment" />
           </Typography>
           <LinkButton href={pages.bags.path}>
@@ -86,7 +86,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     } else if (bagsProduct()) {
       return (
         <>
-          <Box mb={2}>
+          <Box mb={4}>
             <Typography component="div" variant="body1" sx={{ mb: 1 }}>
               <FormattedMessage id="bags.types.title" />
             </Typography>
@@ -157,12 +157,12 @@ const ProductDetail = (props: ProductDetailProps) => {
               }}  
             >
               {/* Title */}
-              <Typography component="h1" variant="h1" sx={{ mb: 2 }}>
+              <Typography component="h1" variant="h1" sx={{ mb: 3 }}>
                 <FormattedMessage id={productTitleId()} />
               </Typography>
               {/* Price */}  
               { product.activeDiscount ?
-                <Box sx={{ mb: 2 }}>
+                <Box sx={{ mb: 3 }}>
                   <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                     {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
                   </Typography>
@@ -174,19 +174,19 @@ const ProductDetail = (props: ProductDetailProps) => {
                   </Typography> 
                 </Box>
                 :
-                <Box sx={{ mb: 2 }}>
+                <Box sx={{ mb: 3 }}>
                   <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                     {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
                   </Typography>
                 </Box>
               }
               {/* Description */}
-              <Typography component="h3" variant="body1" sx={{ mb: 2 }}>
+              <Typography component="h3" variant="body1" sx={{ mb: 4 }}>
                 <FormattedMessage id={productDescriptionId()} />
               </Typography>
               {/* Cart inputs */}
               <FormControl 
-                sx={{ mb: 2 }} 
+                sx={{ mb: 4 }} 
               >
                 <SelectInventory />
                 <Button
@@ -196,14 +196,14 @@ const ProductDetail = (props: ProductDetailProps) => {
                   disabled={!selectedInventory || selectedInventory.quantity == 0}
                   sx={{
                     ...convertElementToSx(themeCustomElements.button.action),
-                    mt: 1,
+                    mt: 2,
                   }}
                 >
                   <FormattedMessage id="productDetail.addCartBtn" />
                 </Button>
               </FormControl>
               <FormControl 
-                sx={{ mb: 2 }} 
+                sx={{ mb: 4 }} 
               >
                 <SelectQuantity />
               </FormControl>
