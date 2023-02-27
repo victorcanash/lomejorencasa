@@ -15,7 +15,6 @@ import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 import characteristics_bg from 'public/images/home/characteristics-bg.png';
-import advantages_bg from 'public/images/home/advantages-bg.png';
 import frezzer_icon from 'public/images/home/icons/frezzer-icon.png';
 import hand_icon from 'public/images/home/icons/hand-icon.png';
 import airplane_icon from 'public/images/home/icons/airplane-icon.png';
@@ -86,7 +85,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
         xs={12}
       >   
         { type == 'characteristics' ?
-          <Box maxWidth="xs_sm" ml="auto">
+          <Box maxWidth="sm" ml="auto">
             { characteristicIcon(source, alt, widthSrc, heightSrc) }
             <Typography 
               component="div" 
@@ -98,7 +97,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
             </Typography>
           </Box>
           :
-          <Box maxWidth="sm">
+          <Box maxWidth="sm" mr="auto">
             <Typography 
               component="div" 
               variant="body1" 
@@ -141,9 +140,9 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
         sx={{
           ...convertElementToSx(themeCustomElements.home.characteristics.content),
           position: 'relative',
-          mt: type == 'characteristics' ? 18 : 4,
+          mt: 4,
           zIndex: '-2',
-          overflow: type == 'characteristics' ? undefined : 'hidden',
+          overflow: 'hidden',
         }}
       >
         <Box
@@ -155,9 +154,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
               md: '200px',
             },
             right: type == 'characteristics' ? '0px' : undefined,
-            mt: type == 'characteristics' ? -10 : undefined,
             zIndex: '-1',
-            overflow: type == 'characteristics' ? 'hidden' : undefined,
           }}
         >
           <Box
@@ -167,10 +164,11 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
                 sm: '174px',
                 md: '214px',
               },
+              transform: type == 'characteristics' ? 'rotate(180deg)' : undefined,
             }}
           >
             <Image 
-              src={type == 'characteristics' ? characteristics_bg : advantages_bg} 
+              src={characteristics_bg}
               alt={'Vacuum machine characteristics background'} 
               layout="responsive" 
               objectFit="cover"
@@ -185,6 +183,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
           sx={{
             position: 'relative',
             width: '70%',
+            mr: type == 'characteristics' ? 'auto' : undefined,
             ml: type == 'characteristics' ? undefined : 'auto',
             py: 4,
             pr: type == 'characteristics' ? undefined : 2,
@@ -213,14 +212,18 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
           <Grid 
             item
             xs={12}
+            container
+            direction={type == 'characteristics' ? 'row-reverse' : undefined}
           >
-            <LinkButton
-              href={pages.everfresh.path}
-              id="advantages"
-              sx={convertElementToSx(themeCustomElements.button.action)}
-            >
-              <FormattedMessage id={type == 'characteristics' ? 'home.characteristics.buyBtn' : 'home.advantages.buyBtn'} />
-            </LinkButton>
+            <Grid item>
+              <LinkButton
+                href={pages.everfresh.path}
+                id="advantages"
+                sx={convertElementToSx(themeCustomElements.button.action)}
+              >
+                <FormattedMessage id={type == 'characteristics' ? 'home.characteristics.buyBtn' : 'home.advantages.buyBtn'} />
+              </LinkButton>
+            </Grid>
           </Grid>
         </Grid>
       </Box>
