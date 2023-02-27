@@ -23,6 +23,7 @@ type PageHeaderProps = {
     title?: FormatText,
     titleAdd?: string,
   },
+  googleVerification?: boolean,
 };
 
 const PageHeader = (props: PageHeaderProps) => {
@@ -31,6 +32,7 @@ const PageHeader = (props: PageHeaderProps) => {
     metas,
     marginTop,
     texts,
+    googleVerification,
   } = props;
 
   const intl = useIntl();
@@ -61,6 +63,9 @@ const PageHeader = (props: PageHeaderProps) => {
       <Head>
         <title>{getTitle()}</title>
         <meta name="description" content={getDescription()} />
+        { googleVerification &&
+          <meta name="google-site-verification" content="xvwLXsrtgtd0e2ND0c6B1vJilBHiEFcxg-guYfWZ0g0" />
+        }
       </Head>
 
       { (pageType == PageTypes.main || 
