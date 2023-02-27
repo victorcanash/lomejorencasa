@@ -54,18 +54,12 @@ export const themeDefaultElements: ThemeDefaultElements = {
           font: { 
             default: typographies.secondTitle,
           },
-          color: {
-            default: colors.text.black,
-          },
         },
       },
       h4: {
         text: {
           font: { 
             default: typographies.secondTitle,
-          },
-          color: {
-            default: colors.text.black,
           },
         },
       },
@@ -74,18 +68,12 @@ export const themeDefaultElements: ThemeDefaultElements = {
           font: { 
             default: typographies.content,
           },
-          color: {
-            default: colors.text.black,
-          },
         },
       },
       body2: {
         text: {
           font: { 
             default: typographies.secondContent,
-          },
-          color: {
-            default: colors.text.black,
           },
         },
       },
