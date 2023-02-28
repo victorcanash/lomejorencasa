@@ -171,6 +171,11 @@ const themeOptions: ThemeOptions = {
         text: convertElementToSx(themeDefaultElements.stepIcon.text),
       },
     },
+    MuiStepLabel: {
+      styleOverrides: {
+        labelContainer: convertElementToSx(themeDefaultElements.stepLabel.labelContainer),
+      },
+    },
     MuiBadge: {
       styleOverrides: {
         badge: convertElementToSx(themeDefaultElements.badge),

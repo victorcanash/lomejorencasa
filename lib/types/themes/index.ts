@@ -49,6 +49,9 @@ export type ThemeDefaultElements = {
     default: ThemeElement,
     text: ThemeElement,
   },
+  stepLabel: {
+    labelContainer: ThemeElement,
+  },
   badge: ThemeElement,
   alert: { 
     default: ThemeElement,

@@ -252,6 +252,15 @@ export const themeDefaultElements: ThemeDefaultElements = {
       },
     },
   },
+  stepLabel: {
+    labelContainer: {
+      text: {
+        color: {
+          default: colors.text.disabled,
+        },
+      },
+    },
+  },
   badge: {
     backgroundColor: {
       default: colors.background.action,
