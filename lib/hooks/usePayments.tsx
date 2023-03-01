@@ -111,11 +111,7 @@ const usePayments = () => {
     await sendConfirmTransactionEmailMW( 
       intl.locale, 
       checkoutPayment as CheckoutPayment,
-      {
-        ...user,
-        email: authLogin.email,
-      } as GuestUser,
-      authLogin.password,
+      user as GuestUser,
       cart,
       pages.checkout,
     )

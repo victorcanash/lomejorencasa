@@ -59,7 +59,7 @@ export const getGuestUserData = async (confirmationToken: string) => {
   })
 };
 
-export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayment: CheckoutPayment, guestUser: GuestUser, userPassword: string, cart: Cart, urlPage: Page) => {
+export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayment: CheckoutPayment, guestUser: GuestUser, cart: Cart, urlPage: Page) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getLanguageHeaders(currentLocale),
@@ -71,10 +71,7 @@ export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayme
     };
     const body = {
       paymentPayload: checkoutPayment.methodPayload,
-      guestUser: {
-        ...guestUser,
-        password: userPassword,
-      },
+      guestUser: guestUser,
       guestCart: convertCartToGuestCart(cart),
     }
     axios.post('payments/send-email/transaction', body, options)

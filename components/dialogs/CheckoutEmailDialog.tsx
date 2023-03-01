@@ -37,7 +37,6 @@ const CheckoutEmailDialog = (props: CheckoutEmailDialogProps) => {
   const handleSubmit = async (values: { email: string }) => {
     const authLogin = {
       email: values.email,
-      password: 'guest_user',
     } as AuthLogin;
     sendConfirmTransactionEmail(authLogin, onErrorSend);
   };
