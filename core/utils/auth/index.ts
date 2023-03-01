@@ -45,8 +45,7 @@ export const init = async (categoryIds: number[], productIds: number[], packIds:
         if (response.status === StatusCodes.CREATED && 
             response.data?.braintreeToken && 
             response.data?.productCategories && 
-            response.data?.products/*&& 
-            response.data?.packs*/) {
+            response.data?.products) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
