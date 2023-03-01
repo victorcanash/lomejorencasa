@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
-import envConfig from '@core/config/env.config';
+// import envConfig from '@core/config/env.config';
 import type { Order } from '@core/types/orders';
 import type { GuestUser } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';
@@ -141,7 +141,7 @@ const usePayments = () => {
     removeCart();
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.sendEmail'}));
     enqueueSnackbar(intl.formatMessage(
-      { id: 'checkout.successes.sendConfirmTransactionEmail' }, { time: envConfig.NEXT_PUBLIC_CONFIRMATION_TOKEN_EXPIRY }), 
+      { id: 'checkout.successes.sendConfirmTransactionEmail' }, '30'/*{ time: envConfig.NEXT_PUBLIC_CONFIRMATION_TOKEN_EXPIRY }*/), 
       { variant: 'success', autoHideDuration: 10000 }
     );
   };
