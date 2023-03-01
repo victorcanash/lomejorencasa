@@ -30,9 +30,8 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
     if (layoutComponent != LinkLayout) {
       await init(
         categoryIds,
-        //[productIds.everfresh, productIds.bags],
+        [productIds.everfresh, productIds.bags],
         //[packIds.everfresh, packIds.bagsXS, packIds.bagsS, packIds.bagsM, packIds.bagsL, packIds.bagsXL, packIds.bagsMix]
-        [],
         []
       ).then(async (
           response: {

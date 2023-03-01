@@ -45,8 +45,8 @@ export const init = async (categoryIds: number[], productIds: number[], packIds:
         if (response.status === StatusCodes.CREATED && 
             response.data?.braintreeToken && 
             response.data?.productCategories && 
-            response.data?.products && 
-            response.data?.packs) {
+            response.data?.products/*&& 
+            response.data?.packs*/) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
@@ -64,7 +64,7 @@ export const init = async (categoryIds: number[], productIds: number[], packIds:
           resolve({
             productCategories: response.data.productCategories,
             products: response.data.products, 
-            packs: response.data.packs,
+            packs: response.data.packs || [],
             cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
             token: token,
             user: response.data.user || undefined,
