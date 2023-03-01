@@ -98,7 +98,7 @@ const useForms = () => {
     firstName: '',
     lastName: '',
     birthday: dayjs(subtractYears(18)),
-    getEmails: false,
+    getEmails: true,
     remember: true,
     tlf: '',
     comments: '',
