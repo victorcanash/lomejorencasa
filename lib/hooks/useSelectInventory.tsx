@@ -18,7 +18,7 @@ const useSelectInventory = (product: Product, initInventory?: ProductInventory) 
 
   useEffect(() => {
     if (!loaded) {
-      if (product.inventories.length <= 0) {
+      if (!product.inventories || product.inventories.length <= 0) {
         return;
       }
       if (!initInventory) {
@@ -34,7 +34,7 @@ const useSelectInventory = (product: Product, initInventory?: ProductInventory) 
   }, [initInventory, loaded, product.id, product.inventories, router.asPath]);
 
   const handleSelectChange = (event: SelectChangeEvent) => {
-    setSelectedInventory(product.inventories.find(item => item.name.current === event.target.value as string));
+    setSelectedInventory(product.inventories?.find(item => item.name.current === event.target.value as string));
   };
 
   const Select = () => {
@@ -52,7 +52,7 @@ const useSelectInventory = (product: Product, initInventory?: ProductInventory) 
               value={selectedInventory?.name.current || ''}
               onChange={handleSelectChange}
             >
-              { product.inventories.map((item) => (
+              { product.inventories?.map((item) => (
                 <MenuItem key={item.id} value={item.name.current}>
                   <FormattedMessage
                     id="forms.selectInventory.content"

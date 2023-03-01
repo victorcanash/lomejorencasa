@@ -125,7 +125,7 @@ const useCart = () => {
       const addedQuantity = -cartItem.quantity;
       const addedPrice = -(itemTotalPriceNumber(cartItem, addedQuantity));
       manageCartItem(ManageActions.delete, token, cart, cartItem)
-        .then(() => {
+        .then((_response: { cartItem: CartItem }) => {
           cart.items.splice(cartItemIndex, 1);
           onUpdateCartItemSuccess(addedQuantity, addedPrice);
         }).catch((_error: Error) => {

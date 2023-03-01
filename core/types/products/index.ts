@@ -14,7 +14,7 @@ export type Product = {
   lowestPrice: number,
   lowestRealPrice: number,
   imageNames: string[],
-  inventories: ProductInventory[],
+  inventories?: ProductInventory[],
   discounts?: ProductDiscount[],
   activeDiscount?: ProductDiscount,
 };
