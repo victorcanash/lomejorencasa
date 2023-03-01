@@ -44,8 +44,9 @@ export const init = async (categoryIds: number[], productIds: number[], packIds:
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && 
             response.data?.braintreeToken && 
-            response.data?.productCategories && 
-            response.data?.products) {
+            response.data?.categories && 
+            response.data?.products &&
+            response.data?.packs) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
@@ -61,9 +62,9 @@ export const init = async (categoryIds: number[], productIds: number[], packIds:
             await removeStorageItem(Storages.local, JWTTokenKey);
           }
           resolve({
-            productCategories: response.data.productCategories,
+            productCategories: response.data.categories,
             products: response.data.products, 
-            packs: response.data.packs || [],
+            packs: response.data.packs,
             cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
             token: token,
             user: response.data.user || undefined,
@@ -74,7 +75,7 @@ export const init = async (categoryIds: number[], productIds: number[], packIds:
         }
       }).catch(async (error) => {
         await removeStorageItem(Storages.local, JWTTokenKey);
-        const errorMsg = getBackendErrorMsg('Get Logged User ERROR', error);
+        const errorMsg = getBackendErrorMsg('Init ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
