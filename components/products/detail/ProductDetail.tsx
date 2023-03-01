@@ -16,8 +16,7 @@ import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { everfreshProductId, bagsProductId } from '@lib/constants/products';
-import { getProductDetailImgsUrl } from '@lib/utils/products';
+import { isEverfreshProduct, isBagsProduct, getProductDetailImgsUrl } from '@lib/utils/products';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
@@ -44,33 +43,26 @@ const ProductDetail = (props: ProductDetailProps) => {
     }
   };
 
-  const everfreshProduct = () => {
-    return everfreshProductId === product.id;
-  };
-  const bagsProduct = () => {
-    return bagsProductId === product.id;
-  };
-
   const productTitleId = () => {
-    if (everfreshProduct()) { 
+    if (isEverfreshProduct(product)) { 
       return 'everfresh.h1';
-    } else if (bagsProduct()) {
+    } else if (isBagsProduct(product)) {
       return 'bags.h1';
     }
     return `${product.name.current}`;
   };
 
   const productDescriptionId = () => {
-    if (everfreshProduct()) {
+    if (isEverfreshProduct(product)) { 
       return 'everfresh.description';
-    } else if (bagsProduct()) {
+    } else if (isBagsProduct(product)) {
       return 'bags.description';
     }
     return `${product.description.current}`;
   };
 
   const productComments = () => {
-    if (everfreshProduct()) {
+    if (isEverfreshProduct(product)) {
       return (
         <>
           <Typography component="div" variant="body1" sx={{ mb: 4 }}>
@@ -83,7 +75,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           </LinkButton>
         </>
       );
-    } else if (bagsProduct()) {
+    } else if (isBagsProduct(product)) {
       return (
         <>
           <Box mb={4}>
@@ -217,13 +209,12 @@ const ProductDetail = (props: ProductDetailProps) => {
       </Container>
 
       {/* Type Product Section */}
-      { (everfreshProduct() || bagsProduct()) &&
+      { (isEverfreshProduct(product) || isBagsProduct(product)) &&
         <>
-          { everfreshProduct() &&
+          { isEverfreshProduct(product) &&
             <EverfreshDetail />      
           }
-
-          { bagsProduct() &&
+          { isBagsProduct(product) &&
             <BagsDetail />
           }
         </>

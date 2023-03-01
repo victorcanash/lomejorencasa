@@ -6,13 +6,12 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
-import type { CartItem } from '@core/types/cart';
-import type { OrderItem } from '@core/types/orders';
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 
 import CartItemDetail from '@components/cart/CartItemDetail';
 
 type CartDetailProps = {
-  items: CartItem[] | OrderItem[],
+  items: CartItem[] | GuestCartCheckItem[],
   totalPrice: number,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   showEmptyItems: boolean,
@@ -40,7 +39,7 @@ const CartDetail = (props: CartDetailProps) => {
                     updateQuantity={updateQuantity}
                     priorityImg={index <= 4 ? true : false}
                   />
-                  <Divider variant='fullWidth' sx={{ my: 3 }} />
+                  <Divider sx={{ my: 3 }} />
                 </>
               }
             </Fragment>
@@ -52,7 +51,7 @@ const CartDetail = (props: CartDetailProps) => {
         variant='h1'
         align='right'
       >
-        {`${intl.formatMessage({ id: "cart.total" })}: ${totalPrice.toFixed(2)} €`}
+        {`${intl.formatMessage({ id: 'cart.total' })}: ${totalPrice.toFixed(2)} €`}
       </Typography>
     </>
   );

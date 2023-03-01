@@ -5,9 +5,8 @@ import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.co
 import envConfig from '@core/config/env.config';
 import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
-
-import placeholder from 'public/images/placeholder.jpeg';
 
 export const getAllProducts = async (
   token: string, 
@@ -93,17 +92,31 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
   });
 };
 
+export const getProductByCartItem = (item: CartItem | GuestCartCheckItem) => {
+  if (item.inventory?.product) {
+    return item.inventory.product;
+  }  else if (item.pack?.inventories && item.pack.inventories.length > 0 && item.pack.inventories[0].product) {
+    return item.pack.inventories[0].product;
+  }
+  return undefined;
+};
+
 export const getProductImgUrl = (product: Product, index = 0) => {
   if (product.imageNames.length > index && product.imageNames[index]) {
     return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`
   }
-  return placeholder;
+  return undefined;
 };
 
 export const getAllProductImgsUrl = (product: Product) => {
-  return product.imageNames.map((_item, index) => { 
-    return getProductImgUrl(product, index); 
+  const imgUrls: string[] = [];
+  product.imageNames.forEach((_item, index) => { 
+    const imgUrl = getProductImgUrl(product, index);
+    if (imgUrl) {
+      imgUrls.push(imgUrl); 
+    }
   });
+  return imgUrls;
 };
 
 export const getAllProductCategories = async (categoriesIds: number[], currentLocale: string, adminData = false, sortBy?: string, order?: string) => {
@@ -308,35 +321,6 @@ const deleteProductCategory = (token: string, currentLocale: string, productCate
   };
   return axios.delete(`/product-categories/${productCategory.id}`, options)
 }
-
-export const getAllProductInventories = async (ids: number[], currentLocale: string, sortBy?: string, order?: string) => {
-  return new Promise<{productInventories: ProductInventory[]}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      params: {
-        page: 1,
-        limit: 100,
-        sortBy,
-        order,
-        ids,
-      },
-      headers: getLanguageHeaders(currentLocale),
-    }
-    axios.get('/product-inventories', options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK && response.data?.productInventories) {
-          resolve({
-            productInventories: response.data.productInventories
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get All Product Inventories ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  })
-};
 
 export const manageProductInventory = (action: ManageActions, token: string, currentLocale: string, productInventory: ProductInventory) => {
   return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {

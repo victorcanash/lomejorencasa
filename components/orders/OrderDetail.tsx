@@ -124,7 +124,7 @@ const OrderDetail = (props: OrderDetailProps) => {
         {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
       </Typography>
       <CartDetail
-        items={order.bigbuy.products}
+        items={order.items || []}
         totalPrice={Number(order.braintree.amount)}
         showEmptyItems={true}
       />

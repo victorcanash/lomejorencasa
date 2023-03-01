@@ -4,8 +4,13 @@ import { useSnackbar } from 'notistack';
 import { ManageActions } from '@core/constants/auth';
 import { maxQuantity } from '@core/constants/cart';
 import type { Cart, CartItem } from '@core/types/cart';
-import type { ProductInventory } from '@core/types/products';
-import { manageCartItem, checkCart as checkCartMW } from '@core/utils/cart';
+import type { ProductInventory, ProductPack } from '@core/types/products';
+import { 
+  manageCartItem, 
+  checkCart as checkCartMW, 
+  itemTotalPriceNumber,
+} from '@core/utils/cart';
+
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -18,49 +23,53 @@ const useCart = () => {
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
-  const addCartItem = (inventory: ProductInventory, quantity: number) => {
+  const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number) => {
     if (totalQuantity + quantity > maxQuantity) {
       onMaxCartQuantityError();
       return;
     }
-
     setLoading(true);
 
     const cartItem = {
       id: 0,
       cartId: cart.id,
-      inventoryId: inventory.id,
-      inventory: inventory,
+      inventoryId: (productItem as ProductInventory)?.sku ? productItem.id : undefined,
+      packId: (productItem as ProductInventory)?.sku ? undefined : productItem.id,
+      inventory: (productItem as ProductInventory)?.sku ? productItem : undefined,
+      pack: (productItem as ProductInventory)?.sku ? undefined : productItem,
       quantity: quantity,
     } as CartItem;
 
     let cartItemIndex = -1;
     cart.items.forEach((item, index) => {
-      if (item.inventoryId === inventory.id) {
+      if (((productItem as ProductInventory)?.sku && item.inventoryId === productItem.id) ||
+          ((productItem as ProductPack)?.inventories && item.packId === productItem.id)) {
         cartItemIndex = index;
         cartItem.id = item.id;
         cartItem.quantity += item.quantity;
         return;
-      };
+      }
     });
+
+    const addPrice = itemTotalPriceNumber(cartItem);
 
     // Update cart item
     if (cartItemIndex > -1) {
-      manageCartItem(ManageActions.update, token, cartItem)
+      manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
-          onAddCartItemSuccess(quantity, inventory.realPrice);
+          onAddCartItemSuccess(quantity, addPrice);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
 
     // Create cart item
     } else {
-      manageCartItem(ManageActions.create, token, cartItem)
+      manageCartItem(ManageActions.create, token, cart, cartItem)
         .then((response: { cartItem: CartItem }) => {
           cartItem.id = response.cartItem.id;
           cart.items.push(cartItem);
-          onAddCartItemSuccess(quantity, inventory.realPrice);
+          onAddCartItemSuccess(quantity, addPrice);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
@@ -89,13 +98,11 @@ const useCart = () => {
     if (cartItem.quantity == quantity && !forceUpdate) {
       return;
     };
-
     if (((totalQuantity - cartItem.quantity) + quantity > maxQuantity) && 
         (cartItem.quantity < quantity)) {
       onMaxCartQuantityError();
       return;
     }
-
     setLoading(true);
 
     const cartItemIndex = cart.items.indexOf(cartItem);
@@ -103,9 +110,9 @@ const useCart = () => {
     // Update cart item
     if (quantity > 0) {
       const addedQuantity = quantity - cartItem.quantity;
-      const addedPrice = cartItem.inventory.realPrice * addedQuantity;
+      const addedPrice = itemTotalPriceNumber(cartItem, addedQuantity);
       cartItem.quantity = quantity;
-      manageCartItem(ManageActions.update, token, cartItem)
+      manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
           onUpdateCartItemSuccess(addedQuantity, addedPrice);
@@ -116,8 +123,8 @@ const useCart = () => {
     // Delete cart item
     } else {
       const addedQuantity = -cartItem.quantity;
-      const addedPrice = -(cartItem.inventory.realPrice * cartItem.quantity);
-      manageCartItem(ManageActions.delete, token, cartItem)
+      const addedPrice = -(itemTotalPriceNumber(cartItem, addedQuantity));
+      manageCartItem(ManageActions.delete, token, cart, cartItem)
         .then(() => {
           cart.items.splice(cartItemIndex, 1);
           onUpdateCartItemSuccess(addedQuantity, addedPrice);

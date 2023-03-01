@@ -2,7 +2,7 @@ import { createContext, useState, useContext } from 'react';
 
 import type { Product } from '@core/types/products';
 
-import { everfreshProductId, bagsProductId } from '@lib/constants/products';
+import { isEverfreshProduct, isBagsProduct } from '@lib/utils/products';
 
 type ProductsContext = {
   products: Product[],
@@ -37,9 +37,9 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     let newEverfreshProduct = undefined;
     let newBagsProduct = undefined;
     newProducts.forEach((item) => {
-      if (item.id === everfreshProductId) {
+      if (isEverfreshProduct(item)) {
         newEverfreshProduct = item;
-      } else if (item.id === bagsProductId) {
+      } else if (isBagsProduct(item)) {
         newBagsProduct = item;
       }
     })

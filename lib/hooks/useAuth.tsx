@@ -15,15 +15,13 @@ import {
   registerUser, 
   loginUser, 
   logoutUser, 
-  getLoggedUser,
+  initUser,
   updateUserEmail,
   resetUserPsw,
   sendUserActivationEmail,
   sendUserUpdateEmail,
   sendUserResetPswEmail,
 } from '@core/utils/auth';
-import { getBraintreeToken } from '@core/utils/payments';
-import { getGuestCart } from '@core/utils/cart';
 
 import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -122,47 +120,47 @@ const useAuth = () => {
     }
 
     setLoading(true);
-
-    await logoutUser(token);
     setToken('');
     removeUser();
     removeCart();
-    await getBraintreeToken().then(async (response: {braintreeToken: string}) => {
-      setBraintreeToken(response.braintreeToken);
-    }).catch((error) => {
-      throw error;
-    });
-
-    const path = getRedirectLogoutPath();
-    if (path) {
-      router.push(path);
-    } else if (!isProtectedPath()) {
-      setLoading(false);
-    }
-  };
-
-  const getLogged = async (onSuccess?: () => void, onError?: (message: string) => void) => {
-    await getLoggedUser().then(async (response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
-      setToken(response.token);
-      setUser(response.user);
-      setBraintreeToken(response.braintreeToken);
-      initCart(response.cart);
-      if (onSuccess) {
-        onSuccess();
-      }
-    }).catch(async (error: Error) => {
-      await getBraintreeToken().then(async (response: {braintreeToken: string}) => {
+    await logoutUser(token)
+      .then(async (response: { braintreeToken: string }) => {
         setBraintreeToken(response.braintreeToken);
-      }).catch((error) => {
+        const path = getRedirectLogoutPath();
+        if (path) {
+          router.push(path);
+        } else if (!isProtectedPath()) {
+          setLoading(false);
+        }
+      }).catch(async (error: Error) => {
+        setBraintreeToken(undefined);
+        setLoading(false);
         throw error;
       });
-      const guestCart = await getGuestCart(intl.locale)
-      initCart(guestCart);
-      if (onError) {
-        onError(error.message);
-      }
-    });
-  }
+  };
+
+  const initAuth = async () => {
+    await initUser()
+      .then(async (response: {token?: string, user?: User, braintreeToken: string, cart: Cart}) => {
+        if (response.token && response.user) {
+          setToken(response.token);
+          setUser(response.user);
+        } else if (isLogged()) {
+          setToken('');
+          removeUser();
+        }
+        setBraintreeToken(response.braintreeToken);
+        initCart(response.cart);
+      }).catch(async (error: Error) => {
+        if (isLogged()) {
+          setToken('');
+          removeUser();
+          removeCart();
+          setBraintreeToken(undefined);
+        }
+        throw error;
+      });
+  };
 
   const updateEmail = async (updateToken: string) => {
     setLoading(true);
@@ -275,10 +273,10 @@ const useAuth = () => {
   };
 
   return {
+    initAuth,
     register,
     login, 
     logout,
-    getLogged,
     updateEmail,
     resetPsw,
     sendActivationEmail,

@@ -22,7 +22,6 @@ import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useAuth from '@lib/hooks/useAuth';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
@@ -32,8 +31,6 @@ const usePayments = () => {
   const router = useRouter();
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
-
-  const { getLogged, logout } = useAuth()
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -181,21 +178,16 @@ const usePayments = () => {
   };
 
   const onCreateTransactionSuccess = async () => {
-    router.push(pages.home.path);
-    if (isLogged()) {
-      await getLogged(undefined, async (_message: string) => {
-        // On error
-        await logout();
-      });
-    } else {
-      removeCart();
-      removeUser();
-    }
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.createTransaction'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.createOrder' }), 
       { variant: 'success', autoHideDuration: 10000 }
     );
+    router.push(pages.home.path);
+    if (!isLogged()) {
+      removeUser();
+    } 
+    removeCart(); 
   };
 
   return {

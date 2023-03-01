@@ -11,19 +11,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
+import type { Product } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { everfreshProductId, bagsProductId } from '@lib/constants/products';
+import { isEverfreshProduct, isBagsProduct } from '@lib/utils/products';
 
 type DetailCharacteristicsProps = {
-  productId: number,
+  product: Product,
 };
 
 const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
-  const { productId } = props;
+  const { product } = props;
 
   const characteristicsGroup = (
     title: FormatText,
@@ -87,7 +88,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
         spacing={1}
         mt={6}
       >
-        { productId === everfreshProductId &&
+        { isEverfreshProduct(product) &&
           <>
             { characteristicsGroup(
                 {
@@ -118,7 +119,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
             }
           </>
         }
-        { productId === bagsProductId &&
+        { isBagsProduct(product) &&
           <>
             { characteristicsGroup(
                 {

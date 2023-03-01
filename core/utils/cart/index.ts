@@ -6,10 +6,8 @@ import { ManageActions } from '@core/constants/auth';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
 import type { Cart, CartItem, GuestCart, GuestCartCheck, GuestCartCheckItem } from '@core/types/cart';
-import type { ProductInventory } from '@core/types/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
-import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
-import { getAllProductInventories } from '@core/utils/products';
+import { getStorageItem, setStorageItem } from '@core/utils/storage';
 
 export const checkCart = (token: string | undefined, cart: Cart) => {
   return new Promise<{cart: Cart, changedItemsByInventory: CartItem[]}>(async (resolve, reject) => {
@@ -18,14 +16,7 @@ export const checkCart = (token: string | undefined, cart: Cart) => {
     };
     const cartId = token ? cart.id : -1;
     const body = !token ? {
-      guestCart: {
-        items: cart.items.map((item) => {
-          return {
-            inventoryId: item.inventoryId,
-            quantity: item.quantity,
-          }
-        })
-      } as GuestCart
+      guestCart: convertCartToGuestCart(cart),
     } : undefined;
     axios.put(`/carts/${cartId}/check`, body, options)
       .then(async (response: AxiosResponse) => {
@@ -38,30 +29,10 @@ export const checkCart = (token: string | undefined, cart: Cart) => {
             });
           // Guest cart
           } else if ((response.data.cart as GuestCartCheck)?.items) {
-            setGuestCart(response.data.cart as GuestCartCheck);
+            await setGuestCart(response.data.cart as GuestCartCheck);
             resolve({
-              cart: {
-                id: -1,
-                userId: -1,
-                items: (response.data.cart as GuestCartCheck).items.map((item) => {
-                  return {
-                    id: -1,
-                    cartId: -1,
-                    inventoryId: item.inventory.id,
-                    inventory: item.inventory,
-                    quantity: item.quantity,
-                  } as CartItem;
-                }),
-              },
-              changedItemsByInventory: (response.data.changedItemsByInventory as GuestCartCheckItem[]).map((changedItem) => {
-                return {
-                  id: -1,
-                  cartId: -1,
-                  inventoryId: changedItem.inventory.id,
-                  inventory: changedItem.inventory,
-                  quantity: changedItem.quantity,
-                }
-              }),
+              cart: convertGuestCartCheckToCart(response.data.cart as GuestCartCheck),
+              changedItemsByInventory: convertGuestCartCheckItemsToCartItems(response.data.changedItemsByInventory as GuestCartCheckItem[])
             });
           } else {
             throw new Error('Something went wrong');
@@ -77,20 +48,92 @@ export const checkCart = (token: string | undefined, cart: Cart) => {
   });
 };
 
-export const manageCartItem = (action: ManageActions, token: string, cartItem: CartItem) => {
+export const itemTotalPriceNumber = (item: CartItem | GuestCartCheckItem, setQuantity?: number) => {
+  const price = 0;
+  if (item.inventory) {
+    return item.inventory?.realPrice * (setQuantity ? setQuantity : item.quantity);
+  } else if (item.pack) {
+    return item.pack?.price * (setQuantity ? setQuantity : item.quantity);
+  }
+  return price;
+};
+
+export const itemTotalPriceString = (item: CartItem | GuestCartCheckItem) => {
+  if (item.inventory) {
+    return `${(item.inventory.realPrice * item.quantity).toFixed(2)} €`;
+  } else if (item.pack) {
+    return `${(item.pack.price * item.quantity).toFixed(2)} €`;
+  }
+  return '';
+};
+
+export const availableItemQuantity = (item: CartItem | GuestCartCheckItem) => {
+  if (item.inventory && item.inventory.quantity <= 0) {
+    return false;
+  } else if (item.pack && item.pack.quantity <= 0) {
+    return false;
+  } else if (!item.pack && !item.inventory) {
+    return false;
+  }
+  return true;
+};
+
+export const setGuestCart = async (cart: Cart | GuestCartCheck) => {
+  const guestCart = convertCartToGuestCart(cart);
+  await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
+};
+
+export const getGuestCart = async () => {
+  const guestCart = { items: [] } as GuestCart;
+  const guestCartStorage = await getStorageItem(Storages.local, GuestCartKey);
+  if (guestCartStorage) {
+    const guestCartObj = JSON.parse(guestCartStorage) as GuestCart;
+    if (guestCartObj?.items && guestCartObj.items.length > 0) {
+      guestCart.items = guestCartObj.items;
+    }
+  }
+  return guestCart;
+};
+
+export const convertCartToGuestCart = (cart: Cart | GuestCartCheck) => {
+  return {
+    items: cart.items.map((item) => {
+      return {
+        inventoryId: item.inventory?.id,
+        packId: item.pack?.id,
+        quantity: item.quantity,
+      };
+    })
+  } as GuestCart;
+};
+
+export const convertGuestCartCheckToCart = (guestCartCheck: GuestCartCheck) => {
+  return {
+    id: -1,
+    userId: -1,
+    items: convertGuestCartCheckItemsToCartItems(guestCartCheck.items)
+  } as Cart;
+};
+
+const convertGuestCartCheckItemsToCartItems = (items: GuestCartCheckItem[]) => {
+  return items.map((item) => {
+    return {
+      id: -1,
+      cartId: -1,
+      inventoryId: item.inventory?.id,
+      packId: item.pack?.id,
+      inventory: item.inventory,
+      pack: item.pack,
+      quantity: item.quantity,
+    } as CartItem;
+  });
+};
+
+export const manageCartItem = (action: ManageActions, token: string, cart: Cart, cartItem: CartItem) => {
   return new Promise<{cartItem: CartItem}>(async (resolve, reject) => {
     // Guest cart
     if (!token) {
-      const guestCart = {
-        items: [],
-      } as GuestCart;
-      const guestCartStorage = await getStorageItem(Storages.local, GuestCartKey);
-      if (guestCartStorage) {
-        const guestCartObj = JSON.parse(guestCartStorage) as GuestCart;
-        if (guestCartObj?.items && guestCartObj.items.length > 0) {
-          guestCart.items = guestCartObj.items;
-        }
-      }
+      const guestCart = convertCartToGuestCart(cart);
       if (action == ManageActions.create) {
         await createGuestCartItem(guestCart, cartItem);
       } else if (action == ManageActions.update) {
@@ -103,7 +146,7 @@ export const manageCartItem = (action: ManageActions, token: string, cartItem: C
       }); 
       return;
     }
-
+    // User cart
     let promiseMW = createCartItem;
     let successStatus = StatusCodes.CREATED;
     let errorTitle = 'Create Cart Item ERROR';
@@ -153,19 +196,21 @@ const deleteCartItem = (token: string, cartItem: CartItem) => {
   return axios.delete(`/cart-items/${cartItem.id}`, options);
 };
 
-export const createGuestCartItem = async (guestCart: GuestCart, cartItem: CartItem) => {
+const createGuestCartItem = async (guestCart: GuestCart, cartItem: CartItem) => {
   guestCart.items.push({
     inventoryId: cartItem.inventoryId,
+    packId: cartItem.packId,
     quantity: cartItem.quantity,
   });
   await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
 };
 
-export const updateGuestCartItem = async (guestCart: GuestCart, cartItem: CartItem) => {
+const updateGuestCartItem = async (guestCart: GuestCart, cartItem: CartItem) => {
   guestCart.items = guestCart.items.map((item) => {
     if (item.inventoryId === cartItem.inventoryId) {
       return {
         inventoryId: cartItem.inventoryId,
+        packId: cartItem.packId,
         quantity: cartItem.quantity,
       };
     }
@@ -174,65 +219,12 @@ export const updateGuestCartItem = async (guestCart: GuestCart, cartItem: CartIt
   await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
 };
 
-export const deleteGuestCartItem = async (guestCart: GuestCart, cartItem: CartItem) => {
+const deleteGuestCartItem = async (guestCart: GuestCart, cartItem: CartItem) => {
   guestCart.items.forEach((item, index) => {
-    if (item.inventoryId == cartItem.inventoryId) {
+    if (item.inventoryId === cartItem.inventoryId && item.packId === cartItem.packId) {
       guestCart.items.splice(index, 1);
       return;
     }
   });
   await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
-};
-
-export const setGuestCart = async (cart: Cart | GuestCartCheck) => {
-  const guestCart = {
-    items: cart.items.map((item) => {
-      return {
-        inventoryId: item.inventory.id,
-        quantity: item.quantity,
-      }
-    })
-  } as GuestCart
-  await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
-};
-
-export const getGuestCart = async (currentLocale: string) => {
-  let cart = {
-    id: -1,
-    userId: -1,
-    items: [],
-  } as Cart;
-
-  const guestCartStorage = await getStorageItem(Storages.local, GuestCartKey);
-  if (!guestCartStorage) {
-    return cart;
-  }
-  const guestCartObj = JSON.parse(guestCartStorage) as GuestCart;
-  if (!guestCartObj?.items || guestCartObj.items.length <= 0) {
-    return cart;
-  }
-
-  await getAllProductInventories(
-      guestCartObj.items.map((item) => { return item.inventoryId; }),
-      currentLocale
-    )
-    .then(async (response: {productInventories: ProductInventory[]}) => {
-      cart = {
-        id: -1,
-        userId: -1,
-        items: response.productInventories.map((inventory) => {
-          return {
-            id: -1,
-            cartId: -1,
-            inventoryId: inventory.id,
-            inventory: inventory,
-            quantity: guestCartObj.items.find((item) => item.inventoryId === inventory.id)?.quantity,
-          } as CartItem;
-        }),
-      };
-    }).catch( async(_error: Error) => {
-      await removeStorageItem(Storages.local, GuestCartKey);
-    });
-
-  return cart;
 };

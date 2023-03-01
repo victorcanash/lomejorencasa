@@ -9,18 +9,15 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import type { CartItem } from '@core/types/cart';
-import type { OrderItem } from '@core/types/orders';
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
+import { itemTotalPriceString, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 
-import { pages } from '@lib/constants/navigation';
-import { everfreshProductId, bagsProductId } from '@lib/constants/products';
-import { getProductImgUrl } from '@lib/utils/products';
+import { getProductPageUrl, getProductImgUrl } from '@lib/utils/products';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
-import placeholder from 'public/images/placeholder.jpeg';
 
 type CartItemDetailProps = {
-  item: CartItem | OrderItem,
+  item: CartItem | GuestCartCheckItem,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   priorityImg?: boolean,
 };
@@ -39,7 +36,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     }
   );
 
-  const [availableItemQuantity, setAvailableItemQuantity] = useState(true);
+  const [availableQuantity, setAvailableQuantity] = useState(true);
 
   const handleRemoveItem = () => {
     if (updateQuantity) {
@@ -47,44 +44,31 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     }
   };
 
-  const itemHref = () => {
-    let href = `${pages.productDetail.path}/${item.inventory?.product.name.current}?id=${item.inventory?.product.id}`;
-    if (item.inventory?.product.id === everfreshProductId) {
-      href = `${pages.everfresh.path}`;
-    } else if (item.inventory?.product.id === bagsProductId) {
-      href = `${pages.bags.path}`;
-    }
-    return href;
-  };
-
-  const checkAvailableItemQuantity = useCallback(() => {
+  const checkAvailableQuantity = useCallback(() => {
     if ((item as CartItem)?.cartId) {
-      if (item.inventory && item.inventory.quantity <= 0) {
-        setAvailableItemQuantity(false);
-        return;
-      }
-    } else if ((item as OrderItem)?.name) {
+      setAvailableQuantity(availableItemQuantity(item));
+      return;
+    } else if ((item as GuestCartCheckItem)?.quantity) {
       if (item.quantity <= 0) {
-        setAvailableItemQuantity(false);
+        setAvailableQuantity(false);
         return;
       }
+      setAvailableQuantity(true);
     }
-    setAvailableItemQuantity(true);
   }, [item])
 
   useEffect(() => {
-    checkAvailableItemQuantity();
-  }, [checkAvailableItemQuantity]);
+    checkAvailableQuantity();
+  }, [checkAvailableQuantity]);
 
   return (
     <>
       <Grid container spacing={2}>
         <Grid item xs={4} sm={3} md={2}>
-          { item.inventory ?
-            <Link href={itemHref()} noLinkStyle>
+            <Link href={getProductPageUrl(item)} noLinkStyle>
               <div>
                 <Image
-                  src={getProductImgUrl(item.inventory.product)}
+                  src={getProductImgUrl(item)}
                   alt="Product image"
                   layout="responsive"
                   objectFit="cover"
@@ -92,96 +76,84 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   priority={priorityImg}
                 />
               </div>
+              { !item.inventory && !item.pack &&
+                <Typography component="div" variant="body1">
+                  <FormattedMessage 
+                    id="orderDetail.noProductReference" 
+                  />
+                </Typography>
+              }
             </Link>
-            :
-            <>
-              <div>
-                <Image
-                  src={placeholder}
-                  alt="Product image"
-                  layout="responsive"
-                  objectFit="cover"
-                  style={{ borderRadius: '10px' }}
-                  priority={priorityImg}
-                />
-              </div>
-              <Typography component="div" variant="body1">
-                <FormattedMessage 
-                  id="orderDetail.noProductReference" 
-                />
-              </Typography>
-            </>
-          }
         </Grid>
 
-        <Grid item xs={8} sm={9} md={10} container>
-
-          <Grid item xs container direction="column" spacing={2}>
-
-            <Grid item xs sx={item.quantity <= 0 ? { color: 'grey' } : undefined}>
-              <Typography gutterBottom component="div" variant="body1">
-                {item.inventory?.product.name.current || (item as OrderItem)?.name}
-              </Typography>
-              <Typography component="div" variant="body2">
-                {item.inventory?.name.current || ''}
-              </Typography>
-              { !updateQuantity &&
-                <Typography component="div" variant="body2">
-                  {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
+        { (item.inventory || item.pack) &&
+          <Grid item xs={8} sm={9} md={10} container>
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs sx={item.quantity <= 0 ? { color: 'grey' } : undefined}>
+                <Typography gutterBottom component="div" variant="body1">
+                  {item.inventory?.product.name.current || item.pack?.name.current}
                 </Typography>
-              }
-              { (item as OrderItem)?.reference &&
-                <Typography component="div" variant="body2">
-                  {`${intl.formatMessage({ id: "forms.sku" })}: ${(item as OrderItem).reference}`}
-                </Typography>
-              }
-            </Grid>
-
-            { updateQuantity &&
-              <Grid item>
-                <SelectQuantity />
-
-                <Tooltip 
-                  title={intl.formatMessage({ id: 'app.deleteBtn' })} 
-                  placement='top'
-                >
-                  <IconButton 
-                    onClick={handleRemoveItem}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-
-                { item.quantity <= 0 &&
-                  <Typography 
-                    variant="body2"
-                    mt="5px"
-                    //color={!availableItemQuantity ? { color: 'text.disabled' } : undefined}
-                  >
-                    { !availableItemQuantity ? 
-                      intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
-                      intl.formatMessage({ id: 'cart.inventoryAvailable' })
-                    }
+                { item.inventory &&
+                  <>
+                    <Typography component="div" variant="body2">
+                      {item.inventory.name.current}
+                    </Typography>
+                    <Typography component="div" variant="body2">
+                    {`${intl.formatMessage({ id: 'forms.sku' })}: ${item.inventory.sku}`}
+                    </Typography>
+                  </>
+                }
+                { !updateQuantity &&
+                  <Typography component="div" variant="body2">
+                    {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
                   </Typography>
                 }
               </Grid>
-            }
 
+              { updateQuantity &&
+                <Grid item>
+                  <SelectQuantity />
+
+                  <Tooltip 
+                    title={intl.formatMessage({ id: 'app.deleteBtn' })} 
+                    placement='top'
+                  >
+                    <IconButton 
+                      onClick={handleRemoveItem}
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </Tooltip>
+
+                  { item.quantity <= 0 &&
+                    <Typography 
+                      variant="body2"
+                      mt="5px"
+                      color={!availableQuantity ? { color: 'text.disabled' } : undefined}
+                    >
+                      { !availableQuantity ? 
+                        intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
+                        intl.formatMessage({ id: 'cart.inventoryAvailable' })
+                      }
+                    </Typography>
+                  }
+                </Grid>
+              }
+
+            </Grid>
+
+            <Grid item>
+              <Typography 
+                component="div" 
+                variant="body1" 
+                color={!availableQuantity ? { color: 'text.disabled' } : undefined}
+                fontWeight={500}
+              >
+                { itemTotalPriceString(item) }
+              </Typography>
+            </Grid>
           </Grid>
-
-          <Grid item>
-            <Typography 
-              component="div" 
-              variant="body1" 
-              color={!availableItemQuantity ? { color: 'text.disabled' } : undefined}
-              fontWeight={500}
-            >
-              { item.inventory ? `${(item.inventory?.realPrice * item.quantity).toFixed(2)} €` : undefined }
-            </Typography>
-          </Grid>
-
-        </Grid>
-
+        }
       </Grid>
     </>
   );

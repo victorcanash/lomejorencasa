@@ -1,4 +1,4 @@
-import type { ProductInventory } from '@core/types/products';
+import type { ProductInventory, ProductPack } from '@core/types/products';
 
 export type Cart = {
   id: number,
@@ -9,26 +9,30 @@ export type Cart = {
 export type CartItem = {
   id: number,
   cartId: number,
-  inventoryId: number,
-  inventory: ProductInventory,
+  inventoryId?: number,
+  packId?: number,
+  inventory?: ProductInventory,
+  pack?: ProductPack,
   quantity: number,
 };
 
 
 export type GuestCart = {
-  items: GuestCartItem[]
-}
+  items: GuestCartItem[],
+};
 
 export type GuestCartItem = {
-  inventoryId: number
-  quantity: number
-}
+  inventoryId?: number,
+  packId?: number,
+  quantity: number,
+};
 
 export type GuestCartCheck = {
-  items: GuestCartCheckItem[]
-}
+  items: GuestCartCheckItem[],
+};
 
 export type GuestCartCheckItem = {
-  inventory: ProductInventory
-  quantity: number
-}
+  inventory?: ProductInventory,
+  pack?: ProductPack,
+  quantity: number,
+};

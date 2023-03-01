@@ -1,6 +1,5 @@
-import { ProductInventory } from '@core/types/products';
-import { UserAddress } from '@core/types/user';
-import { GuestCartItem } from '@core/types/cart';
+import type { UserAddress } from '@core/types/user';
+import type { GuestCartCheckItem, GuestCartItem } from '@core/types/cart';
 
 export type Order = {
   id: number,
@@ -9,6 +8,7 @@ export type Order = {
   braintreeTransactionId: string,
   bigbuyId?: string,
   createdAt: Date,
+  items?: GuestCartCheckItem[],
   bigbuy: {
     id: string,
     status: string,
@@ -22,7 +22,7 @@ export type Order = {
       country: string,
       phone: string,
     },
-    products: OrderItem[],
+    products: BigbuyOrderProduct[],
   },
   braintree: {
     amount: string,
@@ -45,12 +45,12 @@ export type Order = {
   }
 };
 
-export type OrderItem = {
+export type BigbuyOrderProduct = {
   id: string,
   reference: string,
   quantity: number,
   name: string,
-  inventory: ProductInventory | null,
+  internalReference: string,
 };
 
 export type OrderContact = {

@@ -24,14 +24,14 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
   const intl = useIntl();
 
   const { initForms } = useForms();
-  const { getLogged } = useAuth();
+  const { initAuth } = useAuth();
 
   const firstRenderRef = useRef(false);
 
   const initData = useCallback(async () => {
     initForms();
     if (layoutComponent != LinkLayout) {
-      await getLogged();
+      await initAuth();
     }
     if (layoutComponent == AdminLayout) {
       await getAllProductCategories([], intl.locale, true)
@@ -52,7 +52,7 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
     } else {
       setInitialized(true);
     }
-  }, [getLogged, initForms, initProducts, intl.locale, layoutComponent, setInitialized, setProductCategories]);
+  }, [initAuth, initForms, initProducts, intl.locale, layoutComponent, setInitialized, setProductCategories]);
 
   useEffect(() => {
     if (!firstRenderRef.current) {

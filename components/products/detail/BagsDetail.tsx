@@ -1,16 +1,21 @@
-import { bagsProductId } from '@lib/constants/products';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
 import DetailReviews from '@components/products/sections/DetailReviews';
 
 const BagsDetail = () => {
+  const { bagsProduct } = useProductsContext();
 
   return (
     <>
-      <DetailCharacteristics
-        productId={bagsProductId}
-      />
+      { bagsProduct &&
+        <>
+          <DetailCharacteristics
+            product={bagsProduct}
+          />
 
-      <DetailReviews />
+          <DetailReviews />
+        </>
+      }
     </>
   );
 };

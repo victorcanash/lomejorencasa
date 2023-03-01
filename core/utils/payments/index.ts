@@ -10,32 +10,10 @@ import type { Page } from '@core/types/navigation';
 import type { CheckoutPayment } from '@core/types/checkout';
 import type { Order } from '@core/types/orders';
 import type { GuestUser } from '@core/types/user';
-import type { Cart, CartItem, GuestCart, GuestCartCheck } from '@core/types/cart';
+import type { Cart, GuestCartCheck } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
-import { setGuestCart } from '@core/utils/cart';
+import { convertCartToGuestCart, convertGuestCartCheckToCart, setGuestCart } from '@core/utils/cart';
 import { removeStorageItem } from '@core/utils/storage';
-
-export const getBraintreeToken = (token?: string) => {
-  return new Promise<{braintreeToken: string}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: token ? getAuthHeaders(token) : undefined,
-    };
-    axios.get('/payments/braintree-token', options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK) {
-          resolve({
-            braintreeToken: response.data.braintreeToken,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get Braintree Token ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  })
-};
 
 export const checkPaymentMethod = (dropin: Dropin) => {
   return new Promise<{paymentPayload: PaymentMethodPayload}>(async (resolve, reject) => {
@@ -61,26 +39,14 @@ export const getGuestUserData = async (confirmationToken: string) => {
     axios.get('/payments/guest-user-data', options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.OK) {
-          setGuestCart(response.data.guestCart as GuestCartCheck);
+          await setGuestCart(response.data.guestCart as GuestCartCheck);
           resolve({
             checkoutPayment: {
               methodPayload: response.data.paymentPayload,
               remember: false,
             },
             user: response.data.guestUser,
-            cart: {
-              id: -1,
-              userId: -1,
-              items: (response.data.guestCart as GuestCartCheck).items.map((item) => {
-                return {
-                  id: -1,
-                  cartId: -1,
-                  inventoryId: item.inventory.id,
-                  inventory: item.inventory,
-                  quantity: item.quantity,
-                } as CartItem;
-              }),
-            },
+            cart: convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
           });
         } else {
           throw new Error('Something went wrong');
@@ -109,14 +75,7 @@ export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayme
         ...guestUser,
         password: userPassword,
       },
-      guestCart: {
-        items: cart.items.map((item) => {
-          return {
-            inventoryId: item.inventoryId,
-            quantity: item.quantity,
-          }
-        })
-      } as GuestCart
+      guestCart: convertCartToGuestCart(cart),
     }
     axios.post('payments/send-email/transaction', body, options)
       .then(async (response: AxiosResponse) => {
@@ -150,14 +109,7 @@ export const createTransaction = (token: string | undefined, currentLocale: stri
       paymentMethodNonce: checkoutPayment.methodPayload.nonce,
       remember: checkoutPayment.remember,
       guestUser,
-      guestCart: {
-        items: cart.items.map((item) => {
-          return {
-            inventoryId: item.inventoryId,
-            quantity: item.quantity,
-          }
-        })
-      } as GuestCart
+      guestCart: convertCartToGuestCart(cart),
     } : {
       paymentMethodNonce: checkoutPayment.methodPayload.nonce,
       remember: checkoutPayment.remember,

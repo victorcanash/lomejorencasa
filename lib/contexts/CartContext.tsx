@@ -1,6 +1,7 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
 
 import type { Cart } from '@core/types/cart';
+import { itemTotalPriceNumber } from '@core/utils/cart';
 
 type ContextType = {
   cart: Cart,
@@ -57,7 +58,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     let result = 0;
     if (cart && cart.items && cart.items.length >= 1) {
       cart.items.forEach((item) => {
-        result += item.inventory.realPrice * item.quantity;
+        result += itemTotalPriceNumber(item);
       });
     }
     setTotalPrice(result);

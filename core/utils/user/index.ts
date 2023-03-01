@@ -3,13 +3,16 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { ManageActions } from '@core/constants/auth';
+import { Storages } from '@core/constants/storage';
+import { ManageActions, JWTTokenKey } from '@core/constants/auth';
+import { GuestCartKey } from '@core/constants/cart';
 import type { User, UserAddress, UserContact } from '@core/types/user';
 import type { CheckoutAddresses } from '@core/types/checkout';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+import { removeStorageItem } from '@core/utils/storage';
 
 export const manageUser = (action: ManageActions.update | ManageActions.delete, token: string, user: User) => {
-  return new Promise<{user: User}>(async (resolve, reject) => {
+  return new Promise<{user: User, braintreeToken?: string}>(async (resolve, reject) => {
     let promiseMW;
     let successStatus = StatusCodes.CREATED;
     let errorTitle = '';
@@ -26,9 +29,18 @@ export const manageUser = (action: ManageActions.update | ManageActions.delete, 
 
     promiseMW(token, user)
       .then(async (response: AxiosResponse) => {
-        if (response.status === successStatus) {
+        if (response.status === successStatus && response.data) {
+          if (action == ManageActions.delete) {
+            if (!response.data.braintreeToken) {
+              throw new Error('Something went wrong');
+            }
+            await removeStorageItem(Storages.local, JWTTokenKey);
+            await removeStorageItem(Storages.local, GuestCartKey);
+          }
           resolve({
             user: response.data.user,
+            braintreeToken: action == ManageActions.delete ?
+              response.data.braintreeToken : undefined,
           });
         } else {
           throw new Error('Something went wrong');

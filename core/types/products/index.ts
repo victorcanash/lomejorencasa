@@ -1,5 +1,11 @@
 import { LocalizedText } from '@core/types/texts';
 
+export type ProductCategory = {
+  id: number,
+  name: LocalizedText,
+  description: LocalizedText,
+};
+
 export type Product = {
   id: number,
   categoryId: number,
@@ -11,12 +17,6 @@ export type Product = {
   inventories: ProductInventory[],
   discounts?: ProductDiscount[],
   activeDiscount?: ProductDiscount,
-};
-
-export type ProductCategory = {
-  id: number,
-  name: LocalizedText,
-  description: LocalizedText,
 };
 
 export type ProductInventory = {
@@ -37,6 +37,16 @@ export type ProductInventory = {
   },
   product: Product,
 };
+
+export type ProductPack = {
+  id: number,
+  name: LocalizedText,
+  description: LocalizedText,
+  price: number,
+  quantity: number,
+  originalPrice: number,
+  inventories: ProductInventory[],
+}
 
 export type ProductDiscount = {
   id: number,
