@@ -1,20 +1,42 @@
 import { createContext, useState, useContext } from 'react';
 
-import type { Product } from '@core/types/products';
+import type { Product, ProductPack } from '@core/types/products';
 
-import { isEverfreshProduct, isBagsProduct } from '@lib/utils/products';
+import { 
+  isEverfreshProduct, 
+  isBagsProduct, 
+  isEverfreshPack,
+  isBagsXSPack,
+  isBagsSPack,
+  isBagsMPack,
+  isBagsLPack,
+  isBagsXLPack,
+  isBagsMixPack,
+} from '@lib/utils/products';
 
 type ProductsContext = {
-  products: Product[],
   everfreshProduct: Product | undefined,
   bagsProduct: Product | undefined,
-  initProducts: (newProducts: Product[]) => void,
+  everfreshPack: ProductPack | undefined,
+  bagsXSPack: ProductPack | undefined,
+  bagsSPack: ProductPack | undefined,
+  bagsMPack: ProductPack | undefined,
+  bagsLPack: ProductPack | undefined,
+  bagsXLPack: ProductPack | undefined,
+  bagsMixPack: ProductPack | undefined,
+  initProducts: (newProducts: Product[], newPacks: ProductPack[]) => void,
 };
 
 const ProductsContext = createContext<ProductsContext>({
-  products: [],
   everfreshProduct: undefined,
   bagsProduct: undefined,
+  everfreshPack: undefined,
+  bagsXSPack: undefined,
+  bagsSPack: undefined,
+  bagsMPack: undefined,
+  bagsLPack: undefined,
+  bagsXLPack: undefined,
+  bagsMixPack: undefined,
   initProducts: () => {},
 });
 
@@ -28,31 +50,55 @@ export const useProductsContext = () => {
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [products, setProducts] = useState<Product[]>([]);
   const [everfreshProduct, setEverfreshProduct] = useState<Product | undefined>(undefined);
   const [bagsProduct, setBagsProduct] = useState<Product | undefined>(undefined);
+  const [everfreshPack, setEverfreshPack] = useState<ProductPack | undefined>(undefined);
+  const [bagsXSPack, setBagsXSPack] = useState<ProductPack | undefined>(undefined);
+  const [bagsSPack, setBagsSPack] = useState<ProductPack | undefined>(undefined);
+  const [bagsMPack, setBagsMPack] = useState<ProductPack | undefined>(undefined);
+  const [bagsLPack, setBagsLPack] = useState<ProductPack | undefined>(undefined);
+  const [bagsXLPack, setBagsXLPack] = useState<ProductPack | undefined>(undefined);
+  const [bagsMixPack, setBagsMixPack] = useState<ProductPack | undefined>(undefined);
 
-  const initProducts = (newProducts: Product[]) => {
-    setProducts(newProducts);
-    let newEverfreshProduct = undefined;
-    let newBagsProduct = undefined;
-    newProducts.forEach((item) => {
+  const initProducts = (products: Product[], packs: ProductPack[]) => {
+    products.forEach((item) => {
       if (isEverfreshProduct(item)) {
-        newEverfreshProduct = item;
+        setEverfreshProduct(item);
       } else if (isBagsProduct(item)) {
-        newBagsProduct = item;
+        setBagsProduct(item);
       }
-    })
-    setEverfreshProduct(newEverfreshProduct);
-    setBagsProduct(newBagsProduct);
+    });
+    packs.forEach((item) => {
+      if (isEverfreshPack(item)) {
+        setEverfreshPack(item);
+      } else if (isBagsXSPack(item)) {
+        setBagsXSPack(item);
+      } else if (isBagsSPack(item)) {
+        setBagsSPack(item);
+      } else if (isBagsMPack(item)) {
+        setBagsMPack(item);
+      } else if (isBagsLPack(item)) {
+        setBagsLPack(item);
+      } else if (isBagsXLPack(item)) {
+        setBagsXLPack(item);
+      } else if (isBagsMixPack(item)) {
+        setBagsMixPack(item);
+      }
+    });
   };
 
   return (
     <ProductsContext.Provider
       value={{
-        products,
         everfreshProduct,
         bagsProduct,
+        everfreshPack,
+        bagsXSPack,
+        bagsSPack,
+        bagsMPack,
+        bagsLPack,
+        bagsXLPack,
+        bagsMixPack,
         initProducts,
       }}
     >

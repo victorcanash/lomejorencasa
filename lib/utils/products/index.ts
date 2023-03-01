@@ -21,6 +21,49 @@ import banner_everfresh2 from 'public/images/banner/everfresh2.jpg';
 import banner_everfresh3 from 'public/images/banner/everfresh3.jpg';
 import banner_everfresh4 from 'public/images/banner/everfresh4.jpg';
 
+export const isEverfreshPack = (item: CartItem | GuestCartCheckItem) => {
+  if (item.pack?.id == packIds.everfresh) {
+    return true;
+  }
+  return false;
+};
+export const isBagsXSPack = (item: CartItem | GuestCartCheckItem) => {
+  if (item.pack?.id == packIds.bagsXS) {
+    return true;
+  }
+  return false;
+};
+export const isBagsSPack = (item: CartItem | GuestCartCheckItem) => {
+  if (item.pack?.id == packIds.bagsS) {
+    return true;
+  }
+  return false;
+};
+export const isBagsMPack = (item: CartItem | GuestCartCheckItem) => {
+  if (item.pack?.id == packIds.bagsM) {
+    return true;
+  }
+  return false;
+};
+export const isBagsLPack = (item: CartItem | GuestCartCheckItem) => {
+  if (item.pack?.id == packIds.bagsL) {
+    return true;
+  }
+  return false;
+};
+export const isBagsXLPack = (item: CartItem | GuestCartCheckItem) => {
+  if (item.pack?.id == packIds.bagsXL) {
+    return true;
+  }
+  return false;
+};
+export const isBagsMixPack = (item: CartItem | GuestCartCheckItem) => {
+  if (item.pack?.id == packIds.bagsMix) {
+    return true;
+  }
+  return false;
+};
+
 export const isEverfreshProduct = (item: Product | CartItem | GuestCartCheckItem) => {
   const product = convertToProduct(item);
   if (product?.id === productIds.everfresh) {
@@ -28,7 +71,6 @@ export const isEverfreshProduct = (item: Product | CartItem | GuestCartCheckItem
   }
   return false;
 };
-
 export const isBagsProduct = (item: Product | CartItem | GuestCartCheckItem) => {
   const product = convertToProduct(item);
   if (product?.id === productIds.bags) {

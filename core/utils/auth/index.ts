@@ -6,6 +6,7 @@ import envConfig from '@core/config/env.config';
 import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
+import type { Page } from '@core/types/navigation';
 import type { User } from '@core/types/user';
 import type { 
   AuthLogin, 
@@ -14,10 +15,72 @@ import type {
   AuthResetPsw 
 } from '@core/types/auth';
 import type { Cart, GuestCartCheck } from '@core/types/cart';
-import type { Page } from '@core/types/navigation';
+import type { Product, ProductCategory, ProductPack } from '@core/types/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { convertCartToGuestCart, convertGuestCartCheckToCart, getGuestCart } from '@core/utils/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
+
+export const init = async (categoryIds: number[], productIds: number[], packIds: number[]) => {
+  const guestCart = await getGuestCart();
+  return new Promise<{
+    productCategories: ProductCategory[],
+    products: Product[], 
+    packs: ProductPack[],
+    cart: Cart,
+    token?: string, 
+    user?: User, 
+    braintreeToken: string, 
+  }>(async (resolve, reject) => {
+    const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
+    const options = token ? {
+      headers: getAuthHeaders(token),
+    } as AxiosRequestConfig : undefined;
+    axios.post('/auth/init', { 
+      categoryIds, 
+      productIds, 
+      packIds, 
+      guestCart 
+    }, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED && 
+            response.data?.braintreeToken && 
+            response.data?.productCategories && 
+            response.data?.products && 
+            response.data?.packs) {
+          if (response.data.user) {
+            if (response.data.user.lockedOut || !response.data.user.isActivated) {
+              let errorMsg = '';
+              if (response.data.user.lockedOut) {
+                errorMsg = getBackendErrorMsg('Get Logged User WARNING', new Error('You are locked out'));            
+              } else {
+                errorMsg = getBackendErrorMsg('Get Logged User WARNING', new Error('You need to activate your account'));
+              }
+              logBackendError(errorMsg);
+              await removeStorageItem(Storages.local, JWTTokenKey);
+            }
+          } else {
+            await removeStorageItem(Storages.local, JWTTokenKey);
+          }
+          resolve({
+            productCategories: response.data.productCategories,
+            products: response.data.products, 
+            packs: response.data.packs,
+            cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
+            token: token,
+            user: response.data.user || undefined,
+            braintreeToken: response.data.braintreeToken,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch(async (error) => {
+        await removeStorageItem(Storages.local, JWTTokenKey);
+        const errorMsg = getBackendErrorMsg('Get Logged User ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
 
 export const registerUser = async (authRegister: AuthRegister) => {
   return new Promise<true>((resolve, reject) => {
@@ -111,48 +174,6 @@ export const logoutUser = async (token: string) => {
         await removeStorageItem(Storages.local, JWTTokenKey);
         await removeStorageItem(Storages.local, GuestCartKey);
         const errorMsg = getBackendErrorMsg('Logout User ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
-
-export const initUser = async () => {
-  const guestCart = await getGuestCart();
-  return new Promise<{token?: string, user?: User, braintreeToken: string, cart: Cart}>(async (resolve, reject) => {
-    const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
-    const options = token ? {
-      headers: getAuthHeaders(token),
-    } as AxiosRequestConfig : undefined;
-    axios.post('/auth/init-user', { guestCart }, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED && response.data?.braintreeToken) {
-          if (response.data.user) {
-            if (response.data.user.lockedOut || !response.data.user.isActivated) {
-              let errorMsg = '';
-              if (response.data.user.lockedOut) {
-                errorMsg = getBackendErrorMsg('Get Logged User WARNING', new Error('You are locked out'));            
-              } else {
-                errorMsg = getBackendErrorMsg('Get Logged User WARNING', new Error('You need to activate your account'));
-              }
-              logBackendError(errorMsg);
-              await removeStorageItem(Storages.local, JWTTokenKey);
-            }
-          } else {
-            await removeStorageItem(Storages.local, JWTTokenKey);
-          }
-          resolve({
-            token: token,
-            user: response.data.user || undefined,
-            braintreeToken: response.data.braintreeToken,
-            cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch(async (error) => {
-        await removeStorageItem(Storages.local, JWTTokenKey);
-        const errorMsg = getBackendErrorMsg('Get Logged User ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 

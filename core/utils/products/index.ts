@@ -119,36 +119,6 @@ export const getAllProductImgsUrl = (product: Product) => {
   return imgUrls;
 };
 
-export const getAllProductCategories = async (categoriesIds: number[], currentLocale: string, adminData = false, sortBy?: string, order?: string) => {
-  return new Promise<{productCategories: ProductCategory[]}>(async (resolve, reject) => {
-    const ids = !adminData ? categoriesIds : undefined;
-    const options: AxiosRequestConfig = {
-      params: {
-        page: 1,
-        limit: 100,
-        sortBy,
-        order,
-        ids,
-      },
-      headers: getLanguageHeaders(currentLocale),
-    }
-    axios.get('/product-categories', options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK && response.data?.productCategories) {
-          resolve({
-            productCategories: response.data.productCategories
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get All Product Categories ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  })
-};
-
 export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     let promiseMW = createProduct;
