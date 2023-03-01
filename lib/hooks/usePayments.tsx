@@ -141,7 +141,7 @@ const usePayments = () => {
     removeCart();
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.sendEmail'}));
     enqueueSnackbar(intl.formatMessage(
-      { id: 'checkout.successes.sendConfirmTransactionEmail' }, '30'/*{ time: envConfig.NEXT_PUBLIC_CONFIRMATION_TOKEN_EXPIRY }*/), 
+      { id: 'checkout.successes.sendConfirmTransactionEmail' }, { time: '30' }/*{ time: envConfig.NEXT_PUBLIC_CONFIRMATION_TOKEN_EXPIRY }*/), 
       { variant: 'success', autoHideDuration: 10000 }
     );
   };
