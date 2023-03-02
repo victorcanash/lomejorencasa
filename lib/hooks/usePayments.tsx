@@ -26,7 +26,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 const usePayments = () => {
   const { setLoading } = useAppContext();
   const { token, user, setUser, removeUser, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
-  const { cart, initCart, removeCart } = useCartContext();
+  const { cart, initCart, cleanCart } = useCartContext();
 
   const router = useRouter();
   const intl = useIntl();
@@ -137,7 +137,7 @@ const usePayments = () => {
 
   const onSendConfirmTransactionEmailSuccess = async () => {
     router.push(pages.home.path);
-    removeCart();
+    cleanCart();
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.sendEmail'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.sendConfirmTransactionEmail' }, { time: '30' }/*{ time: envConfig.NEXT_PUBLIC_CONFIRMATION_TOKEN_EXPIRY }*/), 
@@ -186,7 +186,7 @@ const usePayments = () => {
     if (!isLogged()) {
       removeUser();
     } 
-    removeCart(); 
+    cleanCart(); 
   };
 
   return {

@@ -10,6 +10,7 @@ type ContextType = {
   totalPrice: number,
   setTotalPrice: Dispatch<SetStateAction<number>>,
   initCart: (cart: Cart) => void,
+  cleanCart: () => void,
   removeCart: () => void,
 };
 
@@ -24,6 +25,7 @@ export const CartContext = createContext<ContextType>({
   totalPrice: 0,
   setTotalPrice: () => {},
   initCart: () => {},
+  cleanCart: () => {},
   removeCart: () => {},
 });
 
@@ -70,6 +72,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     initCartPrice(cart);
   };
 
+  const cleanCart = () => {
+    setCart({
+      ...cart,
+      items: [],
+    })
+  };
+
   const removeCart = () => {
     setCart({
       id: -1,
@@ -89,6 +98,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         totalPrice,
         setTotalPrice,
         initCart,
+        cleanCart,
         removeCart,
       }}
     >
