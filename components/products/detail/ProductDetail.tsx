@@ -68,7 +68,10 @@ const ProductDetail = (props: ProductDetailProps) => {
           <Typography component="div" variant="body1" sx={{ mb: 4 }}>
             <FormattedMessage id="everfresh.comment" />
           </Typography>
-          <LinkButton href={pages.bags.path}>
+          <LinkButton 
+            href={pages.bags.path}
+            sx={convertElementToSx(themeCustomElements.button.action)}
+          >
             <FormattedMessage 
               id="everfresh.bagsButton" 
             />
@@ -93,7 +96,10 @@ const ProductDetail = (props: ProductDetailProps) => {
               </Fragment>
             ))}
           </Box>
-          <LinkButton href={pages.everfresh.path}>
+          <LinkButton 
+            href={pages.everfresh.path}
+            sx={convertElementToSx(themeCustomElements.button.action)}
+          >
             <FormattedMessage
               id="bags.everfreshButton" 
             />
