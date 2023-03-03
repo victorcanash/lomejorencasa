@@ -4,9 +4,9 @@ import { AdminSections } from '@core/constants/admin';
 import { ManageActions } from '@core/constants/auth';
 
 import { pages } from '@lib/constants/navigation';
-import ManagePCategoryForm from '@components/forms/admin/ManagePCategoryForm';
+import ManagePPackForm from '@components/forms/admin/ManagePPackForm';
 
-const CreateCategorySection = () => {
+const CreatePackSection = () => {
   const router = useRouter();
 
   const onSuccessManage = () => {
@@ -15,7 +15,7 @@ const CreateCategorySection = () => {
 
   return (
     <>           
-      <ManagePCategoryForm
+      <ManagePPackForm
         action={ManageActions.create}
         onSubmitSuccess={onSuccessManage}
       />
@@ -23,4 +23,4 @@ const CreateCategorySection = () => {
   );
 };
 
-export default CreateCategorySection;
+export default CreatePackSection;

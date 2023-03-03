@@ -4,7 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import { ManageActions } from '@core/constants/auth';
-import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
+import type { Product, ProductCategory, ProductInventory, ProductDiscount, ProductPack } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
@@ -50,13 +50,57 @@ export const getAllProducts = async (
             products: response.data.products,
             productCategory: response.data.category,
             totalPages: response.data.totalPages,
-            currentPage: response.data.currentPage
+            currentPage: response.data.currentPage,
           });
         } else {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Get All Products ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const getAllPacks = async (
+  token: string, 
+  currentLocale: string, 
+  page: number,
+  limit: number,
+  sortBy: string, 
+  order: string, 
+) => {
+  return new Promise<{
+    packs: ProductPack[], 
+    totalPages: number, 
+    currentPage: number,
+  }>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      params: {
+        page,
+        limit,
+        sortBy,
+        order,
+      },
+      headers: {
+        ...getAuthHeaders(token),
+        ...getLanguageHeaders(currentLocale),
+      },
+    };
+    axios.get('/product-packs', options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.productPacks) {
+          resolve({
+            packs: response.data.productPacks,
+            totalPages: response.data.totalPages,
+            currentPage: response.data.currentPage,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get All Product Packs ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
@@ -412,4 +456,65 @@ const deleteProductDiscount = (token: string, currentLocale: string, productDisc
     },
   };
   return axios.delete(`/product-discounts/${productDiscount.id}`, options)
+};
+
+export const manageProductPack = (action: ManageActions, token: string, currentLocale: string, productPack: ProductPack) => {
+  return new Promise<{productPack: ProductPack}>(async (resolve, reject) => {
+    let promiseMW = createProductPack;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Product Pack ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateProductPack;
+      errorTitle = 'Update Product Pack ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteProductPack;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Product Pack ERROR';
+    }
+
+    promiseMW(token, currentLocale, productPack)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            productPack: response.data.productPack,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+const createProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.post('/product-packs', productPack, options);
+};
+
+const updateProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.put(`/product-packs/${productPack.id}`, productPack, options);
+};
+
+const deleteProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.delete(`/product-packs/${productPack.id}`, options)
 };

@@ -16,14 +16,16 @@ import GoBackBtn from '@components/ui/GoBackBtn';
 import HomeSection from '@components/admin/sections/HomeSection';
 import CheckCategoriesSection from '@components/admin/sections/CheckCategoriesSection';
 import CheckProductsSection from '@components/admin/sections/CheckProductsSection';
+import CheckPacksSection from '@components/admin/sections/CheckPacksSection';
 import CreateCategorySection from '@components/admin/sections/CreateCategorySection';
 import CreateProductSection from '@components/admin/sections/CreateProductSection';
+import CreatePackSection from '@components/admin/sections/CreatePackSection';
 import CreateFailedOrderSection from '@components/admin/sections/CreateFailedOrderSection';
 import SendFailedOrderEmailSection from '@components/admin/sections/SendFailedOrderEmailSection';
 
 const Admin: NextPage = () => {
   const page = usePage();
-  const { section, checkProductsProps } = useAdmin(page.checked);
+  const { section, checkProductsProps, checkPacksProps } = useAdmin(page.checked);
 
   const getCurrentSection = () => {
     if (section == AdminSections.home) {
@@ -41,10 +43,20 @@ const Admin: NextPage = () => {
           getAdminProduct={checkProductsProps.getAdminProduct}
         />
       );
+    } else if (section == AdminSections.checkProductPacks && checkPacksProps) { 
+      return (
+        <CheckPacksSection 
+          packs={checkPacksProps.packs}
+          totalPages={checkPacksProps.totalPages}
+          currentPage={checkPacksProps.currentPage}
+        />
+      );
     } else if (section == AdminSections.createProductCategory) {
       return (<CreateCategorySection />);
     } else if (section == AdminSections.createProduct) {
       return (<CreateProductSection />);
+    } else if (section == AdminSections.createProductPack) {
+      return (<CreatePackSection />);
     } else if (section == AdminSections.createFailedOrder) {
       return (<CreateFailedOrderSection />);
     } else if (section == AdminSections.sendFailedOrderEmail) {
@@ -73,7 +85,7 @@ const Admin: NextPage = () => {
             :
             <GoBackBtn />
           }
-          <Divider sx={{ mt: 1, mb: 3 }} />
+          <Divider sx={{ mt: 1, mb: 4 }} />
           { getCurrentSection() }
         </Container>
       }

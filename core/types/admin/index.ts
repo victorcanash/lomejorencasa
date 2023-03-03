@@ -7,7 +7,7 @@ export type CheckProduct = {
   checkDiscounts: boolean,
 };
 
-export type SelectedModel = {
+export type SelectedCheckProduct = {
   product: Product | undefined,
   inventory: ProductInventory | ManageActions.create | undefined,
   discount: ProductDiscount | ManageActions.create | undefined,

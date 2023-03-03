@@ -24,7 +24,6 @@ const HomeSection = () => {
   return (
     <>
       <Box>
-
         <Box sx={{ m: 2 }}>
           <Typography variant="h1" component="h2" gutterBottom>
             <FormattedMessage
@@ -47,6 +46,15 @@ const HomeSection = () => {
           >
             <FormattedMessage
               id="admin.checkProductsBtn"
+            />
+          </Button>
+          <Button 
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={() => onClickSectionBtn(AdminSections.checkProductPacks)}
+          >
+            <FormattedMessage
+              id="admin.checkPacksBtn"
             />
           </Button>
         </Box>
@@ -76,6 +84,16 @@ const HomeSection = () => {
           >
             <FormattedMessage
               id="admin.createProductBtn"
+            />
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={() => onClickSectionBtn(AdminSections.createProductPack)}
+            disabled={productCategories.length <= 0}
+          >
+            <FormattedMessage
+              id="admin.createPackBtn"
             />
           </Button>
         </Box>

@@ -8,7 +8,7 @@ import { ProductInventory } from '@core/types/products';
 type InventoriesDetailProps = {
   inventories: ProductInventory[],
   created: boolean,
-  getInventoryActionComponent: (inventoryIndex: number) => JSX.Element,
+  getInventoryActionComponent?: (inventoryIndex: number) => JSX.Element,
 };
 
 const InventoriesDetail = (props: InventoriesDetailProps) => {
@@ -77,7 +77,9 @@ const InventoriesDetail = (props: InventoriesDetailProps) => {
               </Typography>
             </>
           }
-          { getInventoryActionComponent(inventoryIndex) }
+          { getInventoryActionComponent &&
+            getInventoryActionComponent(inventoryIndex) 
+          }
         </Grid>
       ))}
     </Grid>

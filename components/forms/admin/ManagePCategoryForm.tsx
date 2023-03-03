@@ -10,7 +10,6 @@ import BaseForm from '@components/forms/BaseForm';
 type ManagePCategoryFormProps = {
   action: ManageActions.create | ManageActions.update,
   productCategory?: ProductCategory,
-  manageOnSubmit: boolean,
   onSubmitSuccess?: (productCategory: ProductCategory) => void,
   onDeleteSuccess?: () => void,
   onCancel?: () => void,
@@ -19,8 +18,7 @@ type ManagePCategoryFormProps = {
 const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   const { 
     action,
-    productCategory, 
-    manageOnSubmit, 
+    productCategory,
     onSubmitSuccess, 
     onDeleteSuccess,
     onCancel, 
@@ -30,13 +28,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   const { manageProductCategory, errorMsg, successMsg } = useProducts();
 
   const handleSubmit = async (values: ProductCategory) => {
-    if (manageOnSubmit) {
-      manageProductCategory(action, values, onSubmitSuccess);
-    } else {
-      if (onSubmitSuccess) {
-        onSubmitSuccess(values);
-      }
-    }
+    manageProductCategory(action, values, onSubmitSuccess);
   };
 
   const handleDeleteBtn = () => {
@@ -49,7 +41,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
     if (onCancel) {
       onCancel();
     }
-  }
+  };
 
   return (
     <BaseForm 

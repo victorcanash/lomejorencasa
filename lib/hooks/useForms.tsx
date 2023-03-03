@@ -288,6 +288,32 @@ const useForms = () => {
     active: false,
   };
 
+  const packFieldsValidation = {
+    name: Yup.object().shape(localizedTextsFieldsValidation),
+    description: Yup.object().shape(localizedTextsFieldsValidation),
+    price: Yup
+      .number()
+      .min(0)
+      .required(),
+  };
+
+  const packFieldsInitValues = {
+    name: localizedTextsFieldsInitValues,
+    description: localizedTextsFieldsInitValues,
+    price: 0,
+  };
+
+  const packInventoryFieldsValidation = {
+    id: Yup
+      .number()
+      .min(0)
+      .required(),
+  };
+
+  const packInventoryFieldsInitValues = {
+    id: 0,
+  };
+
   // Custom forms validation
 
   const loginFormValidation = Yup.object().shape({
@@ -406,6 +432,16 @@ const useForms = () => {
     active: discountFieldsValidation.active,
   });
 
+  const managePackFormValidation = Yup.object().shape({
+    name: packFieldsValidation.name,
+    description: packFieldsValidation.description,
+    price: packFieldsValidation.price,
+  });
+
+  const managePackInventoryFormValidation = Yup.object().shape({
+    id: packInventoryFieldsValidation.id,
+  });
+
   // Custom form fields
 
   const addressFormFields = (name: string, autoFocus?: boolean) => {
@@ -474,6 +510,8 @@ const useForms = () => {
     categoryFieldsInitValues,
     inventoryFieldsInitValues,
     discountFieldsInitValues,
+    packFieldsInitValues,
+    packInventoryFieldsInitValues,
 
     loginFormValidation,
     registerFormValidation,
@@ -493,6 +531,8 @@ const useForms = () => {
     manageCategoryFormValidation,
     manageInventoryFormValidation,
     manageDiscountFormValidation,
+    managePackFormValidation,
+    managePackInventoryFormValidation,
 
     addressFormFields,
   }

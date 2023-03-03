@@ -14,6 +14,7 @@ type SearchContext = {
   order: string,
   setOrder: Dispatch<SetStateAction<string>>,
   getHref: (categoryName?: string, page?: number, keywords?: string, admin?: boolean) => string,
+  getPacksHref: (page?: number) => string,
 };
 
 const SearchContext = createContext<SearchContext>({
@@ -24,6 +25,7 @@ const SearchContext = createContext<SearchContext>({
   order: 'asc',
   setOrder: () => {},
   getHref: () => '',
+  getPacksHref: () => '',
 });
 
 export const useSearchContext = () => {
@@ -49,6 +51,13 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     return `${pagePath}${queries}`;
   };
 
+  const getPacksHref = (page = 1) => {
+    const pagePath = pages.admin.path;
+    let queries = `?page=${page}&sortBy=${sortBy}&order=${order}`;
+    queries += `&section=${AdminSections.checkProductPacks}`;
+    return `${pagePath}${queries}`;
+  };
+
   return (
     <SearchContext.Provider
       value={{
@@ -59,6 +68,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         order,
         setOrder,
         getHref,
+        getPacksHref,
       }}
     >
       {children}

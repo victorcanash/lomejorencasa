@@ -5,13 +5,14 @@ import { useIntl } from 'react-intl';
 
 import { AdminSections } from '@core/constants/admin';
 import { allProductsName } from '@core/constants/products';
-import type { Product, ProductCategory } from '@core/types/products';
-import { getAllProducts, getProduct } from '@core/utils/products';
+import type { Product, ProductCategory, ProductPack } from '@core/types/products';
+import { getAllProducts, getAllPacks, getProduct } from '@core/utils/products';
 
 import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/search';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { CheckProductsSectionProps } from '@components/admin/sections/CheckProductsSection';
+import { CheckPacksSectionProps } from '@components/admin/sections/CheckPacksSection';
 
 const useAdmin = (checkedPage: boolean) => {
   const { setLoading } = useAppContext();
@@ -22,6 +23,7 @@ const useAdmin = (checkedPage: boolean) => {
 
   const [section, setSection] = useState<AdminSections | undefined>(undefined);
   const [checkProductsProps, setCheckProductsProps] = useState<CheckProductsSectionProps | undefined>(undefined);
+  const [checkPacksProps, setCheckPacksProps] = useState<CheckPacksSectionProps | undefined>(undefined);
 
   const getAdminProduct = useCallback(async (id: number, bigbuyData: boolean, onSuccess: (product: Product) => void) => {
     setLoading(true);
@@ -57,6 +59,25 @@ const useAdmin = (checkedPage: boolean) => {
         setSection(AdminSections.home);
       });
   }, [getAdminProduct, intl.locale, router.query, token]);
+
+  const getCheckPacksProps = useCallback(async (sectionSearch: AdminSections) => {
+    const { page, sortBy, order } = router.query;
+    const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
+    const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
+    const orderSearch = typeof order == 'string' ? order : 'asc';
+
+    await getAllPacks(token, intl.locale, pageSearch, limitByPageSearch, sortBySearch, orderSearch)
+      .then((response: { packs: ProductPack[], totalPages: number, currentPage: number }) => {
+        setCheckPacksProps({
+          packs: response.packs,
+          totalPages: response.totalPages,
+          currentPage: response.currentPage,
+        });
+        setSection(sectionSearch);
+      }).catch((_error: Error) => {
+        setSection(AdminSections.home);
+      });
+  }, [intl.locale, router.query, token]);
   
   useEffect(() => {
     if (checkedPage) {
@@ -70,11 +91,18 @@ const useAdmin = (checkedPage: boolean) => {
             sectionSearch = AdminSections.checkProducts;
             getCheckProductsProps(sectionSearch);
             return;
+          case AdminSections.checkProductPacks.toString():
+            sectionSearch = AdminSections.checkProductPacks;
+            getCheckPacksProps(sectionSearch);
+            return;
           case AdminSections.createProductCategory.toString():
             sectionSearch = AdminSections.createProductCategory;
             break;
           case AdminSections.createProduct.toString():
             sectionSearch = AdminSections.createProduct;
+            break;
+          case AdminSections.createProductPack.toString():
+            sectionSearch = AdminSections.createProductPack;
             break;
           case AdminSections.createFailedOrder.toString():
             sectionSearch = AdminSections.createFailedOrder;
@@ -86,11 +114,12 @@ const useAdmin = (checkedPage: boolean) => {
       }
       setSection(sectionSearch);
     }
-  }, [checkedPage, getCheckProductsProps, router.query.section]);
+  }, [checkedPage, getCheckPacksProps, getCheckProductsProps, router.query.section]);
 
   return {
     section,
     checkProductsProps,
+    checkPacksProps
   };
 };
 

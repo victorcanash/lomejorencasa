@@ -6,8 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
 import AddIcon from '@mui/icons-material/Add';
 import UpdateIcon from '@mui/icons-material/Update';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -16,9 +14,10 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { ManageActions } from '@core/constants/auth';
 import { allProductsName } from "@core/constants/products";
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
-import type { CheckProduct, SelectedModel } from '@core/types/admin';
+import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import Pagination from '@components/ui/Pagination';
 import ManageProductForm from '@components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/admin/ManagePInventoryForm';
 import ManagePDiscountForm from '@components/forms/admin/ManagePDiscountForm';
@@ -58,7 +57,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
       } as CheckProduct;
     })
   );
-  const [selectedModel, setSelectedModel] = useState<SelectedModel>({
+  const [selectedModel, setSelectedModel] = useState<SelectedCheckProduct>({
     product: undefined,
     inventory: undefined,
     discount: undefined,
@@ -393,20 +392,11 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
             ))}
           </Grid>
 
-          <Stack spacing={2} sx={{ mt: 1 }} >
-            <Pagination
-              sx={{
-                display: 'flex', 
-                flexDirection: 'col', 
-                justifyContent: 'center',
-              }}
-              count={totalPages}
-              page={currentPage}
-              onChange={handleChangePage}
-              variant="outlined"
-              shape="rounded"
-            />
-          </Stack>
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onChangePage={handleChangePage}
+          />
         </>
         :
         getManageForm()

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { ManageActions } from '@core/constants/auth';
-import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
+import type { Product, ProductCategory, ProductInventory, ProductDiscount, ProductPack } from '@core/types/products';
 import type { UploadFile } from '@core/types/multimedia';
 import { 
   manageProduct as manageProductMW,
@@ -12,6 +12,7 @@ import {
   manageProductCategory as manageProductCategoryMW,
   manageProductInventory as manageProductInventoryMW,
   manageProductDiscount as manageProductDiscountMW,
+  manageProductPack as manageProductPackMW,
 } from '@core/utils/products';
 
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -262,6 +263,27 @@ const deleteProduct = async (
     }
   };
 
+  const manageProductPack = async (action: ManageActions, productPack: ProductPack, onSuccess?: (productPack: ProductPack) => void) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    manageProductPackMW(action, token, intl.locale, productPack)
+      .then((response: {productPack: ProductPack}) => {
+        onManagePPackSuccess(response.productPack, onSuccess);
+      }).catch((error: Error) => {
+        setErrorMsg(error.message);
+        setLoading(false);
+      });
+  };
+
+  const onManagePPackSuccess = (productPack: ProductPack, onSuccess?: (productPack: ProductPack) => void) => {
+    setLoading(false);
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePPack' }));
+    if (onSuccess) {
+      onSuccess(productPack);
+    }
+  };
+
   return {
     validateProductImgs,
     createProduct,
@@ -270,6 +292,7 @@ const deleteProduct = async (
     manageProductCategory,
     manageProductInventory,
     manageProductDiscount,
+    manageProductPack,
     errorMsg,
     successMsg,
   };
