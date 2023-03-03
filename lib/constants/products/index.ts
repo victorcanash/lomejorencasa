@@ -1,8 +1,8 @@
 export const categoryIds: number[] = [];
 
 export const productIds = {
-  everfresh: 2,
-  bags: 5,
+  everfresh: 1,
+  bags: 3,
 };
 
 export const packIds = {
