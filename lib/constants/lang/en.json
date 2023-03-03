@@ -535,11 +535,11 @@
   "forms.resetPassword.successBtn": "Reset",
 
   "forms.resendActivation.title": "Activate your account",
-  "forms.resendActivation.description": "We have sent an email to {email} with a link to activate your account before you can login. Once you verified your account, proceed to login.",
+  "forms.resendActivation.description": "We have sent an email to {email} with a link to activate your account before you can login. Once you verified your account, proceed to <link>login</link>.",
   "forms.resendActivation.successBtn": "Resend",
   "forms.resendActivation.loginLink": "Proceed to login",
   "forms.resendActivation.received": "Didn't received the email?",
-  "forms.resendActivation.resendTime": "Resend in {timeLeft} second/s",
+  "forms.resendActivation.resendTime": "Resend in {timeLeft}",
   "forms.resendActivation.resendNow": "Resend now",
 
   "forms.contact.normal.description": "Rellena el formulario y te responderemos tan pronto como sea posible.",

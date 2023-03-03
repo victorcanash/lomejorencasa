@@ -1,8 +1,10 @@
+import { ReactNode } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 
-import LinkButton from '@core/components/LinkButton';
+import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import type { FormButtonsNormal } from '@lib/types/forms';
@@ -38,16 +40,17 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
           },
           descriptionTxt: {
             id: 'forms.resendActivation.description',
-            values: { email },
+            values: {
+              'link': (...chunks: ReactNode[]) => (
+                <Link href={pages.login.path} onClick={onClickProceedBtn}>
+                  {chunks}
+                </Link>
+              ),
+              email,
+            },
           },
-          extraElements: <>
-            <LinkButton href={pages.login.path} onClick={onClickProceedBtn}>
-              <FormattedMessage 
-                id="forms.resendActivation.loginLink" 
-              />
-            </LinkButton>
-  
-            <Typography component="h3" variant="body1" sx={{ mt: 4 }}>
+          extraElements: 
+            <Typography component="h3" variant="body1" sx={{ mt: 2 }}>
               <FormattedMessage 
                 id="forms.resendActivation.received" 
               />
@@ -63,7 +66,6 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
                 />
               }
             </Typography>
-          </>,
         }
       ]}
       formButtons={{

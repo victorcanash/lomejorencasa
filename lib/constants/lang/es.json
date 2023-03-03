@@ -540,11 +540,11 @@
   "forms.resetPassword.successBtn": "Resetear",
 
   "forms.resendActivation.title": "Activa tu cuenta",
-  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta antes de que puedas iniciar sesión. Una vez verifiques tu cuenta, procede a iniciar sesión.",
+  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta antes de que puedas iniciar sesión. Una vez verifiques tu cuenta, procede a <link>iniciar sesión</link>.",
   "forms.resendActivation.successBtn": "Reenviar",
   "forms.resendActivation.loginLink": "Proceder a iniciar sesión",
   "forms.resendActivation.received": "No recibiste el correo?",
-  "forms.resendActivation.resendTime": "Reenviar en {timeLeft} segundo/s",
+  "forms.resendActivation.resendTime": "Reenviar en {timeLeft}",
   "forms.resendActivation.resendNow": "Reenviar ahora",
 
   "forms.contact.normal.description": "Rellena el formulario y te responderemos tan pronto como sea posible.",
