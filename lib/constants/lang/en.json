@@ -183,6 +183,7 @@
   "productDetail.metas.description": "Product detail page",
   "productDetail.addCartBtn": "Add to cart",
   "productDetail.original": "Original",
+  "productDetail.withoutPack": "Without Pack",
   "productDetail.shipping.title": "Envíos",
   "productDetail.shipping.1": "Envío gratuito en toda España.",
   "productDetail.shipping.2": "Envío mediante Correos express en 24-48h.",
