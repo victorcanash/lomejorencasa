@@ -1,8 +1,6 @@
 import { ReactNode } from 'react';
 
-import { FormattedMessage } from 'react-intl';
-
-import Typography from '@mui/material/Typography';
+import { useIntl } from 'react-intl';
 
 import Link from '@core/components/Link';
 
@@ -20,6 +18,8 @@ type ResendActivationFormProps = {
 const ResendActivationForm = (props: ResendActivationFormProps) => {
   const { email, onClickProceedBtn } = props;
 
+  const intl = useIntl();
+
   const { sendActivationEmail, errorMsg, successMsg } = useAuth();
   const { trigger, timeLeft, active } = useCountdown();
 
@@ -33,6 +33,7 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
 
   return (
     <BaseForm
+      initialValues={{}}
       formFieldGroups={[
         {
           titleTxt: {
@@ -47,25 +48,10 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
                 </Link>
               ),
               email,
+              resend: timeLeft ? 
+                intl.formatMessage({ id: 'forms.resendActivation.resendTime' }, { timeLeft }) : intl.formatMessage({ id: 'forms.resendActivation.resendNow' }),
             },
           },
-          extraElements: 
-            <Typography component="h3" variant="body1" sx={{ mt: 2 }}>
-              <FormattedMessage 
-                id="forms.resendActivation.received" 
-              />
-              {" "}
-              { timeLeft ?
-                <FormattedMessage 
-                  id="forms.resendActivation.resendTime"
-                  values={{ timeLeft }}
-                />
-                :
-                <FormattedMessage 
-                  id="forms.resendActivation.resendNow"
-                />
-              }
-            </Typography>
         }
       ]}
       formButtons={{

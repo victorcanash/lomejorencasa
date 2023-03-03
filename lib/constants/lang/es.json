@@ -268,7 +268,7 @@
   
   "activation.metas.title": "Activación de Cuenta",
   "activation.metas.description": "Link de activación de cuenta",
-  "activation.successes.default": "Tu cuenta está activada y puedes logearte ahora. Puedes cerrar esta ventana.",
+  "activation.successes.default": "Tu cuenta está activada y puedes logearte ahora.\nPuedes cerrar esta ventana.",
   "activation.successes.email": "Correo para activar tu cuenta enviado",
   "activation.errors.default": "Algo falló, inténtalo otra vez o vuelve a enviar otro correo",
   "activation.errors.alreadyActivated": "Tu cuenta ya estaba activada",
@@ -540,12 +540,10 @@
   "forms.resetPassword.successBtn": "Resetear",
 
   "forms.resendActivation.title": "Activa tu cuenta",
-  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta antes de que puedas iniciar sesión. Una vez verifiques tu cuenta, procede a <link>iniciar sesión</link>.",
+  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta.\n\nUna vez verificada, procede a <link>iniciar sesión</link>.\n\nNo recibiste el correo? {resend}",
   "forms.resendActivation.successBtn": "Reenviar",
-  "forms.resendActivation.loginLink": "Proceder a iniciar sesión",
-  "forms.resendActivation.received": "No recibiste el correo?",
-  "forms.resendActivation.resendTime": "Reenviar en {timeLeft}",
-  "forms.resendActivation.resendNow": "Reenviar ahora",
+  "forms.resendActivation.resendTime": "Reenviar en {timeLeft}.",
+  "forms.resendActivation.resendNow": "Reenviar ahora.",
 
   "forms.contact.normal.description": "Rellena el formulario y te responderemos tan pronto como sea posible.",
   "forms.contact.refundOrder.description": "Rellena el formulario y te responderemos tan pronto como sea posible.\n\nSi el motivo de la devolución es causada por esta dañado el paquete de mensajeria se puede notificar hasta pasadas 48 horas desde que llegó a su domicilio.\n\nSi es porque está defectuoso el producto se puede notificar hasta dos años.",
