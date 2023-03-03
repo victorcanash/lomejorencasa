@@ -78,20 +78,13 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   priority={priorityImg}
                 />
               </div>
-              { !item.inventory && !item.pack &&
-                <Typography component="div" variant="body1">
-                  <FormattedMessage 
-                    id="orderDetail.noProductReference" 
-                  />
-                </Typography>
-              }
             </Link>
         </Grid>
 
-        { (item.inventory || item.pack) &&
-          <Grid item xs={8} sm={9} md={10} container>
+        <Grid item xs={8} sm={9} md={10} container>
+          { (item.inventory || item.pack) ?
             <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs sx={item.quantity <= 0 ? { color: 'grey' } : undefined}>
+              <Grid item xs sx={item.quantity <= 0 ? { color: 'text.disabled' } : undefined}>
                 <Typography gutterBottom component="div" variant="body1">
                   {item.inventory?.product.name.current || item.pack?.name.current}
                 </Typography>
@@ -141,21 +134,30 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   }
                 </Grid>
               }
-
             </Grid>
-
-            <Grid item>
-              <Typography 
-                component="div" 
-                variant="body1" 
-                color={!availableQuantity ? { color: 'text.disabled' } : undefined}
-                fontWeight={500}
-              >
-                { itemTotalPriceString(item) }
-              </Typography>
+            :
+            <Grid item xs container direction="column" spacing={2}>
+              <Grid item xs sx={{ color: 'text.disabled' }}>
+                <Typography component="div" variant="body1">
+                  <FormattedMessage 
+                    id="orderDetail.noProductReference" 
+                  />
+                </Typography>
+              </Grid>
             </Grid>
+          }
+
+          <Grid item>
+            <Typography 
+              component="div" 
+              variant="body1" 
+              color={!availableQuantity ? { color: 'text.disabled' } : undefined}
+              fontWeight={500}
+            >
+              { itemTotalPriceString(item) }
+            </Typography>
           </Grid>
-        }
+        </Grid> 
       </Grid>
     </>
   );
