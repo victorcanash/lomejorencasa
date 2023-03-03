@@ -114,7 +114,7 @@ const Cart: NextPage = () => {
                 <LinkButton
                   href={pages.checkout.path}
                   startIcon={<PointOfSaleIcon />}
-                  disabled={totalPrice <= 0}
+                  disabled={/*totalPrice <= 0*/true}
                 >
                   <FormattedMessage id="cart.checkoutBtn" />
                 </LinkButton>
