@@ -142,7 +142,8 @@ export const convertToProduct = (item: Product | ProductPack | CartItem | GuestC
   } 
   if ((item as ProductPack)?.inventories) {
     return getProductByPack(item as ProductPack);
-  } else if ((item as CartItem | GuestCartCheckItem)?.inventory) {
+  } else if ((item as CartItem | GuestCartCheckItem)?.inventory || 
+             (item as CartItem | GuestCartCheckItem)?.pack ) {
     return getProductByCartItem(item as (CartItem | GuestCartCheckItem));
   }
   return undefined;
