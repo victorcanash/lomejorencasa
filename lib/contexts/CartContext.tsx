@@ -77,6 +77,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       ...cart,
       items: [],
     })
+    setTotalQuantity(0);
+    setTotalPrice(0);
   };
 
   const removeCart = () => {
