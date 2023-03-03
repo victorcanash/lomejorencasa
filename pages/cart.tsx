@@ -93,7 +93,7 @@ const Cart: NextPage = () => {
               showEmptyItems={true}
             />
             :
-            <Typography component='div' variant='body1' align='center' sx={{ my: 5 }}>
+            <Typography component='div' variant='body1' sx={{ my: 5, textAlign: 'center' }}>
               <FormattedMessage id="cart.noItems" />
             </Typography>
           }

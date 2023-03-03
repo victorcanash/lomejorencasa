@@ -15,7 +15,7 @@ const useSelectInventoryQuantity = (
   const [menuItems, setMenuItems] = useState<JSX.Element[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [prevItem, setPrevItem] = useState<ProductInventory | ProductPack | undefined>(undefined);
-
+  
   const currentItem = useCallback(() => {
     if ((item as ProductInventory)?.sku) {
       return item as ProductInventory;
@@ -32,25 +32,31 @@ const useSelectInventoryQuantity = (
   const checkMenuItems = useCallback((newQuantity: number) => {
     const newMenuItems = [] as JSX.Element[];
     const menuItemsValues = [] as number[];
-    const itemQuantity = currentItem()?.quantity || 0;
-    let maxBigbuyQuantity = newQuantity + rangeChangeItemQuantity;
-    if (maxBigbuyQuantity > itemQuantity) {
-      maxBigbuyQuantity = itemQuantity;
-    }
-    let minBigbuyQuantity = newQuantity - rangeChangeItemQuantity;
-    if (minBigbuyQuantity < 0) {
-      minBigbuyQuantity = 0;
-    }
-
-    if (newQuantity == 0) {
-      menuItemsValues.push(0);
-    }
-    if (itemQuantity > 0) {
-      if (minBigbuyQuantity > 2) {
-        menuItemsValues.push(1, 2);
+    const cItem = currentItem();
+    
+    if (!cItem) {
+      menuItemsValues.push(newQuantity);
+    } else {
+      const itemQuantity = cItem.quantity;
+      let maxBigbuyQuantity = newQuantity + rangeChangeItemQuantity;
+      if (maxBigbuyQuantity > itemQuantity) {
+        maxBigbuyQuantity = itemQuantity;
       }
-      for (let i = minBigbuyQuantity; i < maxBigbuyQuantity; i++) {
-        menuItemsValues.push(i + 1);
+      let minBigbuyQuantity = newQuantity - rangeChangeItemQuantity;
+      if (minBigbuyQuantity < 0) {
+        minBigbuyQuantity = 0;
+      }
+
+      if (newQuantity == 0) {
+        menuItemsValues.push(0);
+      }
+      if (itemQuantity > 0) {
+        if (minBigbuyQuantity > 2) {
+          menuItemsValues.push(1, 2);
+        }
+        for (let i = minBigbuyQuantity; i < maxBigbuyQuantity; i++) {
+          menuItemsValues.push(i + 1);
+        }
       }
     }
 

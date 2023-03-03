@@ -82,70 +82,66 @@ const CartItemDetail = (props: CartItemDetailProps) => {
         </Grid>
 
         <Grid item xs={8} sm={9} md={10} container>
-          { (item.inventory || item.pack) ?
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs sx={item.quantity <= 0 ? { color: 'text.disabled' } : undefined}>
-                <Typography gutterBottom component="div" variant="body1">
-                  {item.inventory?.product.name.current || item.pack?.name.current}
-                </Typography>
-                { item.inventory &&
-                  <>
-                    <Typography component="div" variant="body2">
-                      {item.inventory.name.current}
-                    </Typography>
-                    <Typography component="div" variant="body2">
-                    {`${intl.formatMessage({ id: 'forms.sku' })}: ${item.inventory.sku}`}
-                    </Typography>
-                  </>
-                }
-                { !updateQuantity &&
-                  <Typography component="div" variant="body2">
-                    {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
+          <Grid item xs container direction="column" spacing={2}>
+            <Grid item xs sx={item.quantity <= 0 || (!item.inventory && !item.pack) ? { color: 'text.disabled' } : undefined}>
+              { (item.inventory || item.pack) ?
+                <>
+                  <Typography gutterBottom component="div" variant="body1">
+                    {item.inventory?.product.name.current || item.pack?.name.current}
                   </Typography>
-                }
-              </Grid>
-
-              { updateQuantity &&
-                <Grid item>
-                  <SelectQuantity />
-
-                  <Tooltip 
-                    title={intl.formatMessage({ id: 'app.deleteBtn' })} 
-                    placement='top'
-                  >
-                    <IconButton 
-                      onClick={handleRemoveItem}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Tooltip>
-
-                  { item.quantity <= 0 &&
-                    <Typography 
-                      variant="body2"
-                      mt="5px"
-                      color={!availableQuantity ? { color: 'text.disabled' } : undefined}
-                    >
-                      { !availableQuantity ? 
-                        intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
-                        intl.formatMessage({ id: 'cart.inventoryAvailable' })
-                      }
-                    </Typography>
+                  { item.inventory &&
+                    <>
+                      <Typography component="div" variant="body2">
+                        {item.inventory.name.current}
+                      </Typography>
+                      <Typography component="div" variant="body2">
+                      {`${intl.formatMessage({ id: 'forms.sku' })}: ${item.inventory.sku}`}
+                      </Typography>
+                    </>
                   }
-                </Grid>
-              }
-            </Grid>
-            :
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs sx={{ color: 'text.disabled' }}>
+                </>
+                :
                 <Typography component="div" variant="body1">
                   <FormattedMessage 
                     id="orderDetail.noProductReference" 
                   />
                 </Typography>
-              </Grid>
+              }
+              { !updateQuantity &&
+                <Typography component="div" variant="body2">
+                  {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
+                </Typography>
+              }
             </Grid>
-          }
+
+            { updateQuantity &&
+              <Grid item>
+                <SelectQuantity />
+                <Tooltip 
+                  title={intl.formatMessage({ id: 'app.deleteBtn' })} 
+                  placement='top'
+                >
+                  <IconButton 
+                    onClick={handleRemoveItem}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Tooltip>
+                { ((item.inventory || item.pack) && item.quantity <= 0) &&
+                  <Typography 
+                    variant="body2"
+                    mt="5px"
+                    color={!availableQuantity ? { color: 'text.disabled' } : undefined}
+                  >
+                    { !availableQuantity ? 
+                      intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
+                      intl.formatMessage({ id: 'cart.inventoryAvailable' })
+                    }
+                  </Typography>
+                }
+              </Grid>
+            }
+          </Grid>
 
           <Grid item>
             <Typography 
