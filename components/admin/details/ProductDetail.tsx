@@ -9,8 +9,8 @@ import Box from '@mui/material/Box';
 
 import type { Product } from '@core/types/products';
 
-import { getProductDetailImgsUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 type ProductDetailProps = {
   product: Product,
@@ -21,6 +21,7 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { product, created } = props;
 
   const { productCategories } = useSearchContext();
+  const { getProductDetailImgsUrl } = useProductsContext();
 
   const intl = useIntl();
 

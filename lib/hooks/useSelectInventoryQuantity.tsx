@@ -4,23 +4,27 @@ import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 import { rangeChangeItemQuantity } from '@core/constants/cart';
-import type { ProductInventory } from '@core/types/products';
+import type { ProductInventory, ProductPack } from '@core/types/products';
 import type { CartItem } from '@core/types/cart';
 
 const useSelectInventoryQuantity = (
-  item: ProductInventory | CartItem | undefined, 
+  item: ProductInventory | ProductPack | CartItem | undefined, 
   onChange?: (quantity: number) => void,
 ) => {
   const [selectedQuantity, setSelectedQuantity] = useState(0);
   const [menuItems, setMenuItems] = useState<JSX.Element[]>([]);
   const [loaded, setLoaded] = useState(false);
-  const [prevItem, setPrevItem] = useState<ProductInventory | undefined>(undefined);
+  const [prevItem, setPrevItem] = useState<ProductInventory | ProductPack | undefined>(undefined);
 
-  const currentInventory = useCallback(() => {
+  const currentItem = useCallback(() => {
     if ((item as ProductInventory)?.sku) {
       return item as ProductInventory;
+    } else if ((item as ProductPack)?.inventories) {
+      return item as ProductPack;
     } else if ((item as CartItem)?.inventory) {
       return (item as CartItem).inventory;
+    } else if ((item as CartItem)?.pack) {
+      return (item as CartItem).pack;
     }
     return undefined;
   }, [item]);
@@ -28,10 +32,10 @@ const useSelectInventoryQuantity = (
   const checkMenuItems = useCallback((newQuantity: number) => {
     const newMenuItems = [] as JSX.Element[];
     const menuItemsValues = [] as number[];
-    const inventoryQuantity = currentInventory()?.quantity || 0;
+    const itemQuantity = currentItem()?.quantity || 0;
     let maxBigbuyQuantity = newQuantity + rangeChangeItemQuantity;
-    if (maxBigbuyQuantity > inventoryQuantity) {
-      maxBigbuyQuantity = inventoryQuantity;
+    if (maxBigbuyQuantity > itemQuantity) {
+      maxBigbuyQuantity = itemQuantity;
     }
     let minBigbuyQuantity = newQuantity - rangeChangeItemQuantity;
     if (minBigbuyQuantity < 0) {
@@ -41,7 +45,7 @@ const useSelectInventoryQuantity = (
     if (newQuantity == 0) {
       menuItemsValues.push(0);
     }
-    if (inventoryQuantity > 0) {
+    if (itemQuantity > 0) {
       if (minBigbuyQuantity > 2) {
         menuItemsValues.push(1, 2);
       }
@@ -58,11 +62,11 @@ const useSelectInventoryQuantity = (
       );
     }
     return newMenuItems;
-  }, [currentInventory]);
+  }, [currentItem]);
 
   const disabled = () => {
-    const inventory = currentInventory();
-    if (!inventory || inventory.quantity <= 0) {
+    const cItem = currentItem();
+    if (!cItem || cItem.quantity <= 0) {
       return true;
     }
     return false;
@@ -80,7 +84,7 @@ const useSelectInventoryQuantity = (
   useEffect(() => {
     if (!loaded) {
       let quantity = item?.quantity || 0;
-      if ((item as ProductInventory)?.sku) {
+      if ((item as ProductInventory)?.sku || (item as ProductPack)?.inventories) {
         if (item?.quantity && item.quantity > 0) {
           quantity = 1;
         } else {
@@ -90,8 +94,9 @@ const useSelectInventoryQuantity = (
       setSelectedQuantity(quantity);
       setMenuItems(checkMenuItems(quantity));
       setLoaded(true);
-    } else if ((item as ProductInventory)?.sku) {
-      if ((item as ProductInventory).sku !== prevItem?.sku){
+    } else if ((item as ProductInventory)?.sku || (item as ProductPack)?.inventories) {
+      if (((item as ProductInventory)?.sku !== (prevItem as ProductInventory)?.sku) ||
+          ((item as ProductPack)?.inventories !== (prevItem as ProductPack)?.inventories)){
         let quantity = 0;
         if (item?.quantity && item.quantity > 0) {
           quantity = 1;
@@ -102,6 +107,8 @@ const useSelectInventoryQuantity = (
     }
     if ((item as ProductInventory)?.sku) {
       setPrevItem(item as ProductInventory);
+    } else if ((item as ProductPack)?.inventories) {
+      setPrevItem(item as ProductPack);
     }
   }, [checkMenuItems, item, item?.quantity, loaded, prevItem]);
 

@@ -45,6 +45,7 @@ export type ProductPack = {
   price: number,
   quantity: number,
   originalPrice: number,
+  discountPercent: number,
   inventories: ProductInventory[],
   inventoriesIds: number[],
 };

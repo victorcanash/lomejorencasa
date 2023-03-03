@@ -17,7 +17,7 @@ import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { isEverfreshProduct, isBagsProduct } from '@lib/utils/products';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 type DetailCharacteristicsProps = {
   product: Product,
@@ -25,6 +25,8 @@ type DetailCharacteristicsProps = {
 
 const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
   const { product } = props;
+
+  const { isEverfreshProduct, isBagsProduct } = useProductsContext();
 
   const characteristicsGroup = (
     title: FormatText,

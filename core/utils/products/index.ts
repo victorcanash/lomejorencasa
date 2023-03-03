@@ -136,11 +136,30 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
   });
 };
 
-export const getProductByCartItem = (item: CartItem | GuestCartCheckItem) => {
+export const convertToProduct = (item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
+  if ((item as Product)?.categoryId) {
+    return item as Product;
+  } 
+  if ((item as ProductPack)?.inventories) {
+    return getProductByPack(item as ProductPack);
+  } else if ((item as CartItem | GuestCartCheckItem)?.inventory) {
+    return getProductByCartItem(item as (CartItem | GuestCartCheckItem));
+  }
+  return undefined;
+};
+
+const getProductByCartItem = (item: CartItem | GuestCartCheckItem) => {
   if (item.inventory?.product) {
     return item.inventory.product;
   }  else if (item.pack?.inventories && item.pack.inventories.length > 0 && item.pack.inventories[0].product) {
     return item.pack.inventories[0].product;
+  }
+  return undefined;
+};
+
+const getProductByPack = (pack: ProductPack) => {
+  if (pack.inventories && pack.inventories.length > 0 && pack.inventories[0].product) {
+    return pack.inventories[0].product;
   }
   return undefined;
 };

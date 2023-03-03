@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { useState } from 'react';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
@@ -9,14 +9,14 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import type { Product } from '@core/types/products';
+import type { Product, ProductInventory, ProductPack } from '@core/types/products';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { isEverfreshProduct, isBagsProduct, getProductDetailImgsUrl } from '@lib/utils/products';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
@@ -31,11 +31,26 @@ type ProductDetailProps = {
 const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
+  const { 
+    isEverfreshProduct, 
+    isBagsProduct, 
+    getProductPacks, 
+    getProductDetailImgsUrl,
+  } = useProductsContext();
+
   const intl = useIntl();
 
   const { addCartItem } = useCart();
-  const { Select: SelectInventory, selectedInventory } = useSelectInventory(product);
+  const { 
+    Select: SelectInventory,
+    selectedInventory,
+  } = useSelectInventory(
+    product, 
+    getProductPacks(product).length > 0 ? getProductPacks(product)[0] : undefined
+  );
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
+
+  const [_packs, _setPacks] = useState<ProductPack[]>(getProductPacks(product))
 
   const onClickAddCartBtn = () => {
     if (selectedInventory) {
@@ -52,6 +67,33 @@ const ProductDetail = (props: ProductDetailProps) => {
     return `${product.name.current}`;
   };
 
+  const productPrice = () => {
+    if ((selectedInventory as ProductInventory)?.realPrice) {
+      return (selectedInventory as ProductInventory).realPrice;
+    } else if ((selectedInventory as ProductPack)?.inventories) {
+      return (selectedInventory as ProductPack).price;
+    }
+    return product.lowestRealPrice;
+  };
+
+  const productOriginalPrice = () => {
+    if ((selectedInventory as ProductInventory)?.realPrice) {
+      return (selectedInventory as ProductInventory).price;
+    } else if ((selectedInventory as ProductPack)?.inventories) {
+      return (selectedInventory as ProductPack).originalPrice;
+    }
+    return product.lowestPrice;
+  };
+
+  const productDiscountPercent = () => {
+    if ((selectedInventory as ProductInventory)?.realPrice) {
+      return product.activeDiscount?.discountPercent;
+    } else if ((selectedInventory as ProductPack)?.inventories) {
+      return (selectedInventory as ProductPack).discountPercent;
+    }
+    return product.activeDiscount?.discountPercent;
+  };
+
   const productDescriptionId = () => {
     if (isEverfreshProduct(product)) { 
       return 'everfresh.description';
@@ -65,7 +107,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     if (isEverfreshProduct(product)) {
       return (
         <>
-          <Typography component="div" variant="body1" sx={{ mb: 4 }}>
+          <Typography component="div" variant="body1" mb={4}>
             <FormattedMessage id="everfresh.comment" />
           </Typography>
           <LinkButton 
@@ -81,21 +123,6 @@ const ProductDetail = (props: ProductDetailProps) => {
     } else if (isBagsProduct(product)) {
       return (
         <>
-          <Box mb={4}>
-            <Typography component="div" variant="body1" sx={{ mb: 1 }}>
-              <FormattedMessage id="bags.types.title" />
-            </Typography>
-            { [1,2,3,4,5,6].map((_item, index) => (
-              <Fragment key={index}>
-                <Typography component="div" variant="body1" sx={{ mb: 1, marginInlineStart: '15px' }}>
-                  <Box sx={{ display: 'inline-block' }}>
-                    {`${intl.formatMessage({ id: `bags.types.${index + 1}.title` })}:`}
-                  </Box>
-                  {` ${intl.formatMessage({ id: `bags.types.${index + 1}.content` })}`}
-                </Typography>
-              </Fragment>
-            ))}
-          </Box>
           <LinkButton 
             href={pages.everfresh.path}
             sx={convertElementToSx(themeCustomElements.button.action)}
@@ -159,22 +186,23 @@ const ProductDetail = (props: ProductDetailProps) => {
                 <FormattedMessage id={productTitleId()} />
               </Typography>
               {/* Price */}  
-              { product.activeDiscount ?
+              { (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ?
                 <Box sx={{ mb: 3 }}>
                   <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-                    {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
+                    {`${productPrice()} €`} 
                   </Typography>
                   <Typography component="span" variant="body1">
-                    <FormattedMessage id="productDetail.original" />: <s>{selectedInventory ? selectedInventory.price : product.lowestPrice} €</s>
-                  </Typography> 
+                    {`${intl.formatMessage({ id: 'productDetail.original' })}:`}
+                    <s>{` ${productOriginalPrice()} €`}</s>
+                  </Typography>
                   <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
-                    {` -${product.activeDiscount.discountPercent}%`}
-                  </Typography> 
+                    {` -${productDiscountPercent()}%`}
+                  </Typography>
                 </Box>
                 :
                 <Box sx={{ mb: 3 }}>
                   <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-                    {selectedInventory ? selectedInventory.realPrice : product.lowestRealPrice} €
+                    {`${productPrice()} €`} 
                   </Typography>
                 </Box>
               }

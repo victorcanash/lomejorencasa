@@ -24,7 +24,9 @@ const Bags: NextPage = () => {
       />
 
       { bagsProduct &&
-        <ProductDetail product={bagsProduct} />
+        <ProductDetail 
+          product={bagsProduct}
+        />
       }
     </>
   );

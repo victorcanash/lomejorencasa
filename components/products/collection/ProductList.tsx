@@ -20,8 +20,8 @@ import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { getProductImgUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import Pagination from '@components/ui/Pagination';
 
 type ProductListProps = {
@@ -36,6 +36,7 @@ const ProductList = (props: ProductListProps) => {
   const { category, products, totalPages, currentPage, keywords } = props;
 
   const { getHref } = useSearchContext();
+  const { getProductImgUrl } = useProductsContext();
 
   const router = useRouter();
 

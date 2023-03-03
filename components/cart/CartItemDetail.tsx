@@ -13,7 +13,7 @@ import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { itemTotalPriceString, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 
-import { getProductPageUrl, getProductImgUrl } from '@lib/utils/products';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 
 type CartItemDetailProps = {
@@ -24,6 +24,8 @@ type CartItemDetailProps = {
 
 const CartItemDetail = (props: CartItemDetailProps) => {
   const { item, updateQuantity, priorityImg } = props;
+
+  const { getProductPageUrl, getProductImgUrl } = useProductsContext();
 
   const intl = useIntl();
   const { Select: SelectQuantity } = useSelectInventoryQuantity(

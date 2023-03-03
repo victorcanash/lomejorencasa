@@ -23,7 +23,9 @@ const Product: NextPage<ProductProps> = (props) => {
         marginTop={true}
       />
 
-      <ProductDetail product={product} />
+      <ProductDetail 
+        product={product}
+      />
     </>
   );
 };

@@ -13,10 +13,12 @@ import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { getProductBannerImgsUrl } from '@lib/utils/products';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import MultimediaContainer from '@components/ui/MultimediaContainer';
 
 const HomeBanner = () => {
+  const { getProductBannerImgsUrl } = useProductsContext();
+
   const isXsBreakpoint = useMediaQuery('(max-width:500px)');
   const isMdBreakpoint = useMediaQuery('(max-width:600px)');
   const isLgBreakpoint = useMediaQuery('(max-width:750px)');

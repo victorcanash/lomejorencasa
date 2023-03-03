@@ -12,8 +12,8 @@ import type { Product } from '@core/types/products';
 import type { Source, UploadFile } from '@core/types/multimedia';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
-import { getProductDetailImgsUrl } from '@lib/utils/products';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useForms from '@lib/hooks/useForms';
 import useProducts from '@lib/hooks/useProducts';
 import BaseForm from '@components/forms/BaseForm';
@@ -37,6 +37,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   } = props;
 
   const { productCategories } = useSearchContext();
+  const { getProductDetailImgsUrl } = useProductsContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
   const { validateProductImgs, updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();

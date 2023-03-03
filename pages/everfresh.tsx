@@ -24,7 +24,9 @@ const Everfresh: NextPage = () => {
       />
 
       { everfreshProduct &&
-        <ProductDetail product={everfreshProduct} />
+        <ProductDetail 
+          product={everfreshProduct}
+        />
       }
     </>
   );

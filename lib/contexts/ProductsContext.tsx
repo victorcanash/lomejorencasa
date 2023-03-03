@@ -1,43 +1,53 @@
 import { createContext, useState, useContext } from 'react';
+import { StaticImageData } from 'next/image';
 
 import type { Product, ProductPack } from '@core/types/products';
-
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { 
-  isEverfreshProduct, 
-  isBagsProduct, 
-  isEverfreshPack,
-  isBagsXSPack,
-  isBagsSPack,
-  isBagsMPack,
-  isBagsLPack,
-  isBagsXLPack,
-  isBagsMixPack,
-} from '@lib/utils/products';
+  convertToProduct,
+  getProductImgUrl as getProductImgUrlMW, 
+  getAllProductImgsUrl as getAllProductImgsUrlMW,
+} from '@core/utils/products';
+
+import { pages } from '@lib/constants/navigation';
+import { productIds } from '@lib/constants/products'
+import placeholder from 'public/images/placeholder.jpeg';
+import detail_everfresh1 from 'public/images/everfresh/everfresh1.jpg';
+import detail_everfresh2 from 'public/images/everfresh/everfresh2.jpg';
+import detail_everfresh3 from 'public/images/everfresh/everfresh3.jpg';
+import detail_everfresh4 from 'public/images/everfresh/everfresh4.jpg';
+import detail_bags1 from 'public/images/bags/bags1.jpg';
+import detail_bags2 from 'public/images/bags/bags2.jpg';
+import detail_bags3 from 'public/images/bags/bags3.jpg';
+import banner_everfresh1 from 'public/images/banner/everfresh1.jpg';
+import banner_everfresh2 from 'public/images/banner/everfresh2.jpg';
+import banner_everfresh3 from 'public/images/banner/everfresh3.jpg';
+import banner_everfresh4 from 'public/images/banner/everfresh4.jpg';
 
 type ProductsContext = {
   everfreshProduct: Product | undefined,
   bagsProduct: Product | undefined,
-  everfreshPack: ProductPack | undefined,
-  bagsXSPack: ProductPack | undefined,
-  bagsSPack: ProductPack | undefined,
-  bagsMPack: ProductPack | undefined,
-  bagsLPack: ProductPack | undefined,
-  bagsXLPack: ProductPack | undefined,
-  bagsMixPack: ProductPack | undefined,
   initProducts: (newProducts: Product[], newPacks: ProductPack[]) => void,
+  isEverfreshProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
+  isBagsProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
+  getProductPageUrl: (item: Product | CartItem | GuestCartCheckItem) => string,
+  getProductPacks: (product: Product) => ProductPack[],
+  getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string | StaticImageData,
+  getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[] | StaticImageData[],
+  getProductBannerImgsUrl: () => StaticImageData[],
 };
 
 const ProductsContext = createContext<ProductsContext>({
   everfreshProduct: undefined,
   bagsProduct: undefined,
-  everfreshPack: undefined,
-  bagsXSPack: undefined,
-  bagsSPack: undefined,
-  bagsMPack: undefined,
-  bagsLPack: undefined,
-  bagsXLPack: undefined,
-  bagsMixPack: undefined,
   initProducts: () => {},
+  isEverfreshProduct: () => false,
+  isBagsProduct: () => false,
+  getProductPageUrl: () => '',
+  getProductPacks: () => [],
+  getProductImgUrl: () => '',
+  getProductDetailImgsUrl: () => [],
+  getProductBannerImgsUrl: () => [],
 });
 
 export const useProductsContext = () => {
@@ -45,20 +55,14 @@ export const useProductsContext = () => {
   if (!context) {
     throw new Error('Error while reading ProductsContext');
   }
-
   return context;
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
   const [everfreshProduct, setEverfreshProduct] = useState<Product | undefined>(undefined);
   const [bagsProduct, setBagsProduct] = useState<Product | undefined>(undefined);
-  const [everfreshPack, setEverfreshPack] = useState<ProductPack | undefined>(undefined);
-  const [bagsXSPack, setBagsXSPack] = useState<ProductPack | undefined>(undefined);
-  const [bagsSPack, setBagsSPack] = useState<ProductPack | undefined>(undefined);
-  const [bagsMPack, setBagsMPack] = useState<ProductPack | undefined>(undefined);
-  const [bagsLPack, setBagsLPack] = useState<ProductPack | undefined>(undefined);
-  const [bagsXLPack, setBagsXLPack] = useState<ProductPack | undefined>(undefined);
-  const [bagsMixPack, setBagsMixPack] = useState<ProductPack | undefined>(undefined);
+  const [everfreshPacks, setEverfreshPacks] = useState<ProductPack[]>([]);
+  const [bagsPacks, setBagsPacks] = useState<ProductPack[]>([]);
 
   const initProducts = (products: Product[], packs: ProductPack[]) => {
     products.forEach((item) => {
@@ -69,22 +73,96 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       }
     });
     packs.forEach((item) => {
-      if (isEverfreshPack(item)) {
-        setEverfreshPack(item);
-      } else if (isBagsXSPack(item)) {
-        setBagsXSPack(item);
-      } else if (isBagsSPack(item)) {
-        setBagsSPack(item);
-      } else if (isBagsMPack(item)) {
-        setBagsMPack(item);
-      } else if (isBagsLPack(item)) {
-        setBagsLPack(item);
-      } else if (isBagsXLPack(item)) {
-        setBagsXLPack(item);
-      } else if (isBagsMixPack(item)) {
-        setBagsMixPack(item);
+      if (isEverfreshProduct(item)) {
+        setEverfreshPacks(current => [...current, item]);
+      }
+      if (isBagsProduct(item)) {
+        setBagsPacks(current => [...current, item]);
       }
     });
+  };
+
+  const isEverfreshProduct = (item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
+    const product = convertToProduct(item);
+    if (product?.id === productIds.everfresh) {
+      return true;
+    }
+    return false;
+  };
+  
+  const isBagsProduct = (item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
+    const product = convertToProduct(item);
+    if (product?.id === productIds.bags) {
+      return true;
+    }
+    return false;
+  };
+
+  const getProductPageUrl = (item: Product | CartItem | GuestCartCheckItem) => {
+    const product = convertToProduct(item);
+    if (product) {
+      if (isEverfreshProduct(product)) {
+        return `${pages.everfresh.path}`;
+      } else if (isBagsProduct(product)) {
+        return `${pages.bags.path}`;
+      }
+      return `${pages.productDetail.path}/${product.name.current}?id=${product.id}`;
+    }
+    return pages.productList.path;
+  };
+
+  const getProductPacks = (product: Product) => {
+    if (isEverfreshProduct(product)) {
+      return everfreshPacks;
+    } else if (isBagsProduct(product)) {
+      return bagsPacks;
+    }
+    return [];
+  };
+  
+  const getProductImgUrl = (item: Product | CartItem | GuestCartCheckItem, index = 0) => {
+    const product = convertToProduct(item);
+    if (product) {
+      if (isEverfreshProduct(product)) {
+        return detail_everfresh1;
+      } else if (isBagsProduct(product)) {
+        return detail_bags1;
+      }
+      return getProductImgUrlMW(product, index) || placeholder;
+    }
+    return placeholder;
+  };
+  
+  const getProductDetailImgsUrl = (item: Product | CartItem | GuestCartCheckItem) => {
+    const product = convertToProduct(item);
+    if (product) {
+      if (isEverfreshProduct(product)) {
+        return [
+          detail_everfresh1, 
+          detail_everfresh2, 
+          detail_everfresh3, 
+          detail_everfresh4
+        ];
+      } else if (isBagsProduct(product)) {
+        return [
+          detail_bags1, 
+          detail_bags2, 
+          detail_bags3
+        ];
+      }
+      const imgsUrl = getAllProductImgsUrlMW(product);
+      return imgsUrl.length >= 1 ? imgsUrl : [placeholder]
+    }
+    return [placeholder];
+  };
+  
+  const getProductBannerImgsUrl = () => {
+    return [
+      banner_everfresh1, 
+      banner_everfresh2, 
+      banner_everfresh3, 
+      banner_everfresh4
+    ];
   };
 
   return (
@@ -92,14 +170,14 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       value={{
         everfreshProduct,
         bagsProduct,
-        everfreshPack,
-        bagsXSPack,
-        bagsSPack,
-        bagsMPack,
-        bagsLPack,
-        bagsXLPack,
-        bagsMixPack,
         initProducts,
+        isEverfreshProduct,
+        isBagsProduct,
+        getProductPageUrl,
+        getProductPacks,
+        getProductImgUrl,
+        getProductDetailImgsUrl,
+        getProductBannerImgsUrl,
       }}
     >
       {children}

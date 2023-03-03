@@ -7,7 +7,7 @@ import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
 import { init } from '@core/utils/auth';
 
-import { categoryIds, productIds, packIds } from '@lib/constants/products';
+import { allCategoryIds, allProductIds, allPackIds } from '@lib/constants/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
@@ -34,9 +34,9 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
     if (layoutComponent != LinkLayout) {
       await init(
         intl.locale,
-        categoryIds,
-        [productIds.everfresh, productIds.bags],
-        [packIds.everfresh, packIds.bagsXS, packIds.bagsS, packIds.bagsM, packIds.bagsL, packIds.bagsXL, packIds.bagsMix]
+        allCategoryIds,
+        allProductIds,
+        allPackIds
       ).then(async (
           response: {
             productCategories: ProductCategory[], 
