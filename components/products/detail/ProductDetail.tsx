@@ -192,11 +192,10 @@ const ProductDetail = (props: ProductDetailProps) => {
                     {`${productPrice()} €`} 
                   </Typography>
                   <Typography component="span" variant="body1">
-                    {`${(selectedInventory as ProductPack)?.inventories ? 
-                        intl.formatMessage({ id: 'productDetail.withoutPack' }) :
-                        intl.formatMessage({ id: 'productDetail.original' })}
-                    :`}
-                    <s>{` ${productOriginalPrice()}`}</s>{' €'}
+                    {(selectedInventory as ProductPack)?.inventories ? 
+                      `${intl.formatMessage({ id: 'productDetail.withoutPack' })}:`:
+                      `${intl.formatMessage({ id: 'productDetail.original' })}:`
+                    }<s>{` ${productOriginalPrice()}`}</s>{' €'}
                   </Typography>
                   <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
                     {` -${productDiscountPercent()}%`}
