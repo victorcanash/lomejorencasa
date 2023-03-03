@@ -1,5 +1,7 @@
 import { useRef, useEffect, useCallback, ReactNode } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import type { Product, ProductCategory, ProductPack } from '@core/types/products';
 import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
@@ -21,6 +23,8 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
   const { initCart } = useCartContext();
   const { setToken, setUser, setBraintreeToken } = useAuthContext();
 
+  const intl = useIntl();
+
   const { initForms } = useForms();
 
   const firstRenderRef = useRef(false);
@@ -29,6 +33,7 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
     initForms();
     if (layoutComponent != LinkLayout) {
       await init(
+        intl.locale,
         categoryIds,
         [productIds.everfresh, productIds.bags],
         //[packIds.everfresh, packIds.bagsXS, packIds.bagsS, packIds.bagsM, packIds.bagsL, packIds.bagsXL, packIds.bagsMix]
@@ -59,7 +64,7 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, layoutComponent, setBraintreeToken, setInitialized, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, layoutComponent, setBraintreeToken, setInitialized, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current) {
