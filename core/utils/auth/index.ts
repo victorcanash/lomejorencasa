@@ -20,7 +20,7 @@ import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { convertCartToGuestCart, convertGuestCartCheckToCart, getGuestCart } from '@core/utils/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 
-export const init = async (categoryIds: number[], productIds: number[], packIds: number[]) => {
+export const init = async (currentLocale: string, categoryIds: number[], productIds: number[], packIds: number[]) => {
   const guestCart = await getGuestCart();
   return new Promise<{
     productCategories: ProductCategory[],
@@ -33,7 +33,10 @@ export const init = async (categoryIds: number[], productIds: number[], packIds:
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
-      headers: getAuthHeaders(token),
+      headers: {
+        ...getAuthHeaders(token),
+        ...getLanguageHeaders(currentLocale),
+      },
     } as AxiosRequestConfig : undefined;
     axios.post('/auth/init', { 
       categoryIds, 
