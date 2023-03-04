@@ -164,7 +164,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             }
           </Grid>
 
-          <Grid item>
+          <Grid item ml={1}>
             <Typography 
               component="div" 
               variant="body1" 
