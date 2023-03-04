@@ -1,9 +1,10 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Fragment } from 'react';
 import Image from 'next/image';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
@@ -89,15 +90,33 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   <Typography gutterBottom component="div" variant="body1">
                     {item.inventory?.product.name.current || item.pack?.name.current}
                   </Typography>
-                  { item.inventory &&
-                    <>
+                  { item.inventory ?
+                    <Box>
                       <Typography component="div" variant="body2">
                         {item.inventory.name.current}
                       </Typography>
                       <Typography component="div" variant="body2">
                       {`${intl.formatMessage({ id: 'forms.sku' })}: ${item.inventory.sku}`}
                       </Typography>
-                    </>
+                    </Box>
+                    :
+                    <Box>
+                      { item.pack?.inventories.map((item, index) => (
+                        <Fragment key={index}>
+                          <Typography component="div" variant="body2">
+                            {item.product.name.current}
+                          </Typography>
+                          <Box ml={1}>
+                            <Typography component="div" variant="body2">
+                              {item.name.current}
+                            </Typography>
+                            <Typography component="div" variant="body2">
+                            {`${intl.formatMessage({ id: 'forms.sku' })}: ${item.sku}`}
+                            </Typography>
+                          </Box>
+                        </Fragment>
+                      ))}
+                    </Box>
                   }
                 </>
                 :
@@ -108,9 +127,11 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 </Typography>
               }
               { !updateQuantity &&
-                <Typography component="div" variant="body2">
-                  {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
-                </Typography>
+                <Box>
+                  <Typography component="div" variant="body2">
+                    {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
+                  </Typography>
+                </Box>
               }
             </Grid>
 
