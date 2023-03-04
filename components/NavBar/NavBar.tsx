@@ -45,6 +45,7 @@ const NavBar = () => {
         >
           <Grid
             container
+            wrap="nowrap"
             alignItems="center"
             justifyContent="center"
             py="0px"

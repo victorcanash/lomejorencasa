@@ -19,6 +19,7 @@ const MaintenanceBanner = () => {
         <HideOnScroll direction="up">
           <Grid     
             container
+            wrap="nowrap"
             alignItems="center"
             justifyContent="center"
             sx={{
@@ -44,7 +45,7 @@ const MaintenanceBanner = () => {
                 component="div"
                 variant="inherit"
               >
-                <FormattedMessage id="header.banners.maintenance" />
+                <FormattedMessage id="banners.maintenance" />
               </Typography>
             </Grid>
           </Grid>

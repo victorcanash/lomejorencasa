@@ -18,8 +18,9 @@
   "banners.cookies.acceptBtn": "Aceptar todas las cookies",
   "banners.cookies.refuseBtn": "Rechazar cookies no necesarias",
 
-  "header.banners.shipping": "Envío gratuito en toda la península en 24-48h",
-  "header.banners.maintenance": "Actualmente la web está en mantenimiento",
+  "banners.maintenance": "Actualmente en mantenimiento",
+
+  "header.banners.shipping": "Envío gratuito en 24-48h",
   "header.drawerItems.home": "Inicio",
   "header.drawerItems.shop": "Tienda",
   "header.drawerItems.everfresh": "EverFresh",
