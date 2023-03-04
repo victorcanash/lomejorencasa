@@ -211,7 +211,8 @@ const ProductDetail = (props: ProductDetailProps) => {
                   <SelectQuantity />
                 </Grid>
                 <Grid
-                  mb={2} 
+                  mb={2}
+                  mr={1} 
                   item 
                   container 
                   width="auto" 
