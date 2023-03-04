@@ -54,10 +54,10 @@ const CookiesBanner = (props: CookiesBannerProps) => {
       >
         <Box sx={{ maxWidth: '500px' }}>
           <Typography component='div' variant='h3' sx={{ mb: 1 }}>
-            <FormattedMessage id="dialogs.cookies.title" />
+            <FormattedMessage id="banners.cookies.title" />
           </Typography>
           <Typography component='div' variant='body1'>
-            <FormattedMessage id="dialogs.cookies.content"/>
+            <FormattedMessage id="banners.cookies.content"/>
           </Typography>
         </Box>
         <Box 
@@ -74,13 +74,13 @@ const CookiesBanner = (props: CookiesBannerProps) => {
             onClick={handleClickAcceptBtn}
             variant="contained"
           >
-            <FormattedMessage id="dialogs.cookies.acceptBtn" />
+            <FormattedMessage id="banners.cookies.acceptBtn" />
           </Button>
           <Button 
             onClick={handleClickRefuseBtn}
             variant="contained"
           >
-            <FormattedMessage id="dialogs.cookies.refuseBtn" />
+            <FormattedMessage id="banners.cookies.refuseBtn" />
           </Button>
         </Box>
       </Box>

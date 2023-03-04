@@ -1,7 +1,7 @@
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import { ManageActions } from '@core/constants/auth';
+import { ManageActions } from '@core/constants/app';
 import { maxQuantity } from '@core/constants/cart';
 import type { Cart, CartItem } from '@core/types/cart';
 import type { ProductInventory, ProductPack } from '@core/types/products';

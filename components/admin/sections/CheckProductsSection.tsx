@@ -11,7 +11,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import { ManageActions } from '@core/constants/auth';
+import { ManageActions } from '@core/constants/app';
 import { allProductsName } from "@core/constants/products";
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';

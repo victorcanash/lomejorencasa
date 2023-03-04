@@ -294,6 +294,45 @@ export const themeDefaultElements: ThemeDefaultElements = {
 
 export const themeCustomElements: ThemeCustomElements = {
   header: {
+    banners: {
+      maintenance: {
+        content: {
+          backgroundColor: {
+            default: colors.background.action,
+          },
+          text: {
+            color: {
+              default: colors.text.white,
+            },
+            font: {
+              default: typographies.headerBanner,
+            },
+          },
+        },
+        icon: {
+          fill: {
+            default: colors.text.white,
+          },
+        },
+      },
+      shipping: {
+        content: {
+          backgroundColor: {
+            default: colors.background.third,
+          },
+          text: {
+            font: {
+              default: typographies.headerBanner,
+            },
+          },
+        },
+        icon: {
+          fill: {
+            default: colors.text.black,
+          },
+        },
+      },
+    },
     drawer: {
       divider: {
         border: {

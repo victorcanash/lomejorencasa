@@ -110,7 +110,7 @@ const Drawer = (props: DrawerProps) => {
       <Toolbar 
         variant="dense" 
         disableGutters 
-        sx={{ minHeight: '78px' }} 
+        sx={{ minHeight: '114px' }} 
       />
       <Box
         sx={{ 

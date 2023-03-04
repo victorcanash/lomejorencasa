@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 
+import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
-import { ManageActions } from '@core/constants/auth';
 import type { ProductPack } from '@core/types/products';
 
 import type { FormButtonsNormal } from '@lib/types/forms';

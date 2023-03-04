@@ -1,5 +1,5 @@
+import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
-import { ManageActions } from '@core/constants/auth';
 import type { ProductInventory, Product } from '@core/types/products';
 
 import type { FormButtonsNormal } from '@lib/types/forms';

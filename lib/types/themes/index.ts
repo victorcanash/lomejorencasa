@@ -62,6 +62,16 @@ export type ThemeDefaultElements = {
 
 export type ThemeCustomElements = {
   header: {
+    banners: {
+      maintenance: {
+        content: ThemeElement,
+        icon: ThemeElement,
+      },
+      shipping: {
+        content: ThemeElement,
+        icon: ThemeElement,
+      },
+    },
     drawer: {
       divider: ThemeElement,
     },

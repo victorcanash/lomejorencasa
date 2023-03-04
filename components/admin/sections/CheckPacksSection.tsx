@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import UpdateIcon from '@mui/icons-material/Update';
 
-import { ManageActions } from '@core/constants/auth';
+import { ManageActions } from '@core/constants/app';
 import type { ProductPack } from '@core/types/products';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';

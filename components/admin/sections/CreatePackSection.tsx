@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 
+import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
-import { ManageActions } from '@core/constants/auth';
 
 import { pages } from '@lib/constants/navigation';
 import ManagePPackForm from '@components/forms/admin/ManagePPackForm';

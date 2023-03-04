@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { ManageActions } from '@core/constants/auth';
+import { ManageActions } from '@core/constants/app';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount, ProductPack } from '@core/types/products';
 import type { UploadFile } from '@core/types/multimedia';
 import { 

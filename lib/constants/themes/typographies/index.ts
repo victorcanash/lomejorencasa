@@ -32,6 +32,13 @@ const typographies = {
     lineHeight: '24px',
     textTransform: 'uppercase',
   } as ThemeFontPropertyElement,
+  headerBanner: {
+    fontSize: '16px',
+    fontWeight: '500',
+    lineHeight: '24px',
+    textAlign: 'center',
+    textTransform:'uppercase',
+  } as ThemeFontPropertyElement,
   homeBanner: {
     xl: {
       fontSize: '36px',

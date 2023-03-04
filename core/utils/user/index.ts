@@ -3,8 +3,9 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
+import { ManageActions } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
-import { ManageActions, JWTTokenKey } from '@core/constants/auth';
+import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
 import type { User, UserAddress, UserContact } from '@core/types/user';
 import type { CheckoutAddresses } from '@core/types/checkout';

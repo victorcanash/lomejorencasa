@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import { ManageActions } from '@core/constants/auth';
+import { ManageActions } from '@core/constants/app';
 import { ContactTypes, maxContactFiles } from '@core/constants/contact';
 import type { User, UserAddress, UserContact } from '@core/types/user';
 import type { UploadFile } from '@core/types/multimedia';

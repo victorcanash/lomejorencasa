@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 
+import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
-import { ManageActions } from '@core/constants/auth';
 import type { Product } from '@core/types/products';
 import type { Source, UploadFile } from '@core/types/multimedia';
 

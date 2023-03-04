@@ -10,8 +10,8 @@ import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
-import { ManageActions } from '@core/constants/auth';
 import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
 import type { Source, UploadFile } from '@core/types/multimedia';
 

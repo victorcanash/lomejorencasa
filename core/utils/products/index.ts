@@ -3,7 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { ManageActions } from '@core/constants/auth';
+import { ManageActions } from '@core/constants/app';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount, ProductPack } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';

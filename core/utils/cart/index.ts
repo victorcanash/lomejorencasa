@@ -2,7 +2,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders } from '@core/config/axios.config';
-import { ManageActions } from '@core/constants/auth';
+import { ManageActions } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
 import type { Cart, CartItem, GuestCart, GuestCartCheck, GuestCartCheckItem } from '@core/types/cart';
