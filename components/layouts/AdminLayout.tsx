@@ -1,24 +1,19 @@
+import { ReactNode } from 'react';
+
 import Box from '@mui/material/Box';
 
-import Header from '@components/NavBar';
+import NavBar from '@components/NavBar';
 
-const AdminLayout = ({ children }: { children: React.ReactNode }) => {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <Header />
-      <Box 
-        component="main"
-        sx={{
-          mt: '74px',
-          mb: '48px',
-          minHeight: '51vh',
-        }}
-      >
+      <NavBar />
+      <Box component="main">
         {children}
       </Box>
     </>
-  )
-}
+  );
+};
 
 export default AdminLayout;

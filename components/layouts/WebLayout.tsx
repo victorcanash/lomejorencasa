@@ -1,29 +1,24 @@
+import { ReactNode } from 'react';
+
 import Box from '@mui/material/Box';
 
 import useCookies from '@lib/hooks/useCookies';
-import Header from '@components/NavBar';
+import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
 
-const WebLayout = ({ children }: { children: React.ReactNode }) => {
-  const { CookiesBannerComponent } = useCookies();
+const WebLayout = ({ children }: { children: ReactNode }) => {
+  const { CookiesBanner } = useCookies();
 
   return (
     <>
-      <Header />
-      <Box 
-        component="main"
-        sx={{
-          mt: '74px',
-          mb: '48px',
-          minHeight: '51vh',
-        }}
-      >
+      <NavBar />
+      <Box component="main">
         {children}
       </Box>
       <Footer />
-      <CookiesBannerComponent />
+      <CookiesBanner />
     </>
-  )
-}
+  );
+};
 
 export default WebLayout;

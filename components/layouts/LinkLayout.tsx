@@ -1,21 +1,16 @@
+import { ReactNode } from 'react';
+
 import Box from '@mui/material/Box';
 
-const LinkLayout = ({ children }: { children: React.ReactNode }) => {
+const LinkLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <Box 
-        component="main" 
-        sx={{
-          mt: '74px',
-          mb: '48px',
-          minHeight: '51vh',
-        }}
-      >
+      <Box component="main">
         {children}
       </Box>
     </>
-  )
-}
+  );
+};
 
 export default LinkLayout;

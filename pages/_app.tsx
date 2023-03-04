@@ -70,19 +70,19 @@ function MyApp(props: MyAppProps) {
           title: title,
           url: `https://${envConfig.NEXT_PUBLIC_APP_URL}${props.router.asPath}`,
           description: description,
-          images: [
+          /*images: [
             {
               url: `https://${envConfig.NEXT_PUBLIC_APP_URL}/logo_lg.png`,
               width: 1000,
               height: 750,
             },
-          ],
-          site_name: title,
+          ],*/
+          siteName: title,
         }}
       />
       <Head>
-        <meta name="keywords" content="ecommerce, shop, nextjs, laenvasadora, la envasadora" />
-        <meta name="author" content="La Envasadora" />
+        <meta name="keywords" content="ecommerce, shop, nextjs, laenvasadora, la envasadora, envasadora, al vacío" />
+        <meta name="author" content={title} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
 

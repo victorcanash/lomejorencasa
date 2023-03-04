@@ -1,7 +1,8 @@
-import { useRef, useEffect, useCallback, ReactNode } from 'react';
+import { useRef, useEffect, useCallback } from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { PageTypes } from '@core/constants/navigation';
 import type { Product, ProductCategory, ProductPack } from '@core/types/products';
 import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
@@ -14,9 +15,8 @@ import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
-import LinkLayout from '@components/layouts/LinkLayout';
 
-const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.Element) => {
+const useApp = (pageType: PageTypes | undefined) => {
   const { setInitialized } = useAppContext();
   const { setProductCategories } = useSearchContext();
   const { initProducts } = useProductsContext();
@@ -31,7 +31,7 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
 
   const initData = useCallback(async () => {
     initForms();
-    if (layoutComponent != LinkLayout) {
+    if (pageType !== PageTypes.link) {
       await init(
         intl.locale,
         allCategoryIds,
@@ -63,16 +63,16 @@ const useApp = (layoutComponent: ({ children }: { children: ReactNode }) => JSX.
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, layoutComponent, setBraintreeToken, setInitialized, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setInitialized, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
-    if (!firstRenderRef.current) {
+    if (!firstRenderRef.current && pageType) {
       firstRenderRef.current = true;
       initData();
     }    
-  }, [initData]);
+  }, [pageType, initData]);
 
   return {};
-}
+};
 
 export default useApp;

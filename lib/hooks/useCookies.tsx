@@ -3,6 +3,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Storages } from '@core/constants/storage';
 import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
+
 import { useAppContext } from '@lib/contexts/AppContext';
 import CookiesBanner from '@components/banners/CookiesBanner';
 
@@ -46,7 +47,7 @@ const useCookies = () => {
   )
 
   return {
-    CookiesBannerComponent,
+    CookiesBanner: CookiesBannerComponent,
   };
 };
 
