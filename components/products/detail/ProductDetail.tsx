@@ -4,7 +4,6 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -104,31 +103,18 @@ const ProductDetail = (props: ProductDetailProps) => {
   };
 
   const productComments = () => {
-    if (isEverfreshProduct(product)) {
+    if (isEverfreshProduct(product) || isBagsProduct(product)) {
       return (
         <>
           <Typography component="div" variant="body1" mb={4}>
-            <FormattedMessage id="everfresh.comment" />
+            <FormattedMessage id={isEverfreshProduct(product) ? 'everfresh.comment' : 'bags.comment'} />
           </Typography>
-          <LinkButton 
-            href={pages.bags.path}
-            sx={convertElementToSx(themeCustomElements.button.action)}
-          >
-            <FormattedMessage 
-              id="everfresh.bagsButton" 
-            />
-          </LinkButton>
-        </>
-      );
-    } else if (isBagsProduct(product)) {
-      return (
-        <>
-          <LinkButton 
-            href={pages.everfresh.path}
+          <LinkButton
+            href={isEverfreshProduct(product) ? pages.bags.path : pages.everfresh.path}
             sx={convertElementToSx(themeCustomElements.button.action)}
           >
             <FormattedMessage
-              id="bags.everfreshButton" 
+              id={isEverfreshProduct(product) ? 'everfresh.bagsButton' : 'bags.everfreshButton'}
             />
           </LinkButton>
         </>
@@ -140,7 +126,11 @@ const ProductDetail = (props: ProductDetailProps) => {
   const maxWidthCarousel = '540px';
 
   return (
-    <>
+    <Box 
+      sx={{
+        overflow: 'hidden',
+      }}
+    >
       <Container>
 
         {/* General Product Section */}
@@ -188,7 +178,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               {/* Price */}  
               { (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ?
                 <Box sx={{ mb: 3 }}>
-                  <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+                  <Typography component="h2" variant="h1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                     {`${productPrice()} €`} 
                   </Typography>
                   <Typography component="span" variant="body1">
@@ -203,38 +193,45 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </Box>
                 :
                 <Box sx={{ mb: 3 }}>
-                  <Typography component="h2" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+                  <Typography component="h2" variant="h1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
                     {`${productPrice()} €`} 
                   </Typography>
                 </Box>
               }
               {/* Description */}
-              <Typography component="h3" variant="body1" sx={{ mb: 4 }}>
+              <Typography component="h3" variant="body1">
                 <FormattedMessage id={productDescriptionId()} />
               </Typography>
               {/* Cart inputs */}
-              <FormControl 
-                sx={{ mb: 4 }} 
-              >
-                <SelectInventory />
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={onClickAddCartBtn}
-                  disabled={!selectedInventory || selectedInventory.quantity == 0}
-                  sx={{
-                    ...convertElementToSx(themeCustomElements.button.action),
-                    mt: 2,
-                  }}
+              <Grid container mt={4} mb={2}>
+                <Grid item>
+                  <SelectInventory />
+                </Grid>
+                <Grid item mr={1} mb={2}>
+                  <SelectQuantity />
+                </Grid>
+                <Grid
+                  mb={2} 
+                  item 
+                  container 
+                  width="auto" 
+                  direction="column" 
+                  justifyContent="center"
                 >
-                  <FormattedMessage id="productDetail.addCartBtn" />
-                </Button>
-              </FormControl>
-              <FormControl 
-                sx={{ mb: 4 }} 
-              >
-                <SelectQuantity />
-              </FormControl>
+                  <Grid item>
+                    <Button
+                      
+                      variant="contained"
+                      onClick={onClickAddCartBtn}
+                      disabled={!selectedInventory || selectedInventory.quantity == 0}
+                      sx={convertElementToSx(themeCustomElements.button.action)}
+                    >
+                    
+                      <FormattedMessage id="productDetail.addCartBtn" />
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
               {/* Comments */}
               { productComments() }
             </Box>
@@ -255,7 +252,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           }
         </>
       }
-    </>
+    </Box>
   );
 };
 
