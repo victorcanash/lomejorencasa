@@ -97,7 +97,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
                   id: 'everfresh.details.title', 
                 },
                 [
-                  { id: 'everfresh.details.1' }, { id: 'everfresh.details.2' }, { id: 'everfresh.details.3' }, { id: 'everfresh.details.4' }, { id: 'everfresh.details.5' }, { id: 'everfresh.details.6' }, { id: 'everfresh.details.7' }, { id: 'everfresh.details.8' }
+                  { id: 'everfresh.details.1' }, { id: 'everfresh.details.2' }, { id: 'everfresh.details.3' }, { id: 'everfresh.details.4' }, { id: 'everfresh.details.5' }, { id: 'everfresh.details.6' }, { id: 'everfresh.details.7' }, { id: 'everfresh.details.8' }, { id: 'everfresh.details.9' }
                 ]
               ) 
             }
@@ -123,6 +123,15 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
         }
         { isBagsProduct(product) &&
           <>
+            { characteristicsGroup(
+                {
+                  id: 'bags.details.title',
+                },
+                [
+                  { id: 'bags.details.1' }
+                ]
+              ) 
+            }
             { characteristicsGroup(
                 {
                   id: 'bags.small.title',
