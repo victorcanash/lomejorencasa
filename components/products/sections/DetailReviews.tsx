@@ -68,7 +68,6 @@ const DetailReviews = () => {
                   alt="Product image"
                   layout="responsive" 
                   objectFit="cover"
-                  quality="100"
                 />
               </div>
             </CardMedia>
@@ -122,38 +121,38 @@ const DetailReviews = () => {
         >
           { review(
               { src: review1 } as Source,
-              'Jose Antonio',
-              'Cumple lo especificado.',
-              'La máquina está bastante bien. Tanto el vendedor como el servicio de atención al cliente se podrian puntuar con la máxima puntuación. En principio me llegó una máquina que no funcionaba correctamente, lo comuniqué, el vendedor se puso en contacto conmigo ofreciéndome varias soluciones, le propuse el cambio, y en 2 días tenía en mi poder la nueva máquina. Así da gusto comprar.',
+              'Carlos Pérez',
+              'Envasadora EverFresh',
+              'La máquina funciona genial, lo que sí es importante asegurarse de que esté bien colocada con el agujero de la válvula, sino no succiona. En general cumple con lo esperado.',
               4,
-              new Date('2022-06-02')
+              new Date('2023-01-02')
             )
           }
           { review(
               { src: review2 } as Source,
-              'Alba Sanchez',
-              'Muy práctico para no gran cantidad de bolsas.',
-              'Me ha gustado su tamaño y su facilidad de ubicarlo, y su eficacia. Hay que tener cuidado con cerrar bien las bolsas.',
+              'Alba Sánchez',
+              'Envasadora EverFresh',
+              'Muy práctica la envasadora, pero recomendaría comprarla con el pack, ya que sino te quedarás justo de bolsas en poco tiempo. Por lo demás funciona correctamente.',
               5,
-              new Date('2020-12-05')
+              new Date('2023-02-10')
             )
           }
           { review(
               { src: review3 } as Source,
-              'Casinero',
-              'Recomendable.',
-              'Relación calidad precio inmejorable.',
+              'Paula Martín',
+              'Envasadora EverFresh',
+              'Relación calidad precio inmejorable. Envío correcto y puntual.',
               5,
-              new Date('2021-03-22')
+              new Date('2023-01-17')
             )
           }
           { review(
               { src: review4 } as Source,
-              'Ramón Álvarez',
-              'Envasa bien.',
-              'Funciona bien, envasa bien. Por ponerle una pega que a veces se escapa el vacío.',
+              'Ramón Poblet',
+              'Envasadora EverFresh',
+              'La envasadora es muy pequeña, no molesta en la cocina y te la puedes llevar en el avión. Producto útil',
               4,
-              new Date('2021-01-02')
+              new Date('2023-02-13')
             )
           }
         </Grid>
