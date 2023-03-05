@@ -154,7 +154,6 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
               md: '200px',
             },
             right: type == 'characteristics' ? '0px' : undefined,
-            zIndex: '-1',
           }}
         >
           <Box
