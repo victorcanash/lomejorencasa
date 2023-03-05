@@ -55,7 +55,7 @@ const Title = (props: TitleProps) => {
             sx={{
               ...convertElementToSx(type == 'h3Home' ? 
                 themeCustomElements.home.title.h3 : themeCustomElements.home.title.h4),
-              width: 'max-content',
+              width: 'fit-content',
               mt: noMarginTop ? undefined : 4,
               mb: 4,
               ml: -3,
