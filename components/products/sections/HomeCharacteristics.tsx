@@ -141,7 +141,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
           ...convertElementToSx(themeCustomElements.home.characteristics.content),
           position: 'relative',
           mt: 4,
-          zIndex: '-2',
+          zIndex: '0',
           overflow: 'hidden',
         }}
       >
