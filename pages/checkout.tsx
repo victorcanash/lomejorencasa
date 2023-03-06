@@ -65,17 +65,19 @@ const Checkout: NextPage = () => {
     return Object.values(CheckoutSections)[activeStep];
   };
 
-  const checkConfirmToken = useCallback(async () => {
+  const init = useCallback(async () => {
     if (disabledCheckoutPage()) {
+      let isAdmin = false
       await isAdminUser(token).then((response: boolean) => {
-        if (!response) {
-          router.push(pages.home.path);
-        }
-      }).catch((_error: Error) => {
+        isAdmin = response
+      }).catch((_error) => {
+      })
+      if (!isAdmin) {
         router.push(pages.home.path);
         return;
-      }); 
+      }
     }
+
     const queryToken = typeof router.query.token == 'string' ? router.query.token : '';
     if (queryToken) {
       await getGuestUserData(queryToken, () => {
@@ -100,9 +102,9 @@ const Checkout: NextPage = () => {
   useEffect(() => {
     if (page.checked && !loadedCheckout) {
       setLoadedCheckout(true);
-      checkConfirmToken();
+      init();
     }
-  }, [checkConfirmToken, loadedCheckout, page.checked]);
+  }, [init, loadedCheckout, page.checked]);
 
   return (
     <>
