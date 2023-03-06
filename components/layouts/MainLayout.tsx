@@ -14,7 +14,7 @@ import Loading from '@components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { initialized } = useAppContext();
-  const { paypalClientId, paypalClientToken, currency } = useAuthContext();
+  const { paypalClientId, currency } = useAuthContext();
 
   const { layout, pageType } = useLayout(children);
   const app = useApp(pageType);
@@ -28,14 +28,13 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      { (pageType !== PageTypes.link && paypalClientId && paypalClientToken) ?
+      { (pageType !== PageTypes.link && paypalClientId) ?
         <PayPalScriptProvider
           options={{
             'client-id': paypalClientId,
-            'data-client-token': paypalClientToken,
             'components': 'buttons',
             'currency': currency,
-            'intent': "capture",
+            'intent': 'capture',
           }}
         >
           { content }
