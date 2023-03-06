@@ -61,9 +61,13 @@ const Cart: NextPage = () => {
   useEffect(() => {
     if (page.checked && initCart) {
       setInitCart(false);
-      checkCart(onSuccessCheckCart);
+      if (totalPrice <= 0 && totalQuantity <= 0) {
+        onSuccessCheckCart(false, []);
+      } else {
+        checkCart(onSuccessCheckCart);
+      }
     }
-  }, [initCart, checkCart, onSuccessCheckCart, page.checked, router.asPath]);
+  }, [initCart, checkCart, onSuccessCheckCart, page.checked, router.asPath, totalPrice, totalQuantity]);
 
   return (
     <>
