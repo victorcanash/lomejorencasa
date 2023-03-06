@@ -92,24 +92,21 @@ export const getGuestUserData = async (confirmationToken: string) => {
 export const createTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
   return new Promise<{order?: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
-      headers: token ? {
+      headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
-      } : getLanguageHeaders(currentLocale),
+      },
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
       timeout: 20000,
     };
-    const body = !token && guestUser && cart ? {
+    const body = {
       paymentMethodNonce: checkoutPayment.methodPayload.nonce,
       remember: checkoutPayment.remember,
-      guestUser,
-      guestCart: convertCartToGuestCart(cart),
-    } : {
-      paymentMethodNonce: checkoutPayment.methodPayload.nonce,
-      remember: checkoutPayment.remember,
+      guestUser: guestUser,
+      guestCart: cart ? convertCartToGuestCart(cart) : undefined,
     };
     axios.post('/payments/transaction', body, options)
       .then(async (response: AxiosResponse) => {
