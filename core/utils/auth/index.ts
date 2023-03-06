@@ -3,6 +3,7 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
+import { PaymentModes } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
@@ -28,8 +29,11 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     packs: ProductPack[],
     cart: Cart,
     token?: string, 
-    user?: User, 
-    braintreeToken: string, 
+    user?: User,
+    paymentMode: PaymentModes,
+    currency: string,
+    braintreeToken?: string, 
+    paypalClientId?: string,
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
@@ -46,10 +50,12 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && 
-            response.data?.braintreeToken && 
             response.data?.categories && 
             response.data?.products &&
-            response.data?.packs) {
+            response.data?.packs &&
+            response.data?.paymentMode &&
+            response.data?.currency &&
+            (response.data?.braintreeToken || response.data?.paypalClientId)) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
@@ -71,7 +77,10 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
             token: token,
             user: response.data.user || undefined,
+            paymentMode: response.data.paymentMode,
+            currency: response.data.currency,
             braintreeToken: response.data.braintreeToken,
+            paypalClientId: response.data.paypalClientId,
           });
         } else {
           throw new Error('Something went wrong');

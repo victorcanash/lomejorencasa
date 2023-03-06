@@ -2,6 +2,7 @@ import { useRef, useEffect, useCallback } from 'react';
 
 import { useIntl } from 'react-intl';
 
+import { PaymentModes } from '@core/constants/app';
 import { PageTypes } from '@core/constants/navigation';
 import type { Product, ProductCategory, ProductPack } from '@core/types/products';
 import type { User } from '@core/types/user';
@@ -21,7 +22,7 @@ const useApp = (pageType: PageTypes | undefined) => {
   const { setProductCategories } = useSearchContext();
   const { initProducts } = useProductsContext();
   const { initCart } = useCartContext();
-  const { setToken, setUser, setBraintreeToken } = useAuthContext();
+  const { setToken, setUser, setPaymentMode, setCurrency, setBraintreeToken, setPaypalClientId } = useAuthContext();
 
   const intl = useIntl();
 
@@ -44,8 +45,11 @@ const useApp = (pageType: PageTypes | undefined) => {
             packs: ProductPack[], 
             cart: Cart,
             token?: string, 
-            user?: User, 
-            braintreeToken: string, 
+            user?: User,
+            paymentMode: PaymentModes,
+            currency: string,
+            braintreeToken?: string,
+            paypalClientId?: string,
           }
         ) => {
           setProductCategories(response.productCategories);
@@ -55,7 +59,10 @@ const useApp = (pageType: PageTypes | undefined) => {
             setToken(response.token);
             setUser(response.user);
           } 
+          setPaymentMode(response.paymentMode);
+          setCurrency(response.currency);
           setBraintreeToken(response.braintreeToken);
+          setPaypalClientId(response.paypalClientId);
           setInitialized(true);
         }).catch(async (error: Error) => {
           throw error;
@@ -63,7 +70,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setInitialized, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setCurrency, setInitialized, setPaymentMode, setPaypalClientId, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {

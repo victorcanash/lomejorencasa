@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 
 import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
 
+import { PaymentModes } from '@core/constants/app';
 import { Protections } from '@core/constants/auth';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';
@@ -14,8 +15,14 @@ type ContextType = {
   setToken: Dispatch<SetStateAction<string>>,
   braintreeToken?: string,
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
+  paypalClientId?: string,
+  setPaypalClientId: Dispatch<SetStateAction<string | undefined>>,
   user: User | GuestUser,
   setUser: Dispatch<SetStateAction<User | GuestUser>>,
+  paymentMode: PaymentModes,
+  setPaymentMode: Dispatch<SetStateAction<PaymentModes>>,
+  currency: string,
+  setCurrency: Dispatch<SetStateAction<string>>,
   checkoutPayment?: CheckoutPayment,
   setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment | undefined>>,
   removeUser: () => void,
@@ -34,8 +41,14 @@ export const AuthContext = createContext<ContextType>({
   setToken: () => {},
   braintreeToken: '',
   setBraintreeToken: () => {},
+  paypalClientId: '',
+  setPaypalClientId: () => {},
   user: {} as GuestUser,
   setUser: () => {},
+  paymentMode: PaymentModes.braintree,
+  setPaymentMode: () => {},
+  currency: '',
+  setCurrency: () => {},
   checkoutPayment: undefined,
   setCheckoutPayment: () => {},
   removeUser: () => {},
@@ -63,11 +76,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
+  const [paypalClientId, setPaypalClientId] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<User | GuestUser>({ 
     email: undefined, 
     shipping: undefined, 
     billing: undefined,
   });
+  const [paymentMode, setPaymentMode] = useState(PaymentModes.braintree);
+  const [currency, setCurrency] = useState('');
   const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment | undefined>(undefined);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
@@ -154,8 +170,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setToken,
         braintreeToken,
         setBraintreeToken,
+        paypalClientId,
+        setPaypalClientId,
         user, 
         setUser,
+        paymentMode,
+        setPaymentMode,
+        currency,
+        setCurrency,
         checkoutPayment,
         setCheckoutPayment,
         removeUser,
