@@ -17,6 +17,8 @@ type ContextType = {
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
   paypalClientId?: string,
   setPaypalClientId: Dispatch<SetStateAction<string | undefined>>,
+  paypalClientToken?: string,
+  setPaypalClientToken: Dispatch<SetStateAction<string | undefined>>,
   user: User | GuestUser,
   setUser: Dispatch<SetStateAction<User | GuestUser>>,
   paymentMode: PaymentModes,
@@ -39,10 +41,12 @@ type ContextType = {
 export const AuthContext = createContext<ContextType>({
   token: '',
   setToken: () => {},
-  braintreeToken: '',
+  braintreeToken: undefined,
   setBraintreeToken: () => {},
-  paypalClientId: '',
+  paypalClientId: undefined,
   setPaypalClientId: () => {},
+  paypalClientToken: undefined,
+  setPaypalClientToken: () => {},
   user: {} as GuestUser,
   setUser: () => {},
   paymentMode: PaymentModes.braintree,
@@ -77,6 +81,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
   const [paypalClientId, setPaypalClientId] = useState<string | undefined>(undefined);
+  const [paypalClientToken, setPaypalClientToken] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<User | GuestUser>({ 
     email: undefined, 
     shipping: undefined, 
@@ -96,11 +101,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const getCardPayload = () => {
-    return checkoutPayment?.methodPayload as cardPaymentMethodPayload;
+    return checkoutPayment?.braintreePayload as cardPaymentMethodPayload;
   };
 
   const getPaypalPayload = () => {
-    return checkoutPayment?.methodPayload as paypalPaymentMethodPayload;
+    return checkoutPayment?.braintreePayload as paypalPaymentMethodPayload;
   };
 
   const isLogged = () => {
@@ -172,6 +177,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setBraintreeToken,
         paypalClientId,
         setPaypalClientId,
+        paypalClientToken,
+        setPaypalClientToken,
         user, 
         setUser,
         paymentMode,

@@ -34,6 +34,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     currency: string,
     braintreeToken?: string, 
     paypalClientId?: string,
+    paypalClientToken?: string,
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
@@ -55,7 +56,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             response.data?.packs &&
             response.data?.paymentMode &&
             response.data?.currency &&
-            (response.data?.braintreeToken || response.data?.paypalClientId)) {
+            (response.data?.braintreeToken || (response.data?.paypalClientId && response.data?.paypalClientToken))) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
@@ -81,6 +82,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             currency: response.data.currency,
             braintreeToken: response.data.braintreeToken,
             paypalClientId: response.data.paypalClientId,
+            paypalClientToken: response.data.paypalClientToken,
           });
         } else {
           throw new Error('Something went wrong');
@@ -136,7 +138,7 @@ export const loginUser = async (authLogin: AuthLogin, cart?: Cart) => {
   return new Promise<{token: string, user: User, braintreeToken: string, cart: Cart}>((resolve, reject) => {
     axios.post('/auth/login', { ...authLogin, guestCart})
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED && response.data?.user && response.data?.braintreeToken) {
+        if (response.status === StatusCodes.CREATED && response.data?.user) {
           if (response.data.token){
             const prevToken = await getStorageItem(Storages.local, JWTTokenKey) || '';
             if (prevToken !== '') {
@@ -173,7 +175,7 @@ export const logoutUser = async (token: string) => {
     };
     axios.post('/auth/logout', undefined, options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED && response.data?.braintreeToken) {
+        if (response.status === StatusCodes.CREATED) {
           await removeStorageItem(Storages.local, JWTTokenKey);
           await removeStorageItem(Storages.local, GuestCartKey);
           resolve({

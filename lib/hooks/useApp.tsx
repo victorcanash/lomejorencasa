@@ -22,7 +22,15 @@ const useApp = (pageType: PageTypes | undefined) => {
   const { setProductCategories } = useSearchContext();
   const { initProducts } = useProductsContext();
   const { initCart } = useCartContext();
-  const { setToken, setUser, setPaymentMode, setCurrency, setBraintreeToken, setPaypalClientId } = useAuthContext();
+  const { 
+    setToken, 
+    setUser, 
+    setPaymentMode, 
+    setCurrency, 
+    setBraintreeToken, 
+    setPaypalClientId,
+    setPaypalClientToken,
+  } = useAuthContext();
 
   const intl = useIntl();
 
@@ -50,6 +58,7 @@ const useApp = (pageType: PageTypes | undefined) => {
             currency: string,
             braintreeToken?: string,
             paypalClientId?: string,
+            paypalClientToken?: string,
           }
         ) => {
           setProductCategories(response.productCategories);
@@ -63,6 +72,7 @@ const useApp = (pageType: PageTypes | undefined) => {
           setCurrency(response.currency);
           setBraintreeToken(response.braintreeToken);
           setPaypalClientId(response.paypalClientId);
+          setPaypalClientToken(response.paypalClientId);
           setInitialized(true);
         }).catch(async (error: Error) => {
           throw error;
@@ -70,7 +80,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setCurrency, setInitialized, setPaymentMode, setPaypalClientId, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setCurrency, setInitialized, setPaymentMode, setPaypalClientId, setPaypalClientToken, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {
