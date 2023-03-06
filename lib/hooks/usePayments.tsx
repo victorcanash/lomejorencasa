@@ -145,7 +145,10 @@ const usePayments = () => {
     );
   };
 
-  const createTransaction = async (onError?: (message: string) => void) => {
+  const createTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
+    if (!confirmToken && !isLogged()) {
+      return;
+    }
     if (missingTransactionData(onError)) {
       return;
     }
@@ -153,7 +156,7 @@ const usePayments = () => {
     setErrorMsg('');
     setSuccessMsg('');
     await createTransactionMW(
-      isLogged() ? token : undefined, 
+      isLogged() ? token : confirmToken || '', 
       intl.locale, 
       checkoutPayment as CheckoutPayment,
       !isLogged() ? user as GuestUser : undefined,

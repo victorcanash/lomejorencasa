@@ -89,7 +89,7 @@ export const getGuestUserData = async (confirmationToken: string) => {
   })
 };
 
-export const createTransaction = (token: string | undefined, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
+export const createTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
   return new Promise<{order?: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: token ? {

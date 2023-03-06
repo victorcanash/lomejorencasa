@@ -72,7 +72,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
       if (!emptyConfirmToken() || isLogged()) {
-        createTransaction(onErrorTransaction);
+        createTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
       } else {
         setLoading(false);
         handleEmailDialog();
