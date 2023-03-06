@@ -9,6 +9,9 @@ export type CheckoutAddresses = {
 };
 
 export type CheckoutPayment = {
-  methodPayload: PaymentMethodPayload,
-  remember: boolean,
+  braintreePayload?: PaymentMethodPayload,
+  paypalPayload?: {
+    orderId: string,
+  },
+  remember?: boolean,
 };

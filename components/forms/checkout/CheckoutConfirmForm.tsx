@@ -30,12 +30,20 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   const { back, setTransactionError, confirmToken } = props;
 
   const { setLoading } = useAppContext();
-  const { user, checkoutPayment, getCardPayload, getPaypalPayload, isLogged } = useAuthContext();
+  const { 
+    user, 
+    paypalClientId, 
+    paypalClientToken, 
+    checkoutPayment, 
+    getCardPayload, 
+    getPaypalPayload, 
+    isLogged 
+  } = useAuthContext();
   const { cart, totalPrice } = useCartContext();
 
   const intl = useIntl();
 
-  const { createTransaction, errorMsg, successMsg } = usePayments();
+  const { createBraintreeTransaction, capturePaypalTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
 
   const [openCartDialog, setOpenCartDialog] = useState(false);
@@ -72,7 +80,11 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
       if (!emptyConfirmToken() || isLogged()) {
-        createTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
+        if (!paypalClientId || !paypalClientToken) {
+          createBraintreeTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
+        } else {
+          capturePaypalTransaction(isLogged() ? undefined: confirmToken, onErrorTransaction);
+        }
       } else {
         setLoading(false);
         handleEmailDialog();
@@ -158,7 +170,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                               <FormattedMessage 
                                 id="orderDetail.paidCard" 
                                 values={{
-                                  cardType: checkoutPayment?.methodPayload.type,
+                                  cardType: checkoutPayment?.braintreePayload?.type,
                                   last4: getCardPayload()?.details.lastFour,
                                 }}
                               />

@@ -3,12 +3,14 @@ import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
 import { useIntl } from 'react-intl';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 import DropIn from 'braintree-web-drop-in-react';
+import { PayPalButtons } from "@paypal/react-paypal-js";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
-import type { FormButtonsCheckout } from '@lib/types/forms';
+import type { FormButtonsCheckout, FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 import usePayments from '@lib/hooks/usePayments';
 import BaseForm from '@components/forms/BaseForm';
 
@@ -17,25 +19,28 @@ type CheckoutPaymentFormProps = {
   back?: () => void,
   transactionError?: string,
   setTransactionError?: Dispatch<SetStateAction<string>>,
+  confirmToken: string,
 };
 
 const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
-  const { next, back, transactionError, setTransactionError } = props;
+  const { next, back, transactionError, setTransactionError, confirmToken } = props;
 
-  const { braintreeToken, setCheckoutPayment, isLogged } = useAuthContext();
+  const { braintreeToken, paypalClientId, paypalClientToken, setCheckoutPayment, isLogged } = useAuthContext();
+  const { totalPrice } = useCartContext();
 
   const intl = useIntl();
 
-  const { checkPaymentMethod, errorMsg, successMsg } = usePayments();
+  const { checkBraintreePaymentMethod, createPaypalTransaction, errorMsg, successMsg } = usePayments();
 
-  const [dropinInstance, setDropinInstance] = useState<Dropin | undefined>(undefined)
+  // Braintree fields
+  const [braintreeDropin, setBraintreeDropin] = useState<Dropin | undefined>(undefined)
   const [rememberFieldValue, setRememberFieldValue] = useState(true)
 
   const handleRememberField = (_event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
     setRememberFieldValue(checked);
   };
 
-  const handleBack = () => {
+  const handleBack = async () => {
     if (setTransactionError) {
       setTransactionError('');
     }
@@ -44,19 +49,19 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!dropinInstance) {
+  const handleBraintreeSubmit = async () => {
+    if (!braintreeDropin) {
       return;
     }
     if (setTransactionError) {
       setTransactionError('');
     }
-    checkPaymentMethod(dropinInstance, onSuccessCheckPaymentMethod);
+    checkBraintreePaymentMethod(braintreeDropin, onSuccessCheckBPaymentMethod);
   };
 
-  const onSuccessCheckPaymentMethod = (paymentPayload: PaymentMethodPayload) => {
+  const onSuccessCheckBPaymentMethod = (paymentPayload: PaymentMethodPayload) => {
     setCheckoutPayment({
-      methodPayload: paymentPayload,
+      braintreePayload: paymentPayload,
       remember: rememberFieldValue,
     });
     setTimeout(() => { 
@@ -64,6 +69,49 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
         next(); 
       }
     }, 10);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handlePaypalSubmit = async (_data: any, _actions: any) => {
+    let paypalOrderId = '';
+    await createPaypalTransaction(isLogged() ? undefined : confirmToken)
+      .then((response: string) => {
+        paypalOrderId = response;
+      }).catch((errorMsg) => {
+        onErrorPaypalTransaction(errorMsg)
+      })
+    return paypalOrderId
+  };
+
+  const onSuccessPaypalTransaction = (orderId: string) => {
+    console.log('on success transaction paypal')
+    setCheckoutPayment({
+      paypalPayload: {
+        orderId: orderId
+      },
+    });
+    setTimeout(() => { 
+      if (next) {
+        next(); 
+      }
+    }, 10);
+  };
+
+  const onErrorPaypalTransaction = (message: string) => {
+    if (setTransactionError) {
+      setTransactionError(message);
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPaypalApprove = async (data: any, _actions: any) => {
+    console.log('on paypal approve');
+    console.log('data: ', data)
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPaypalError = (_error: any) => {
+    console.log('on paypal error');
   };
 
   return (
@@ -76,68 +124,94 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
             id: 'checkout.paymentMethod',
             textAlign: 'center',
           },
-          extraElements: braintreeToken ?
+          extraElements: (!paypalClientId || !paypalClientToken) ?
             <>
-              {/* Dropin field */}
-              <div 
-                id="dropinPayment"
-                style={{           
-                  padding: '13px 5px 0px 5px',
-                  marginTop: '10px',
-                  marginBottom: !isLogged() ? '25px' : undefined,
-                }}
-              >
-                <DropIn
-                  options={{ 
-                    authorization: braintreeToken,
-                    locale: intl.locale,
-                    vaultManager: true,
-                    card: {
-                      cardholderName: {
-                        required: true,
-                      },
-                    },
-                    paypal: {
-                      flow: 'vault',
-                    },
-                  }}
-                  onInstance={(instance) => {
-                    setDropinInstance(instance);
-                  }}
-                />
-              </div>
-              {/* Remember Field */}
-              { isLogged() &&
-              <FormControlLabel
-                label={intl.formatMessage({ id: 'forms.rememberPayment' })}
-                control={
-                  <Checkbox 
-                    id="remember"
-                    name="remember"
-                    checked={rememberFieldValue} 
-                    onChange={handleRememberField}
-                  />
-                }      
-              />
+              { braintreeToken &&
+                <>
+                  {/* Dropin field */}
+                  <div 
+                    id="dropinPayment"
+                    style={{           
+                      padding: '13px 5px 0px 5px',
+                      marginTop: '10px',
+                      marginBottom: !isLogged() ? '25px' : undefined,
+                    }}
+                  >
+                    <DropIn
+                      options={{ 
+                        authorization: braintreeToken,
+                        locale: intl.locale,
+                        vaultManager: true,
+                        card: {
+                          cardholderName: {
+                            required: true,
+                          },
+                        },
+                        paypal: {
+                          flow: 'vault',
+                        },
+                      }}
+                      onInstance={(instance) => {
+                        setBraintreeDropin(instance);
+                      }}
+                    />
+                  </div>
+                  {/* Remember Field */}
+                  { isLogged() &&
+                    <FormControlLabel
+                      label={intl.formatMessage({ id: 'forms.rememberPayment' })}
+                      control={
+                        <Checkbox 
+                          id="remember"
+                          name="remember"
+                          checked={rememberFieldValue} 
+                          onChange={handleRememberField}
+                        />
+                      }      
+                    />
+                  }
+                </>
               }
-            </> : undefined,
+            </> 
+            :
+            <>
+              <PayPalButtons
+                disabled={false}
+                forceReRender={[totalPrice]}
+                fundingSource={undefined}
+                createOrder={handlePaypalSubmit}
+                onApprove={onPaypalApprove}
+                onError={onPaypalError}
+              />
+            </>
+          ,
         }
       ]}
-      formButtons={{
-        submit: {
-          text: { 
-            id: 'app.continueBtn',
+      formButtons={(!paypalClientId || !paypalClientToken) ? {
+          submit: {
+            text: { 
+              id: 'app.continueBtn',
+            },
+            onSubmit: handleBraintreeSubmit,
+            disabled: !braintreeDropin,
           },
-          onSubmit: handleSubmit,
-          disabled: !dropinInstance,
-        },
-        back: {
-          text: { 
-            id: 'app.backBtn',
+          back: {
+            text: { 
+              id: 'app.backBtn',
+            },
+            onClick: handleBack,
           },
-          onClick: handleBack,
-        },
-      } as FormButtonsCheckout}
+        } as FormButtonsCheckout
+        :
+        {
+          submit: {
+            text: {
+              id: 'app.backBtn',
+            },
+            onSubmit: handleBack,
+          },
+        } as FormButtonsNormal
+      }
       successMsg={successMsg}
       errorMsg={errorMsg ? errorMsg : transactionError}
     />

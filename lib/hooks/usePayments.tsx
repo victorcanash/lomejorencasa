@@ -12,10 +12,12 @@ import type { CheckoutPayment } from '@core/types/checkout';
 import type { Cart } from '@core/types/cart';
 import type { AuthLogin } from '@core/types/auth';
 import { 
-  checkPaymentMethod as checkPaymentMethodMW,
+  checkBraintreePaymentMethod as checkBPaymentMethodMW,
   getGuestUserData as getGuestUserDataMW,
   sendConfirmTransactionEmail as sendConfirmTransactionEmailMW,
-  createTransaction as createTransactionMW, 
+  createBraintreeTransaction as createBTransactionMW, 
+  createPaypalTransaction as createPTransactionMW,
+  capturePaypalTransaction as capturePTransactionMW,
 } from '@core/utils/payments';
 
 import { pages } from '@lib/constants/navigation';
@@ -35,27 +37,23 @@ const usePayments = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const checkPaymentMethod = (dropin: Dropin, onSuccess?: (paymentPayload: PaymentMethodPayload) => void) => {
+  const checkBraintreePaymentMethod = (dropin: Dropin, onSuccess?: (paymentPayload: PaymentMethodPayload) => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    checkPaymentMethodMW(dropin)
+    checkBPaymentMethodMW(dropin)
       .then((response: {paymentPayload: PaymentMethodPayload}) => {
-        onCheckPaymentMethodSuccess(response.paymentPayload, onSuccess);
+        if (onSuccess) {
+          onSuccess(response.paymentPayload);
+        }
+        setLoading(false);
+        setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
       }).catch((_error: Error) => {
         dropin.clearSelectedPaymentMethod();
         const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
         setErrorMsg(errorMsg);
         setLoading(false);
       })
-  };
-
-  const onCheckPaymentMethodSuccess = (paymentPayload: PaymentMethodPayload, onSuccess?: (paymentPayload: PaymentMethodPayload) => void) => {
-    if (onSuccess) {
-      onSuccess(paymentPayload);
-    }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
   };
 
   const getGuestUserData = async (confirmationToken: string, onSuccess?: () => void, onError?: (message: string) => void) => {
@@ -84,25 +82,15 @@ const usePayments = () => {
     });
   }
 
-  const missingTransactionData = (onError?: (message: string) => void, userEmail?: string) => {
-    if (!checkoutPayment || !user.shipping || !user.billing || (!user.email && !userEmail) || cart.items.length <= 0) {
-      const errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
-      setErrorMsg(errorMsg);
-      if (onError) {
-        onError(errorMsg);
-      }
-      setLoading(false);
-      return true;
-    }
-    return false;
-  }
-
   const sendConfirmTransactionEmail = async (authLogin: AuthLogin, onError?: (message: string) => void) => {
     setUser({
       ...user,
       email: authLogin.email,
     });
-    if (missingTransactionData(onError, authLogin.email)) {
+    if (missingTransactionData(true, true, onError, authLogin.email)) {
+      if (onError) {
+        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      }
       return;
     }
     setLoading(true);
@@ -145,17 +133,23 @@ const usePayments = () => {
     );
   };
 
-  const createTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
+  const createBraintreeTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
     if (!confirmToken && !isLogged()) {
+      if (onError) {
+        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      }
       return;
     }
-    if (missingTransactionData(onError)) {
+    if (missingTransactionData(true, true, onError)) {
+      if (onError) {
+        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      }
       return;
     }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await createTransactionMW(
+    await createBTransactionMW(
       isLogged() ? token : confirmToken || '', 
       intl.locale, 
       checkoutPayment as CheckoutPayment,
@@ -163,7 +157,7 @@ const usePayments = () => {
       !isLogged() ? cart : undefined
     )
       .then((_response: { order?: Order }) => {
-        onCreateTransactionSuccess();
+        onCompleteTransaction();
       }).catch((error) => {
         let errorMsg = error.message;
         if (errorMsg.includes('Insufficient Funds')) {
@@ -179,7 +173,85 @@ const usePayments = () => {
       });
   };
 
-  const onCreateTransactionSuccess = async () => {
+  const createPaypalTransaction = async (confirmToken?: string) => {
+    return new Promise<string>(async (resolve, reject) => {
+      if (missingTransactionData(false, false)) {
+        reject(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      }
+      setLoading(true);
+      setErrorMsg('');
+      setSuccessMsg('');
+      await createPTransactionMW(
+        isLogged() ? token : confirmToken || '', 
+        intl.locale,
+        !isLogged() ? user as GuestUser : undefined,
+        !isLogged() ? cart : undefined
+      )
+        .then((response: { paypalOrderId: string }) => {
+          setLoading(false);
+          setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
+          resolve(response.paypalOrderId)
+        }).catch((error) => {
+          let errorMsg = error.message;
+          if (errorMsg.includes('Insufficient Funds')) {
+            errorMsg = intl.formatMessage({ id: 'checkout.errors.insufficientFunds' });
+          } else {
+            errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
+          }
+          setErrorMsg(errorMsg);
+          setLoading(false);
+          reject(errorMsg)
+        });
+    });
+  };
+
+  const capturePaypalTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
+    if (!confirmToken && !isLogged()) {
+      if (onError) {
+        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      }
+      return;
+    }
+    if (!checkoutPayment?.paypalPayload?.orderId) {
+      if (onError) {
+        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      }
+      return;
+    }
+    if (missingTransactionData(true, true, onError)) {
+      if (onError) {
+        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      }
+      return;
+    }
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await capturePTransactionMW(
+      isLogged() ? token : confirmToken || '', 
+      intl.locale, 
+      checkoutPayment?.paypalPayload?.orderId,
+      !isLogged() ? user as GuestUser : undefined,
+      !isLogged() ? cart : undefined
+    )
+      .then((_response: { order?: Order }) => {
+        onCompleteTransaction();
+      }).catch((error) => {
+        let errorMsg = error.message;
+        if (errorMsg.includes('Insufficient Funds')) {
+          errorMsg = intl.formatMessage({ id: 'checkout.errors.insufficientFunds' });
+        } else {
+          errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
+        }
+        setErrorMsg(errorMsg);
+        setLoading(false);
+        if (onError) {
+          onError(errorMsg);
+        }
+      });
+  };
+
+  const onCompleteTransaction = async () => {
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.createTransaction'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.createOrder' }), 
@@ -192,13 +264,32 @@ const usePayments = () => {
     cleanCart(); 
   };
 
+  const missingTransactionData = (checkCheckoutPayment: boolean, checkUserEmail: boolean, onError?: (message: string) => void, userEmail?: string) => {
+    if ((checkCheckoutPayment && !checkoutPayment) || 
+        !user.shipping || 
+        !user.billing || 
+        (checkUserEmail && (!user.email && !userEmail)) || 
+        cart.items.length <= 0) {
+      const errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
+      setErrorMsg(errorMsg);
+      if (onError) {
+        onError(errorMsg);
+      }
+      setLoading(false);
+      return true;
+    }
+    return false;
+  }
+
   return {
     errorMsg,
     successMsg,
-    checkPaymentMethod,
+    checkBraintreePaymentMethod,
     getGuestUserData,
     sendConfirmTransactionEmail,
-    createTransaction,
+    createBraintreeTransaction,
+    createPaypalTransaction,
+    capturePaypalTransaction,
   };
 };
 

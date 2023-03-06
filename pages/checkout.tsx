@@ -66,7 +66,7 @@ const Checkout: NextPage = () => {
   };
 
   const init = useCallback(async () => {
-    if (disabledCheckoutPage()) {
+    /*if (disabledCheckoutPage()) {
       let isAdmin = false
       await isAdminUser(token).then((response: boolean) => {
         isAdmin = response
@@ -76,7 +76,7 @@ const Checkout: NextPage = () => {
         router.push(pages.home.path);
         return;
       }
-    }
+    }*/
 
     const queryToken = typeof router.query.token == 'string' ? router.query.token : '';
     if (queryToken) {
@@ -97,7 +97,7 @@ const Checkout: NextPage = () => {
       }
       setLoading(false);
     }
-  }, [disabledCheckoutPage, getGuestUserData, isLogged, router, setLoading, token]);
+  }, [getGuestUserData, isLogged, router.query.token, setLoading]);
 
   useEffect(() => {
     if (page.checked && !loadedCheckout) {
