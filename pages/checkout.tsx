@@ -8,8 +8,11 @@ import Container from '@mui/material/Container';
 
 import { PageTypes } from '@core/constants/navigation';
 import { CheckoutSections } from '@core/constants/checkout';
+import { isAdminUser } from '@core/utils/auth';
 
+import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import usePayments from '@lib/hooks/usePayments';
@@ -22,7 +25,8 @@ import LoginInfoDialog from '@components/dialogs/LoginInfoDialog';
 
 const Checkout: NextPage = () => {
   const { setLoading } = useAppContext();
-  const { isLogged } = useAuthContext();
+  const { disabledCheckoutPage } = useCartContext()
+  const { token, isLogged } = useAuthContext();
 
   const router = useRouter();
 
@@ -62,6 +66,16 @@ const Checkout: NextPage = () => {
   };
 
   const checkConfirmToken = useCallback(async () => {
+    if (disabledCheckoutPage()) {
+      await isAdminUser(token).then((response: boolean) => {
+        if (!response) {
+          router.push(pages.home.path);
+        }
+      }).catch((_error: Error) => {
+        router.push(pages.home.path);
+        return;
+      }); 
+    }
     const queryToken = typeof router.query.token == 'string' ? router.query.token : '';
     if (queryToken) {
       await getGuestUserData(queryToken, () => {
@@ -81,7 +95,7 @@ const Checkout: NextPage = () => {
       }
       setLoading(false);
     }
-  }, [getGuestUserData, isLogged, router.query.token, setLoading]);
+  }, [disabledCheckoutPage, getGuestUserData, isLogged, router, setLoading, token]);
 
   useEffect(() => {
     if (page.checked && !loadedCheckout) {

@@ -13,8 +13,6 @@ import { IntlProvider } from 'react-intl';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { SnackbarProvider } from 'notistack';
 // import { GoogleOAuthProvider } from '@react-oauth/google';
-// import { Elements } from '@stripe/react-stripe-js';
-// import { loadStripe } from '@stripe/stripe-js';
 
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -36,12 +34,7 @@ import { AuthProvider } from '@lib/contexts/AuthContext';
 import ErrorBoundary from '@components/exceptions/ErrorBoundary';
 import MainLayout from '@components/layouts/MainLayout';
 
-// Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
-
-/*const stripePromise = loadStripe(
-  envConfig.NEXT_PUBLIC_STRIPE_KEY
-);*/
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
@@ -90,32 +83,30 @@ function MyApp(props: MyAppProps) {
         <CacheProvider value={emotionCache}>
           <SnackbarProvider maxSnack={3} autoHideDuration={5000}>     
             {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
-              {/*<Elements stripe={stripePromise}>*/}
             
-                <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
-                      
-                    <ErrorBoundary>
-                      <AppProvider>
-                        <SearchProvider>
-                          <ProductsProvider>
-                            <CartProvider>
-                              <AuthProvider>
-                                <MainLayout>
-                                  <Component {...pageProps} />
-                                </MainLayout> 
-                              </AuthProvider>
-                            </CartProvider>
-                          </ProductsProvider>          
-                        </SearchProvider>
-                      </AppProvider>
-                    </ErrorBoundary>
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+                    
+                  <ErrorBoundary>
+                    <AppProvider>
+                      <SearchProvider>
+                        <ProductsProvider>
+                          <CartProvider>
+                            <AuthProvider>
+                              <MainLayout>
+                                <Component {...pageProps} />
+                              </MainLayout> 
+                            </AuthProvider>
+                          </CartProvider>
+                        </ProductsProvider>          
+                      </SearchProvider>
+                    </AppProvider>
+                  </ErrorBoundary>
 
-                  </LocalizationProvider>    
-                </ThemeProvider>
+                </LocalizationProvider>    
+              </ThemeProvider>
 
-              {/*</Elements>*/}
             {/*</GoogleOAuthProvider>*/}   
           </SnackbarProvider>
         </CacheProvider>

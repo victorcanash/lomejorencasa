@@ -31,34 +31,6 @@ export const checkPaymentMethod = (dropin: Dropin) => {
   });
 };
 
-export const getGuestUserData = async (confirmationToken: string) => {
-  return new Promise<{checkoutPayment: CheckoutPayment, user: GuestUser, cart: Cart}>((resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: getAuthHeaders(confirmationToken),
-    };
-    axios.get('/payments/guest-user-data', options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK) {
-          await setGuestCart(response.data.guestCart as GuestCartCheck);
-          resolve({
-            checkoutPayment: {
-              methodPayload: response.data.paymentPayload,
-              remember: false,
-            },
-            user: response.data.guestUser,
-            cart: convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get Guest User Data ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      });
-  })
-};
-
 export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayment: CheckoutPayment, guestUser: GuestUser, cart: Cart, urlPage: Page) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
@@ -83,6 +55,34 @@ export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayme
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Send Confirm Transaction Email ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      });
+  })
+};
+
+export const getGuestUserData = async (confirmationToken: string) => {
+  return new Promise<{checkoutPayment: CheckoutPayment, user: GuestUser, cart: Cart}>((resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: getAuthHeaders(confirmationToken),
+    };
+    axios.get('/payments/guest-user-data', options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK) {
+          await setGuestCart(response.data.guestCart as GuestCartCheck);
+          resolve({
+            checkoutPayment: {
+              methodPayload: response.data.paymentPayload,
+              remember: false,
+            },
+            user: response.data.guestUser,
+            cart: convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get Guest User Data ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       });

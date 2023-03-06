@@ -79,7 +79,7 @@ export const pages: Pages = {
   checkout: {
     path: '/checkout',
     filepath: '/checkout',
-    protection: Protections.admin,
+    protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
       enabled: true,

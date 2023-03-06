@@ -1,5 +1,7 @@
 import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
 
+import envConfig from '@core/config/env.config';
+import { Environments } from '@core/constants/app';
 import type { Cart } from '@core/types/cart';
 import { itemTotalPriceNumber } from '@core/utils/cart';
 
@@ -12,6 +14,7 @@ type ContextType = {
   initCart: (cart: Cart) => void,
   cleanCart: () => void,
   removeCart: () => void,
+  disabledCheckoutPage: () => boolean,
 };
 
 export const CartContext = createContext<ContextType>({
@@ -27,6 +30,7 @@ export const CartContext = createContext<ContextType>({
   initCart: () => {},
   cleanCart: () => {},
   removeCart: () => {},
+  disabledCheckoutPage: () => true,
 });
 
 export const useCartContext = () => {
@@ -91,6 +95,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setTotalPrice(0);
   };
 
+  const disabledCheckoutPage = () => {
+    if (envConfig.NEXT_PUBLIC_APP_ENV === Environments.development) {
+      return true;
+    } else if (totalPrice <= 0) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <CartContext.Provider
       value={{ 
@@ -102,6 +115,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         initCart,
         cleanCart,
         removeCart,
+        disabledCheckoutPage,
       }}
     >
       {children}
