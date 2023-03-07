@@ -66,17 +66,16 @@ const Checkout: NextPage = () => {
   };
 
   const init = useCallback(async () => {
-    /*if (disabledCheckoutPage()) {
+    if (disabledCheckoutPage()) {
       let isAdmin = false
       await isAdminUser(token).then((response: boolean) => {
         isAdmin = response
-      }).catch((_error) => {
-      })
+      }).catch((_error) => {})
       if (!isAdmin) {
         router.push(pages.home.path);
         return;
       }
-    }*/
+    }
 
     const queryToken = typeof router.query.token == 'string' ? router.query.token : '';
     if (queryToken) {
@@ -97,7 +96,7 @@ const Checkout: NextPage = () => {
       }
       setLoading(false);
     }
-  }, [getGuestUserData, isLogged, router.query.token, setLoading]);
+  }, [disabledCheckoutPage, getGuestUserData, isLogged, router, setLoading, token]);
 
   useEffect(() => {
     if (page.checked && !loadedCheckout) {
@@ -137,6 +136,7 @@ const Checkout: NextPage = () => {
               back={prevStep}
               transactionError={transactionError}
               setTransactionError={setTransactionError}
+              confirmToken={confirmToken}
             />
           }
           { currentCheckoutSection() == CheckoutSections.confirm &&
