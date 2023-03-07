@@ -33,7 +33,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   const { 
     user, 
     paypalClientId, 
-    paypalClientToken, 
+    paypalMerchantId, 
     checkoutPayment, 
     getCardPayload, 
     getPaypalPayload, 
@@ -80,7 +80,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
       if (!emptyConfirmToken() || isLogged()) {
-        if (!paypalClientId || !paypalClientToken) {
+        if (!paypalMerchantId || !paypalClientId) {
           createBraintreeTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
         } else {
           capturePaypalTransaction(isLogged() ? undefined: confirmToken, onErrorTransaction);

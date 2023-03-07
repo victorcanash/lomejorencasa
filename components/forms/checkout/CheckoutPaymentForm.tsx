@@ -25,7 +25,7 @@ type CheckoutPaymentFormProps = {
 const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   const { next, back, transactionError, setTransactionError, confirmToken } = props;
 
-  const { braintreeToken, paypalClientId, paypalClientToken, setCheckoutPayment, isLogged } = useAuthContext();
+  const { braintreeToken, paypalMerchantId, paypalClientId, setCheckoutPayment, isLogged } = useAuthContext();
   const { totalPrice } = useCartContext();
 
   const intl = useIntl();
@@ -124,7 +124,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
             id: 'checkout.paymentMethod',
             textAlign: 'center',
           },
-          extraElements: (!paypalClientId || !paypalClientToken) ?
+          extraElements: (!paypalMerchantId || !paypalClientId) ?
             <>
               { braintreeToken &&
                 <>
@@ -174,7 +174,11 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
               }
             </> 
             :
-            <>
+            <div 
+              style={{           
+                marginTop: '10px',   
+              }}
+            >
               <PayPalButtons
                 disabled={false}
                 forceReRender={[totalPrice]}
@@ -183,11 +187,11 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
                 onApprove={onPaypalApprove}
                 onError={onPaypalError}
               />
-            </>
+            </div>
           ,
         }
       ]}
-      formButtons={(!paypalClientId || !paypalClientToken) ? {
+      formButtons={(!paypalMerchantId || !paypalClientId) ? {
           submit: {
             text: { 
               id: 'app.continueBtn',

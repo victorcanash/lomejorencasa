@@ -32,9 +32,9 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     user?: User,
     paymentMode: PaymentModes,
     currency: string,
-    braintreeToken?: string, 
+    braintreeToken?: string,
+    paypalMerchantId?: string,
     paypalClientId?: string,
-    paypalClientToken?: string,
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
@@ -56,7 +56,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             response.data?.packs &&
             response.data?.paymentMode &&
             response.data?.currency &&
-            (response.data?.braintreeToken || (response.data?.paypalClientId && response.data?.paypalClientToken))) {
+            (response.data?.braintreeToken || (response.data?.paypalMerchantId && response.data?.paypalClientId))) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
@@ -81,8 +81,8 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             paymentMode: response.data.paymentMode,
             currency: response.data.currency,
             braintreeToken: response.data.braintreeToken,
+            paypalMerchantId: response.data.paypalMerchantId,
             paypalClientId: response.data.paypalClientId,
-            paypalClientToken: response.data.paypalClientToken,
           });
         } else {
           throw new Error('Something went wrong');

@@ -15,10 +15,10 @@ type ContextType = {
   setToken: Dispatch<SetStateAction<string>>,
   braintreeToken?: string,
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
+  paypalMerchantId?: string,
+  setPaypalMerchantId: Dispatch<SetStateAction<string | undefined>>,
   paypalClientId?: string,
   setPaypalClientId: Dispatch<SetStateAction<string | undefined>>,
-  paypalClientToken?: string,
-  setPaypalClientToken: Dispatch<SetStateAction<string | undefined>>,
   user: User | GuestUser,
   setUser: Dispatch<SetStateAction<User | GuestUser>>,
   paymentMode: PaymentModes,
@@ -43,10 +43,10 @@ export const AuthContext = createContext<ContextType>({
   setToken: () => {},
   braintreeToken: undefined,
   setBraintreeToken: () => {},
+  paypalMerchantId: undefined,
+  setPaypalMerchantId: () => {},
   paypalClientId: undefined,
   setPaypalClientId: () => {},
-  paypalClientToken: undefined,
-  setPaypalClientToken: () => {},
   user: {} as GuestUser,
   setUser: () => {},
   paymentMode: PaymentModes.braintree,
@@ -80,8 +80,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
+  const [paypalMerchantId, setPaypalMerchantId] = useState<string | undefined>(undefined);
   const [paypalClientId, setPaypalClientId] = useState<string | undefined>(undefined);
-  const [paypalClientToken, setPaypalClientToken] = useState<string | undefined>(undefined);
   const [user, setUser] = useState<User | GuestUser>({ 
     email: undefined, 
     shipping: undefined, 
@@ -177,8 +177,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setBraintreeToken,
         paypalClientId,
         setPaypalClientId,
-        paypalClientToken,
-        setPaypalClientToken,
+        paypalMerchantId,
+        setPaypalMerchantId,
         user, 
         setUser,
         paymentMode,
