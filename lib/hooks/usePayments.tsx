@@ -191,7 +191,6 @@ const usePayments = () => {
       )
         .then((response: { paypalOrderId: string }) => {
           setLoading(false);
-          setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
           resolve(response.paypalOrderId)
         }).catch((error) => {
           let errorMsg = error.message;
