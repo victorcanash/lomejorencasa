@@ -16,6 +16,6 @@ export const getBackendErrorMsg = (title: string, error: any) => {
   return `[${title}]: ${errorMsg as string}`;
 };
 
-export const logBackendError = ( errorMsg: string) => {
+export const logBackendError = (errorMsg: string) => {
   console.error(`${errorMsg}`);
 };

@@ -8,6 +8,8 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+
 import type { FormButtonsCheckout, FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -83,35 +85,35 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
     return paypalOrderId
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPaypalApprove = async (data: any, _actions: any) => {
+    onSuccessPaypalTransaction(data.orderId);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPaypalError = (error: any) => {
+    const errorMsg = getBackendErrorMsg('SDK Paypal ERROR', error);
+    logBackendError(errorMsg)
+    onErrorPaypalTransaction()
+  };
+
   const onSuccessPaypalTransaction = (orderId: string) => {
-    console.log('on success transaction paypal')
     setCheckoutPayment({
       paypalPayload: {
         orderId: orderId
       },
     });
-    setTimeout(() => { 
+    setTimeout(() => {
       if (next) {
         next(); 
       }
     }, 10);
   };
 
-  const onErrorPaypalTransaction = (message: string) => {
+  const onErrorPaypalTransaction = (message?: string) => {
     if (setTransactionError) {
-      setTransactionError(message);
+      setTransactionError(message || intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
     }
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPaypalApprove = async (data: any, _actions: any) => {
-    console.log('on paypal approve');
-    console.log('data: ', data)
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPaypalError = (_error: any) => {
-    console.log('on paypal error');
   };
 
   return (

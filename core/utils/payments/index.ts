@@ -19,7 +19,7 @@ export const checkBraintreePaymentMethod = (dropin: Dropin) => {
   return new Promise<{paymentPayload: PaymentMethodPayload}>(async (resolve, reject) => {
     dropin.requestPaymentMethod((error: object | null, payload: PaymentMethodPayload) => {
       if (error) {
-        const errorMsg = getBackendErrorMsg('Check Payment Method ERROR', error);
+        const errorMsg = getBackendErrorMsg('Check Braintree Payment Method ERROR', error);
         logBackendError(errorMsg)
         reject(new Error(errorMsg));
       } else {
