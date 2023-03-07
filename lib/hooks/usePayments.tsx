@@ -138,12 +138,14 @@ const usePayments = () => {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
+      setLoading(false);
       return;
     }
     if (missingTransactionData(true, true, onError)) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
+      setLoading(false);
       return;
     }
     setLoading(true);
@@ -210,18 +212,21 @@ const usePayments = () => {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
+      setLoading(false);
       return;
     }
     if (!checkoutPayment?.paypalPayload?.orderId) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
+      setLoading(false);
       return;
     }
     if (missingTransactionData(true, true, onError)) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
+      setLoading(false);
       return;
     }
     setLoading(true);

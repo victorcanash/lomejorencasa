@@ -10,49 +10,54 @@ export type Order = {
   bigbuyId?: string,
   createdAt: Date,
   items?: GuestCartCheckItem[],
-  bigbuy: {
-    id: string,
-    status: string,
-    shipping: {
-      firstName: string,
-      lastName: string,
-      addressLine1: string,
-      addressLine2: string,
-      postalCode: string,
-      locality: string,
-      country: string,
-      phone: string,
-    },
-    products: BigbuyOrderProduct[],
-  },
-  braintree: {
-    amount: string,
-    billing: {
-      firstName: string,
-      lastName: string,
-      addressLine1: string,
-      addressLine2: string,
-      postalCode: string,
-      locality: string,
-      country: string,
-    },
-    creditCard: {
-      cardType: string,
-      last4: string,
-    },
-    paypalAccount: {
-      payerEmail: string,
-    },
-  }
+  bigbuy: OrderBigbuy,
+  braintree: OrderTransaction,
 };
 
-export type BigbuyOrderProduct = {
-  id: string,
-  reference: string,
-  quantity: number,
-  name: string,
-  internalReference: string,
+export type OrderBigbuy = {
+  id: string
+  status: string
+  shippingAddress: {
+    firstName: string
+    lastName: string
+    country: string
+    postcode: string
+    town: string
+    address: string
+    phone: string
+    email: string
+    companyName: string
+  }
+  products: OrderBigbuyProduct[]
+}
+
+export type OrderBigbuyProduct = {
+  id?: string
+  reference: string
+  quantity: number
+  name?: string
+  internalReference: string
 };
+
+export type OrderTransaction = {
+  amount: string
+  billing: {
+    firstName: string
+    lastName: string
+    country: string
+    postalCode: string
+    locality: string
+    addressLine1: string
+    addressLine2: string
+  }
+  creditCard: {
+    cardType: string
+    last4: string
+  }
+  paypalAccount: {
+    payerEmail: string
+  }
+}
 
 export type OrderContact = {
   orderId: string,

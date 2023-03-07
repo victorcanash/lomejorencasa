@@ -3,6 +3,7 @@ import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react';
 import { useIntl } from 'react-intl';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 import DropIn from 'braintree-web-drop-in-react';
+import { OnApproveData, OnApproveActions, CreateOrderData, CreateOrderActions } from '@paypal/paypal-js';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -74,7 +75,10 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const handlePaypalSubmit = async (_data: any, _actions: any) => {
+  const handlePaypalSubmit = async (_data: CreateOrderData, _actions: CreateOrderActions) => {
+    if (setTransactionError) {
+      setTransactionError('');
+    }
     let paypalOrderId = '';
     await createPaypalTransaction(isLogged() ? undefined : confirmToken)
       .then((response: string) => {
@@ -86,12 +90,12 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPaypalApprove = async (data: any, _actions: any) => {
-    onSuccessPaypalTransaction(data.orderId);
+  const onPaypalApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
+    onSuccessPaypalTransaction(data.orderID);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onPaypalError = (error: any) => {
+  const onPaypalError = (error: Record<string, unknown>) => {
     const errorMsg = getBackendErrorMsg('SDK Paypal ERROR', error);
     logBackendError(errorMsg)
     onErrorPaypalTransaction()

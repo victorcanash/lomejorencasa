@@ -80,13 +80,13 @@ const OrderDetail = (props: OrderDetailProps) => {
                 id: 0,
                 userId: 0,
                 type: AddressTypes.shipping,
-                firstName: order.bigbuy.shipping.firstName,
-                lastName: order.bigbuy.shipping.lastName,
-                addressLine1: order.bigbuy.shipping.addressLine1,
-                addressLine2: order.bigbuy.shipping.addressLine2,
-                postalCode: order.bigbuy.shipping.postalCode,
-                locality: order.bigbuy.shipping.locality,
-                country: order.bigbuy.shipping.country,
+                firstName: order.bigbuy.shippingAddress.firstName,
+                lastName: order.bigbuy.shippingAddress.lastName,
+                addressLine1: order.bigbuy.shippingAddress.address,
+                addressLine2: undefined,
+                postalCode: order.bigbuy.shippingAddress.postcode,
+                locality: order.bigbuy.shippingAddress.town,
+                country: order.bigbuy.shippingAddress.country,
               } as UserAddress}
               variant="body2"
             />
