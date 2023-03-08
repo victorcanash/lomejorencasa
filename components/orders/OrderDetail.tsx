@@ -43,23 +43,23 @@ const OrderDetail = (props: OrderDetailProps) => {
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
-          { order.braintree.creditCard.cardType != '' &&
+          { order.transaction.creditCard.cardType != '' &&
             <Typography component="div" variant="body1">
               <FormattedMessage 
                 id="orderDetail.paidCard" 
                 values={{
-                  cardType: order.braintree.creditCard.cardType,
-                  last4: order.braintree.creditCard.last4,
+                  cardType: order.transaction.creditCard.cardType,
+                  last4: order.transaction.creditCard.last4,
                 }}
               />
             </Typography>
           }
-          { order.braintree.paypalAccount.payerEmail != '' &&
+          { order.transaction.paypalAccount.payerEmail != '' &&
             <Typography component="div" variant="body1">
               <FormattedMessage 
                 id="orderDetail.paidPaypal" 
                 values={{
-                  payerEmail: order.braintree.paypalAccount.payerEmail,
+                  payerEmail: order.transaction.paypalAccount.payerEmail,
                 }}
               />
             </Typography>
@@ -92,7 +92,7 @@ const OrderDetail = (props: OrderDetailProps) => {
             />
           </Box>
         </Grid>
-        { order.braintree.billing.addressLine1 != '' &&
+        { order.transaction.billing.addressLine1 != '' &&
           <Grid item xs={6}>
             <Typography component="div" variant="body1">
               <FormattedMessage 
@@ -105,13 +105,13 @@ const OrderDetail = (props: OrderDetailProps) => {
                   id: 0,
                   userId: 0,
                   type: AddressTypes.billing,
-                  firstName: order.braintree.billing.firstName,
-                  lastName: order.braintree.billing.lastName,
-                  addressLine1: order.braintree.billing.addressLine1,
-                  addressLine2: order.braintree.billing.addressLine2,
-                  postalCode: order.braintree.billing.postalCode,
-                  locality: order.braintree.billing.locality,
-                  country: order.braintree.billing.country,
+                  firstName: order.transaction.billing.firstName,
+                  lastName: order.transaction.billing.lastName,
+                  addressLine1: order.transaction.billing.addressLine1,
+                  addressLine2: order.transaction.billing.addressLine2,
+                  postalCode: order.transaction.billing.postalCode,
+                  locality: order.transaction.billing.locality,
+                  country: order.transaction.billing.country,
                 } as UserAddress}
                 variant="body2"
               />
@@ -125,7 +125,7 @@ const OrderDetail = (props: OrderDetailProps) => {
       </Typography>
       <CartDetail
         items={order.items || []}
-        totalPrice={Number(order.braintree.amount)}
+        totalPrice={Number(order.transaction.amount)}
         showEmptyItems={true}
       />
 

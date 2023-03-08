@@ -11,7 +11,7 @@ export type Order = {
   createdAt: Date,
   items?: GuestCartCheckItem[],
   bigbuy: OrderBigbuy,
-  braintree: OrderTransaction,
+  transaction: OrderTransaction,
 };
 
 export type OrderBigbuy = {
