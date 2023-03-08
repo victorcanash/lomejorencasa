@@ -163,7 +163,6 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
       },
     };
     const body = {
-      cardName: checkoutPayment.paypalPayload?.cardName,
       remember: checkoutPayment.remember,
       guestUser: guestUser ? {
         ...guestUser,

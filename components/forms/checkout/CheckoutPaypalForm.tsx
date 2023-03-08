@@ -15,6 +15,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+import { getCountryCode } from '@core/utils/addresses';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -44,7 +45,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const { setLoading } = useAppContext();
   const { totalPrice } = useCartContext();
-  const { checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
+  const { user, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
 
   const intl = useIntl();
   const [{ isResolved, options }, dispatch] = usePayPalScriptReducer();
@@ -74,8 +75,18 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     if (renderInstance) {
       setTransactionError('');
       renderInstance
-        .submit()
-        .then((response) => { 
+        .submit({
+          //cardholderName: cardHolderName,
+          billingAddress: {
+            streetAddress: user.billing?.addressLine1,
+            extendedAddress: user.billing?.addressLine2,
+            region: user.billing?.country,
+            locality: user.billing?.locality,
+            postalCode: user.billing?.postalCode,
+            countryCodeAlpha2: user.billing?.country ? getCountryCode(user.billing?.country) : undefined,
+          },
+        })
+        .then((response) => {
           onSuccessPaypalTransaction(response.orderId);
         })
         .catch((error: Record<string, unknown>) => {
@@ -88,7 +99,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     setCheckoutPayment({
       paypalPayload: {
         orderId: orderId,
-        cardName: undefined,
       },
       remember,
     });
@@ -137,16 +147,16 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
         },*/
         fields: {
           number: {
-            selector: "#card-number",
-            placeholder: "Credit Card Number"
+            selector: '#card-number',
+            placeholder: '0000 0000 0000 0000',
           },
           cvv: {
-            selector: "#cvv",
+            selector: '#cvv',
             placeholder: "CVV"
           },
           expirationDate: {
-            selector: "#expiration-date",
-            placeholder: "MM/YYYY"
+            selector: '#expiration-date',
+            placeholder: 'MM/YYYY'
           }
         }
       });
@@ -169,7 +179,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   return (
     <BaseForm
       maxWidth="800px"
-      initialValues={{}}
+      initialValues={{
+
+      }}
       formFieldGroups={[
         {
           titleTxt: {
