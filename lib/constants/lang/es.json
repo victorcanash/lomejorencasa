@@ -349,7 +349,7 @@
   "orderDetail.date": "Fecha del pedido",
   "orderDetail.status": "Estado",
   "orderDetail.paidCard": "Pagado con {cardType} ....{last4}",
-  "orderDetail.paidPaypal": "Pagado con Paypal {payerEmail}",
+  "orderDetail.paidPaypal": "Pagado con Paypal\n{payerEmail}",
   "orderDetail.products": "Productos",
   "orderDetail.noProductReference": "La referencia del producto ya no existe",
   "orderDetail.showBtn": "Ver pedido",

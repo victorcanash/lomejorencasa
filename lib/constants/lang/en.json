@@ -349,7 +349,7 @@
   "orderDetail.date": "Order date",
   "orderDetail.status": "Status",
   "orderDetail.paidCard": "Paid with {cardType} ....{last4}",
-  "orderDetail.paidPaypal": "Paid with Paypal {payerEmail}",
+  "orderDetail.paidPaypal": "Paid with Paypal\n{payerEmail}",
   "orderDetail.products": "Products",
   "orderDetail.noProductReference": "The product reference no longer exists",
   "orderDetail.showBtn": "Show order",
