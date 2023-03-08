@@ -37,7 +37,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
             'currency': currency,
             'intent': 'capture',
             'components': 'buttons,hosted-fields',
-            //vault: true,
+            'vault': true,
           }}
         >
           { content }
