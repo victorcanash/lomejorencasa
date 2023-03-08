@@ -35,6 +35,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     braintreeToken?: string,
     paypalMerchantId?: string,
     paypalClientId?: string,
+    paypalToken?: string,
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
@@ -56,7 +57,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             response.data?.packs &&
             response.data?.paymentMode &&
             response.data?.currency &&
-            (response.data?.braintreeToken || (response.data?.paypalMerchantId && response.data?.paypalClientId))) {
+            (response.data?.braintreeToken || (response.data?.paypalMerchantId && response.data?.paypalClientId && response.data?.paypalToken))) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
@@ -83,6 +84,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             braintreeToken: response.data.braintreeToken,
             paypalMerchantId: response.data.paypalMerchantId,
             paypalClientId: response.data.paypalClientId,
+            paypalToken: response.data.paypalToken,
           });
         } else {
           throw new Error('Something went wrong');

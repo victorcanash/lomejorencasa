@@ -30,6 +30,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     setBraintreeToken,
     setPaypalMerchantId,
     setPaypalClientId,
+    setPaypalToken,
   } = useAuthContext();
 
   const intl = useIntl();
@@ -59,6 +60,7 @@ const useApp = (pageType: PageTypes | undefined) => {
             braintreeToken?: string,
             paypalMerchantId?: string,
             paypalClientId?: string,
+            paypalToken?: string,
           }
         ) => {
           setProductCategories(response.productCategories);
@@ -73,6 +75,7 @@ const useApp = (pageType: PageTypes | undefined) => {
           setBraintreeToken(response.braintreeToken);
           setPaypalMerchantId(response.paypalMerchantId);
           setPaypalClientId(response.paypalClientId);
+          setPaypalToken(response.paypalToken);
           setInitialized(true);
         }).catch(async (error: Error) => {
           throw error;
@@ -80,7 +83,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setCurrency, setInitialized, setPaymentMode, setPaypalClientId, setPaypalMerchantId, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setCurrency, setInitialized, setPaymentMode, setPaypalClientId, setPaypalMerchantId, setPaypalToken, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {

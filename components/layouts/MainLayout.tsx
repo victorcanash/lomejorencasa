@@ -14,7 +14,7 @@ import Loading from '@components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { initialized } = useAppContext();
-  const { paypalMerchantId, paypalClientId, currency } = useAuthContext();
+  const { paypalMerchantId, paypalClientId, paypalToken, currency } = useAuthContext();
 
   const { layout, pageType } = useLayout(children);
   const app = useApp(pageType);
@@ -28,14 +28,16 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      { (pageType !== PageTypes.link && paypalMerchantId && paypalClientId) ?
+      { (pageType !== PageTypes.link && paypalMerchantId && paypalClientId && paypalToken) ?
         <PayPalScriptProvider
           options={{
             'merchant-id': paypalMerchantId,
             'client-id': paypalClientId,
+            'data-client-token': paypalToken,
             'currency': currency,
             'intent': 'capture',
-            'components': 'buttons',
+            'components': 'buttons,hosted-fields',
+            //vault: true,
           }}
         >
           { content }
