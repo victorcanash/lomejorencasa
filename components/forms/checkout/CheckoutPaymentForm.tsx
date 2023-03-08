@@ -34,13 +34,6 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
     setRememberFieldValue(checked);
   };
 
-  useEffect(() => {
-    setCheckoutPayment({
-      ...checkoutPayment,
-      remember: rememberFieldValue,
-    });
-  }, [checkoutPayment, rememberFieldValue, setCheckoutPayment])
-
   return (
     <>
       { (!paypalMerchantId || !paypalClientId || !paypalToken) ?
