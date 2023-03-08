@@ -37,17 +37,23 @@ const usePayments = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const checkBraintreePaymentMethod = (dropin: Dropin, onSuccess?: (paymentPayload: PaymentMethodPayload) => void) => {
+  const checkBraintreePaymentMethod = (dropin: Dropin, remember: boolean, onSuccess?: () => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     checkBPaymentMethodMW(dropin)
       .then((response: {paymentPayload: PaymentMethodPayload}) => {
-        if (onSuccess) {
-          onSuccess(response.paymentPayload);
-        }
-        setLoading(false);
-        setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
+        setCheckoutPayment({
+          braintreePayload: response.paymentPayload,
+          remember: remember,
+        });
+        setTimeout(() => {
+          setLoading(false);
+          setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
+          if (onSuccess) {
+            onSuccess();
+          }
+        }, 10);
       }).catch((_error: Error) => {
         dropin.clearSelectedPaymentMethod();
         const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
@@ -56,31 +62,40 @@ const usePayments = () => {
       })
   };
 
-  const getGuestUserData = async (confirmationToken: string, onSuccess?: () => void, onError?: (message: string) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    await getGuestUserDataMW(confirmationToken).then(async (response: {checkoutPayment: CheckoutPayment, user: GuestUser, cart: Cart}) => {
-      setCheckoutPayment(response.checkoutPayment);
-      setUser(response.user);
-      initCart(response.cart);
-      enqueueSnackbar(intl.formatMessage(
-        { id: 'checkout.successes.getGuestUserData' }), 
-        { variant: 'success', autoHideDuration: 10000 }
-      );
-      if (onSuccess) {
-        onSuccess();
+  const createPaypalTransaction = async () => {
+    return new Promise<string>(async (resolve, reject) => {
+      const confirmToken = typeof router.query.token == 'string' ? router.query.token : '';
+      if (missingTransactionData(false, false)) {
+        reject(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
       }
-    }).catch(async (error: Error) => {
-      enqueueSnackbar(intl.formatMessage(
-        { id: 'checkout.errors.getGuestUserData' }), 
-        { variant: 'error', autoHideDuration: 10000 }
-      );
-      if (onError) {
-        onError(error.message);
-      }
+      setLoading(true);
+      setErrorMsg('');
+      setSuccessMsg('');
+      await createPTransactionMW(
+        isLogged() ? token : confirmToken || '', 
+        intl.locale,
+        !isLogged() ? user as GuestUser : undefined,
+        !isLogged() ? cart : undefined
+      )
+        .then((response: { paypalOrderId: string }) => {   
+          setCheckoutPayment({
+            paypalPayload: {
+              orderId: response.paypalOrderId,
+            },
+          });
+          setTimeout(() => {
+            setLoading(false);
+            setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
+            resolve(response.paypalOrderId)
+          }, 10);
+        }).catch((_error) => {
+          const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
+          setErrorMsg(errorMsg);
+          setLoading(false);
+          reject(errorMsg)
+        });
     });
-  }
+  };
 
   const sendConfirmTransactionEmail = async (authLogin: AuthLogin, onError?: (message: string) => void) => {
     setUser({
@@ -133,6 +148,32 @@ const usePayments = () => {
     );
   };
 
+  const getGuestUserData = async (confirmationToken: string, onSuccess?: () => void, onError?: (message: string) => void) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await getGuestUserDataMW(confirmationToken).then(async (response: {checkoutPayment: CheckoutPayment, user: GuestUser, cart: Cart}) => {
+      setCheckoutPayment(response.checkoutPayment);
+      setUser(response.user);
+      initCart(response.cart);
+      enqueueSnackbar(intl.formatMessage(
+        { id: 'checkout.successes.getGuestUserData' }), 
+        { variant: 'success', autoHideDuration: 10000 }
+      );
+      if (onSuccess) {
+        onSuccess();
+      }
+    }).catch(async (error: Error) => {
+      enqueueSnackbar(intl.formatMessage(
+        { id: 'checkout.errors.getGuestUserData' }), 
+        { variant: 'error', autoHideDuration: 10000 }
+      );
+      if (onError) {
+        onError(error.message);
+      }
+    });
+  }
+
   const createBraintreeTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
     if (!confirmToken && !isLogged()) {
       if (onError) {
@@ -173,37 +214,6 @@ const usePayments = () => {
           onError(errorMsg);
         }
       });
-  };
-
-  const createPaypalTransaction = async (confirmToken?: string) => {
-    return new Promise<string>(async (resolve, reject) => {
-      if (missingTransactionData(false, false)) {
-        reject(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
-      }
-      setLoading(true);
-      setErrorMsg('');
-      setSuccessMsg('');
-      await createPTransactionMW(
-        isLogged() ? token : confirmToken || '', 
-        intl.locale,
-        !isLogged() ? user as GuestUser : undefined,
-        !isLogged() ? cart : undefined
-      )
-        .then((response: { paypalOrderId: string }) => {
-          setLoading(false);
-          resolve(response.paypalOrderId)
-        }).catch((error) => {
-          let errorMsg = error.message;
-          if (errorMsg.includes('Insufficient Funds')) {
-            errorMsg = intl.formatMessage({ id: 'checkout.errors.insufficientFunds' });
-          } else {
-            errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });
-          }
-          setErrorMsg(errorMsg);
-          setLoading(false);
-          reject(errorMsg)
-        });
-    });
   };
 
   const capturePaypalTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
@@ -289,10 +299,10 @@ const usePayments = () => {
     errorMsg,
     successMsg,
     checkBraintreePaymentMethod,
-    getGuestUserData,
-    sendConfirmTransactionEmail,
-    createBraintreeTransaction,
     createPaypalTransaction,
+    sendConfirmTransactionEmail,
+    getGuestUserData,
+    createBraintreeTransaction,
     capturePaypalTransaction,
   };
 };
