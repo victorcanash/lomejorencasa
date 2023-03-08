@@ -49,7 +49,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   const intl = useIntl();
   const [{ isResolved, options }, dispatch] = usePayPalScriptReducer();
 
-  const { getPaypalUserToken, createPaypalTransaction, errorMsg, successMsg } = usePayments();
+  const { getPaypalUserToken, createPaypalTransaction, errorMsg, successMsg, setSuccessMsg } = usePayments();
 
   const [loadedPaypal, setLoadedPaypal] = useState(false);
   const [renderInstance, setRenderInstance] = useState<HostedFieldsHandler | undefined>(undefined);
@@ -100,7 +100,8 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const onErrorPaypalTransaction = (error: Record<string, unknown>) => {
     const errorMsg = getBackendErrorMsg('SDK Paypal ERROR', error);
-    logBackendError(errorMsg)
+    logBackendError(errorMsg);
+    setSuccessMsg('');
     setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
   };
 

@@ -312,6 +312,7 @@ const usePayments = () => {
   return {
     errorMsg,
     successMsg,
+    setSuccessMsg,
     getPaypalUserToken,
     checkBraintreePaymentMethod,
     createPaypalTransaction,
