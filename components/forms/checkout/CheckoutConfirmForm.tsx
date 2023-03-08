@@ -21,8 +21,8 @@ import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 import CheckoutEmailDialog from '@components/dialogs/CheckoutEmailDialog';
 
 type CheckoutConfirmFormProps = {
-  back?: () => void,
-  setTransactionError?: Dispatch<SetStateAction<string>>,
+  back: () => void,
+  setTransactionError: Dispatch<SetStateAction<string>>,
   confirmToken: string,
 };
 
@@ -33,7 +33,8 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   const { 
     user, 
     paypalClientId, 
-    paypalMerchantId, 
+    paypalMerchantId,
+    paypalToken,
     checkoutPayment, 
     getCardPayload, 
     getPaypalPayload, 
@@ -60,18 +61,12 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   };
 
   const handleBack = () => {
-    if (setTransactionError) {
-      setTransactionError('');
-    }
-    if (back) {
-      back();
-    }
+    setTransactionError('');
+    back();
   };
 
   const handleSubmit = async () => {
-    if (setTransactionError) {
-      setTransactionError('');
-    }
+    setTransactionError('');
     checkCart(onSuccessCheckCart);
   };
 
@@ -80,7 +75,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedItemsByInventory(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
       if (!emptyConfirmToken() || isLogged()) {
-        if (!paypalMerchantId || !paypalClientId) {
+        if (!paypalMerchantId || !paypalClientId || !paypalToken) {
           createBraintreeTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
         } else {
           capturePaypalTransaction(isLogged() ? undefined: confirmToken, onErrorTransaction);
@@ -102,12 +97,8 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     if (openEmailDialog) {
       handleEmailDialog();
     }
-    if (setTransactionError) {
-      setTransactionError(message);
-    }
-    if (back) {
-      back();
-    }
+    setTransactionError(message);
+    back();
   };
 
   const emptyCart = () => {
@@ -122,7 +113,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
       return false;
     }
     return true;
-  }
+  };
 
   return (
     <>

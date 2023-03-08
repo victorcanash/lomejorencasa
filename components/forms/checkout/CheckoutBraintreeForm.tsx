@@ -1,7 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import { useIntl } from 'react-intl';
-import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
+import { Dropin } from 'braintree-web-drop-in';
 import DropIn from 'braintree-web-drop-in-react';
 
 import FormControlLabel from '@mui/material/FormControlLabel';

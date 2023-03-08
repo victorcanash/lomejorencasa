@@ -14,7 +14,7 @@ import useUser from '@lib/hooks/useUser';
 import BaseForm from '@components/forms/BaseForm';
 
 type CheckoutAddressesFormProps = {
-  next?: () => void,
+  next: () => void,
 };
 
 const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
@@ -53,9 +53,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
       }
       updateUserAddresses(checkoutAddresses, next);
     } else if (!dirty && user.shipping && user.billing) {
-      if (next) {
-        next();
-      };
+      next();
     }
   };
 
