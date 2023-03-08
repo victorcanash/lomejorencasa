@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, ChangeEvent, useState } from 'react';
 
 import { useIntl } from 'react-intl';
 import { Dropin } from 'braintree-web-drop-in';
@@ -17,6 +17,8 @@ type CheckoutBraintreeFormProps = {
   handleBack: () => Promise<void>,
   transactionError: string | undefined,
   setTransactionError: Dispatch<SetStateAction<string>>,
+  remember: boolean,
+  handleRemember: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void,
 };
 
 const CheckoutBraintreeForm = (props: CheckoutBraintreeFormProps) => {
@@ -24,7 +26,9 @@ const CheckoutBraintreeForm = (props: CheckoutBraintreeFormProps) => {
     next,
     handleBack,
     transactionError, 
-    setTransactionError 
+    setTransactionError,
+    remember,
+    handleRemember,
   } = props;
 
   const { braintreeToken, isLogged } = useAuthContext();
@@ -34,18 +38,13 @@ const CheckoutBraintreeForm = (props: CheckoutBraintreeFormProps) => {
   const { checkBraintreePaymentMethod, errorMsg, successMsg } = usePayments();
 
   const [braintreeDropin, setBraintreeDropin] = useState<Dropin | undefined>(undefined);
-  const [rememberFieldValue, setRememberFieldValue] = useState(true);
-
-  const handleRememberField = (_event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
-    setRememberFieldValue(checked);
-  };
 
   const handleBraintreeSubmit = async () => {
     if (!braintreeDropin) {
       return;
     }
     setTransactionError('');
-    checkBraintreePaymentMethod(braintreeDropin, rememberFieldValue, onSuccessCheckBPaymentMethod);
+    checkBraintreePaymentMethod(braintreeDropin, remember, onSuccessCheckBPaymentMethod);
   };
 
   const onSuccessCheckBPaymentMethod = () => {
@@ -100,8 +99,8 @@ const CheckoutBraintreeForm = (props: CheckoutBraintreeFormProps) => {
                     <Checkbox 
                       id="remember"
                       name="remember"
-                      checked={rememberFieldValue} 
-                      onChange={handleRememberField}
+                      checked={remember} 
+                      onChange={handleRemember}
                     />
                   }      
                 />

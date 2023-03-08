@@ -12,6 +12,7 @@ import type { CheckoutPayment } from '@core/types/checkout';
 import type { Cart } from '@core/types/cart';
 import type { AuthLogin } from '@core/types/auth';
 import { 
+  getPaypalUserToken as getPaypalUserTokenMW,
   checkBraintreePaymentMethod as checkBPaymentMethodMW,
   getGuestUserData as getGuestUserDataMW,
   sendConfirmTransactionEmail as sendConfirmTransactionEmailMW,
@@ -37,12 +38,30 @@ const usePayments = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
+  const getPaypalUserToken = async () => {
+    let paypalUserToken: string | undefined
+    if (!isLogged()) {
+      return paypalUserToken;
+    }
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await getPaypalUserTokenMW(token, intl.locale)
+      .then((response: { paypalUserToken: string }) => {
+        paypalUserToken = response.paypalUserToken
+      }).catch((error) => {
+        console.log(error.message)
+      })
+    setLoading(false)
+    return paypalUserToken
+  }
+
   const checkBraintreePaymentMethod = (dropin: Dropin, remember: boolean, onSuccess?: () => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     checkBPaymentMethodMW(dropin)
-      .then((response: {paymentPayload: PaymentMethodPayload}) => {
+      .then((response: { paymentPayload: PaymentMethodPayload }) => {
         setCheckoutPayment({
           braintreePayload: response.paymentPayload,
           remember: remember,
@@ -65,7 +84,7 @@ const usePayments = () => {
   const createPaypalTransaction = async () => {
     return new Promise<string>(async (resolve, reject) => {
       const confirmToken = typeof router.query.token == 'string' ? router.query.token : '';
-      if (missingTransactionData(false, false)) {
+      if (missingTransactionData(false)) {
         reject(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
       }
       setLoading(true);
@@ -74,20 +93,16 @@ const usePayments = () => {
       await createPTransactionMW(
         isLogged() ? token : confirmToken || '', 
         intl.locale,
-        !isLogged() ? user as GuestUser : undefined,
+        checkoutPayment as CheckoutPayment,
+        !isLogged() ? {
+          ...user,
+          email: user.email ? user.email : '',
+        } : undefined,
         !isLogged() ? cart : undefined
       )
         .then((response: { paypalOrderId: string }) => {   
-          setCheckoutPayment({
-            paypalPayload: {
-              orderId: response.paypalOrderId,
-            },
-          });
-          setTimeout(() => {
-            setLoading(false);
-            setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
-            resolve(response.paypalOrderId)
-          }, 10);
+          setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
+          resolve(response.paypalOrderId)
         }).catch((_error) => {
           const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
           setErrorMsg(errorMsg);
@@ -102,7 +117,7 @@ const usePayments = () => {
       ...user,
       email: authLogin.email,
     });
-    if (missingTransactionData(true, true, onError, authLogin.email)) {
+    if (missingTransactionData(true, onError, authLogin.email)) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
@@ -182,7 +197,7 @@ const usePayments = () => {
       setLoading(false);
       return;
     }
-    if (missingTransactionData(true, true, onError)) {
+    if (missingTransactionData(true, onError)) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
@@ -231,7 +246,7 @@ const usePayments = () => {
       setLoading(false);
       return;
     }
-    if (missingTransactionData(true, true, onError)) {
+    if (missingTransactionData(true, onError)) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
@@ -244,7 +259,7 @@ const usePayments = () => {
     await capturePTransactionMW(
       isLogged() ? token : confirmToken || '', 
       intl.locale, 
-      checkoutPayment?.paypalPayload?.orderId,
+      checkoutPayment as CheckoutPayment,
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )
@@ -278,8 +293,8 @@ const usePayments = () => {
     cleanCart(); 
   };
 
-  const missingTransactionData = (checkCheckoutPayment: boolean, checkUserEmail: boolean, onError?: (message: string) => void, userEmail?: string) => {
-    if ((checkCheckoutPayment && !checkoutPayment) || 
+  const missingTransactionData = (checkUserEmail: boolean, onError?: (message: string) => void, userEmail?: string) => {
+    if (!checkoutPayment || 
         !user.shipping || 
         !user.billing || 
         (checkUserEmail && (!user.email && !userEmail)) || 
@@ -298,6 +313,7 @@ const usePayments = () => {
   return {
     errorMsg,
     successMsg,
+    getPaypalUserToken,
     checkBraintreePaymentMethod,
     createPaypalTransaction,
     sendConfirmTransactionEmail,

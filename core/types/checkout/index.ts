@@ -12,6 +12,7 @@ export type CheckoutPayment = {
   braintreePayload?: PaymentMethodPayload,
   paypalPayload?: {
     orderId: string,
+    cardName?: string,
   },
   remember?: boolean,
 };

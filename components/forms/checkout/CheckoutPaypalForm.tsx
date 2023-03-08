@@ -1,13 +1,25 @@
-import { useState, Dispatch, useEffect, useCallback, SetStateAction } from 'react';
+import { useState, useRef, Dispatch, useEffect, useCallback, SetStateAction, ChangeEvent } from 'react';
 
 import { useIntl } from 'react-intl';
-import { CreateOrderData, CreateOrderActions, OnApproveData, OnApproveActions, HostedFieldsHandler } from '@paypal/paypal-js';
+import { 
+  CreateOrderData, 
+  CreateOrderActions, 
+  OnApproveData, 
+  OnApproveActions, 
+  HostedFieldsHandler 
+} from '@paypal/paypal-js';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+
+import Box from '@mui/material/Box';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePayments from '@lib/hooks/usePayments';
 import BaseForm from '@components/forms/BaseForm';
 
@@ -16,6 +28,8 @@ type CheckoutPaypalFormProps = {
   handleBack: () => Promise<void>,
   transactionError: string | undefined,
   setTransactionError: Dispatch<SetStateAction<string>>,
+  remember: boolean,
+  handleRemember: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void,
 };
 
 const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
@@ -24,14 +38,18 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     handleBack, 
     transactionError, 
     setTransactionError,
+    remember,
+    handleRemember,
   } = props;
 
+  const { setLoading } = useAppContext();
   const { totalPrice } = useCartContext();
+  const { checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
 
   const intl = useIntl();
-  const [{ isResolved, options }] = usePayPalScriptReducer();
+  const [{ isResolved, options }, dispatch] = usePayPalScriptReducer();
 
-  const { createPaypalTransaction, errorMsg, successMsg } = usePayments();
+  const { getPaypalUserToken, createPaypalTransaction, errorMsg, successMsg } = usePayments();
 
   const [loadedPaypal, setLoadedPaypal] = useState(false);
   const [renderInstance, setRenderInstance] = useState<HostedFieldsHandler | undefined>(undefined);
@@ -45,11 +63,11 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   };
 
   const onPaypalButtonsApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
-    onSuccessPaypalTransaction();
+    onSuccessPaypalTransaction(data.orderID);
   };
 
   const onPaypalButtonsError = (error: Record<string, unknown>) => {
-    onErrorPaypalTransaction(error)
+    onErrorPaypalTransaction(error);
   };
 
   const handlePaypalHostedFieldsSubmit = async () => {
@@ -58,16 +76,26 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       renderInstance
         .submit()
         .then((response) => { 
-          onSuccessPaypalTransaction()
+          onSuccessPaypalTransaction(response.orderId);
         })
         .catch((error: Record<string, unknown>) => {
-          onErrorPaypalTransaction(error)
+          onErrorPaypalTransaction(error);
         });
     }
   };
 
-  const onSuccessPaypalTransaction = () => {
-    next(); 
+  const onSuccessPaypalTransaction = (orderId: string) => {
+    setCheckoutPayment({
+      paypalPayload: {
+        orderId: orderId,
+        cardName: undefined,
+      },
+      remember,
+    });
+    setTimeout(() => {
+      setLoading(false);
+      next(); 
+    }, 10);
   };
 
   const onErrorPaypalTransaction = (error: Record<string, unknown>) => {
@@ -79,6 +107,19 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   const initPaypal = useCallback(async () => {
     if (typeof supportsHostedFields === 'boolean' && !!supportsHostedFields) {
       setLoadedPaypal(true);
+      
+      await getPaypalUserToken().then((paypalUserToken?: string) => { 
+        if (paypalUserToken) {
+          dispatch({
+            type: 'resetOptions',
+            value: {
+                ...options,
+                'data-user-id-token': paypalUserToken,
+            },
+          });
+        }
+      });
+       
       const instance = await paypal.HostedFields?.render({
         createOrder: createPaypalTransaction,
         /*styles: {
@@ -110,13 +151,13 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       });
       setRenderInstance(instance);
     }
-  }, [createPaypalTransaction, paypal.HostedFields, supportsHostedFields]);
+  }, [supportsHostedFields, getPaypalUserToken, paypal.HostedFields, createPaypalTransaction, dispatch, options]);
 
   useEffect(() => {
     if (isResolved) {
       setSupportsHostedFields(paypal.HostedFields?.isEligible());
     }
-  }, [setSupportsHostedFields, options, isResolved, paypal]);
+  }, [setSupportsHostedFields, options, isResolved, paypal.HostedFields]);
 
   useEffect(() => {
     if (!loadedPaypal) {
@@ -135,31 +176,47 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             textAlign: 'center',
           },
           extraElements:
-            <div 
-              style={{           
-                marginTop: '10px',   
-              }}
-            >
-              <PayPalButtons
-                disabled={false}
-                forceReRender={[totalPrice]}
-                fundingSource={undefined}
-                createOrder={handlePaypalButtonsSubmit}
-                onApprove={onPaypalButtonsApprove}
-                onError={onPaypalButtonsError}
-              />
-              <div>
-                <label htmlFor="card-number">Card Number</label>
-                <div id="card-number"></div>
-                <label htmlFor="expiration-date">Expiration Date</label>
-                <div id="expiration-date"></div>
-                <label htmlFor="cvv">CVV</label>
-                <div id="cvv"></div>
-                {/*<button onClick={handlePaypalHostedFieldsSubmit}>
-                  Pay with Card
-                </button>*/}
-              </div>
-            </div>
+            <>
+              <Box 
+                sx={{           
+                  mt: '10px',   
+                }}
+              >
+                <PayPalButtons
+                  disabled={!renderInstance || !checkoutPayment}
+                  forceReRender={[totalPrice]}
+                  fundingSource={undefined}
+                  createOrder={handlePaypalButtonsSubmit}
+                  onApprove={onPaypalButtonsApprove}
+                  onError={onPaypalButtonsError}
+                />
+                <Box>
+                  <label htmlFor="card-number">Card Number</label>
+                  <Box id="card-number"></Box>
+                  <label htmlFor="expiration-date">Expiration Date</label>
+                  <Box id="expiration-date"></Box>
+                  <label htmlFor="cvv">CVV</label>
+                  <Box id="cvv"></Box>
+                  {/*<button onClick={handlePaypalHostedFieldsSubmit}>
+                    Pay with Card
+                  </button>*/}
+                </Box>
+              </Box>
+              {/* Remember Field */}
+              { isLogged() &&
+                <FormControlLabel
+                  label={intl.formatMessage({ id: 'forms.rememberPayment' })}
+                  control={
+                    <Checkbox 
+                      id="remember"
+                      name="remember"
+                      checked={remember} 
+                      onChange={handleRemember}
+                    />
+                  }      
+                />
+              }
+            </>
           ,
         }
       ]}
@@ -169,7 +226,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             id: 'app.continueBtn',
           },
           onSubmit: handlePaypalHostedFieldsSubmit,
-          disabled: !renderInstance,
+          disabled: !renderInstance || !checkoutPayment,
         },
         back: {
           text: { 

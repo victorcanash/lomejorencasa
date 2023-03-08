@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState, useEffect } from 'react';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import CheckoutBraintreeForm from '@components/forms/checkout/CheckoutBraintreeForm';
@@ -15,15 +15,31 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   const { next, back, transactionError, setTransactionError } = props;
 
   const { 
+    checkoutPayment,
+    setCheckoutPayment,
     paypalMerchantId, 
     paypalClientId, 
-    paypalToken 
+    paypalToken,
+    isLogged,
   } = useAuthContext();
+
+  const [rememberFieldValue, setRememberFieldValue] = useState(isLogged() ? true : false);
 
   const handleBack = async () => {
     setTransactionError('');
     back();
   };
+
+  const handleRememberField = (_event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    setRememberFieldValue(checked);
+  };
+
+  useEffect(() => {
+    setCheckoutPayment({
+      ...checkoutPayment,
+      remember: rememberFieldValue,
+    });
+  }, [checkoutPayment, rememberFieldValue, setCheckoutPayment])
 
   return (
     <>
@@ -33,6 +49,8 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
           handleBack={handleBack}
           transactionError={transactionError}
           setTransactionError={setTransactionError}
+          remember={rememberFieldValue}
+          handleRemember={handleRememberField}
         />
         :
         <CheckoutPaypalForm
@@ -40,6 +58,8 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
           handleBack={handleBack}
           transactionError={transactionError}
           setTransactionError={setTransactionError}
+          remember={rememberFieldValue}
+          handleRemember={handleRememberField}
         />
       } 
     </>

@@ -15,6 +15,31 @@ import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { convertCartToGuestCart, convertGuestCartCheckToCart, setGuestCart } from '@core/utils/cart';
 import { removeStorageItem } from '@core/utils/storage';
 
+export const getPaypalUserToken = (token: string, currentLocale: string) => {
+  return new Promise<{paypalUserToken: string}>((resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: {
+        ...getLanguageHeaders(currentLocale),
+        ...getAuthHeaders(token),
+      },
+    };
+    axios.post('payments/paypal-user-token', undefined, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED && response.data) {
+          resolve({
+            paypalUserToken: response.data.paypalUserToken,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get Paypal User Token ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      });
+  });
+};
+
 export const checkBraintreePaymentMethod = (dropin: Dropin) => {
   return new Promise<{paymentPayload: PaymentMethodPayload}>(async (resolve, reject) => {
     dropin.requestPaymentMethod((error: object | null, payload: PaymentMethodPayload) => {
@@ -68,7 +93,7 @@ export const getGuestUserData = async (confirmationToken: string) => {
     };
     axios.get('/payments/guest-user-data', options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK) {
+        if (response.status === StatusCodes.OK && response.data) {
           await setGuestCart(response.data.guestCart as GuestCartCheck);
           resolve({
             checkoutPayment: {
@@ -103,14 +128,14 @@ export const createBraintreeTransaction = (token: string, currentLocale: string,
       timeout: 20000,
     };
     const body = {
-      paymentMethodNonce: checkoutPayment?.braintreePayload?.nonce,
-      remember: checkoutPayment?.remember,
+      paymentMethodNonce: checkoutPayment.braintreePayload?.nonce,
+      remember: checkoutPayment.remember,
       guestUser: guestUser,
       guestCart: cart ? convertCartToGuestCart(cart) : undefined,
     };
     axios.post('/payments/transaction', body, options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
+        if (response.status === StatusCodes.CREATED && response.data) {
           await removeStorageItem(Storages.local, GuestCartKey);
           resolve({
             order: response.data.order,
@@ -132,20 +157,17 @@ export const createBraintreeTransaction = (token: string, currentLocale: string,
   })
 };
 
-export const createPaypalTransaction = (token: string, currentLocale: string, guestUser?: GuestUser, cart?: Cart) => {
+export const createPaypalTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
   return new Promise<{paypalOrderId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
       },
-      params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      },
-      //timeout: 20000,
     };
     const body = {
+      cardName: checkoutPayment.paypalPayload?.cardName,
+      remember: checkoutPayment.remember,
       guestUser: guestUser ? {
         ...guestUser,
         email: '',
@@ -154,7 +176,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, gu
     };
     axios.post('/payments/transaction', body, options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED && response.data?.paypalOrderId) {
+        if (response.status === StatusCodes.CREATED && response.data) {
           resolve({
             paypalOrderId: response.data.paypalOrderId,
           });
@@ -169,7 +191,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, gu
   })
 };
 
-export const capturePaypalTransaction = (token: string, currentLocale: string, orderId: string, guestUser?: GuestUser, cart?: Cart) => {
+export const capturePaypalTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
   return new Promise<{order?: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
@@ -183,12 +205,13 @@ export const capturePaypalTransaction = (token: string, currentLocale: string, o
       timeout: 20000,
     };
     const body = {
+      remember: checkoutPayment.remember,
       guestUser: guestUser,
       guestCart: cart ? convertCartToGuestCart(cart) : undefined,
     };
-    axios.post(`/payments/paypal-transaction/${orderId}`, body, options)
+    axios.post(`/payments/paypal-transaction/${checkoutPayment.paypalPayload?.orderId}`, body, options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
+        if (response.status === StatusCodes.CREATED && response.data) {
           await removeStorageItem(Storages.local, GuestCartKey);
           resolve({
             order: response.data.order,
