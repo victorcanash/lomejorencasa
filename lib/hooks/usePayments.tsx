@@ -93,7 +93,7 @@ const usePayments = () => {
       await createPTransactionMW(
         isLogged() ? token : confirmToken || '', 
         intl.locale,
-        checkoutPayment as CheckoutPayment,
+        checkoutPayment,
         !isLogged() ? {
           ...user,
           email: user.email ? user.email : '',
@@ -128,7 +128,7 @@ const usePayments = () => {
     setSuccessMsg('');
     await sendConfirmTransactionEmailMW( 
       intl.locale, 
-      checkoutPayment as CheckoutPayment,
+      checkoutPayment,
       {
         ...user,
         email: authLogin.email,
@@ -167,26 +167,27 @@ const usePayments = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await getGuestUserDataMW(confirmationToken).then(async (response: {checkoutPayment: CheckoutPayment, user: GuestUser, cart: Cart}) => {
-      setCheckoutPayment(response.checkoutPayment);
-      setUser(response.user);
-      initCart(response.cart);
-      enqueueSnackbar(intl.formatMessage(
-        { id: 'checkout.successes.getGuestUserData' }), 
-        { variant: 'success', autoHideDuration: 10000 }
-      );
-      if (onSuccess) {
-        onSuccess();
-      }
-    }).catch(async (error: Error) => {
-      enqueueSnackbar(intl.formatMessage(
-        { id: 'checkout.errors.getGuestUserData' }), 
-        { variant: 'error', autoHideDuration: 10000 }
-      );
-      if (onError) {
-        onError(error.message);
-      }
-    });
+    await getGuestUserDataMW(confirmationToken)
+      .then(async (response: {checkoutPayment: CheckoutPayment, user: GuestUser, cart: Cart}) => {
+        setCheckoutPayment(response.checkoutPayment);
+        setUser(response.user);
+        initCart(response.cart);
+        enqueueSnackbar(intl.formatMessage(
+          { id: 'checkout.successes.getGuestUserData' }), 
+          { variant: 'success', autoHideDuration: 10000 }
+        );
+        if (onSuccess) {
+          onSuccess();
+        }
+      }).catch(async (error: Error) => {
+        enqueueSnackbar(intl.formatMessage(
+          { id: 'checkout.errors.getGuestUserData' }), 
+          { variant: 'error', autoHideDuration: 10000 }
+        );
+        if (onError) {
+          onError(error.message);
+        }
+      });
   }
 
   const createBraintreeTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
@@ -210,7 +211,7 @@ const usePayments = () => {
     await createBTransactionMW(
       isLogged() ? token : confirmToken || '', 
       intl.locale, 
-      checkoutPayment as CheckoutPayment,
+      checkoutPayment,
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )
@@ -259,7 +260,7 @@ const usePayments = () => {
     await capturePTransactionMW(
       isLogged() ? token : confirmToken || '', 
       intl.locale, 
-      checkoutPayment as CheckoutPayment,
+      checkoutPayment,
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )
@@ -294,9 +295,7 @@ const usePayments = () => {
   };
 
   const missingTransactionData = (checkUserEmail: boolean, onError?: (message: string) => void, userEmail?: string) => {
-    if (!checkoutPayment || 
-        !user.shipping || 
-        !user.billing || 
+    if (!user.shipping || !user.billing || 
         (checkUserEmail && (!user.email && !userEmail)) || 
         cart.items.length <= 0) {
       const errorMsg = intl.formatMessage({ id: 'checkout.errors.createTransaction' });

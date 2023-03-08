@@ -67,7 +67,7 @@ export const sendConfirmTransactionEmail = (currentLocale: string, checkoutPayme
       }
     };
     const body = {
-      paymentPayload: checkoutPayment.braintreePayload,
+      checkoutPayment: checkoutPayment,
       guestUser: guestUser,
       guestCart: convertCartToGuestCart(cart),
     }
@@ -96,10 +96,7 @@ export const getGuestUserData = async (confirmationToken: string) => {
         if (response.status === StatusCodes.OK && response.data) {
           await setGuestCart(response.data.guestCart as GuestCartCheck);
           resolve({
-            checkoutPayment: {
-              braintreePayload: response.data.paymentPayload,
-              remember: false,
-            },
+            checkoutPayment: response.data.checkoutPayment,
             user: response.data.guestUser,
             cart: convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
           });
@@ -133,7 +130,7 @@ export const createBraintreeTransaction = (token: string, currentLocale: string,
       guestUser: guestUser,
       guestCart: cart ? convertCartToGuestCart(cart) : undefined,
     };
-    axios.post('/payments/transaction', body, options)
+    axios.post('/payments/braintree-transaction', body, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data) {
           await removeStorageItem(Storages.local, GuestCartKey);
@@ -174,7 +171,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
       } : undefined,
       guestCart: cart ? convertCartToGuestCart(cart) : undefined,
     };
-    axios.post('/payments/transaction', body, options)
+    axios.post('/payments/paypal-transaction', body, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data) {
           resolve({

@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useState, useEffect } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import CheckoutBraintreeForm from '@components/forms/checkout/CheckoutBraintreeForm';
@@ -15,8 +15,6 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   const { next, back, transactionError, setTransactionError } = props;
 
   const { 
-    checkoutPayment,
-    setCheckoutPayment,
     paypalMerchantId, 
     paypalClientId, 
     paypalToken,

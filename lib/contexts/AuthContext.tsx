@@ -27,8 +27,8 @@ type ContextType = {
   setPaymentMode: Dispatch<SetStateAction<PaymentModes>>,
   currency: string,
   setCurrency: Dispatch<SetStateAction<string>>,
-  checkoutPayment?: CheckoutPayment,
-  setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment | undefined>>,
+  checkoutPayment: CheckoutPayment,
+  setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment>>,
   removeUser: () => void,
   getCardPayload: () => cardPaymentMethodPayload | undefined,
   getPaypalPayload: () => paypalPaymentMethodPayload | undefined,
@@ -57,7 +57,7 @@ export const AuthContext = createContext<ContextType>({
   setPaymentMode: () => {},
   currency: '',
   setCurrency: () => {},
-  checkoutPayment: undefined,
+  checkoutPayment: {} as CheckoutPayment,
   setCheckoutPayment: () => {},
   removeUser: () => {},
   getCardPayload: () => undefined,
@@ -87,14 +87,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [paypalMerchantId, setPaypalMerchantId] = useState<string | undefined>(undefined);
   const [paypalClientId, setPaypalClientId] = useState<string | undefined>(undefined);
   const [paypalToken, setPaypalToken] = useState<string | undefined>(undefined);
-  const [user, setUser] = useState<User | GuestUser>({ 
-    email: undefined, 
-    shipping: undefined, 
-    billing: undefined,
-  });
+  const [user, setUser] = useState<User | GuestUser>({});
   const [paymentMode, setPaymentMode] = useState(PaymentModes.braintree);
   const [currency, setCurrency] = useState('');
-  const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment | undefined>(undefined);
+  const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment>({});
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
   const removeUser = () => {

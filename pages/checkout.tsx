@@ -96,7 +96,7 @@ const Checkout: NextPage = () => {
       }
       setLoading(false);
     }
-  }, [disabledCheckoutPage, getGuestUserData, isLogged, router, setLoading, token]);
+  }, [disabledCheckoutPage, token, getGuestUserData, isLogged, router, setLoading]);
 
   useEffect(() => {
     if (page.checked && !loadedCheckout) {
@@ -136,7 +136,6 @@ const Checkout: NextPage = () => {
               back={prevStep}
               transactionError={transactionError}
               setTransactionError={setTransactionError}
-              confirmToken={confirmToken}
             />
           }
           { currentCheckoutSection() == CheckoutSections.confirm &&
