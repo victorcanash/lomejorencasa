@@ -11,6 +11,7 @@ import {
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Divider from '@mui/material/Divider';
@@ -22,6 +23,7 @@ import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getCountryCode } from '@core/utils/addresses';
 
 import colors from '@lib/constants/themes/colors';
+import typographies from '@lib/constants/themes/typographies';
 import { themeDefaultElements } from '@lib/constants/themes/elements';
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -146,7 +148,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     if (error.details && error.details.length > 0 && error.details[0].field) {
       errorDetail = error.details[0].field as string;
     }
-    if (error.message && error.emssage.includes('cardHolderName')) {
+    if (error.message && error.message.includes('cardHolderName')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsHolderName' }));
     } else if (errorDetail && errorDetail.includes('card/number')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsNumber' }));
@@ -154,9 +156,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsCVV' }));
     } else if (errorDetail && errorDetail.includes('card/expiry')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsExpiry' }));
-    } else if (error.message && error.message.includes('syntactically incorrect') ||
-               error.message.includes('semantically incorrect') ) {
-      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsDefault' }))
     } else {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
     }
@@ -182,14 +181,14 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           'input': {
             'transition': 'color 160ms linear',
             '-webkit-transition': 'color 160ms linear',
-            'padding': '16.5px 14px',
-            'font-size-adjustfont-size': '16px',
-            'font-weight': '500',
-            'line-height': '24px',
-            'text-align': 'left',
-            'letter-spacing': '-0.33px',
+            'font-size-adjustfont-size': typographies.content.fontSize,
+            'font-weight': typographies.content.fontWeight,
+            'line-height': typographies.content.lineHeight,
+            'text-align': typographies.default.textAlign,
+            'letter-spacing': typographies.default.letterSpacing,
             'font-family': themeDefaultElements.default.typography.fontFamily.join(','),
             'color': colors.text.black,
+            'padding': '16.5px 14px',
           },
           ':hover': {
             'color': colors.text.black,
@@ -242,11 +241,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     }
     return false;
   };
-
-  const hostedDivSx = {
-    m: '16px 0px 8px',
-  };
-
+  
   const hostedFieldSx = {
     height: '56px',
     backgroundColor: colors.background.input,
@@ -260,9 +255,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       backgroundColor: colors.background.inputHover,
       border: `0px solid ${colors.text.black}`,
     },
-    '&.invalid': {         
-      border: `1px solid ${colors.text.action}`,
-    }
   };
 
   const hostedFieldLabel = (formatText: FormatText) => {
@@ -287,7 +279,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             <>
               <Box
                 textAlign="center"
-                sx={hostedDivSx}
+                mt={2}
               >
                 <PayPalButtons
                   disabled={disabledSubmitBtn()}
@@ -305,47 +297,50 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
                   border: '1px solid rgba(0, 0, 0, 0.23)',
                 }} 
               />
-              <Box sx={hostedDivSx}>
-                { hostedFieldLabel({ id: 'cardHolderName' }) }
-                <Box id ="cardHolderName">
-                  <TextField 
-                    fullWidth
-                    type="text" 
-                    id="cardHolderName" 
-                    name="cardHolderName" 
-                    autoComplete="off" 
-                    placeholder="" 
-                    onChange={handleCardHolderNameField}
-                  />
-                </Box>
-              </Box>
-              <Box sx={hostedDivSx}>
-                { hostedFieldLabel({ id: 'cardNumber' }) }
-                <Box id="cardNumber" sx={hostedFieldSx}></Box>
-              </Box>
-              <Box sx={hostedDivSx}>
-                { hostedFieldLabel({ id: 'cardExpiry' }) }
-                <Box id="cardExpiry" sx={hostedFieldSx}></Box>
-              </Box>
-              <Box sx={hostedDivSx}>
-                { hostedFieldLabel({ id: 'cvv' }) }
-                <Box id="cvv" sx={hostedFieldSx}></Box>
-              </Box>
-              { isLogged() &&
-                <Box sx={hostedDivSx}>
-                  <FormControlLabel
-                    label={intl.formatMessage({ id: 'forms.rememberPayment' })}
-                    control={
-                      <Checkbox 
-                        id="remember"
-                        name="remember"
-                        checked={remember} 
-                        onChange={handleRemember}
-                      />
-                    }      
-                  />
-                </Box>
-              }     
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  { hostedFieldLabel({ id: 'cardHolderName' }) }
+                  <Box id ="cardHolderName">
+                    <TextField 
+                      fullWidth
+                      type="text" 
+                      id="cardHolderName" 
+                      name="cardHolderName" 
+                      autoComplete="off" 
+                      placeholder=""
+                      value={cardHolderNameFieldValue}
+                      onChange={handleCardHolderNameField}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={6}>
+                  { hostedFieldLabel({ id: 'cardNumber' }) }
+                  <Box id="cardNumber" sx={hostedFieldSx}></Box>
+                </Grid>
+                <Grid item xs={6}>
+                  { hostedFieldLabel({ id: 'cardExpiry' }) }
+                  <Box id="cardExpiry" sx={hostedFieldSx}></Box>
+                </Grid>
+                <Grid item xs={6}>
+                  { hostedFieldLabel({ id: 'cvv' }) }
+                  <Box id="cvv" sx={hostedFieldSx}></Box>
+                </Grid>
+                { isLogged() &&
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      label={intl.formatMessage({ id: 'forms.rememberPayment' })}
+                      control={
+                        <Checkbox 
+                          id="remember"
+                          name="remember"
+                          checked={remember} 
+                          onChange={handleRemember}
+                        />
+                      }      
+                    />
+                  </Grid>
+                }
+              </Grid>     
             </>
           ,
         }
