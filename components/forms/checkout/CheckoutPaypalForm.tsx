@@ -293,10 +293,14 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
               </Box>  
               <Divider 
                 sx={{ 
-                  my: 3, 
-                  border: '1px solid rgba(0, 0, 0, 0.23)',
+                  my: 2, 
+                  border: 'none',
                 }} 
-              />
+              >
+                <Typography variant="body2" textAlign="center">
+                  <FormattedMessage id="checkout.paymentMethod.or" />
+                </Typography>
+              </Divider>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
                   { hostedFieldLabel({ id: 'cardHolderName' }) }

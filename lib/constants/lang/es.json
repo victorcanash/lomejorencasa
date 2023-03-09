@@ -320,6 +320,7 @@
   "checkout.sections.payment": "Pago",
   "checkout.sections.confirm": "Confirmación",
   "checkout.paymentMethod": "Método de pago",
+  "checkout.paymentMethod.or": "o con tarjeta",
   "checkout.order": "Pedido",
   "checkout.confirmBtn": "Confirmar",
   "checkout.successes.updateAddresses": "Direcciones actualizadas",
