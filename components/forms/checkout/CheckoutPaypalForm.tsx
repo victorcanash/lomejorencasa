@@ -110,9 +110,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 3) {
             throw new Error('cardHolderName');
           }
-          if (response.liabilityShift !== 'POSSIBLE') {
+          /*if (response.liabilityShift !== 'POSSIBLE') {
             throw new Error('3dSecure');
-          }
+          }*/
           setCheckoutPayment({
             ...checkoutPayment,
             paypalPayload: {
