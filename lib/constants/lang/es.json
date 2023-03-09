@@ -331,6 +331,7 @@
   "checkout.successes.createTransaction": "Transacción creada",
   "checkout.successes.createOrder": "Pedido completado, recibirás un correo con todos sus detalles",
   "checkout.errors.checkPaymentMethod": "Cambia los datos de tu tarjeta e inténtalo otra vez o selecciona otro método de pago",
+  "checkout.errors.checkPaymentMethodCardFields3dSecure": "Transacción no autorizada, inténtalo otra vez o selecciona otro método de pago",
   "checkout.errors.checkPaymentMethodCardFieldsNumber": "Introduce correctamente el número de tu tarjeta",
   "checkout.errors.checkPaymentMethodCardFieldsHolderName": "Introduce correctamente el nombre del titular de tu tarjeta (mínimo tres carácteres)",
   "checkout.errors.checkPaymentMethodCardFieldsCVV": "Introduce correctamente el CVV de tu tarjeta",

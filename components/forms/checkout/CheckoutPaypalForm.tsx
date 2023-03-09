@@ -104,10 +104,14 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             postalCode: user.billing?.postalCode,
             countryCodeAlpha2: user.billing?.country ? getCountryCode(user.billing?.country) : undefined,
           },
+          contingencies: ['SCA_WHEN_REQUIRED'],
         })
         .then((response) => {
           if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 3) {
             throw new Error('cardHolderName');
+          }
+          if (response.liabilityShift !== 'POSSIBLE') {
+            throw new Error('3dSecure');
           }
           setCheckoutPayment({
             ...checkoutPayment,
@@ -148,7 +152,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     if (error.details && error.details.length > 0 && error.details[0].field) {
       errorDetail = error.details[0].field as string;
     }
-    if (error.message && error.message.includes('cardHolderName')) {
+    if (error.message && error.message.includes('3dSecure')) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFields3dSecure' }));
+    } else if (error.message && error.message.includes('cardHolderName')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsHolderName' }));
     } else if (errorDetail && errorDetail.includes('card/number')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsNumber' }));
