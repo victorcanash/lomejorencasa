@@ -15,10 +15,7 @@ export type CheckoutPayment = {
     card?: {
       lastFour?: string,
       type?: string,
-      number?: string,
       holderName?: string,
-      cvv?: string,
-      expiry?: Date,
     },
     paypal?: {
       email: string,

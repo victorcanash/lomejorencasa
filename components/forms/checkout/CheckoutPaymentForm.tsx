@@ -18,10 +18,9 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
     paypalMerchantId, 
     paypalClientId, 
     paypalToken,
-    isLogged,
   } = useAuthContext();
 
-  const [rememberFieldValue, setRememberFieldValue] = useState(isLogged() ? true : false);
+  const [rememberFieldValue, setRememberFieldValue] = useState(true);
 
   const handleBack = async () => {
     setTransactionError('');

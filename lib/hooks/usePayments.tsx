@@ -101,7 +101,6 @@ const usePayments = () => {
         !isLogged() ? cart : undefined
       )
         .then((response: { paypalOrderId: string }) => {   
-          setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
           resolve(response.paypalOrderId)
         }).catch((_error) => {
           const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });

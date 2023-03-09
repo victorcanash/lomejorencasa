@@ -1,6 +1,6 @@
-import { useState, useRef, Dispatch, useEffect, useCallback, SetStateAction, ChangeEvent } from 'react';
+import { useState, Dispatch, useEffect, useCallback, SetStateAction, ChangeEvent } from 'react';
 
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { 
   CreateOrderData, 
   CreateOrderActions, 
@@ -13,10 +13,16 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import Box from '@mui/material/Box';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
 
+import type { FormatText } from '@core/types/texts';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getCountryCode } from '@core/utils/addresses';
 
+import colors from '@lib/constants/themes/colors';
+import { themeDefaultElements } from '@lib/constants/themes/elements';
 import type { FormButtonsCheckout } from '@lib/types/forms';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -55,6 +61,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   const [loadedPaypal, setLoadedPaypal] = useState(false);
   const [renderInstance, setRenderInstance] = useState<HostedFieldsHandler | undefined>(undefined);
   const [supportsHostedFields, setSupportsHostedFields] = useState<boolean | undefined>(undefined);
+  const [cardHolderNameFieldValue, setCardHolderNameFieldValue] = useState(checkoutPayment.paypalPayload?.card?.holderName || '');
 
   const paypal = window.paypal;
 
@@ -64,10 +71,20 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   };
 
   const onPaypalButtonsApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
-    onSuccessPaypalTransaction(data.orderID);
+    setCheckoutPayment({
+      paypalPayload: {
+        orderId: data.orderID,
+        /*paypal: {
+          email: '',
+        },*/
+      },
+      remember,
+    })
+    onSuccessPaypalTransaction
   };
 
-  const onPaypalButtonsError = (error: Record<string, unknown>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onPaypalButtonsError = (error: any) => {
     onErrorPaypalTransaction(error);
   };
 
@@ -76,7 +93,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       setTransactionError('');
       renderInstance
         .submit({
-          //cardholderName: cardHolderName,
+          cardholderName: cardHolderNameFieldValue,
           billingAddress: {
             streetAddress: user.billing?.addressLine1,
             extendedAddress: user.billing?.addressLine2,
@@ -87,38 +104,67 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           },
         })
         .then((response) => {
-          onSuccessPaypalTransaction(response.orderId);
+          if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 3) {
+            throw new Error('cardHolderName');
+          }
+          setCheckoutPayment({
+            ...checkoutPayment,
+            paypalPayload: {
+              orderId: response.orderId,
+              card: {
+                type: response.card.brand,
+                lastFour: response.card.last_digits,
+                holderName: cardHolderNameFieldValue,
+              },
+            },
+            remember,
+          });
+          onSuccessPaypalTransaction();
         })
-        .catch((error: Record<string, unknown>) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .catch((error: any) => {
           onErrorPaypalTransaction(error);
         });
     }
   };
 
-  const onSuccessPaypalTransaction = (orderId: string) => {
-    setCheckoutPayment({
-      paypalPayload: {
-        orderId: orderId,
-      },
-      remember,
-    });
+  const onSuccessPaypalTransaction = () => {
+    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
     setTimeout(() => {
       setLoading(false);
       next(); 
     }, 10);
   };
 
-  const onErrorPaypalTransaction = (error: Record<string, unknown>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onErrorPaypalTransaction = (error: any) => {
+    setLoading(false);
     const errorMsg = getBackendErrorMsg('SDK Paypal ERROR', error);
     logBackendError(errorMsg);
     setSuccessMsg('');
-    setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
+    let errorDetail = '';
+    if (error.details && error.details.length > 0 && error.details[0].field) {
+      errorDetail = error.details[0].field as string;
+    }
+    if (error.message && error.emssage.includes('cardHolderName')) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsHolderName' }));
+    } else if (errorDetail && errorDetail.includes('card/number')) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsNumber' }));
+    } else if (errorDetail && errorDetail.includes('card/cvv')) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsCVV' }));
+    } else if (errorDetail && errorDetail.includes('card/expiry')) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsExpiry' }));
+    } else if (error.message && error.message.includes('syntactically incorrect') ||
+               error.message.includes('semantically incorrect') ) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsDefault' }))
+    } else {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
+    }
   };
 
   const initPaypal = useCallback(async () => {
     if (typeof supportsHostedFields === 'boolean' && !!supportsHostedFields) {
       setLoadedPaypal(true);
-      
       await getPaypalUserToken().then((paypalUserToken?: string) => { 
         if (paypalUserToken) {
           dispatch({
@@ -129,36 +175,46 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             },
           });
         }
-      });
-       
+      });  
       const instance = await paypal.HostedFields?.render({
         createOrder: createPaypalTransaction,
-        /*styles: {
-          input: {
-            "font-size": "16pt",
-            color: "#3A3A3A"
+        styles: {
+          'input': {
+            'transition': 'color 160ms linear',
+            '-webkit-transition': 'color 160ms linear',
+            'padding': '16.5px 14px',
+            'font-size-adjustfont-size': '16px',
+            'font-weight': '500',
+            'line-height': '24px',
+            'text-align': 'left',
+            'letter-spacing': '-0.33px',
+            'font-family': themeDefaultElements.default.typography.fontFamily.join(','),
+            'color': colors.text.black,
           },
-          ".number": {
-            "font-family": "monospace"
+          ':hover': {
+            'color': colors.text.black,
           },
-          ".valid": {
-            color: "green"
+          ':focus': {
+            'color': colors.text.black,
+          },
+          '.invalid': {         
+            'color': colors.text.action,
           }
-        },*/
+        },
         fields: {
           number: {
-            selector: '#card-number',
-            placeholder: '0000 0000 0000 0000',
+            selector: '#cardNumber',
+            placeholder: '1111 1111 1111 1111',
           },
           cvv: {
             selector: '#cvv',
-            placeholder: "CVV"
+            placeholder: '111',
           },
           expirationDate: {
-            selector: '#expiration-date',
-            placeholder: 'MM/YYYY'
-          }
-        }
+            selector: '#cardExpiry',
+            placeholder: 'MM/YY',
+          },
+        },
       });
       setRenderInstance(instance);
     }
@@ -176,12 +232,51 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     }
   }, [initPaypal, loadedPaypal]);
 
+  const handleCardHolderNameField = (event: ChangeEvent<HTMLInputElement>) => {
+    setCardHolderNameFieldValue(event.target.value);
+  };
+
+  const disabledSubmitBtn = () => {
+    if (!renderInstance || !checkoutPayment) {
+      return true;
+    }
+    return false;
+  };
+
+  const hostedDivSx = {
+    m: '16px 0px 8px',
+  };
+
+  const hostedFieldSx = {
+    height: '56px',
+    backgroundColor: colors.background.input,
+    border: '1px solid rgba(0, 0, 0, 0.23)',
+    borderRadius: '4px',
+    '&:hover': {
+      backgroundColor: colors.background.inputHover,
+      border: `1px solid ${colors.text.black}`,
+    },
+    '&.Mui-focused': {
+      backgroundColor: colors.background.inputHover,
+      border: `0px solid ${colors.text.black}`,
+    },
+    '&.invalid': {         
+      border: `1px solid ${colors.text.action}`,
+    }
+  };
+
+  const hostedFieldLabel = (formatText: FormatText) => {
+    return (
+      <Typography variant="body1">
+        <FormattedMessage id={`forms.${formatText.id}`} values={formatText.values} />
+      </Typography>
+    );
+  };
+
   return (
     <BaseForm
       maxWidth="800px"
-      initialValues={{
-
-      }}
+      initialValues={{}}
       formFieldGroups={[
         {
           titleTxt: {
@@ -190,45 +285,67 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           },
           extraElements:
             <>
-              <Box 
-                sx={{           
-                  mt: '10px',   
-                }}
+              <Box
+                textAlign="center"
+                sx={hostedDivSx}
               >
                 <PayPalButtons
-                  disabled={!renderInstance || !checkoutPayment}
+                  disabled={disabledSubmitBtn()}
                   forceReRender={[totalPrice]}
                   fundingSource={undefined}
                   createOrder={handlePaypalButtonsSubmit}
                   onApprove={onPaypalButtonsApprove}
                   onError={onPaypalButtonsError}
+                  style={{ shape: 'pill' }}
                 />
-                <Box>
-                  <label htmlFor="card-number">Card Number</label>
-                  <Box id="card-number"></Box>
-                  <label htmlFor="expiration-date">Expiration Date</label>
-                  <Box id="expiration-date"></Box>
-                  <label htmlFor="cvv">CVV</label>
-                  <Box id="cvv"></Box>
-                  {/*<button onClick={handlePaypalHostedFieldsSubmit}>
-                    Pay with Card
-                  </button>*/}
+              </Box>  
+              <Divider 
+                sx={{ 
+                  my: 3, 
+                  border: '1px solid rgba(0, 0, 0, 0.23)',
+                }} 
+              />
+              <Box sx={hostedDivSx}>
+                { hostedFieldLabel({ id: 'cardHolderName' }) }
+                <Box id ="cardHolderName">
+                  <TextField 
+                    fullWidth
+                    type="text" 
+                    id="cardHolderName" 
+                    name="cardHolderName" 
+                    autoComplete="off" 
+                    placeholder="" 
+                    onChange={handleCardHolderNameField}
+                  />
                 </Box>
               </Box>
-              {/* Remember Field */}
+              <Box sx={hostedDivSx}>
+                { hostedFieldLabel({ id: 'cardNumber' }) }
+                <Box id="cardNumber" sx={hostedFieldSx}></Box>
+              </Box>
+              <Box sx={hostedDivSx}>
+                { hostedFieldLabel({ id: 'cardExpiry' }) }
+                <Box id="cardExpiry" sx={hostedFieldSx}></Box>
+              </Box>
+              <Box sx={hostedDivSx}>
+                { hostedFieldLabel({ id: 'cvv' }) }
+                <Box id="cvv" sx={hostedFieldSx}></Box>
+              </Box>
               { isLogged() &&
-                <FormControlLabel
-                  label={intl.formatMessage({ id: 'forms.rememberPayment' })}
-                  control={
-                    <Checkbox 
-                      id="remember"
-                      name="remember"
-                      checked={remember} 
-                      onChange={handleRemember}
-                    />
-                  }      
-                />
-              }
+                <Box sx={hostedDivSx}>
+                  <FormControlLabel
+                    label={intl.formatMessage({ id: 'forms.rememberPayment' })}
+                    control={
+                      <Checkbox 
+                        id="remember"
+                        name="remember"
+                        checked={remember} 
+                        onChange={handleRemember}
+                      />
+                    }      
+                  />
+                </Box>
+              }     
             </>
           ,
         }
@@ -239,7 +356,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             id: 'app.continueBtn',
           },
           onSubmit: handlePaypalHostedFieldsSubmit,
-          disabled: !renderInstance || !checkoutPayment,
+          disabled: disabledSubmitBtn(),
         },
         back: {
           text: { 

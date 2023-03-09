@@ -22,7 +22,7 @@ const colors = {
     disabled: '#858585',
     title: '#1F4F2F',
     footer: '#E1E8CB',
-    action: '#CF0707',
+    action: '#d32f2f',
   },
   border: {
     divider: '#586453',
