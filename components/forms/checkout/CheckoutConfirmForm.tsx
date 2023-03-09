@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { useIntl, FormattedMessage } from 'react-intl';
+import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -36,8 +37,6 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     paypalMerchantId,
     paypalToken,
     checkoutPayment, 
-    getCardPayload, 
-    getPaypalPayload, 
     isLogged 
   } = useAuthContext();
   const { cart, totalPrice } = useCartContext();
@@ -115,6 +114,21 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     return true;
   };
 
+  const getCardType = () => {
+    return checkoutPayment.braintreePayload ? 
+      (checkoutPayment.braintreePayload as cardPaymentMethodPayload)?.details.cardType : checkoutPayment.paypalPayload?.card?.type; 
+  }
+
+  const getCardLastFour = () => {
+    return checkoutPayment.braintreePayload ? 
+      (checkoutPayment.braintreePayload as cardPaymentMethodPayload)?.details.lastFour : checkoutPayment.paypalPayload?.card?.lastFour; 
+  }
+
+  const getPaypalEmail = () => {
+    return checkoutPayment.braintreePayload ? 
+      (checkoutPayment.braintreePayload as paypalPaymentMethodPayload)?.details.email : checkoutPayment.paypalPayload?.paypal?.email; 
+  }
+
   return (
     <>
       { user.billing && user.shipping &&
@@ -156,23 +170,23 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                           />
                         </Typography>
                         <Box mt={1}>
-                          { getCardPayload()?.details.lastFour &&
+                          { getCardType() && getCardLastFour() &&
                             <Typography component="div" variant="body1">
                               <FormattedMessage 
                                 id="orderDetail.paidCard" 
                                 values={{
-                                  cardType: checkoutPayment?.braintreePayload?.type,
-                                  last4: getCardPayload()?.details.lastFour,
+                                  cardType: getCardType(),
+                                  last4: getCardLastFour(),
                                 }}
                               />
                             </Typography>
                           }
-                          { getPaypalPayload()?.details.email &&
+                          { getPaypalEmail() &&
                             <Typography component="div" variant="body1">
                               <FormattedMessage 
                                 id="orderDetail.paidPaypal" 
                                 values={{
-                                  payerEmail: getPaypalPayload()?.details.email
+                                  payerEmail: getPaypalEmail()
                                 }}
                               />
                             </Typography>

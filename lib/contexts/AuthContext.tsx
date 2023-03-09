@@ -1,8 +1,6 @@
 import { createContext, useContext, useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
 import { useRouter } from 'next/router';
 
-import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
-
 import { PaymentModes } from '@core/constants/app';
 import { Protections } from '@core/constants/auth';
 import type { User, GuestUser } from '@core/types/user';
@@ -30,8 +28,6 @@ type ContextType = {
   checkoutPayment: CheckoutPayment,
   setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment>>,
   removeUser: () => void,
-  getCardPayload: () => cardPaymentMethodPayload | undefined,
-  getPaypalPayload: () => paypalPaymentMethodPayload | undefined,
   prevLoginPath?: string,
   isLogged: () => boolean,
   isProtectedPath: () => boolean,
@@ -60,8 +56,6 @@ export const AuthContext = createContext<ContextType>({
   checkoutPayment: {} as CheckoutPayment,
   setCheckoutPayment: () => {},
   removeUser: () => {},
-  getCardPayload: () => undefined,
-  getPaypalPayload: () => undefined,
   prevLoginPath: undefined,
   isLogged: () => false,
   isProtectedPath: () => false,
@@ -99,14 +93,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       shipping: undefined, 
       billing: undefined,
     } as GuestUser);
-  };
-
-  const getCardPayload = () => {
-    return checkoutPayment?.braintreePayload as cardPaymentMethodPayload;
-  };
-
-  const getPaypalPayload = () => {
-    return checkoutPayment?.braintreePayload as paypalPaymentMethodPayload;
   };
 
   const isLogged = () => {
@@ -191,8 +177,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         checkoutPayment,
         setCheckoutPayment,
         removeUser,
-        getCardPayload,
-        getPaypalPayload,
         prevLoginPath: prevLoginPathRef.current,
         isLogged,
         isProtectedPath,

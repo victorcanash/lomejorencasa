@@ -63,7 +63,6 @@ const CheckoutBraintreeForm = (props: CheckoutBraintreeFormProps) => {
           },
           extraElements:
             <>
-              {/* Dropin field */}
               <div 
                 id="dropinPayment"
                 style={{           
@@ -91,7 +90,6 @@ const CheckoutBraintreeForm = (props: CheckoutBraintreeFormProps) => {
                   }}
                 />
               </div>
-              {/* Remember Field */}
               { isLogged() &&
                 <FormControlLabel
                   label={intl.formatMessage({ id: 'forms.rememberPayment' })}
