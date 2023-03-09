@@ -104,7 +104,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             postalCode: user.billing?.postalCode,
             countryCodeAlpha2: user.billing?.country ? getCountryCode(user.billing?.country) : undefined,
           },
-          contingencies: ['SCA_WHEN_REQUIRED'],
+          //contingencies: ['SCA_WHEN_REQUIRED'],
         })
         .then((response) => {
           if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 3) {
