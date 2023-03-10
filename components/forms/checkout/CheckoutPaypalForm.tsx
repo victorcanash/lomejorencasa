@@ -104,15 +104,15 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             postalCode: user.billing?.postalCode,
             countryCodeAlpha2: user.billing?.country ? getCountryCode(user.billing?.country) : undefined,
           },
-          //contingencies: ['SCA_WHEN_REQUIRED'],
+          contingencies: ['SCA_WHEN_REQUIRED'],
         })
         .then((response) => {
           if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 3) {
             throw new Error('cardHolderName');
           }
-          /*if (response.liabilityShift !== 'POSSIBLE') {
+          if (response.liabilityShift && response.liabilityShift !== 'POSSIBLE') {
             throw new Error('3dSecure');
-          }*/
+          }
           setCheckoutPayment({
             ...checkoutPayment,
             paypalPayload: {
