@@ -100,7 +100,7 @@ const usePayments = () => {
         } : undefined,
         !isLogged() ? cart : undefined
       )
-        .then((response: { paypalOrderId: string }) => {   
+        .then((response: { paypalOrderId: string }) => {
           resolve(response.paypalOrderId)
         }).catch((_error) => {
           const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });

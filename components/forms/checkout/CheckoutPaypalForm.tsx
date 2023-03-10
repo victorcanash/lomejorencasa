@@ -82,7 +82,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       },
       remember,
     })
-    onSuccessPaypalTransaction
+    onSuccessPaypalTransaction();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
