@@ -122,7 +122,7 @@ const useOrders = () => {
         onCreateFailedOrderSuccess(response.order, onSuccess);
       }).catch((error) => {
         let errorMsg = error.message;
-        if (errorMsg.includes('Braintree error')) {
+        if (errorMsg.includes('payment data error')) {
           errorMsg = intl.formatMessage({ id: 'admin.errors.invalidOrderTransactionId' });
         }
         setErrorMsg(errorMsg);

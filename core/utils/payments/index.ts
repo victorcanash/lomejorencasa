@@ -112,15 +112,11 @@ export const getGuestUserData = async (confirmationToken: string) => {
 };
 
 export const createBraintreeTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
-  return new Promise<{order?: Order}>(async (resolve, reject) => {
+  return new Promise<{braintreeTransactionId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
-      },
-      params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
       timeout: 20000,
     };
@@ -135,7 +131,7 @@ export const createBraintreeTransaction = (token: string, currentLocale: string,
         if (response.status === StatusCodes.CREATED && response.data) {
           await removeStorageItem(Storages.local, GuestCartKey);
           resolve({
-            order: response.data.order,
+            braintreeTransactionId: response.data.braintreeTransactionId,
           });
         } else {
           throw new Error('Something went wrong');
@@ -143,19 +139,13 @@ export const createBraintreeTransaction = (token: string, currentLocale: string,
       }).catch(async (error) => {
         const errorMsg = getBackendErrorMsg('Create Braintree Transaction ERROR', error);
         logBackendError(errorMsg);
-        if (errorMsg.includes('Create bigbuy order error') || 
-            errorMsg.includes('Get order info error')) {
-          await removeStorageItem(Storages.local, GuestCartKey);
-          resolve({});
-        } else {
-          reject(new Error(errorMsg));
-        }
+        reject(new Error(errorMsg));
       }); 
   })
 };
 
 export const createPaypalTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
-  return new Promise<{paypalOrderId: string}>(async (resolve, reject) => {
+  return new Promise<{paypalTransactionId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
@@ -174,7 +164,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data) {
           resolve({
-            paypalOrderId: response.data.paypalOrderId,
+            paypalTransactionId: response.data.paypalTransactionId,
           });
         } else {
           throw new Error('Something went wrong');
@@ -188,15 +178,11 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
 };
 
 export const capturePaypalTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
-  return new Promise<{order?: Order}>(async (resolve, reject) => {
+  return new Promise<{paypalTransactionId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
-      },
-      params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
       timeout: 20000,
     };
@@ -210,7 +196,7 @@ export const capturePaypalTransaction = (token: string, currentLocale: string, c
         if (response.status === StatusCodes.CREATED && response.data) {
           await removeStorageItem(Storages.local, GuestCartKey);
           resolve({
-            order: response.data.order,
+            paypalTransactionId: response.data.paypalTransactionId,
           });
         } else {
           throw new Error('Something went wrong');
@@ -218,13 +204,7 @@ export const capturePaypalTransaction = (token: string, currentLocale: string, c
       }).catch(async (error) => {
         const errorMsg = getBackendErrorMsg('Capture Paypal Transaction ERROR', error);
         logBackendError(errorMsg);
-        if (errorMsg.includes('Create bigbuy order error') || 
-            errorMsg.includes('Get order info error')) {
-          await removeStorageItem(Storages.local, GuestCartKey);
-          resolve({});
-        } else {
-          reject(new Error(errorMsg));
-        }
+        reject(new Error(errorMsg));
       }); 
   })
 };

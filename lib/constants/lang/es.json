@@ -429,7 +429,7 @@
   "admin.successes.updatePPack": "Pack de productos actualizado",
   "admin.successes.updatePInventory": "Inventario del producto actualizado",
   "admin.successes.updatePDiscount": "Descuento del producto actualizado",
-  "admin.errors.invalidOrderTransactionId": "Braintree transaction ID incorrecto",
+  "admin.errors.invalidOrderTransactionId": "Transaction ID incorrecto",
   "admin.errors.validateProductImgs": "El producto debe de contener al menos una imagen",
 
   "error.metas.title": "Error",
@@ -503,6 +503,7 @@
   "forms.activeDiscountId": "ID del descuento activo",
   "forms.orderId": "Número de pedido",
   "forms.braintreeTransactionId": "ID de BraintreeTransaction",
+  "forms.paypalTransactionId": "ID de PaypalTransaction",
   "forms.cardNumber": "Número de tarjeta",
   "forms.cardHolderName": "Nombre del titular",
   "forms.cvv": "CVV",

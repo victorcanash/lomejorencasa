@@ -76,6 +76,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
           userId: orderFieldsInitValues.userId,
           guestUserEmail: orderFieldsInitValues.guestUserEmail,
           braintreeTransactionId: orderFieldsInitValues.braintreeTransactionId,
+          paypalTransactionId: orderFieldsInitValues.braintreeTransactionId,
           shipping: {
             id: -1,
             userId: -1,
@@ -123,7 +124,10 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
               {
                 name: 'braintreeTransactionId',
                 type: FormFieldTypes.text,
-                required: true,
+              },
+              {
+                name: 'paypalTransactionId',
+                type: FormFieldTypes.text,
               },
               ...addressFormFields(AddressTypes.shipping)
             ],

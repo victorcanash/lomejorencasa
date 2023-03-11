@@ -68,7 +68,8 @@ export type OrderFailedCreate = {
   locale: string,
   userId?: number,
   guestUserEmail?: string,
-  braintreeTransactionId: string,
+  braintreeTransactionId?: string,
+  paypalTransactionId?: string,
   shipping: UserAddress,
   products: GuestCartItem[],
 };

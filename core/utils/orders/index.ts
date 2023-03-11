@@ -98,7 +98,7 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
       },
       timeout: 15000,
     };
-    axios.post('/orders', order, options)
+    axios.post('/orders/admin', order, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
@@ -129,7 +129,7 @@ export const sendFailedOrderEmail = (token: string, order: OrderFailedSendEmail)
       },
       timeout: 15000,
     };
-    axios.post(`/orders/${order.orderId}/send-email/check`, order, options)
+    axios.post(`/orders/send-email/check/${order.orderId}`, order, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({

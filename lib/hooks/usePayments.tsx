@@ -5,8 +5,7 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { Dropin, PaymentMethodPayload } from 'braintree-web-drop-in';
 
-// import envConfig from '@core/config/env.config';
-import type { Order } from '@core/types/orders';
+import envConfig from '@core/config/env.config';
 import type { GuestUser } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';
 import type { Cart } from '@core/types/cart';
@@ -28,7 +27,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
-  const { token, user, setUser, removeUser, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
+  const { token, user, setUser, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
   const { cart, initCart, cleanCart } = useCartContext();
 
   const router = useRouter();
@@ -37,6 +36,8 @@ const usePayments = () => {
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
+
+  const snachbarDuration = 10000;
 
   const getPaypalUserToken = async () => {
     let paypalUserToken: string | undefined
@@ -100,10 +101,15 @@ const usePayments = () => {
         } : undefined,
         !isLogged() ? cart : undefined
       )
-        .then((response: { paypalOrderId: string }) => {
-          resolve(response.paypalOrderId)
-        }).catch((_error) => {
-          const errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
+        .then((response: { paypalTransactionId: string }) => {
+          resolve(response.paypalTransactionId)
+        }).catch((error) => {
+          let errorMsg = error.message;
+          if (errorMsg.includes('Insufficient Funds')) {
+            errorMsg = intl.formatMessage({ id: 'checkout.errors.insufficientFunds' });
+          } else {
+            errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
+          }
           setErrorMsg(errorMsg);
           setLoading(false);
           reject(errorMsg)
@@ -157,8 +163,8 @@ const usePayments = () => {
     cleanCart();
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.sendEmail'}));
     enqueueSnackbar(intl.formatMessage(
-      { id: 'checkout.successes.sendConfirmTransactionEmail' }, { time: '30' }/*{ time: envConfig.NEXT_PUBLIC_CONFIRMATION_TOKEN_EXPIRY }*/), 
-      { variant: 'success', autoHideDuration: 10000 }
+      { id: 'checkout.successes.sendConfirmTransactionEmail' }, { time: parseInt(envConfig.NEXT_PUBLIC_CONFIRMATION_TOKEN_EXPIRY) }), 
+      { variant: 'success', autoHideDuration: snachbarDuration }
     );
   };
 
@@ -173,7 +179,7 @@ const usePayments = () => {
         initCart(response.cart);
         enqueueSnackbar(intl.formatMessage(
           { id: 'checkout.successes.getGuestUserData' }), 
-          { variant: 'success', autoHideDuration: 10000 }
+          { variant: 'success', autoHideDuration: snachbarDuration }
         );
         if (onSuccess) {
           onSuccess();
@@ -181,7 +187,7 @@ const usePayments = () => {
       }).catch(async (error: Error) => {
         enqueueSnackbar(intl.formatMessage(
           { id: 'checkout.errors.getGuestUserData' }), 
-          { variant: 'error', autoHideDuration: 10000 }
+          { variant: 'error', autoHideDuration: snachbarDuration }
         );
         if (onError) {
           onError(error.message);
@@ -214,7 +220,7 @@ const usePayments = () => {
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )
-      .then((_response: { order?: Order }) => {
+      .then((_response: { braintreeTransactionId: string }) => {
         onCompleteTransaction();
       }).catch((error) => {
         let errorMsg = error.message;
@@ -263,7 +269,7 @@ const usePayments = () => {
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )
-      .then((_response: { order?: Order }) => {
+      .then((_response: { paypalTransactionId: string }) => {
         onCompleteTransaction();
       }).catch((error) => {
         let errorMsg = error.message;
@@ -284,13 +290,10 @@ const usePayments = () => {
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.createTransaction'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.createOrder' }), 
-      { variant: 'success', autoHideDuration: 10000 }
+      { variant: 'success', autoHideDuration: snachbarDuration }
     );
     router.push(pages.home.path);
-    if (!isLogged()) {
-      removeUser();
-    } 
-    cleanCart(); 
+    cleanCart();
   };
 
   const missingTransactionData = (checkUserEmail: boolean, onError?: (message: string) => void, userEmail?: string) => {

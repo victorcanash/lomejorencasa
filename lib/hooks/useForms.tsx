@@ -176,8 +176,10 @@ const useForms = () => {
       .min(1),
     braintreeTransactionId: Yup
       .string()
-      .min(1)
-      .required(),
+      .min(1),
+    paypalTransactionId: Yup
+      .string()
+      .min(1),
   };
 
   const orderFieldsInitValues = {
@@ -187,6 +189,7 @@ const useForms = () => {
     userId: 0,
     guestUserEmail: '',
     braintreeTransactionId: '',
+    paypalTransactionId: '',
   }
 
   const orderProductFieldsValidation = {
@@ -393,6 +396,7 @@ const useForms = () => {
     userId: orderFieldsValidation.userId,
     guestUserEmail: orderFieldsValidation.guestUserEmail,
     braintreeTransactionId: orderFieldsValidation.braintreeTransactionId,
+    paypalTransactionId: orderFieldsValidation.paypalTransactionId,
     shipping: Yup.object().shape(addressFieldsValidation),
   });
   
