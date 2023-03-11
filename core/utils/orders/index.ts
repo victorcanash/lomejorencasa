@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import axios, { getAuthHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
+import type { GuestCart } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 export const getOrders = (token: string, page: number, sortBy: string, order: string, userId: number) => {
@@ -98,7 +99,12 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
       },
       timeout: 15000,
     };
-    axios.post('/orders/admin', order, options)
+    axios.post('/orders/admin', { 
+      ...order,
+      cart: {
+        items: order.products,
+      } as GuestCart,
+    }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
@@ -129,7 +135,7 @@ export const sendFailedOrderEmail = (token: string, order: OrderFailedSendEmail)
       },
       timeout: 15000,
     };
-    axios.post(`/orders/send-email/check/${order.orderId}`, order, options)
+    axios.post(`/orders/send-email/check/${order.orderId}`, { locale: order.locale}, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({
