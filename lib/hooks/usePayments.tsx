@@ -101,15 +101,24 @@ const usePayments = () => {
         } : undefined,
         !isLogged() ? cart : undefined
       )
-        .then((response: { paypalTransactionId: string }) => {
-          resolve(response.paypalTransactionId)
-        }).catch((error) => {
-          let errorMsg = error.message;
-          if (errorMsg.includes('Insufficient Funds')) {
-            errorMsg = intl.formatMessage({ id: 'checkout.errors.insufficientFunds' });
+        .then((response: { paypalTransactionId: string, paypalEmail?: string }) => {
+          if (response.paypalEmail) {
+            setCheckoutPayment({
+              paypalPayload: {
+                orderId: response.paypalTransactionId,
+                paypal: {
+                  email: response.paypalEmail || '',
+                },
+              },
+            });
+            setTimeout(() => {  
+              resolve(response.paypalTransactionId);
+            }, 10)
           } else {
-            errorMsg = intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' });
-          }
+            resolve(response.paypalTransactionId);
+          };
+        }).catch((error) => {
+          const errorMsg = error.message;
           setErrorMsg(errorMsg);
           setLoading(false);
           reject(errorMsg)

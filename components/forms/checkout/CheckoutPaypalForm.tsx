@@ -74,11 +74,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const onPaypalButtonsApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
     setCheckoutPayment({
+      ...checkoutPayment,
       paypalPayload: {
         orderId: data.orderID,
-        /*paypal: {
-          email: '',
-        },*/
       },
       remember,
     })
@@ -91,6 +89,10 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   };
 
   const handlePaypalHostedFieldsSubmit = async () => {
+    if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 3) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsHolderName' }));
+      return;
+    }
     if (renderInstance) {
       setTransactionError('');
       renderInstance
@@ -107,14 +109,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           contingencies: ['SCA_WHEN_REQUIRED'],
         })
         .then((response) => {
-          if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 3) {
-            throw new Error('cardHolderName');
-          }
-          if (response.liabilityShift && response.liabilityShift !== 'POSSIBLE') {
-            throw new Error('3dSecure');
-          }
           setCheckoutPayment({
-            ...checkoutPayment,
             paypalPayload: {
               orderId: response.orderId,
               card: {
@@ -135,11 +130,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   };
 
   const onSuccessPaypalTransaction = () => {
+    setLoading(false);
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.checkPaymentMethod' }));
-    setTimeout(() => {
-      setLoading(false);
-      next(); 
-    }, 10);
+    next(); 
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -152,16 +145,16 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     if (error.details && error.details.length > 0 && error.details[0].field) {
       errorDetail = error.details[0].field as string;
     }
-    if (error.message && error.message.includes('3dSecure')) {
-      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFields3dSecure' }));
-    } else if (error.message && error.message.includes('cardHolderName')) {
-      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsHolderName' }));
-    } else if (errorDetail && errorDetail.includes('card/number')) {
+    if (errorDetail && errorDetail.includes('card/number')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsNumber' }));
     } else if (errorDetail && errorDetail.includes('card/cvv')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsCVV' }));
     } else if (errorDetail && errorDetail.includes('card/expiry')) {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsExpiry' }));
+    } else if (error.message && error.message.includes('3dSecure')) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFields3dSecure' }));
+    } else if (error.message && error.message.includes('Insufficient Funds')) {
+      setTransactionError(intl.formatMessage({ id: 'checkout.errors.insufficientFunds' }));
     } else {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
     }

@@ -145,7 +145,7 @@ export const createBraintreeTransaction = (token: string, currentLocale: string,
 };
 
 export const createPaypalTransaction = (token: string, currentLocale: string, checkoutPayment: CheckoutPayment, guestUser?: GuestUser, cart?: Cart) => {
-  return new Promise<{paypalTransactionId: string}>(async (resolve, reject) => {
+  return new Promise<{paypalTransactionId: string, paypalEmail?: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
@@ -165,6 +165,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
         if (response.status === StatusCodes.CREATED && response.data) {
           resolve({
             paypalTransactionId: response.data.paypalTransactionId,
+            paypalEmail: response.data.paypalEmail,
           });
         } else {
           throw new Error('Something went wrong');
