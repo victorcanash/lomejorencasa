@@ -106,6 +106,12 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             countryCodeAlpha2: user.billing?.country ? getCountryCode(user.billing?.country) : undefined,
           },
           contingencies: ['SCA_WHEN_REQUIRED'],
+          stored_credential: {
+            payment_initiator: 'CUSTOMER',
+            payment_type: 'RECURRING',
+            usage: 'DERIVED',
+            //previous_transaction_reference: '53963906K75832009',
+          },
         })
         .then((response) => {
           console.log(`on Submit: ${JSON.stringify(response)}`)
