@@ -126,7 +126,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             },
             remember,
           });
-          onSuccessPaypalTransaction();
+          if (!response.liabilityShift || response.liabilityShift === 'POSSIBLE') {
+            onSuccessPaypalTransaction();
+          }
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((error: any) => {
