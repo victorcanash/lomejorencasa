@@ -104,6 +104,7 @@ const usePayments = () => {
       )
         .then((response: { paypalTransactionId: string }) => {
           console.log('create treansacion resolve')
+          setLoading(false);
           resolve(response.paypalTransactionId);
         }).catch((error) => {
           console.log('create treansacion catch')
