@@ -74,7 +74,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const onPaypalButtonsApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
     setCheckoutPayment({
-      ...checkoutPayment,
       paypalPayload: {
         orderId: data.orderID,
       },
@@ -109,6 +108,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           contingencies: ['SCA_WHEN_REQUIRED'],
         })
         .then((response) => {
+          console.log(`on Submit: ${JSON.stringify(response)}`)
           setCheckoutPayment({
             paypalPayload: {
               orderId: response.orderId,

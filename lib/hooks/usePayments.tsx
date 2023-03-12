@@ -83,6 +83,7 @@ const usePayments = () => {
   };
 
   const createPaypalTransaction = async () => {
+    console.log('create treansacion')
     return new Promise<string>(async (resolve, reject) => {
       const confirmToken = typeof router.query.token == 'string' ? router.query.token : '';
       if (missingTransactionData(false)) {
@@ -101,23 +102,11 @@ const usePayments = () => {
         } : undefined,
         !isLogged() ? cart : undefined
       )
-        .then((response: { paypalTransactionId: string, paypalEmail?: string }) => {
-          if (response.paypalEmail) {
-            setCheckoutPayment({
-              paypalPayload: {
-                orderId: response.paypalTransactionId,
-                paypal: {
-                  email: response.paypalEmail || '',
-                },
-              },
-            });
-            setTimeout(() => {  
-              resolve(response.paypalTransactionId);
-            }, 10)
-          } else {
-            resolve(response.paypalTransactionId);
-          };
+        .then((response: { paypalTransactionId: string }) => {
+          console.log('create treansacion resolve')
+          resolve(response.paypalTransactionId);
         }).catch((error) => {
+          console.log('create treansacion catch')
           const errorMsg = error.message;
           setErrorMsg(errorMsg);
           setLoading(false);

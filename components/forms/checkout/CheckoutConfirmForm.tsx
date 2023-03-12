@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { useIntl, FormattedMessage } from 'react-intl';
-import { cardPaymentMethodPayload, paypalPaymentMethodPayload } from 'braintree-web-drop-in';
+import { cardPaymentMethodPayload } from 'braintree-web-drop-in';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
@@ -124,11 +124,6 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
       (checkoutPayment.braintreePayload as cardPaymentMethodPayload)?.details.lastFour : checkoutPayment.paypalPayload?.card?.lastFour; 
   }
 
-  const getPaypalEmail = () => {
-    return checkoutPayment.braintreePayload ? 
-      (checkoutPayment.braintreePayload as paypalPaymentMethodPayload)?.details.email : checkoutPayment.paypalPayload?.paypal?.email; 
-  }
-
   return (
     <>
       { user.billing && user.shipping &&
@@ -170,7 +165,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                           />
                         </Typography>
                         <Box mt={1}>
-                          { getCardType() && getCardLastFour() &&
+                          { getCardType() && getCardLastFour() ?
                             <Typography component="div" variant="body1">
                               <FormattedMessage 
                                 id="orderDetail.paidCard" 
@@ -180,13 +175,12 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                                 }}
                               />
                             </Typography>
-                          }
-                          { getPaypalEmail() &&
+                            :
                             <Typography component="div" variant="body1">
                               <FormattedMessage 
                                 id="orderDetail.paidPaypal" 
                                 values={{
-                                  payerEmail: getPaypalEmail()
+                                  payerEmail: ''
                                 }}
                               />
                             </Typography>
