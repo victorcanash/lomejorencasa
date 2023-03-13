@@ -42,10 +42,10 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
 
   const handleSubmit = async (values: CheckoutAddresses, formikHelpers: FormikHelpers<CheckoutAddresses>, dirty: boolean) => {
     if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled' ||
-        dirty || !user.shipping || !user.billing) {
+        (dirty || !user.shipping || !user.billing)) {
       const checkoutAddresses = {...values};
       if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled' ||
-          values.sameAsShipping) {
+          (values.sameAsShipping)) {
         checkoutAddresses.billing = {...values.shipping};
         formikHelpers.setFieldValue('billing.firstName', values.shipping.firstName);
         formikHelpers.setFieldValue('billing.lastName', values.shipping.lastName);

@@ -235,7 +235,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
             errorMsg={errorMsg}
           />
 
-          { !isLogged() && confirmToken !== '' &&
+          { !isLogged() && confirmToken === '' &&
             <CheckoutEmailDialog
               open={openEmailDialog}
               handleDialog={handleEmailDialog}

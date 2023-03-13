@@ -2,6 +2,7 @@ import * as Yup from 'yup';
 import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 
+import envConfig from '@core/config/env.config';
 import { FormFieldTypes } from '@core/constants/forms';
 import { CountryOptions } from '@core/constants/addresses';
 import { ContactTypes } from '@core/constants/contact';
@@ -358,11 +359,13 @@ const useForms = () => {
 
   const checkoutAddressesFormValidation = Yup.object().shape({
     shipping: Yup.object().shape(addressFieldsValidation),
-    billing: Yup
-      .object().when('sameAsShipping', {
+    billing: envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' ? 
+      Yup.object().when('sameAsShipping', {
         is: (sameAsShipping: boolean) => !sameAsShipping,
         then: Yup.object().shape(addressFieldsValidation),
-      }),
+      })
+      :
+      Yup.object(),
     sameAsShipping: Yup
       .boolean(),
   });
