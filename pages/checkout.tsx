@@ -8,6 +8,7 @@ import Container from '@mui/material/Container';
 
 import { PageTypes } from '@core/constants/navigation';
 import { CheckoutSections } from '@core/constants/checkout';
+import type { CartItem } from '@core/types/cart';
 import { isAdminUser } from '@core/utils/auth';
 
 import { pages } from '@lib/constants/navigation';
@@ -22,6 +23,7 @@ import CheckoutAddressesForm from '@components/forms/checkout/CheckoutAddressesF
 import CheckoutPaymentForm from '@components/forms/checkout/CheckoutPaymentForm';
 import CheckoutConfirmForm from '@components/forms/checkout/CheckoutConfirmForm';
 import LoginInfoDialog from '@components/dialogs/LoginInfoDialog';
+import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 
 const Checkout: NextPage = () => {
   const { setLoading } = useAppContext();
@@ -40,9 +42,16 @@ const Checkout: NextPage = () => {
   const [transactionError, setTransactionError] = useState('');
   const [confirmToken, setConfirmToken] = useState<string | undefined>(undefined)
   const [openLoginInfoDialog, setOpenLoginInfoDialog] = useState(false);
+  const [openCartDialog, setOpenCartDialog] = useState(false);
+  const [changedCartDialog, setChangedCartDialog] = useState(false);
+  const [changedItemsByInventoryDialog, setChangedItemsByInventoryDialog] = useState<CartItem[]>([]);
 
   const handleLoginInfoDialog = () => {
     setOpenLoginInfoDialog(!openLoginInfoDialog);
+  };
+
+  const handleCartDialog = () => {
+    setOpenCartDialog(!openCartDialog);
   };
 
   const nextStep = () => {
@@ -125,6 +134,7 @@ const Checkout: NextPage = () => {
             })}
             mb={4}
           />
+
           { currentCheckoutSection() == CheckoutSections.address &&
             <CheckoutAddressesForm 
               next={nextStep}
@@ -143,6 +153,9 @@ const Checkout: NextPage = () => {
               back={prevStep}
               setTransactionError={setTransactionError}
               confirmToken={confirmToken}
+              handleCartDialog={handleCartDialog}
+              setChangedCartDialog={setChangedCartDialog}
+              setChangedItemsByInventoryDialog={setChangedItemsByInventoryDialog}
             />
           }
 
@@ -152,6 +165,13 @@ const Checkout: NextPage = () => {
               handleDialog={handleLoginInfoDialog}
             />
           }
+          <CheckedCartDialog
+            open={openCartDialog}
+            handleDialog={handleCartDialog}
+            changedCart={changedCartDialog}
+            changedItemsByInventory={changedItemsByInventoryDialog}
+            message={intl.formatMessage({ id: 'dialogs.checkedCart.content.checkoutPage' })}
+          />
         </Container>
       }
     </>

@@ -18,17 +18,26 @@ import useCart from '@lib/hooks/useCart';
 import BaseForm from '@components/forms/BaseForm';
 import AddressDetail from '@components/addresses/AddressDetail';
 import CartDetail from '@components/cart/CartDetail';
-import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 import CheckoutEmailDialog from '@components/dialogs/CheckoutEmailDialog';
 
 type CheckoutConfirmFormProps = {
   back: () => void,
   setTransactionError: Dispatch<SetStateAction<string>>,
   confirmToken: string,
+  handleCartDialog: () => void,
+  setChangedCartDialog: Dispatch<SetStateAction<boolean>>,
+  setChangedItemsByInventoryDialog: Dispatch<SetStateAction<CartItem[]>>,
 };
 
 const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
-  const { back, setTransactionError, confirmToken } = props;
+  const { 
+    back, 
+    setTransactionError, 
+    confirmToken,
+    handleCartDialog,
+    setChangedCartDialog,
+    setChangedItemsByInventoryDialog,
+  } = props;
 
   const { setLoading } = useAppContext();
   const { 
@@ -46,14 +55,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   const { createBraintreeTransaction, capturePaypalTransaction, errorMsg, successMsg } = usePayments();
   const { checkCart } = useCart();
 
-  const [openCartDialog, setOpenCartDialog] = useState(false);
-  const [changedCart, setChangedCart] = useState(false);
-  const [changedItemsByInventory, setChangedItemsByInventory] = useState<CartItem[]>([]);
   const [openEmailDialog, setOpenEmailDialog] = useState(false);
-
-  const handleCartDialog = () => {
-    setOpenCartDialog(!openCartDialog);
-  };
 
   const handleEmailDialog = () => {
     setOpenEmailDialog(!openEmailDialog);
@@ -70,10 +72,10 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
   };
 
   const onSuccessCheckCart = (changedCart: boolean, changedItemsByInventory: CartItem[]) => {
-    setChangedCart(changedCart);
-    setChangedItemsByInventory(changedItemsByInventory);
+    setChangedCartDialog(changedCart);
+    setChangedItemsByInventoryDialog(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
-      if (!emptyConfirmToken() || isLogged()) {
+      if (confirmToken !== '' || isLogged()) {
         if (!paypalMerchantId || !paypalClientId || !paypalToken) {
           createBraintreeTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
         } else {
@@ -102,13 +104,6 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
 
   const emptyCart = () => {
     if (cart.items.length > 0) {
-      return false;
-    }
-    return true;
-  };
-
-  const emptyConfirmToken = () => {
-    if (confirmToken !== '') {
       return false;
     }
     return true;
@@ -180,7 +175,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                               <FormattedMessage 
                                 id="orderDetail.paidPaypal" 
                                 values={{
-                                  payerEmail: ''
+                                  payerEmail: '',
                                 }}
                               />
                             </Typography>
@@ -235,15 +230,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
             errorMsg={errorMsg}
           />
 
-          <CheckedCartDialog
-            open={openCartDialog}
-            handleDialog={handleCartDialog}
-            changedCart={changedCart}
-            changedItemsByInventory={changedItemsByInventory}
-            message={intl.formatMessage({ id: 'dialogs.checkedCart.content.checkoutPage' })}
-          />
-
-          { !isLogged() && emptyConfirmToken() &&
+          { !isLogged() && confirmToken !== '' &&
             <CheckoutEmailDialog
               open={openEmailDialog}
               handleDialog={handleEmailDialog}
