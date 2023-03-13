@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import envConfig from '@core/config/env.config';
 import type { CartItem } from '@core/types/cart';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
@@ -143,17 +144,21 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                             variant="body1"
                           />
                         </Box>
-                        <Typography component="h3" variant="h1" mt={3}>
-                          <FormattedMessage 
-                            id="forms.billing" 
-                          />
-                        </Typography>
-                        <Box mt={1}>
-                          <AddressDetail 
-                            address={user.billing}
-                            variant="body1"
-                          />
-                        </Box>
+                        { envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' &&
+                          <>
+                            <Typography component="h3" variant="h1" mt={3}>
+                              <FormattedMessage 
+                                id="forms.billing" 
+                              />
+                            </Typography>
+                            <Box mt={1}>
+                              <AddressDetail 
+                                address={user.billing}
+                                variant="body1"
+                              />
+                            </Box>
+                          </>
+                        }
                         <Typography component="h3" variant="h1" mt={3}>
                           <FormattedMessage 
                             id="checkout.sections.payment" 

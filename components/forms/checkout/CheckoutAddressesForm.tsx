@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import { FormikHelpers } from 'formik';
 
+import envConfig from '@core/config/env.config';
 import { FormFieldTypes } from '@core/constants/forms';
 import { AddressTypes } from '@core/constants/addresses';
+import type { FormField } from '@core/types/forms';
 import type { CheckoutAddresses } from '@core/types/checkout';
 import type { User } from '@core/types/user';
 
@@ -39,9 +41,11 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
   };
 
   const handleSubmit = async (values: CheckoutAddresses, formikHelpers: FormikHelpers<CheckoutAddresses>, dirty: boolean) => {
-    if (dirty || !user.shipping || !user.billing) {
+    if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled' ||
+        dirty || !user.shipping || !user.billing) {
       const checkoutAddresses = {...values};
-      if (values.sameAsShipping) {
+      if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled' ||
+          values.sameAsShipping) {
         checkoutAddresses.billing = {...values.shipping};
         formikHelpers.setFieldValue('billing.firstName', values.shipping.firstName);
         formikHelpers.setFieldValue('billing.lastName', values.shipping.lastName);
@@ -54,6 +58,25 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
       updateUserAddresses(checkoutAddresses, next);
     } else if (!dirty && user.shipping && user.billing) {
       next();
+    }
+  };
+
+  const getBillingFields = () => {
+    if (!hiddenBilling) {
+      return [
+        {
+          name: 'sameAsShipping',
+          type: FormFieldTypes.checkbox,
+        },
+        ...addressFormFields(AddressTypes.billing)
+      ] as FormField[];
+    } else { 
+      return [
+        {
+          name: 'sameAsShipping',
+          type: FormFieldTypes.checkbox,
+        },
+      ] as FormField[];
     }
   };
 
@@ -90,35 +113,34 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
       validationSchema={checkoutAddressesFormValidation}
       enableReinitialize={true}
       onChange={handleChange}
-      formFieldGroups={[
-        {
-          titleTxt: {
-            id: 'forms.shipping',
-            textAlign: 'center',
+      formFieldGroups={envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' ? 
+        [
+          {
+            titleTxt: {
+              id: 'forms.shipping',
+              textAlign: 'center',
+            },
+            formFields: addressFormFields(AddressTypes.shipping),
           },
-          formFields: addressFormFields(AddressTypes.shipping),
-        },
-        {
-          titleTxt: {
-            id: 'forms.billing',
-            textAlign: 'center',
-          },
-          formFields: !hiddenBilling ?
-            [
-              {
-                name: 'sameAsShipping',
-                type: FormFieldTypes.checkbox,
-              },
-              ...addressFormFields(AddressTypes.billing)
-            ] : 
-            [
-              {
-                name: 'sameAsShipping',
-                type: FormFieldTypes.checkbox,
-              },
-            ],
-        }
-      ]}
+          {
+            titleTxt: {
+              id: 'forms.billing',
+              textAlign: 'center',
+            },
+            formFields: getBillingFields(),
+          }
+        ]
+        :
+        [
+          {
+            titleTxt: {
+              id: 'forms.shipping',
+              textAlign: 'center',
+            },
+            formFields: addressFormFields(AddressTypes.shipping),
+          }
+        ]
+      }
       formButtons={{
         submit: {
           text: { 
