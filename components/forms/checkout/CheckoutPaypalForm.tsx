@@ -18,6 +18,7 @@ import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import envConfig from '@core/config/env.config';
 import type { FormatText } from '@core/types/texts';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getCountryCode } from '@core/utils/addresses';
@@ -60,8 +61,8 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const { getPaypalUserToken, createPaypalTransaction, errorMsg, successMsg, setSuccessMsg } = usePayments();
 
-  const [loadedPaypal, setLoadedPaypal] = useState(false);
-  const [renderInstance, setRenderInstance] = useState<HostedFieldsHandler | undefined>(undefined);
+  const [loadedHostedFields, setLoadedHostedFields] = useState(false);
+  const [hostedFieldsInstance, setHostedFieldsInstance] = useState<HostedFieldsHandler | undefined>(undefined);
   const [supportsHostedFields, setSupportsHostedFields] = useState<boolean | undefined>(undefined);
   const [cardHolderNameFieldValue, setCardHolderNameFieldValue] = useState(checkoutPayment.paypalPayload?.card?.holderName || '');
 
@@ -92,9 +93,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsHolderName' }));
       return;
     }
-    if (renderInstance) {
+    if (hostedFieldsInstance) {
       setTransactionError('');
-      renderInstance
+      hostedFieldsInstance
         .submit({
           cardholderName: cardHolderNameFieldValue,
           billingAddress: {
@@ -161,9 +162,9 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     }
   };
 
-  const initPaypal = useCallback(async () => {
+  const initHostedFields = useCallback(async () => {
     if (typeof supportsHostedFields === 'boolean' && !!supportsHostedFields) {
-      setLoadedPaypal(true);
+      setLoadedHostedFields(true);
       await getPaypalUserToken().then((paypalUserToken?: string) => { 
         if (paypalUserToken) {
           dispatch({
@@ -215,31 +216,28 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           },
         },
       });
-      setRenderInstance(instance);
+      setHostedFieldsInstance(instance);
     }
   }, [supportsHostedFields, getPaypalUserToken, paypal.HostedFields, createPaypalTransaction, dispatch, options]);
 
   useEffect(() => {
-    if (isResolved) {
-      setSupportsHostedFields(paypal.HostedFields?.isEligible());
+    if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled') {
+      if (isResolved) {
+        setSupportsHostedFields(paypal.HostedFields?.isEligible());
+      }
     }
   }, [setSupportsHostedFields, options, isResolved, paypal.HostedFields]);
 
   useEffect(() => {
-    if (!loadedPaypal) {
-      initPaypal();
+    if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled') {
+      if (!loadedHostedFields) {
+        initHostedFields();
+      }
     }
-  }, [initPaypal, loadedPaypal]);
+  }, [initHostedFields, loadedHostedFields]);
 
   const handleCardHolderNameField = (event: ChangeEvent<HTMLInputElement>) => {
     setCardHolderNameFieldValue(event.target.value);
-  };
-
-  const disabledSubmitBtn = () => {
-    if (!renderInstance || !checkoutPayment) {
-      return true;
-    }
-    return false;
   };
   
   const hostedFieldSx = {
@@ -282,7 +280,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
                 mt={2}
               >
                 <PayPalButtons
-                  disabled={disabledSubmitBtn()}
+                  disabled={!checkoutPayment}
                   forceReRender={[totalPrice]}
                   fundingSource={undefined}
                   createOrder={handlePaypalButtonsSubmit}
@@ -291,60 +289,65 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
                   style={{ shape: 'pill' }}
                 />
               </Box>  
-              <Divider 
-                sx={{ 
-                  my: 2, 
-                  border: 'none',
-                }} 
-              >
-                <Typography variant="body2" textAlign="center">
-                  <FormattedMessage id="checkout.paymentMethod.or" />
-                </Typography>
-              </Divider>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  { hostedFieldLabel({ id: 'cardHolderName' }) }
-                  <Box id ="cardHolderName">
-                    <TextField 
-                      fullWidth
-                      type="text" 
-                      id="cardHolderName" 
-                      name="cardHolderName" 
-                      autoComplete="off" 
-                      placeholder=""
-                      value={cardHolderNameFieldValue}
-                      onChange={handleCardHolderNameField}
-                    />
-                  </Box>
-                </Grid>
-                <Grid item xs={6}>
-                  { hostedFieldLabel({ id: 'cardNumber' }) }
-                  <Box id="cardNumber" sx={hostedFieldSx}></Box>
-                </Grid>
-                <Grid item xs={6}>
-                  { hostedFieldLabel({ id: 'cardExpiry' }) }
-                  <Box id="cardExpiry" sx={hostedFieldSx}></Box>
-                </Grid>
-                <Grid item xs={6}>
-                  { hostedFieldLabel({ id: 'cvv' }) }
-                  <Box id="cvv" sx={hostedFieldSx}></Box>
-                </Grid>
-                { isLogged() &&
-                  <Grid item xs={12}>
-                    <FormControlLabel
-                      label={intl.formatMessage({ id: 'forms.rememberPayment' })}
-                      control={
-                        <Checkbox 
-                          id="remember"
-                          name="remember"
-                          checked={remember} 
-                          onChange={handleRemember}
+              { envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' &&
+                <>
+                  <Divider
+                    sx={{
+                      mb: 2,
+                      border: 'none',
+                    }}
+                  >
+                    <Typography variant="body2" textAlign="center">
+                      <FormattedMessage id="checkout.paymentMethod.or" />
+                    </Typography>
+                  </Divider>
+                  <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                      { hostedFieldLabel({ id: 'cardHolderName' }) }
+                      <Box id ="cardHolderName">
+                        <TextField 
+                          fullWidth
+                          type="text" 
+                          id="cardHolderName" 
+                          name="cardHolderName" 
+                          autoComplete="off"
+                          placeholder=""
+                          value={cardHolderNameFieldValue}
+                          onChange={handleCardHolderNameField}
+                          disabled={envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled'}
                         />
-                      }      
-                    />
+                      </Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      { hostedFieldLabel({ id: 'cardNumber' }) }
+                      <Box id="cardNumber" sx={hostedFieldSx}></Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      { hostedFieldLabel({ id: 'cardExpiry' }) }
+                      <Box id="cardExpiry" sx={hostedFieldSx}></Box>
+                    </Grid>
+                    <Grid item xs={6}>
+                      { hostedFieldLabel({ id: 'cvv' }) }
+                      <Box id="cvv" sx={hostedFieldSx}></Box>
+                    </Grid>
+                    { isLogged() &&
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          label={intl.formatMessage({ id: 'forms.rememberPayment' })}
+                          control={
+                            <Checkbox 
+                              id="remember"
+                              name="remember"
+                              checked={remember} 
+                              onChange={handleRemember}
+                            />
+                          }      
+                        />
+                      </Grid>
+                    }
                   </Grid>
-                }
-              </Grid>     
+                </> 
+              }
             </>
           ,
         }
@@ -355,7 +358,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             id: 'app.continueBtn',
           },
           onSubmit: handlePaypalHostedFieldsSubmit,
-          disabled: disabledSubmitBtn(),
+          disabled: !hostedFieldsInstance || !checkoutPayment,
         },
         back: {
           text: { 

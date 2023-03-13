@@ -12,7 +12,12 @@ type CheckoutPaymentFormProps = {
 };
 
 const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
-  const { next, back, transactionError, setTransactionError } = props;
+  const { 
+    next, 
+    back, 
+    transactionError, 
+    setTransactionError 
+  } = props;
 
   const { 
     paypalMerchantId, 

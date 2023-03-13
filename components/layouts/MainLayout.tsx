@@ -4,6 +4,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 import Box from '@mui/material/Box';
 
+import envConfig from '@core/config/env.config';
 import { PageTypes } from '@core/constants/navigation';
 
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -36,7 +37,8 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
             'data-client-token': paypalToken,
             'currency': currency,
             'intent': 'capture',
-            'components': 'buttons,hosted-fields',
+            'components':
+              envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' ? 'buttons,hosted-fields' : 'buttons',
             //'vault': true,
           }}
         >
