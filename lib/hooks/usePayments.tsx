@@ -50,8 +50,7 @@ const usePayments = () => {
     await getPaypalUserTokenMW(token, intl.locale)
       .then((response: { paypalUserToken: string }) => {
         paypalUserToken = response.paypalUserToken
-      }).catch((error) => {
-        console.log(error.message)
+      }).catch((_error) => {
       })
     setLoading(false)
     return paypalUserToken
@@ -83,7 +82,6 @@ const usePayments = () => {
   };
 
   const createPaypalTransaction = async () => {
-    console.log('create treansacion')
     return new Promise<string>(async (resolve, reject) => {
       const confirmToken = typeof router.query.token == 'string' ? router.query.token : '';
       if (missingTransactionData(false)) {
@@ -103,11 +101,9 @@ const usePayments = () => {
         !isLogged() ? cart : undefined
       )
         .then((response: { paypalTransactionId: string }) => {
-          console.log('create treansacion resolve')
           setLoading(false);
           resolve(response.paypalTransactionId);
         }).catch((error) => {
-          console.log('create treansacion catch')
           const errorMsg = error.message;
           setErrorMsg(errorMsg);
           setLoading(false);

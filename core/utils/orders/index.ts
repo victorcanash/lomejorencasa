@@ -97,7 +97,7 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
-      timeout: 15000,
+      timeout: 20000,
     };
     axios.post('/orders/admin', { 
       ...order,

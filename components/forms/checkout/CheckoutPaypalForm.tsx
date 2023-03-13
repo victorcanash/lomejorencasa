@@ -106,15 +106,8 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             countryCodeAlpha2: user.billing?.country ? getCountryCode(user.billing?.country) : undefined,
           },
           contingencies: ['SCA_WHEN_REQUIRED'],
-          storedCredential: {
-            paymentInitiator: 'CUSTOMER',
-            paymentType: 'RECURRING',
-            usage: 'DERIVED',
-            //previous_transaction_reference: '53963906K75832009',
-          },
         })
         .then((response) => {
-          console.log(`on Submit: ${JSON.stringify(response)}`)
           setCheckoutPayment({
             paypalPayload: {
               orderId: response.orderId,
@@ -132,7 +125,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
         })
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .catch((error: any) => {
-          console.log('catch hosted cards error')
           onErrorPaypalTransaction(error);
         });
     }
@@ -168,11 +160,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       setTransactionError(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
     }
   };
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onHostedFieldsError = (error: any) => {
-    console.log('entra hosted fields error init')
-  }
 
   const initPaypal = useCallback(async () => {
     if (typeof supportsHostedFields === 'boolean' && !!supportsHostedFields) {
@@ -213,7 +200,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
             'color': colors.text.action,
           }
         },
-        onError: onHostedFieldsError,
         fields: {
           number: {
             selector: '#cardNumber',
