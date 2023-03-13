@@ -118,6 +118,10 @@ export const createBraintreeTransaction = (token: string, currentLocale: string,
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
       },
+      params: {
+        appName: envConfig.NEXT_PUBLIC_APP_NAME,
+        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
+      },
       timeout: 20000,
     };
     const body = {
@@ -183,6 +187,10 @@ export const capturePaypalTransaction = (token: string, currentLocale: string, c
       headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
+      },
+      params: {
+        appName: envConfig.NEXT_PUBLIC_APP_NAME,
+        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
       timeout: 20000,
     };
