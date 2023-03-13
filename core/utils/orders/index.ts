@@ -133,7 +133,7 @@ export const sendFailedOrderEmail = (token: string, order: OrderFailedSendEmail)
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
       },
-      timeout: 15000,
+      timeout: 20000,
     };
     axios.post(`/orders/send-email/check/${order.orderId}`, { locale: order.locale}, options)
       .then(async (response: AxiosResponse) => {
