@@ -32,6 +32,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
       { (pageType !== PageTypes.link && paypalMerchantId && paypalClientId && paypalToken) ?
         <PayPalScriptProvider
           options={{
+            'locale': 'es_ES',
             'merchant-id': paypalMerchantId,
             'client-id': paypalClientId,
             'data-client-token': paypalToken,
