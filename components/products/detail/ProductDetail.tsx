@@ -57,13 +57,35 @@ const ProductDetail = (props: ProductDetailProps) => {
     }
   };
 
-  const productTitleId = () => {
-    if (isEverfreshProduct(product)) { 
-      return 'everfresh.h1';
-    } else if (isBagsProduct(product)) {
-      return 'bags.h1';
+  const productTitle = () => {
+    let formatted = false
+    let text = ''
+    if ((selectedInventory as ProductInventory)?.realPrice) {
+      if (isEverfreshProduct(product)) { 
+        formatted = true
+        text = 'everfresh.h1';
+      } else if (isBagsProduct(product)) {
+        formatted = true
+        text = 'bags.h1';
+      } else {
+        text = `${product.name.current}`;
+      }
+    } else if ((selectedInventory as ProductPack)?.inventories) {
+      text = (selectedInventory as ProductPack).name.current;
+    } else {
+      text = `${product.name.current}`;
     }
-    return `${product.name.current}`;
+    return (
+      <Typography component="h1" variant="h1" sx={{ mb: 3 }}>
+        { formatted ? 
+            <FormattedMessage id={text} defaultMessage={text} />
+            :
+            <>
+              { text }
+            </>
+        }
+      </Typography>
+    )
   };
 
   const productPrice = () => {
@@ -172,9 +194,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               }}  
             >
               {/* Title */}
-              <Typography component="h1" variant="h1" sx={{ mb: 3 }}>
-                <FormattedMessage id={productTitleId()} />
-              </Typography>
+              { productTitle() }
               {/* Price */}  
               { (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ?
                 <Box sx={{ mb: 3 }}>
