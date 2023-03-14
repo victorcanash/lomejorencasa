@@ -9,7 +9,7 @@ const typographies = {
   title: {
     fontSize: '24px',
     fontWeight: '800',
-    lineHeight: '28px',
+    lineHeight: '30px',
   } as ThemeFontPropertyElement,
   secondTitle: {
     fontSize: '20px',

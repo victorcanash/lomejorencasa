@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -49,79 +47,107 @@ const ProductDetail = (props: ProductDetailProps) => {
   );
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
-  const [_packs, _setPacks] = useState<ProductPack[]>(getProductPacks(product))
-
   const onClickAddCartBtn = () => {
     if (selectedInventory) {
       addCartItem(selectedInventory, selectedQuantity);
     }
   };
 
-  const productTitle = () => {
-    let formatted = false
-    let text = ''
-    if ((selectedInventory as ProductInventory)?.realPrice) {
-      if (isEverfreshProduct(product)) { 
-        formatted = true
-        text = 'everfresh.h1';
-      } else if (isBagsProduct(product)) {
-        formatted = true
-        text = 'bags.h1';
-      } else {
-        text = `${product.name.current}`;
-      }
-    } else if ((selectedInventory as ProductPack)?.inventories) {
-      text = (selectedInventory as ProductPack).name.current;
-    } else {
-      text = `${product.name.current}`;
+  const productH1 = () => {
+    let formatted = false;
+    let text = product.name.current;
+    if (isEverfreshProduct(product)) { 
+      formatted = true
+      text = 'everfresh.h1';
+    } else if (isBagsProduct(product)) {
+      formatted = true
+      text = 'bags.h1';
     }
     return (
-      <Typography component="h1" variant="h1" sx={{ mb: 3 }}>
+      <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
         { formatted ? 
             <FormattedMessage id={text} defaultMessage={text} />
             :
-            <>
-              { text }
-            </>
+            <>{ text }</>
         }
       </Typography>
-    )
+    );
+  };
+
+  const productTitle = () => {
+    let text = product.name.current;
+    if (selectedInventory) {
+      text = selectedInventory.description.current;
+    }
+    return (
+      <Typography component="h2" variant="h1">
+        { text }
+      </Typography>
+    );
   };
 
   const productPrice = () => {
+    let price = product.lowestRealPrice;
     if ((selectedInventory as ProductInventory)?.realPrice) {
-      return (selectedInventory as ProductInventory).realPrice;
+      price = (selectedInventory as ProductInventory).realPrice;
     } else if ((selectedInventory as ProductPack)?.inventories) {
-      return (selectedInventory as ProductPack).price;
+      price = (selectedInventory as ProductPack).price;
     }
-    return product.lowestRealPrice;
+    return (
+      <Typography component="h2" variant="h1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+        {`${price} €`} 
+      </Typography>
+    );
   };
 
   const productOriginalPrice = () => {
+    let originPrice = product.lowestPrice;
     if ((selectedInventory as ProductInventory)?.realPrice) {
-      return (selectedInventory as ProductInventory).price;
+      originPrice = (selectedInventory as ProductInventory).price;
     } else if ((selectedInventory as ProductPack)?.inventories) {
-      return (selectedInventory as ProductPack).originalPrice;
+      originPrice = (selectedInventory as ProductPack).originalPrice;
     }
-    return product.lowestPrice;
+    return (
+      <Typography component="span" variant="body1">
+        {(selectedInventory as ProductPack)?.inventories ? 
+          `${intl.formatMessage({ id: 'productDetail.withoutPack' })}: `:
+          `${intl.formatMessage({ id: 'productDetail.original' })}: `
+        }<s>{`${originPrice}`}</s>{' €'}
+      </Typography>
+    );
   };
 
   const productDiscountPercent = () => {
-    if ((selectedInventory as ProductInventory)?.realPrice) {
-      return product.activeDiscount?.discountPercent;
-    } else if ((selectedInventory as ProductPack)?.inventories) {
-      return (selectedInventory as ProductPack).discountPercent;
+    let percent = product.activeDiscount?.discountPercent || 0;
+    if ((selectedInventory as ProductPack)?.inventories) {
+      percent = (selectedInventory as ProductPack).discountPercent;
     }
-    return product.activeDiscount?.discountPercent;
+    return (
+      <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
+        {` -${percent}%`}
+      </Typography>
+    );
   };
 
-  const productDescriptionId = () => {
+  const productDescription = () => {
+    let formatted = false;
+    let text = product.description.current;
     if (isEverfreshProduct(product)) { 
-      return 'everfresh.description';
+      formatted = true
+      text = 'everfresh.description';
     } else if (isBagsProduct(product)) {
-      return 'bags.description';
+      formatted = true
+      text = 'bags.description';
     }
-    return `${product.description.current}`;
+    return (
+      <Typography component="h3" variant="body1">
+        { formatted ? 
+            <FormattedMessage id={text} defaultMessage={text} />
+            :
+            <>{ text }</>
+        }
+      </Typography>
+    );
   };
 
   const productComments = () => {
@@ -153,6 +179,8 @@ const ProductDetail = (props: ProductDetailProps) => {
         overflow: 'hidden',
       }}
     >
+      { productH1() }
+
       <Container>
 
         {/* General Product Section */}
@@ -193,35 +221,21 @@ const ProductDetail = (props: ProductDetailProps) => {
                 m: 'auto',
               }}  
             >
-              {/* Title */}
-              { productTitle() }
-              {/* Price */}  
+              <Box sx={{ mb: 3 }}>
+                { productTitle() }
+              </Box>
               { (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ?
                 <Box sx={{ mb: 3 }}>
-                  <Typography component="h2" variant="h1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-                    {`${productPrice()} €`} 
-                  </Typography>
-                  <Typography component="span" variant="body1">
-                    {(selectedInventory as ProductPack)?.inventories ? 
-                      `${intl.formatMessage({ id: 'productDetail.withoutPack' })}: `:
-                      `${intl.formatMessage({ id: 'productDetail.original' })}: `
-                    }<s>{`${productOriginalPrice()}`}</s>{' €'}
-                  </Typography>
-                  <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
-                    {` -${productDiscountPercent()}%`}
-                  </Typography>
+                  { productPrice() }
+                  { productOriginalPrice() }
+                  { productDiscountPercent() }
                 </Box>
                 :
                 <Box sx={{ mb: 3 }}>
-                  <Typography component="h2" variant="h1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-                    {`${productPrice()} €`} 
-                  </Typography>
+                  { productPrice() }
                 </Box>
               }
-              {/* Description */}
-              <Typography component="h3" variant="body1">
-                <FormattedMessage id={productDescriptionId()} />
-              </Typography>
+              { productDescription() }
               {/* Cart inputs */}
               <Grid container mt={4} mb={2}>
                 <Grid item>
@@ -232,7 +246,6 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </Grid>
                 <Grid
                   mb={2}
-                  mr={1} 
                   item 
                   container 
                   width="auto" 
@@ -253,7 +266,6 @@ const ProductDetail = (props: ProductDetailProps) => {
                   </Grid>
                 </Grid>
               </Grid>
-              {/* Comments */}
               { productComments() }
             </Box>
           </Grid>

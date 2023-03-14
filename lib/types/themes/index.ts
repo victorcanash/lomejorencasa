@@ -23,7 +23,6 @@ export type ThemeDefaultElements = {
       body2: ThemeElement,
     },
   },
-  typography: ThemeElement,
   link: ThemeElement,
   paper: ThemeElement,
   appBar: ThemeElement,

@@ -20,7 +20,7 @@
 
   "banners.maintenance": "Actualmente en mantenimiento",
 
-  "header.banners.shipping": "Envío gratuito en la península en 24-48h",
+  "header.banners.shipping": "Envío gratuito en la península (24-48h)",
   "header.drawerItems.home": "Home",
   "header.drawerItems.shop": "Shop",
   "header.drawerItems.everfresh": "EverFresh",
@@ -209,7 +209,7 @@
   "everfresh.h1": "Envasadora EverFresh",
   "everfresh.description": "¡Prolonga la vida de tus alimentos en un solo click!",
   "everfresh.comment": "La envasadora al vacío EverFresh es la solución perfecta para los amantes de la conservación. Con un diseño ligero y compacto, podrás llevarla contigo a cualquier lugar sin tener que preocuparte por el espacio.\n\nOlvídate de tirar comida en mal estado y ahorra dinero con una visión más clara de lo que consumes para evitar compras innecesarias.\n\nAdemás es compatible con todo tipo de bolsas de vacío con válvula, lo que te permitirá elegir la opción que mejor se adapte a tus necesidades y presupuesto.\n\n¡Adquiérela hoy mismo y experimenta la frescura en cada bocado!",
-  "everfresh.bagsButton": "Añadir bolsas al vacío con válvula",
+  "everfresh.bagsButton": "Añadir bolsas de vacío con válvula",
   "everfresh.details.title": "Detalles del producto",
   "everfresh.details.1": "Marca: InnovaGoods",
   "everfresh.details.2": "Rápida extracción del aire en un solo click.",
@@ -237,9 +237,9 @@
   "everfresh.videoComment.3.title": "El compañero ideal para tus aventuras",
   "everfresh.videoComment.3.content": "Con un tamaño y peso reducido, nuestra envasadora se convierte en la mejor opción para llevar en tu viajes.\n\nYa no tendrás que preocuparte por perder tiempo organizando tu equipaje o por los costosos gastos de las aerolíneas por el tamaño de tu mochila.\n\nCon ella, puedes envasar ropa y alimentos al momento y llevarte un pedazo de tus aventuras contigo a casa.",
 
-  "bags.metas.title": "Bolsas al vacío con válvula",
-  "bags.metas.description": "Página de bolsas al vacío con válvula",
-  "bags.h1": "Bolsas al vacío con válvula",
+  "bags.metas.title": "Bolsas de vacío con válvula",
+  "bags.metas.description": "Página de bolsas de vacío con válvula",
+  "bags.h1": "Bolsas de vacío con válvula",
   "bags.description": "En la envasadora ofrecemos una amplia gama de tamaños, cada uno pensado para un uso especifico.\n\nEs importante elegir el tamaño que mejor se adapte a tu necesidad con el fin de obtener un envasado óptimo y eficaz.",
   "bags.comment": "Todos nuestros paquetes de bolsas contienen 10 unidades del producto.\n\nAñade la envasadora EverFresh para aprovechar el descuento incluido.",
   "bags.everfreshButton": "Añadir Envasadora EverFresh",

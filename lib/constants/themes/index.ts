@@ -71,11 +71,6 @@ const themeOptions: ThemeOptions = {
     body2: convertElementToSx(themeDefaultElements.default.typography.body2),
   },
   components: {
-    MuiTypography: {
-      styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.typography),
-      },
-    },
     MuiLink: {
       styleOverrides: {
         root: {

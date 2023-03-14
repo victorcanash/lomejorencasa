@@ -79,13 +79,6 @@ export const themeDefaultElements: ThemeDefaultElements = {
       },
     },
   },
-  typography: {
-    text: {
-      font: { 
-        default: typographies.default,
-      },
-    },
-  },
   link: {
     text: {
       color: {
