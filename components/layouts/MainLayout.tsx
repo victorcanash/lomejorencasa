@@ -4,7 +4,6 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 import Box from '@mui/material/Box';
 
-import envConfig from '@core/config/env.config';
 import { PageTypes } from '@core/constants/navigation';
 
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -15,7 +14,7 @@ import Loading from '@components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { initialized } = useAppContext();
-  const { paypalMerchantId, paypalClientId, paypalToken, currency } = useAuthContext();
+  const { braintreeToken, paypal, currency } = useAuthContext();
 
   const { layout, pageType } = useLayout(children);
   const app = useApp(pageType);
@@ -29,17 +28,17 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      { (pageType !== PageTypes.link && paypalMerchantId && paypalClientId && paypalToken) ?
+      { (pageType !== PageTypes.link && !braintreeToken && paypal) ?
         <PayPalScriptProvider
           options={{
             'locale': 'es_ES',
-            'merchant-id': paypalMerchantId,
-            'client-id': paypalClientId,
-            'data-client-token': paypalToken,
+            'merchant-id': paypal.merchantId,
+            'client-id': paypal.clientId,
+            'data-client-token': paypal.token,
             'currency': currency,
             'intent': 'capture',
             'components':
-              envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' ? 'buttons,hosted-fields' : 'buttons',
+              paypal.advancedCards ? 'buttons,hosted-fields' : 'buttons',
             //'vault': true,
           }}
         >

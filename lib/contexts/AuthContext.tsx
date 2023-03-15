@@ -1,8 +1,17 @@
-import { createContext, useContext, useState, useRef, useEffect, Dispatch, SetStateAction } from 'react';
+import { 
+  createContext, 
+  useContext, 
+  useState, 
+  useRef, 
+  useEffect, 
+  Dispatch, 
+  SetStateAction 
+} from 'react';
 import { useRouter } from 'next/router';
 
 import { PaymentModes } from '@core/constants/app';
 import { Protections } from '@core/constants/auth';
+import type { PaypalCredentials } from '@core/types/paypal';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';
 
@@ -13,18 +22,18 @@ type ContextType = {
   setToken: Dispatch<SetStateAction<string>>,
   braintreeToken?: string,
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
-  paypalMerchantId?: string,
-  setPaypalMerchantId: Dispatch<SetStateAction<string | undefined>>,
-  paypalClientId?: string,
-  setPaypalClientId: Dispatch<SetStateAction<string | undefined>>,
-  paypalToken?: string,
-  setPaypalToken: Dispatch<SetStateAction<string | undefined>>,
+  paypal?: PaypalCredentials,
+  setPaypal: Dispatch<SetStateAction<PaypalCredentials | undefined>>,
+  googleOAuthId: string,
+  setGoogleOAuthId: Dispatch<SetStateAction<string>>,
   user: User | GuestUser,
   setUser: Dispatch<SetStateAction<User | GuestUser>>,
   paymentMode: PaymentModes,
   setPaymentMode: Dispatch<SetStateAction<PaymentModes>>,
   currency: string,
   setCurrency: Dispatch<SetStateAction<string>>,
+  confirmTokenExpiry: string,
+  setConfirmTokenExpiry: Dispatch<SetStateAction<string>>,
   checkoutPayment: CheckoutPayment,
   setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment>>,
   removeUser: () => void,
@@ -41,18 +50,18 @@ export const AuthContext = createContext<ContextType>({
   setToken: () => {},
   braintreeToken: undefined,
   setBraintreeToken: () => {},
-  paypalMerchantId: undefined,
-  setPaypalMerchantId: () => {},
-  paypalClientId: undefined,
-  setPaypalClientId: () => {},
-  paypalToken: undefined,
-  setPaypalToken: () => {},
+  paypal: undefined,
+  setPaypal: () => {},
+  googleOAuthId: '',
+  setGoogleOAuthId: () => {},
   user: {} as GuestUser,
   setUser: () => {},
   paymentMode: PaymentModes.braintree,
   setPaymentMode: () => {},
   currency: '',
   setCurrency: () => {},
+  confirmTokenExpiry: '',
+  setConfirmTokenExpiry: () => {},
   checkoutPayment: {} as CheckoutPayment,
   setCheckoutPayment: () => {},
   removeUser: () => {},
@@ -78,12 +87,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
-  const [paypalMerchantId, setPaypalMerchantId] = useState<string | undefined>(undefined);
-  const [paypalClientId, setPaypalClientId] = useState<string | undefined>(undefined);
-  const [paypalToken, setPaypalToken] = useState<string | undefined>(undefined);
+  const [paypal, setPaypal] = useState<PaypalCredentials | undefined>(undefined);
+  const [googleOAuthId, setGoogleOAuthId] = useState<string>('');
   const [user, setUser] = useState<User | GuestUser>({});
   const [paymentMode, setPaymentMode] = useState(PaymentModes.braintree);
   const [currency, setCurrency] = useState('');
+  const [confirmTokenExpiry, setConfirmTokenExpiry] = useState('');
   const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment>({});
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
@@ -158,22 +167,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthContext.Provider
       value={{ 
-        token, 
+        token,
         setToken,
         braintreeToken,
         setBraintreeToken,
-        paypalMerchantId,
-        setPaypalMerchantId,
-        paypalClientId,
-        setPaypalClientId,
-        paypalToken,
-        setPaypalToken,
-        user, 
+        paypal,
+        setPaypal,
+        googleOAuthId,
+        setGoogleOAuthId,
+        user,
         setUser,
         paymentMode,
         setPaymentMode,
         currency,
         setCurrency,
+        confirmTokenExpiry,
+        setConfirmTokenExpiry,
         checkoutPayment,
         setCheckoutPayment,
         removeUser,

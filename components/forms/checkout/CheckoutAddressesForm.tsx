@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { FormikHelpers } from 'formik';
 
-import envConfig from '@core/config/env.config';
 import { FormFieldTypes } from '@core/constants/forms';
 import { AddressTypes } from '@core/constants/addresses';
 import type { FormField } from '@core/types/forms';
@@ -22,7 +21,7 @@ type CheckoutAddressesFormProps = {
 const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
   const { next } = props;
 
-  const { user } = useAuthContext();
+  const { braintreeToken, paypal, user } = useAuthContext();
 
   const { 
     checkoutAddressesFormValidation, 
@@ -41,10 +40,10 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
   };
 
   const handleSubmit = async (values: CheckoutAddresses, formikHelpers: FormikHelpers<CheckoutAddresses>, dirty: boolean) => {
-    if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled' ||
+    if ((!braintreeToken && !paypal?.advancedCards) ||
         (dirty || !user.shipping || !user.billing)) {
       const checkoutAddresses = {...values};
-      if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled' ||
+      if ((!braintreeToken && !paypal?.advancedCards) ||
           (values.sameAsShipping)) {
         checkoutAddresses.billing = {...values.shipping};
         formikHelpers.setFieldValue('billing.firstName', values.shipping.firstName);
@@ -113,7 +112,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
       validationSchema={checkoutAddressesFormValidation}
       enableReinitialize={true}
       onChange={handleChange}
-      formFieldGroups={envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' ? 
+      formFieldGroups={(braintreeToken || paypal?.advancedCards) ? 
         [
           {
             titleTxt: {

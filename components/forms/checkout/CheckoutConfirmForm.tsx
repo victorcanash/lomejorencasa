@@ -7,7 +7,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import envConfig from '@core/config/env.config';
 import type { CartItem } from '@core/types/cart';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
@@ -42,10 +41,9 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
 
   const { setLoading } = useAppContext();
   const { 
-    user, 
-    paypalClientId, 
-    paypalMerchantId,
-    paypalToken,
+    user,
+    braintreeToken,
+    paypal,
     checkoutPayment, 
     isLogged 
   } = useAuthContext();
@@ -77,9 +75,9 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedItemsByInventoryDialog(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
       if (confirmToken !== '' || isLogged()) {
-        if (!paypalMerchantId || !paypalClientId || !paypalToken) {
+        if (braintreeToken) {
           createBraintreeTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
-        } else {
+        } else if (paypal) {
           capturePaypalTransaction(isLogged() ? undefined: confirmToken, onErrorTransaction);
         }
       } else {
@@ -144,7 +142,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                             variant="body1"
                           />
                         </Box>
-                        { envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' &&
+                        { (braintreeToken || paypal?.advancedCards) &&
                           <>
                             <Typography component="h3" variant="h1" mt={3}>
                               <FormattedMessage 

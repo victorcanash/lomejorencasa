@@ -8,6 +8,7 @@ import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
 import type { Page } from '@core/types/navigation';
+import type { PaypalCredentials } from '@core/types/paypal';
 import type { User } from '@core/types/user';
 import type { 
   AuthLogin, 
@@ -32,10 +33,10 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     user?: User,
     paymentMode: PaymentModes,
     currency: string,
+    confirmTokenExpiry: string,
     braintreeToken?: string,
-    paypalMerchantId?: string,
-    paypalClientId?: string,
-    paypalToken?: string,
+    paypal?: PaypalCredentials,
+    googleOAuthId: string,
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
@@ -57,7 +58,14 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             response.data?.packs &&
             response.data?.paymentMode &&
             response.data?.currency &&
-            (response.data?.braintreeToken || (response.data?.paypalMerchantId && response.data?.paypalClientId && response.data?.paypalToken))) {
+            response.data?.confirmTokenExpiry &&
+            (
+              response.data?.braintreeToken || (
+                response.data?.paypal?.merchantId && response.data?.paypal?.paypalClientId && response.data?.paypal?.paypalToken
+              )
+            ) &&
+            response.data?.googleOAuthId
+          ) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
               let errorMsg = '';
@@ -81,10 +89,15 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             user: response.data.user || undefined,
             paymentMode: response.data.paymentMode,
             currency: response.data.currency,
+            confirmTokenExpiry: response.data.confirmTokenExpiry,
             braintreeToken: response.data.braintreeToken,
-            paypalMerchantId: response.data.paypalMerchantId,
-            paypalClientId: response.data.paypalClientId,
-            paypalToken: response.data.paypalToken,
+            paypal: !response.data.braintreeToken ? {
+              merchantId: response.data.paypalMerchantId,
+              clientId: response.data.paypalClientId,
+              token: response.data.paypalToken,
+              advancedCards: response.data.paypalAdvancedCards,
+            } : undefined,
+            googleOAuthId: response.data.googleOAuthId,
           });
         } else {
           throw new Error('Something went wrong');

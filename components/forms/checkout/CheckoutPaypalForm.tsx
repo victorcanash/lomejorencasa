@@ -18,7 +18,6 @@ import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
-import envConfig from '@core/config/env.config';
 import type { FormatText } from '@core/types/texts';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getCountryCode } from '@core/utils/addresses';
@@ -54,7 +53,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const { setLoading } = useAppContext();
   const { totalPrice } = useCartContext();
-  const { user, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
+  const { paypal, user, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
 
   const intl = useIntl();
   const [{ isResolved, options }, dispatch] = usePayPalScriptReducer();
@@ -65,8 +64,6 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   const [hostedFieldsInstance, setHostedFieldsInstance] = useState<HostedFieldsHandler | undefined>(undefined);
   const [supportsHostedFields, setSupportsHostedFields] = useState<boolean | undefined>(undefined);
   const [cardHolderNameFieldValue, setCardHolderNameFieldValue] = useState(checkoutPayment.paypalPayload?.card?.holderName || '');
-
-  const paypal = window.paypal;
 
   const handlePaypalButtonsSubmit = async (_data: CreateOrderData, _actions: CreateOrderActions) => {
     setTransactionError('');
@@ -176,7 +173,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           });
         }
       });  
-      const instance = await paypal.HostedFields?.render({
+      const instance = await window.paypal.HostedFields?.render({
         createOrder: createPaypalTransaction,
         styles: {
           'input': {
@@ -218,23 +215,23 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
       });
       setHostedFieldsInstance(instance);
     }
-  }, [supportsHostedFields, getPaypalUserToken, paypal.HostedFields, createPaypalTransaction, dispatch, options]);
+  }, [supportsHostedFields, getPaypalUserToken, createPaypalTransaction, dispatch, options]);
 
   useEffect(() => {
-    if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled') {
+    if (paypal?.advancedCards) {
       if (isResolved) {
-        setSupportsHostedFields(paypal.HostedFields?.isEligible());
+        setSupportsHostedFields(window.paypal.HostedFields?.isEligible());
       }
     }
-  }, [setSupportsHostedFields, options, isResolved, paypal.HostedFields]);
+  }, [setSupportsHostedFields, options, isResolved, paypal?.advancedCards]);
 
   useEffect(() => {
-    if (envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled') {
+    if (paypal?.advancedCards) {
       if (!loadedHostedFields) {
         initHostedFields();
       }
     }
-  }, [initHostedFields, loadedHostedFields]);
+  }, [initHostedFields, loadedHostedFields, paypal?.advancedCards]);
 
   const handleCardHolderNameField = (event: ChangeEvent<HTMLInputElement>) => {
     setCardHolderNameFieldValue(event.target.value);
@@ -289,7 +286,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
                   style={{ shape: 'pill' }}
                 />
               </Box>  
-              { envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' &&
+              { paypal?.advancedCards &&
                 <>
                   <Divider
                     sx={{
@@ -314,7 +311,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
                           placeholder=""
                           value={cardHolderNameFieldValue}
                           onChange={handleCardHolderNameField}
-                          disabled={envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS !== 'enabled'}
+                          disabled={!paypal.advancedCards}
                         />
                       </Box>
                     </Grid>

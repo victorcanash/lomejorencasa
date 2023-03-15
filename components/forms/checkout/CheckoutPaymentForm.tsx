@@ -19,11 +19,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
     setTransactionError 
   } = props;
 
-  const { 
-    paypalMerchantId, 
-    paypalClientId, 
-    paypalToken,
-  } = useAuthContext();
+  const { braintreeToken, paypal } = useAuthContext();
 
   const [rememberFieldValue, setRememberFieldValue] = useState(true);
 
@@ -38,7 +34,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
 
   return (
     <>
-      { (!paypalMerchantId || !paypalClientId || !paypalToken) ?
+      { braintreeToken &&
         <CheckoutBraintreeForm
           next={next}
           handleBack={handleBack}
@@ -47,7 +43,8 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
           remember={rememberFieldValue}
           handleRemember={handleRememberField}
         />
-        :
+      }
+      { (!braintreeToken && paypal) &&
         <CheckoutPaypalForm
           next={next}
           handleBack={handleBack}

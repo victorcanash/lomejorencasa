@@ -2,7 +2,6 @@ import * as Yup from 'yup';
 import { useIntl } from 'react-intl';
 import dayjs from 'dayjs';
 
-import envConfig from '@core/config/env.config';
 import { FormFieldTypes } from '@core/constants/forms';
 import { CountryOptions } from '@core/constants/addresses';
 import { ContactTypes } from '@core/constants/contact';
@@ -11,8 +10,12 @@ import { getCountryName } from '@core/utils/addresses';
 import { subtractYears } from '@core/utils/dates';
 import { getContactTypeName } from '@core/utils/contact';
 
+import { useAuthContext } from '@lib/contexts/AuthContext';
+
 const useForms = () => {
   const intl = useIntl();
+
+  const { braintreeToken, paypal } = useAuthContext();
 
   const initForms = () => {
     Yup.setLocale({
@@ -359,7 +362,7 @@ const useForms = () => {
 
   const checkoutAddressesFormValidation = Yup.object().shape({
     shipping: Yup.object().shape(addressFieldsValidation),
-    billing: envConfig.NEXT_PUBLIC_PAYPAL_ADVANCED_CARDS === 'enabled' ? 
+    billing: paypal?.advancedCards && !braintreeToken ? 
       Yup.object().when('sameAsShipping', {
         is: (sameAsShipping: boolean) => !sameAsShipping,
         then: Yup.object().shape(addressFieldsValidation),
