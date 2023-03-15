@@ -17,7 +17,6 @@ const Home: NextPage = () => {
           titleId: 'home.metas.title',
           descriptionId: 'home.metas.description',
         }}
-        googleVerification={true}
       />
 
       <EverfreshHome />
