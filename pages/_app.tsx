@@ -4,6 +4,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-cards';
 import 'styles/globals.css';
 
+import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 // import { useRouter } from 'next/router';
@@ -12,6 +13,7 @@ import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { SnackbarProvider } from 'notistack';
+import TagManager from 'react-gtm-module';
 // import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { ThemeProvider } from '@mui/material/styles';
@@ -52,6 +54,10 @@ function MyApp(props: MyAppProps) {
 
   const title = messages[locale]['app.metas.title'];
   const description = messages[locale]['app.metas.description'];
+
+  useEffect(() => {
+    TagManager.initialize({ gtmId: 'GTM-N5TBRNT' });
+  }, []);
 
   return (
     <>
