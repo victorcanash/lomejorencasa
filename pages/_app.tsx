@@ -13,8 +13,9 @@ import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { SnackbarProvider } from 'notistack';
-import TagManager from 'react-gtm-module';
 // import { GoogleOAuthProvider } from '@react-oauth/google';
+import GoogleAnalythics from '@bradgarropy/next-google-analytics';
+import TagManager from 'react-gtm-module';
 
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -56,7 +57,9 @@ function MyApp(props: MyAppProps) {
   const description = messages[locale]['app.metas.description'];
 
   useEffect(() => {
-    TagManager.initialize({ gtmId: 'GTM-N5TBRNT' });
+    TagManager.initialize({ 
+      gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
+    });
   }, []);
 
   return (
@@ -79,11 +82,16 @@ function MyApp(props: MyAppProps) {
           siteName: title,
         }}
       />
+
       <Head>
-        <meta name="keywords" content="ecommerce, shop, nextjs, laenvasadora, la envasadora, envasadora, al vacío" />
+        <meta name="keywords" content="ecommerce, shop, laenvasadora, la envasadora, envasadora, al vacío" />
         <meta name="author" content={title} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
+
+      <GoogleAnalythics
+        measurementId={envConfig.NEXT_PUBLIC_GOOGLE_AM_ID}
+      />
 
       <IntlProvider locale={locale} messages={messages[locale]}>
         <CacheProvider value={emotionCache}>
