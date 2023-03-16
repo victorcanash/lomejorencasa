@@ -13,7 +13,6 @@ import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { SnackbarProvider } from 'notistack';
-// import { GoogleOAuthProvider } from '@react-oauth/google';
 import GoogleAnalythics from '@bradgarropy/next-google-analytics';
 import TagManager from 'react-gtm-module';
 
@@ -96,8 +95,6 @@ function MyApp(props: MyAppProps) {
       <IntlProvider locale={locale} messages={messages[locale]}>
         <CacheProvider value={emotionCache}>
           <SnackbarProvider maxSnack={3} autoHideDuration={5000}>     
-            {/*<GoogleOAuthProvider clientId={envConfig.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>*/}
-            
               <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
@@ -121,7 +118,6 @@ function MyApp(props: MyAppProps) {
                 </LocalizationProvider>    
               </ThemeProvider>
 
-            {/*</GoogleOAuthProvider>*/}   
           </SnackbarProvider>
         </CacheProvider>
       </IntlProvider>
