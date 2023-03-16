@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { PaymentModes } from '@core/constants/app';
 import { Protections } from '@core/constants/auth';
 import type { PaypalCredentials } from '@core/types/paypal';
+import type { GoogleCredentials } from '@core/types/google';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutPayment } from '@core/types/checkout';
 
@@ -24,8 +25,8 @@ type ContextType = {
   setBraintreeToken: Dispatch<SetStateAction<string | undefined>>,
   paypal?: PaypalCredentials,
   setPaypal: Dispatch<SetStateAction<PaypalCredentials | undefined>>,
-  googleOAuthId: string,
-  setGoogleOAuthId: Dispatch<SetStateAction<string>>,
+  google: GoogleCredentials,
+  setGoogle: Dispatch<SetStateAction<GoogleCredentials>>,
   user: User | GuestUser,
   setUser: Dispatch<SetStateAction<User | GuestUser>>,
   paymentMode: PaymentModes,
@@ -52,8 +53,8 @@ export const AuthContext = createContext<ContextType>({
   setBraintreeToken: () => {},
   paypal: undefined,
   setPaypal: () => {},
-  googleOAuthId: '',
-  setGoogleOAuthId: () => {},
+  google: {} as GoogleCredentials,
+  setGoogle: () => {},
   user: {} as GuestUser,
   setUser: () => {},
   paymentMode: PaymentModes.braintree,
@@ -88,12 +89,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState('');
   const [braintreeToken, setBraintreeToken] = useState<string | undefined>(undefined);
   const [paypal, setPaypal] = useState<PaypalCredentials | undefined>(undefined);
-  const [googleOAuthId, setGoogleOAuthId] = useState<string>('');
-  const [user, setUser] = useState<User | GuestUser>({});
+  const [google, setGoogle] = useState<GoogleCredentials>({} as GoogleCredentials);
+  const [user, setUser] = useState<User | GuestUser>({} as GuestUser);
   const [paymentMode, setPaymentMode] = useState(PaymentModes.braintree);
   const [currency, setCurrency] = useState('');
   const [confirmTokenExpiry, setConfirmTokenExpiry] = useState('');
-  const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment>({});
+  const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment>({} as CheckoutPayment);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
   const removeUser = () => {
@@ -173,8 +174,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setBraintreeToken,
         paypal,
         setPaypal,
-        googleOAuthId,
-        setGoogleOAuthId,
+        google,
+        setGoogle,
         user,
         setUser,
         paymentMode,

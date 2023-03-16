@@ -8,6 +8,7 @@ import type { Product, ProductCategory, ProductPack } from '@core/types/products
 import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
 import type { PaypalCredentials } from '@core/types/paypal';
+import type { GoogleCredentials } from '@core/types/google';
 import { init } from '@core/utils/auth';
 
 import { allCategoryIds, allProductIds, allPackIds } from '@lib/constants/products';
@@ -31,7 +32,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     setConfirmTokenExpiry,
     setBraintreeToken,
     setPaypal,
-    setGoogleOAuthId,
+    setGoogle,
   } = useAuthContext();
 
   const intl = useIntl();
@@ -61,7 +62,7 @@ const useApp = (pageType: PageTypes | undefined) => {
             confirmTokenExpiry: string,
             braintreeToken?: string,
             paypal?: PaypalCredentials,
-            googleOAuthId: string,
+            google: GoogleCredentials,
           }
         ) => {
           setProductCategories(response.productCategories);
@@ -76,7 +77,7 @@ const useApp = (pageType: PageTypes | undefined) => {
           setConfirmTokenExpiry(response.confirmTokenExpiry);
           setBraintreeToken(response.braintreeToken);
           setPaypal(response.paypal);
-          setGoogleOAuthId(response.googleOAuthId);
+          setGoogle(response.google);
           setInitialized(true);
         }).catch(async (error: Error) => {
           throw error;
@@ -84,7 +85,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setConfirmTokenExpiry, setCurrency, setGoogleOAuthId, setInitialized, setPaymentMode, setPaypal, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setConfirmTokenExpiry, setCurrency, setGoogle, setInitialized, setPaymentMode, setPaypal, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {

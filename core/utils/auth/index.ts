@@ -9,6 +9,7 @@ import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
 import type { Page } from '@core/types/navigation';
 import type { PaypalCredentials } from '@core/types/paypal';
+import type { GoogleCredentials } from '@core/types/google';
 import type { User } from '@core/types/user';
 import type { 
   AuthLogin, 
@@ -36,7 +37,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     confirmTokenExpiry: string,
     braintreeToken?: string,
     paypal?: PaypalCredentials,
-    googleOAuthId: string,
+    google: GoogleCredentials,
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
@@ -44,6 +45,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
       },
+      timeout: 20000,
     } as AxiosRequestConfig : undefined;
     axios.post('/auth/init', { 
       categoryIds, 
@@ -52,19 +54,16 @@ export const init = async (currentLocale: string, categoryIds: number[], product
       guestCart 
     }, options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED && 
-            response.data?.categories && 
-            response.data?.products &&
-            response.data?.packs &&
-            response.data?.paymentMode &&
-            response.data?.currency &&
-            response.data?.confirmTokenExpiry &&
+        if (
+            response.status === StatusCodes.CREATED && 
+            response.data?.categories && response.data?.products && response.data?.packs &&
+            response.data?.paymentMode && response.data?.currency && response.data?.confirmTokenExpiry &&
             (
               response.data?.braintreeToken || (
                 response.data?.paypal?.merchantId && response.data?.paypal?.clientId && response.data?.paypal?.token
               )
             ) &&
-            response.data?.googleOAuthId
+            response.data?.google?.oauthId && response.data?.google?.oauthRedirect
           ) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
@@ -97,7 +96,10 @@ export const init = async (currentLocale: string, categoryIds: number[], product
               token: response.data.paypal.token,
               advancedCards: response.data.paypal.advancedCards,
             } : undefined,
-            googleOAuthId: response.data.googleOAuthId,
+            google: {
+              oauthId: response.data.google.oauthId,
+              oauthRedirect: response.data.google.oauthRedirect,
+            },
           });
         } else {
           throw new Error('Something went wrong');
