@@ -57,7 +57,7 @@ const HomeBanner = () => {
           position: 'absolute',
           height: '100%',
           width: {
-            xs: '75vw',
+            xs: '85vw',
             sm_md: '50vw'
           },
           top: {
@@ -124,7 +124,7 @@ const HomeBanner = () => {
             xs: 'inline-block',
             sm_md: 'block',
           },
-          width: '1002px',
+          width: '1010px',
           m: 'auto',
         }}
       >
