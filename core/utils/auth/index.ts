@@ -61,7 +61,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             response.data?.confirmTokenExpiry &&
             (
               response.data?.braintreeToken || (
-                response.data?.paypal?.merchantId && response.data?.paypal?.paypalClientId && response.data?.paypal?.paypalToken
+                response.data?.paypal?.merchantId && response.data?.paypal?.clientId && response.data?.paypal?.token
               )
             ) &&
             response.data?.googleOAuthId
@@ -92,10 +92,10 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             confirmTokenExpiry: response.data.confirmTokenExpiry,
             braintreeToken: response.data.braintreeToken,
             paypal: !response.data.braintreeToken ? {
-              merchantId: response.data.paypalMerchantId,
-              clientId: response.data.paypalClientId,
-              token: response.data.paypalToken,
-              advancedCards: response.data.paypalAdvancedCards,
+              merchantId: response.data.paypal.merchantId,
+              clientId: response.data.paypal.clientId,
+              token: response.data.paypal.token,
+              advancedCards: response.data.paypal.advancedCards,
             } : undefined,
             googleOAuthId: response.data.googleOAuthId,
           });
