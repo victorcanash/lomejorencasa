@@ -389,43 +389,23 @@ export const themeCustomElements: ThemeCustomElements = {
       },
     },
     banner: {
-      xl: {
+      default: {
         text: {
           color: {
             default: colors.text.white,
           },
           font: {
-            default: typographies.homeBanner.xl,
+            default: typographies.homeBanner.default,
           },
         }, 
       },
-      lg: {
+      small: {
         text: {
           color: {
             default: colors.text.white,
           },
           font: {
-            default: typographies.homeBanner.lg,
-          },
-        }, 
-      },
-      md: {
-        text: {
-          color: {
-            default: colors.text.white,
-          },
-          font: {
-            default: typographies.homeBanner.md,
-          },
-        }, 
-      },
-      sm: {
-        text: {
-          color: {
-            default: colors.text.white,
-          },
-          font: {
-            default: typographies.homeBanner.sm,
+            default: typographies.homeBanner.small,
           },
         }, 
       },

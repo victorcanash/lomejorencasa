@@ -19,19 +19,19 @@ import MultimediaContainer from '@components/ui/MultimediaContainer';
 const HomeBanner = () => {
   const { getProductBannerImgsUrl } = useProductsContext();
 
-  const isXsBreakpoint = useMediaQuery('(max-width:500px)');
   const isMdBreakpoint = useMediaQuery('(max-width:600px)');
-  const isLgBreakpoint = useMediaQuery('(max-width:750px)');
+
+  const styleXs = {
+    containerWidth: '2103px',
+    containerLeft: -673,
+    imgSeparatorWidth: '95vw',
+  } 
 
   const getSxContent = () => {
-    if (isXsBreakpoint) {
-      return convertElementToSx(themeCustomElements.home.banner.sm);
-    } else if (isMdBreakpoint) {
-      return convertElementToSx(themeCustomElements.home.banner.md);
-    } else if (isLgBreakpoint) {
-      return convertElementToSx(themeCustomElements.home.banner.lg);
+    if (isMdBreakpoint) {
+      return convertElementToSx(themeCustomElements.home.banner.small);
     }
-    return convertElementToSx(themeCustomElements.home.banner.xl);
+    return convertElementToSx(themeCustomElements.home.banner.default);
   };
 
   const getContent = (index: number) => {
@@ -48,7 +48,6 @@ const HomeBanner = () => {
     return (
       <Grid 
         container
-        rowSpacing={2}
         direction="column"
         wrap="nowrap"
         justifyContent="center"
@@ -58,13 +57,20 @@ const HomeBanner = () => {
           position: 'absolute',
           height: '100%',
           width: {
-            xs: '75%',
-            sm: '50%'
+            xs: '75vw',
+            sm_md: '50vw'
           },
-          top: '0px',
+          top: {
+            xs: '40px',
+            sm: '0px',
+          },
+          left: {
+            xs: `calc(${-styleXs.containerLeft}px - ${styleXs.imgSeparatorWidth})`,
+            sm_md: '0px',
+          },
         }}
       >
-        <Grid item>
+        <Grid item mb={2}>
           <Typography 
             component="div"
             align={text.textAlign}
@@ -87,34 +93,66 @@ const HomeBanner = () => {
   };
 
   return ( 
-    <Box
-      maxWidth="md_lg"
-      m="auto"
+    <Box 
+      sx={{
+        position: 'relative',
+        width: {
+          xs: styleXs.containerWidth,
+          sm_md: '100%',
+        },
+        left: {
+          xs: `${styleXs.containerLeft}px`,
+          sm_md: '0px',
+        },
+      }}
     >
-      <Swiper 
-        modules={[Autoplay]}
-        speed={1000} 
-        loop
-        centeredSlides
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
+      <Box 
+        sx={{
+          display: {
+            xs: 'inline-block',
+            sm_md: 'hidden',
+          },
+          width: {
+            xs: styleXs.imgSeparatorWidth,
+            sm_md: '0px',
+          },
+        }}
+      />
+      <Box
+        sx={{
+          display: {
+            xs: 'inline-block',
+            sm_md: 'block',
+          },
+          width: '1002px',
+          m: 'auto',
         }}
       >
-        { getProductBannerImgsUrl().map((src, index) => (
-          <SwiperSlide key={index}>
-            <MultimediaContainer
-              type="banner"
-              source={{ 
-                src,
-                alt: 'Everfresh banner images',
-                priority: true,
-              }}
-            />
-            { getContent(index) }
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        <Swiper 
+          modules={[Autoplay]}
+          speed={1000} 
+          //loop
+          centeredSlides
+          /*autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+          }}*/
+        >
+          { getProductBannerImgsUrl().map((src, index) => (
+            <SwiperSlide key={index}>
+              <MultimediaContainer
+                type="banner"
+                source={{ 
+                  src,
+                  alt: 'Everfresh banner images',
+                  priority: true,
+                }}
+              />
+              { getContent(index) }  
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </Box>
     </Box>
   );
 };

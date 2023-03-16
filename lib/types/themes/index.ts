@@ -85,10 +85,8 @@ export type ThemeCustomElements = {
       h4: ThemeElement,
     },
     banner: {
-      xl: ThemeElement,
-      lg: ThemeElement,
-      md: ThemeElement,
-      sm: ThemeElement,
+      default: ThemeElement,
+      small: ThemeElement,
     },
     packingMachine: {
       card: {
