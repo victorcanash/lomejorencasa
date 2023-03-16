@@ -56,10 +56,7 @@ const HomeBanner = () => {
         sx={{
           position: 'absolute',
           height: '100%',
-          width: {
-            xs: '85vw',
-            sm_md: '50vw'
-          },
+          width: '100vw',
           top: {
             xs: '40px',
             sm: '0px',
@@ -106,7 +103,7 @@ const HomeBanner = () => {
         },
       }}
     >
-      <Box 
+      <Box
         sx={{
           display: {
             xs: 'inline-block',
