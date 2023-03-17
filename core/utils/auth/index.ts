@@ -63,7 +63,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
                 response.data?.paypal?.merchantId && response.data?.paypal?.clientId && response.data?.paypal?.token
               )
             ) &&
-            response.data?.google?.oauthId && response.data?.google?.oauthRedirect
+            response.data?.google?.oauthId
           ) {
           if (response.data.user) {
             if (response.data.user.lockedOut || !response.data.user.isActivated) {
@@ -98,7 +98,6 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             } : undefined,
             google: {
               oauthId: response.data.google.oauthId,
-              oauthRedirect: response.data.google.oauthRedirect,
             },
           });
         } else {
