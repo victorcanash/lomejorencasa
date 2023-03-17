@@ -13,7 +13,8 @@ import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
 import { 
   registerUser, 
-  loginUser, 
+  loginUser,
+  loginUserGoogle,
   logoutUser, 
   updateUserEmail,
   resetUserPsw,
@@ -74,29 +75,23 @@ const useAuth = () => {
     setLoading(false);
   };
 
-  const login = async (authLogin: AuthLogin, onFailByActivation?: (email: string) => void) => {
+  const login = async (authLogin: AuthLogin, onFailByActivation: (email: string) => void) => {
     setLoading(true);
     loginUser(authLogin, isLogged() ? undefined : cart)
       .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
         onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
       }).catch((error: Error) => {
-        let errorMsg = error.message;
-        if (errorMsg.includes('activate')) {
-          errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
-          if (onFailByActivation) {
-            onFailByActivation(authLogin.email);
-          }
-        } else if (errorMsg.includes('email')) {
-          errorMsg = intl.formatMessage({ id: 'login.errors.email' });
-        } else if (errorMsg.includes('password')) {
-          errorMsg = intl.formatMessage({ id: 'login.errors.password' });
-        } else if (errorMsg.includes('locked out')) {
-          errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
-        } else {
-          errorMsg = intl.formatMessage({ id: 'app.errors.default' });
-        }
-        setErrorMsg(errorMsg);
-        setLoading(false);
+        onLoginError(error, onFailByActivation, authLogin.email);
+      });
+  };
+
+  const loginGoogle = async (code: string) => {
+    setLoading(true);
+    loginUserGoogle(code, isLogged() ? undefined : cart)
+      .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
+        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
+      }).catch((error: Error) => {
+        onLoginError(error);
       });
   };
 
@@ -110,6 +105,26 @@ const useAuth = () => {
     } else {
       router.push(pages.home.path);
     }
+  };
+
+  const onLoginError = (error: Error, onFailByActivation?: (email: string) => void, authEmail?: string) => {
+    let errorMsg = error.message;
+    if (errorMsg.includes('activate')) {
+      errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
+      if (onFailByActivation) {
+        onFailByActivation(authEmail || '');
+      }
+    } else if (errorMsg.includes('email')) {
+      errorMsg = intl.formatMessage({ id: 'login.errors.email' });
+    } else if (errorMsg.includes('password')) {
+      errorMsg = intl.formatMessage({ id: 'login.errors.password' });
+    } else if (errorMsg.includes('locked out')) {
+      errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
+    } else {
+      errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+    }
+    setErrorMsg(errorMsg);
+    setLoading(false);
   };
 
   const logout = async () => {
@@ -250,7 +265,8 @@ const useAuth = () => {
 
   return {
     register,
-    login, 
+    login,
+    loginGoogle,
     logout,
     updateEmail,
     resetPsw,

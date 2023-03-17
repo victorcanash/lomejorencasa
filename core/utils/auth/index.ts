@@ -150,9 +150,18 @@ export const activateUser = async (activationToken: string) => {
 };
 
 export const loginUser = async (authLogin: AuthLogin, cart?: Cart) => {
+  return login('/auth/login', authLogin, authLogin.remember, cart);
+};
+
+export const loginUserGoogle = async (code: string, cart?: Cart) => {
+  return login('/auth/login', { code }, true, cart);
+};
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const login = async (url: string, body: any, remember: boolean, cart?: Cart) => {
   const guestCart = cart && cart.items.length > 0 ? convertCartToGuestCart(cart) : undefined;
   return new Promise<{token: string, user: User, braintreeToken: string, cart: Cart}>((resolve, reject) => {
-    axios.post('/auth/login', { ...authLogin, guestCart})
+    axios.post(url, { ...body, guestCart })
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data?.user) {
           if (response.data.token){
@@ -160,7 +169,7 @@ export const loginUser = async (authLogin: AuthLogin, cart?: Cart) => {
             if (prevToken !== '') {
               await logoutUser(prevToken);
             }
-            if (authLogin.remember) {
+            if (remember) {
               await setStorageItem(Storages.local, JWTTokenKey, response.data.token);
             }
             await removeStorageItem(Storages.local, GuestCartKey);
