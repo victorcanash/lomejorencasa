@@ -5,9 +5,11 @@ import type { AuthRegister } from '@core/types/auth';
 
 import { pages } from '@lib/constants/navigation';
 import type { FormButtonsNormal } from '@lib/types/forms';
+import { useAppContext } from '@lib/contexts/AppContext';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
+import GoogleLogin from '@components/google/GoogleLogin';
 
 type RegisterFormProps = {
   onSuccess: (email: string) => void,
@@ -16,11 +18,17 @@ type RegisterFormProps = {
 const RegisterForm = (props: RegisterFormProps) => {
   const { onSuccess } = props;
 
+  const { initialized } = useAppContext();
+
   const { registerFormValidation, userFieldsInitValues } = useForms();
-  const { register, errorMsg } = useAuth();
+  const { register, loginGoogle, errorMsg } = useAuth();
 
   const handleSubmit = async (values: AuthRegister) => {
     register(values, onSuccess);
+  };
+
+  const onSuccessAuthLoginGoogle = (code: string) => {
+    loginGoogle(code);
   };
 
   return (
@@ -46,7 +54,6 @@ const RegisterForm = (props: RegisterFormProps) => {
               name: 'firstName',
               type: FormFieldTypes.text,
               required: true,
-              autoFocus: true,
             },
             {
               name: 'lastName',
@@ -78,6 +85,11 @@ const RegisterForm = (props: RegisterFormProps) => {
               type: FormFieldTypes.checkbox,
             },
           ],
+          extraElements: initialized ? (
+            <GoogleLogin
+              onSuccessAuth={onSuccessAuthLoginGoogle}
+            />
+          ) : undefined,
         }
       ]}
       formButtons={{

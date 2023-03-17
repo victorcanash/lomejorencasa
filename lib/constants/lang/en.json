@@ -517,6 +517,7 @@
   "forms.login.successBtn": "Sign in",
   "forms.login.forgotLink": "Forgot password?",
   "forms.login.registerLink": "Don't have an account? Sign up",
+  "forms.login.googleBtn": "Inicia sesión con Google",
 
   "forms.forgotPassword.title": "Forgotten password",
   "forms.forgotPassword.description": "Introduce your email address and we will send you an email with a link to set your new password.",
