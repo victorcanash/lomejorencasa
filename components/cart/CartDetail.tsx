@@ -6,8 +6,12 @@ import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import { firstBuyDiscount } from '@core/constants/payments';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
+import type { User } from '@core/types/user';
+import { roundTwoDecimals } from '@core/utils/numbers';
 
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import CartItemDetail from '@components/cart/CartItemDetail';
 
 type CartDetailProps = {
@@ -25,7 +29,18 @@ const CartDetail = (props: CartDetailProps) => {
     showEmptyItems
   } = props;
 
+  const { user } = useAuthContext();
+
   const intl = useIntl();
+
+  const getRealTotalPrice = () => {
+    let realPrice = totalPrice;
+    if ((user as User)?.firstName && !(user as User).orderExists) {
+      const discount = (firstBuyDiscount / 100) * realPrice
+      realPrice = roundTwoDecimals(realPrice - discount)
+    }
+    return realPrice;
+  }
 
   return (
     <>
@@ -51,7 +66,7 @@ const CartDetail = (props: CartDetailProps) => {
         variant='h1'
         align='right'
       >
-        {`${intl.formatMessage({ id: 'cart.total' })}: ${totalPrice.toFixed(2)} €`}
+        {`${intl.formatMessage({ id: 'cart.total' })}: ${getRealTotalPrice().toFixed(2)} €`}
       </Typography>
     </>
   );

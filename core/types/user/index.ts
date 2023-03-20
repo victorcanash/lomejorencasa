@@ -12,6 +12,7 @@ export type User = {
   getEmails: boolean,
   shipping?: UserAddress,
   billing?: UserAddress,
+  orderExists?: boolean,
 };
 
 export type UserAddress = {
