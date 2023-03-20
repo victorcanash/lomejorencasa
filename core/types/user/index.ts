@@ -1,12 +1,14 @@
+import { Providers } from '@core/constants/auth';
 import { AddressTypes, CountryOptions } from '@core/constants/addresses'
 import { ContactTypes } from '@core/constants/contact';
 
 export type User = {
   id: number,
   email: string,
+  authProvider?: Providers,
   firstName: string,
   lastName: string,
-  birthday: Date,
+  birthday?: Date,
   getEmails: boolean,
   shipping?: UserAddress,
   billing?: UserAddress,

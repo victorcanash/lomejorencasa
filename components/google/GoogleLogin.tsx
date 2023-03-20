@@ -32,7 +32,6 @@ const GoogleLogin = (props: GoogleLoginProps) => {
   });
 
   const onSuccessAuth = (accessToken: string) => {
-    console.log(accessToken)
     login(accessToken);
   };
 

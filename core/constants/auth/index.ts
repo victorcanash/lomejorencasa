@@ -5,3 +5,7 @@ export enum Protections {
   user = 'user',
   admin = 'admin',
 };
+
+export enum Providers {
+  google = 'google',
+};
