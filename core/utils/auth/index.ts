@@ -46,7 +46,9 @@ export const init = async (currentLocale: string, categoryIds: number[], product
         ...getLanguageHeaders(currentLocale),
       },
       timeout: 20000,
-    } as AxiosRequestConfig : undefined;
+    } as AxiosRequestConfig : {
+      timeout: 20000,
+    };
     axios.post('/auth/init', { 
       categoryIds, 
       productIds, 
@@ -153,8 +155,8 @@ export const loginUser = async (authLogin: AuthLogin, cart?: Cart) => {
   return login('/auth/login', authLogin, authLogin.remember, cart);
 };
 
-export const loginUserGoogle = async (code: string, cart?: Cart) => {
-  return login('/auth/login', { code }, true, cart);
+export const loginUserGoogle = async (accessToken: string, cart?: Cart) => {
+  return login('/auth/login/google', { accessToken }, true, cart);
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -178,7 +180,7 @@ const login = async (url: string, body: any, remember: boolean, cart?: Cart) => 
               user: response.data.user,
               braintreeToken: response.data.braintreeToken,
               cart: response.data.user.cart,
-            });         
+            });     
           } else {
             throw new Error('Error generating token');
           }
