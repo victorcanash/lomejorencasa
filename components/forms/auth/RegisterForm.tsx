@@ -1,3 +1,8 @@
+import { FormattedMessage } from 'react-intl';
+
+import Typography from '@mui/material/Typography';
+import Divider from '@mui/material/Divider';
+import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { FormFieldTypes } from '@core/constants/forms';
@@ -27,85 +32,103 @@ const RegisterForm = (props: RegisterFormProps) => {
     register(values, onSuccess);
   };
 
+  const maxWidth = '500px';
+
   return (
-    <BaseForm 
-      initialValues={{
-        email: userFieldsInitValues.email,
-        password: userFieldsInitValues.password,
-        confirm: userFieldsInitValues.confirm,
-        firstName: userFieldsInitValues.firstName,
-        lastName: userFieldsInitValues.lastName,
-        birthday: userFieldsInitValues.birthday,
-        getEmails: userFieldsInitValues.getEmails,
-      } as AuthRegister}
-      validationSchema={registerFormValidation}
-      formFieldGroups={[
-        {
-          avatarIcon: <LockOutlinedIcon />,
-          titleTxt: {
-            id: 'forms.register.title',
+    <>
+      <BaseForm
+        maxWidth={maxWidth}
+        initialValues={{
+          email: userFieldsInitValues.email,
+          password: userFieldsInitValues.password,
+          confirm: userFieldsInitValues.confirm,
+          firstName: userFieldsInitValues.firstName,
+          lastName: userFieldsInitValues.lastName,
+          birthday: userFieldsInitValues.birthday,
+          getEmails: userFieldsInitValues.getEmails,
+        } as AuthRegister}
+        validationSchema={registerFormValidation}
+        formFieldGroups={[
+          {
+            avatarIcon: <LockOutlinedIcon />,
+            titleTxt: {
+              id: 'forms.register.title',
+            },
+            formFields: [
+              {
+                name: 'firstName',
+                type: FormFieldTypes.text,
+                required: true,
+              },
+              {
+                name: 'lastName',
+                type: FormFieldTypes.text,
+                required: true,
+              },
+              {
+                name: 'email',
+                type: FormFieldTypes.text,
+                required: true,
+              },
+              {
+                name: 'password',
+                type: FormFieldTypes.password,
+                required: true,
+              },
+              {
+                name: 'confirm',
+                type: FormFieldTypes.password,
+                required: true,
+              },
+              {
+                name: 'birthday',
+                type: FormFieldTypes.datePicker,
+                required: true,
+              },
+              {
+                name: 'getEmails',
+                type: FormFieldTypes.checkbox,
+              },
+            ],
+          }
+        ]}
+        formButtons={{
+          submit: {
+            text: {
+              id: 'forms.register.successBtn',
+            },
+            onSubmit: handleSubmit,
           },
-          formFields: [
-            {
-              name: 'firstName',
-              type: FormFieldTypes.text,
-              required: true,
+        } as FormButtonsNormal}
+        errorMsg={errorMsg}
+        linksItems={[
+          {
+            text: {
+              id: 'forms.register.loginLink',
             },
-            {
-              name: 'lastName',
-              type: FormFieldTypes.text,
-              required: true,
-            },
-            {
-              name: 'email',
-              type: FormFieldTypes.text,
-              required: true,
-            },
-            {
-              name: 'password',
-              type: FormFieldTypes.password,
-              required: true,
-            },
-            {
-              name: 'confirm',
-              type: FormFieldTypes.password,
-              required: true,
-            },
-            {
-              name: 'birthday',
-              type: FormFieldTypes.datePicker,
-              required: true,
-            },
-            {
-              name: 'getEmails',
-              type: FormFieldTypes.checkbox,
-            },
-          ],
-          extraElements: initialized ? (
-            <GoogleLogin
-              login={loginGoogle}
-            />
-          ) : undefined,
-        }
-      ]}
-      formButtons={{
-        submit: {
-          text: {
-            id: 'forms.register.successBtn',
-          },
-          onSubmit: handleSubmit,
-        },
-      } as FormButtonsNormal}
-      errorMsg={errorMsg}
-      linksItems={[
-        {
-          text: {
-            id: 'forms.register.loginLink',
-          },
-          path: pages.login.path,
-        }
-      ]}
-    />
+            path: pages.login.path,
+          }
+        ]}
+      />
+
+      { initialized &&
+        <Box maxWidth={maxWidth}>
+          <Divider
+            sx={{
+              my: 2,
+              border: 'none',
+            }}
+          >
+            <Typography variant="body2" textAlign="center">
+              <FormattedMessage id="checkout.paymentMethod.or" />
+            </Typography>
+          </Divider>
+          <GoogleLogin
+            login={loginGoogle}
+          />
+        </Box>
+      }
+    </>
   );
 };
 

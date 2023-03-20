@@ -322,7 +322,7 @@
   "checkout.sections.payment": "Pago",
   "checkout.sections.confirm": "Confirmación",
   "checkout.paymentMethod": "Método de pago",
-  "checkout.paymentMethod.or": "o con tarjeta",
+  "checkout.paymentMethod.or": "o",
   "checkout.order": "Pedido",
   "checkout.confirmBtn": "Confirmar",
   "checkout.successes.updateAddresses": "Direcciones actualizadas",
@@ -524,7 +524,6 @@
   "forms.login.successBtn": "Iniciar sesión",
   "forms.login.forgotLink": "Contraseña olvidada?",
   "forms.login.registerLink": "No tienes una cuenta? Regístrate",
-  "forms.login.googleBtn": "Inicia sesión con Google",
 
   "forms.forgotPassword.title": "Contraseña olvidada",                            
   "forms.forgotPassword.description": "Introduce tu dirección de correo y te enviaremos un correo con un link para poner tu nueva contraseña.",
