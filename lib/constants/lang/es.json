@@ -270,7 +270,7 @@
   
   "activation.metas.title": "Activación de Cuenta",
   "activation.metas.description": "Link de activación de cuenta",
-  "activation.successes.default": "Tu cuenta está activada y puedes logearte ahora.\nPuedes cerrar esta ventana.",
+  "activation.successes.default": "Tu cuenta ahora está activada.\nPuedes cerrar esta ventana e iniciar sesión.",
   "activation.successes.email": "Correo para activar tu cuenta enviado",
   "activation.errors.default": "Algo falló, inténtalo otra vez o vuelve a enviar otro correo",
   "activation.errors.alreadyActivated": "Tu cuenta ya estaba activada",

@@ -270,7 +270,7 @@
 
   "activation.metas.title": "Account Activation",
   "activation.metas.description": "Account activation link",
-  "activation.successes.default": "Your account is activated and you can login now.\nYou can close this window.",
+  "activation.successes.default": "Your account is activated now.\nYou can close this window and login.",
   "activation.successes.email": "Sent activation email",
   "activation.errors.default": "Something went wrong, try again or resend another email",
   "activation.errors.alreadyActivated": "Your account was already activated",
