@@ -45,7 +45,7 @@ const CartDetail = (props: CartDetailProps) => {
   const getRealTotalPrice = () => {
     let realPrice = totalPrice;
     if (applyFirstBuyDiscount()) {
-      const discount = (firstBuyDiscount / 100) * realPrice;
+      const discount = parseFloat(((firstBuyDiscount / 100) * realPrice).toFixed(2))
       realPrice = roundTwoDecimals(realPrice - discount);
     }
     return realPrice;
