@@ -1,22 +1,22 @@
 import { FormattedMessage } from 'react-intl';
-import { CodeResponse, useGoogleLogin } from '@react-oauth/google';
+import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
 
 import Button from '@mui/material/Button';
 
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
 type GoogleLoginProps = {
-  onSuccessAuth: (code: string) => void,
+  login: (accessToken: string) => void,
 };
 
 const GoogleLogin = (props: GoogleLoginProps) => {
-  const { onSuccessAuth } = props;
+  const { login } = props;
 
-  const onSuccessGoogleLogin = (codeResponse: Omit<CodeResponse, "error" | "error_description" | "error_uri">) => {
-    onSuccessAuth(codeResponse.code)
+  const onSuccessGoogleLogin = (tokenResponse: Omit<TokenResponse, "error" | "error_description" | "error_uri">) => {
+    onSuccessAuth(tokenResponse.access_token);
   };
 
-  const onErrorGoogleLogin = (errorResponse: Pick<CodeResponse, "error" | "error_description" | "error_uri">) => {
+  const onErrorGoogleLogin = (errorResponse: Pick<TokenResponse, "error" | "error_description" | "error_uri">) => {
     const errorMsg = getBackendErrorMsg('SDK Google OAuth2 ERROR', errorResponse);
     logBackendError(errorMsg);
   };
@@ -24,16 +24,20 @@ const GoogleLogin = (props: GoogleLoginProps) => {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: onSuccessGoogleLogin,
     onError: onErrorGoogleLogin,
-    flow: 'auth-code',
-    ux_mode: 'popup',
+    flow: 'implicit',
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
       'https://www.googleapis.com/auth/userinfo.email',
     ].join(' '),
   });
 
+  const onSuccessAuth = (accessToken: string) => {
+    console.log(accessToken)
+    login(accessToken);
+  };
+
   return (
-    <Button onClick={handleGoogleLogin}>
+    <Button onClick={() => handleGoogleLogin()}>
       <FormattedMessage id="forms.login.googleBtn" />
     </Button>
   );

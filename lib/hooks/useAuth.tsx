@@ -85,9 +85,9 @@ const useAuth = () => {
       });
   };
 
-  const loginGoogle = async (code: string) => {
+  const loginGoogle = async (accessToken: string) => {
     setLoading(true);
-    loginUserGoogle(code, isLogged() ? undefined : cart)
+    loginUserGoogle(accessToken, isLogged() ? undefined : cart)
       .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
         onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
       }).catch((error: Error) => {
@@ -120,6 +120,12 @@ const useAuth = () => {
       errorMsg = intl.formatMessage({ id: 'login.errors.password' });
     } else if (errorMsg.includes('locked out')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
+    } else if (errorMsg.includes('provider')) {
+      if (onFailByActivation) {
+        errorMsg = intl.formatMessage({ id: 'login.errors.provider.google' });
+      } else {
+        errorMsg = intl.formatMessage({ id: 'login.errors.provider.manual' });
+      }
     } else {
       errorMsg = intl.formatMessage({ id: 'app.errors.default' });
     }

@@ -257,7 +257,9 @@
   "login.errors.email": "Correo incorrecto",
   "login.errors.password": "Contraseña incorrecta",
   "login.errors.activation": "Tienes que activar tu cuenta. Te hemos enviado un correo con el link para verificar tu cuenta antes de logearte.",
-  "login.errors.lockedOut": "Tu cuenta está bloqueada", 
+  "login.errors.lockedOut": "Tu cuenta está bloqueada",
+  "login.errors.provider.google": "Esta cuenta fue creada a través de Google, inicia sesión dándole click al botón de Google",
+  "login.errors.provider.manual": "Esta cuenta no fue creada a través de Google, inicia sesión de forma manual",
   
   "register.metas.title": "Registrarse",
   "register.metas.description": "Página de registrarse",

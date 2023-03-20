@@ -257,7 +257,9 @@
   "login.errors.email": "Invalid email",
   "login.errors.password": "Invalid password",
   "login.errors.activation": "You have to activate your account. We have sent you an email with a link to verify your account before you can login.",
-  "login.errors.lockedOut": "You are locked out", 
+  "login.errors.lockedOut": "You are locked out",
+  "login.errors.provider.google": "Esta cuenta fue creada a través de Google, inicia sesión dándole click al botón de Google",
+  "login.errors.provider.manual": "Esta cuenta no fue creada a través de Google, inicia sesión de forma manual",
 
   "register.metas.title": "Register",
   "register.metas.description": "Register page",
