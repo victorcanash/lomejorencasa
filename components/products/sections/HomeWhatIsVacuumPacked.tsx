@@ -9,7 +9,7 @@ import Title from '@components/ui/Title';
 const HomeWhatIsVacuumPacked = () => {
 
   return (
-    <Container>
+    <Container id="whatIsVacuumPacked">
       <Box
         sx={{
           maxWidth: '600px',

@@ -84,9 +84,13 @@ const HomeConservation = () => {
     ),
   ];
 
+  const tableCellSx = {
+    p: 1,
+  };
+
   return (
     <>
-      <Container>
+      <Container id="conservation">
         <Box
           maxWidth="sm"
           m="auto"
@@ -108,22 +112,22 @@ const HomeConservation = () => {
             <Table aria-label="time-conservation-table">
               <TableHead>
                 <TableRow>
-                  <TableCell>
+                  <TableCell sx={tableCellSx}>
                     <FormattedMessage 
                       id={'home.conservation.table.head.food'} 
                     />
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell sx={tableCellSx}>
                     <FormattedMessage 
                       id={'home.conservation.table.head.noVacuum'} 
                     />
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell sx={tableCellSx}>
                     <FormattedMessage 
                       id={'home.conservation.table.head.vacuumFridge'} 
                     />
                   </TableCell>
-                  <TableCell align="right">
+                  <TableCell sx={tableCellSx}>
                     <FormattedMessage 
                       id={'home.conservation.table.head.vacuumFrozen'} 
                     />
@@ -133,12 +137,12 @@ const HomeConservation = () => {
               <TableBody>
                 {rows.map((row) => (
                   <TableRow key={row.food}>
-                    <TableCell component="th" scope="row">
+                    <TableCell component="th" scope="row" sx={tableCellSx}>
                       {row.food}
                     </TableCell>
-                    <TableCell align="right">{row.noVacuum}</TableCell>
-                    <TableCell align="right">{row.vacuumFridge}</TableCell>
-                    <TableCell align="right">{row.vacuumFrozen}</TableCell>
+                    <TableCell sx={tableCellSx}>{row.noVacuum}</TableCell>
+                    <TableCell sx={tableCellSx}>{row.vacuumFridge}</TableCell>
+                    <TableCell sx={tableCellSx}>{row.vacuumFrozen}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

@@ -26,7 +26,7 @@ const EverfreshDetail = () => {
               text: {
                 id: 'everfresh.videoComment.1.button',
               },
-              path: pages.home.path,
+              path: `${pages.home.path}#use`,
             }}
             source={{ 
               type: 'video',

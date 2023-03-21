@@ -84,7 +84,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
   };
 
   return (
-    <Container>
+    <Container id="characteristics">
       <Grid
         container
         spacing={1}

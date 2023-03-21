@@ -18,7 +18,7 @@ const HomeWhyVacuumPacked = () => {
 
   return (
     <>
-      <Container>
+      <Container id="whyVacuumPacked">
         <Box
           maxWidth="sm"
           m="auto"

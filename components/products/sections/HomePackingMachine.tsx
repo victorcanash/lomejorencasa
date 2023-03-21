@@ -27,7 +27,7 @@ const HomePackingMachine = () => {
 
   return (
     <>
-      <Container>
+      <Container id="packingMachine">
         <Box
           maxWidth="sm"
           m="auto"

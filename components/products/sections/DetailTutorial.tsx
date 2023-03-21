@@ -26,7 +26,7 @@ const DetailTutorial = (props: DetailTutorialProps) => {
 
   return (
     <>
-      <Container>
+      <Container id="tutorial">
         <Box 
           maxWidth="sm"
           m="auto"

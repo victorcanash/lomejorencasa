@@ -589,6 +589,11 @@ export const themeCustomElements: ThemeCustomElements = {
         hover: colors.background.actionHover, 
       },
       text: {
+        font: {
+          default: {
+            textAlign: 'center',
+          },
+        },
         color: {
           default: colors.text.white,
           hover: colors.text.white,

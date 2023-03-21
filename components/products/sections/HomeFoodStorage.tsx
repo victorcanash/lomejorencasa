@@ -11,7 +11,7 @@ import food_storage from 'public/images/home/food-storage.png';
 const HomeFoodStorage = () => {
 
   return (
-    <Container>
+    <Container id="foodStorage">
       <Box
         maxWidth="sm"
         m="auto"

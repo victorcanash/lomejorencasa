@@ -9,7 +9,7 @@ import Title from '@components/ui/Title';
 const HomeIntro = () => {
 
   return (
-    <Container>
+    <Container id="intro">
       <Box
         maxWidth="sm"
         m="auto"

@@ -26,7 +26,7 @@ const HomeFaq = () => {
   };
 
   return (
-    <Container>
+    <Container id="faq">
       <Box
         maxWidth="md"
         m="auto"

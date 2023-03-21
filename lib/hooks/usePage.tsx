@@ -50,6 +50,23 @@ const usePage = (setLoaded = true) => {
     }
   }, [router.asPath, initialized, checkPage]);
 
+  useEffect(() => {
+    const path = window.location.hash;
+    if (path && path.includes('#')) {
+      setTimeout(() => {
+        const id = path.replace('#', '');
+        const element = window.document.getElementById(id);
+        if (element) {
+          const r = element.getBoundingClientRect();
+          window.top?.scroll({
+            top: scrollY + r.top,
+            behavior: 'smooth',
+          });
+        }
+      }, 600)
+    }
+  }, []);
+
   return {
     checked
   };

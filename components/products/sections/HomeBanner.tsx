@@ -79,7 +79,6 @@ const HomeBanner = () => {
         <Grid item>
           <LinkButton
             href={pages.everfresh.path}
-            id="advantages"
             sx={convertElementToSx(themeCustomElements.button.action)}
           >
             <FormattedMessage id="home.banner.buyBtn" />
@@ -128,12 +127,12 @@ const HomeBanner = () => {
         <Swiper 
           modules={[Autoplay]}
           speed={1000} 
-          //loop
+          loop
           centeredSlides
-          /*autoplay={{
+          autoplay={{
             delay: 5000,
             disableOnInteraction: false,
-          }}*/
+          }}
         >
           { getProductBannerImgsUrl().map((src, index) => (
             <SwiperSlide key={index}>

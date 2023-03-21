@@ -114,7 +114,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
 
   return (
     <>
-      <Container>
+      <Container id={type}>
         <Box
           maxWidth="sm"
           m="auto"
