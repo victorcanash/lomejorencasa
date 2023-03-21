@@ -15,8 +15,10 @@ const useLayout = (children: React.ReactNode) => {
   const [layout, setLayout] = useState<JSX.Element | undefined>(undefined);
 
   const checkLayout = useCallback(() => {
+    let foundPage = false;
     for (const [, page] of Object.entries(pages)) {
       if (page.filepath == router.pathname) {
+        foundPage = true;
         setPageType(page.type);
         if (page.type == PageTypes.link) {
           setLayout(
@@ -36,6 +38,9 @@ const useLayout = (children: React.ReactNode) => {
         break;
       }
     };
+    if (!foundPage) {
+      setPageType(PageTypes.notFound);
+    }
     setLayout(
       <WebLayout>
         { children }
