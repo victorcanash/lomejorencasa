@@ -15,6 +15,7 @@ export type Pages = {
   cookies: Page,
   legal: Page,
   conditions: Page,
+  refunds: Page,
 
   login: Page,
   register: Page,

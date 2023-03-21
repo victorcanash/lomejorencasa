@@ -124,6 +124,15 @@ export const pages: Pages = {
       enabled: true,
     },
   },
+  refunds: {
+    path: '/refunds',
+    filepath: '/refunds',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
 
   login: {
     path: '/login',
@@ -344,3 +353,7 @@ export const unloggedDrawerItems: DrawerItems[] = [
     open: false,
   },
 ];
+
+export const tiktokHref = 'https://www.tiktok.com/@laenvasadora';
+export const instagramHref = 'https://www.instagram.com/laenvasadora/';
+export const facebookHref = 'https://www.facebook.com/profile.php?id=100090179633575';
