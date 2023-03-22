@@ -43,7 +43,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     selectedInventory,
   } = useSelectInventory(
     product, 
-    getProductPacks(product).length > 0 ? getProductPacks(product)[0] : undefined
+    //getProductPacks(product).length > 0 ? getProductPacks(product)[0] : undefined
   );
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
