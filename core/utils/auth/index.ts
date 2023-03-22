@@ -68,13 +68,13 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             response.data?.google?.oauthId
           ) {
           if (response.data.user) {
-            if (response.data.user.lockedOut || !response.data.user.isActivated) {
+            if (response.data.user.lockedOut/* || !response.data.user.isActivated*/) {
               let errorMsg = '';
               if (response.data.user.lockedOut) {
                 errorMsg = getBackendErrorMsg('Get Logged User WARNING', new Error('You are locked out'));            
-              } else {
+              }/* else {
                 errorMsg = getBackendErrorMsg('Get Logged User WARNING', new Error('You need to activate your account'));
-              }
+              }*/
               logBackendError(errorMsg);
               await removeStorageItem(Storages.local, JWTTokenKey);
             }

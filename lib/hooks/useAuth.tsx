@@ -54,7 +54,7 @@ const useAuth = () => {
     setErrorMsg('');
     setLoading(true);
     registerUser(authRegister).then(() => {
-      onRegisterSuccess(authRegister.email, onSuccess);
+      onRegisterSuccess(authRegister, onSuccess);
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('Unique validation failure with the email')) {
@@ -67,21 +67,22 @@ const useAuth = () => {
     })
   };
 
-  const onRegisterSuccess = async (email: string, onSuccess?: (email: string) => void) => {
-    await sendUserActivationEmail(intl.locale, email, pages.activation);
+  const onRegisterSuccess = async (authRegister: AuthRegister, onSuccess?: (email: string) => void) => {
+    /*await sendUserActivationEmail(intl.locale, email, pages.activation);
     if (onSuccess) {
       onSuccess(email);
     }
-    setLoading(false);
+    setLoading(false);*/
+    await login({ email: authRegister.email, password: authRegister.password, remember: true})
   };
 
-  const login = async (authLogin: AuthLogin, onFailByActivation: (email: string) => void) => {
+  const login = async (authLogin: AuthLogin, /*onFailByActivation: (email: string) => void*/) => {
     setLoading(true);
     loginUser(authLogin, isLogged() ? undefined : cart)
       .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
         onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
       }).catch((error: Error) => {
-        onLoginError(error, onFailByActivation, authLogin.email);
+        onLoginError(error, /*onFailByActivation, */authLogin.email);
       });
   };
 
@@ -107,26 +108,26 @@ const useAuth = () => {
     }
   };
 
-  const onLoginError = (error: Error, onFailByActivation?: (email: string) => void, authEmail?: string) => {
+  const onLoginError = (error: Error, /*onFailByActivation?: (email: string) => void, */authEmail?: string) => {
     let errorMsg = error.message;
     if (errorMsg.includes('activate')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
-      if (onFailByActivation) {
+      /*if (onFailByActivation) {
         onFailByActivation(authEmail || '');
-      }
+      }*/
     } else if (errorMsg.includes('email')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.email' });
     } else if (errorMsg.includes('password')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.password' });
     } else if (errorMsg.includes('locked out')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
-    } else if (errorMsg.includes('provider')) {
+    } /*else if (errorMsg.includes('provider')) {
       if (onFailByActivation) {
         errorMsg = intl.formatMessage({ id: 'login.errors.provider.google' });
       } else {
         errorMsg = intl.formatMessage({ id: 'login.errors.provider.manual' });
       }
-    } else {
+    }*/ else {
       errorMsg = intl.formatMessage({ id: 'app.errors.default' });
     }
     setErrorMsg(errorMsg);
