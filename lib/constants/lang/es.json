@@ -634,7 +634,7 @@
   "dialogs.checkoutEmail.cancelBtn": "Cancelar",
 
   "dialogs.loginInfo.title": "Iniciar sesión",
-  "dialogs.loginInfo.content": "Antes de continuar has de saber que puedes registrar una cuenta para poder guardar tus datos para futuras compras.",
+  "dialogs.loginInfo.content": "Registrate antes para obtener un 10% de descuento en tu primera compra.",
   "dialogs.loginInfo.loginBtn": "Iniciar sesión",
   "dialogs.loginInfo.continueBtn": "Continuar sin iniciar sesión",
 
