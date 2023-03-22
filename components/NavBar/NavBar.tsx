@@ -17,7 +17,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
-import HideOnScroll from '@core/components/HideOnScroll';
+// import HideOnScroll from '@core/components/HideOnScroll';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -35,7 +35,7 @@ const NavBar = () => {
 
   return (
     <>
-      <HideOnScroll direction="down">
+      {/*<HideOnScroll direction="down">*/}
         <AppBar 
           position="fixed" 
           sx={{ 
@@ -134,7 +134,7 @@ const NavBar = () => {
             </IconButton>
           </Toolbar>
         </AppBar>
-      </HideOnScroll>
+      {/*</HideOnScroll>*/}
 
       <Drawer
         key="app-drawer"
