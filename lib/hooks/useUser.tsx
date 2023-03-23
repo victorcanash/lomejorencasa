@@ -69,7 +69,7 @@ const useUser = () => {
     if (isLogged()) {
       updateUserAddressesMW(token, user as User, checkoutAddresses)
         .then((response: {shipping: UserAddress, billing: UserAddress}) => {
-          onUpdateUserAddressesSuccess(response.shipping, response.billing, '', onSuccess);
+          onUpdateUserAddressesSuccess(response.shipping, response.billing, (user as User).email, onSuccess);
         }).catch((_error: Error) => {
           const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
           setErrorMsg(errorMsg);
