@@ -21,7 +21,7 @@ type CheckoutAddressesFormProps = {
 const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
   const { next } = props;
 
-  const { braintreeToken, paypal, user } = useAuthContext();
+  const { braintreeToken, paypal, user, isLogged } = useAuthContext();
 
   const { 
     checkoutAddressesFormValidation, 
@@ -137,7 +137,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
               id: 'forms.shipping',
               textAlign: 'center',
             },
-            formFields: [
+            formFields: !isLogged() ? [
               ...addressFormFields(AddressTypes.shipping),
               {
                 name: `email`,
@@ -145,7 +145,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
                 required: true,
                 autoComplete: 'lastName',
               },
-            ],
+            ] : addressFormFields(AddressTypes.shipping),
           }
         ]
       }
