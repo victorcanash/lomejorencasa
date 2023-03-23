@@ -38,7 +38,7 @@ const Checkout: NextPage = () => {
   const { getGuestUserData } = usePayments();
 
   const [loadedCheckout, setLoadedCheckout] = useState(false);
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(2);
   const [transactionError, setTransactionError] = useState('');
   const [confirmToken, setConfirmToken] = useState<string | undefined>(undefined)
   const [openLoginInfoDialog, setOpenLoginInfoDialog] = useState(false);

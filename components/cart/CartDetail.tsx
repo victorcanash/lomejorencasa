@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect, useCallback } from 'react';
 
 import { useIntl } from 'react-intl';
 
@@ -35,21 +35,27 @@ const CartDetail = (props: CartDetailProps) => {
 
   const intl = useIntl();
 
-  const applyFirstBuyDiscount = () => {
+  const [realTotalPrice, setRealTotalPrice] = useState<number | undefined>(undefined)
+
+  const applyFirstBuyDiscount = useCallback(() => {
     if ((user as User)?.firstName && !(user as User).orderExists) {
       return true;
     }
     return false;
-  };
+  }, [user]);
 
-  const getRealTotalPrice = () => {
+  const getRealTotalPrice = useCallback(() => {
     let realPrice = totalPrice;
     if (applyFirstBuyDiscount()) {
       const discount = parseFloat(((firstBuyDiscount / 100) * realPrice).toFixed(2))
       realPrice = roundTwoDecimals(realPrice - discount);
     }
     return realPrice;
-  };
+  }, [applyFirstBuyDiscount, totalPrice]);
+
+  useEffect(() => {
+    setRealTotalPrice(getRealTotalPrice())
+  }, [getRealTotalPrice]);
 
   return (
     <>
@@ -71,24 +77,28 @@ const CartDetail = (props: CartDetailProps) => {
       </Box>
 
       <Box width="max-content">
-        { applyFirstBuyDiscount() &&
+        { realTotalPrice &&
           <>
-            <Typography component="div" variant="h3">
-              {`${intl.formatMessage({ id: 'cart.subtotal' })}: ${totalPrice.toFixed(2)} €`}
+            { applyFirstBuyDiscount() &&
+              <>
+                <Typography component="div" variant="h3">
+                  {`${intl.formatMessage({ id: 'cart.subtotal' })}: ${totalPrice.toFixed(2)} €`}
+                </Typography>
+                <Typography component="div" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
+                  {` -${firstBuyDiscount}%`}
+                </Typography>
+                <Divider
+                  sx={{
+                    my: 1,            
+                  }}
+                />
+              </>
+            }
+            <Typography component="div" variant="h2">
+              {`${intl.formatMessage({ id: 'cart.total' })}: ${realTotalPrice.toFixed(2)} €`}
             </Typography>
-            <Typography component="div" variant="h3" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
-              {` -${firstBuyDiscount}%`}
-            </Typography>
-            <Divider
-              sx={{
-                my: 1,            
-              }}
-            />
           </>
         }
-        <Typography component="div" variant="h2">
-          {`${intl.formatMessage({ id: 'cart.total' })}: ${getRealTotalPrice().toFixed(2)} €`}
-        </Typography>
       </Box>
     </>
   );

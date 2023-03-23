@@ -137,7 +137,7 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                           />
                         </Typography>
                         <Box mt={1}>
-                          <AddressDetail 
+                          <AddressDetail
                             address={user.shipping}
                             variant="body1"
                           />
