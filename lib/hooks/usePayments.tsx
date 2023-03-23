@@ -179,10 +179,10 @@ const usePayments = () => {
           onSuccess();
         }
       }).catch(async (error: Error) => {
-        enqueueSnackbar(intl.formatMessage(
+        /*enqueueSnackbar(intl.formatMessage(
           { id: 'checkout.errors.getGuestUserData' }), 
           { variant: 'error', autoHideDuration: snachbarDuration }
-        );
+        );*/
         if (onError) {
           onError(error.message);
         }
@@ -232,13 +232,13 @@ const usePayments = () => {
   };
 
   const capturePaypalTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
-    if (!confirmToken && !isLogged()) {
+    /*if (!confirmToken && !isLogged()) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
       setLoading(false);
       return;
-    }
+    }*/
     if (!checkoutPayment?.paypalPayload?.orderId) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));

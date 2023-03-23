@@ -74,16 +74,16 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
     setChangedCartDialog(changedCart);
     setChangedItemsByInventoryDialog(changedItemsByInventory);
     if (changedItemsByInventory.length < 1 && !changedCart) {
-      if (confirmToken !== '' || isLogged()) {
+      //if (confirmToken !== '' || isLogged()) {
         if (braintreeToken) {
           createBraintreeTransaction(isLogged() ? undefined : confirmToken, onErrorTransaction);
         } else if (paypal) {
           capturePaypalTransaction(isLogged() ? undefined: confirmToken, onErrorTransaction);
         }
-      } else {
+      /*} else {
         setLoading(false);
         handleEmailDialog();
-      }
+      }*/
     } else {
       setLoading(false);
       handleCartDialog();
@@ -141,6 +141,9 @@ const CheckoutConfirmForm = (props: CheckoutConfirmFormProps) => {
                             address={user.shipping}
                             variant="body1"
                           />
+                          <Typography component="div" variant="body1">
+                            {`${user.email}`}
+                          </Typography>
                         </Box>
                         { (braintreeToken || paypal?.advancedCards) &&
                           <>

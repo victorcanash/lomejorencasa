@@ -29,7 +29,7 @@ const LoginForm = (props: LoginFormProps) => {
   const { login, /*loginGoogle, */errorMsg } = useAuth();
 
   const handleSubmit = async (values: AuthLogin) => {
-    login(values, onFailByActivation);
+    login(values, /*onFailByActivation*/);
   };
 
   const maxWidth = '500px';

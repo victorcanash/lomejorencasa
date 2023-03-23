@@ -69,20 +69,21 @@ const useUser = () => {
     if (isLogged()) {
       updateUserAddressesMW(token, user as User, checkoutAddresses)
         .then((response: {shipping: UserAddress, billing: UserAddress}) => {
-          onUpdateUserAddressesSuccess(response.shipping, response.billing, onSuccess);
+          onUpdateUserAddressesSuccess(response.shipping, response.billing, '', onSuccess);
         }).catch((_error: Error) => {
           const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
           setErrorMsg(errorMsg);
           setLoading(false);
         });
     } else {
-      onUpdateUserAddressesSuccess(checkoutAddresses.shipping, checkoutAddresses.billing, onSuccess);
+      onUpdateUserAddressesSuccess(checkoutAddresses.shipping, checkoutAddresses.billing, checkoutAddresses.email || '', onSuccess);
     }
   };
 
-  const onUpdateUserAddressesSuccess = (shipping: UserAddress, billing: UserAddress, onSuccess?: () => void) => {
+  const onUpdateUserAddressesSuccess = (shipping: UserAddress, billing: UserAddress, email: string, onSuccess?: () => void) => {
     setUser({
       ...user,
+      email: email,
       shipping: shipping,
       billing: billing,
     });

@@ -6,6 +6,7 @@ export type CheckoutAddresses = {
   shipping: UserAddress,
   billing: UserAddress,
   sameAsShipping: boolean,
+  email?: string,
 };
 
 export type CheckoutPayment = {

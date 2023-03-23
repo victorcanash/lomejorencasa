@@ -108,6 +108,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
           country: user.billing?.country || addressFieldsInitValues.country,
         },
         sameAsShipping: false,
+        email: user.email || '',
       } as CheckoutAddresses}
       validationSchema={checkoutAddressesFormValidation}
       enableReinitialize={true}
@@ -136,7 +137,15 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
               id: 'forms.shipping',
               textAlign: 'center',
             },
-            formFields: addressFormFields(AddressTypes.shipping),
+            formFields: [
+              ...addressFormFields(AddressTypes.shipping),
+              {
+                name: `email`,
+                type: FormFieldTypes.text,
+                required: true,
+                autoComplete: 'lastName',
+              },
+            ],
           }
         ]
       }
