@@ -325,6 +325,7 @@
   "checkout.sections.confirm": "Confirmation",
   "checkout.paymentMethod": "Payment method",
   "checkout.paymentMethod.or": "or",
+  "checkout.paypalDescription": "No te preocupes, te cobraremos cuando confirmes el pedido en el último paso.",
   "checkout.order": "Order",
   "checkout.confirmBtn": "Confirm",
   "checkout.successes.updateAddresses": "Updated addresses",
