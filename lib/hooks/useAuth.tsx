@@ -76,35 +76,39 @@ const useAuth = () => {
     await login({ email: authRegister.email, password: authRegister.password, remember: true})
   };
 
-  const login = async (authLogin: AuthLogin, /*onFailByActivation: (email: string) => void*/) => {
+  const login = async (authLogin: AuthLogin, redirectUrl = true/*onFailByActivation: (email: string) => void*/) => {
     setLoading(true);
     loginUser(authLogin, isLogged() ? undefined : cart)
       .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
-        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
+        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart, redirectUrl);
       }).catch((error: Error) => {
         onLoginError(error, /*onFailByActivation, */authLogin.email);
       });
   };
 
-  const loginGoogle = async (accessToken: string) => {
+  const loginGoogle = async (accessToken: string, redirectUrl = true) => {
     setLoading(true);
     loginUserGoogle(accessToken, isLogged() ? undefined : cart)
       .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
-        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart);
+        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart, redirectUrl);
       }).catch((error: Error) => {
         onLoginError(error);
       });
   };
 
-  const onLoginSuccess = (token: string, user: User, braintreeToken: string, cart: Cart) => {
+  const onLoginSuccess = (token: string, user: User, braintreeToken: string, cart: Cart, redirectUrl = true) => {
     setToken(token);
     setUser(user);
     setBraintreeToken(braintreeToken);
     initCart(cart);
-    if (prevLoginPath){
-      router.push(prevLoginPath);
+    if (redirectUrl) {
+      if (prevLoginPath){
+        router.push(prevLoginPath);
+      } else {
+        router.push(pages.home.path);
+      }
     } else {
-      router.push(pages.home.path);
+      setLoading(false);
     }
   };
 
@@ -270,6 +274,11 @@ const useAuth = () => {
     });
   };
 
+  const applyCoupon = () => {
+    setErrorMsg('Cupón inválido, prueba con otro');
+    setSuccessMsg('');
+  };
+
   return {
     register,
     login,
@@ -280,6 +289,7 @@ const useAuth = () => {
     sendActivationEmail,
     sendResetPswEmail,
     sendUpdateEmail,
+    applyCoupon,
     errorMsg,
     successMsg,
   };
