@@ -1,7 +1,16 @@
 import { ReactNode } from 'react';
-import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faInstagram, 
+  faFacebook, 
+  faTiktok,
+  faCcVisa,
+  faCcMastercard,
+  faCcPaypal,
+  IconDefinition,
+} from '@fortawesome/free-brands-svg-icons';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -14,9 +23,6 @@ import Link from '@core/components/Link';
 import { pages, tiktokHref, instagramHref, facebookHref } from '@lib/constants/navigation';
 import { themeCustomElements, themeDefaultElements } from '@lib/constants/themes/elements';
 import colors from '@lib/constants/themes/colors';
-import tiktok_icon from 'public/images/footer/icons/tiktok-icon.png';
-import instagram_icon from 'public/images/footer/icons/instagram-icon.png';
-import facebook_icon from 'public/images/footer/icons/facebook-icon.png';
 
 const Footer = () => {  
   const getDefaultBgColor = () => {
@@ -27,6 +33,16 @@ const Footer = () => {
   };
   const getFooterGradientBgColor = () => {
     return colors.background.footerGradient;
+  };
+
+  const socialMediaIcon = (icon: IconDefinition) => {
+    return (
+      <FontAwesomeIcon 
+        size="2xl" 
+        icon={icon}
+        style={{ color: "#ffffff" }}
+      />
+    );
   };
 
   return (
@@ -68,14 +84,7 @@ const Footer = () => {
                 size="small"
                 href={tiktokHref}
               >
-                <Image
-                  src={tiktok_icon}
-                  alt="Logo"
-                  width="40px"
-                  height="40px"
-                  layout="fixed"
-                  objectFit="cover"
-                />
+                { socialMediaIcon(faTiktok) }
               </IconButton>
             </Grid>
             <Grid item>
@@ -83,14 +92,7 @@ const Footer = () => {
                 size="small"
                 href={instagramHref}
               >
-                <Image
-                  src={instagram_icon}
-                  alt="Logo"
-                  width="40px"
-                  height="40px"
-                  layout="fixed"
-                  objectFit="cover"
-                />
+                { socialMediaIcon(faInstagram) }
               </IconButton>
             </Grid>
             <Grid item>
@@ -98,14 +100,7 @@ const Footer = () => {
                 size="small"
                 href={facebookHref}
               >
-                <Image
-                  src={facebook_icon}
-                  alt="Logo"
-                  width="40px"
-                  height="40px"
-                  layout="fixed"
-                  objectFit="cover"
-                />
+                { socialMediaIcon(faFacebook) }
               </IconButton>
             </Grid>
           </Grid>
@@ -159,6 +154,17 @@ const Footer = () => {
               />
             </Typography>
           </Box>
+          <Grid container mt={2} columnSpacing={2}>
+            <Grid item>
+              { socialMediaIcon(faCcVisa) }
+            </Grid>
+            <Grid item>
+              { socialMediaIcon(faCcMastercard) }
+            </Grid>
+            <Grid item>
+              { socialMediaIcon(faCcPaypal) }
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
     </Box>
