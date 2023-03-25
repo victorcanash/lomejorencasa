@@ -209,7 +209,7 @@
   "everfresh.metas.description": "Página de Envasadora EverFresh",
   "everfresh.h1": "Envasadora EverFresh",
   "everfresh.description": "¡Prolonga la vida de tus alimentos en un solo click!",
-  "everfresh.comment": "La envasadora al vacío EverFresh es la solución perfecta para los amantes de la conservación. Con un diseño ligero y compacto, podrás llevarla contigo a cualquier lugar sin tener que preocuparte por el espacio.\n\nOlvídate de tirar comida en mal estado y ahorra dinero con una visión más clara de lo que consumes para evitar compras innecesarias.\n\nAdemás es compatible con todo tipo de bolsas de vacío con válvula, lo que te permitirá elegir la opción que mejor se adapte a tus necesidades y presupuesto.\n\n¡Adquiérela hoy mismo y experimenta la frescura en cada bocado!",
+  "everfresh.comment": "La envasadora Everfresh es la solución perfecta para ahorrar dinero, tiempo y espacio.No desperdicies más comida y prolonga la vida de tus alimentos con el envasado. Además, su diseño compacto y portátil la convierten en la compañera ideal para tus viajes.",
   "everfresh.bagsButton": "Añadir bolsas de vacío con válvula",
   "everfresh.details.title": "Detalles del producto",
   "everfresh.details.1": "Marca: InnovaGoods",
@@ -465,6 +465,7 @@
   "forms.getEmails": "I want to receive inspiration, marketing promotions and updates via email",
   "forms.shipping": "Shipping address",
   "forms.billing": "Billing address",
+  "forms.checkoutContact": "Datos de contacto",
   "forms.addressLine1": "Address line 1",
   "forms.shipping.addressLine1": "Address line 1",
   "forms.billing.addressLine1": "Address line 1",
@@ -481,6 +482,7 @@
   "forms.shipping.country": "Country",
   "forms.billing.country": "Country",
   "forms.sameAsShipping": "Same as shipping address",
+  "forms.notes": "Notas sobre tu pedido",
   "forms.name": "Name",
   "forms.name.en": "Name (EN)",
   "forms.name.es": "Name (ES)",
@@ -518,12 +520,14 @@
   "forms.selectContactType.refundOrder": "Devolver pedido",
   "forms.selectContactType.modifyOrder": "Modificar pedido",
   "forms.selectContactType.cancelOrder": "Cancelar pedido",
+  "forms.couponCode": "Código de cupón",
 
   "forms.register.title": "Sign up",
   "forms.register.successBtn": "Sign up",
   "forms.register.loginLink": "Already have an account? Sign in",
 
   "forms.login.title": "Sign in",
+  "forms.login.description": "Si ya eres cliente, por favor, rellena tus datos a continuación. Si eres un nuevo cliente, continúa en la sección de facturación.",
   "forms.login.successBtn": "Sign in",
   "forms.login.forgotLink": "Forgot password?",
   "forms.login.registerLink": "Don't have an account? Sign up",
@@ -567,6 +571,9 @@
 
   "forms.getOrder.description": "Para solicitar la información de un pedido debes de introducir su número y el correo que usaste",
   "forms.getOrder.successBtn": "Solicitar",
+
+  "forms.coupon.description": "Si tienes un código de cupón, por favor, aplícalo abajo.",
+  "forms.coupon.successBtn": "Aplicar cupón",
 
   "forms.createProduct.title": "Create new product",
   "forms.createProduct.successBtn": "Create",
