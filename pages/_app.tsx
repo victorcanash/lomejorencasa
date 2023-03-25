@@ -1,3 +1,4 @@
+import '@fortawesome/fontawesome-svg-core/styles.css'; 
 import 'swiper/css';
 import 'swiper/css/bundle';
 import 'swiper/css/pagination';
@@ -12,6 +13,7 @@ import Head from 'next/head';
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { config } from '@fortawesome/fontawesome-svg-core';
 import { SnackbarProvider } from 'notistack';
 import GoogleAnalythics from '@bradgarropy/next-google-analytics';
 import TagManager from 'react-gtm-module';
@@ -35,6 +37,10 @@ import { CartProvider } from '@lib/contexts/CartContext';
 import { AuthProvider } from '@lib/contexts/AuthContext';
 import ErrorBoundary from '@components/exceptions/ErrorBoundary';
 import MainLayout from '@components/layouts/MainLayout';
+
+// Tell Font Awesome to skip adding the CSS automatically 
+// since it's already imported above
+config.autoAddCss = false; 
 
 const clientSideEmotionCache = createEmotionCache();
 
