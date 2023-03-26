@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import { 
   Formik, 
@@ -51,6 +51,8 @@ const BaseForm = (props: FormBase) => {
 
   const intl = useIntl();
 
+  const formikRef = useRef<FormikProps<any> | null>(null);
+
   const [openDialog, setOpenDialog] = useState(false);
 
   const handleDialog = () => {
@@ -59,7 +61,7 @@ const BaseForm = (props: FormBase) => {
 
   const handleChange = (event: any) => {
     if (onChange) {
-      onChange(event);
+      onChange(event, formikRef.current ? formikRef.current : undefined);
     }
   };
 
@@ -261,6 +263,7 @@ const BaseForm = (props: FormBase) => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
         enableReinitialize={enableReinitialize}
+        innerRef={formikRef}
       >
         { props => (
           <FormikForm
@@ -271,7 +274,6 @@ const BaseForm = (props: FormBase) => {
             }}
           >
             <>
-
               { formFieldGroups && formFieldGroups.length > 0 &&
                 <Grid 
                   container 
@@ -458,7 +460,6 @@ const BaseForm = (props: FormBase) => {
               }
 
               <Box mb={-2} />
-
             </>
           </FormikForm>
         )}
@@ -471,7 +472,6 @@ const BaseForm = (props: FormBase) => {
           onConfirm={onConfirmDelete}
         />
       }
-
     </Box>
   );
 };
