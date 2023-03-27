@@ -8,7 +8,7 @@ import { ManageActions } from '@core/constants/app';
 import { ContactTypes, maxContactFiles } from '@core/constants/contact';
 import type { User, UserAddress, UserContact } from '@core/types/user';
 import type { UploadFile } from '@core/types/multimedia';
-import type { CheckoutAddresses } from '@core/types/checkout';
+import type { CheckoutContact } from '@core/types/checkout';
 import { 
   manageUser as manageUserMW, 
   updateUserAddresses as updateUserAddressesMW,
@@ -62,7 +62,7 @@ const useUser = () => {
     }
   };
 
-  const updateUserAddresses = async (checkoutAddresses: CheckoutAddresses, onSuccess?: () => void) => {
+  const updateUserAddresses = async (checkoutAddresses: CheckoutContact, onSuccess?: () => void) => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');

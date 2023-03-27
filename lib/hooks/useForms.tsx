@@ -184,6 +184,8 @@ const useForms = () => {
     paypalTransactionId: Yup
       .string()
       .min(1),
+    notes: Yup
+      .string(),
   };
 
   const orderFieldsInitValues = {
@@ -194,7 +196,8 @@ const useForms = () => {
     guestUserEmail: '',
     braintreeTransactionId: '',
     paypalTransactionId: '',
-  }
+    notes: '',
+  };
 
   const orderProductFieldsValidation = {
     quantity: Yup
@@ -377,6 +380,27 @@ const useForms = () => {
     email: userFieldsValidation.email,
   });
 
+  const checkoutContactFormValidation = Yup.object().shape({
+    shipping: Yup.object().shape(addressFieldsValidation),
+    billing: paypal?.advancedCards && !braintreeToken ? 
+      Yup.object().when('sameAsShipping', {
+        is: (sameAsShipping: boolean) => !sameAsShipping,
+        then: Yup.object().shape(addressFieldsValidation),
+      })
+      :
+      Yup.object(),
+    sameAsShipping: Yup
+      .boolean(),
+    email: userFieldsValidation.email,
+    notes: orderFieldsValidation.notes,
+  });
+
+  const couponFormValidation = Yup.object().shape({
+    couponCode: Yup
+      .string()
+      .required(),
+  });
+
   const contactUserFormValidation = Yup.object().shape({
     type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
@@ -533,6 +557,8 @@ const useForms = () => {
     contactOrderUserFormValidation,
     checkoutAddressesFormValidation,
     checkoutConfirmFormValidation,
+    checkoutContactFormValidation,
+    couponFormValidation,
     getOrderFormValidation,
     createFailedOrderFormValidation,
     createFailedOrderProductFormValidation,

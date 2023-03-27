@@ -25,7 +25,7 @@ import GoBackBtn from '@components/ui/GoBackBtn';
 
 const Cart: NextPage = () => {
   const { setLoading } = useAppContext();
-  const { cart, totalPrice, totalQuantity, disabledCheckoutPage } = useCartContext();
+  const { cart, totalPrice, totalQuantity, /*disabledCheckoutPage*/ } = useCartContext();
 
   const page = usePage();
   const router = useRouter();
@@ -118,7 +118,7 @@ const Cart: NextPage = () => {
                 <LinkButton
                   href={pages.checkout.path}
                   startIcon={<PointOfSaleIcon />}
-                  disabled={disabledCheckoutPage()}
+                  /*disabled={disabledCheckoutPage()}*/
                 >
                   <FormattedMessage id="cart.checkoutBtn" />
                 </LinkButton>

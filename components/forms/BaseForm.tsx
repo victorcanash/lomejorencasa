@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 import { 
   Formik, 
@@ -47,11 +46,10 @@ const BaseForm = (props: FormBase) => {
     successMsg,
     errorMsg,
     linksItems,
+    formikRef,
   } = props;
 
   const intl = useIntl();
-
-  const formikRef = useRef<FormikProps<any> | null>(null);
 
   const [openDialog, setOpenDialog] = useState(false);
 
@@ -61,7 +59,7 @@ const BaseForm = (props: FormBase) => {
 
   const handleChange = (event: any) => {
     if (onChange) {
-      onChange(event, formikRef.current ? formikRef.current : undefined);
+      onChange(event);
     }
   };
 
@@ -84,7 +82,6 @@ const BaseForm = (props: FormBase) => {
         }
       });
     }
-
     formButtons?.submit?.onSubmit(values, formikHelpers, dirty);
   };
 
@@ -184,9 +181,9 @@ const BaseForm = (props: FormBase) => {
           }
         />
       );
-    } else if (formField.type == FormFieldTypes.datePicker) { 
+    } else if (formField.type == FormFieldTypes.datePicker) {
       return (
-        <DatePicker                         
+        <DatePicker                      
           label={intl.formatMessage({ id: `forms.${formField.name}` })}
           disableFuture
           openTo="year"

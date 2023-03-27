@@ -14,7 +14,7 @@ import { Protections } from '@core/constants/auth';
 import type { PaypalCredentials } from '@core/types/paypal';
 import type { GoogleCredentials } from '@core/types/google';
 import type { User, GuestUser } from '@core/types/user';
-import type { CheckoutPayment } from '@core/types/checkout';
+import type { CheckoutData } from '@core/types/checkout';
 
 import { pages } from '@lib/constants/navigation';
 
@@ -35,8 +35,8 @@ type ContextType = {
   setCurrency: Dispatch<SetStateAction<string>>,
   confirmTokenExpiry: string,
   setConfirmTokenExpiry: Dispatch<SetStateAction<string>>,
-  checkoutPayment: CheckoutPayment,
-  setCheckoutPayment: Dispatch<SetStateAction<CheckoutPayment>>,
+  checkoutData: CheckoutData,
+  setCheckoutData: Dispatch<SetStateAction<CheckoutData>>,
   removeUser: () => void,
   prevLoginPath?: string,
   isLogged: () => boolean,
@@ -63,8 +63,8 @@ export const AuthContext = createContext<ContextType>({
   setCurrency: () => {},
   confirmTokenExpiry: '',
   setConfirmTokenExpiry: () => {},
-  checkoutPayment: {} as CheckoutPayment,
-  setCheckoutPayment: () => {},
+  checkoutData: {} as CheckoutData,
+  setCheckoutData: () => {},
   removeUser: () => {},
   prevLoginPath: undefined,
   isLogged: () => false,
@@ -94,7 +94,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [paymentMode, setPaymentMode] = useState(PaymentModes.braintree);
   const [currency, setCurrency] = useState('');
   const [confirmTokenExpiry, setConfirmTokenExpiry] = useState('');
-  const [checkoutPayment, setCheckoutPayment] = useState<CheckoutPayment>({} as CheckoutPayment);
+  const [checkoutData, setCheckoutData] = useState<CheckoutData>({} as CheckoutData);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
   const removeUser = () => {
@@ -184,8 +184,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setCurrency,
         confirmTokenExpiry,
         setConfirmTokenExpiry,
-        checkoutPayment,
-        setCheckoutPayment,
+        checkoutData,
+        setCheckoutData,
         removeUser,
         prevLoginPath: prevLoginPathRef.current,
         isLogged,

@@ -1,8 +1,8 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import CheckoutBraintreeForm from '@components/forms/checkout/CheckoutBraintreeForm';
-import CheckoutPaypalForm from '@components/forms/checkout/CheckoutPaypalForm';
+import CheckoutBraintreeForm from '@components/forms/checkout/old/CheckoutBraintreeForm';
+import CheckoutPaypalForm from '@components/forms/checkout/old/CheckoutPaypalForm';
 
 type CheckoutPaymentFormProps = {
   next: () => void,

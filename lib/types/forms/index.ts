@@ -1,3 +1,5 @@
+import { MutableRefObject } from 'react';
+
 import { FormikProps } from 'formik';
 
 import type { FormField, FormButton, FormSubmit } from '@core/types/forms';
@@ -31,6 +33,8 @@ export type FormButtonsCheckout = FormButtons & {
 };
 
 export type FormBase = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formikRef?: MutableRefObject<FormikProps<any> | null>,
   maxWidth?: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   initialValues?: any,
@@ -38,7 +42,7 @@ export type FormBase = {
   validationSchema?: any,
   enableReinitialize?: boolean,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange?: (event: any, props?: FormikProps<any>) => void,
+  onChange?: (event: any) => void,
   formFieldGroups?: FormFieldGroup[],
   formButtons?: FormButtonsNormal | FormButtonsCheckout,
   successMsg?: string,

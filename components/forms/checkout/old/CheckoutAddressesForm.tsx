@@ -5,7 +5,7 @@ import { FormikHelpers } from 'formik';
 import { FormFieldTypes } from '@core/constants/forms';
 import { AddressTypes } from '@core/constants/addresses';
 import type { FormField } from '@core/types/forms';
-import type { CheckoutAddresses } from '@core/types/checkout';
+import type { CheckoutContact } from '@core/types/checkout';
 import type { User } from '@core/types/user';
 
 import type { FormButtonsCheckout } from '@lib/types/forms';
@@ -39,7 +39,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
     }
   };
 
-  const handleSubmit = async (values: CheckoutAddresses, formikHelpers: FormikHelpers<CheckoutAddresses>, dirty: boolean) => {
+  const handleSubmit = async (values: CheckoutContact, formikHelpers: FormikHelpers<CheckoutContact>, dirty: boolean) => {
     if ((!braintreeToken && !paypal?.advancedCards) ||
         (dirty || !user.shipping || !user.billing)) {
       const checkoutAddresses = {...values};
@@ -109,7 +109,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
         },
         sameAsShipping: false,
         email: user.email || '',
-      } as CheckoutAddresses}
+      } as CheckoutContact}
       validationSchema={checkoutAddressesFormValidation}
       enableReinitialize={true}
       onChange={handleChange}
@@ -143,7 +143,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
                 name: `email`,
                 type: FormFieldTypes.text,
                 required: true,
-                autoComplete: 'lastName',
+                autoComplete: 'email',
               },
             ] : addressFormFields(AddressTypes.shipping),
           }

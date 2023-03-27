@@ -53,7 +53,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const { setLoading } = useAppContext();
   const { totalPrice } = useCartContext();
-  const { paypal, user, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
+  const { paypal, user, checkoutData: checkoutPayment, setCheckoutData: setCheckoutPayment, isLogged } = useAuthContext();
 
   const intl = useIntl();
   const [{ isResolved, options }, dispatch] = usePayPalScriptReducer();

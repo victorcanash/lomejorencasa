@@ -8,7 +8,7 @@ import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
 import type { User, UserAddress, UserContact } from '@core/types/user';
-import type { CheckoutAddresses } from '@core/types/checkout';
+import type { CheckoutContact } from '@core/types/checkout';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { removeStorageItem } from '@core/utils/storage';
 
@@ -68,7 +68,7 @@ const deleteUser = (token: string, user: User) => {
   return axios.delete(`/users/${user.id}`, options)
 }
 
-export const updateUserAddresses = (token: string, user: User, checkoutAddresses: CheckoutAddresses) => {
+export const updateUserAddresses = (token: string, user: User, checkoutAddresses: CheckoutContact) => {
   return new Promise<{shipping: UserAddress, billing: UserAddress}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),

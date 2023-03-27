@@ -12,6 +12,7 @@ export type Order = {
   items?: GuestCartCheckItem[],
   bigbuy: OrderBigbuy,
   transaction: OrderTransaction,
+  notes?: string,
 };
 
 export type OrderBigbuy = {

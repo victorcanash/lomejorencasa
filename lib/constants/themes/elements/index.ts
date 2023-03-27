@@ -602,3 +602,42 @@ export const themeCustomElements: ThemeCustomElements = {
     },
   },
 };
+
+export const paypalHostedFieldsStyle = {
+  'input': {
+    'transition': 'color 160ms linear',
+    '-webkit-transition': 'color 160ms linear',
+    'font-size-adjustfont-size': typographies.content.fontSize,
+    'font-weight': typographies.content.fontWeight,
+    'line-height': typographies.content.lineHeight,
+    'text-align': typographies.default.textAlign,
+    'letter-spacing': typographies.default.letterSpacing,
+    'font-family': themeDefaultElements.default.typography.fontFamily.join(','),
+    'color': colors.text.black,
+    'padding': '16.5px 14px',
+  },
+  ':hover': {
+    'color': colors.text.black,
+  },
+  ':focus': {
+    'color': colors.text.black,
+  },
+  '.invalid': {         
+    'color': colors.text.action,
+  },
+};
+
+export const paypalHostedFieldsSx = {
+  height: '56px',
+  backgroundColor: colors.background.input,
+  border: '1px solid rgba(0, 0, 0, 0.23)',
+  borderRadius: '4px',
+  '&:hover': {
+    backgroundColor: colors.background.inputHover,
+    border: `1px solid ${colors.text.black}`,
+  },
+  '&.Mui-focused': {
+    backgroundColor: colors.background.inputHover,
+    border: `0px solid ${colors.text.black}`,
+  },
+};

@@ -26,7 +26,15 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
-  const { token, user, setUser, confirmTokenExpiry, checkoutPayment, setCheckoutPayment, isLogged } = useAuthContext();
+  const {
+    token,
+    user,
+    setUser,
+    confirmTokenExpiry,
+    checkoutData,
+    setCheckoutData,
+    isLogged,
+  } = useAuthContext();
   const { cart, initCart, cleanCart } = useCartContext();
 
   const router = useRouter();
@@ -61,7 +69,8 @@ const usePayments = () => {
     setSuccessMsg('');
     checkBPaymentMethodMW(dropin)
       .then((response: { paymentPayload: PaymentMethodPayload }) => {
-        setCheckoutPayment({
+        setCheckoutData({
+          ...checkoutData,
           braintreePayload: response.paymentPayload,
           remember: remember,
         });
@@ -92,7 +101,7 @@ const usePayments = () => {
       await createPTransactionMW(
         isLogged() ? token : confirmToken || '', 
         intl.locale,
-        checkoutPayment,
+        checkoutData,
         !isLogged() ? {
           ...user,
           email: user.email ? user.email : '',
@@ -127,7 +136,7 @@ const usePayments = () => {
     setSuccessMsg('');
     await sendConfirmTransactionEmailMW( 
       intl.locale, 
-      checkoutPayment,
+      checkoutData,
       {
         ...user,
         email: authLogin.email,
@@ -168,7 +177,10 @@ const usePayments = () => {
     setSuccessMsg('');
     await getGuestUserDataMW(confirmationToken)
       .then(async (response: {checkoutPayment: CheckoutPayment, user: GuestUser, cart: Cart}) => {
-        setCheckoutPayment(response.checkoutPayment);
+        setCheckoutData({
+          ...checkoutData,
+          ...response.checkoutPayment,
+        });
         setUser(response.user);
         initCart(response.cart);
         enqueueSnackbar(intl.formatMessage(
@@ -189,14 +201,7 @@ const usePayments = () => {
       });
   }
 
-  const createBraintreeTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
-    if (!confirmToken && !isLogged()) {
-      if (onError) {
-        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
-      }
-      setLoading(false);
-      return;
-    }
+  const createBraintreeTransaction = async (onError?: (message: string) => void) => {
     if (missingTransactionData(true, onError)) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
@@ -208,9 +213,9 @@ const usePayments = () => {
     setErrorMsg('');
     setSuccessMsg('');
     await createBTransactionMW(
-      isLogged() ? token : confirmToken || '', 
+      isLogged() ? token : '', 
       intl.locale, 
-      checkoutPayment,
+      checkoutData,
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )
@@ -231,15 +236,8 @@ const usePayments = () => {
       });
   };
 
-  const capturePaypalTransaction = async (confirmToken?: string, onError?: (message: string) => void) => {
-    /*if (!confirmToken && !isLogged()) {
-      if (onError) {
-        onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
-      }
-      setLoading(false);
-      return;
-    }*/
-    if (!checkoutPayment?.paypalPayload?.orderId) {
+  const capturePaypalTransaction = async (onError?: (message: string) => void) => {
+    if (!checkoutData?.paypalPayload?.orderId) {
       if (onError) {
         onError(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
       }
@@ -257,9 +255,9 @@ const usePayments = () => {
     setErrorMsg('');
     setSuccessMsg('');
     await capturePTransactionMW(
-      isLogged() ? token : confirmToken || '', 
+      isLogged() ? token : '', 
       intl.locale, 
-      checkoutPayment,
+      checkoutData,
       !isLogged() ? user as GuestUser : undefined,
       !isLogged() ? cart : undefined
     )

@@ -2,11 +2,12 @@ import { PaymentMethodPayload } from 'braintree-web-drop-in';
 
 import { UserAddress } from '@core/types/user';
 
-export type CheckoutAddresses = {
+export type CheckoutContact = {
   shipping: UserAddress,
   billing: UserAddress,
   sameAsShipping: boolean,
   email?: string,
+  notes?: string,
 };
 
 export type CheckoutPayment = {
@@ -24,3 +25,5 @@ export type CheckoutPayment = {
   },
   remember?: boolean,
 };
+
+export type CheckoutData = CheckoutContact & CheckoutPayment;
