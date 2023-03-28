@@ -1,7 +1,6 @@
-import { useState, useEffect, useCallback, ChangeEvent, MutableRefObject } from 'react';
+import { useState, useMemo, useEffect, useCallback, ChangeEvent } from 'react';
 import { useRouter } from 'next/router';
 
-import { FormikProps } from 'formik';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 import { 
@@ -13,8 +12,7 @@ import {
 } from '@paypal/paypal-js';
 import { usePayPalScriptReducer } from '@paypal/react-paypal-js';
 
-import type { CheckoutContact } from '@core/types/checkout';
-import type { GuestUser } from '@core/types/user';
+import type { CheckoutContact, CheckoutData } from '@core/types/checkout';
 import { 
   getPaypalUserToken as getPaypalUserTokenMW,
   createPaypalTransaction as createPTransactionMW,
@@ -28,8 +26,9 @@ import { paypalHostedFieldsStyle } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import { GuestUser, User } from '@core/types/user';
 
-const usePaypal = () => {
+const usePaypal = (contactFormValues: CheckoutContact) => {
   const { setLoading } = useAppContext();
   const { 
     token, 
@@ -66,50 +65,65 @@ const usePaypal = () => {
     setCardHolderNameFieldValue(event.target.value);
   };
 
-  const setUserData = (checkoutContact: CheckoutContact) => {
-    return new Promise((resolve, _reject) => {
-      setCheckoutData({
-        ...checkoutData,
-        ...checkoutContact,
-      });
-      if (isLogged()) {
-        setUser({
-          ...user,
-          shipping: checkoutData.shipping,
-          billing: checkoutData.billing,
-        });
-      } else {
-        setUser({
-          ...user,
-          email: checkoutData.checkoutEmail,
-          shipping: checkoutData.shipping,
-          billing: checkoutData.billing,
-        });
-      }
-      setTimeout(() => {
-        resolve(null);
-      })
-    })
-  }
+  const newUser = useMemo(() => {
+    if (isLogged()) {
+      return {
+        ...user,
+        shipping: contactFormValues.shipping,
+        billing: contactFormValues.billing,
+      } as User;
+    } else {
+      return{
+        ...user,
+        email: contactFormValues.checkoutEmail,
+        shipping: contactFormValues.shipping,
+        billing: contactFormValues.billing,
+      } as GuestUser;
+    }
+  }, [contactFormValues.billing, contactFormValues.checkoutEmail, contactFormValues.shipping, isLogged, user]);
 
-  const onPaypalButtonsSubmit = async (_data: CreateOrderData, _actions: CreateOrderActions, contactFormRef: MutableRefObject<FormikProps<CheckoutContact> | null>) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    const checkoutContactRef = contactFormRef.current?.values as CheckoutContact;
-    await setUserData(checkoutContactRef);
+  const newCheckoutData = useMemo(() => {
+    return {
+      ...checkoutData,
+      ...contactFormValues,
+    } as CheckoutData;
+  }, [checkoutData, contactFormValues]);
+
+  const setAuthData = useCallback(() => {
+    setCheckoutData({
+      ...checkoutData,
+      ...contactFormValues,
+    });
+    if (isLogged()) {
+      setUser({
+        ...user,
+        shipping: contactFormValues.shipping,
+        billing: contactFormValues.billing,
+      });
+    } else {
+      setUser({
+        ...user,
+        email: contactFormValues.checkoutEmail,
+        shipping: contactFormValues.shipping,
+        billing: contactFormValues.billing,
+      });
+    }
+  }, [checkoutData, contactFormValues, isLogged, setCheckoutData, setUser, user]);
+
+  const onPaypalButtonsSubmit = async (_data: CreateOrderData, _actions: CreateOrderActions) => {
     return createPaypalTransaction();
   };
 
   const onPaypalButtonsApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
-    setCheckoutData({
+    const captureCheckoutData = {
       ...checkoutData,
       paypalPayload: {
         orderId: data.orderID,
       },
       remember: rememberFieldValue,
-    });
-    onSuccessPaypalTransaction();
+    } as CheckoutData;
+    setCheckoutData(captureCheckoutData);
+    onSuccessPaypalTransaction(captureCheckoutData);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -117,7 +131,7 @@ const usePaypal = () => {
     onErrorPaypalTransaction(error);
   };
 
-  const onAdvancedCardsSubmit = async (contactFormRef: MutableRefObject<FormikProps<CheckoutContact> | null>) => {
+  const onAdvancedCardsSubmit = async () => {
     if(!advancedCardsInstance) {
       onErrorPaypalTransaction(new Error());
       return;
@@ -126,25 +140,20 @@ const usePaypal = () => {
       onErrorPaypalTransaction('cardholdername');
       return;
     }
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    const checkoutContactRef = contactFormRef.current?.values as CheckoutContact;
-    await setUserData(checkoutContactRef);
     advancedCardsInstance
       .submit({
         cardholderName: cardHolderNameFieldValue,
         billingAddress: {
-          streetAddress: checkoutContactRef.billing?.addressLine1,
-          extendedAddress: checkoutContactRef.billing?.addressLine2,
-          region: checkoutContactRef.billing?.country,
-          locality: checkoutContactRef.billing?.locality,
-          postalCode: checkoutContactRef.billing?.postalCode,
-          countryCodeAlpha2: checkoutContactRef.billing?.country ? getCountryCode(checkoutContactRef.billing?.country) : undefined,
+          streetAddress: contactFormValues.billing?.addressLine1,
+          extendedAddress: contactFormValues.billing?.addressLine2,
+          region: contactFormValues.billing?.country,
+          locality: contactFormValues.billing?.locality,
+          postalCode: contactFormValues.billing?.postalCode,
+          countryCodeAlpha2: contactFormValues.billing?.country ? getCountryCode(contactFormValues.billing?.country) : undefined,
         },
         contingencies: ['SCA_WHEN_REQUIRED'],
       }).then((response) => {
-        setCheckoutData({
+        const captureCheckoutData = {
           ...checkoutData,
           paypalPayload: {
             orderId: response.orderId,
@@ -155,12 +164,13 @@ const usePaypal = () => {
             },
           },
           remember: rememberFieldValue,
-        });
+        } as CheckoutData;
+        setCheckoutData(captureCheckoutData);
         if (response.liabilityShift && response.liabilityShift !== 'POSSIBLE') {
           onErrorPaypalTransaction(new Error('3dSecure'));
           return;
         }
-        onSuccessPaypalTransaction();
+        onSuccessPaypalTransaction(captureCheckoutData);
       }).catch((error: Error) => {
         onErrorPaypalTransaction(error);
       });
@@ -182,16 +192,19 @@ const usePaypal = () => {
     return paypalUserToken
   }, [intl.locale, isLogged, setLoading, token]);
 
-  const createPaypalTransaction = useCallback(async (checkoutContact?: CheckoutContact) => {
+  const createPaypalTransaction = useCallback(async () => {
+    console.log(newCheckoutData);
+    console.log(newUser);
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    setAuthData();
     return new Promise<string>(async (resolve, reject) => {
       await createPTransactionMW(
         isLogged() ? token : '', 
         intl.locale,
-        checkoutData,
-        !isLogged() ? {
-          ...user,
-          ...checkoutContact,
-        } : undefined,
+        newCheckoutData,
+        !isLogged() ? newUser : undefined,
         !isLogged() ? cart : undefined
       )
         .then((response: { paypalTransactionId: string }) => {
@@ -204,12 +217,10 @@ const usePaypal = () => {
           reject(errorMsg)
         });
     });
-  }, [cart, checkoutData, intl, isLogged, setLoading, token, user]);
+  }, [cart, intl.locale, isLogged, newCheckoutData, newUser, setAuthData, setLoading, token]);
 
-  const onSuccessPaypalTransaction = () => {
-    setTimeout(() => {
-      capturePaypalTransaction();
-    });
+  const onSuccessPaypalTransaction = (captureCheckoutData: CheckoutData) => {
+    capturePaypalTransaction(captureCheckoutData);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -295,16 +306,17 @@ const usePaypal = () => {
     }
   }, [initHostedFields, loadedAdvancedCards, paypal?.advancedCards]);
 
-  const capturePaypalTransaction = async () => {
-    if (!checkoutData?.paypalPayload?.orderId) {
+  const capturePaypalTransaction = async (captureCheckoutData: CheckoutData) => {
+    console.log(captureCheckoutData);
+    if (!captureCheckoutData.paypalPayload?.orderId) {
       onErrorPaypalTransaction(new Error(), true);
       return;
     }
     await capturePTransactionMW(
       isLogged() ? token : '', 
       intl.locale, 
-      checkoutData,
-      !isLogged() ? user as GuestUser : undefined,
+      captureCheckoutData,
+      !isLogged() ? user : undefined,
       !isLogged() ? cart : undefined
     ).then((_response: { paypalTransactionId: string }) => {
       onCompleteTransaction();

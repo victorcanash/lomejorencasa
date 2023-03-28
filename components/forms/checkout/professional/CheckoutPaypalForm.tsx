@@ -34,7 +34,7 @@ type CheckoutPaypalFormProps = {
 const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   const { contactFormRef } = props;
 
-  const { paypal, checkoutData: checkoutPayment, isLogged } = useAuthContext();
+  const { paypal, isLogged } = useAuthContext();
   const { totalPrice } = useCartContext();
 
   const intl = useIntl();
@@ -50,14 +50,14 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     handleRememberField,
     errorMsg,
     successMsg,
-  } = usePaypal();
+  } = usePaypal(contactFormRef.current?.values || {} as CheckoutContact);
 
   const handlePaypalButtonsSubmit = async (data: CreateOrderData, actions: CreateOrderActions) => {
-    return onPaypalButtonsSubmit(data, actions, contactFormRef);
+    return onPaypalButtonsSubmit(data, actions);
   };
 
   const handleAdvancedCardsSubmit = async () => {
-    return onAdvancedCardsSubmit(contactFormRef);
+    return onAdvancedCardsSubmit();
   };
 
   const hostedFieldLabel = (formatText: FormatText) => {
