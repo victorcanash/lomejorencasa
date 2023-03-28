@@ -72,6 +72,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
 
   const onPaypalButtonsApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
     setCheckoutPayment({
+      ...checkoutPayment,
       paypalPayload: {
         orderId: data.orderID,
       },
@@ -107,6 +108,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
         })
         .then((response) => {
           setCheckoutPayment({
+            ...checkoutPayment,
             paypalPayload: {
               orderId: response.orderId,
               card: {
