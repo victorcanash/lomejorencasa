@@ -81,7 +81,7 @@ const usePaypal = () => {
       } else {
         setUser({
           ...user,
-          email: checkoutData.email,
+          email: checkoutData.checkoutEmail,
           shipping: checkoutData.shipping,
           billing: checkoutData.billing,
         });

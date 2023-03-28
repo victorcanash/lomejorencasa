@@ -78,7 +78,7 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
           country: user.billing?.country || addressFieldsInitValues.country,
         },
         sameAsShipping: checkoutData.sameAsShipping || false,
-        email: user.email || userFieldsInitValues.email,
+        checkoutEmail: user.email || userFieldsInitValues.email,
         notes: checkoutData.notes || orderFieldsInitValues.notes,
       } as CheckoutContact}
       validationSchema={checkoutContactFormValidation}
@@ -120,7 +120,7 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
           },
           formFields: [
             {
-              name: 'email',
+              name: 'checkoutEmail',
               type: FormFieldTypes.text,
               required: true,
               autoComplete: 'email',

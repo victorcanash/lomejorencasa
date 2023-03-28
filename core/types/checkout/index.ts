@@ -6,7 +6,7 @@ export type CheckoutContact = {
   shipping: UserAddress,
   billing: UserAddress,
   sameAsShipping: boolean,
-  email?: string,
+  checkoutEmail?: string,
   notes?: string,
 };
 

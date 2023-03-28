@@ -76,7 +76,7 @@ const useUser = () => {
           setLoading(false);
         });
     } else {
-      onUpdateUserAddressesSuccess(checkoutAddresses.shipping, checkoutAddresses.billing, checkoutAddresses.email || '', onSuccess);
+      onUpdateUserAddressesSuccess(checkoutAddresses.shipping, checkoutAddresses.billing, checkoutAddresses.checkoutEmail || '', onSuccess);
     }
   };
 

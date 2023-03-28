@@ -108,7 +108,7 @@ const CheckoutAddressesForm = (props: CheckoutAddressesFormProps) => {
           country: user.billing?.country || addressFieldsInitValues.country,
         },
         sameAsShipping: false,
-        email: user.email || '',
+        checkoutEmail: user.email || '',
       } as CheckoutContact}
       validationSchema={checkoutAddressesFormValidation}
       enableReinitialize={true}

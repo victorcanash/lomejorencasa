@@ -482,6 +482,7 @@
   "forms.shipping.country": "Country",
   "forms.billing.country": "Country",
   "forms.sameAsShipping": "Same as shipping address",
+  "forms.checkoutEmail": "Dirección de correo",
   "forms.notes": "Notas sobre tu pedido",
   "forms.name": "Name",
   "forms.name.en": "Name (EN)",
