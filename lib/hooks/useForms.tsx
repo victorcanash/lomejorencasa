@@ -391,7 +391,7 @@ const useForms = () => {
       Yup.object(),
     sameAsShipping: Yup
       .boolean(),
-    email: userFieldsValidation.email,
+    checkoutEmail: userFieldsValidation.email,
     notes: orderFieldsValidation.notes,
   });
 

@@ -167,7 +167,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           ,
         }
       ]}
-      formButtons={{
+      formButtons={paypal?.advancedCards ? {
         submit: {
           text: { 
             id: 'app.continueBtn',
@@ -175,7 +175,7 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
           onSubmit: handleAdvancedCardsSubmit,
           disabled: !advancedCardsInstance || !contactFormRef.current?.isValid,
         },
-      } as FormButtonsNormal}
+      } as FormButtonsNormal : undefined}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
