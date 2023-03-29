@@ -1,11 +1,13 @@
-import { MutableRefObject } from 'react';
+import { ChangeEvent, MutableRefObject } from 'react';
 
 import { FormikProps } from 'formik';
 import { useIntl, FormattedMessage } from 'react-intl';
-
 import { 
   CreateOrderData, 
   CreateOrderActions,
+  OnApproveData,
+  OnApproveActions,
+  HostedFieldsHandler,
 } from '@paypal/paypal-js';
 import { PayPalButtons } from '@paypal/react-paypal-js';
 
@@ -23,22 +25,29 @@ import type { CheckoutContact } from '@core/types/checkout';
 import { paypalHostedFieldsSx } from '@lib/constants/themes/elements';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import { useCartContext } from '@lib/contexts/CartContext';
-import usePaypal from '@lib/hooks/usePaypal';
 import BaseForm from '@components/forms/BaseForm';
 
-type CheckoutPaypalFormProps = {
+type CheckoutPaymentFormProps = {
   contactFormRef: MutableRefObject<FormikProps<CheckoutContact> | null>,
+  paypalButtonsDependencies: Array<unknown>,
+  onPaypalButtonsSubmit: (_data: CreateOrderData, _actions: CreateOrderActions) => Promise<string>,
+  onPaypalButtonsApprove: (data: OnApproveData, _actions: OnApproveActions) => Promise<void>,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onPaypalButtonsError: (error: any) => void,
+  onAdvancedCardsSubmit: () => Promise<void>,
+  advancedCardsInstance: HostedFieldsHandler | undefined,
+  cardHolderNameFieldValue: string,
+  handleCardHolderNameField: (event: ChangeEvent<HTMLInputElement>) => void,
+  rememberFieldValue: boolean,
+  handleRememberField: (_event: ChangeEvent<HTMLInputElement>, checked: boolean) => void,
+  errorMsg: string,
+  successMsg: string,
 };
 
-const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
-  const { contactFormRef } = props;
-
-  const { paypal, isLogged } = useAuthContext();
-  const { totalPrice } = useCartContext();
-
-  const intl = useIntl();
+const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   const {
+    contactFormRef,
+    paypalButtonsDependencies,
     onPaypalButtonsSubmit,
     onPaypalButtonsApprove,
     onPaypalButtonsError,
@@ -50,7 +59,11 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
     handleRememberField,
     errorMsg,
     successMsg,
-  } = usePaypal(contactFormRef.current?.values || {} as CheckoutContact);
+  } = props;
+
+  const { paypal, isLogged } = useAuthContext();
+
+  const intl = useIntl();
 
   const handlePaypalButtonsSubmit = async (data: CreateOrderData, actions: CreateOrderActions) => {
     return onPaypalButtonsSubmit(data, actions);
@@ -98,8 +111,8 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
                 mt={2}
               >
                 <PayPalButtons
-                  disabled={!contactFormRef.current?.isValid}
-                  forceReRender={[totalPrice]}
+                  //disabled={!contactFormRef.current?.isValid}
+                  forceReRender={paypalButtonsDependencies}
                   fundingSource={undefined}
                   createOrder={handlePaypalButtonsSubmit}
                   onApprove={onPaypalButtonsApprove}
@@ -182,4 +195,4 @@ const CheckoutPaypalForm = (props: CheckoutPaypalFormProps) => {
   );
 };
 
-export default CheckoutPaypalForm;
+export default CheckoutPaymentForm;

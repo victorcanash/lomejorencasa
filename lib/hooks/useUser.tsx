@@ -6,12 +6,10 @@ import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
 import { ContactTypes, maxContactFiles } from '@core/constants/contact';
-import type { User, UserAddress, UserContact } from '@core/types/user';
+import type { User, UserContact } from '@core/types/user';
 import type { UploadFile } from '@core/types/multimedia';
-import type { CheckoutContact } from '@core/types/checkout';
-import { 
-  manageUser as manageUserMW, 
-  updateUserAddresses as updateUserAddressesMW,
+import {
+  manageUser as manageUserMW,
   sendUserContactEmail as sendUserContactEmailMW,
 } from '@core/utils/user';
 
@@ -22,7 +20,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useUser = () => {
   const { setLoading } = useAppContext();
-  const { token, user, setUser, setToken, setBraintreeToken, removeUser, isLogged } = useAuthContext();
+  const { token, setUser, setToken, removeUser } = useAuthContext();
   const { removeCart } = useCartContext();
 
   const router = useRouter();
@@ -38,8 +36,8 @@ const useUser = () => {
     setErrorMsg('');
     setSuccessMsg('');
     manageUserMW(action, token, newUser)
-      .then((response: {user: User, braintreeToken?: string}) => {
-        onManageUserSuccess(action, response.user, response.braintreeToken);
+      .then((response: {user: User}) => {
+        onManageUserSuccess(action, response.user);
       }).catch((_error: Error) => {
         const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
         setErrorMsg(errorMsg);
@@ -47,7 +45,7 @@ const useUser = () => {
       });
   };
 
-  const onManageUserSuccess = (action: ManageActions.update | ManageActions.delete, newUser: User, braintreeToken?: string) => {
+  const onManageUserSuccess = (action: ManageActions.update | ManageActions.delete, newUser: User) => {
     if (action == ManageActions.update) {
       setUser(newUser);
       setLoading(false);
@@ -56,42 +54,9 @@ const useUser = () => {
       setToken('');
       removeUser();
       removeCart();
-      setBraintreeToken(braintreeToken);
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'settings.successes.deleteUser' }));
     }
-  };
-
-  const updateUserAddresses = async (checkoutAddresses: CheckoutContact, onSuccess?: () => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    if (isLogged()) {
-      updateUserAddressesMW(token, user as User, checkoutAddresses)
-        .then((response: {shipping: UserAddress, billing: UserAddress}) => {
-          onUpdateUserAddressesSuccess(response.shipping, response.billing, (user as User).email, onSuccess);
-        }).catch((_error: Error) => {
-          const errorMsg = intl.formatMessage({ id: 'app.errors.default' });
-          setErrorMsg(errorMsg);
-          setLoading(false);
-        });
-    } else {
-      onUpdateUserAddressesSuccess(checkoutAddresses.shipping, checkoutAddresses.billing, checkoutAddresses.checkoutEmail || '', onSuccess);
-    }
-  };
-
-  const onUpdateUserAddressesSuccess = (shipping: UserAddress, billing: UserAddress, email: string, onSuccess?: () => void) => {
-    setUser({
-      ...user,
-      email: email,
-      shipping: shipping,
-      billing: billing,
-    });
-    if (onSuccess) {
-      onSuccess();
-    }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.updateAddresses' }));
   };
 
   const sendUserContactEmail = async (userContact: UserContact, uploadImgs: UploadFile[]) => {
@@ -133,7 +98,6 @@ const useUser = () => {
 
   return {
     manageUser,
-    updateUserAddresses,
     sendUserContactEmail,
     errorMsg,
     successMsg,

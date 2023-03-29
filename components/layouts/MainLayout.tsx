@@ -15,7 +15,7 @@ import Loading from '@components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { initialized } = useAppContext();
-  const { google, braintreeToken, paypal, currency } = useAuthContext();
+  const { google, paypal, currency } = useAuthContext();
 
   const { layout, pageType } = useLayout(children);
   const app = useApp(pageType);
@@ -33,7 +33,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
         <GoogleOAuthProvider 
           clientId={google.oauthId}
         >
-          { !braintreeToken && paypal ?
+          { paypal ?
             <PayPalScriptProvider
               options={{
                 'locale': 'es_ES',

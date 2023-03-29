@@ -7,8 +7,7 @@ import { ManageActions } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
-import type { User, UserAddress, UserContact } from '@core/types/user';
-import type { CheckoutContact } from '@core/types/checkout';
+import type { User, UserContact } from '@core/types/user';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { removeStorageItem } from '@core/utils/storage';
 
@@ -67,29 +66,6 @@ const deleteUser = (token: string, user: User) => {
   };
   return axios.delete(`/users/${user.id}`, options)
 }
-
-export const updateUserAddresses = (token: string, user: User, checkoutAddresses: CheckoutContact) => {
-  return new Promise<{shipping: UserAddress, billing: UserAddress}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: getAuthHeaders(token),
-    };
-    axios.put(`/users/${user.id}/addresses`, checkoutAddresses, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
-          resolve({
-            shipping: response.data.shipping,
-            billing: response.data.billing,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Update User Addresses ERROR', error);
-        logBackendError(errorMsg)
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
 
 export const sendUserContactEmail = (currentLocale: string, userContact: UserContact, contactImgs: File[]) => {
   return new Promise<true>((resolve, reject) => {

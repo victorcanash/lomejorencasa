@@ -3,7 +3,6 @@ import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
-import { PaymentModes } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
@@ -32,10 +31,7 @@ export const init = async (currentLocale: string, categoryIds: number[], product
     cart: Cart,
     token?: string, 
     user?: User,
-    paymentMode: PaymentModes,
     currency: string,
-    confirmTokenExpiry: string,
-    braintreeToken?: string,
     paypal?: PaypalCredentials,
     google: GoogleCredentials,
   }>(async (resolve, reject) => {
@@ -59,12 +55,8 @@ export const init = async (currentLocale: string, categoryIds: number[], product
         if (
             response.status === StatusCodes.CREATED && 
             response.data?.categories && response.data?.products && response.data?.packs &&
-            response.data?.paymentMode && response.data?.currency && response.data?.confirmTokenExpiry &&
-            (
-              response.data?.braintreeToken || (
-                response.data?.paypal?.merchantId && response.data?.paypal?.clientId && response.data?.paypal?.token
-              )
-            ) &&
+            response.data?.currency &&
+            response.data?.paypal?.merchantId && response.data?.paypal?.clientId && response.data?.paypal?.token &&
             response.data?.google?.oauthId
           ) {
           if (response.data.user) {
@@ -88,16 +80,13 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
             token: token,
             user: response.data.user || undefined,
-            paymentMode: response.data.paymentMode,
             currency: response.data.currency,
-            confirmTokenExpiry: response.data.confirmTokenExpiry,
-            braintreeToken: response.data.braintreeToken,
-            paypal: !response.data.braintreeToken ? {
+            paypal: {
               merchantId: response.data.paypal.merchantId,
               clientId: response.data.paypal.clientId,
               token: response.data.paypal.token,
               advancedCards: response.data.paypal.advancedCards,
-            } : undefined,
+            },
             google: {
               oauthId: response.data.google.oauthId,
             },
@@ -161,8 +150,8 @@ export const loginUserGoogle = async (accessToken: string, cart?: Cart) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const login = async (url: string, body: any, remember: boolean, cart?: Cart) => {
-  const guestCart = cart && cart.items.length > 0 ? convertCartToGuestCart(cart) : undefined;
-  return new Promise<{token: string, user: User, braintreeToken: string, cart: Cart}>((resolve, reject) => {
+  return new Promise<{token: string, user: User, cart: Cart}>((resolve, reject) => {
+    const guestCart = cart && cart.items.length > 0 ? convertCartToGuestCart(cart) : undefined;
     axios.post(url, { ...body, guestCart })
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data?.user) {
@@ -178,7 +167,6 @@ const login = async (url: string, body: any, remember: boolean, cart?: Cart) => 
             resolve({
               token: response.data.token,
               user: response.data.user,
-              braintreeToken: response.data.braintreeToken,
               cart: response.data.user.cart,
             });     
           } else {
@@ -196,7 +184,7 @@ const login = async (url: string, body: any, remember: boolean, cart?: Cart) => 
 };
 
 export const logoutUser = async (token: string) => {
-  return new Promise<{braintreeToken: string}>(async (resolve, reject) => {
+  return new Promise<void>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
     };
@@ -205,9 +193,7 @@ export const logoutUser = async (token: string) => {
         if (response.status === StatusCodes.CREATED) {
           await removeStorageItem(Storages.local, JWTTokenKey);
           await removeStorageItem(Storages.local, GuestCartKey);
-          resolve({
-            braintreeToken: response.data.braintreeToken,
-          });
+          resolve();
         } else {
           throw new Error('Something went wrong');
         }

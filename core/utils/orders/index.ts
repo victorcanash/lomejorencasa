@@ -100,10 +100,18 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
       timeout: 20000,
     };
     axios.post('/orders/admin', { 
-      ...order,
+      locale: order.locale,
+      checkoutData: {
+        email: order.checkoutEmail,
+        shipping: order.shipping,
+        billing: order.shipping,
+        remember: false,
+        notes: order.notes,
+      },
       cart: {
         items: order.products,
       } as GuestCart,
+      paypalTransactionId: order.paypalTransactionId,
     }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {

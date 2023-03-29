@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 
 import { 
   Formik, 
@@ -57,6 +56,7 @@ const BaseForm = (props: FormBase) => {
     setOpenDialog(!openDialog);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
     if (onChange) {
       onChange(event);
@@ -71,6 +71,7 @@ const BaseForm = (props: FormBase) => {
     return formButtons as FormButtonsCheckout;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (values: any, formikHelpers: FormikHelpers<any>) => {
     let dirty = false;
     if (initialValues) {
@@ -105,6 +106,7 @@ const BaseForm = (props: FormBase) => {
     formButtonsCheckout().back?.onClick();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getFormField = (props: FormikProps<any>, formField: FormField) => {
     if (formField.type == FormFieldTypes.text || 
         formField.type == FormFieldTypes.password ||
@@ -229,6 +231,7 @@ const BaseForm = (props: FormBase) => {
             label={intl.formatMessage({ id: `forms.${formField.name}` })}
             disabled={formField.disabled}
             value={getIn(props.values, formField.name)}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             onChange={(e: any) => { props.handleChange(e); handleChange(e); }}
             onBlur={props.handleBlur}
             error={getIn(props.touched, formField.name) && Boolean(getIn(props.errors, formField.name))}

@@ -38,6 +38,4 @@ export type UserContact = {
 
 export type GuestUser = {
   email?: string,
-  shipping?: UserAddress,
-  billing?: UserAddress,
 }

@@ -15,7 +15,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 const useForms = () => {
   const intl = useIntl();
 
-  const { braintreeToken, paypal } = useAuthContext();
+  const { paypal } = useAuthContext();
 
   const initForms = () => {
     Yup.setLocale({
@@ -178,9 +178,6 @@ const useForms = () => {
     guestUserEmail: Yup
       .string()
       .min(1),
-    braintreeTransactionId: Yup
-      .string()
-      .min(1),
     paypalTransactionId: Yup
       .string()
       .min(1),
@@ -194,7 +191,6 @@ const useForms = () => {
     locale: 'es',// intl.defaultLocale,
     userId: 0,
     guestUserEmail: '',
-    braintreeTransactionId: '',
     paypalTransactionId: '',
     notes: '',
   };
@@ -365,7 +361,7 @@ const useForms = () => {
 
   const checkoutAddressesFormValidation = Yup.object().shape({
     shipping: Yup.object().shape(addressFieldsValidation),
-    billing: paypal?.advancedCards && !braintreeToken ? 
+    billing: paypal?.advancedCards ? 
       Yup.object().when('sameAsShipping', {
         is: (sameAsShipping: boolean) => !sameAsShipping,
         then: Yup.object().shape(addressFieldsValidation),
@@ -382,7 +378,7 @@ const useForms = () => {
 
   const checkoutContactFormValidation = Yup.object().shape({
     shipping: Yup.object().shape(addressFieldsValidation),
-    billing: paypal?.advancedCards && !braintreeToken ? 
+    billing: paypal?.advancedCards ? 
       Yup.object().when('sameAsShipping', {
         is: (sameAsShipping: boolean) => !sameAsShipping,
         then: Yup.object().shape(addressFieldsValidation),
@@ -423,10 +419,9 @@ const useForms = () => {
 
   const createFailedOrderFormValidation = Yup.object().shape({
     locale: orderFieldsValidation.locale,
-    userId: orderFieldsValidation.userId,
-    guestUserEmail: orderFieldsValidation.guestUserEmail,
-    braintreeTransactionId: orderFieldsValidation.braintreeTransactionId,
     paypalTransactionId: orderFieldsValidation.paypalTransactionId,
+    checkoutEmail: userFieldsValidation.email,
+    notes: orderFieldsValidation.notes,
     shipping: Yup.object().shape(addressFieldsValidation),
   });
   

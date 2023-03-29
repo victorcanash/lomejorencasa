@@ -8,19 +8,19 @@ import { PageTypes } from '@core/constants/navigation';
 // import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 // import { useCartContext } from '@lib/contexts/CartContext';
-// import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import CheckoutProfessional from '@components/Checkout/CheckoutProfessional';
+import CheckoutForms from '@components/forms/checkout';
 
 const Checkout: NextPage = () => {
-  const page = usePage(false);
-
   const { setLoading } = useAppContext();
   // const { disabledCheckoutPage } = useCartContext();
-  // const { token } = useAuthContext();
+  const {/*token*/ paypal } = useAuthContext();
 
   // const router = useRouter();
+
+  const page = usePage(false);
 
   const [loadedCheckout, setLoadedCheckout] = useState(false);
 
@@ -56,8 +56,8 @@ const Checkout: NextPage = () => {
         marginTop={true}
       />
 
-      { loadedCheckout &&
-        <CheckoutProfessional />
+      { (loadedCheckout && paypal) &&
+        <CheckoutForms />
       }
     </>
   );

@@ -32,7 +32,8 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
 
   const { 
     createFailedOrderFormValidation, 
-    orderFieldsInitValues, 
+    orderFieldsInitValues,
+    userFieldsInitValues,
     addressFieldsInitValues,
     addressFormFields,
   } = useForms();
@@ -73,16 +74,15 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
         maxWidth={maxWidth}
         initialValues={{
           locale: orderFieldsInitValues.locale,
-          userId: orderFieldsInitValues.userId,
-          guestUserEmail: orderFieldsInitValues.guestUserEmail,
-          braintreeTransactionId: orderFieldsInitValues.braintreeTransactionId,
-          paypalTransactionId: orderFieldsInitValues.braintreeTransactionId,
+          paypalTransactionId: orderFieldsInitValues.paypalTransactionId,
+          checkoutEmail: userFieldsInitValues.email,
+          notes: orderFieldsInitValues.notes,
           shipping: {
             id: -1,
             userId: -1,
             type: AddressTypes.shipping,
             ...addressFieldsInitValues,
-          }, 
+          },
           products: [],
         } as OrderFailedCreate}
         validationSchema={createFailedOrderFormValidation}

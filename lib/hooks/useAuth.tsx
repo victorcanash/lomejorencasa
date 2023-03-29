@@ -32,8 +32,7 @@ const useAuth = () => {
   const { setLoading } = useAppContext();
   const { 
     token, 
-    setToken, 
-    setBraintreeToken, 
+    setToken,
     user, 
     setUser,
     removeUser,
@@ -79,27 +78,26 @@ const useAuth = () => {
   const login = async (authLogin: AuthLogin, redirectUrl = true/*onFailByActivation: (email: string) => void*/) => {
     setLoading(true);
     loginUser(authLogin, isLogged() ? undefined : cart)
-      .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
-        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart, redirectUrl);
+      .then((response: {token: string, user: User, cart: Cart}) => {
+        onLoginSuccess(response.token, response.user, response.cart, redirectUrl);
       }).catch((error: Error) => {
-        onLoginError(error, /*onFailByActivation, */authLogin.email);
+        onLoginError(error, /*onFailByActivation, authLogin.email*/);
       });
   };
 
   const loginGoogle = async (accessToken: string, redirectUrl = true) => {
     setLoading(true);
     loginUserGoogle(accessToken, isLogged() ? undefined : cart)
-      .then((response: {token: string, user: User, braintreeToken: string, cart: Cart}) => {
-        onLoginSuccess(response.token, response.user, response.braintreeToken, response.cart, redirectUrl);
+      .then((response: {token: string, user: User, cart: Cart}) => {
+        onLoginSuccess(response.token, response.user, response.cart, redirectUrl);
       }).catch((error: Error) => {
         onLoginError(error);
       });
   };
 
-  const onLoginSuccess = (token: string, user: User, braintreeToken: string, cart: Cart, redirectUrl = true) => {
+  const onLoginSuccess = (token: string, user: User, cart: Cart, redirectUrl = true) => {
     setToken(token);
     setUser(user);
-    setBraintreeToken(braintreeToken);
     initCart(cart);
     if (redirectUrl) {
       if (prevLoginPath){
@@ -112,7 +110,7 @@ const useAuth = () => {
     }
   };
 
-  const onLoginError = (error: Error, /*onFailByActivation?: (email: string) => void, */authEmail?: string) => {
+  const onLoginError = (error: Error/*, onFailByActivation?: (email: string) => void, authEmail?: string*/) => {
     let errorMsg = error.message;
     if (errorMsg.includes('activate')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
@@ -149,8 +147,7 @@ const useAuth = () => {
     removeUser();
     removeCart();
     await logoutUser(token)
-      .then(async (response: { braintreeToken: string }) => {
-        setBraintreeToken(response.braintreeToken);
+      .then(async () => {
         const path = getRedirectLogoutPath();
         if (path) {
           router.push(path);
@@ -158,7 +155,6 @@ const useAuth = () => {
           setLoading(false);
         }
       }).catch(async (error: Error) => {
-        setBraintreeToken(undefined);
         setLoading(false);
         throw error;
       });

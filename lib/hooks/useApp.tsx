@@ -2,7 +2,6 @@ import { useRef, useEffect, useCallback } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import { PaymentModes } from '@core/constants/app';
 import { PageTypes } from '@core/constants/navigation';
 import type { Product, ProductCategory, ProductPack } from '@core/types/products';
 import type { User } from '@core/types/user';
@@ -25,12 +24,9 @@ const useApp = (pageType: PageTypes | undefined) => {
   const { initProducts } = useProductsContext();
   const { initCart } = useCartContext();
   const { 
-    setToken, 
-    setUser, 
-    setPaymentMode, 
+    setToken,
+    setUser,
     setCurrency,
-    setConfirmTokenExpiry,
-    setBraintreeToken,
     setPaypal,
     setGoogle,
   } = useAuthContext();
@@ -57,10 +53,7 @@ const useApp = (pageType: PageTypes | undefined) => {
             cart: Cart,
             token?: string, 
             user?: User,
-            paymentMode: PaymentModes,
             currency: string,
-            confirmTokenExpiry: string,
-            braintreeToken?: string,
             paypal?: PaypalCredentials,
             google: GoogleCredentials,
           }
@@ -72,10 +65,7 @@ const useApp = (pageType: PageTypes | undefined) => {
             setToken(response.token);
             setUser(response.user);
           } 
-          setPaymentMode(response.paymentMode);
           setCurrency(response.currency);
-          setConfirmTokenExpiry(response.confirmTokenExpiry);
-          setBraintreeToken(response.braintreeToken);
           setPaypal(response.paypal);
           setGoogle(response.google);
           setInitialized(true);
@@ -85,13 +75,13 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, pageType, setBraintreeToken, setConfirmTokenExpiry, setCurrency, setGoogle, setInitialized, setPaymentMode, setPaypal, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, pageType, setCurrency, setGoogle, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {
       firstRenderRef.current = true;
       initData();
-    }    
+    }
   }, [pageType, initData]);
 
   return {};

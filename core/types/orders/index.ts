@@ -5,7 +5,6 @@ export type Order = {
   id: number,
   userId?: number,
   guestUserId?: number,
-  braintreeTransactionId?: string,
   paypalTransactionId?: string,
   bigbuyId?: string,
   createdAt: Date,
@@ -67,10 +66,9 @@ export type OrderContact = {
 
 export type OrderFailedCreate = {
   locale: string,
-  userId?: number,
-  guestUserEmail?: string,
-  braintreeTransactionId?: string,
   paypalTransactionId?: string,
+  checkoutEmail: string,
+  notes?: string,
   shipping: UserAddress,
   products: GuestCartItem[],
 };
