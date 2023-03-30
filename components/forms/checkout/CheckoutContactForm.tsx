@@ -28,7 +28,7 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
     addressFormFields,
   } = useForms();
 
-  const [hiddenBilling, setHiddenBilling] = useState(false);
+  const [hiddenBilling, setHiddenBilling] = useState(checkoutData.sameAsShipping || false);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
