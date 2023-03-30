@@ -1,6 +1,5 @@
-import { ChangeEvent, MutableRefObject } from 'react';
+import { ChangeEvent } from 'react';
 
-import { FormikProps } from 'formik';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { 
   CreateOrderData, 
@@ -20,7 +19,6 @@ import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 
 import type { FormatText } from '@core/types/texts';
-import type { CheckoutContact } from '@core/types/checkout';
 
 import { paypalHostedFieldsSx } from '@lib/constants/themes/elements';
 import type { FormButtonsNormal } from '@lib/types/forms';
@@ -28,7 +26,6 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import BaseForm from '@components/forms/BaseForm';
 
 type CheckoutPaymentFormProps = {
-  contactFormRef: MutableRefObject<FormikProps<CheckoutContact> | null>,
   paypalButtonsDependencies: Array<unknown>,
   onPaypalButtonsSubmit: (_data: CreateOrderData, _actions: CreateOrderActions) => Promise<string>,
   onPaypalButtonsApprove: (data: OnApproveData, _actions: OnApproveActions) => Promise<void>,
@@ -46,7 +43,6 @@ type CheckoutPaymentFormProps = {
 
 const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
   const {
-    contactFormRef,
     paypalButtonsDependencies,
     onPaypalButtonsSubmit,
     onPaypalButtonsApprove,
@@ -107,7 +103,6 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
                 mt={2}
               >
                 <PayPalButtons
-                  //disabled={!contactFormRef.current?.isValid}
                   forceReRender={paypalButtonsDependencies}
                   fundingSource={undefined}
                   createOrder={handlePaypalButtonsSubmit}
@@ -182,7 +177,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
             id: 'app.continueBtn',
           },
           onSubmit: handleAdvancedCardsSubmit,
-          disabled: !advancedCardsInstance || !contactFormRef.current?.isValid,
+          disabled: !advancedCardsInstance,
         },
       } as FormButtonsNormal : undefined}
       successMsg={successMsg}

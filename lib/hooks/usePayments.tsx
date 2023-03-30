@@ -51,7 +51,6 @@ const usePayments = () => {
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-  const [loadedAdvancedCards, setLoadedAdvancedCards] = useState(false);
   const [advancedCardsInstance, setAdvancedCardsInstance] = useState<HostedFieldsHandler | undefined>(undefined);
   const [supportsAdvancedCards, setSupportsAdvancedCards] = useState<boolean | undefined>(undefined);
   const [rememberFieldValue, setRememberFieldValue] = useState(true);
@@ -142,13 +141,14 @@ const usePayments = () => {
         },
         contingencies: ['SCA_WHEN_REQUIRED'],
       }).then((response) => {
+        setLoading(true);
         const { newUser, newCheckoutData } = getNewData();
         const captureCheckoutData: CheckoutData = {
           ...newCheckoutData,
           orderId: response.orderId,
           card: {
-            type: response.card.brand,
-            lastFour: response.card.last_digits,
+            type: response.card?.brand,
+            lastFour: response.card?.last_digits,
             holderName: cardHolderNameFieldValue,
           },
           remember: rememberFieldValue,
@@ -160,7 +160,8 @@ const usePayments = () => {
           return;
         }
         onSuccessPaypalTransaction(captureCheckoutData);
-      }).catch((error: Error) => {
+      }).catch(async (error: Error) => {
+        await initHostedFields();
         onErrorPaypalTransaction(error);
       });
   };
@@ -199,7 +200,7 @@ const usePayments = () => {
           !isLogged() ? cart : undefined
         )
           .then((response: { paypalTransactionId: string }) => {
-            setLoading(false)
+            setLoading(false);
             resolve(response.paypalTransactionId);
           }).catch((error) => {
             const errorMsg = error.message;
@@ -215,10 +216,10 @@ const usePayments = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onErrorPaypalTransaction = (error: any) => {
     setLoading(false);
-    const errorMsg = getBackendErrorMsg('SDK Paypal ERROR', error);
-    logBackendError(errorMsg);
     setSuccessMsg('');
-    if (error.message && error.message.includes('contactForm')) {
+    if (error.message && error.message.includes('Detected popup close')) {
+      setErrorMsg('');
+    } else if (error.message && error.message.includes('contactForm')) {
       setErrorMsg(intl.formatMessage({ id: 'checkout.errors.contactForm' }));
     } else if (error.message && error.message.includes('The email entered belongs to a registered user')) {
       setErrorMsg(intl.formatMessage({ id: 'checkout.errors.registeredUser' }));
@@ -240,44 +241,51 @@ const usePayments = () => {
     } else {
       setErrorMsg(intl.formatMessage({ id: 'checkout.errors.default' }));
     }
-    console.log('error', error.message)
   };
 
   const initHostedFields = useCallback(async () => {
-    if (typeof supportsAdvancedCards === 'boolean' && !!supportsAdvancedCards) {
-      setLoadedAdvancedCards(true);
-      await getPaypalUserToken().then((paypalUserToken?: string) => { 
-        if (paypalUserToken) {
-          dispatch({
-            type: 'resetOptions',
-            value: {
-                ...options,
-                'data-user-id-token': paypalUserToken,
-            },
-          });
+    try {
+      if (typeof supportsAdvancedCards === 'boolean' && !!supportsAdvancedCards) {
+        /*await getPaypalUserToken().then((paypalUserToken?: string) => { 
+          if (paypalUserToken) {
+            dispatch({
+              type: 'resetOptions',
+              value: {
+                  ...options,
+                  'data-user-id-token': paypalUserToken,
+              },
+            });
+          }
+        });*/
+        if (advancedCardsInstance) {
+          await advancedCardsInstance.teardown();
         }
-      });  
-      const instance = await window.paypal?.HostedFields?.render({
-        createOrder: createPaypalTransaction,
-        styles: paypalHostedFieldsStyle,
-        fields: {
-          number: {
-            selector: '#cardNumber',
-            placeholder: '1111 1111 1111 1111',
+        const instance = await window.paypal?.HostedFields?.render({
+          createOrder: createPaypalTransaction,
+          styles: paypalHostedFieldsStyle,
+          fields: {
+            number: {
+              selector: '#cardNumber',
+              placeholder: '1111 1111 1111 1111',
+            },
+            cvv: {
+              selector: '#cvv',
+              placeholder: '111',
+            },
+            expirationDate: {
+              selector: '#cardExpiry',
+              placeholder: 'MM/YY',
+            },
           },
-          cvv: {
-            selector: '#cvv',
-            placeholder: '111',
-          },
-          expirationDate: {
-            selector: '#cardExpiry',
-            placeholder: 'MM/YY',
-          },
-        },
-      });
-      setAdvancedCardsInstance(instance);
+        });
+        setAdvancedCardsInstance(instance);
+      }
+    } catch (error) {
+      const errorMsg = getBackendErrorMsg('SDK PaypalHostedFields ERROR', error);
+      logBackendError(errorMsg);
     }
-  }, [createPaypalTransaction, dispatch, getPaypalUserToken, options, supportsAdvancedCards]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [createPaypalTransaction, supportsAdvancedCards]);
 
   useEffect(() => {
     if (paypal?.advancedCards) {
@@ -289,11 +297,9 @@ const usePayments = () => {
 
   useEffect(() => {
     if (paypal?.advancedCards) {
-      if (!loadedAdvancedCards) {
-        initHostedFields();
-      }
+      initHostedFields();
     }
-  }, [initHostedFields, loadedAdvancedCards, paypal?.advancedCards]);
+  }, [initHostedFields, paypal?.advancedCards]);
 
   const capturePaypalTransaction = async (captureCheckoutData: CheckoutData) => {
     if (!captureCheckoutData?.orderId) {

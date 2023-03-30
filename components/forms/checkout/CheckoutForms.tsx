@@ -36,7 +36,6 @@ const CheckoutForms = () => {
         formikRef={contactFormRef}
       />
       <CheckoutPaymentForm
-        contactFormRef={contactFormRef}
         paypalButtonsDependencies={paypalButtonsDependencies}
         onPaypalButtonsSubmit={onPaypalButtonsSubmit}
         onPaypalButtonsApprove={onPaypalButtonsApprove}
