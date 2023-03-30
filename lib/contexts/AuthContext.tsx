@@ -85,6 +85,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser({
       email: undefined,
     } as GuestUser);
+    setCheckoutData({} as CheckoutData);
   };
 
   const isLogged = () => {
