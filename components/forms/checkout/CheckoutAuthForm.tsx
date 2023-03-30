@@ -32,7 +32,7 @@ const CheckoutAuthForm: NextPage = () => {
         formFieldGroups={[
           {
             descriptionTxt: {
-              id: 'forms.login.description',
+              id: 'checkout.auth.description',
             },
             formFields: [
               {

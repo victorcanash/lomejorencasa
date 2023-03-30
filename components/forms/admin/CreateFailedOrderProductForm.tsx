@@ -15,7 +15,11 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
   const { createFailedOrderProductFormValidation, orderProductFieldsInitValues } = useForms();
 
   const handleSubmit = async (values: GuestCartItem) => {
-    onSubmitSuccess(values)
+    onSubmitSuccess({
+      ...values,
+      inventoryId: values.inventoryId !== -1 ? values.inventoryId : undefined,
+      packId: values.packId !== -1 ? values.packId : undefined,
+    })
   };
 
   return (
@@ -35,6 +39,11 @@ const CreateFailedOrderProductForm = (props: CreateFailedOrderProductFormProps) 
             },
             {
               name: 'inventoryId',
+              type: FormFieldTypes.numeric,
+              required: true,
+            },
+            {
+              name: 'packId',
               type: FormFieldTypes.numeric,
               required: true,
             }

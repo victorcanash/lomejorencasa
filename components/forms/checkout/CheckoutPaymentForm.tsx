@@ -100,10 +100,6 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
             id: 'checkout.paymentMethod',
             textAlign: 'center',
           },
-          descriptionTxt: {
-            id: 'checkout.paypalDescription',
-            textAlign: 'center',
-          },
           extraElements:
             <>
               <Box

@@ -10,12 +10,8 @@ import { getCountryName } from '@core/utils/addresses';
 import { subtractYears } from '@core/utils/dates';
 import { getContactTypeName } from '@core/utils/contact';
 
-import { useAuthContext } from '@lib/contexts/AuthContext';
-
 const useForms = () => {
   const intl = useIntl();
-
-  const { paypal } = useAuthContext();
 
   const initForms = () => {
     Yup.setLocale({
@@ -180,7 +176,8 @@ const useForms = () => {
       .min(1),
     paypalTransactionId: Yup
       .string()
-      .min(1),
+      .min(1)
+      .required(),
     notes: Yup
       .string(),
   };
@@ -208,7 +205,8 @@ const useForms = () => {
 
   const orderProductFieldsInitValues = {
     quantity: 1,
-    inventoryId: 0,
+    inventoryId: -1,
+    packId: -1,
   };
 
   const localizedTextsFieldsValidation = {
@@ -359,32 +357,12 @@ const useForms = () => {
     getEmails: userFieldsValidation.getEmails,
   });
 
-  const checkoutAddressesFormValidation = Yup.object().shape({
-    shipping: Yup.object().shape(addressFieldsValidation),
-    billing: paypal?.advancedCards ? 
-      Yup.object().when('sameAsShipping', {
-        is: (sameAsShipping: boolean) => !sameAsShipping,
-        then: Yup.object().shape(addressFieldsValidation),
-      })
-      :
-      Yup.object(),
-    sameAsShipping: Yup
-      .boolean(),
-  });
-
-  const checkoutConfirmFormValidation = Yup.object().shape({
-    email: userFieldsValidation.email,
-  });
-
   const checkoutContactFormValidation = Yup.object().shape({
     shipping: Yup.object().shape(addressFieldsValidation),
-    billing: paypal?.advancedCards ? 
-      Yup.object().when('sameAsShipping', {
-        is: (sameAsShipping: boolean) => !sameAsShipping,
-        then: Yup.object().shape(addressFieldsValidation),
-      })
-      :
-      Yup.object(),
+    billing: Yup.object().when('sameAsShipping', {
+      is: (sameAsShipping: boolean) => !sameAsShipping,
+      then: Yup.object().shape(addressFieldsValidation),
+    }),
     sameAsShipping: Yup
       .boolean(),
     checkoutEmail: userFieldsValidation.email,
@@ -550,8 +528,6 @@ const useForms = () => {
     updateUserFormValidation,
     contactUserFormValidation,
     contactOrderUserFormValidation,
-    checkoutAddressesFormValidation,
-    checkoutConfirmFormValidation,
     checkoutContactFormValidation,
     couponFormValidation,
     getOrderFormValidation,

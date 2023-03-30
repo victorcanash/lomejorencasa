@@ -40,7 +40,7 @@ const usePayments = () => {
     isLogged,
     paypal,
   } = useAuthContext();
-  const { cart, cleanCart, totalPrice } = useCartContext();
+  const { cart, cleanCart, totalPrice, totalQuantity } = useCartContext();
 
   const router = useRouter();
   const intl = useIntl();
@@ -51,8 +51,6 @@ const usePayments = () => {
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-  const [newUser, setNewUser] = useState<User | GuestUser>({} as GuestUser);
-  const [newCheckoutData, setNewCheckoutData] = useState<CheckoutData>({} as CheckoutData);
   const [loadedAdvancedCards, setLoadedAdvancedCards] = useState(false);
   const [advancedCardsInstance, setAdvancedCardsInstance] = useState<HostedFieldsHandler | undefined>(undefined);
   const [supportsAdvancedCards, setSupportsAdvancedCards] = useState<boolean | undefined>(undefined);
@@ -62,6 +60,16 @@ const usePayments = () => {
   );
 
   const snachbarDuration = 10000;
+  const paypalButtonsDependencies: Array<unknown> = [
+    intl.locale,
+    checkoutData,
+    token,
+    user,
+    isLogged,
+    cart,
+    totalPrice,
+    totalQuantity
+  ];
 
   const handleRememberField = (_event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
     setRememberFieldValue(checked);
@@ -70,25 +78,34 @@ const usePayments = () => {
     setCardHolderNameFieldValue(event.target.value);
   };
 
-  const paypalButtonsDependencies: Array<unknown> = [
-    totalPrice,
-    checkoutData,
-    token,
-    user,
-    isLogged,
-    intl.locale,
-    cart
-  ];
+  const getNewData = useCallback(() => {
+    const contactFormValues = contactFormRef.current?.values || {} as CheckoutContact;
+    const newCheckoutData: CheckoutData = {
+      ...checkoutData,
+      ...contactFormValues,
+    };
+    const newUser = isLogged() ? {
+      ...user,
+      shipping: contactFormValues.shipping,
+      billing: contactFormValues.billing,
+    } as User : {
+      ...user,
+      email: contactFormValues.checkoutEmail,
+    } as GuestUser;
+    return {
+      newCheckoutData,
+      newUser,
+    };
+  }, [checkoutData, isLogged, user]);
 
   const onPaypalButtonsSubmit = async (_data: CreateOrderData, _actions: CreateOrderActions) => {
     return createPaypalTransaction();
   };
 
   const onPaypalButtonsApprove = async (data: OnApproveData, _actions: OnApproveActions) => {
-    const contactFormValues = contactFormRef.current?.values || {} as CheckoutContact;
+    const { newUser, newCheckoutData } = getNewData();
     const captureCheckoutData: CheckoutData = {
-      ...checkoutData,
-      ...contactFormValues,
+      ...newCheckoutData,
       orderId: data.orderID,
       remember: rememberFieldValue,
     };
@@ -108,7 +125,7 @@ const usePayments = () => {
       return;
     }
     if (!cardHolderNameFieldValue || cardHolderNameFieldValue.length < 1) {
-      onErrorPaypalTransaction('cardholdername');
+      onErrorPaypalTransaction(new Error('cardHolderName'));
       return;
     }
     const contactFormValues = contactFormRef.current?.values || {} as CheckoutContact;
@@ -125,6 +142,7 @@ const usePayments = () => {
         },
         contingencies: ['SCA_WHEN_REQUIRED'],
       }).then((response) => {
+        const { newUser, newCheckoutData } = getNewData();
         const captureCheckoutData: CheckoutData = {
           ...newCheckoutData,
           orderId: response.orderId,
@@ -157,38 +175,23 @@ const usePayments = () => {
     setSuccessMsg('');
     await getPaypalUserTokenMW(token, intl.locale)
       .then((response: { paypalUserToken: string }) => {
-        paypalUserToken = response.paypalUserToken
+        paypalUserToken = response.paypalUserToken;
       }).catch((_error) => {
       })
-    setLoading(false)
-    return paypalUserToken
+    setLoading(false);
+    return paypalUserToken;
   }, [intl.locale, isLogged, setLoading, token]);
 
   const createPaypalTransaction = useCallback(async () => {
     return new Promise<string>(async (resolve, reject) => {
-      if (!contactFormRef.current?.isValid) {
-        reject('form');
-      }
       setLoading(true);
       setErrorMsg('');
       setSuccessMsg('');
-      const contactFormValues = contactFormRef.current?.values || {} as CheckoutContact;
-      const newCheckoutData: CheckoutData = {
-        ...checkoutData,
-        ...contactFormValues,
-      };
-      const newUser: User | GuestUser = isLogged() ? {
-        ...user,
-        shipping: contactFormValues.shipping,
-        billing: contactFormValues.billing,
-      } as User : {
-        ...user,
-        email: contactFormValues.checkoutEmail,
-      } as GuestUser;
-      setNewCheckoutData(newCheckoutData);
-      setNewUser(newUser);
-      console.log(newCheckoutData);
-      console.log(newUser);
+      if (!contactFormRef.current?.isValid) {
+        reject(new Error('contactForm'));
+        return;
+      }
+      const { newCheckoutData } = getNewData();
       await createPTransactionMW(
           isLogged() ? token : '', 
           intl.locale,
@@ -196,50 +199,48 @@ const usePayments = () => {
           !isLogged() ? cart : undefined
         )
           .then((response: { paypalTransactionId: string }) => {
-            setLoading(false);
+            setLoading(false)
             resolve(response.paypalTransactionId);
           }).catch((error) => {
             const errorMsg = error.message;
-            setErrorMsg(errorMsg);
-            setLoading(false);
-            reject(errorMsg)
+            reject(new Error(errorMsg))
           });
     });
-  }, [cart, checkoutData, intl.locale, isLogged, setLoading, token, user]);
+  }, [cart, getNewData, intl.locale, isLogged, setLoading, token]);
 
   const onSuccessPaypalTransaction = (captureCheckoutData: CheckoutData) => {
     capturePaypalTransaction(captureCheckoutData);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onErrorPaypalTransaction = (error: any, capturing?: boolean) => {
+  const onErrorPaypalTransaction = (error: any) => {
     setLoading(false);
     const errorMsg = getBackendErrorMsg('SDK Paypal ERROR', error);
     logBackendError(errorMsg);
     setSuccessMsg('');
-    let errorDetail = '';
-    if (error.details && error.details.length > 0 && error.details[0].field) {
-      errorDetail = error.details[0].field as string;
+    if (error.message && error.message.includes('contactForm')) {
+      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.contactForm' }));
+    } else if (error.message && error.message.includes('The email entered belongs to a registered user')) {
+      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.registeredUser' }));
+    } else if (error.message && error.message.includes('cardHolderName')) {
+      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.cardFieldsHolderName' }));
+    } else if (error.details && error.details.length > 0 && error.details[0].field) {
+      const errorDetail = error.details[0].field as string;
       if (errorDetail.includes('card/number')) {
-        setErrorMsg(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsNumber' }));
+        setErrorMsg(intl.formatMessage({ id: 'checkout.errors.cardFieldsNumber' }));
       } else if (errorDetail.includes('card/cvv')) {
-        setErrorMsg(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsCVV' }));
+        setErrorMsg(intl.formatMessage({ id: 'checkout.errors.cardFieldsCVV' }));
       } else if (errorDetail.includes('card/expiry')) {
-        setErrorMsg(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsExpiry' }));
+        setErrorMsg(intl.formatMessage({ id: 'checkout.errors.cardFieldsExpiry' }));
       }
-      return;
-    }
-    if (error.message && error.message.includes('cardholdername')) {
-      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFieldsHolderName' }));
     } else if (error.message && error.message.includes('3dSecure')) {
-      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethodCardFields3dSecure' }));
+      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.cardFields3dSecure' }));
     } else if (error.message && error.message.includes('Insufficient Funds')) {
       setErrorMsg(intl.formatMessage({ id: 'checkout.errors.insufficientFunds' }));
-    } else if (!capturing) {
-      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.checkPaymentMethod' }));
     } else {
-      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.createTransaction' }));
+      setErrorMsg(intl.formatMessage({ id: 'checkout.errors.default' }));
     }
+    console.log('error', error.message)
   };
 
   const initHostedFields = useCallback(async () => {
@@ -296,7 +297,7 @@ const usePayments = () => {
 
   const capturePaypalTransaction = async (captureCheckoutData: CheckoutData) => {
     if (!captureCheckoutData?.orderId) {
-      onErrorPaypalTransaction(new Error(), true);
+      onErrorPaypalTransaction(new Error());
       return;
     }
     setLoading(true);
@@ -310,16 +311,16 @@ const usePayments = () => {
     ).then((_response: { paypalTransactionId: string }) => {
       onCompleteTransaction();
     }).catch((error) => {
-      onErrorPaypalTransaction(error, true);
+      onErrorPaypalTransaction(error);
     });
   };
 
   const onCompleteTransaction = () => {
     router.push(pages.home.path);
     cleanCart();
-    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.createTransaction'}));
+    setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.message'}));
     enqueueSnackbar(intl.formatMessage(
-      { id: 'checkout.successes.createOrder' }), 
+      { id: 'checkout.successes.snackbar' }), 
       { variant: 'success', autoHideDuration: snachbarDuration }
     );
   };

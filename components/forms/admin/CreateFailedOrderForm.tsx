@@ -114,19 +114,17 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 ],       
               },
               {
-                name: 'userId',
-                type: FormFieldTypes.numeric,
-              },
-              {
-                name: 'guestUserEmail',
-                type: FormFieldTypes.text,
-              },
-              {
-                name: 'braintreeTransactionId',
-                type: FormFieldTypes.text,
-              },
-              {
                 name: 'paypalTransactionId',
+                type: FormFieldTypes.text,
+                required: true,
+              },
+              {
+                name: 'checkoutEmail',
+                type: FormFieldTypes.text,
+                required: true,
+              },
+              {
+                name: 'notes',
                 type: FormFieldTypes.text,
               },
               ...addressFormFields(AddressTypes.shipping)
@@ -175,6 +173,9 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 </Typography>
                 <Typography component="div" variant="body1">
                   {`${intl.formatMessage({ id: "forms.inventoryId" })}: ${product.inventoryId}`}
+                </Typography>
+                <Typography component="div" variant="body1">
+                  {`${intl.formatMessage({ id: "forms.packId" })}: ${product.packId}`}
                 </Typography>
                 <Button 
                   variant="contained"                    

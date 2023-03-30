@@ -33,16 +33,10 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
     if (event.target.id === 'sameAsShipping') {
-      if (event.target.checked) {
-        formikRef.current?.setFieldValue('billing.firstName', formikRef.current?.values.shipping?.firstName);
-        formikRef.current?.setFieldValue('billing.lastName', formikRef.current?.values.shipping?.lastName);
-        formikRef.current?.setFieldValue('billing.addressLine1', formikRef.current?.values.shipping?.addressLine1);
-        formikRef.current?.setFieldValue('billing.addressLine2', formikRef.current?.values.shipping?.addressLine2);
-        formikRef.current?.setFieldValue('billing.postalCode', formikRef.current?.values.shipping?.postalCode);
-        formikRef.current?.setFieldValue('billing.locality', formikRef.current?.values.shipping?.locality);
-        formikRef.current?.setFieldValue('billing.country', formikRef.current?.values.shipping?.country);
-      }
       setHiddenBilling(event.target.checked);
+    }
+    if (formikRef.current?.values.sameAsShipping) {
+      formikRef.current?.setFieldValue('billing', formikRef.current?.values.shipping);
     }
   };
 
@@ -115,7 +109,7 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
         },
         {
           titleTxt: {
-            id: 'forms.checkoutContact',
+            id: 'checkout.contact.title',
             textAlign: 'center',
           },
           formFields: [

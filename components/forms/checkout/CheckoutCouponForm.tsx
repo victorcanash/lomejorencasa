@@ -28,7 +28,7 @@ const CheckoutCouponForm: NextPage = () => {
         formFieldGroups={[
           {
             descriptionTxt: {
-              id: 'forms.coupon.description',
+              id: 'checkout.coupon.description',
             },
             formFields: [
               {
@@ -42,7 +42,7 @@ const CheckoutCouponForm: NextPage = () => {
         formButtons={{
           submit: {
             text: {
-              id: 'forms.coupon.successBtn',
+              id: 'checkout.coupon.successBtn',
             },
             onSubmit: handleCouponSubmit,
           },

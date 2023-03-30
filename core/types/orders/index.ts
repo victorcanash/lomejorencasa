@@ -66,7 +66,7 @@ export type OrderContact = {
 
 export type OrderFailedCreate = {
   locale: string,
-  paypalTransactionId?: string,
+  paypalTransactionId: string,
   checkoutEmail: string,
   notes?: string,
   shipping: UserAddress,

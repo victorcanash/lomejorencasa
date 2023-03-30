@@ -264,6 +264,7 @@ const BaseForm = (props: FormBase) => {
         onSubmit={handleSubmit}
         enableReinitialize={enableReinitialize}
         innerRef={formikRef}
+        validateOnMount={true}
       >
         { props => (
           <FormikForm

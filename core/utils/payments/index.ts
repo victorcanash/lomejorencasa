@@ -36,7 +36,7 @@ export const getPaypalUserToken = (token: string, currentLocale: string) => {
   });
 };
 
-export const createPaypalTransaction = (token: string, currentLocale: string, checkoutData: CheckoutData, guestCart?: Cart) => {
+export const createPaypalTransaction = (token: string, currentLocale: string, checkoutData: CheckoutData, unloggedCart?: Cart) => {
   return new Promise<{paypalTransactionId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
@@ -52,7 +52,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
         remember: checkoutData.remember,
         notes: checkoutData.notes,
       },
-      guestCart: guestCart ? convertCartToGuestCart(guestCart) : undefined,
+      guestCart: unloggedCart ? convertCartToGuestCart(unloggedCart) : undefined,
     };
     axios.post('/payments/paypal-transaction', body, options)
       .then(async (response: AxiosResponse) => {
@@ -71,7 +71,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
   })
 };
 
-export const capturePaypalTransaction = (token: string, currentLocale: string, checkoutData: CheckoutData, guestCart?: Cart) => {
+export const capturePaypalTransaction = (token: string, currentLocale: string, checkoutData: CheckoutData, unloggedCart?: Cart) => {
   return new Promise<{paypalTransactionId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
@@ -92,7 +92,7 @@ export const capturePaypalTransaction = (token: string, currentLocale: string, c
         remember: checkoutData.remember,
         notes: checkoutData.notes,
       },
-      guestCart: guestCart ? convertCartToGuestCart(guestCart) : undefined,
+      guestCart: unloggedCart ? convertCartToGuestCart(unloggedCart) : undefined,
     };
     axios.post(`/payments/paypal-transaction/${checkoutData.orderId}`, body, options)
       .then(async (response: AxiosResponse) => {
