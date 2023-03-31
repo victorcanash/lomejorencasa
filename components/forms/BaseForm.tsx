@@ -286,7 +286,7 @@ const BaseForm = (props: FormBase) => {
                       key={index} 
                       item 
                       xs={12}
-                      sm={formFieldGroups.length > 1 ? 6 : undefined}
+                      //sm={formFieldGroups.length > 1 ? 6 : undefined}
                     >
                       { (group.avatarIcon || group.titleTxt || group.descriptionTxt) &&
                         <Box
