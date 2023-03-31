@@ -5,6 +5,8 @@ import axios, { getAuthHeaders } from '@core/config/axios.config';
 import { ManageActions } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
+import { firstBuyDiscount, spainVat } from '@core/constants/payments';
+import type { User, GuestUser } from '@core/types/user';
 import type { Cart, CartItem, GuestCart, GuestCartCheck, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
@@ -48,6 +50,55 @@ export const checkCart = (token: string | undefined, cart: Cart) => {
   });
 };
 
+export const applyFirstBuyDiscount = (user: User | GuestUser) => {
+  if ((user as User)?.firstName && !(user as User).orderExists) {
+    return true;
+  }
+  return false;
+};
+
+const getFirstBuyDiscountNumber = (totalPrice: number) => {
+  return (firstBuyDiscount / 100) * totalPrice;
+};
+
+const getRealTotalPriceNumber = (user: User | GuestUser, totalPrice: number) => {
+  let realPrice = totalPrice;
+  if (applyFirstBuyDiscount(user)) {
+    realPrice -= getFirstBuyDiscountNumber(totalPrice);
+  }
+  return realPrice;
+};
+
+const getRealTotalVatNumber = (user: User | GuestUser, totalPrice: number) => {
+  const realTotalPrice = getRealTotalPriceNumber(user, totalPrice);
+  return (spainVat / 100) * realTotalPrice;
+};
+
+export const getFirstBuyDiscountString = (totalPrice: number) => {
+  return `${getFirstBuyDiscountNumber(totalPrice).toFixed(2)}€`;
+};
+
+export const getTotalPriceString = (totalPrice: number) => {
+  return `${totalPrice.toFixed(2)}€`;
+};
+
+export const getRealTotalPriceString = (user: User | GuestUser, totalPrice: number) => {
+  return `${getRealTotalPriceNumber(user, totalPrice).toFixed(2)}€`;
+};
+
+export const getRealTotalVatString = (user: User | GuestUser, totalPrice: number) => {
+  return `${getRealTotalVatNumber(user, totalPrice).toFixed(2)}€`;
+};
+
+export const itemPriceString = (item: CartItem | GuestCartCheckItem) => {
+  if (item.inventory) {
+    return `${item.inventory.realPrice}€`;
+  } else if (item.pack) {
+    return `${item.pack.price}€`;
+  }
+  return '';
+};
+
 export const itemTotalPriceNumber = (item: CartItem | GuestCartCheckItem, setQuantity?: number) => {
   const price = 0;
   if (item.inventory) {
@@ -60,9 +111,9 @@ export const itemTotalPriceNumber = (item: CartItem | GuestCartCheckItem, setQua
 
 export const itemTotalPriceString = (item: CartItem | GuestCartCheckItem) => {
   if (item.inventory) {
-    return `${(item.inventory.realPrice * item.quantity).toFixed(2)} €`;
+    return `${(item.inventory.realPrice * item.quantity).toFixed(2)}€`;
   } else if (item.pack) {
-    return `${(item.pack.price * item.quantity).toFixed(2)} €`;
+    return `${(item.pack.price * item.quantity).toFixed(2)}€`;
   }
   return '';
 };

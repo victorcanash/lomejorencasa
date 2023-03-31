@@ -124,8 +124,8 @@ const OrderDetail = (props: OrderDetailProps) => {
         {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
       </Typography>
       <CartDetail
-        items={order.items || []}
-        totalPrice={Number(order.transaction.amount)}
+        //items={order.items || []}
+        //totalPrice={Number(order.transaction.amount)}
         showEmptyItems={true}
       />
 

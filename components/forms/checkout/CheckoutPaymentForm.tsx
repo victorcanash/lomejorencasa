@@ -98,6 +98,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
           },
           extraElements:
             <>
+
               <Box
                 textAlign="center"
                 mt={2}

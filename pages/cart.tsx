@@ -1,11 +1,10 @@
 import { useEffect, useState, useCallback } from 'react';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
@@ -21,14 +20,12 @@ import useCart from '@lib/hooks/useCart';
 import PageHeader from '@components/ui/PageHeader';
 import CartDetail from '@components/cart/CartDetail';
 import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
-import GoBackBtn from '@components/ui/GoBackBtn';
 
 const Cart: NextPage = () => {
   const { setLoading } = useAppContext();
-  const { cart, totalPrice, totalQuantity, /*disabledCheckoutPage*/ } = useCartContext();
+  const { cart, totalPrice, disabledCheckoutPage } = useCartContext();
 
   const page = usePage();
-  const router = useRouter();
   const intl = useIntl();
 
   const { checkCart, updateCartItemQuantity } = useCart();
@@ -61,13 +58,15 @@ const Cart: NextPage = () => {
   useEffect(() => {
     if (page.checked && initCart) {
       setInitCart(false);
-      if (totalPrice <= 0 && totalQuantity <= 0) {
+      if (totalPrice <= 0) {
         onSuccessCheckCart(false, []);
       } else {
         checkCart(onSuccessCheckCart);
       }
     }
-  }, [initCart, checkCart, onSuccessCheckCart, page.checked, router.asPath, totalPrice, totalQuantity]);
+  }, [checkCart, initCart, onSuccessCheckCart, page.checked, totalPrice]);
+
+  const maxWidth = '500px';
 
   return (
     <>
@@ -82,49 +81,33 @@ const Cart: NextPage = () => {
           title: {
             id: 'cart.h1',
           },
-          titleAdd: ` (${totalQuantity})`,
         }}
       />
 
       { checkedCart &&
-        <Container>
-
+        <Container sx={{ maxWidth: maxWidth }}>
           { cart && !emptyCart() ?
-            <CartDetail
-              items={cart.items}
-              totalPrice={totalPrice}
-              updateQuantity={updateCartItemQuantity}
-              showEmptyItems={true}
-            />
+            <>
+              <CartDetail
+                updateQuantity={updateCartItemQuantity}
+                showEmptyItems={true}
+              />
+              <Box mt={3}>
+                <LinkButton
+                  href={pages.checkout.path}
+                  startIcon={<PointOfSaleIcon />}
+                  disabled={disabledCheckoutPage()}
+                  fullWidth
+                >
+                  <FormattedMessage id="cart.checkoutBtn" />
+                </LinkButton>
+              </Box>
+            </>
             :
             <Typography component='div' variant='body1' sx={{ my: 5, textAlign: 'center' }}>
               <FormattedMessage id="cart.noItems" />
             </Typography>
           }
-
-          <Grid
-            container
-            sx={{
-              flexWrap: 'nowrap',
-              justifyContent: 'space-between',
-            }}
-            mt={ !emptyCart() ? 3 : undefined }
-          >
-            <Grid item>
-              <GoBackBtn />
-            </Grid>
-            { !emptyCart() &&
-              <Grid item>
-                <LinkButton
-                  href={pages.checkout.path}
-                  startIcon={<PointOfSaleIcon />}
-                  /*disabled={disabledCheckoutPage()}*/
-                >
-                  <FormattedMessage id="cart.checkoutBtn" />
-                </LinkButton>
-              </Grid>
-            }
-          </Grid>
 
           <CheckedCartDialog
             open={openDialog}
@@ -133,7 +116,6 @@ const Cart: NextPage = () => {
             changedItemsByInventory={changedItemsByInventory}
             message={intl.formatMessage({ id: 'dialogs.checkedCart.content.cartPage' })}
           />
-
         </Container>
       }
     </>

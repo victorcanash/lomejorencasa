@@ -336,7 +336,7 @@ const BaseForm = (props: FormBase) => {
                         </Box>
                       }
                       { group.formFields && group.formFields.length > 0 &&
-                        <Box mb={2}>
+                        <Box mb={group.formFieldsMb === undefined ? 2 : group.formFieldsMb}>
                           { group.formFields.map((formField) => (
                             <Box key={formField.name}>
                               { getFormField(props, formField) }

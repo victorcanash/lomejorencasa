@@ -43,91 +43,93 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
   const maxWidth = '600px';
 
   return (
-    <BaseForm
-      formikRef={formikRef}
-      maxWidth={maxWidth}
-      initialValues={{
-        shipping: {
-          id: (user as User)?.shipping?.id || checkoutData.shipping?.id || -1,
-          userId: (user as User)?.shipping?.userId || (user as User)?.id || -1,
-          type: AddressTypes.shipping,
-          firstName: (user as User)?.shipping?.firstName || (user as User)?.firstName || checkoutData.shipping?.firstName || addressFieldsInitValues.firstName,
-          lastName: (user as User)?.shipping?.lastName || (user as User)?.lastName || checkoutData.shipping?.lastName || addressFieldsInitValues.lastName,
-          addressLine1: (user as User)?.shipping?.addressLine1 || checkoutData.shipping?.addressLine1 || addressFieldsInitValues.addressLine1,
-          addressLine2: (user as User)?.shipping?.addressLine2 || checkoutData.shipping?.addressLine2 || addressFieldsInitValues.addressLine2,
-          postalCode: (user as User)?.shipping?.postalCode || checkoutData.shipping?.postalCode || addressFieldsInitValues.postalCode,
-          locality: (user as User)?.shipping?.locality || checkoutData.shipping?.locality || addressFieldsInitValues.locality,
-          country: (user as User)?.shipping?.country || checkoutData.shipping?.country || addressFieldsInitValues.country,
-        },
-        billing: {
-          id: (user as User)?.billing?.id || checkoutData.billing?.id || -1,
-          userId: (user as User)?.billing?.userId || (user as User)?.id || -1,
-          type: AddressTypes.billing,
-          firstName: (user as User)?.billing?.firstName || (user as User)?.firstName || checkoutData.billing?.firstName || addressFieldsInitValues.firstName,
-          lastName: (user as User)?.billing?.lastName || (user as User)?.lastName || checkoutData.billing?.lastName || addressFieldsInitValues.lastName,
-          addressLine1: (user as User)?.billing?.addressLine1 || checkoutData.billing?.addressLine1 || addressFieldsInitValues.addressLine1,
-          addressLine2: (user as User)?.billing?.addressLine2 || checkoutData.billing?.addressLine2 || addressFieldsInitValues.addressLine2,
-          postalCode: (user as User)?.billing?.postalCode || checkoutData.billing?.postalCode || addressFieldsInitValues.postalCode,
-          locality: (user as User)?.billing?.locality || checkoutData.billing?.locality || addressFieldsInitValues.locality,
-          country: (user as User)?.billing?.country || checkoutData.billing?.country || addressFieldsInitValues.country,
-        },
-        sameAsShipping: checkoutData.sameAsShipping || false,
-        checkoutEmail: user.email || checkoutData.checkoutEmail || userFieldsInitValues.email,
-        notes: checkoutData.notes || orderFieldsInitValues.notes,
-      } as CheckoutContact}
-      validationSchema={checkoutContactFormValidation}
-      enableReinitialize={true}
-      onChange={handleChange}
-      formFieldGroups={[
-        {
-          titleTxt: {
-            id: 'forms.shipping',
-            textAlign: 'center',
+    <>
+      <BaseForm
+        formikRef={formikRef}
+        maxWidth={maxWidth}
+        initialValues={{
+          shipping: {
+            id: (user as User)?.shipping?.id || checkoutData.shipping?.id || -1,
+            userId: (user as User)?.shipping?.userId || (user as User)?.id || -1,
+            type: AddressTypes.shipping,
+            firstName: (user as User)?.shipping?.firstName || (user as User)?.firstName || checkoutData.shipping?.firstName || addressFieldsInitValues.firstName,
+            lastName: (user as User)?.shipping?.lastName || (user as User)?.lastName || checkoutData.shipping?.lastName || addressFieldsInitValues.lastName,
+            addressLine1: (user as User)?.shipping?.addressLine1 || checkoutData.shipping?.addressLine1 || addressFieldsInitValues.addressLine1,
+            addressLine2: (user as User)?.shipping?.addressLine2 || checkoutData.shipping?.addressLine2 || addressFieldsInitValues.addressLine2,
+            postalCode: (user as User)?.shipping?.postalCode || checkoutData.shipping?.postalCode || addressFieldsInitValues.postalCode,
+            locality: (user as User)?.shipping?.locality || checkoutData.shipping?.locality || addressFieldsInitValues.locality,
+            country: (user as User)?.shipping?.country || checkoutData.shipping?.country || addressFieldsInitValues.country,
           },
-          formFields: addressFormFields(AddressTypes.shipping),
-        },
-        {
-          titleTxt: {
-            id: 'forms.billing',
-            textAlign: 'center',
+          billing: {
+            id: (user as User)?.billing?.id || checkoutData.billing?.id || -1,
+            userId: (user as User)?.billing?.userId || (user as User)?.id || -1,
+            type: AddressTypes.billing,
+            firstName: (user as User)?.billing?.firstName || (user as User)?.firstName || checkoutData.billing?.firstName || addressFieldsInitValues.firstName,
+            lastName: (user as User)?.billing?.lastName || (user as User)?.lastName || checkoutData.billing?.lastName || addressFieldsInitValues.lastName,
+            addressLine1: (user as User)?.billing?.addressLine1 || checkoutData.billing?.addressLine1 || addressFieldsInitValues.addressLine1,
+            addressLine2: (user as User)?.billing?.addressLine2 || checkoutData.billing?.addressLine2 || addressFieldsInitValues.addressLine2,
+            postalCode: (user as User)?.billing?.postalCode || checkoutData.billing?.postalCode || addressFieldsInitValues.postalCode,
+            locality: (user as User)?.billing?.locality || checkoutData.billing?.locality || addressFieldsInitValues.locality,
+            country: (user as User)?.billing?.country || checkoutData.billing?.country || addressFieldsInitValues.country,
           },
-          formFields: !hiddenBilling ?
-            [
+          sameAsShipping: checkoutData.sameAsShipping || false,
+          checkoutEmail: user.email || checkoutData.checkoutEmail || userFieldsInitValues.email,
+          notes: checkoutData.notes || orderFieldsInitValues.notes,
+        } as CheckoutContact}
+        validationSchema={checkoutContactFormValidation}
+        enableReinitialize={true}
+        onChange={handleChange}
+        formFieldGroups={[
+          {
+            titleTxt: {
+              id: 'forms.shipping',
+              textAlign: 'center',
+            },
+            formFields: addressFormFields(AddressTypes.shipping),
+          },
+          {
+            titleTxt: {
+              id: 'forms.billing',
+              textAlign: 'center',
+            },
+            formFields: !hiddenBilling ?
+              [
+                {
+                  name: 'sameAsShipping',
+                  type: FormFieldTypes.checkbox,
+                },
+                ...addressFormFields(AddressTypes.billing)
+              ]
+              :
+              [
+                {
+                  name: 'sameAsShipping',
+                  type: FormFieldTypes.checkbox,
+                },
+              ],
+          },
+          {
+            titleTxt: {
+              id: 'checkout.contact.title',
+              textAlign: 'center',
+            },
+            formFields: [
               {
-                name: 'sameAsShipping',
-                type: FormFieldTypes.checkbox,
+                name: 'checkoutEmail',
+                type: FormFieldTypes.text,
+                required: true,
+                autoComplete: 'email',
+                disabled: isLogged(),
               },
-              ...addressFormFields(AddressTypes.billing)
-            ]
-            :
-            [
               {
-                name: 'sameAsShipping',
-                type: FormFieldTypes.checkbox,
+                name: 'notes',
+                type: FormFieldTypes.text,
               },
             ],
-        },
-        {
-          titleTxt: {
-            id: 'checkout.contact.title',
-            textAlign: 'center',
-          },
-          formFields: [
-            {
-              name: 'checkoutEmail',
-              type: FormFieldTypes.text,
-              required: true,
-              autoComplete: 'email',
-              disabled: isLogged(),
-            },
-            {
-              name: 'notes',
-              type: FormFieldTypes.text,
-            },
-          ],
-        }
-      ]}
-    />
+          }
+        ]}
+      />
+    </>
   );
 };
 

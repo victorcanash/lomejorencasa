@@ -12,6 +12,7 @@ export type FormFieldGroup = {
   titleTxt?: FormatText,
   descriptionTxt?: FormatText,
   formFields?: FormField[],
+  formFieldsMb?: number,
   extraElements?: JSX.Element,
 };
 

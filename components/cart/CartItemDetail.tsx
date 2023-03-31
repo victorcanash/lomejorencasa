@@ -1,21 +1,25 @@
-import { useState, useEffect, useCallback, Fragment } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import { FormFieldTypes } from '@core/constants/forms';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import { itemTotalPriceString, availableItemQuantity } from '@core/utils/cart';
+import { itemPriceString, itemTotalPriceString, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 
+import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
+import useForms from '@lib/hooks/useForms';
+import useAuth from '@lib/hooks/useAuth';
+import BaseForm from '@components/forms/BaseForm';
 
 type CartItemDetailProps = {
   item: CartItem | GuestCartCheckItem,
@@ -29,6 +33,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
   const { getProductPageUrl, getProductImgUrl } = useProductsContext();
 
   const intl = useIntl();
+
   const { Select: SelectQuantity } = useSelectInventoryQuantity(
     item as CartItem,
     // On change
@@ -38,6 +43,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       }
     }
   );
+  const { couponFormValidation, couponFieldsInitValues } = useForms();
+  const { applyCoupon, errorMsg } = useAuth();
 
   const [availableQuantity, setAvailableQuantity] = useState(true);
 
@@ -45,6 +52,10 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     if (updateQuantity) {
       updateQuantity(item as CartItem, 0, true);
     }
+  };
+
+  const handleCouponSubmit = async (_values: { couponCode: string }) => {
+    applyCoupon();
   };
 
   const checkAvailableQuantity = useCallback(() => {
@@ -66,115 +77,154 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
   return (
     <>
+      {/* Delete Button */}
+      { updateQuantity &&
+        <Grid container direction="row-reverse">
+          <Grid item>
+            <Tooltip 
+              title={intl.formatMessage({ id: 'app.deleteBtn' })} 
+              placement='top'
+            >
+              <IconButton 
+                onClick={handleRemoveItem}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+        </Grid>
+      }
+
       <Grid container spacing={2}>
-        <Grid item xs={4} sm={3} md={2}>
-            <Link href={getProductPageUrl(item)} noLinkStyle>
-              <div>
-                <Image
-                  src={getProductImgUrl(item)}
-                  alt="Product image"
-                  layout="responsive"
-                  objectFit="cover"
-                  style={{ borderRadius: '10px' }}
-                  priority={priorityImg}
-                />
-              </div>
-            </Link>
+        {/* Product Image */}
+        <Grid item xs={12}>
+          <Link href={getProductPageUrl(item)} noLinkStyle>
+            <Image
+              src={getProductImgUrl(item)}
+              alt="Product image"
+              layout="responsive"
+              objectFit="cover"
+              style={{ borderRadius: '10px' }}
+              priority={priorityImg}
+            />
+          </Link>
         </Grid>
 
-        <Grid item xs={8} sm={9} md={10} container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs sx={item.quantity <= 0 || (!item.inventory && !item.pack) ? { color: 'text.disabled' } : undefined}>
-              { (item.inventory || item.pack) ?
+        <Grid 
+          item 
+          xs={12}
+          container
+          spacing={1} 
+          sx={!availableQuantity ? { color: 'text.disabled' } : undefined}
+        >
+          {/* Product Name */}
+          <Grid item xs={12} container justifyContent="space-between">
+            <Grid item>
+              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <FormattedMessage
+                  id="cart.product"
+                />
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography component="div" variant="body1">
+                {item.inventory?.name.current || item.pack?.name.current}
+              </Typography>
+            </Grid>
+          </Grid>
+          {/* Product Price */}
+          <Grid item xs={12} container justifyContent="space-between">
+            <Grid item>
+              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <FormattedMessage
+                  id="cart.price"
+                />
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography component="div" variant="body1">
+                {itemPriceString(item)}
+              </Typography>
+            </Grid>
+          </Grid>
+          {/* Product Quantity */}
+          <Grid item xs={12} container justifyContent="space-between">
+            <Grid item>
+              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <FormattedMessage
+                  id="cart.quantity"
+                />
+              </Typography>
+            </Grid>
+            <Grid item>
+              { !updateQuantity ?
+                <Typography component="div" variant="body1">
+                  {item.quantity.toString()}
+                </Typography>
+                :
                 <>
-                  <Typography gutterBottom component="div" variant="body1">
-                    {item.inventory?.product.name.current || item.pack?.name.current}
-                  </Typography>
-                  { item.inventory ?
-                    <Box>
-                      <Typography component="div" variant="body2">
-                        {item.inventory.name.current}
-                      </Typography>
-                      <Typography component="div" variant="body2">
-                      {`${intl.formatMessage({ id: 'forms.sku' })}: ${item.inventory.sku}`}
-                      </Typography>
-                    </Box>
-                    :
-                    <Box>
-                      { item.pack?.inventories.map((item, index) => (
-                        <Fragment key={index}>
-                          <Typography component="div" variant="body2">
-                            {item.product.name.current}
-                          </Typography>
-                          <Box ml={1}>
-                            <Typography component="div" variant="body2">
-                              {item.name.current}
-                            </Typography>
-                            <Typography component="div" variant="body2">
-                            {`${intl.formatMessage({ id: 'forms.sku' })}: ${item.sku}`}
-                            </Typography>
-                          </Box>
-                        </Fragment>
-                      ))}
-                    </Box>
+                  <SelectQuantity />      
+                  { ((item.inventory || item.pack) && item.quantity <= 0) &&
+                    <Typography 
+                      variant="body2"
+                      mt="5px"
+                      color={!availableQuantity ? { color: 'text.disabled' } : { color: 'text.primary' }}
+                    >
+                      { !availableQuantity ? 
+                        intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
+                        intl.formatMessage({ id: 'cart.inventoryAvailable' })
+                      }
+                    </Typography>
                   }
                 </>
-                :
-                <Typography component="div" variant="body1">
-                  <FormattedMessage 
-                    id="orderDetail.noProductReference" 
-                  />
-                </Typography>
-              }
-              { !updateQuantity &&
-                <Box>
-                  <Typography component="div" variant="body2">
-                    {`${intl.formatMessage({ id: 'forms.quantity' })}: ${item.quantity.toString()}`}
-                  </Typography>
-                </Box>
               }
             </Grid>
-
-            { updateQuantity &&
-              <Grid item>
-                <SelectQuantity />
-                <Tooltip 
-                  title={intl.formatMessage({ id: 'app.deleteBtn' })} 
-                  placement='top'
-                >
-                  <IconButton 
-                    onClick={handleRemoveItem}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-                { ((item.inventory || item.pack) && item.quantity <= 0) &&
-                  <Typography 
-                    variant="body2"
-                    mt="5px"
-                    color={!availableQuantity ? { color: 'text.disabled' } : undefined}
-                  >
-                    { !availableQuantity ? 
-                      intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
-                      intl.formatMessage({ id: 'cart.inventoryAvailable' })
-                    }
-                  </Typography>
-                }
-              </Grid>
-            }
           </Grid>
-
-          <Grid item ml={1}>
-            <Typography 
-              component="div" 
-              variant="body1" 
-              color={!availableQuantity ? { color: 'text.disabled' } : undefined}
-              fontWeight={500}
-            >
-              { itemTotalPriceString(item) }
-            </Typography>
+          {/* Product Subtotal */}
+          <Grid item xs={12} container justifyContent="space-between">
+            <Grid item>
+              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <FormattedMessage
+                  id="cart.subtotal"
+                />
+              </Typography>
+            </Grid> 
+            <Grid item>
+              <Typography component="div" variant="body1">
+                {itemTotalPriceString(item)}
+              </Typography>
+            </Grid>
           </Grid>
-        </Grid> 
+        </Grid>
+        {/* Product Coupon Form */}
+        <Grid item xs={12} mt={-2}>
+          <BaseForm
+            initialValues={couponFieldsInitValues}
+            validationSchema={couponFormValidation}
+            formFieldGroups={[
+              {
+                formFields: [
+                  {
+                    name: 'couponCode',
+                    type: FormFieldTypes.text,
+                    required: true,
+                  },
+                ],
+                formFieldsMb: 1,
+              }
+            ]}
+            formButtons={{
+              submit: {
+                text: {
+                  id: 'cart.coupon.successBtn',
+                },
+                disabled: !availableQuantity,
+                onSubmit: handleCouponSubmit,
+              },
+            } as FormButtonsNormal}
+            errorMsg={errorMsg}
+          />
+        </Grid>
       </Grid>
     </>
   );

@@ -1,4 +1,5 @@
 import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePayments from '@lib/hooks/usePayments';
@@ -29,26 +30,34 @@ const CheckoutForms = () => {
   return (
     <Container>
       { !isLogged() &&
-        <CheckoutAuthForm />
+        <Box mb={4}>
+          <CheckoutAuthForm />
+        </Box>
       }
-      <CheckoutCouponForm />
-      <CheckoutContactForm
-        formikRef={contactFormRef}
-      />
-      <CheckoutPaymentForm
-        paypalButtonsDependencies={paypalButtonsDependencies}
-        onPaypalButtonsSubmit={onPaypalButtonsSubmit}
-        onPaypalButtonsApprove={onPaypalButtonsApprove}
-        onPaypalButtonsError={onPaypalButtonsError}
-        onAdvancedCardsSubmit={onAdvancedCardsSubmit}
-        advancedCardsInstance={advancedCardsInstance}
-        cardHolderNameFieldValue={cardHolderNameFieldValue}
-        handleCardHolderNameField={handleCardHolderNameField}
-        rememberFieldValue={rememberFieldValue}
-        handleRememberField={handleRememberField}
-        errorMsg={errorMsg}
-        successMsg={successMsg}
-      />
+      <Box mb={4}>
+        <CheckoutCouponForm />
+      </Box>
+      <Box mb={3}>
+        <CheckoutContactForm
+          formikRef={contactFormRef}
+        />
+      </Box>
+      <Box>
+        <CheckoutPaymentForm
+          paypalButtonsDependencies={paypalButtonsDependencies}
+          onPaypalButtonsSubmit={onPaypalButtonsSubmit}
+          onPaypalButtonsApprove={onPaypalButtonsApprove}
+          onPaypalButtonsError={onPaypalButtonsError}
+          onAdvancedCardsSubmit={onAdvancedCardsSubmit}
+          advancedCardsInstance={advancedCardsInstance}
+          cardHolderNameFieldValue={cardHolderNameFieldValue}
+          handleCardHolderNameField={handleCardHolderNameField}
+          rememberFieldValue={rememberFieldValue}
+          handleRememberField={handleRememberField}
+          errorMsg={errorMsg}
+          successMsg={successMsg}
+        />
+      </Box>
     </Container>
   );
 };

@@ -209,6 +209,10 @@ const useForms = () => {
     packId: -1,
   };
 
+  const couponFieldsInitValues = {
+    couponCode: '',
+  };
+
   const localizedTextsFieldsValidation = {
     en: Yup
       .string()
@@ -513,6 +517,7 @@ const useForms = () => {
     addressFieldsInitValues,
     orderFieldsInitValues,
     orderProductFieldsInitValues,
+    couponFieldsInitValues,
     productFieldsInitValues,
     categoryFieldsInitValues,
     inventoryFieldsInitValues,
