@@ -96,11 +96,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const disabledCheckoutPage = () => {
-    /*if (envConfig.NEXT_PUBLIC_APP_ENV === Environments.development) {
+    if (envConfig.NEXT_PUBLIC_APP_ENV === Environments.development) {
       return true;
     } else if (totalPrice <= 0) {
       return true;
-    }*/
+    }
     return false;
   };
 

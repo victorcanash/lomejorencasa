@@ -17,6 +17,7 @@ import {
   getTotalPriceString 
 } from '@core/utils/cart';
 
+import { pages } from '@lib/constants/navigation';
 import colors from '@lib/constants/themes/colors';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -65,7 +66,12 @@ const CartDetail = (props: CartDetailProps) => {
                   updateQuantity={updateQuantity}
                   priorityImg={index <= 4 ? true : false}
                 />
-                <Divider sx={{ mt: 3, mb: 2 }} />
+                <Divider 
+                  sx={{
+                    mt: 3,
+                    mb: page == pages.cart ? 2 : 3,
+                  }} 
+                />
               </>
             }
           </Fragment>

@@ -10,6 +10,7 @@ import type { User, GuestUser } from '@core/types/user';
 import type { Cart, CartItem, GuestCart, GuestCartCheck, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
+import { roundTwoDecimals, roundTwoDecimalsToString } from '@core/utils/numbers';
 
 export const checkCart = (token: string | undefined, cart: Cart) => {
   return new Promise<{cart: Cart, changedItemsByInventory: CartItem[]}>(async (resolve, reject) => {
@@ -58,7 +59,8 @@ export const applyFirstBuyDiscount = (user: User | GuestUser) => {
 };
 
 const getFirstBuyDiscountNumber = (totalPrice: number) => {
-  return (firstBuyDiscount / 100) * totalPrice;
+  const firstBuyDiscountValue = roundTwoDecimals((firstBuyDiscount / 100) * totalPrice);
+  return firstBuyDiscountValue;
 };
 
 const getRealTotalPriceNumber = (user: User | GuestUser, totalPrice: number) => {
@@ -74,20 +76,18 @@ const getRealTotalVatNumber = (user: User | GuestUser, totalPrice: number) => {
   return (spainVat / 100) * realTotalPrice;
 };
 
-export const getFirstBuyDiscountString = (totalPrice: number) => {
-  return `${getFirstBuyDiscountNumber(totalPrice).toFixed(2)}€`;
-};
-
 export const getTotalPriceString = (totalPrice: number) => {
-  return `${totalPrice.toFixed(2)}€`;
+  return `${roundTwoDecimalsToString(totalPrice)}€`;
 };
 
 export const getRealTotalPriceString = (user: User | GuestUser, totalPrice: number) => {
-  return `${getRealTotalPriceNumber(user, totalPrice).toFixed(2)}€`;
+  const realTotalPrice = getRealTotalPriceNumber(user, totalPrice);
+  return `${roundTwoDecimalsToString(realTotalPrice)}€`;
 };
 
 export const getRealTotalVatString = (user: User | GuestUser, totalPrice: number) => {
-  return `${getRealTotalVatNumber(user, totalPrice).toFixed(2)}€`;
+  const realTotalVat = getRealTotalVatNumber(user, totalPrice);
+  return `${roundTwoDecimalsToString(realTotalVat)}€`;
 };
 
 export const itemPriceString = (item: CartItem | GuestCartCheckItem) => {
