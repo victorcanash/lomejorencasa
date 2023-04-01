@@ -45,7 +45,7 @@ const usePayments = () => {
   const router = useRouter();
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
-  const [{ isResolved, options }, /*dispatch*/] = usePayPalScriptReducer();
+  const [{ isResolved, options }, dispatch] = usePayPalScriptReducer();
 
   const contactFormRef = useRef<FormikProps<CheckoutContact> | null>(null);
 
@@ -54,9 +54,7 @@ const usePayments = () => {
   const [advancedCardsInstance, setAdvancedCardsInstance] = useState<HostedFieldsHandler | undefined>(undefined);
   const [supportsAdvancedCards, setSupportsAdvancedCards] = useState<boolean | undefined>(undefined);
   const [rememberFieldValue, setRememberFieldValue] = useState(false);
-  const [cardHolderNameFieldValue, setCardHolderNameFieldValue] = useState(
-    checkoutData?.card?.holderName || ''
-  );
+  const [cardHolderNameFieldValue, setCardHolderNameFieldValue] = useState(checkoutData?.card?.holderName || '');
 
   const snachbarDuration = 10000;
   const paypalButtonsDependencies: Array<unknown> = [
