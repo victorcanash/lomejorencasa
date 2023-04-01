@@ -217,7 +217,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                       required: true,
                     },
                   ],
-                  formFieldsMb: 1,
+                  formFieldsMb: 0,
                 }
               ]}
               formButtons={{
