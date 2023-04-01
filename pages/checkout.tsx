@@ -22,7 +22,7 @@ const Checkout: NextPage = () => {
 
   const page = usePage(false);
 
-  const [loadedCheckout, setLoadedCheckout] = useState(false);
+  const [loadedCheckout, setLoadedCheckout] = useState(disabledCheckoutPage() ? false : true);
 
   const init = useCallback(async () => {
     if (disabledCheckoutPage()) {
