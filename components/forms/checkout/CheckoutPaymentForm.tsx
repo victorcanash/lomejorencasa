@@ -98,7 +98,6 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
           },
           extraElements:
             <>
-
               <Box
                 textAlign="center"
                 mt={2}
@@ -175,7 +174,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
       formButtons={paypal?.advancedCards ? {
         submit: {
           text: { 
-            id: 'app.continueBtn',
+            id: 'checkout.successBtn',
           },
           onSubmit: handleAdvancedCardsSubmit,
           disabled: !advancedCardsInstance,

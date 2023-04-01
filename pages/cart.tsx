@@ -87,6 +87,7 @@ const Cart: NextPage = () => {
           { cart && !emptyCart() ?
             <>
               <CartDetail
+                page={pages.cart}
                 updateQuantity={updateCartItemQuantity}
                 showEmptyItems={true}
               />

@@ -11,10 +11,12 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { FormFieldTypes } from '@core/constants/forms';
+import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { itemPriceString, itemTotalPriceString, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 
+import { pages } from '@lib/constants/navigation';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
@@ -28,12 +30,19 @@ type CartItemDetailProps = {
     mt?: number;
     mb?: number;
   }) => JSX.Element,
+  page: Page,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   priorityImg?: boolean,
 };
 
 const CartItemDetail = (props: CartItemDetailProps) => {
-  const { item, Subdivider, updateQuantity, priorityImg } = props;
+  const { 
+    item, 
+    Subdivider,
+    page,
+    updateQuantity, 
+    priorityImg 
+  } = props;
 
   const { getProductPageUrl, getProductImgUrl } = useProductsContext();
 
@@ -101,23 +110,25 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       }
 
       <Grid container rowSpacing={1} columnSpacing={2}>
-        <Grid item xs={12} xs_sm={6}>
-          {/* Product Image */}
-          <Box>
-            <Link href={getProductPageUrl(item)} noLinkStyle>
-              <Image
-                src={getProductImgUrl(item)}
-                alt="Product image"
-                layout="responsive"
-                objectFit="cover"
-                style={{ borderRadius: '10px' }}
-                priority={priorityImg}
-              />
-            </Link>
-          </Box>
-        </Grid>
+        { page == pages.cart &&
+          <Grid item xs={12} xs_sm={6}>
+            {/* Product Image */}
+            <Box>
+              <Link href={getProductPageUrl(item)} noLinkStyle>
+                <Image
+                  src={getProductImgUrl(item)}
+                  alt="Product image"
+                  layout="responsive"
+                  objectFit="cover"
+                  style={{ borderRadius: '10px' }}
+                  priority={priorityImg}
+                />
+              </Link>
+            </Box>
+          </Grid>
+        }
 
-        <Grid item xs={12} xs_sm={6}>
+        <Grid item xs={12} xs_sm={page == pages.cart ? 6 : 12}>
           <Box
             sx={!availableQuantity ? { color: 'text.disabled' } : undefined}
           >
@@ -201,37 +212,41 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 </Typography>
               </Grid>
             </Grid>
-            <Subdivider />
+            { page == pages.cart &&
+              <Subdivider />
+            }
           </Box>
           {/* Product Coupon Form */}
-          <Box mt={-2}>
-            <BaseForm
-              initialValues={couponFieldsInitValues}
-              validationSchema={couponFormValidation}
-              formFieldGroups={[
-                {
-                  formFields: [
-                    {
-                      name: 'couponCode',
-                      type: FormFieldTypes.text,
-                      required: true,
+          { page == pages.cart &&
+            <Box mt={-2}>
+              <BaseForm
+                initialValues={couponFieldsInitValues}
+                validationSchema={couponFormValidation}
+                formFieldGroups={[
+                  {
+                    formFields: [
+                      {
+                        name: 'couponCode',
+                        type: FormFieldTypes.text,
+                        required: true,
+                      },
+                    ],
+                    formFieldsMb: 0,
+                  }
+                ]}
+                formButtons={{
+                  submit: {
+                    text: {
+                      id: 'cart.coupon.successBtn',
                     },
-                  ],
-                  formFieldsMb: 0,
-                }
-              ]}
-              formButtons={{
-                submit: {
-                  text: {
-                    id: 'cart.coupon.successBtn',
+                    disabled: !availableQuantity,
+                    onSubmit: handleCouponSubmit,
                   },
-                  disabled: !availableQuantity,
-                  onSubmit: handleCouponSubmit,
-                },
-              } as FormButtonsNormal}
-              errorMsg={errorMsg}
-            />
-          </Box>
+                } as FormButtonsNormal}
+                errorMsg={errorMsg}
+              />
+            </Box>
+          }
         </Grid>
       </Grid>
     </>

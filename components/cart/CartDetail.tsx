@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 import { firstBuyDiscount } from '@core/constants/payments';
+import type { Page } from '@core/types/navigation';
 import type { CartItem } from '@core/types/cart';
 import { 
   applyFirstBuyDiscount, 
@@ -22,12 +23,14 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import CartItemDetail from '@components/cart/CartItemDetail';
 
 type CartDetailProps = {
+  page: Page,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   showEmptyItems: boolean,
 };
 
 const CartDetail = (props: CartDetailProps) => {
   const { 
+    page,
     updateQuantity, 
     showEmptyItems
   } = props;
@@ -58,6 +61,7 @@ const CartDetail = (props: CartDetailProps) => {
                 <CartItemDetail 
                   item={item}
                   Subdivider={Subdivider}
+                  page={page}
                   updateQuantity={updateQuantity}
                   priorityImg={index <= 4 ? true : false}
                 />

@@ -123,11 +123,11 @@ const OrderDetail = (props: OrderDetailProps) => {
       <Typography component="div" variant="body1" mb={2}>
         {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
       </Typography>
-      <CartDetail
-        //items={order.items || []}
-        //totalPrice={Number(order.transaction.amount)}
+      {/*<CartDetail
+        items={order.items || []}
+        totalPrice={Number(order.transaction.amount)}
         showEmptyItems={true}
-      />
+      />*/}
 
       { backBtn &&
         <Grid

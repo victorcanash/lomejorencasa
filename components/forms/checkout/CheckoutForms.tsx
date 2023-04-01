@@ -6,6 +6,7 @@ import usePayments from '@lib/hooks/usePayments';
 import CheckoutAuthForm from '@components/forms/checkout/CheckoutAuthForm';
 import CheckoutCouponForm from '@components/forms/checkout/CheckoutCouponForm';
 import CheckoutContactForm from '@components/forms/checkout/CheckoutContactForm';
+import CheckoutOrderForm from '@components/forms/checkout/CheckoutOrderForm';
 import CheckoutPaymentForm from '@components/forms/checkout/CheckoutPaymentForm';
 
 const CheckoutForms = () => {
@@ -41,6 +42,9 @@ const CheckoutForms = () => {
         <CheckoutContactForm
           formikRef={contactFormRef}
         />
+      </Box>
+      <Box mb={4}>
+        <CheckoutOrderForm />
       </Box>
       <Box>
         <CheckoutPaymentForm
