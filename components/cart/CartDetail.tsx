@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
+import { firstBuyDiscount } from '@core/constants/payments';
 import type { Page } from '@core/types/navigation';
 import type { CartItem } from '@core/types/cart';
 import { 
@@ -40,7 +41,7 @@ const CartDetail = (props: CartDetailProps) => {
 
   const intl = useIntl();
 
-  const [firstBuyDiscount, setFirstBuyDiscount] = useState(false);
+  const [isFirstBuy, setIsFirstBuy] = useState(false);
   const [totalPrice, setTotalPrice] = useState('')
   const [realTotalPrice, setRealTotalPrice] = useState('');
   const [realTotalVat, setRealTotalVat] = useState('');
@@ -56,7 +57,7 @@ const CartDetail = (props: CartDetailProps) => {
   );
 
   useEffect(() => {
-    setFirstBuyDiscount(applyFirstBuyDiscount(user));
+    setIsFirstBuy(applyFirstBuyDiscount(user));
     setTotalPrice(getTotalPriceString(cartTotalPrice));
     setRealTotalPrice(getRealTotalPriceString(user, cartTotalPrice));
     setRealTotalVat(getRealTotalVatString(user, cartTotalPrice));
@@ -112,7 +113,7 @@ const CartDetail = (props: CartDetailProps) => {
           </Grid>
           <Subdivider />
           {/* Cart First Buy Discount */}
-          { firstBuyDiscount &&
+          { isFirstBuy &&
             <>
               <Grid container justifyContent="space-between">
                 <Grid item>
