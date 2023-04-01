@@ -66,8 +66,6 @@ const Cart: NextPage = () => {
     }
   }, [checkCart, initCart, onSuccessCheckCart, page.checked, totalPrice]);
 
-  const maxWidth = '500px';
-
   return (
     <>
       <PageHeader
@@ -85,7 +83,7 @@ const Cart: NextPage = () => {
       />
 
       { checkedCart &&
-        <Container sx={{ maxWidth: maxWidth }}>
+        <Container maxWidth="md">
           { cart && !emptyCart() ?
             <>
               <CartDetail

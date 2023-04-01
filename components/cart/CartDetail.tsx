@@ -16,10 +16,10 @@ import {
   getTotalPriceString 
 } from '@core/utils/cart';
 
+import colors from '@lib/constants/themes/colors';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import CartItemDetail from '@components/cart/CartItemDetail';
-import colors from '@lib/constants/themes/colors';
 
 type CartDetailProps = {
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
@@ -37,8 +37,14 @@ const CartDetail = (props: CartDetailProps) => {
 
   const intl = useIntl();
 
-  const Subdivider = () => (
-    <Divider sx={{ border: `1px solid ${colors.border.divider}4f`, my: 1 }} />
+  const Subdivider = (props: { mt?: number, mb?: number }) => (
+    <Divider 
+      sx={{ 
+        border: `1px solid ${colors.border.divider}4f`, 
+        mt: props.mt || 1,  
+        mb: props.mb || 1,
+      }} 
+    />
   )
 
   return (
@@ -50,7 +56,8 @@ const CartDetail = (props: CartDetailProps) => {
             { ((!showEmptyItems && item.quantity > 0) || (showEmptyItems)) &&
               <>
                 <CartItemDetail 
-                  item={item} 
+                  item={item}
+                  Subdivider={Subdivider}
                   updateQuantity={updateQuantity}
                   priorityImg={index <= 4 ? true : false}
                 />
@@ -65,11 +72,10 @@ const CartDetail = (props: CartDetailProps) => {
         <Typography component="h2" variant="h3" textAlign="center">
           <FormattedMessage id="cart.totalTitle" />
         </Typography>
-        <Subdivider />
-
-        <Grid container spacing={1}>
+        <Subdivider mt={2} />
+        <Box>
           {/* Cart Subtotal */}
-          <Grid item xs={12} container justifyContent="space-between">
+          <Grid container justifyContent="space-between">
             <Grid item>
               <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
                 <FormattedMessage
@@ -83,25 +89,29 @@ const CartDetail = (props: CartDetailProps) => {
               </Typography>
             </Grid>
           </Grid>
+          <Subdivider />
           {/* Cart First Buy Discount */}
           { applyFirstBuyDiscount(user) &&
-            <Grid item xs={12} container justifyContent="space-between">
-              <Grid item>
-                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
-                  <FormattedMessage
-                    id="cart.firstBuyDiscount"
-                  />
-                </Typography>
+            <>
+              <Grid container justifyContent="space-between">
+                <Grid item>
+                  <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                    <FormattedMessage
+                      id="cart.firstBuyDiscount"
+                    />
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography component="div" variant="body1">
+                    {`-${firstBuyDiscount}%`}
+                  </Typography>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Typography component="div" variant="body1">
-                  {`-${firstBuyDiscount}%`}
-                </Typography>
-              </Grid>
-            </Grid>
+              <Subdivider />
+            </>
           }
           {/* Cart Shipping */}
-          <Grid item xs={12} container justifyContent="space-between">
+          <Grid container justifyContent="space-between">
             <Grid item>
               <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
                 <FormattedMessage
@@ -117,8 +127,9 @@ const CartDetail = (props: CartDetailProps) => {
               </Typography>
             </Grid>
           </Grid>
+          <Subdivider />
           {/* Cart Total with VAT */}
-          <Grid item xs={12} container justifyContent="space-between">
+          <Grid container justifyContent="space-between">
             <Grid item>
               <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
                 <FormattedMessage
@@ -135,7 +146,8 @@ const CartDetail = (props: CartDetailProps) => {
               </Typography>
             </Grid>
           </Grid>
-        </Grid>
+          <Subdivider />
+        </Box>
       </Box>
     </>
   );

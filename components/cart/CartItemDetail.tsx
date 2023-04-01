@@ -3,6 +3,7 @@ import Image from 'next/image';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
+import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -23,12 +24,16 @@ import BaseForm from '@components/forms/BaseForm';
 
 type CartItemDetailProps = {
   item: CartItem | GuestCartCheckItem,
+  Subdivider: (props: {
+    mt?: number;
+    mb?: number;
+  }) => JSX.Element,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   priorityImg?: boolean,
 };
 
 const CartItemDetail = (props: CartItemDetailProps) => {
-  const { item, updateQuantity, priorityImg } = props;
+  const { item, Subdivider, updateQuantity, priorityImg } = props;
 
   const { getProductPageUrl, getProductImgUrl } = useProductsContext();
 
@@ -95,135 +100,138 @@ const CartItemDetail = (props: CartItemDetailProps) => {
         </Grid>
       }
 
-      <Grid container spacing={2}>
-        {/* Product Image */}
-        <Grid item xs={12}>
-          <Link href={getProductPageUrl(item)} noLinkStyle>
-            <Image
-              src={getProductImgUrl(item)}
-              alt="Product image"
-              layout="responsive"
-              objectFit="cover"
-              style={{ borderRadius: '10px' }}
-              priority={priorityImg}
-            />
-          </Link>
+      <Grid container rowSpacing={1} columnSpacing={2}>
+        <Grid item xs={12} xs_sm={6}>
+          {/* Product Image */}
+          <Box>
+            <Link href={getProductPageUrl(item)} noLinkStyle>
+              <Image
+                src={getProductImgUrl(item)}
+                alt="Product image"
+                layout="responsive"
+                objectFit="cover"
+                style={{ borderRadius: '10px' }}
+                priority={priorityImg}
+              />
+            </Link>
+          </Box>
         </Grid>
 
-        <Grid 
-          item 
-          xs={12}
-          container
-          spacing={1} 
-          sx={!availableQuantity ? { color: 'text.disabled' } : undefined}
-        >
-          {/* Product Name */}
-          <Grid item xs={12} container justifyContent="space-between">
-            <Grid item>
-              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
-                <FormattedMessage
-                  id="cart.product"
-                />
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography component="div" variant="body1">
-                {item.inventory?.name.current || item.pack?.name.current}
-              </Typography>
-            </Grid>
-          </Grid>
-          {/* Product Price */}
-          <Grid item xs={12} container justifyContent="space-between">
-            <Grid item>
-              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
-                <FormattedMessage
-                  id="cart.price"
-                />
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography component="div" variant="body1">
-                {itemPriceString(item)}
-              </Typography>
-            </Grid>
-          </Grid>
-          {/* Product Quantity */}
-          <Grid item xs={12} container justifyContent="space-between">
-            <Grid item>
-              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
-                <FormattedMessage
-                  id="cart.quantity"
-                />
-              </Typography>
-            </Grid>
-            <Grid item>
-              { !updateQuantity ?
-                <Typography component="div" variant="body1">
-                  {item.quantity.toString()}
+        <Grid item xs={12} xs_sm={6}>
+          <Box
+            sx={!availableQuantity ? { color: 'text.disabled' } : undefined}
+          >
+            {/* Product Name */}
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                  <FormattedMessage
+                    id="cart.product"
+                  />
                 </Typography>
-                :
-                <>
-                  <SelectQuantity />      
-                  { ((item.inventory || item.pack) && item.quantity <= 0) &&
-                    <Typography 
-                      variant="body2"
-                      mt="5px"
-                      color={!availableQuantity ? { color: 'text.disabled' } : { color: 'text.primary' }}
-                    >
-                      { !availableQuantity ? 
-                        intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
-                        intl.formatMessage({ id: 'cart.inventoryAvailable' })
-                      }
-                    </Typography>
-                  }
-                </>
-              }
+              </Grid>
+              <Grid item>
+                <Typography component="div" variant="body1">
+                  {item.inventory?.name.current || item.pack?.name.current}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-          {/* Product Subtotal */}
-          <Grid item xs={12} container justifyContent="space-between">
-            <Grid item>
-              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
-                <FormattedMessage
-                  id="cart.subtotal"
-                />
-              </Typography>
-            </Grid> 
-            <Grid item>
-              <Typography component="div" variant="body1">
-                {itemTotalPriceString(item)}
-              </Typography>
+            <Subdivider />
+            {/* Product Price */}
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                  <FormattedMessage
+                    id="cart.price"
+                  />
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Typography component="div" variant="body1">
+                  {itemPriceString(item)}
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-        {/* Product Coupon Form */}
-        <Grid item xs={12} mt={-2}>
-          <BaseForm
-            initialValues={couponFieldsInitValues}
-            validationSchema={couponFormValidation}
-            formFieldGroups={[
-              {
-                formFields: [
-                  {
-                    name: 'couponCode',
-                    type: FormFieldTypes.text,
-                    required: true,
+            <Subdivider />
+            {/* Product Quantity */}
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                  <FormattedMessage
+                    id="cart.quantity"
+                  />
+                </Typography>
+              </Grid>
+              <Grid item>
+                { !updateQuantity ?
+                  <Typography component="div" variant="body1">
+                    {item.quantity.toString()}
+                  </Typography>
+                  :
+                  <>
+                    <SelectQuantity />      
+                    { ((item.inventory || item.pack) && item.quantity <= 0) &&
+                      <Typography 
+                        variant="body2"
+                        color={!availableQuantity ? { color: 'text.disabled' } : { color: 'text.primary' }}
+                      >
+                        { !availableQuantity ? 
+                          intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
+                          intl.formatMessage({ id: 'cart.inventoryAvailable' })
+                        }
+                      </Typography>
+                    }
+                  </>
+                }
+              </Grid>
+            </Grid>
+            <Subdivider />
+            {/* Product Subtotal */}
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                  <FormattedMessage
+                    id="cart.subtotal"
+                  />
+                </Typography>
+              </Grid> 
+              <Grid item>
+                <Typography component="div" variant="body1">
+                  {itemTotalPriceString(item)}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Subdivider />
+          </Box>
+          {/* Product Coupon Form */}
+          <Box mt={-2}>
+            <BaseForm
+              initialValues={couponFieldsInitValues}
+              validationSchema={couponFormValidation}
+              formFieldGroups={[
+                {
+                  formFields: [
+                    {
+                      name: 'couponCode',
+                      type: FormFieldTypes.text,
+                      required: true,
+                    },
+                  ],
+                  formFieldsMb: 1,
+                }
+              ]}
+              formButtons={{
+                submit: {
+                  text: {
+                    id: 'cart.coupon.successBtn',
                   },
-                ],
-                formFieldsMb: 1,
-              }
-            ]}
-            formButtons={{
-              submit: {
-                text: {
-                  id: 'cart.coupon.successBtn',
+                  disabled: !availableQuantity,
+                  onSubmit: handleCouponSubmit,
                 },
-                disabled: !availableQuantity,
-                onSubmit: handleCouponSubmit,
-              },
-            } as FormButtonsNormal}
-            errorMsg={errorMsg}
-          />
+              } as FormButtonsNormal}
+              errorMsg={errorMsg}
+            />
+          </Box>
         </Grid>
       </Grid>
     </>
