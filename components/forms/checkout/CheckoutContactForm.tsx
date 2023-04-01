@@ -34,8 +34,10 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
   const handleChange = (event: any) => {
     if (event.target.id === 'sameAsShipping') {
       setHiddenBilling(event.target.checked);
-    }
-    if (formikRef.current?.values.sameAsShipping) {
+      if (event.target.checked) {
+        formikRef.current?.setFieldValue('billing', formikRef.current?.values.shipping);
+      }
+    } else if (formikRef.current?.values.sameAsShipping) {
       formikRef.current?.setFieldValue('billing', formikRef.current?.values.shipping);
     }
   };
@@ -98,7 +100,7 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
                   name: 'sameAsShipping',
                   type: FormFieldTypes.checkbox,
                 },
-                ...addressFormFields(AddressTypes.billing)
+                ...addressFormFields(AddressTypes.billing),
               ]
               :
               [
