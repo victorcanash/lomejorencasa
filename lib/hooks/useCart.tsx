@@ -123,7 +123,7 @@ const useCart = () => {
     // Delete cart item
     } else {
       const addedQuantity = -cartItem.quantity;
-      const addedPrice = -(itemTotalPriceNumber(cartItem, addedQuantity));
+      const addedPrice = itemTotalPriceNumber(cartItem, addedQuantity);
       manageCartItem(ManageActions.delete, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items.splice(cartItemIndex, 1);
