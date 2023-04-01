@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { NextPage } from 'next';
-// import { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 import { PageTypes } from '@core/constants/navigation';
-// import { isAdminUser } from '@core/utils/auth';
+import { isAdminUser } from '@core/utils/auth';
 
-// import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
-// import { useCartContext } from '@lib/contexts/CartContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
@@ -15,17 +15,17 @@ import CheckoutForms from '@components/forms/checkout';
 
 const Checkout: NextPage = () => {
   const { setLoading } = useAppContext();
-  // const { disabledCheckoutPage } = useCartContext();
-  const {/*token*/ paypal } = useAuthContext();
+  const { disabledCheckoutPage } = useCartContext();
+  const {token, paypal } = useAuthContext();
 
-  // const router = useRouter();
+  const router = useRouter();
 
   const page = usePage(false);
 
   const [loadedCheckout, setLoadedCheckout] = useState(false);
 
   const init = useCallback(async () => {
-    /*if (disabledCheckoutPage()) {
+    if (disabledCheckoutPage()) {
       let isAdmin = false;
       await isAdminUser(token).then((response: boolean) => {
         isAdmin = response;
@@ -34,10 +34,10 @@ const Checkout: NextPage = () => {
         router.push(pages.home.path);
         return;
       }
-    }*/
+    }
     setLoadedCheckout(true);
     setLoading(false);
-  }, [/*disabledCheckoutPage, router, token*/ setLoading]);
+  }, [disabledCheckoutPage, router, setLoading, token]);
 
   useEffect(() => {
     if (page.checked) {
