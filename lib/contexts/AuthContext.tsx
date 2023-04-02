@@ -14,6 +14,7 @@ import type { PaypalCredentials } from '@core/types/paypal';
 import type { GoogleCredentials } from '@core/types/google';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
+import { roundTwoDecimals } from '@core/utils/numbers';
 
 import { pages } from '@lib/constants/navigation';
 
@@ -37,6 +38,7 @@ type ContextType = {
   isAdminPath: () => boolean,
   getRedirectProtectedPath: () => string,
   getRedirectLogoutPath: () => string | undefined,
+  convertPriceToString: (price: number) => string
 };
 
 export const AuthContext = createContext<ContextType>({
@@ -59,6 +61,7 @@ export const AuthContext = createContext<ContextType>({
   isAdminPath: () => false,
   getRedirectProtectedPath: () => '',
   getRedirectLogoutPath: () => undefined,
+  convertPriceToString: () => '',
 });
 
 export const useAuthContext = () => {
@@ -137,6 +140,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return undefined;
   };
 
+  const convertPriceToString = (price: number) => {
+    const rounded = roundTwoDecimals(price).toFixed(2);
+    if (currency === 'EUR') {
+      return `${rounded}€`;
+    }
+    return `${rounded}$`;
+  };
+
   useEffect(() => {
     Object.entries(pages).forEach(([_key, page]) => {
       if (page.filepath == router.pathname) {
@@ -170,6 +181,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAdminPath,
         getRedirectProtectedPath,
         getRedirectLogoutPath,
+        convertPriceToString,
       }}
     >
       {children}

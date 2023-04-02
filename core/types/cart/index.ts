@@ -36,3 +36,10 @@ export type GuestCartCheckItem = {
   pack?: ProductPack,
   quantity: number,
 };
+
+export type CartBreakdown = {
+  cartAmount: number,
+  firstBuyDiscount: number,
+  vat: number,
+  amount: number,
+};

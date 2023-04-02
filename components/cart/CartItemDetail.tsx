@@ -13,12 +13,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import { itemPriceString, itemTotalPriceString, availableItemQuantity } from '@core/utils/cart';
+import { itemPriceValue, itemTotalPriceValue, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
@@ -45,6 +46,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
   } = props;
 
   const { getProductPageUrl, getProductImgUrl } = useProductsContext();
+  const { convertPriceToString } = useAuthContext();
 
   const intl = useIntl();
 
@@ -159,7 +161,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               </Grid>
               <Grid item>
                 <Typography component="div" variant="body1">
-                  {itemPriceString(item)}
+                  {convertPriceToString(itemPriceValue(item))}
                 </Typography>
               </Grid>
             </Grid>
@@ -208,7 +210,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               </Grid> 
               <Grid item>
                 <Typography component="div" variant="body1">
-                  {itemTotalPriceString(item)}
+                  {convertPriceToString(itemTotalPriceValue(item))}
                 </Typography>
               </Grid>
             </Grid>

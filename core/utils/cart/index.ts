@@ -5,180 +5,19 @@ import axios, { getAuthHeaders } from '@core/config/axios.config';
 import { ManageActions } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
-import { firstBuyDiscount, spainVat } from '@core/constants/payments';
+import { firstBuyDiscountPercent, vatPercent } from '@core/constants/payments';
+import type { 
+  Cart, 
+  CartItem, 
+  GuestCart, 
+  GuestCartCheck, 
+  GuestCartCheckItem,
+  CartBreakdown,
+} from '@core/types/cart';
 import type { User, GuestUser } from '@core/types/user';
-import type { Cart, CartItem, GuestCart, GuestCartCheck, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
-import { roundTwoDecimals, roundTwoDecimalsToString } from '@core/utils/numbers';
-
-export const checkCart = (token: string | undefined, cart: Cart) => {
-  return new Promise<{cart: Cart, changedItemsByInventory: CartItem[]}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: token ? getAuthHeaders(token) : undefined,
-    };
-    const cartId = token ? cart.id : -1;
-    const body = !token ? {
-      guestCart: convertCartToGuestCart(cart),
-    } : undefined;
-    axios.put(`/carts/${cartId}/check`, body, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
-          // User cart
-          if ((response.data.cart as Cart)?.id) {
-            resolve({
-              cart: response.data.cart,
-              changedItemsByInventory: response.data.changedItemsByInventory,
-            });
-          // Guest cart
-          } else if ((response.data.cart as GuestCartCheck)?.items) {
-            await setGuestCart(response.data.cart as GuestCartCheck);
-            resolve({
-              cart: convertGuestCartCheckToCart(response.data.cart as GuestCartCheck),
-              changedItemsByInventory: convertGuestCartCheckItemsToCartItems(response.data.changedItemsByInventory as GuestCartCheckItem[])
-            });
-          } else {
-            throw new Error('Something went wrong');
-          }
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Check Cart ERROR', error);
-        logBackendError(errorMsg)
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
-
-export const applyFirstBuyDiscount = (user: User | GuestUser) => {
-  if ((user as User)?.firstName && !(user as User).orderExists) {
-    return true;
-  }
-  return false;
-};
-
-const getFirstBuyDiscountNumber = (totalPrice: number) => {
-  const firstBuyDiscountValue = roundTwoDecimals((firstBuyDiscount / 100) * totalPrice);
-  return firstBuyDiscountValue;
-};
-
-const getRealTotalPriceNumber = (user: User | GuestUser, totalPrice: number) => {
-  let realPrice = totalPrice;
-  if (applyFirstBuyDiscount(user)) {
-    realPrice -= getFirstBuyDiscountNumber(totalPrice);
-  }
-  return realPrice;
-};
-
-const getRealTotalVatNumber = (user: User | GuestUser, totalPrice: number) => {
-  const realTotalPrice = getRealTotalPriceNumber(user, totalPrice);
-  return (spainVat / 100) * realTotalPrice;
-};
-
-export const getTotalPriceString = (totalPrice: number) => {
-  return `${roundTwoDecimalsToString(totalPrice)}€`;
-};
-
-export const getRealTotalPriceString = (user: User | GuestUser, totalPrice: number) => {
-  const realTotalPrice = getRealTotalPriceNumber(user, totalPrice);
-  return `${roundTwoDecimalsToString(realTotalPrice)}€`;
-};
-
-export const getRealTotalVatString = (user: User | GuestUser, totalPrice: number) => {
-  const realTotalVat = getRealTotalVatNumber(user, totalPrice);
-  return `${roundTwoDecimalsToString(realTotalVat)}€`;
-};
-
-export const itemPriceString = (item: CartItem | GuestCartCheckItem) => {
-  if (item.inventory) {
-    return `${item.inventory.realPrice}€`;
-  } else if (item.pack) {
-    return `${item.pack.price}€`;
-  }
-  return '';
-};
-
-export const itemTotalPriceNumber = (item: CartItem | GuestCartCheckItem, setQuantity?: number) => {
-  const price = 0;
-  if (item.inventory) {
-    return item.inventory?.realPrice * (setQuantity ? setQuantity : item.quantity);
-  } else if (item.pack) {
-    return item.pack?.price * (setQuantity ? setQuantity : item.quantity);
-  }
-  return price;
-};
-
-export const itemTotalPriceString = (item: CartItem | GuestCartCheckItem) => {
-  if (item.inventory) {
-    return `${(item.inventory.realPrice * item.quantity).toFixed(2)}€`;
-  } else if (item.pack) {
-    return `${(item.pack.price * item.quantity).toFixed(2)}€`;
-  }
-  return '';
-};
-
-export const availableItemQuantity = (item: CartItem | GuestCartCheckItem) => {
-  if (item.inventory && item.inventory.quantity <= 0) {
-    return false;
-  } else if (item.pack && item.pack.quantity <= 0) {
-    return false;
-  } else if (!item.pack && !item.inventory) {
-    return false;
-  }
-  return true;
-};
-
-export const setGuestCart = async (cart: Cart | GuestCartCheck) => {
-  const guestCart = convertCartToGuestCart(cart);
-  await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
-};
-
-export const getGuestCart = async () => {
-  const guestCart = { items: [] } as GuestCart;
-  const guestCartStorage = await getStorageItem(Storages.local, GuestCartKey);
-  if (guestCartStorage) {
-    const guestCartObj = JSON.parse(guestCartStorage) as GuestCart;
-    if (guestCartObj?.items && guestCartObj.items.length > 0) {
-      guestCart.items = guestCartObj.items;
-    }
-  }
-  return guestCart;
-};
-
-export const convertCartToGuestCart = (cart: Cart | GuestCartCheck) => {
-  return {
-    items: cart.items.map((item) => {
-      return {
-        inventoryId: item.inventory?.id,
-        packId: item.pack?.id,
-        quantity: item.quantity,
-      };
-    })
-  } as GuestCart;
-};
-
-export const convertGuestCartCheckToCart = (guestCartCheck: GuestCartCheck) => {
-  return {
-    id: -1,
-    userId: -1,
-    items: convertGuestCartCheckItemsToCartItems(guestCartCheck.items)
-  } as Cart;
-};
-
-const convertGuestCartCheckItemsToCartItems = (items: GuestCartCheckItem[]) => {
-  return items.map((item) => {
-    return {
-      id: -1,
-      cartId: -1,
-      inventoryId: item.inventory?.id,
-      packId: item.pack?.id,
-      inventory: item.inventory,
-      pack: item.pack,
-      quantity: item.quantity,
-    } as CartItem;
-  });
-};
+import { roundTwoDecimals } from '@core/utils/numbers';
 
 export const manageCartItem = (action: ManageActions, token: string, cart: Cart, cartItem: CartItem) => {
   return new Promise<{cartItem: CartItem}>(async (resolve, reject) => {
@@ -278,4 +117,140 @@ const deleteGuestCartItem = async (guestCart: GuestCart, cartItem: CartItem) => 
     }
   });
   await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
+};
+
+export const setGuestCart = async (cart: Cart | GuestCartCheck) => {
+  const guestCart = convertCartToGuestCart(cart);
+  await setStorageItem(Storages.local, GuestCartKey, JSON.stringify(guestCart));
+};
+
+export const getGuestCart = async () => {
+  const guestCart = { items: [] } as GuestCart;
+  const guestCartStorage = await getStorageItem(Storages.local, GuestCartKey);
+  if (guestCartStorage) {
+    const guestCartObj = JSON.parse(guestCartStorage) as GuestCart;
+    if (guestCartObj?.items && guestCartObj.items.length > 0) {
+      guestCart.items = guestCartObj.items;
+    }
+  }
+  return guestCart;
+};
+
+export const convertCartToGuestCart = (cart: Cart | GuestCartCheck) => {
+  return {
+    items: cart.items.map((item) => {
+      return {
+        inventoryId: item.inventory?.id,
+        packId: item.pack?.id,
+        quantity: item.quantity,
+      };
+    })
+  } as GuestCart;
+};
+
+export const convertGuestCartCheckToCart = (guestCartCheck: GuestCartCheck) => {
+  return {
+    id: -1,
+    userId: -1,
+    items: convertGuestCartCheckItemsToCartItems(guestCartCheck.items)
+  } as Cart;
+};
+
+const convertGuestCartCheckItemsToCartItems = (items: GuestCartCheckItem[]) => {
+  return items.map((item) => {
+    return {
+      id: -1,
+      cartId: -1,
+      inventoryId: item.inventory?.id,
+      packId: item.pack?.id,
+      inventory: item.inventory,
+      pack: item.pack,
+      quantity: item.quantity,
+    } as CartItem;
+  });
+};
+
+export const checkCart = (token: string | undefined, cart: Cart) => {
+  return new Promise<{cart: Cart, changedItemsByInventory: CartItem[]}>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: token ? getAuthHeaders(token) : undefined,
+    };
+    const cartId = token ? cart.id : -1;
+    const body = !token ? {
+      guestCart: convertCartToGuestCart(cart),
+    } : undefined;
+    axios.put(`/carts/${cartId}/check`, body, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          // User cart
+          if ((response.data.cart as Cart)?.id) {
+            resolve({
+              cart: response.data.cart,
+              changedItemsByInventory: response.data.changedItemsByInventory,
+            });
+          // Guest cart
+          } else if ((response.data.cart as GuestCartCheck)?.items) {
+            await setGuestCart(response.data.cart as GuestCartCheck);
+            resolve({
+              cart: convertGuestCartCheckToCart(response.data.cart as GuestCartCheck),
+              changedItemsByInventory: convertGuestCartCheckItemsToCartItems(response.data.changedItemsByInventory as GuestCartCheckItem[])
+            });
+          } else {
+            throw new Error('Something went wrong');
+          }
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Check Cart ERROR', error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const itemPriceValue = (item: CartItem | GuestCartCheckItem) => {
+  let price = 0;
+  if (item.inventory) {
+    price = item.inventory?.realPrice;
+  } else if (item.pack) {
+    price = item.pack?.price;
+  }
+  return price;
+};
+
+export const itemTotalPriceValue = (item: CartItem | GuestCartCheckItem, setQuantity?: number) => {
+  let price = 0;
+  if (item.inventory) {
+    price = item.inventory?.realPrice * (setQuantity ? setQuantity : item.quantity);
+  } else if (item.pack) {
+    price = item.pack?.price * (setQuantity ? setQuantity : item.quantity);
+  }
+  return price;
+};
+
+export const availableItemQuantity = (item: CartItem | GuestCartCheckItem) => {
+  if (item.inventory && item.inventory.quantity <= 0) {
+    return false;
+  } else if (item.pack && item.pack.quantity <= 0) {
+    return false;
+  } else if (!item.pack && !item.inventory) {
+    return false;
+  }
+  return true;
+};
+
+export const cartBreakdown = (cartAmount: number, user: User | GuestUser) => {
+  let firstBuyDiscount = 0
+  if ((user as User)?.firstName && !(user as User).orderExists) {
+    firstBuyDiscount = roundTwoDecimals((firstBuyDiscountPercent / 100) * cartAmount)
+  }
+  const vat = (vatPercent / 100) * (cartAmount - firstBuyDiscount)
+  const amount = cartAmount - firstBuyDiscount + vat; 
+  return {
+    cartAmount: roundTwoDecimals(cartAmount),
+    firstBuyDiscount: roundTwoDecimals(firstBuyDiscount),
+    vat: roundTwoDecimals(vat),
+    amount: roundTwoDecimals(amount),
+  } as CartBreakdown;
 };

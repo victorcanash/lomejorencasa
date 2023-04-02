@@ -1,2 +1,2 @@
-export const firstBuyDiscount = 10
-export const spainVat = 21
+export const firstBuyDiscountPercent = 10
+export const vatPercent = 21

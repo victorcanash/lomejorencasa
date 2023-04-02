@@ -3,7 +3,7 @@ import { createContext, Dispatch, SetStateAction, useContext, useState } from 'r
 import envConfig from '@core/config/env.config';
 import { Environments } from '@core/constants/app';
 import type { Cart } from '@core/types/cart';
-import { itemTotalPriceNumber } from '@core/utils/cart';
+import { itemTotalPriceValue } from '@core/utils/cart';
 
 type ContextType = {
   cart: Cart,
@@ -64,7 +64,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     let result = 0;
     if (cart && cart.items && cart.items.length >= 1) {
       cart.items.forEach((item) => {
-        result += itemTotalPriceNumber(item);
+        result += itemTotalPriceValue(item);
       });
     }
     setTotalPrice(result);

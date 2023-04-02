@@ -23,12 +23,12 @@ import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 
 const Cart: NextPage = () => {
   const { setLoading } = useAppContext();
-  const { cart, totalPrice, disabledCheckoutPage } = useCartContext();
+  const { totalPrice, disabledCheckoutPage } = useCartContext();
 
   const page = usePage();
   const intl = useIntl();
 
-  const { checkCart, updateCartItemQuantity } = useCart();
+  const { breakdown, isEmpty, checkCart, updateCartItemQuantity } = useCart();
 
   const [openDialog, setOpenDialog] = useState(false);
   const [initCart, setInitCart] = useState(true);
@@ -47,13 +47,6 @@ const Cart: NextPage = () => {
       handleDialog();
     }
   }, [handleDialog, setLoading]);
-
-  const emptyCart = () => {
-    if (cart && cart.items && cart.items.length > 0) {
-      return false;
-    }
-    return true;
-  };
 
   useEffect(() => {
     if (page.checked && initCart) {
@@ -84,10 +77,11 @@ const Cart: NextPage = () => {
 
       { checkedCart &&
         <Container maxWidth="md">
-          { cart && !emptyCart() ?
+          { !isEmpty ?
             <>
               <CartDetail
                 page={pages.cart}
+                breakdown={breakdown}
                 updateQuantity={updateCartItemQuantity}
                 showEmptyItems={true}
               />

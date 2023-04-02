@@ -1,14 +1,17 @@
+import { useEffect, useState } from 'react';
+
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
 import { maxQuantity } from '@core/constants/cart';
-import type { Cart, CartItem } from '@core/types/cart';
+import type { Cart, CartBreakdown, CartItem } from '@core/types/cart';
 import type { ProductInventory, ProductPack } from '@core/types/products';
 import { 
   manageCartItem, 
   checkCart as checkCartMW, 
-  itemTotalPriceNumber,
+  itemTotalPriceValue,
+  cartBreakdown,
 } from '@core/utils/cart';
 
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -17,11 +20,14 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useCart = () => {
   const { setLoading } = useAppContext();
-  const { token, isLogged } = useAuthContext();
+  const { user, token, isLogged } = useAuthContext();
   const { cart, initCart, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice } = useCartContext();
 
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
+
+  const [breakdown, setBreakdown] = useState({} as CartBreakdown);
+  const [isEmpty, setIsEmpty] = useState(true);
 
   const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number) => {
     if (totalQuantity + quantity > maxQuantity) {
@@ -51,7 +57,7 @@ const useCart = () => {
       }
     });
 
-    const addPrice = itemTotalPriceNumber(cartItem);
+    const addPrice = itemTotalPriceValue(cartItem);
 
     // Update cart item
     if (cartItemIndex > -1) {
@@ -110,7 +116,7 @@ const useCart = () => {
     // Update cart item
     if (quantity > 0) {
       const addedQuantity = quantity - cartItem.quantity;
-      const addedPrice = itemTotalPriceNumber(cartItem, addedQuantity);
+      const addedPrice = itemTotalPriceValue(cartItem, addedQuantity);
       cartItem.quantity = quantity;
       manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
@@ -123,7 +129,7 @@ const useCart = () => {
     // Delete cart item
     } else {
       const addedQuantity = -cartItem.quantity;
-      const addedPrice = itemTotalPriceNumber(cartItem, addedQuantity);
+      const addedPrice = itemTotalPriceValue(cartItem, addedQuantity);
       manageCartItem(ManageActions.delete, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items.splice(cartItemIndex, 1);
@@ -194,7 +200,21 @@ const useCart = () => {
     );
   };
 
+  useEffect(() => {
+    setBreakdown(cartBreakdown(totalPrice, user));
+  }, [totalPrice, user])
+
+  useEffect(() => {
+    if (cart.items.length > 0) {
+      setIsEmpty(false);
+    } else {
+      setIsEmpty(true);
+    }
+  }, [cart]);
+
   return {
+    breakdown,
+    isEmpty,
     addCartItem,
     updateCartItemQuantity,
     checkCart,

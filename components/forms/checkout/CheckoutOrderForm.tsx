@@ -1,10 +1,12 @@
 import Box from '@mui/material/Box';
 
 import { pages } from '@lib/constants/navigation';
+import useCart from '@lib/hooks/useCart';
 import BaseForm from '@components/forms/BaseForm';
 import CartDetail from '@components/cart/CartDetail';
 
 const CheckoutOrderForm = () => {
+  const { breakdown } = useCart();
 
   return (
     <BaseForm
@@ -20,6 +22,7 @@ const CheckoutOrderForm = () => {
             <Box mt={2}>
               <CartDetail
                 page={pages.checkout}
+                breakdown={breakdown}
                 showEmptyItems={false}
               />
             </Box>

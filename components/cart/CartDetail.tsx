@@ -1,21 +1,15 @@
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment } from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
-import { firstBuyDiscount } from '@core/constants/payments';
+import { firstBuyDiscountPercent } from '@core/constants/payments';
 import type { Page } from '@core/types/navigation';
-import type { CartItem } from '@core/types/cart';
-import { 
-  applyFirstBuyDiscount, 
-  getRealTotalPriceString, 
-  getRealTotalVatString, 
-  getTotalPriceString 
-} from '@core/utils/cart';
+import type { CartBreakdown, CartItem } from '@core/types/cart';
 
 import { pages } from '@lib/constants/navigation';
 import colors from '@lib/constants/themes/colors';
@@ -25,6 +19,7 @@ import CartItemDetail from '@components/cart/CartItemDetail';
 
 type CartDetailProps = {
   page: Page,
+  breakdown: CartBreakdown,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   showEmptyItems: boolean,
 };
@@ -32,19 +27,13 @@ type CartDetailProps = {
 const CartDetail = (props: CartDetailProps) => {
   const { 
     page,
+    breakdown,
     updateQuantity, 
     showEmptyItems
   } = props;
 
-  const { cart, totalPrice: cartTotalPrice } = useCartContext();
-  const { user } = useAuthContext();
-
-  const intl = useIntl();
-
-  const [isFirstBuy, setIsFirstBuy] = useState(false);
-  const [totalPrice, setTotalPrice] = useState('')
-  const [realTotalPrice, setRealTotalPrice] = useState('');
-  const [realTotalVat, setRealTotalVat] = useState('');
+  const { cart } = useCartContext();
+  const { convertPriceToString } = useAuthContext();
 
   const Subdivider = (props: { mt?: number, mb?: number }) => (
     <Divider 
@@ -55,13 +44,6 @@ const CartDetail = (props: CartDetailProps) => {
       }} 
     />
   );
-
-  useEffect(() => {
-    setIsFirstBuy(applyFirstBuyDiscount(user));
-    setTotalPrice(getTotalPriceString(cartTotalPrice));
-    setRealTotalPrice(getRealTotalPriceString(user, cartTotalPrice));
-    setRealTotalVat(getRealTotalVatString(user, cartTotalPrice));
-  }, [cartTotalPrice, user]);
 
   return (
     <>
@@ -81,7 +63,7 @@ const CartDetail = (props: CartDetailProps) => {
                 <Divider 
                   sx={{
                     mt: 3,
-                    mb: page == pages.cart ? 2 : 3,
+                    mb: 2,
                   }} 
                 />
               </>
@@ -96,7 +78,7 @@ const CartDetail = (props: CartDetailProps) => {
         </Typography>
         <Subdivider mt={2} />
         <Box>
-          {/* Cart Subtotal */}
+          {/* Cart Amount */}
           <Grid container justifyContent="space-between">
             <Grid item>
               <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
@@ -107,13 +89,13 @@ const CartDetail = (props: CartDetailProps) => {
             </Grid>
             <Grid item>
               <Typography component="div" variant="body1">
-                {totalPrice}
+                {convertPriceToString(breakdown.cartAmount)}
               </Typography>
             </Grid>
           </Grid>
           <Subdivider />
-          {/* Cart First Buy Discount */}
-          { isFirstBuy &&
+          {/* First Buy Discount */}
+          { breakdown.firstBuyDiscount > 0 &&
             <>
               <Grid container justifyContent="space-between">
                 <Grid item>
@@ -125,7 +107,7 @@ const CartDetail = (props: CartDetailProps) => {
                 </Grid>
                 <Grid item>
                   <Typography component="div" variant="body1">
-                    {`-${firstBuyDiscount}%`}
+                    {`-${firstBuyDiscountPercent}%`}
                   </Typography>
                 </Grid>
               </Grid>
@@ -150,7 +132,23 @@ const CartDetail = (props: CartDetailProps) => {
             </Grid>
           </Grid>
           <Subdivider />
-          {/* Cart Total with VAT */}
+          {/* Cart VAT */}
+          <Grid container justifyContent="space-between">
+            <Grid item>
+              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <FormattedMessage
+                  id="cart.vat"
+                />
+              </Typography>
+            </Grid>
+            <Grid item>
+              <Typography component="div" variant="body1">
+                {convertPriceToString(breakdown.vat)}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Subdivider />
+          {/* Cart Total */}
           <Grid container justifyContent="space-between">
             <Grid item>
               <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
@@ -161,14 +159,10 @@ const CartDetail = (props: CartDetailProps) => {
             </Grid>
             <Grid item>
               <Typography component="span" variant="body1">
-                {realTotalPrice}
-              </Typography>
-              <Typography component="span" variant="body2">
-                {` (${intl.formatMessage({ id: 'cart.vat' }, { value: realTotalVat })})`}
+                {convertPriceToString(breakdown.amount)}
               </Typography>
             </Grid>
           </Grid>
-          <Subdivider />
         </Box>
       </Box>
     </>
