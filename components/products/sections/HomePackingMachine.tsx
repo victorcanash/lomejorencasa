@@ -12,7 +12,7 @@ import { convertElementToSx } from '@core/utils/themes';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
-import MultimediaContainer from '@components/ui/MultimediaContainer';
+import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 import packing_machine from 'public/images/home/packing-machine.png';
 
 const HomePackingMachine = () => {

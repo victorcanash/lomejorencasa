@@ -14,7 +14,7 @@ import LinkButton from '@core/components/LinkButton';
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
-import MultimediaContainer from '@components/ui/MultimediaContainer';
+import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeBanner = () => {
   const { getProductBannerImgsUrl } = useProductsContext();

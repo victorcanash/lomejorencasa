@@ -20,7 +20,7 @@ import use_food_preparation_everfresh from 'public/images/home/use-food-preparat
 import use_bag_selection from 'public/images/home/use-bag-selection.png';
 import use_bag_selection_sizes from 'public/images/home/use-bag-selection-sizes.png';
 import use_packing_machine_step2 from 'public/images/home/use-packing-machine-step2.jpg';
-import MultimediaContainer from '@components/ui/MultimediaContainer';
+import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeUse = () => {
   const getPackingMachineStep = (index: number, source: Source) => {

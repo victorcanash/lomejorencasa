@@ -67,10 +67,11 @@ const deleteUser = (token: string, user: User) => {
   return axios.delete(`/users/${user.id}`, options)
 }
 
-export const sendUserContactEmail = (currentLocale: string, userContact: UserContact, contactImgs: File[]) => {
+export const sendUserContactEmail = (token: string, currentLocale: string, userContact: UserContact, contactImgs: File[]) => {
   return new Promise<true>((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
+        ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
         'Content-Type': 'multipart/form-data',
       },

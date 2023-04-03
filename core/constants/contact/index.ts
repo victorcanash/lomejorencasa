@@ -5,4 +5,4 @@ export enum ContactTypes {
   cancelOrder = 'cancelOrder',
 };
 
-export const maxContactFiles = 5;
+export const maxContactFiles = 6;

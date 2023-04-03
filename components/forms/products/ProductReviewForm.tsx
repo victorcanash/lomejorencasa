@@ -20,7 +20,7 @@ import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';
 import BaseForm from '@components/forms/BaseForm';
 
-const UContactForm = () => {
+const ProductReviewForm = () => {
   const { user } = useAuthContext();
 
   const { 
@@ -219,4 +219,4 @@ const UContactForm = () => {
   );
 };
 
-export default UContactForm;
+export default ProductReviewForm;

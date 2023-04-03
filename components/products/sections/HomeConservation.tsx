@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import Title from '@components/ui/Title';
-import MultimediaContainer from '@components/ui/MultimediaContainer';
+import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 import everfresh from 'public/images/banner/everfresh2.jpg';
 
 const HomeConservation = () => {

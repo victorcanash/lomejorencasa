@@ -20,7 +20,7 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const useUser = () => {
   const { setLoading } = useAppContext();
-  const { token, setUser, setToken, removeUser } = useAuthContext();
+  const { token, setUser, setToken, removeUser, isLogged } = useAuthContext();
   const { removeCart } = useCartContext();
 
   const router = useRouter();
@@ -74,7 +74,11 @@ const useUser = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendUserContactEmailMW(intl.locale, userContact, uploadImgs.map((item) => { return item.file; })).then(() => {
+    sendUserContactEmailMW(
+      isLogged() ? token : '',
+      intl.locale,
+      userContact,
+      uploadImgs.map((item) => { return item.file; })).then(() => {
       onSendUserContactEmailSuccess(userContact);
     }).catch((error: Error) => {
       let errorMsg = error.message;

@@ -8,7 +8,7 @@ import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';
 import BaseForm from '@components/forms/BaseForm';
 
-const UpdateUserForm = () => {
+const UserUpdateForm = () => {
   const { user } = useAuthContext();
 
   const { updateUserFormValidation, userFieldsInitValues } = useForms();
@@ -73,4 +73,4 @@ const UpdateUserForm = () => {
   );
 };
 
-export default UpdateUserForm;
+export default UserUpdateForm;

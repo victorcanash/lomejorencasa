@@ -12,7 +12,7 @@ import LinkButton from '@core/components/LinkButton';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
-import MultimediaContainer from '@components/ui/MultimediaContainer';
+import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 type DetailTutorialProps = {
   title?: FormatText,

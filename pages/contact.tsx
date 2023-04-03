@@ -6,7 +6,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import UContactForm from '@components/forms/user/UContactForm';
+import UserContactForm from '@components/forms/user/UserContactForm';
 
 const Contact: NextPage = () => {
   const page = usePage();
@@ -28,7 +28,7 @@ const Contact: NextPage = () => {
       />
 
       <Container>
-        <UContactForm />
+        <UserContactForm />
       </Container>
     </>
   );
