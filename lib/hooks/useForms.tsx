@@ -56,21 +56,21 @@ const useForms = () => {
     },
     firstName: Yup
       .string()
-      .min(3)
-      .max(12)
+      .min(2)
+      .max(50)
       .required(),
     lastName: Yup
       .string()
-      .min(3)
-      .max(12)
+      .min(2)
+      .max(50)
       .required(),
     birthday: Yup
       .date()
       .max(
-        subtractYears(6), 
+        subtractYears(16), 
         intl.formatMessage(
           { id: 'forms.errors.maxBirthday' }, 
-          { minYears: 6 }
+          { minYears: 16 }
         )
       )
       .nullable()
@@ -122,12 +122,12 @@ const useForms = () => {
     addressLine1: Yup
       .string()
       .min(3)
-      .max(200)
+      .max(95)
       .required(),
     addressLine2: Yup
       .string()
       .min(3)
-      .max(200),
+      .max(95),
     postalCode: Yup
       .string()
       .min(5)
@@ -136,12 +136,12 @@ const useForms = () => {
     locality: Yup
       .string()
       .min(3)
-      .max(30)
+      .max(35)
       .required(),
     country: Yup
       .string()
       .min(3)
-      .max(30)
+      .max(35)
       .required(),
   };
 
@@ -211,6 +211,30 @@ const useForms = () => {
 
   const couponFieldsInitValues = {
     couponCode: '',
+  };
+
+  const reviewFieldsValidation = {
+    rating: Yup
+      .number()
+      .min(1)
+      .max(5)
+      .required(),
+    title: Yup
+      .string()
+      .min(3)
+      .max(35)
+      .required(),
+    description: Yup
+      .string()
+      .min(3)
+      .max(99)
+      .required(),
+  };
+
+  const reviewFieldsInitValues = {
+    rating: 5,
+    title: '',
+    description: '',
   };
 
   const localizedTextsFieldsValidation = {
@@ -379,6 +403,14 @@ const useForms = () => {
       .required(),
   });
 
+  const productReviewFormValidation = Yup.object().shape({
+    rating: reviewFieldsValidation.rating,
+    title: reviewFieldsValidation.title,
+    description: reviewFieldsValidation.description,
+    email: userFieldsValidation.email,
+    firstName: userFieldsValidation.firstName,
+  });
+
   const contactUserFormValidation = Yup.object().shape({
     type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
@@ -518,6 +550,7 @@ const useForms = () => {
     orderFieldsInitValues,
     orderProductFieldsInitValues,
     couponFieldsInitValues,
+    reviewFieldsInitValues,
     productFieldsInitValues,
     categoryFieldsInitValues,
     inventoryFieldsInitValues,
@@ -535,6 +568,7 @@ const useForms = () => {
     contactOrderUserFormValidation,
     checkoutContactFormValidation,
     couponFormValidation,
+    productReviewFormValidation,
     getOrderFormValidation,
     createFailedOrderFormValidation,
     createFailedOrderProductFormValidation,
