@@ -68,7 +68,7 @@ const deleteUser = (token: string, user: User) => {
 }
 
 export const sendUserContactEmail = (token: string, currentLocale: string, userContact: UserContact, contactImgs: File[]) => {
-  return new Promise<true>((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
@@ -94,7 +94,7 @@ export const sendUserContactEmail = (token: string, currentLocale: string, userC
     axios.post('users/send-email/contact', data, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
-          resolve(true);
+          resolve({});
         } else {
           throw new Error('Something went wrong');
         }

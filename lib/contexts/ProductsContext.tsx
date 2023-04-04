@@ -1,7 +1,7 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { StaticImageData } from 'next/image';
 
-import type { Product, ProductPack } from '@core/types/products';
+import type { Product, ProductInventory, ProductPack } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { 
   convertToProduct,
@@ -31,10 +31,11 @@ type ProductsContext = {
   isEverfreshProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   isBagsProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   getProductPageUrl: (item: Product | CartItem | GuestCartCheckItem) => string,
-  getProductPacks: (product: Product) => ProductPack[],
   getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string | StaticImageData,
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[] | StaticImageData[],
   getProductBannerImgsUrl: () => StaticImageData[],
+  getProductPacks: (product: Product) => ProductPack[],
+  productVariants: (ProductInventory | ProductPack)[],
 };
 
 const ProductsContext = createContext<ProductsContext>({
@@ -44,10 +45,11 @@ const ProductsContext = createContext<ProductsContext>({
   isEverfreshProduct: () => false,
   isBagsProduct: () => false,
   getProductPageUrl: () => '',
-  getProductPacks: () => [],
   getProductImgUrl: () => '',
   getProductDetailImgsUrl: () => [],
   getProductBannerImgsUrl: () => [],
+  getProductPacks: () => [],
+  productVariants: [],
 });
 
 export const useProductsContext = () => {
@@ -63,6 +65,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   const [bagsProduct, setBagsProduct] = useState<Product | undefined>(undefined);
   const [everfreshPacks, setEverfreshPacks] = useState<ProductPack[]>([]);
   const [bagsPacks, setBagsPacks] = useState<ProductPack[]>([]);
+  const [productVariants, setProductVariants] = useState<(ProductInventory | ProductPack)[]>([]);
 
   const initProducts = (products: Product[], packs: ProductPack[]) => {
     products.forEach((item) => {
@@ -110,15 +113,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     }
     return pages.productList.path;
   };
-
-  const getProductPacks = (product: Product) => {
-    if (isEverfreshProduct(product)) {
-      return everfreshPacks;
-    } else if (isBagsProduct(product)) {
-      return bagsPacks;
-    }
-    return [];
-  };
   
   const getProductImgUrl = (item: Product | CartItem | GuestCartCheckItem, index = 0) => {
     const product = convertToProduct(item);
@@ -165,6 +159,28 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     ];
   };
 
+  const getProductPacks = useCallback((product?: Product) => {
+    if (product) {
+      if (isEverfreshProduct(product)) {
+        return everfreshPacks;
+      } else if (isBagsProduct(product)) {
+        return bagsPacks;
+      }
+      return [];
+    }
+    return everfreshPacks.concat(bagsPacks);
+  }, [bagsPacks, everfreshPacks]);
+
+  useEffect(() => {
+    const everfreshInventories = everfreshProduct?.inventories || [];
+    const bagsInventories = bagsProduct?.inventories || [];
+    const inventories = everfreshInventories.concat(bagsInventories);
+    const packs = getProductPacks();
+    let variants: (ProductInventory | ProductPack)[] = [];
+    variants = variants.concat(inventories, packs);
+    setProductVariants(variants);
+  }, [bagsProduct?.inventories, everfreshProduct?.inventories, getProductPacks]);
+
   return (
     <ProductsContext.Provider
       value={{
@@ -174,10 +190,11 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         isEverfreshProduct,
         isBagsProduct,
         getProductPageUrl,
-        getProductPacks,
         getProductImgUrl,
         getProductDetailImgsUrl,
         getProductBannerImgsUrl,
+        getProductPacks,
+        productVariants,
       }}
     >
       {children}

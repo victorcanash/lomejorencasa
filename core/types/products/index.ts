@@ -58,3 +58,13 @@ export type ProductDiscount = {
   discountPercent: number,
   active: boolean,
 };
+
+export type CreateProductReview = {
+  // ID of variant products array in products context
+  relatedProduct: string,
+  rating: number,
+  title: string,
+  description: string,
+  email: string,
+  firstName: string,
+};

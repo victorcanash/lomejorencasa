@@ -1,4 +1,5 @@
-import { useIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   IconDefinition,
@@ -19,9 +20,7 @@ import Box from '@mui/material/Box';
 import type { Product, ProductInventory, ProductPack } from '@core/types/products';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/LinkButton';
 
-import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useCart from '@lib/hooks/useCart';
@@ -30,7 +29,6 @@ import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import ProductCarousel from '@components/products/detail/ProductCarousel';
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
-import colors from '@lib/constants/themes/colors';
 
 type ProductDetailProps = {
   product: Product,
@@ -42,11 +40,9 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { 
     isEverfreshProduct, 
     isBagsProduct, 
-    getProductPacks, 
+    //getProductPacks, 
     getProductDetailImgsUrl,
   } = useProductsContext();
-
-  const intl = useIntl();
 
   const { addCartItem } = useCart();
   const { 

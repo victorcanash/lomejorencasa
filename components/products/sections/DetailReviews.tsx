@@ -16,6 +16,7 @@ import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 import type { Source } from '@core/types/multimedia';
 
 import Title from '@components/ui/Title';
+import ProductReviewForm from '@components/forms/products/ProductReviewForm';
 import review1 from 'public/images/reviews/review1.jpg';
 import review2 from 'public/images/reviews/review2.jpg';
 import review3 from 'public/images/reviews/review3.jpg';
@@ -114,6 +115,10 @@ const DetailReviews = () => {
           }}
           divider={true}
         />
+
+        <Box mb={4}>
+          <ProductReviewForm />
+        </Box>
 
         <Grid
           container

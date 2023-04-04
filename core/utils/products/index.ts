@@ -4,9 +4,61 @@ import { StatusCodes } from 'http-status-codes';
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import envConfig from '@core/config/env.config';
 import { ManageActions } from '@core/constants/app';
-import type { Product, ProductCategory, ProductInventory, ProductDiscount, ProductPack } from '@core/types/products';
+import type {
+  Product,
+  ProductCategory,
+  ProductInventory,
+  ProductDiscount,
+  ProductPack,
+  CreateProductReview,
+} from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+
+export const createProductReview = (
+  token: string,
+  currentLocale: string,
+  id: number,
+  productReview: CreateProductReview,
+  reviewImgs: File[]
+) => {
+  return new Promise((resolve, reject) => {
+    resolve({});
+    return;
+    const options: AxiosRequestConfig = {
+      headers: {
+        ...getAuthHeaders(token),
+        ...getLanguageHeaders(currentLocale),
+        'Content-Type': 'multipart/form-data',
+      },
+      params: {
+        appName: envConfig.NEXT_PUBLIC_APP_NAME,
+        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
+      }
+    };
+    const data = new FormData();
+    for (let i = 0; i < reviewImgs.length; i++) {
+      data.append('images', reviewImgs[i]);
+    }
+    data.append('rating', productReview.rating.toString());
+    data.append('title', productReview.title);
+    data.append('description', productReview.description);
+    data.append('email', productReview.email);
+    data.append('firstName', productReview.firstName);
+    axios.post(`products/${id}/review`, data, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve({});
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Create Product Review ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      });
+  })
+};
 
 export const getAllProducts = async (
   token: string, 

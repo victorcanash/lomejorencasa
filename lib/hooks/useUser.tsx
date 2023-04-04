@@ -28,7 +28,6 @@ const useUser = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [errorMsg, setErrorMsg] = useState('');
-
   const [successMsg, setSuccessMsg] = useState('');
 
   const manageUser = async (action: ManageActions.update | ManageActions.delete, newUser: User) => {
@@ -78,7 +77,8 @@ const useUser = () => {
       isLogged() ? token : '',
       intl.locale,
       userContact,
-      uploadImgs.map((item) => { return item.file; })).then(() => {
+      uploadImgs.map((item) => { return item.file; })
+    ).then(() => {
       onSendUserContactEmailSuccess(userContact);
     }).catch((error: Error) => {
       let errorMsg = error.message;

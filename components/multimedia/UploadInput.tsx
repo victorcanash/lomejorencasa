@@ -18,7 +18,7 @@ type UploadInputProps = {
   handleClickDeleteUploadBtn: (uploadIndex: number) => void,
   maxFiles: number,
   maxWidth: string,
-  descriptionText: FormatText,
+  descriptionText?: FormatText,
 };
 
 const UploadInput = (props: UploadInputProps) => {
@@ -43,7 +43,7 @@ const UploadInput = (props: UploadInputProps) => {
         >
           <Grid container spacing={1} py={3}>
             { uploadImgs.map((item, index) => (
-              <Grid item xs={6} key={index}>
+              <Grid item xs={maxFiles > 1 ? 6 : 12} key={index}>
                 <Image
                   src={item.url}
                   alt="Image"
@@ -68,7 +68,7 @@ const UploadInput = (props: UploadInputProps) => {
           margin: 'auto',
         }}
       >
-        { maxFiles > 1 &&
+        { descriptionText &&
           <Typography mb={3} textAlign={descriptionText.textAlign || 'left'}>
             <FormattedMessage 
               id={descriptionText.id}

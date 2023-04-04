@@ -1,11 +1,20 @@
 import { useState } from 'react';
 
 import { useIntl } from 'react-intl';
+import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
-import type { Product, ProductCategory, ProductInventory, ProductDiscount, ProductPack } from '@core/types/products';
+import type { 
+  Product,
+  ProductCategory,
+  ProductInventory,
+  ProductDiscount,
+  ProductPack,
+  CreateProductReview,
+} from '@core/types/products';
 import type { UploadFile } from '@core/types/multimedia';
-import { 
+import {
+  createProductReview as createProductReviewMW,
   manageProduct as manageProductMW,
   uploadProductImgs,
   deleteProductImg,
@@ -18,17 +27,60 @@ import {
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 const useProducts = () => {
   const { setLoading } = useAppContext();
-  const { token } = useAuthContext();
+  const { token, isLogged } = useAuthContext();
   const { productCategories, setProductCategories } = useSearchContext();
+  const { productVariants } = useProductsContext();
 
   const intl = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [errorMsg, setErrorMsg] = useState('');
-
   const [successMsg, setSuccessMsg] = useState('');
+
+  const createProductReview = async (productReview: CreateProductReview, uploadImgs: UploadFile[]) => {
+    setSuccessMsg('');
+    if (uploadImgs.length <= 0) {
+      setErrorMsg(intl.formatMessage({ id: 'contact.errors.validateProductImgs' }));
+      return;
+    } else if (uploadImgs.length > 1) {
+      uploadImgs.splice(uploadImgs.length, uploadImgs.length - 1);
+    }
+    if (parseInt(productReview.relatedProduct) >= productVariants.length) {
+      setErrorMsg(intl.formatMessage({ id: 'app.errors.default' }));
+      return;
+    }
+    setLoading(true);
+    setErrorMsg('');
+    createProductReviewMW(
+      isLogged() ? token : '',
+      intl.locale,
+      productVariants[parseInt(productReview.relatedProduct)].id,
+      productReview,
+      uploadImgs.map((item) => { return item.file; }))
+    .then(() => {
+      onCreateProductReviewSuccess(productReview);
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  };
+
+  const onCreateProductReviewSuccess = (_productReview: CreateProductReview) => {
+    setLoading(false);
+    window.scrollTo(0, 0);
+    enqueueSnackbar(
+      intl.formatMessage({ id: 'contact.successes.default' }), 
+      { variant: 'success' }
+    );
+  };
+
+  /* Admin */
 
   const validateProductImgs = (
     product: Product, 
@@ -36,10 +88,10 @@ const useProducts = () => {
     deleteImgs?: number[], 
     onSuccess?: (product: Product, uploadImgs?: UploadFile[]) => void
   ) => {
-    const totalImgs = product.imageNames.length - 
+    /*const totalImgs = product.imageNames.length - 
       (deleteImgs ? deleteImgs.length : 0) + 
       ((uploadImgs ? uploadImgs.length : 0));
-    /*if (totalImgs < 1) {
+    if (totalImgs < 1) {
       setSuccessMsg('');
       setErrorMsg(intl.formatMessage({ id: 'admin.errors.validateProductImgs' }));
       return false;
@@ -285,6 +337,7 @@ const deleteProduct = async (
   };
 
   return {
+    createProductReview,
     validateProductImgs,
     createProduct,
     updateProduct,

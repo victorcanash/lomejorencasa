@@ -207,7 +207,7 @@
   "productDetail.refund.1": "Garantía de 2 años del fabricante.",
   "productDetail.refund.2": "Servicio técnico para devoluciones.",
   "productDetail.refund.link": "Click aquí para solicitar una devolución",
-  "productDetail.reviews.title": "Valoraciones de los usuarios",
+  "productDetail.reviews.title": "Reseñas de usuarios",
   "productDetail.reviews.date": "Revisado en España el {date}",
 
   "everfresh.metas.title": "Envasadora EverFresh",
@@ -495,6 +495,7 @@
   "forms.name": "Name",
   "forms.name.en": "Name (EN)",
   "forms.name.es": "Name (ES)",
+  "forms.title": "Título",
   "forms.description": "Description",
   "forms.description.en": "Description (EN)",
   "forms.description.es": "Description (ES)",
@@ -513,6 +514,7 @@
   "forms.userId": "User ID",
   "forms.guestUserEmail": "Email address",
   "forms.type": "Asunto",
+  "forms.relatedProduct": "Producto relacionado",
   "forms.categoryId": "ID de la categoría",
   "forms.productId": "ID del producto",
   "forms.inventoryId": "ID del inventario",
@@ -531,8 +533,14 @@
   "forms.selectContactType.modifyOrder": "Modificar pedido",
   "forms.selectContactType.cancelOrder": "Cancelar pedido",
   "forms.couponCode": "Código de cupón",
+  "forms.rating": "Valuación",
 
   "forms.uploadInput.uploadBtn": "Subir imagen",
+
+  "forms.productReview.title": "Haz click aquí para escribir una reseña",
+  "forms.productReview.description": "Rellena el siguiente formulario para compartir con nosotros tu experiencia con nuestros servicios y productos.",
+  "forms.productReview.successBtn": "Enviar reseña",
+  "forms.errors.validateProductImg": "Debes de enviar una imagen.",
 
   "forms.register.title": "Sign up",
   "forms.register.successBtn": "Sign up",

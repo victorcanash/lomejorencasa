@@ -215,9 +215,7 @@ const useForms = () => {
 
   const reviewFieldsValidation = {
     rating: Yup
-      .number()
-      .min(1)
-      .max(5)
+      .string()
       .required(),
     title: Yup
       .string()
