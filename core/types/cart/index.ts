@@ -40,6 +40,5 @@ export type GuestCartCheckItem = {
 export type CartBreakdown = {
   cartAmount: number,
   firstBuyDiscount: number,
-  vat: number,
   amount: number,
 };

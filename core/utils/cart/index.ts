@@ -245,12 +245,10 @@ export const cartBreakdown = (cartAmount: number, user: User | GuestUser) => {
   if ((user as User)?.firstName && !(user as User).orderExists) {
     firstBuyDiscount = roundTwoDecimals((firstBuyDiscountPercent / 100) * cartAmount)
   }
-  const vat = (vatPercent / 100) * (cartAmount - firstBuyDiscount)
-  const amount = cartAmount - firstBuyDiscount + vat; 
+  const amount = cartAmount - firstBuyDiscount; 
   return {
     cartAmount: roundTwoDecimals(cartAmount),
     firstBuyDiscount: roundTwoDecimals(firstBuyDiscount),
-    vat: roundTwoDecimals(vat),
     amount: roundTwoDecimals(amount),
   } as CartBreakdown;
 };

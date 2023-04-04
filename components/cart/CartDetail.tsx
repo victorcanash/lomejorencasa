@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
@@ -11,7 +11,6 @@ import { firstBuyDiscountPercent } from '@core/constants/payments';
 import type { Page } from '@core/types/navigation';
 import type { CartBreakdown, CartItem } from '@core/types/cart';
 
-import { pages } from '@lib/constants/navigation';
 import colors from '@lib/constants/themes/colors';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -34,6 +33,8 @@ const CartDetail = (props: CartDetailProps) => {
 
   const { cart } = useCartContext();
   const { convertPriceToString } = useAuthContext();
+
+  const intl = useIntl();
 
   const Subdivider = (props: { mt?: number, mb?: number }) => (
     <Divider 
@@ -132,22 +133,6 @@ const CartDetail = (props: CartDetailProps) => {
             </Grid>
           </Grid>
           <Subdivider />
-          {/* Cart VAT */}
-          <Grid container justifyContent="space-between">
-            <Grid item>
-              <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
-                <FormattedMessage
-                  id="cart.vat"
-                />
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography component="div" variant="body1">
-                {convertPriceToString(breakdown.vat)}
-              </Typography>
-            </Grid>
-          </Grid>
-          <Subdivider />
           {/* Cart Total */}
           <Grid container justifyContent="space-between">
             <Grid item>
@@ -159,7 +144,7 @@ const CartDetail = (props: CartDetailProps) => {
             </Grid>
             <Grid item>
               <Typography component="span" variant="body1">
-                {convertPriceToString(breakdown.amount)}
+                {`${convertPriceToString(breakdown.amount)} (${intl.formatMessage({ id: 'cart.vat' })})`}
               </Typography>
             </Grid>
           </Grid>
