@@ -5,7 +5,7 @@ import axios, { getAuthHeaders } from '@core/config/axios.config';
 import { ManageActions } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
-import { firstBuyDiscountPercent, vatPercent } from '@core/constants/payments';
+import { firstBuyDiscountPercent } from '@core/constants/payments';
 import type { 
   Cart, 
   CartItem, 
