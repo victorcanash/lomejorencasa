@@ -7,6 +7,7 @@ const envConfig = {
     Environments.production : Environments.development,
   NEXT_PUBLIC_BACKEND_URL: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3333/api',
   NEXT_PUBLIC_EMAIL: process.env.NEXT_PUBLIC_EMAIL || 'example@gmail.com',
+  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || '',
   NEXT_PUBLIC_GOOGLE_AM_ID: process.env.NEXT_PUBLIC_GOOGLE_AM_ID || '',
   NEXT_PUBLIC_GOOGLE_GTM_ID: process.env.NEXT_PUBLIC_GOOGLE_GTM_ID || '',
 };
