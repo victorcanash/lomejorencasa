@@ -7,4 +7,5 @@ export enum FormFieldTypes {
   checkbox = 'checkbox',
   datePicker = 'datePicker',
   select = 'select',
+  rating = 'rating',
 };

@@ -21,6 +21,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import Rating from '@mui/material/Rating';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
@@ -236,17 +237,35 @@ const BaseForm = (props: FormBase) => {
             onBlur={props.handleBlur}
             error={getIn(props.touched, formField.name) && Boolean(getIn(props.errors, formField.name))}
           >
-            { formField.menuItems?.map((menuItem) => (
-              <MenuItem key={menuItem.value} value={menuItem.value}>
+            { formField.menuItems?.map((item, index) => (
+              <MenuItem key={index} value={item.value}>
                 <FormattedMessage 
-                  id={menuItem.text?.id || menuItem.value.toString()} 
-                  defaultMessage={menuItem.value.toString()}
-                  values={menuItem.text?.values}
+                  id={item.text?.id || item.value.toString()} 
+                  defaultMessage={item.value.toString()}
+                  values={item.text?.values}
                 />
               </MenuItem>
             ))}   
           </Select>
         </FormControl>
+      );
+    } else if (formField.type == FormFieldTypes.rating) {
+      return (
+        <>
+          <Typography component="legend" mt={1}>
+            <FormattedMessage 
+              id={`forms.${formField.name}`}
+            />
+          </Typography>
+          <Rating
+            id={formField.name}
+            name={formField.name}
+            disabled={formField.disabled}
+            value={getIn(props.values, formField.name)}
+            onChange={props.handleChange}
+            onBlur={props.handleBlur}
+          />
+        </>
       );
     }
   };
