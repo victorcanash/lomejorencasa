@@ -21,13 +21,20 @@ import { useCartContext } from '@lib/contexts/CartContext';
 const useCart = () => {
   const { setLoading } = useAppContext();
   const { user, token, isLogged } = useAuthContext();
-  const { cart, initCart, totalQuantity, setTotalQuantity, totalPrice, setTotalPrice } = useCartContext();
+  const {
+    cart,
+    initCart,
+    totalQuantity,
+    setTotalQuantity,
+    totalPrice,
+    setTotalPrice,
+    openDrawer,
+  } = useCartContext();
 
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
   const [breakdown, setBreakdown] = useState({} as CartBreakdown);
-  const [isEmpty, setIsEmpty] = useState(true);
 
   const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number) => {
     if (totalQuantity + quantity > maxQuantity) {
@@ -86,10 +93,7 @@ const useCart = () => {
     setTotalQuantity(totalQuantity + quantity);
     setTotalPrice(totalPrice + itemPrice);
     setLoading(false);
-    enqueueSnackbar(
-      intl.formatMessage({ id: 'cart.successes.add' }), 
-      { variant: 'success' }
-    );
+    openDrawer();
   };
 
   const onAddCartItemError = () => {
@@ -204,17 +208,8 @@ const useCart = () => {
     setBreakdown(cartBreakdown(totalPrice, user));
   }, [totalPrice, user])
 
-  useEffect(() => {
-    if (cart.items.length > 0) {
-      setIsEmpty(false);
-    } else {
-      setIsEmpty(true);
-    }
-  }, [cart]);
-
   return {
     breakdown,
-    isEmpty,
     addCartItem,
     updateCartItemQuantity,
     checkCart,

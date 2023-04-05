@@ -8,7 +8,7 @@ main {
   min-height: 51vh;
 }
 
-#drawerToolbar {
+.drawerToolbar {
   min-height: 114px;
 }
 

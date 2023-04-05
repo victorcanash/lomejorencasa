@@ -1,33 +1,37 @@
 import { useEffect, useState } from 'react';
 
-import type { DrawerItems } from '@core/types/navigation';
+import type { NavDrawerItems } from '@core/types/navigation';
 
 import { 
-  mainDrawerItems, 
-  loggedDrawerItems, 
-  unloggedDrawerItems,
+  mainNavDrawerItems, 
+  loggedNavDrawerItems, 
+  unloggedNavDrawerItems,
 } from '@lib/constants/navigation';
 import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 
-const useDrawer = () => {
+const useNavDrawer = () => {
   const { isLogged } = useAuthContext();
+  const { closeDrawer: closeCartDrawer } = useCartContext();
 
-  const [items, setItems] = useState<DrawerItems[]>([]);
+  const [items, setItems] = useState<NavDrawerItems[]>([]);
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
+    closeCartDrawer();
     setOpen(!open);
     closeCollapses();
   };
 
   const close  = () => {
+    closeCartDrawer();
     if (open) {
       setOpen(false);
       closeCollapses();
     }
   }
 
-  const handleCollapse = (item: DrawerItems) => {
+  const handleCollapse = (item: NavDrawerItems) => {
     setItems(
       items.map((current) => {
         if (current.text == item.text) {
@@ -55,9 +59,9 @@ const useDrawer = () => {
 
   useEffect(() => {
     if (isLogged()) {
-      setItems(mainDrawerItems.concat(loggedDrawerItems));
+      setItems(mainNavDrawerItems.concat(loggedNavDrawerItems));
     } else {
-      setItems(mainDrawerItems.concat(unloggedDrawerItems));
+      setItems(mainNavDrawerItems.concat(unloggedNavDrawerItems));
     }
   }, [isLogged]);
 
@@ -70,4 +74,4 @@ const useDrawer = () => {
   };
 };
 
-export default useDrawer;
+export default useNavDrawer;

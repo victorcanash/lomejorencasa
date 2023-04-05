@@ -1,6 +1,7 @@
 import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
-import type { DrawerItems } from '@core/types/navigation';
+import type { NavDrawerItems } from '@core/types/navigation';
+
 import type { Pages } from '@lib/types/navigation';
 
 export const pages: Pages = {
@@ -241,7 +242,7 @@ export const pages: Pages = {
   },
 };
 
-export const mainDrawerItems: DrawerItems[] = [
+export const mainNavDrawerItems: NavDrawerItems[] = [
   {
     text: {
       id: 'home',
@@ -306,7 +307,7 @@ export const mainDrawerItems: DrawerItems[] = [
   },
 ];
 
-export const loggedDrawerItems: DrawerItems[] = [
+export const loggedNavDrawerItems: NavDrawerItems[] = [
   {
     text: {
       id: 'profile',
@@ -330,7 +331,7 @@ export const loggedDrawerItems: DrawerItems[] = [
   },
 ];
 
-export const unloggedDrawerItems: DrawerItems[] = [
+export const unloggedNavDrawerItems: NavDrawerItems[] = [
   {
     text: {
       id: 'profile',

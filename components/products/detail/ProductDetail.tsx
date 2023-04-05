@@ -45,11 +45,11 @@ const ProductDetail = (props: ProductDetailProps) => {
   } = useProductsContext();
 
   const { addCartItem } = useCart();
-  const { 
+  const {
     Select: SelectInventory,
     selectedInventory,
   } = useSelectInventory(
-    product, 
+    product,
     //getProductPacks(product).length > 0 ? getProductPacks(product)[0] : undefined
   );
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);

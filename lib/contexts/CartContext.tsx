@@ -1,4 +1,11 @@
-import { createContext, Dispatch, SetStateAction, useContext, useState } from 'react';
+import { 
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState
+} from 'react';
 
 import envConfig from '@core/config/env.config';
 import { Environments } from '@core/constants/app';
@@ -11,10 +18,15 @@ type ContextType = {
   setTotalQuantity: Dispatch<SetStateAction<number>>,
   totalPrice: number,
   setTotalPrice: Dispatch<SetStateAction<number>>,
+  isEmpty: boolean,
   initCart: (cart: Cart) => void,
   cleanCart: () => void,
   removeCart: () => void,
   disabledCheckoutPage: () => boolean,
+  drawerOpen: boolean,
+  handleDrawerOpen: () => void,
+  closeDrawer: () => void,
+  openDrawer: () => void,
 };
 
 export const CartContext = createContext<ContextType>({
@@ -27,10 +39,15 @@ export const CartContext = createContext<ContextType>({
   setTotalQuantity: () => {},
   totalPrice: 0,
   setTotalPrice: () => {},
+  isEmpty: true,
   initCart: () => {},
   cleanCart: () => {},
   removeCart: () => {},
   disabledCheckoutPage: () => true,
+  drawerOpen: false,
+  handleDrawerOpen: () => {},
+  closeDrawer: () => {},
+  openDrawer: () => {},
 });
 
 export const useCartContext = () => {
@@ -50,6 +67,24 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   });
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isEmpty, setIsEmpty] = useState(true);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const handleDrawerOpen = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
+  const closeDrawer  = () => {
+    if (drawerOpen) {
+      setDrawerOpen(false);
+    }
+  };
+
+  const openDrawer  = () => {
+    if (!drawerOpen) {
+      setDrawerOpen(true);
+    }
+  };
 
   const initCartQuantity = (cart: Cart) => {
     let result = 0;
@@ -104,18 +139,31 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     return false;
   };
 
+  useEffect(() => {
+    if (cart.items.length > 0) {
+      setIsEmpty(false);
+    } else {
+      setIsEmpty(true);
+    }
+  }, [cart]);
+
   return (
     <CartContext.Provider
-      value={{ 
+      value={{
         cart,
         totalQuantity,
         setTotalQuantity,
         totalPrice,
         setTotalPrice,
+        isEmpty,
         initCart,
         cleanCart,
         removeCart,
         disabledCheckoutPage,
+        drawerOpen,
+        handleDrawerOpen,
+        closeDrawer,
+        openDrawer,
       }}
     >
       {children}

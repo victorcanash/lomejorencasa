@@ -22,16 +22,31 @@ import Link from '@core/components/Link';
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useDrawer from '@lib/hooks/useDrawer';
-import Drawer from '@components/NavBar/Drawer';
+import useNavDrawer from '@lib/hooks/useNavDrawer';
+import NavDrawer from '@components/NavBar/NavDrawer';
+import CartDrawer from '@components/NavBar/CartDrawer';
 import logo from 'public/images/navbar-logo.png';
 
 const NavBar = () => {
-  const { totalQuantity } = useCartContext();
+  const { totalQuantity, handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
 
   const router = useRouter();
 
-  const appDrawer = useDrawer();
+  const navDrawer = useNavDrawer();
+
+  const handleAppBarOnClick = () => {
+    navDrawer.close();
+  };
+
+  const handleNavBarBtnOnClick = () => {
+    navDrawer.handleOpen();
+  };
+
+  const handleCartBtnOnClick = () => {
+    if (router.pathname !== pages.cart.path) {
+      handleCartDrawerOpen();
+    }
+  };
 
   return (
     <>
@@ -41,8 +56,9 @@ const NavBar = () => {
           sx={{ 
             zIndex: (theme) => theme.zIndex.drawer + 1,
           }} 
-          onClick={appDrawer.close}
+          onClick={handleAppBarOnClick}
         >
+          {/* Shipping Banner */}
           <Grid
             container
             wrap="nowrap"
@@ -70,21 +86,20 @@ const NavBar = () => {
               </Typography>
             </Grid>
           </Grid> 
-
+          {/* NavBar */}
           <Toolbar 
             variant="dense" 
             disableGutters
           >
+            {/* NavDrawer Button */}
             <IconButton
               size="large"
-              aria-controls="app-drawer"
-              aria-haspopup="true"
-              onClick={appDrawer.handleOpen}
+              onClick={handleNavBarBtnOnClick}
               sx={{ mr: 1 }}
             >
               <MenuIcon sx={{ fontSize: 30 }} />
             </IconButton>
-
+            {/* Logo */}
             <Container 
               maxWidth={false} 
               disableGutters
@@ -119,13 +134,11 @@ const NavBar = () => {
                 />
               </IconButton>
             </Container>
-
             <Box sx={{ flexGrow: 1 }} />
-
+            {/* Cart Button */}
             <IconButton
               size='large'
-              component={Link}
-              href={pages.cart.path}
+              onClick={handleCartBtnOnClick}
               sx={{ ml: 1 }}
             >
               <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity}>
@@ -136,13 +149,16 @@ const NavBar = () => {
         </AppBar>
       {/*</HideOnScroll>*/}
 
-      <Drawer
-        key="app-drawer"
+      <NavDrawer
         anchor="left"
-        open={appDrawer.open}
-        items={appDrawer.items}
-        handleOpen={appDrawer.handleOpen}
-        handleCollapse={appDrawer.handleCollapse}
+        open={navDrawer.open}
+        items={navDrawer.items}
+        handleOpen={navDrawer.handleOpen}
+        handleCollapse={navDrawer.handleCollapse}
+      />
+
+      <CartDrawer
+        anchor="right"
       />
     </>
   );

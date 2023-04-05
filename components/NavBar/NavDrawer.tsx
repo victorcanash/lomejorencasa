@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { useIntl } from 'react-intl';
 
 import Box from '@mui/material/Box';
-import MuiDrawer from '@mui/material/Drawer';
+import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
@@ -12,22 +12,22 @@ import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
-import type { DrawerItems } from '@core/types/navigation';
+import type { NavDrawerItems } from '@core/types/navigation';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import useAuth from '@lib/hooks/useAuth';
 
-type DrawerProps = {
+type NavDrawerProps = {
   anchor: 'top' | 'left' | 'bottom' | 'right',
   open: boolean,
-  items: DrawerItems[],
+  items: NavDrawerItems[],
   handleOpen: () => void,
-  handleCollapse: (item: DrawerItems) => void,
+  handleCollapse: (item: NavDrawerItems) => void,
 };
 
-const Drawer = (props: DrawerProps) => {
+const NavDrawer = (props: NavDrawerProps) => {
   const { 
     anchor, 
     open, 
@@ -40,7 +40,7 @@ const Drawer = (props: DrawerProps) => {
 
   const { logout } = useAuth(); 
 
-  const handleItemBtn = (item: DrawerItems) => {
+  const handleItemBtn = (item: NavDrawerItems) => {
     if (item.items?.length > 0) {
       handleCollapse(item);
     } else {
@@ -51,7 +51,7 @@ const Drawer = (props: DrawerProps) => {
     }
   };
 
-  const listItemBtnSx = (item: DrawerItems) => {
+  const listItemBtnSx = (item: NavDrawerItems) => {
     if (!item.items) {
       return { 
         pl: 4 
@@ -60,7 +60,7 @@ const Drawer = (props: DrawerProps) => {
     return undefined;
   };
 
-  const listItemBtnContent = (item: DrawerItems) => (
+  const listItemBtnContent = (item: NavDrawerItems) => (
     <>
       <ListItemText 
         primary={
@@ -75,7 +75,7 @@ const Drawer = (props: DrawerProps) => {
     </>
   );
 
-  const listItemBtn = (item: DrawerItems) => (
+  const listItemBtn = (item: NavDrawerItems) => (
     <>
       { item.path ?
         <ListItemButton 
@@ -99,7 +99,7 @@ const Drawer = (props: DrawerProps) => {
   );
 
   return (
-    <MuiDrawer
+    <Drawer
       anchor={anchor}
       open={open}
       onClose={handleOpen}
@@ -108,7 +108,7 @@ const Drawer = (props: DrawerProps) => {
       }}
     >
       <Toolbar
-        id="drawerToolbar"
+        className="drawerToolbar"
         variant="dense" 
         disableGutters
       />
@@ -131,7 +131,7 @@ const Drawer = (props: DrawerProps) => {
                   <List component="div" disablePadding>
                     { item.items.map((subitem) => (
                       <Fragment key={subitem.text.id}>
-                        { listItemBtn(subitem as DrawerItems) }
+                        { listItemBtn(subitem as NavDrawerItems) }
                       </Fragment>
                     ))}
                   </List>
@@ -142,8 +142,8 @@ const Drawer = (props: DrawerProps) => {
           ))}
         </List>
       </Box>
-    </MuiDrawer>
+    </Drawer>
   );
 };
 
-export default Drawer;
+export default NavDrawer;

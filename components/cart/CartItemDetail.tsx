@@ -31,7 +31,7 @@ type CartItemDetailProps = {
     mt?: number;
     mb?: number;
   }) => JSX.Element,
-  page: Page,
+  page?: Page,
   updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
   priorityImg?: boolean,
 };
@@ -112,8 +112,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       }
 
       <Grid container rowSpacing={1} columnSpacing={2}>
-        { page == pages.cart &&
-          <Grid item xs={12} xs_sm={6}>
+        { page !== pages.checkout &&
+          <Grid item xs={12} xs_sm={!page ? 12 : 6}>
             {/* Product Image */}
             <Box>
               <Link href={getProductPageUrl(item)} noLinkStyle>
@@ -130,7 +130,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           </Grid>
         }
 
-        <Grid item xs={12} xs_sm={page == pages.cart ? 6 : 12}>
+        <Grid item xs={12} xs_sm={page === pages.cart ? 6 : 12}>
           <Box
             sx={!availableQuantity ? { color: 'text.disabled' } : undefined}
           >
@@ -141,6 +141,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   <FormattedMessage
                     id="cart.product"
                   />
+                  &nbsp;
                 </Typography>
               </Grid>
               <Grid item>
@@ -214,12 +215,12 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 </Typography>
               </Grid>
             </Grid>
-            { page == pages.cart &&
+            { page === pages.cart &&
               <Subdivider />
             }
           </Box>
           {/* Product Coupon Form */}
-          { page == pages.cart &&
+          { page === pages.cart &&
             <Box mt={-2}>
               <BaseForm
                 initialValues={couponFieldsInitValues}

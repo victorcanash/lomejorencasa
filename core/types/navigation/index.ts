@@ -20,7 +20,7 @@ export type NavItem = {
   text: FormatText,
 };
 
-export type DrawerItems = NavItem & {
+export type NavDrawerItems = NavItem & {
   items: NavItem[],
   open: boolean,
 };
