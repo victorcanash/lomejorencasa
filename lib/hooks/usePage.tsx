@@ -48,7 +48,7 @@ const usePage = (setLoaded = true) => {
     if (initialized) {      
       checkPage();
     }
-  }, [router.asPath, initialized, checkPage]);
+  }, [checkPage, initialized]);
 
   useEffect(() => {
     const path = window.location.hash;
