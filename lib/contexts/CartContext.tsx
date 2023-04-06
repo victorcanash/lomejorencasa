@@ -145,7 +145,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     } else {
       setIsEmpty(true);
     }
-  }, [cart]);
+  }, [cart.items.length]);
 
   return (
     <CartContext.Provider
