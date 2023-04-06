@@ -64,8 +64,7 @@ const useCart = () => {
       }
     });
 
-    const addPrice = itemTotalPriceValue(cartItem);
-
+    const addPrice = itemTotalPriceValue(cartItem, quantity);
     // Update cart item
     if (cartItemIndex > -1) {
       manageCartItem(ManageActions.update, token, cart, cartItem)
