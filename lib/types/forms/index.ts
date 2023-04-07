@@ -42,6 +42,7 @@ export type FormBase = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   validationSchema?: any,
   enableReinitialize?: boolean,
+  validateOnMount?: boolean,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (event: any) => void,
   formFieldGroups?: FormFieldGroup[],

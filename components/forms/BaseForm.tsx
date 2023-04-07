@@ -40,6 +40,7 @@ const BaseForm = (props: FormBase) => {
     initialValues,
     validationSchema,
     enableReinitialize,
+    validateOnMount,
     onChange,
     formFieldGroups,
     formButtons,
@@ -283,7 +284,7 @@ const BaseForm = (props: FormBase) => {
         onSubmit={handleSubmit}
         enableReinitialize={enableReinitialize}
         innerRef={formikRef}
-        validateOnMount={true}
+        validateOnMount={validateOnMount}
       >
         { props => (
           <FormikForm

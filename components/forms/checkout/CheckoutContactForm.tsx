@@ -80,6 +80,7 @@ const CheckoutContactForm = (props: CheckoutContactFormProps) => {
         } as CheckoutContact}
         validationSchema={checkoutContactFormValidation}
         enableReinitialize={true}
+        validateOnMount={true}
         onChange={handleChange}
         formFieldGroups={[
           {
