@@ -349,14 +349,14 @@ const ProductDetail = (props: ProductDetailProps) => {
 
       {/* Type Product Section */}
       { (isEverfreshProduct(product) || isBagsProduct(product)) &&
-        <Container sx={{ marginTop: '16px' }}>
+        <Box sx={{ marginTop: '16px' }}>
           { isEverfreshProduct(product) &&
             <EverfreshDetail />      
           }
           { isBagsProduct(product) &&
             <BagsDetail />
           }
-        </Container>
+        </Box>
       }
     </Box>
   );
