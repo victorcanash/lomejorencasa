@@ -2,6 +2,7 @@ import Box from '@mui/material/Box';
 
 import type { Source } from '@core/types/multimedia';
 import CustomImage from '@core/components/CustomImage';
+import CustomVideo from '@core/components/CustomVideo';
 
 type MultimediaContainerProps = {
   type: 'default' | 'banner' | 'homePackingMachine',
@@ -91,23 +92,17 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       mt={getMt()}
     >
       { source.type === 'video' ?
-        <video 
-          loop
-          muted
-          autoPlay
-          playsInline
-          style={{
-            position: 'relative',
-            right: getBorderRadius(),
-            width: getSourceWidth(),
-            borderRadius: getBorderRadius(),
-          }}
-        >
-          <source 
+        <>
+          <CustomVideo
             src={source.src as string}
-            type="video/mp4" 
+            style={{
+              position: 'relative',
+              right: getBorderRadius(),
+              width: getSourceWidth(),
+              borderRadius: getBorderRadius(),
+            }}
           />
-        </video>
+        </>
         :
         <Box
           sx={{

@@ -13,6 +13,7 @@ import LinkButton from '@core/components/LinkButton';
 import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
+import { homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 import use_food_preparation_bg from 'public/images/home/use-food-preparation-bg.jpg';
@@ -215,7 +216,7 @@ const HomeUse = () => {
         ([
           {
             type: 'video',
-            src: require('../../../public/videos/home/use-packing-machine-step1.mp4'),
+            src: homeVideoIds[0],
             alt: 'Use packing machine step 1',
           },
           {
@@ -225,12 +226,12 @@ const HomeUse = () => {
           },
           {
             type: 'video',
-            src: require('../../../public/videos/home/use-packing-machine-step3.mp4'),
+            src: homeVideoIds[1],
             alt: 'Use packing machine step 3',
           },
           {
             type: 'video',
-            src: require('../../../public/videos/home/use-packing-machine-step4.mp4'),
+            src: homeVideoIds[2],
             alt: 'Use packing machine step 4',
           }
         ] as Source[]).map((item, index) => (

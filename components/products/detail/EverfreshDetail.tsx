@@ -1,5 +1,7 @@
 import { pages } from '@lib/constants/navigation';
+import { everfreshVideoIds } from '@lib/constants/multimedia';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
+
 import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
 import DetailTutorial from '@components/products/sections/DetailTutorial';
 import DetailReviews from '@components/products/sections/DetailReviews';
@@ -30,7 +32,7 @@ const EverfreshDetail = () => {
             }}
             source={{ 
               type: 'video',
-              src: require('../../../public/videos/home/use-packing-machine-step4.mp4'),
+              src: everfreshVideoIds[0],
               alt: "Packing machine tutorial 1",
             }} 
           />
@@ -44,7 +46,7 @@ const EverfreshDetail = () => {
             }}
             source={{ 
               type: 'video',
-              src: require('../../../public/videos/everfresh/everfresh-tutorial1.mp4'),
+              src: everfreshVideoIds[1],
               alt: "Packing machine tutorial 2",
             }} 
           />
@@ -58,7 +60,7 @@ const EverfreshDetail = () => {
             }}
             source={{ 
               type: 'video',
-              src: require('../../../public/videos/everfresh/everfresh-tutorial2.mp4'),
+              src: everfreshVideoIds[2],
               alt: "Packing machine tutorial 3",
             }} 
           />
