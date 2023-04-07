@@ -1,18 +1,18 @@
-import NextImage, {
-  ImageLoader as NextImageLoader,
-  ImageLoaderProps as NextImageLoaderProps,
-  ImageProps as NextImageProps,
+import Image, {
+  ImageLoader,
+  ImageLoaderProps,
+  ImageProps,
 } from 'next/image';
 
 import envConfig from '@core/config/env.config';
 
 const normalizeSrc = (src: string) => src[0] === '/' ? src.slice(1) : src;
 
-const cloudinaryLoader: NextImageLoader = ({
+const cloudinaryLoader: ImageLoader = ({
   src,
   width,
   quality,
-}: NextImageLoaderProps) => {
+}: ImageLoaderProps) => {
   const params = [
     'f_auto',
     'c_limit',
@@ -22,14 +22,15 @@ const cloudinaryLoader: NextImageLoader = ({
   return `https://res.cloudinary.com/${envConfig.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${params.join(',')}/${normalizeSrc(src)}`;
 };
 
-const Image = (props: NextImageProps) => {
+const CustomImage = (props: ImageProps) => {
 
   return (
-    <NextImage
+    <Image
+      alt={props.alt || 'image'}
       {...props}
-      loader={cloudinaryLoader}
+      loader={typeof props.src === 'string' ? cloudinaryLoader : undefined}
     />
   );
 };
 
-export default Image;
+export default CustomImage;

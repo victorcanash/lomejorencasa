@@ -1,11 +1,10 @@
-import Image from 'next/image';
-
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Box from '@mui/material/Box';
 
 import type { Source } from '@core/types/multimedia';
+import CustomImage from '@core/components/CustomImage';
 
 type ProductCarouselProps = {
   sources: Source[],
@@ -28,12 +27,13 @@ const ProductCarousel = (props: ProductCarouselProps) => {
             <div 
               style={{ marginBottom: '40px' }}
             >
-              <Image 
+              <CustomImage 
                 src={source.src}
                 alt="Product image" 
+                width="1080"
+                height="1080"
                 layout="responsive" 
                 objectFit="cover"
-                quality="100"
                 priority
                 style={{ borderRadius: '10px' }}
               />

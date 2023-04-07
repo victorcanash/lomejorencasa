@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { useIntl } from 'react-intl';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { Product } from '@core/types/products';
+import CustomImage from '@core/components/CustomImage';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
@@ -68,12 +67,13 @@ const ProductDetail = (props: ProductDetailProps) => {
                 { getProductDetailImgsUrl(product).map((imgSrc, imgSrcIndex) => (
                   <SwiperSlide key={imgSrcIndex}>
                     <div style={{ marginBottom: "40px"}}>
-                      <Image 
+                      <CustomImage 
                         src={imgSrc}
                         alt="Product image" 
+                        width="1080"
+                        height="1080"
                         layout="responsive" 
                         objectFit="cover"
-                        quality="100"
                         priority
                         style={{ borderRadius: '10px' }}
                       />

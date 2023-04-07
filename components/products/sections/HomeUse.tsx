@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Fragment } from 'react';
-import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -11,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
+import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -112,12 +112,11 @@ const HomeUse = () => {
           zIndex: 1,
         }}
       >
-        <Image
+        <CustomImage
           src={use_food_preparation_everfresh} 
-          alt="Use food preparation EverFresh" 
+          alt="Use food preparation EverFresh"
           layout="responsive" 
           objectFit="cover"
-          quality="100"
         />
       </Box>
       <MultimediaContainer

@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -8,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import { convertElementToSx } from '@core/utils/themes';
+import CustomImage from '@core/components/CustomImage';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
@@ -73,12 +72,11 @@ const HomeWhyVacuumPacked = () => {
               mr: 'auto',
             }}
           >
-            <Image
+            <CustomImage
               src={why_vacuum_packed1} 
-              alt="Vacuum packed" 
+              alt="Vacuum packed"
               layout="responsive" 
               objectFit="cover"
-              quality="100"
             />
           </Box>
         </Grid>
@@ -90,12 +88,11 @@ const HomeWhyVacuumPacked = () => {
               ml: 2,
             }}
           >
-            <Image
+            <CustomImage
               src={why_vacuum_packed2} 
-              alt="Vacuum packed" 
+              alt="Vacuum packed"
               layout="responsive" 
               objectFit="cover"
-              quality="100"
             />
           </Box>
         </Grid>

@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import Image from 'next/image'
 
 import { FormattedMessage } from 'react-intl';
 
@@ -17,6 +16,7 @@ import type { Product, ProductCategory } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import Link from '@core/components/Link';
+import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -61,12 +61,13 @@ const ProductList = (props: ProductListProps) => {
       
                   <CardMedia>
                     <div>
-                      <Image
+                      <CustomImage
                         src={getProductImgUrl(item)}
                         alt="Product image"
-                        layout="responsive"
+                        width="1080"
+                        height="1080"
+                        layout="responsive" 
                         objectFit="cover"
-                        quality="100"
                         priority
                       />
                     </div>

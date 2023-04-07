@@ -7,7 +7,7 @@ export type UploadFile = {
 
 export type Source = {
   type?: 'video' | 'image',
-  src: StaticImageData | 'string',
+  src: StaticImageData | string,
   alt?: string,
   priority?: boolean,
 };

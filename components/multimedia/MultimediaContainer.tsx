@@ -1,8 +1,7 @@
-import NextImage from 'next/image';
-
 import Box from '@mui/material/Box';
 
 import type { Source } from '@core/types/multimedia';
+import CustomImage from '@core/components/CustomImage';
 
 type MultimediaContainerProps = {
   type: 'default' | 'banner' | 'homePackingMachine',
@@ -117,12 +116,11 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
             width: getSourceWidth(),
           }}
         >
-          <NextImage
+          <CustomImage
             src={source.src} 
             alt={source.alt}
-            layout="responsive"
+            layout="responsive" 
             objectFit="cover"
-            quality="100"
             priority={source.priority}
             style={{ 
               borderRadius: getBorderRadius(), 

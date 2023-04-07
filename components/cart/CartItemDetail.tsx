@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from 'react';
-import Image from 'next/image';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
@@ -15,10 +14,12 @@ import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
+import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
+import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import useForms from '@lib/hooks/useForms';
@@ -46,6 +47,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
   } = props;
 
   const { getProductPageUrl, getProductImgUrl } = useProductsContext();
+  const { closeDrawer } = useCartContext();
   const { convertPriceToString } = useAuthContext();
 
   const intl = useIntl();
@@ -116,10 +118,16 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           <Grid item xs={12} xs_sm={6}>
             {/* Product Image */}
             <Box>
-              <Link href={getProductPageUrl(item)} noLinkStyle>
-                <Image
+              <Link
+                onClick={closeDrawer}
+                href={getProductPageUrl(item)}
+                noLinkStyle
+              >
+                <CustomImage
                   src={getProductImgUrl(item)}
                   alt="Product image"
+                  width="1080"
+                  height="1080"
                   layout="responsive"
                   objectFit="cover"
                   style={{ borderRadius: '10px' }}

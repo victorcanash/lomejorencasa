@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -17,6 +16,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
+import CustomImage from '@core/components/CustomImage';
 // import HideOnScroll from '@core/components/HideOnScroll';
 
 import { pages } from '@lib/constants/navigation';
@@ -121,7 +121,7 @@ const NavBar = () => {
                     <FormattedMessage id="home.h1" />
                   </Typography>
                 }
-                <Image
+                <CustomImage
                   src={logo}
                   alt="Logo"
                   height="70px"

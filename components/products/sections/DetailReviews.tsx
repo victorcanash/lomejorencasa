@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -14,6 +13,7 @@ import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
 
 import type { Source } from '@core/types/multimedia';
+import CustomImage from '@core/components/CustomImage';
 
 import Title from '@components/ui/Title';
 import ProductReviewForm from '@components/forms/products/ProductReviewForm';
@@ -64,10 +64,10 @@ const DetailReviews = () => {
           >
             <CardMedia>
               <div style={{ position: 'relative', width: '100%' }}>
-                <Image
+                <CustomImage
                   src={source.src}
                   alt="Product image"
-                  layout="responsive" 
+                  layout="responsive"
                   objectFit="cover"
                 />
               </div>

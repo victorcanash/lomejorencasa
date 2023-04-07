@@ -1,8 +1,7 @@
-import Image from 'next/image';
-
 import Grid from '@mui/material/Grid';
 
 import type { Source } from '@core/types/multimedia';
+import CustomImage from '@core/components/CustomImage';
 
 type ImagesDetailProps = {
   sources: Source[],
@@ -19,12 +18,12 @@ const ImagesDetail = (props: ImagesDetailProps) => {
     <Grid container spacing={1} py={3}>
       { sources.map((source, sourceIndex) => (
         <Grid item xs={6} key={sourceIndex}>
-          <Image
+          <CustomImage
             src={source.src}
             alt="Image"
-            width="500"
-            height="500"
-            layout="responsive"
+            width="1080"
+            height="1080"
+            layout="responsive" 
             objectFit="cover"
           />
           { getImgActionComponent &&

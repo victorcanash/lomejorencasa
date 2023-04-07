@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -10,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
+import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -59,7 +58,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
             transform: 'translate(-50%, -50%)',
           }}
         >
-          <Image 
+          <CustomImage 
             src={source.src} 
             alt={alt} 
             width={widthSrc || '100px'}
@@ -166,12 +165,11 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
               transform: type == 'characteristics' ? 'rotate(180deg)' : undefined,
             }}
           >
-            <Image 
+            <CustomImage 
               src={characteristics_bg}
-              alt={'Vacuum machine characteristics background'} 
+              alt={'Vacuum machine characteristics background'}
               layout="responsive" 
               objectFit="cover"
-              quality="100"
             />
           </Box>
         </Box>
