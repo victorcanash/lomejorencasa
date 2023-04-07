@@ -11,11 +11,8 @@ import {
 
 import { pages } from '@lib/constants/navigation';
 import { productIds } from '@lib/constants/products';
-import { everfreshImgIds } from '@lib/constants/multimedia';
+import { everfreshImgIds, bagsImgIds } from '@lib/constants/multimedia';
 import placeholder from 'public/images/placeholder.jpeg';
-import detail_bags1 from 'public/images/bags/bags1.jpg';
-import detail_bags2 from 'public/images/bags/bags2.jpg';
-import detail_bags3 from 'public/images/bags/bags3.jpg';
 import banner_everfresh1 from 'public/images/banner/everfresh1.jpg';
 import banner_everfresh2 from 'public/images/banner/everfresh2.jpg';
 import banner_everfresh3 from 'public/images/banner/everfresh3.jpg';
@@ -117,7 +114,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       if (isEverfreshProduct(product)) {
         return everfreshImgIds[0];
       } else if (isBagsProduct(product)) {
-        return detail_bags1;
+        return bagsImgIds[0];
       }
       return getProductImgUrlMW(product, index) || placeholder;
     }
@@ -130,11 +127,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       if (isEverfreshProduct(product)) {
         return everfreshImgIds;
       } else if (isBagsProduct(product)) {
-        return [
-          detail_bags1, 
-          detail_bags2, 
-          detail_bags3
-        ];
+        return bagsImgIds;
       }
       const imgsUrl = getAllProductImgsUrlMW(product);
       return imgsUrl.length >= 1 ? imgsUrl : [placeholder]
