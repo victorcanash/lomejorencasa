@@ -1,3 +1,5 @@
+import 'dayjs/locale/en';
+import 'dayjs/locale/es';
 import '@fortawesome/fontawesome-svg-core/styles.css'; 
 import 'swiper/css';
 import 'swiper/css/bundle';
@@ -10,20 +12,19 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 // import { useRouter } from 'next/router';
 
+import NP from 'number-precision'
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import { config } from '@fortawesome/fontawesome-svg-core';
 import { SnackbarProvider } from 'notistack';
 import GoogleAnalythics from '@bradgarropy/next-google-analytics';
 import TagManager from 'react-gtm-module';
 
+import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import 'dayjs/locale/en';
-import 'dayjs/locale/es';
+import { config } from '@fortawesome/fontawesome-svg-core';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
 import envConfig from '@core/config/env.config';
@@ -62,6 +63,7 @@ function MyApp(props: MyAppProps) {
   const description = messages[locale]['app.metas.description'];
 
   useEffect(() => {
+    NP.enableBoundaryChecking(false)
     TagManager.initialize({ 
       gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
     });
