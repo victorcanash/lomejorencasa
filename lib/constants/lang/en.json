@@ -323,7 +323,7 @@
   "cart.firstBuyDiscount": "Descuento 1a compra:",
   "cart.shipping": "Envío:",
   "cart.freeShipping": "Envío gratuito",
-  "cart.vat": "IVA incluido",
+  "cart.vat": "incluye {value} IVA",
   "cart.total": "Total:",
   "cart.inventoryAvailable": "Inventory available right now",
   "cart.inventoryUnavailable": "Inventory not available right now",

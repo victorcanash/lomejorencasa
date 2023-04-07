@@ -5,13 +5,13 @@ import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
 import { maxQuantity } from '@core/constants/cart';
-import type { Cart, CartBreakdown, CartItem } from '@core/types/cart';
+import type { Cart, CartItem, TotalAmount } from '@core/types/cart';
 import type { ProductInventory, ProductPack } from '@core/types/products';
 import { 
   manageCartItem, 
   checkCart as checkCartMW, 
-  itemTotalPriceValue,
-  cartBreakdown,
+  getItemAmount,
+  getTotalAmount,
 } from '@core/utils/cart';
 
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -34,7 +34,14 @@ const useCart = () => {
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
-  const [breakdown, setBreakdown] = useState({} as CartBreakdown);
+  const [totalAmount, setTotalAmount] = useState({
+    itemsAmount: [],
+    subtotal: 0,
+    totalVat: 0,
+    totalDiscount: 0,
+    total: 0,
+    totalQuantity: 0,
+  } as TotalAmount);
 
   const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number) => {
     if (totalQuantity + quantity > maxQuantity) {
@@ -64,13 +71,13 @@ const useCart = () => {
       }
     });
 
-    const addPrice = itemTotalPriceValue(cartItem, quantity);
+    const itemAmount = getItemAmount(cartItem, quantity);
     // Update cart item
     if (cartItemIndex > -1) {
       manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
-          onAddCartItemSuccess(quantity, addPrice);
+          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
@@ -81,7 +88,7 @@ const useCart = () => {
         .then((response: { cartItem: CartItem }) => {
           cartItem.id = response.cartItem.id;
           cart.items.push(cartItem);
-          onAddCartItemSuccess(quantity, addPrice);
+          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
@@ -119,12 +126,12 @@ const useCart = () => {
     // Update cart item
     if (quantity > 0) {
       const addedQuantity = quantity - cartItem.quantity;
-      const addedPrice = itemTotalPriceValue(cartItem, addedQuantity);
+      const itemAmount = getItemAmount(cartItem, addedQuantity);
       cartItem.quantity = quantity;
       manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
-          onUpdateCartItemSuccess(addedQuantity, addedPrice);
+          onUpdateCartItemSuccess(addedQuantity, itemAmount.itemTotalWithQuantity);
         }).catch((_error: Error) => {
           onUpdateCartItemError();
         });
@@ -132,11 +139,11 @@ const useCart = () => {
     // Delete cart item
     } else {
       const addedQuantity = -cartItem.quantity;
-      const addedPrice = itemTotalPriceValue(cartItem, addedQuantity);
+      const itemAmount = getItemAmount(cartItem, addedQuantity);
       manageCartItem(ManageActions.delete, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items.splice(cartItemIndex, 1);
-          onUpdateCartItemSuccess(addedQuantity, addedPrice);
+          onUpdateCartItemSuccess(addedQuantity, itemAmount.itemTotalWithQuantity);
         }).catch((_error: Error) => {
           onUpdateCartItemError();
         });
@@ -204,11 +211,11 @@ const useCart = () => {
   };
 
   useEffect(() => {
-    setBreakdown(cartBreakdown(totalPrice, user));
-  }, [totalPrice, user])
+    setTotalAmount(getTotalAmount(cart, user));
+  }, [cart, cart.items, cart.items.length, totalPrice, user])
 
   return {
-    breakdown,
+    totalAmount,
     addCartItem,
     updateCartItemQuantity,
     checkCart,

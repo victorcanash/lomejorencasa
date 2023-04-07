@@ -14,7 +14,6 @@ import type { PaypalCredentials } from '@core/types/paypal';
 import type { GoogleCredentials } from '@core/types/google';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
-import { roundTwoDecimals } from '@core/utils/numbers';
 
 import { pages } from '@lib/constants/navigation';
 
@@ -141,11 +140,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const convertPriceToString = (price: number) => {
-    const rounded = roundTwoDecimals(price).toFixed(2);
     if (currency === 'EUR') {
-      return `${rounded}€`;
+      return `${price.toFixed(2)}€`;
     }
-    return `${rounded}$`;
+    return `${price.toFixed(2)}$`;
   };
 
   useEffect(() => {

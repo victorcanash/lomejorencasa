@@ -43,9 +43,7 @@ const NavBar = () => {
   };
 
   const handleCartBtnOnClick = () => {
-    if (router.pathname !== pages.cart.path) {
-      handleCartDrawerOpen();
-    }
+    handleCartDrawerOpen();
   };
 
   return (
@@ -136,15 +134,28 @@ const NavBar = () => {
             </Container>
             <Box sx={{ flexGrow: 1 }} />
             {/* Cart Button */}
-            <IconButton
-              size='large'
-              onClick={handleCartBtnOnClick}
-              sx={{ ml: 1 }}
-            >
-              <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity}>
-                <ShoppingCartIcon sx={{ fontSize: 30 }} />
-              </Badge>
-            </IconButton>
+            { router.pathname === pages.cart.path || router.pathname === pages.checkout.path ?
+              <IconButton
+                size='large'
+                component={Link}
+                href={pages.cart.path}
+                sx={{ ml: 1 }}
+              >
+                <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity}>
+                  <ShoppingCartIcon sx={{ fontSize: 30 }} />
+                </Badge>
+              </IconButton>
+              :
+              <IconButton
+                size='large'
+                onClick={handleCartBtnOnClick}
+                sx={{ ml: 1 }}
+              >
+                <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity}>
+                  <ShoppingCartIcon sx={{ fontSize: 30 }} />
+                </Badge>
+              </IconButton>
+            }
           </Toolbar>
         </AppBar>
       {/*</HideOnScroll>*/}

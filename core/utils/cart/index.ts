@@ -1,23 +1,24 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
+import NP from 'number-precision'
 
 import axios, { getAuthHeaders } from '@core/config/axios.config';
 import { ManageActions } from '@core/constants/app';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
-import { firstBuyDiscountPercent } from '@core/constants/payments';
+import { firstBuyDiscountPercent, vatExtractPercent, vatPercent } from '@core/constants/payments';
 import type { 
   Cart, 
   CartItem, 
   GuestCart, 
   GuestCartCheck, 
   GuestCartCheckItem,
-  CartBreakdown,
+  TotalAmount,
+  ItemAmount,
 } from '@core/types/cart';
 import type { User, GuestUser } from '@core/types/user';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
-import { roundTwoDecimals } from '@core/utils/numbers';
 
 export const manageCartItem = (action: ManageActions, token: string, cart: Cart, cartItem: CartItem) => {
   return new Promise<{cartItem: CartItem}>(async (resolve, reject) => {
@@ -209,26 +210,6 @@ export const checkCart = (token: string | undefined, cart: Cart) => {
   });
 };
 
-export const itemPriceValue = (item: CartItem | GuestCartCheckItem) => {
-  let price = 0;
-  if (item.inventory) {
-    price = item.inventory?.realPrice;
-  } else if (item.pack) {
-    price = item.pack?.price;
-  }
-  return price;
-};
-
-export const itemTotalPriceValue = (item: CartItem | GuestCartCheckItem, setQuantity?: number) => {
-  let price = 0;
-  if (item.inventory) {
-    price = item.inventory?.realPrice * (setQuantity ? setQuantity : item.quantity);
-  } else if (item.pack) {
-    price = item.pack?.price * (setQuantity ? setQuantity : item.quantity);
-  }
-  return price;
-};
-
 export const availableItemQuantity = (item: CartItem | GuestCartCheckItem) => {
   if (item.inventory && item.inventory.quantity <= 0) {
     return false;
@@ -240,15 +221,45 @@ export const availableItemQuantity = (item: CartItem | GuestCartCheckItem) => {
   return true;
 };
 
-export const cartBreakdown = (cartAmount: number, user: User | GuestUser) => {
-  let firstBuyDiscount = 0
-  if ((user as User)?.firstName && !(user as User).orderExists) {
-    firstBuyDiscount = roundTwoDecimals((firstBuyDiscountPercent / 100) * cartAmount)
-  }
-  const amount = cartAmount - firstBuyDiscount; 
+export const getItemAmount = (item: CartItem | GuestCartCheckItem, setQuantity?: number) => {
+  const itemTotal = item.inventory ? item.inventory.realPrice : item.pack?.price || 0;
+  const itemTotalWithQuantity = NP.times(itemTotal, setQuantity ? setQuantity : item.quantity);
+  const itemVat = -NP.round(NP.minus(NP.divide(itemTotal, vatExtractPercent), itemTotal), 2);
+  const itemSubtotal = NP.round(NP.minus(itemTotal, itemVat), 2);
   return {
-    cartAmount: roundTwoDecimals(cartAmount),
-    firstBuyDiscount: roundTwoDecimals(firstBuyDiscount),
-    amount: roundTwoDecimals(amount),
-  } as CartBreakdown;
+    itemVat,
+    itemSubtotal,
+    itemTotal,
+    itemTotalWithQuantity,
+  } as ItemAmount;
+};
+
+export const getTotalAmount = (cart: Cart | GuestCartCheck, user: User | GuestUser) => {
+  const itemsAmount: ItemAmount[] = [];
+  let subtotal = 0;
+  let total = 0;
+  let totalQuantity = 0;
+  cart.items.forEach((item) => {
+    if (item.quantity > 0 && (item.inventory || item.pack)) {
+      const { itemVat, itemSubtotal, itemTotal, itemTotalWithQuantity } = getItemAmount(item);
+      itemsAmount.push({ itemVat, itemSubtotal, itemTotal, itemTotalWithQuantity });
+      subtotal = NP.round(NP.plus(subtotal, NP.times(itemSubtotal, item.quantity)), 2);
+      total = NP.round(NP.plus(total, NP.times(itemTotal, item.quantity)), 2);
+      totalQuantity = NP.round(NP.plus(totalQuantity, item.quantity), 2);
+    }
+  })
+  let firstBuyDiscount = 0;
+  if ((user as User)?.firstName && !(user as User).orderExists) {
+    firstBuyDiscount = NP.round(NP.times(NP.divide(firstBuyDiscountPercent, 100), total), 2);
+  }
+  total = NP.minus(total, firstBuyDiscount);
+  const totalVat = NP.round(NP.times(NP.divide(vatPercent, 100), total), 2);
+  return {
+    itemsAmount,
+    subtotal,
+    totalVat,
+    totalDiscount: firstBuyDiscount,
+    total,
+    totalQuantity,
+  } as TotalAmount;
 };

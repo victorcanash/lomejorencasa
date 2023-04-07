@@ -29,12 +29,12 @@ const CartDetail = (props: CartDetailProps) => {
     page,
   } = props;
 
-  const { cart, isEmpty, disabledCheckoutPage, closeDrawer } = useCartContext();
+  const { cart, totalPrice, isEmpty, disabledCheckoutPage, closeDrawer } = useCartContext();
   const { convertPriceToString } = useAuthContext();
 
   const intl = useIntl();
 
-  const { breakdown, updateCartItemQuantity } = useCart();
+  const { totalAmount, updateCartItemQuantity } = useCart();
 
   const Subdivider = (props: { mt?: number, mb?: number }) => (
     <Divider 
@@ -66,7 +66,7 @@ const CartDetail = (props: CartDetailProps) => {
                     <Divider
                       sx={{
                         mt: 3,
-                        mb: 2,
+                        mb: 3,
                       }} 
                     />
                   </>
@@ -76,7 +76,7 @@ const CartDetail = (props: CartDetailProps) => {
           </Box>
           {/* Cart All Detail */}
           <Box>
-            <Typography component="h2" variant="h3" textAlign="center">
+            <Typography component="h2" variant="h3" textAlign="center" mt={-1}>
               <FormattedMessage id="cart.totalTitle" />
             </Typography>
             <Subdivider mt={2} />
@@ -92,13 +92,13 @@ const CartDetail = (props: CartDetailProps) => {
                 </Grid>
                 <Grid item>  
                   <Typography component="div" variant="body1">
-                    {convertPriceToString(breakdown.cartAmount)}
+                    {convertPriceToString(totalPrice)}
                   </Typography>
                 </Grid>
               </Grid>
               <Subdivider />
               {/* First Buy Discount */}
-              { breakdown.firstBuyDiscount > 0 &&
+              { totalAmount.totalDiscount > 0 &&
                 <>
                   <Grid container justifyContent="space-between">
                     <Grid item>
@@ -142,11 +142,15 @@ const CartDetail = (props: CartDetailProps) => {
                     <FormattedMessage
                       id="cart.total"
                     />
+                    &nbsp;
                   </Typography>
                 </Grid>
                 <Grid item>
                   <Typography component="span" variant="body1">
-                    {`${convertPriceToString(breakdown.amount)} (${intl.formatMessage({ id: 'cart.vat' })})`}
+                    {`${convertPriceToString(totalAmount.total)}`}
+                  </Typography>
+                  <Typography component="span" variant="body2">
+                    {` (${intl.formatMessage({ id: 'cart.vat' }, { value: convertPriceToString(totalAmount.totalVat) })})`}
                   </Typography>
                 </Grid>
               </Grid>

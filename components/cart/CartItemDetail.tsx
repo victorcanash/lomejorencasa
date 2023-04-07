@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import { itemPriceValue, itemTotalPriceValue, availableItemQuantity } from '@core/utils/cart';
+import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
@@ -113,7 +113,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
       <Grid container rowSpacing={1} columnSpacing={2}>
         { page !== pages.checkout &&
-          <Grid item xs={12} xs_sm={!page ? 12 : 6}>
+          <Grid item xs={12} xs_sm={6}>
             {/* Product Image */}
             <Box>
               <Link href={getProductPageUrl(item)} noLinkStyle>
@@ -130,7 +130,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           </Grid>
         }
 
-        <Grid item xs={12} xs_sm={page === pages.cart ? 6 : 12}>
+        <Grid item xs={12} xs_sm={page !== pages.checkout ? 6 : 12}>
           <Box
             sx={!availableQuantity ? { color: 'text.disabled' } : undefined}
           >
@@ -162,7 +162,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               </Grid>
               <Grid item>
                 <Typography component="div" variant="body1">
-                  {convertPriceToString(itemPriceValue(item))}
+                  {convertPriceToString(getItemAmount(item).itemTotal)}
                 </Typography>
               </Grid>
             </Grid>
@@ -211,7 +211,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               </Grid> 
               <Grid item>
                 <Typography component="div" variant="body1">
-                  {convertPriceToString(itemTotalPriceValue(item))}
+                  {convertPriceToString(getItemAmount(item).itemTotalWithQuantity)}
                 </Typography>
               </Grid>
             </Grid>
@@ -221,7 +221,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           </Box>
           {/* Product Coupon Form */}
           { page === pages.cart &&
-            <Box mt={-2}>
+            <Box mt={-1} mb={1}>
               <BaseForm
                 initialValues={couponFieldsInitValues}
                 validationSchema={couponFormValidation}
@@ -234,7 +234,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                         required: true,
                       },
                     ],
-                    formFieldsMb: 0,
+                    formFieldsMb: 1,
                   }
                 ]}
                 formButtons={{

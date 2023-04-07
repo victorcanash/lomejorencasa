@@ -37,9 +37,8 @@ const CartDrawer = (props: CartDrawerProps) => {
         sx={{
           overflow: 'auto',
           width: {
-            xs_sm: '300px',
-            sm: '400px',
-            md: '500px',
+            xs: '100vw',
+            sm: '600px',
           },
           p: '16px',
         }}

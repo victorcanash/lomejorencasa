@@ -7,10 +7,10 @@ import {
   useState
 } from 'react';
 
-import envConfig from '@core/config/env.config';
-import { Environments } from '@core/constants/app';
+import NP from 'number-precision'
+
 import type { Cart } from '@core/types/cart';
-import { itemTotalPriceValue } from '@core/utils/cart';
+import { getItemAmount } from '@core/utils/cart';
 
 type ContextType = {
   cart: Cart,
@@ -86,29 +86,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const initCartQuantity = (cart: Cart) => {
-    let result = 0;
-    if (cart && cart.items && cart.items.length >= 1) {
-      cart.items.forEach((item) => {
-        result += item.quantity;
-      });
-    }
-    setTotalQuantity(result);
-  };
-  const initCartPrice = (cart: Cart) => {
-    let result = 0;
-    if (cart && cart.items && cart.items.length >= 1) {
-      cart.items.forEach((item) => {
-        result += itemTotalPriceValue(item);
-      });
-    }
-    setTotalPrice(result);
-  };
-
   const initCart = (cart: Cart) => {
     setCart(cart);
-    initCartQuantity(cart);
-    initCartPrice(cart);
   };
 
   const cleanCart = () => {
@@ -131,21 +110,29 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const disabledCheckoutPage = () => {
-    if (envConfig.NEXT_PUBLIC_APP_ENV === Environments.development) {
+    /*if (envConfig.NEXT_PUBLIC_APP_ENV === Environments.development) {
       return true;
     } else if (totalPrice <= 0) {
       return true;
-    }
+    }*/
     return false;
   };
 
   useEffect(() => {
+    let totalPriceResult = 0;
+    let totalQuantityResult = 0;
     if (cart.items.length > 0) {
+      cart.items.forEach((item) => {
+        totalPriceResult = NP.plus(totalPriceResult, getItemAmount(item).itemTotalWithQuantity)
+        totalQuantityResult = NP.plus(totalQuantityResult, item.quantity)
+      });
       setIsEmpty(false);
     } else {
       setIsEmpty(true);
     }
-  }, [cart.items.length]);
+    setTotalPrice(totalPriceResult);
+    setTotalQuantity(totalQuantityResult);
+  }, [cart, cart.items, cart.items.length]);
 
   return (
     <CartContext.Provider

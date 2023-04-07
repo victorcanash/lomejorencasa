@@ -37,8 +37,18 @@ export type GuestCartCheckItem = {
   quantity: number,
 };
 
-export type CartBreakdown = {
-  cartAmount: number,
-  firstBuyDiscount: number,
-  amount: number,
-};
+export type TotalAmount = {
+  itemsAmount: ItemAmount[]
+  subtotal: number
+  totalVat: number
+  totalDiscount: number
+  total: number
+  totalQuantity: number
+}
+
+export type ItemAmount = {
+  itemVat: number
+  itemSubtotal: number
+  itemTotal: number
+  itemTotalWithQuantity: number
+}
