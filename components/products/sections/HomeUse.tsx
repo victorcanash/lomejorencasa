@@ -76,7 +76,7 @@ const HomeUse = () => {
       </Container>
 
       {/* Food Preparation Section */}
-      <Container>
+      <Container id="useFoodPreparation">
         <Box
           maxWidth="sm"
           m="auto"
@@ -130,7 +130,7 @@ const HomeUse = () => {
       />
 
       {/* Bag Selection Section */}
-      <Container>
+      <Container id="useBagSelection">
         <Box
           maxWidth="sm"
           m="auto"
@@ -193,7 +193,7 @@ const HomeUse = () => {
       </Container>
   
       {/* Packing Machine Section */}
-      <Container>
+      <Container id="usePackingMachine">
         <Box
           maxWidth="sm"
           m="auto"
