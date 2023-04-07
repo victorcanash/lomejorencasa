@@ -1,6 +1,6 @@
 const colors = {
   background: {
-    primary: '#F5F5F5',
+    primary: '#FFFFFF',
     secondary: '#E5ECDC',
     third: '#E9D9B1',
     footerContent: '#30343C',
