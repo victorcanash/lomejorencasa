@@ -16,6 +16,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Rating from '@mui/material/Rating';
 
 import type { Product, ProductInventory, ProductPack } from '@core/types/products';
 import type { Source } from '@core/types/multimedia';
@@ -245,6 +246,12 @@ const ProductDetail = (props: ProductDetailProps) => {
             }}  
           >
             <Container>
+              <Box>
+                <Rating
+                  value={5}
+                  readOnly
+                />
+              </Box>
               <Box sx={{ mb: 3 }}>
                 { productTitle() }
               </Box>
