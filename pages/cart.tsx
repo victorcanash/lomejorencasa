@@ -24,7 +24,7 @@ const Cart: NextPage = () => {
   const page = usePage();
   const intl = useIntl();
 
-  const { checkCart } = useCart();
+  const { checkCart } = useCart(false);
 
   const [openDialog, setOpenDialog] = useState(false);
   const [initCart, setInitCart] = useState(true);

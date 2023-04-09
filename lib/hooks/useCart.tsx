@@ -18,7 +18,7 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
-const useCart = () => {
+const useCart = (checkTotalAmount = true) => {
   const { setLoading } = useAppContext();
   const { user, token, isLogged } = useAuthContext();
   const {
@@ -211,8 +211,10 @@ const useCart = () => {
   };
 
   useEffect(() => {
-    setTotalAmount(getTotalAmount(cart, user));
-  }, [cart, cart.items, cart.items.length, totalPrice, user])
+    if (checkTotalAmount) {
+      setTotalAmount(getTotalAmount(cart, user));
+    }
+  }, [cart, cart.items, cart.items.length, checkTotalAmount, totalPrice, user])
 
   return {
     totalAmount,

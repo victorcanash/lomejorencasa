@@ -45,7 +45,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     getProductDetailImgsUrl,
   } = useProductsContext();
 
-  const { addCartItem } = useCart();
+  const { addCartItem } = useCart(false);
   const {
     Select: SelectInventory,
     selectedInventory,
