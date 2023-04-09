@@ -158,7 +158,7 @@ const HomeConservation = () => {
       <MultimediaContainer
         type="default"
         source={{ 
-          src: homeBannerImgIds[1],
+          src: homeBannerImgIds[2],
           alt: 'Food conservation',
         }}
       />
