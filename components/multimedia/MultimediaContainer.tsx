@@ -114,7 +114,9 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
           <CustomImage
             src={source.src} 
             alt={source.alt}
-            layout="responsive" 
+            width="1920"
+            height="1080"
+            layout="responsive"
             objectFit="cover"
             priority={source.priority}
             style={{ 

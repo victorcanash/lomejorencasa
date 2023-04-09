@@ -13,6 +13,10 @@ export const bagsImgIds = [
   'laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
 ];
 
+export const homeUseImgIds = [
+  'v1680692930/laenvasadora/HOME%20PAGE/IMAGENES/Foto_valvula_m%C3%A1s_resultona_kzvwfm.jpg'
+];
+
 export const everfreshVideoIds = [
   'v1680692696/laenvasadora/LANDING%20PAGE/VIDEO_SUCCION_RESUBIDO_shudab.mp4',
   'v1680692687/laenvasadora/LANDING%20PAGE/Video_cajon_landing_con_mas_luz_g2tu5o.mp4',
@@ -20,7 +24,7 @@ export const everfreshVideoIds = [
 ];
 
 export const homeVideoIds = [
-  'v1680692801/laenvasadora/HOME%20PAGE/GIF_FINAL_HOME_PAGE_rkoiwb.mp4',
-  'v1680692799/laenvasadora/HOME%20PAGE/PASO_3_GUIA_DE_USO_utlcnx.mp4',
+  'v1680692801/laenvasadora/HOME%20PAGE/VIDEOS/GIF_FINAL_HOME_PAGE_rkoiwb.mp4',
+  'v1680692799/laenvasadora/HOME%20PAGE/VIDEOS/PASO_3_GUIA_DE_USO_utlcnx.mp4',
   'v1680692696/laenvasadora/LANDING%20PAGE/VIDEO_SUCCION_RESUBIDO_shudab.mp4',
 ];

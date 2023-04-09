@@ -13,14 +13,13 @@ import LinkButton from '@core/components/LinkButton';
 import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
-import { homeVideoIds } from '@lib/constants/multimedia';
+import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 import use_food_preparation_bg from 'public/images/home/use-food-preparation-bg.jpg';
 import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
 import use_bag_selection from 'public/images/home/use-bag-selection.png';
 import use_bag_selection_sizes from 'public/images/home/use-bag-selection-sizes.png';
-import use_packing_machine_step2 from 'public/images/home/use-packing-machine-step2.jpg';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeUse = () => {
@@ -183,7 +182,7 @@ const HomeUse = () => {
             href={pages.bags.path}
             id="advantages"
             sx={{
-              ...convertElementToSx(themeCustomElements.button.action),
+              ...convertElementToSx(themeCustomElements.button.action.primary),
               mt: 4,
             }}
           >
@@ -221,7 +220,7 @@ const HomeUse = () => {
           },
           {
             type: 'image',
-            src: use_packing_machine_step2,
+            src: homeUseImgIds[0],
             alt: 'Use packing machine step 2',
           },
           {
