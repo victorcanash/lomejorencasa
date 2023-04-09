@@ -155,9 +155,14 @@ const themeOptions: ThemeOptions = {
         root: convertElementToSx(themeDefaultElements.avatar),
       },
     },
-    MuiSvgIcon: {
+    MuiIconButton: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.svgIcon),
+        root: convertElementToSx(themeDefaultElements.iconButton),
+      },
+    },
+    MuiRating: {
+      styleOverrides: {
+        icon: convertElementToSx(themeDefaultElements.rating.icon),
       },
     },
     MuiStepIcon: {

@@ -223,10 +223,21 @@ export const themeDefaultElements: ThemeDefaultElements = {
       default: colors.background.third,
     },
   },
-  svgIcon: {
-    fill: {
-      default: colors.text.black,
+  iconButton: {
+    text: {
+      color: {
+        default: colors.text.black,
+      },
     },
+  },
+  rating: {
+    icon: {
+      text: {
+        color: {
+          default: colors.text.ratingIcon,
+        },
+      },
+    }
   },
   stepIcon: {
     default: {

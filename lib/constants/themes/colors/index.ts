@@ -22,7 +22,8 @@ const colors = {
     disabled: '#858585',
     title: '#1F4F2F',
     footer: '#E1E8CB',
-    action: '#d32f2f',
+    action: '#D32F2F',
+    ratingIcon: '#FAAF00'
   },
   border: {
     divider: '#586453',

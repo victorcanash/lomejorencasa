@@ -43,7 +43,10 @@ export type ThemeDefaultElements = {
   paginationItem: ThemeElement,
   circularProgress: ThemeElement,
   avatar: ThemeElement,
-  svgIcon: ThemeElement,
+  iconButton: ThemeElement,
+  rating: {
+    icon: ThemeElement,
+  }
   stepIcon: {
     default: ThemeElement,
     text: ThemeElement,
