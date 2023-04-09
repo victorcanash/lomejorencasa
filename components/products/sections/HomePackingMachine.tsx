@@ -11,9 +11,9 @@ import Typography from '@mui/material/Typography';
 import { convertElementToSx } from '@core/utils/themes';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
+import { homePackingMachineImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
-import packing_machine from 'public/images/home/packing-machine.png';
 
 const HomePackingMachine = () => {
   const getCardSx = (index: number) => {
@@ -98,9 +98,11 @@ const HomePackingMachine = () => {
         <MultimediaContainer
           type="homePackingMachine"
           source={{ 
-            src: packing_machine,
+            src: homePackingMachineImgIds[0],
             alt: 'Packing machine',
             priority: true,
+            width: '8000',
+            height: '4500',
           }}
         />
       </Box>

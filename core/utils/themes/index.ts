@@ -1,5 +1,3 @@
-import { SxProps, Theme } from '@mui/material/styles';
-
 import type { ThemeElement } from '@core/types/themes';
 
 export const convertElementToSx= (themeElement: ThemeElement) => {
@@ -13,7 +11,7 @@ export const convertElementToSx= (themeElement: ThemeElement) => {
     '&:first-of-type': convertElementToEventSx(themeElement, 'firstChild'),
     '&:last-child': convertElementToEventSx(themeElement, 'lastChild'),
     '&:last-of-type': convertElementToEventSx(themeElement, 'lastChild'),
-  }) as SxProps<Theme>;
+  });
 };
 
 const convertElementToEventSx = (
@@ -41,5 +39,5 @@ const convertElementToEventSx = (
     pl: themeElement.spacing?.[themeElementType]?.padding?.left,
     pt: themeElement.spacing?.[themeElementType]?.padding?.top,
     pb: themeElement.spacing?.[themeElementType]?.padding?.bottom,
-  }) as SxProps<Theme>;
+  });
 };
