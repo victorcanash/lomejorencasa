@@ -32,34 +32,66 @@ const UploadInput = (props: UploadInputProps) => {
     descriptionText,
   } = props;
 
+  const RemoveBtn = (props: { index: number }) => (
+    <Button 
+      variant="contained" 
+      onClick={()=>handleClickDeleteUploadBtn(props.index)}
+      sx={{ float: 'right' }}
+    >
+      <FormattedMessage
+        id="app.removeBtn"
+      />
+    </Button>
+  );
+
   return (
     <>
       { uploadImgs && uploadImgs.length > 0 &&
         <Box
           sx={{
-            maxWidth: maxWidth, 
+            maxWidth: maxFiles > 1 ? maxWidth : undefined,
+            position: maxFiles > 1 ? undefined : 'relative',
+            width: maxFiles > 1 ? undefined : '100%',
             margin: 'auto',
-          }}              
+            paddingTop: maxFiles > 1 ? undefined : '100%',
+            overflow: maxFiles > 1 ? undefined : 'scroll',
+          }}
         >
-          <Grid container spacing={1} py={3}>
-            { uploadImgs.map((item, index) => (
-              <Grid item xs={maxFiles > 1 ? 6 : 12} key={index}>
-                <Image
-                  src={item.url}
-                  alt="Image"
-                  width="500"
-                  height="500"
-                  layout="responsive"
-                  objectFit="cover"
-                />
-                <Button variant="contained" onClick={()=>handleClickDeleteUploadBtn(index)}>
-                  <FormattedMessage 
-                    id="app.removeBtn" 
+          { (maxFiles === 1 && uploadImgs.length === 1) &&
+            <>
+              <Image
+                src={uploadImgs[0].url}
+                alt="Image"
+                layout="fill"
+                objectFit="contain"
+              />
+              <RemoveBtn index={0} />
+            </>
+          }
+          { (maxFiles > 1 && uploadImgs.length >= 1) &&
+            <Grid
+              container
+              spacing={1}
+              py={3}
+            >
+              { uploadImgs.map((item, index) => (
+                <Grid
+                  key={index}
+                  item xs={6}
+                >
+                  <Image
+                    src={item.url}
+                    alt="Image"
+                    width="500"
+                    height="500"
+                    layout="responsive"
+                    objectFit="cover"
                   />
-                </Button>
-              </Grid>
-            ))}
-          </Grid>
+                  <RemoveBtn index={index} />
+                </Grid>
+              ))}
+            </Grid>
+          }
         </Box>
       }
       <Box
