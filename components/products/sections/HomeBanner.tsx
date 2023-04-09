@@ -12,13 +12,11 @@ import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
+import { homeBannerImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeBanner = () => {
-  const { getProductBannerImgsUrl } = useProductsContext();
-
   const isMdBreakpoint = useMediaQuery('(max-width:600px)');
 
   const styleXs = {
@@ -134,7 +132,7 @@ const HomeBanner = () => {
             disableOnInteraction: false,
           }}
         >
-          { getProductBannerImgsUrl().map((src, index) => (
+          { homeBannerImgIds.map((src, index) => (
             <SwiperSlide key={index}>
               <MultimediaContainer
                 type="banner"
@@ -142,6 +140,8 @@ const HomeBanner = () => {
                   src,
                   alt: 'Everfresh banner images',
                   priority: true,
+                  width: '1920',
+                  height: '1080', 
                 }}
               />
               { getContent(index) }  

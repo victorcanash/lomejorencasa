@@ -11,9 +11,9 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import { homeBannerImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
-import everfresh from 'public/images/banner/everfresh2.jpg';
 
 const HomeConservation = () => {
   const intl = useIntl();
@@ -158,7 +158,7 @@ const HomeConservation = () => {
       <MultimediaContainer
         type="default"
         source={{ 
-          src: everfresh,
+          src: homeBannerImgIds[1],
           alt: 'Food conservation',
         }}
       />

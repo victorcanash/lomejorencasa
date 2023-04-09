@@ -11,12 +11,7 @@ import {
 
 import { pages } from '@lib/constants/navigation';
 import { productIds } from '@lib/constants/products';
-import { everfreshImgIds, bagsImgIds } from '@lib/constants/multimedia';
-import placeholder from 'public/images/placeholder.jpeg';
-import banner_everfresh1 from 'public/images/banner/everfresh1.jpg';
-import banner_everfresh2 from 'public/images/banner/everfresh2.jpg';
-import banner_everfresh3 from 'public/images/banner/everfresh3.jpg';
-import banner_everfresh4 from 'public/images/banner/everfresh4.jpg';
+import { everfreshImgIds, bagsImgIds, placeholderImgId } from '@lib/constants/multimedia';
 
 type ProductsContext = {
   everfreshProduct: Product | undefined,
@@ -27,7 +22,6 @@ type ProductsContext = {
   getProductPageUrl: (item: Product | CartItem | GuestCartCheckItem) => string,
   getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string | StaticImageData,
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[] | StaticImageData[],
-  getProductBannerImgsUrl: () => StaticImageData[],
   getProductPacks: (product: Product) => ProductPack[],
   productVariants: (ProductInventory | ProductPack)[],
 };
@@ -41,7 +35,6 @@ const ProductsContext = createContext<ProductsContext>({
   getProductPageUrl: () => '',
   getProductImgUrl: () => '',
   getProductDetailImgsUrl: () => [],
-  getProductBannerImgsUrl: () => [],
   getProductPacks: () => [],
   productVariants: [],
 });
@@ -116,9 +109,9 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       } else if (isBagsProduct(product)) {
         return bagsImgIds[0];
       }
-      return getProductImgUrlMW(product, index) || placeholder;
+      return getProductImgUrlMW(product, index) || placeholderImgId;
     }
-    return placeholder;
+    return placeholderImgId;
   };
   
   const getProductDetailImgsUrl = (item: Product | CartItem | GuestCartCheckItem) => {
@@ -130,18 +123,9 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         return bagsImgIds;
       }
       const imgsUrl = getAllProductImgsUrlMW(product);
-      return imgsUrl.length >= 1 ? imgsUrl : [placeholder]
+      return imgsUrl.length >= 1 ? imgsUrl : [placeholderImgId]
     }
-    return [placeholder];
-  };
-  
-  const getProductBannerImgsUrl = () => {
-    return [
-      banner_everfresh1, 
-      banner_everfresh2, 
-      banner_everfresh3, 
-      banner_everfresh4
-    ];
+    return [placeholderImgId];
   };
 
   const getProductPacks = useCallback((product?: Product) => {
@@ -177,7 +161,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getProductPageUrl,
         getProductImgUrl,
         getProductDetailImgsUrl,
-        getProductBannerImgsUrl,
         getProductPacks,
         productVariants,
       }}

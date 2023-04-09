@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { Fragment } from 'react';
 
 import { FormattedMessage } from 'react-intl';
@@ -16,9 +15,6 @@ import { pages } from '@lib/constants/navigation';
 import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
-import use_food_preparation_bg from 'public/images/home/use-food-preparation-bg.jpg';
-import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
-import use_bag_selection from 'public/images/home/use-bag-selection.png';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeUse = () => {
@@ -79,6 +75,7 @@ const HomeUse = () => {
         <Box
           maxWidth="sm"
           m="auto"
+          mb={1}
         >
           <Title
             type="h3Home"
@@ -107,21 +104,23 @@ const HomeUse = () => {
             lg: '35%',
             xl: '40%',
           },
-          pt: 2,
           zIndex: 1,
+          mt: -3,
         }}
       >
         <CustomImage
-          src={use_food_preparation_everfresh} 
+          src={homeUseImgIds[0]} 
           alt="Use food preparation EverFresh"
+          width="628"
+          height="628"
           layout="responsive" 
           objectFit="cover"
         />
       </Box>
       <MultimediaContainer
         type="default"
-        source={{ 
-          src: use_food_preparation_bg,
+        source={{
+          src: homeUseImgIds[1],
           alt: 'Use food preparation image',
         }}
         mt={10}
@@ -150,8 +149,10 @@ const HomeUse = () => {
       <MultimediaContainer
         type="default"
         source={{ 
-          src: use_bag_selection,
+          src: homeUseImgIds[2],
           alt: 'Use bag selection image',
+          width: '8001',
+          height: '2800',
         }}
       />
       <Container>
@@ -172,7 +173,7 @@ const HomeUse = () => {
             mt={-4}
             type="default"
             source={{ 
-              src: homeUseImgIds[0],
+              src: homeUseImgIds[3],
               alt: 'Use bag selection sizes image',
               width: '1080',
               height: '1080',
@@ -222,7 +223,7 @@ const HomeUse = () => {
           },
           {
             type: 'image',
-            src: homeUseImgIds[1],
+            src: homeUseImgIds[4],
             alt: 'Use packing machine step 2',
           },
           {

@@ -11,19 +11,9 @@ import LinkButton from '@core/components/LinkButton';
 import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
+import { homeCharacteristicsBgImgIds, homeCharacteristicsIconsIds, homeAdvantagesIconsIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import Title from '@components/ui/Title';
-import characteristics_bg from 'public/images/home/characteristics-bg.png';
-import frezzer_icon from 'public/images/home/icons/frezzer-icon.png';
-import hand_icon from 'public/images/home/icons/hand-icon.png';
-import airplane_icon from 'public/images/home/icons/airplane-icon.png';
-import breeze_icon from 'public/images/home/icons/breeze-icon.png';
-import cable_icon from 'public/images/home/icons/cable-icon.png';
-import shoppingbag_icon from 'public/images/home/icons/shoppingbag-icon.png';
-import microorganism_icon from 'public/images/home/icons/microorganism-icon.png';
-import diet_icon from 'public/images/home/icons/diet-icon.png';
-import shield_icon from 'public/images/home/icons/shield-icon.png';
-import time_icon from 'public/images/home/icons/time-icon.png';
+import Title from '@components/ui/Title'; 
 
 type HomeCharacteristicsProps = {
   type: 'characteristics' | 'advantages',
@@ -162,14 +152,16 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
                 sm: '174px',
                 md: '214px',
               },
-              transform: type == 'characteristics' ? 'rotate(180deg)' : undefined,
             }}
           >
             <CustomImage 
-              src={characteristics_bg}
+              src={homeCharacteristicsBgImgIds[0]}
               alt={'Vacuum machine characteristics background'}
+              width="597"
+              height="9125"
               layout="responsive" 
               objectFit="cover"
+              flip={type !== 'characteristics' ? 'h' : undefined}
             />
           </Box>
         </Box>
@@ -190,20 +182,20 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
         >
           { type == 'characteristics' ?
             <>
-              { characteristic('home.characteristics.description.1', { src: breeze_icon } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.2', { src: hand_icon } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.3', { src: airplane_icon } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.4', { src: cable_icon } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.5', { src: frezzer_icon } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.6', {src: shoppingbag_icon } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.1', { src: homeCharacteristicsIconsIds[0] } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.2', { src: homeCharacteristicsIconsIds[1] } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.3', { src: homeCharacteristicsIconsIds[2] } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.4', { src: homeCharacteristicsIconsIds[3] } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.5', { src: homeCharacteristicsIconsIds[4] } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.6', {src: homeCharacteristicsIconsIds[5] } as Source, 'everfresh characteristic') }
             </>
             :
             <>
-              { characteristic('home.advantages.description.1', { src: microorganism_icon } as Source, 'everfresh advantage') }
-              { characteristic('home.advantages.description.2', { src: shield_icon } as Source, 'everfresh advantage', '81px') }
-              { characteristic('home.advantages.description.3', { src: diet_icon } as Source, 'everfresh advantage') }
-              { characteristic('home.advantages.description.4', { src: frezzer_icon } as Source, 'everfresh advantage') }
-              { characteristic('home.advantages.description.5', { src: time_icon } as Source, 'everfresh advantage', '76px') }
+              { characteristic('home.advantages.description.1', { src: homeAdvantagesIconsIds[0] } as Source, 'everfresh advantage') }
+              { characteristic('home.advantages.description.2', { src: homeAdvantagesIconsIds[1] } as Source, 'everfresh advantage', '81px') }
+              { characteristic('home.advantages.description.3', { src: homeAdvantagesIconsIds[2] } as Source, 'everfresh advantage') }
+              { characteristic('home.advantages.description.4', { src: homeAdvantagesIconsIds[3] } as Source, 'everfresh advantage') }
+              { characteristic('home.advantages.description.5', { src: homeAdvantagesIconsIds[4] } as Source, 'everfresh advantage', '76px') }
             </>
           }
           <Grid 

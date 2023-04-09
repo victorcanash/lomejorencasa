@@ -20,12 +20,12 @@ import CustomImage from '@core/components/CustomImage';
 // import HideOnScroll from '@core/components/HideOnScroll';
 
 import { pages } from '@lib/constants/navigation';
+import { navbarLogoId } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useNavDrawer from '@lib/hooks/useNavDrawer';
 import NavDrawer from '@components/NavBar/NavDrawer';
 import CartDrawer from '@components/NavBar/CartDrawer';
-import logo from 'public/images/navbar-logo.png';
 
 const NavBar = () => {
   const { totalQuantity, handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
@@ -122,7 +122,7 @@ const NavBar = () => {
                   </Typography>
                 }
                 <CustomImage
-                  src={logo}
+                  src={navbarLogoId}
                   alt="Logo"
                   height="70px"
                   width="156px"

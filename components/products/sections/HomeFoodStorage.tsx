@@ -4,9 +4,9 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import { homeFoodStorageImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
-import food_storage from 'public/images/home/food-storage.png';
 
 const HomeFoodStorage = () => {
 
@@ -31,8 +31,10 @@ const HomeFoodStorage = () => {
         <MultimediaContainer
           type="default"
           source={{ 
-            src: food_storage,
+            src: homeFoodStorageImgIds[0],
             alt: 'Food storage',
+            width: '1920',
+            height: '960',
           }}
           mt={0}
           borderRadius="0px"
