@@ -254,7 +254,7 @@ const BaseForm = (props: FormBase) => {
       return (
         <>
           <Typography component="legend" mt={1}>
-            <FormattedMessage 
+            <FormattedMessage
               id={`forms.${formField.name}`}
             />
           </Typography>
@@ -263,7 +263,9 @@ const BaseForm = (props: FormBase) => {
             name={formField.name}
             disabled={formField.disabled}
             value={getIn(props.values, formField.name)}
-            onChange={props.handleChange}
+            onChange={(_event, value) => {
+              props.setFieldValue(formField.name, value, true);
+            }}
             onBlur={props.handleBlur}
           />
         </>

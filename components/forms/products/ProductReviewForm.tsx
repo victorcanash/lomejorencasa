@@ -44,7 +44,7 @@ const ProductReviewForm = () => {
   };
 
   return (
-    <Accordion>
+    <Accordion defaultExpanded={true}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
       >
