@@ -14,6 +14,7 @@ export const bagsImgIds = [
 ];
 
 export const homeUseImgIds = [
+  'laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
   'v1680692930/laenvasadora/HOME%20PAGE/IMAGENES/Foto_valvula_m%C3%A1s_resultona_kzvwfm.jpg'
 ];
 

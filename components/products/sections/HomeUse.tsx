@@ -19,7 +19,6 @@ import Title from '@components/ui/Title';
 import use_food_preparation_bg from 'public/images/home/use-food-preparation-bg.jpg';
 import use_food_preparation_everfresh from 'public/images/home/use-food-preparation-everfresh.png';
 import use_bag_selection from 'public/images/home/use-bag-selection.png';
-import use_bag_selection_sizes from 'public/images/home/use-bag-selection-sizes.png';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeUse = () => {
@@ -170,10 +169,13 @@ const HomeUse = () => {
             divider={false}
           />
           <MultimediaContainer
+            mt={-4}
             type="default"
             source={{ 
-              src: use_bag_selection_sizes,
+              src: homeUseImgIds[0],
               alt: 'Use bag selection sizes image',
+              width: '1080',
+              height: '1080',
             }}
             borderRadius="0px"
             maxWidth="xs_sm"
@@ -220,7 +222,7 @@ const HomeUse = () => {
           },
           {
             type: 'image',
-            src: homeUseImgIds[0],
+            src: homeUseImgIds[1],
             alt: 'Use packing machine step 2',
           },
           {

@@ -9,5 +9,7 @@ export type Source = {
   type?: 'video' | 'image',
   src: StaticImageData | string,
   alt?: string,
+  width?: string,
+  height?: string,
   priority?: boolean,
 };
