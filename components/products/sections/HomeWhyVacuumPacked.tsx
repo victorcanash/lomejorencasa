@@ -8,10 +8,9 @@ import Typography from '@mui/material/Typography';
 import { convertElementToSx } from '@core/utils/themes';
 import CustomImage from '@core/components/CustomImage';
 
+import { homeWhyVacuumPackedImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
-import why_vacuum_packed1 from 'public/images/home/why-vacuum-packed1.png';
-import why_vacuum_packed2 from 'public/images/home/why-vacuum-packed2.png';
 
 const HomeWhyVacuumPacked = () => {
 
@@ -73,9 +72,11 @@ const HomeWhyVacuumPacked = () => {
             }}
           >
             <CustomImage
-              src={why_vacuum_packed1} 
+              src={homeWhyVacuumPackedImgIds[0]}
               alt="Vacuum packed"
-              layout="responsive" 
+              width="5000"
+              height="5000"
+              layout="responsive"
               objectFit="cover"
             />
           </Box>
@@ -89,9 +90,11 @@ const HomeWhyVacuumPacked = () => {
             }}
           >
             <CustomImage
-              src={why_vacuum_packed2} 
+              src={homeWhyVacuumPackedImgIds[1]}
               alt="Vacuum packed"
-              layout="responsive" 
+              width="1920"
+              height="1771"
+              layout="responsive"
               objectFit="cover"
             />
           </Box>

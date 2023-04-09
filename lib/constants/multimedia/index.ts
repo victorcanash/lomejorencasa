@@ -17,6 +17,11 @@ export const homePackingMachineImgIds = [
   'v1680692829/laenvasadora/HOME%20PAGE/PNG%20IMPLEMENTATION/FOTO_RECURSO_MASK_CROP_PARA_QUE_ES_UNA_ENVASADORA_cxham7.png',
 ];
 
+export const homeWhyVacuumPackedImgIds = [
+  'v1680692951/laenvasadora/HOME%20PAGE/ILUSTRACIONES/microscope-2223268_cg117w.png',
+  'v1680692948/laenvasadora/HOME%20PAGE/ILUSTRACIONES/cabbage-37897_w951pv.png',
+];
+
 export const homeUseImgIds = [
   'laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
   'v1680692930/laenvasadora/HOME%20PAGE/IMAGENES/Foto_valvula_m%C3%A1s_resultona_kzvwfm.jpg'
