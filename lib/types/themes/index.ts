@@ -131,6 +131,9 @@ export type ThemeCustomElements = {
     },
   },
   button: {
-    action: ThemeElement,
+    action: {
+      primary: ThemeElement,
+      secondary: ThemeElement,
+    },
   },
 };

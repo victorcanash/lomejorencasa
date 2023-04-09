@@ -79,7 +79,7 @@ const HomeBanner = () => {
         <Grid item>
           <LinkButton
             href={pages.everfresh.path}
-            sx={convertElementToSx(themeCustomElements.button.action)}
+            sx={convertElementToSx(themeCustomElements.button.action.primary)}
           >
             <FormattedMessage id="home.banner.buyBtn" />
           </LinkButton>

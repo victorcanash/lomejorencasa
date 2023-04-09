@@ -6,14 +6,14 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 import { firstBuyDiscountPercent } from '@core/constants/payments';
 import type { Page } from '@core/types/navigation';
+import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import colors from '@lib/constants/themes/colors';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/constants/navigation';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -162,7 +162,6 @@ const CartDetail = (props: CartDetailProps) => {
               <LinkButton
                 onClick={closeDrawer}
                 href={pages.cart.path}
-                startIcon={<ShoppingCartIcon />}
                 fullWidth
               >
                 <FormattedMessage id="cart.cartBtn" />
@@ -170,14 +169,17 @@ const CartDetail = (props: CartDetailProps) => {
             </Box>
           }
           { page !== pages.checkout &&
-            <Box mt={!page ? 2 : 3}>
+            <Box>
               {/* Checkout Button */}
               <LinkButton
                 onClick={closeDrawer}
                 href={pages.checkout.path}
-                startIcon={<PointOfSaleIcon />}
                 disabled={disabledCheckoutPage()}
                 fullWidth
+                sx={{
+                  ...convertElementToSx(themeCustomElements.button.action.primary),
+                  mt: 3,
+                }}
               >
                 <FormattedMessage id="cart.checkoutBtn" />
               </LinkButton>

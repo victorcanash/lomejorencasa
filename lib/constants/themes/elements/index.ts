@@ -267,7 +267,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
   },
   badge: {
     backgroundColor: {
-      default: colors.background.action,
+      default: colors.background.actionPrimary,
     },
     text: {
       color: {
@@ -302,7 +302,7 @@ export const themeCustomElements: ThemeCustomElements = {
       maintenance: {
         content: {
           backgroundColor: {
-            default: colors.background.action,
+            default: colors.background.actionPrimary,
           },
           text: {
             color: {
@@ -595,19 +595,54 @@ export const themeCustomElements: ThemeCustomElements = {
   },
   button: {
     action: {
-      backgroundColor: {
-        default: colors.background.action,
-        hover: colors.background.actionHover, 
-      },
-      text: {
-        font: {
-          default: {
-            textAlign: 'center',
+      primary: {
+        backgroundColor: {
+          default: colors.background.actionPrimary,
+          hover: colors.background.actionPrimaryHover, 
+        },
+        text: {
+          font: {
+            default: {
+              textAlign: 'center',
+            },
+          },
+          color: {
+            default: colors.text.white,
+            hover: colors.text.white,
           },
         },
-        color: {
-          default: colors.text.white,
-          hover: colors.text.white,
+        spacing: {
+          default: {
+            padding: {
+              top: 2,
+              bottom: 2,
+            },
+          },
+        },
+      },
+      secondary: {
+        backgroundColor: {
+          default: colors.background.actionSecondary,
+          hover: colors.background.actionSecondaryHover, 
+        },
+        text: {
+          font: {
+            default: {
+              textAlign: 'center',
+            },
+          },
+          color: {
+            default: colors.text.white,
+            hover: colors.text.white,
+          },
+        },
+        spacing: {
+          default: {
+            padding: {
+              top: 2,
+              bottom: 2,
+            },
+          },
         },
       },
     },

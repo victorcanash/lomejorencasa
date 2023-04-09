@@ -280,8 +280,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 onClick={onClickAddCartBtn}
                 disabled={!selectedInventory || selectedInventory.quantity == 0}
                 sx={{
-                  ...convertElementToSx(themeCustomElements.button.action),
-                  py: 2,
+                  ...convertElementToSx(themeCustomElements.button.action.primary),
                   mb: 4,
                 }}
               >

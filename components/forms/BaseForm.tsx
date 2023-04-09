@@ -389,7 +389,10 @@ const BaseForm = (props: FormBase) => {
                       <Button
                         fullWidth
                         variant="contained"
-                        sx={{ mb: 2 }}
+                        sx={{
+                          ...formButtonsCheckout().back.sx,
+                          mb: 2,
+                        }}
                         onClick={handleBack}
                         disabled={formButtonsCheckout().back.disabled}
                       >
@@ -409,7 +412,10 @@ const BaseForm = (props: FormBase) => {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mb: 2 }}
+                        sx={{
+                          ...formButtons.submit.sx,
+                          mb: 2,
+                        }}
                         disabled={formButtons.submit.disabled}
                       >
                         <FormattedMessage 
@@ -424,7 +430,10 @@ const BaseForm = (props: FormBase) => {
                       <Button
                         fullWidth
                         variant="contained"
-                        sx={{ mb: 2 }}
+                        sx={{
+                          ...formButtonsNormal().delete?.sx,
+                          mb: 2,
+                        }}
                         onClick={handleDelete}
                         disabled={formButtonsNormal().delete?.disabled}
                       >
@@ -440,7 +449,10 @@ const BaseForm = (props: FormBase) => {
                       <Button
                         fullWidth
                         variant="contained"
-                        sx={{ mb: 2 }}
+                        sx={{
+                          ...formButtonsNormal().cancel?.sx,
+                          mb: 2,
+                        }}
                         onClick={handleCancel}
                         disabled={formButtonsNormal().cancel?.disabled}
                       >

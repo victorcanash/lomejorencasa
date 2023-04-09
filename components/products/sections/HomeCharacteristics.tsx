@@ -216,7 +216,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
               <LinkButton
                 href={pages.everfresh.path}
                 id="advantages"
-                sx={convertElementToSx(themeCustomElements.button.action)}
+                sx={convertElementToSx(themeCustomElements.button.action.primary)}
               >
                 <FormattedMessage id={type == 'characteristics' ? 'home.characteristics.buyBtn' : 'home.advantages.buyBtn'} />
               </LinkButton>

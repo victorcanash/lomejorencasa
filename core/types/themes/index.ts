@@ -3,9 +3,10 @@ export type ThemeElement = {
   text?: {
     color?: ThemeColorElement,
     font?: ThemeFontElement,
-  }
+  },
   fill?: ThemeColorElement,
   border?: ThemeBorderElement,
+  spacing?: ThemeSpacingElement,
 };
 
 export type ThemeColorElement = {
@@ -30,6 +31,17 @@ export type ThemeBorderElement = {
   lastChild?: ThemeBorderPropertyElement,
 };
 
+export type ThemeSpacingElement = {
+  default?: ThemeSpacingPropertyElement,
+  disabled?: ThemeSpacingPropertyElement,
+  hover?: ThemeSpacingPropertyElement,
+  focus?: ThemeSpacingPropertyElement,
+  even?: ThemeSpacingPropertyElement,
+  odd?: ThemeSpacingPropertyElement,
+  firstChild?: ThemeSpacingPropertyElement,
+  lastChild?: ThemeSpacingPropertyElement,
+};
+
 export type ThemeFontElement = {
   default?: ThemeFontPropertyElement,
   disabled?: ThemeFontPropertyElement,
@@ -49,6 +61,16 @@ export type ThemeBorderPropertyElement = {
     topLeft?: string,
     bottomRight?: string,
     bottomLeft?: string,
+  },
+};
+
+export type ThemeSpacingPropertyElement = {
+  padding?: {
+    all?: string | number,
+    right?: string | number,
+    left?: string | number,
+    top?: string | number,
+    bottom?: string | number,
   },
 };
 

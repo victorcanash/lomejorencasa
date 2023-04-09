@@ -12,11 +12,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
+import { convertElementToSx } from '@core/utils/themes';
 import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
 import { pages } from '@lib/constants/navigation';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -252,6 +254,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                     },
                     disabled: !availableQuantity,
                     onSubmit: handleCouponSubmit,
+                    sx: convertElementToSx(themeCustomElements.button.action.secondary),
                   },
                 } as FormButtonsNormal}
                 errorMsg={errorMsg}

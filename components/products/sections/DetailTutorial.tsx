@@ -63,7 +63,7 @@ const DetailTutorial = (props: DetailTutorialProps) => {
               href={button.path}
               align={button.text.textAlign}
               sx={{
-                ...convertElementToSx(themeCustomElements.button.action),
+                ...convertElementToSx(themeCustomElements.button.action.primary),
                 mt: 3,
               }}
             >
