@@ -229,6 +229,11 @@ export const themeDefaultElements: ThemeDefaultElements = {
     backgroundColor: {
       default: colors.background.third,
     },
+    text: {
+      color: {
+        default: colors.text.black,
+      },
+    },
   },
   iconButton: {
     text: {
