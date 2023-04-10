@@ -3,18 +3,17 @@ export const navbarLogoId = 'v1680693087/laenvasadora/LOGOS/LOGO_ENVASADORA_CON_
 export const placeholderImgId = 'v1681059169/laenvasadora/LANDING%20PAGE/placeholder_tl7jks.jpg';
 
 export const everfreshImgIds = [
-  'laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
-  'laenvasadora/LANDING%20PAGE/FOTO_2_fgnlnf.jpg',
-  'laenvasadora/LANDING%20PAGE/FOTO_5_g6vcri.jpg',
-  'laenvasadora/LANDING%20PAGE/FOTO_1_yarwhg.jpg',
-  'laenvasadora/LANDING%20PAGE/FOTO_3_lzky3y.jpg',
-  'laenvasadora/Imagenes%20exportadas/Acc%C3%B3n_embutido_cocina_edu_3_hjgrdx.jpg',
+  'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
+  'v1680726536/laenvasadora/LANDING%20PAGE/FOTO_2_fgnlnf.jpg',
+  'v1680726664/laenvasadora/LANDING%20PAGE/FOTO_5_g6vcri.jpg',
+  'v1680726760/laenvasadora/LANDING%20PAGE/FOTO_1_yarwhg.jpg',
+  'v1680878929/laenvasadora/LANDING%20PAGE/FOTO_3_lzky3y.jpg',
 ];
 
 export const bagsImgIds = [
-  'laenvasadora/LANDING%20PAGE/bolsas_ayqf6k.jpg',
-  'laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
-  'laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
+  'v1680878418/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k.jpg',
+  'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
+  'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
 ];
 
 export const homeBannerImgIds = [
