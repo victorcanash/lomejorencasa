@@ -39,6 +39,7 @@ export type ThemeDefaultElements = {
   inputLabel: ThemeElement,
   inputBase: ThemeElement,
   button: ThemeElement,
+  checkbox: ThemeElement,
   listItem: ThemeElement,
   paginationItem: ThemeElement,
   circularProgress: ThemeElement,

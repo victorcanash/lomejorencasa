@@ -135,6 +135,14 @@ const themeOptions: ThemeOptions = {
         root: convertElementToSx(themeDefaultElements.button),
       },
     },
+    MuiCheckbox: {
+      styleOverrides: {
+        root: {
+          ...convertElementToSx(themeDefaultElements.checkbox),
+          '&.Mui-checked': convertElementToSx(themeDefaultElements.checkbox),
+        },
+      },
+    },
     MuiListItemText: {
       styleOverrides: {
         primary: convertElementToSx(themeDefaultElements.listItem),

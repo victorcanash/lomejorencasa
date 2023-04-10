@@ -201,6 +201,13 @@ export const themeDefaultElements: ThemeDefaultElements = {
       },
     },
   },
+  checkbox: {
+    text: {
+      color: {
+        default: colors.text.black,
+      },
+    },
+  },
   listItem: {
     text: {
       font: {
