@@ -1,9 +1,12 @@
+import { useRouter } from 'next/router';
+
 import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
+import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -19,6 +22,8 @@ import ProductReviewForm from '@components/forms/products/ProductReviewForm';
 
 const DetailReviews = () => {
   const { listProductReviews } = useProductsContext();
+
+  const router = useRouter();
 
   const { errorMsg, successMsg, handleChangePage, createProductReview} = useReviews();
 
@@ -37,7 +42,7 @@ const DetailReviews = () => {
           }}
           divider={true}
         />
-
+        {/* Create ProductReview Form */}
         <Box mb={4}>
           <ProductReviewForm
             errorMsg={errorMsg}
@@ -45,7 +50,7 @@ const DetailReviews = () => {
             createProductReview={createProductReview}
           />
         </Box>
-
+        {/* ProductReview List */}
         { listProductReviews.reviews.length > 0 ?
           <Grid
             container
@@ -54,13 +59,14 @@ const DetailReviews = () => {
             { listProductReviews.reviews.map((item, index) => (
               <Grid
                 key={index}
-                item 
-                xs={6}
-                sm_md={4}
+                item
+                xs={12}
+                sm={6}
+                md={4}
               >
                 <Box
                   sx={{
-                    maxWidth: '300px',
+                    maxWidth: '350px',
                     margin: 'auto',
                   }}
                 >
@@ -69,39 +75,56 @@ const DetailReviews = () => {
                       borderRadius: '15px',
                     }}
                   >
+                    <CardHeader
+                      title={
+                        <Grid container justifyContent="space-between">
+                          <Grid item>
+                            <Rating
+                              value={item.rating}
+                              precision={0.5}
+                              readOnly
+                            />
+                              
+                          </Grid>
+                          <Grid item>
+                            <Typography component="div" variant="body2" color="text.disabled" width="min-content">
+                              {new Date(item.createdAt).toLocaleDateString(router.locale)}
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      }
+                      subheader={
+                        <Typography component="div" variant="body1">
+                          {item.publicName}
+                        </Typography>
+                      }
+                    />
                     { item.imageUrl &&
                       <CardMedia>
-                        <Box sx={{ position: 'relative', width: '100%' }}>
+                        <Box
+                          sx={{
+                            position: 'relative',
+                            width: '100%',
+                            margin: 'auto',
+                            paddingTop: '100%',
+                          }}
+                        >
                           <CustomImage
                             src={item.imageUrl}
                             alt="Product review"
                             layout="fill"
-                            objectFit="contain"
+                            objectFit="cover"
                           />
                         </Box>
                       </CardMedia>
                     }
-                    <CardContent>
-                      <Typography component="div" variant="body2" mb={1}>
-                        { item.publicName }
-                      </Typography>
-                      <Grid container mb={1}>
-                        <Grid item>
-                          <Rating
-                            value={item.rating}
-                            precision={0.5}
-                            readOnly
-                          />
-                        </Grid>
-                      </Grid>
-                      <Typography component="div" variant="body2" mb={1}>
+                    <CardContent
+                      sx={{
+                        mt: item.imageUrl ? undefined : -2,
+                      }}
+                    >
+                      <Typography component="div" variant="body1" mb={1}>
                         { item.title }
-                      </Typography>
-                      <Typography component="div" variant="body2" mb={1}>
-                        <FormattedMessage
-                          id="productDetail.reviews.date"
-                          values={{ date: item.createdAt }}
-                        />
                       </Typography>
                       <Typography component="div" variant="body2">
                         { item.description }
@@ -119,9 +142,8 @@ const DetailReviews = () => {
             />
           </Typography>
         }
-
+        {/* Pagination */}
         <Box mt={4} />
-
         <Pagination
           totalPages={listProductReviews.totalPages}
           currentPage={listProductReviews.currentPage}

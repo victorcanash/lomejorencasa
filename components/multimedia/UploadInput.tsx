@@ -56,7 +56,6 @@ const UploadInput = (props: UploadInputProps) => {
             width: maxFiles > 1 ? undefined : '100%',
             margin: 'auto',
             paddingTop: maxFiles > 1 ? undefined : '100%',
-            overflow: maxFiles > 1 ? undefined : 'scroll',
           }}
         >
           { (maxFiles === 1 && uploadImgs.length === 1) &&
@@ -65,8 +64,9 @@ const UploadInput = (props: UploadInputProps) => {
                 src={uploadImgs[0].url}
                 alt="Upload image"
                 layout="fill"
-                objectFit="contain"
+                objectFit="cover"
               />
+              <Box mb={1} />
               <RemoveBtn index={0} />
             </>
           }
@@ -115,6 +115,7 @@ const UploadInput = (props: UploadInputProps) => {
           fullWidth
           disabled={uploadImgs.length >= maxFiles}
           component="label"
+          sx={{ mt: 2 }}
         >
           <FormattedMessage 
             id="forms.uploadInput.uploadBtn"
