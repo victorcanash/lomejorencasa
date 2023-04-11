@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -12,6 +13,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 
+import type { ProductReview } from '@core/types/products';
 import CustomImage from '@core/components/CustomImage';
 
 import { useProductsContext } from '@lib/contexts/ProductsContext';
@@ -21,11 +23,18 @@ import Pagination from '@components/ui/Pagination';
 import ProductReviewForm from '@components/forms/products/ProductReviewForm';
 
 const DetailReviews = () => {
-  const { listProductReviews } = useProductsContext();
+  const { listProductReviews, getProductInventory, getProductPack } = useProductsContext();
 
   const router = useRouter();
 
   const { errorMsg, successMsg, handleChangePage, createProductReview} = useReviews();
+
+  const getRelatedProductName = useCallback((item: ProductReview) => {
+    if (item.inventoryId) {
+      return getProductInventory(item.inventoryId)?.name.current || '';
+    }
+    return getProductPack(item.packId || -1)?.name.current || '';
+  }, [getProductInventory, getProductPack]);
 
   return (
     <Container id="reviews">
@@ -123,6 +132,9 @@ const DetailReviews = () => {
                         mt: item.imageUrl ? undefined : -2,
                       }}
                     >
+                      <Typography component="div" variant="body1" mb={1} fontWeight={700}>
+                        { getRelatedProductName(item) }
+                      </Typography>
                       <Typography component="div" variant="body1" mb={1}>
                         { item.title }
                       </Typography>
@@ -143,7 +155,7 @@ const DetailReviews = () => {
           </Typography>
         }
         {/* Pagination */}
-        <Box mt={4} />
+        <Box mt={5} />
         <Pagination
           totalPages={listProductReviews.totalPages}
           currentPage={listProductReviews.currentPage}

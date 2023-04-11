@@ -96,7 +96,7 @@ const useReviews = () => {
   const getAllProductReviews = useCallback(async () => {
     const limit = 10;
     const sortBy = 'id';
-    const order = 'asc';
+    const order = 'desc';
 
     await getAllProductReviewsMW(intl.locale, page, limit, sortBy, order)
       .then((response: { reviews: ProductReview[], totalPages: number, currentPage: number }) => {

@@ -15,7 +15,7 @@ const Pagination = (props: PaginationProps) => {
   } = props;
 
   return (
-    <Stack spacing={2} sx={{ mt: 1 }} >
+    <Stack spacing={2}>
       <MuiPagination
         sx={{
           display: 'flex', 

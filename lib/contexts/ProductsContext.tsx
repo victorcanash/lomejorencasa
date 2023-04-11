@@ -31,6 +31,8 @@ type ProductsContext = {
   getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string | StaticImageData,
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[] | StaticImageData[],
   getProductPacks: (product: Product) => ProductPack[],
+  getProductInventory: (id: number) => ProductInventory | undefined,
+  getProductPack: (id: number) => ProductPack | undefined,
   productVariants: (ProductInventory | ProductPack)[],
   listProductReviews: ListProductReviews,
   setListProductReviews: Dispatch<SetStateAction<ListProductReviews>>,
@@ -46,6 +48,8 @@ const ProductsContext = createContext<ProductsContext>({
   getProductImgUrl: () => '',
   getProductDetailImgsUrl: () => [],
   getProductPacks: () => [],
+  getProductInventory: () => undefined,
+  getProductPack: () => undefined,
   productVariants: [],
   listProductReviews: {} as ListProductReviews,
   setListProductReviews: () => {},
@@ -157,6 +161,18 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return everfreshPacks.concat(bagsPacks);
   }, [bagsPacks, everfreshPacks]);
 
+  const getProductInventory = useCallback((id: number) => {
+    const everfreshInventories = everfreshProduct?.inventories || [];
+    const bagsInventories = bagsProduct?.inventories || [];
+    const inventories = everfreshInventories.concat(bagsInventories);
+    return inventories.find(item => item.id === id);
+  }, [bagsProduct?.inventories, everfreshProduct?.inventories]);
+
+  const getProductPack = useCallback((id: number) => {
+    const packs = getProductPacks();
+    return packs.find(item => item.id === id);
+  }, [getProductPacks]);
+
   useEffect(() => {
     const everfreshInventories = everfreshProduct?.inventories || [];
     const bagsInventories = bagsProduct?.inventories || [];
@@ -179,6 +195,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getProductImgUrl,
         getProductDetailImgsUrl,
         getProductPacks,
+        getProductInventory,
+        getProductPack,
         productVariants,
         listProductReviews,
         setListProductReviews,

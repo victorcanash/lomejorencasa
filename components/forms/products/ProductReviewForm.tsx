@@ -55,8 +55,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
   const formRef = useRef<FormikProps<CreateProductReview> | null>(null);
 
   const [expanded, setExpanded] = useState(true);
-
-  const maxWidth = '500px';
+  const [maxWidth, _setMaxWidth] = useState('500px');
 
   const handleSubmit = async (values: CreateProductReview) => {
     createProductReview(values, uploadImgs, onCreateProductReviewSuccess);
