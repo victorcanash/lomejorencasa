@@ -17,6 +17,7 @@ import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
+// import colors from '@lib/constants/themes/colors';
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import type { FormButtonsNormal } from '@lib/types/forms';
@@ -119,24 +120,38 @@ const CartItemDetail = (props: CartItemDetailProps) => {
         { page !== pages.checkout &&
           <Grid item xs={12} xs_sm={6}>
             {/* Product Image */}
-            <Box>
+            {/*<Box
+              sx={{
+                border: {
+                  xs: `2px solid ${colors.border.divider}4f`,
+                  xs_sm: 'none',
+                },
+              }}
+            >*/}
               <Link
                 onClick={closeDrawer}
                 href={getProductPageUrl(item)}
                 noLinkStyle
               >
-                <CustomImage
-                  src={getProductImgUrl(item)}
-                  alt="Product image"
-                  width="1080"
-                  height="1080"
-                  layout="responsive"
-                  objectFit="cover"
-                  style={{ borderRadius: '10px' }}
-                  priority={priorityImg}
-                />
+                <Box
+                  sx={{
+                    maxWidth: '250px',
+                    m: 'auto', 
+                  }}
+                >
+                  <CustomImage
+                    src={getProductImgUrl(item)}
+                    alt="Product image"
+                    width="1080"
+                    height="1080"
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{ borderRadius: '10px' }}
+                    priority={priorityImg}
+                  />
+                </Box>
               </Link>
-            </Box>
+            {/*</Box>*/}
           </Grid>
         }
 
