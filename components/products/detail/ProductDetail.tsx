@@ -1,3 +1,5 @@
+import { useState, useCallback } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,10 +40,10 @@ type ProductDetailProps = {
 const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
-  const { 
-    isEverfreshProduct, 
-    isBagsProduct, 
-    //getProductPacks, 
+  const {
+    isEverfreshProduct,
+    isBagsProduct,
+    //getProductPacks,
     getProductDetailImgsUrl,
   } = useProductsContext();
 
@@ -55,13 +57,15 @@ const ProductDetail = (props: ProductDetailProps) => {
   );
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
-  const onClickAddCartBtn = () => {
+  const [maxWidthCarousel, _setMaxWidthCarousel] = useState('540px');
+
+  const onClickAddCartBtn = useCallback(() => {
     if (selectedInventory) {
       addCartItem(selectedInventory, selectedQuantity);
     }
-  };
+  }, [addCartItem, selectedInventory, selectedQuantity]);
 
-  const productH1 = () => {
+  const productH1 = useCallback(() => {
     let formatted = false;
     let text = product.name.current;
     if (isEverfreshProduct(product)) { 
@@ -80,9 +84,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         }
       </Typography>
     );
-  };
+  }, [isBagsProduct, isEverfreshProduct, product]);
 
-  const productRating = () => {
+  const productRating = useCallback(() => {
     let rating = 0;
     if (selectedInventory) {
       rating = parseInt(selectedInventory.rating);
@@ -94,9 +98,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         readOnly
       />
     );
-  };
+  }, [selectedInventory]);
 
-  const productTitle = () => {
+  const productTitle = useCallback(() => {
     let text = product.name.current;
     if (selectedInventory) {
       text = selectedInventory.description.current;
@@ -106,9 +110,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         { text }
       </Typography>
     );
-  };
+  }, [product.name, selectedInventory]);
 
-  const productPrice = () => {
+  const productPrice = useCallback(() => {
     let price = product.lowestRealPrice;
     if ((selectedInventory as ProductInventory)?.realPrice) {
       price = (selectedInventory as ProductInventory).realPrice;
@@ -120,9 +124,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         {`${price} €`} 
       </Typography>
     );
-  };
+  }, [product.lowestRealPrice, selectedInventory]);
 
-  const productPriceWithDiscount = () => {
+  const productPriceWithDiscount = useCallback(() => {
     let price = product.lowestRealPrice;
     let originPrice = product.lowestPrice;
     if ((selectedInventory as ProductInventory)?.realPrice) {
@@ -144,9 +148,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         {` ${price}€`}
       </Typography>
     );
-  };
+  }, [product.lowestPrice, product.lowestRealPrice, selectedInventory]);
 
-  /*const productDiscountPercent = () => {
+  /*const productDiscountPercent = useCallback(() => {
     let percent = product.activeDiscount?.discountPercent || 0;
     if ((selectedInventory as ProductPack)?.inventories) {
       percent = (selectedInventory as ProductPack).discountPercent;
@@ -156,9 +160,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         {` -${percent}%`}
       </Typography>
     );
-  };*/
+  }, [product.activeDiscount?.discountPercent, selectedInventory]);*/
 
-  const productDescription = () => {
+  const productDescription = useCallback(() => {
     let formatted = false;
     let text = product.description.current;
     if (isEverfreshProduct(product)) { 
@@ -177,9 +181,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         }
       </Typography>
     );
-  };
+  }, [isBagsProduct, isEverfreshProduct, product]);
 
-  const productComments = () => {
+  const productComments = useCallback(() => {
     if (isEverfreshProduct(product) || isBagsProduct(product)) {
       return (
         <>
@@ -198,9 +202,9 @@ const ProductDetail = (props: ProductDetailProps) => {
       );
     }
     return (<></>);
-  };
+  }, [isBagsProduct, isEverfreshProduct, product]);
 
-  const landingIcon = (icon: IconDefinition) => {
+  const landingIcon = useCallback((icon: IconDefinition) => {
     return (
       <FontAwesomeIcon 
         size="2xl" 
@@ -208,9 +212,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         //style={{ color: "#ffffff" }}
       />
     );
-  };
-
-  const maxWidthCarousel = '540px';
+  }, []);
 
   return (
     <Box 
