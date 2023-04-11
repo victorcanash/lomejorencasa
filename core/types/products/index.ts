@@ -36,6 +36,7 @@ export type ProductInventory = {
     quantity: number,
   },
   product: Product,
+  rating: string,
 };
 
 export type ProductPack = {
@@ -48,6 +49,7 @@ export type ProductPack = {
   discountPercent: number,
   inventories: ProductInventory[],
   inventoriesIds: number[],
+  rating: string,
 };
 
 export type ProductDiscount = {

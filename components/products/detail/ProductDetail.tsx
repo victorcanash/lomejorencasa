@@ -82,6 +82,20 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   };
 
+  const productRating = () => {
+    let rating = 0;
+    if (selectedInventory) {
+      rating = parseInt(selectedInventory.rating);
+    }
+    return (
+      <Rating
+        value={rating}
+        precision={0.5}
+        readOnly
+      />
+    );
+  };
+
   const productTitle = () => {
     let text = product.name.current;
     if (selectedInventory) {
@@ -247,10 +261,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           >
             <Container>
               <Box>
-                <Rating
-                  value={5}
-                  readOnly
-                />
+                { productRating() }
               </Box>
               <Box sx={{ mb: 3 }}>
                 { productTitle() }
