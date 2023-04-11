@@ -54,8 +54,14 @@ const ProductList = (props: ProductListProps) => {
 
       { products.length > 0 ?
         <Grid container spacing={1} py={3}>
-          {products?.map((item) => (
-            <Grid item xs={6} sm={4} lg={3} key={item.id}>
+          {products?.map((item, index) => (
+            <Grid
+              key={index}
+              item
+              xs={6}
+              sm={4}
+              lg={3}
+            >
               <Card>
                 <CardActionArea component={Link} href={`${pages.productDetail.path}/${item.name.current}?id=${item.id}`} noLinkStyle>
       
