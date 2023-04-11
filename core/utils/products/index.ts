@@ -10,6 +10,7 @@ import type {
   ProductInventory,
   ProductDiscount,
   ProductPack,
+  ProductReview,
   CreateProductReview,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
@@ -23,7 +24,7 @@ export const createProductReview = (
   productReview: CreateProductReview,
   reviewImg?: File
 ) => {
-  return new Promise((resolve, reject) => {
+  return new Promise<{ review: ProductReview }>((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
@@ -48,7 +49,7 @@ export const createProductReview = (
     axios.post('product-reviews', data, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED && response.data?.productReview) {
-          resolve({});
+          resolve({ review: response.data.productReview });
         } else {
           throw new Error('Something went wrong');
         }
@@ -153,6 +154,48 @@ export const getAllPacks = async (
         }
       }).catch((error) => {
         const errorMsg = getBackendErrorMsg('Get All Product Packs ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const getAllProductReviews = async (
+  currentLocale: string, 
+  page: number,
+  limit: number,
+  sortBy: string, 
+  order: string, 
+) => {
+  return new Promise<{
+    reviews: ProductReview[], 
+    totalPages: number, 
+    currentPage: number,
+  }>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      params: {
+        page,
+        limit,
+        sortBy,
+        order,
+      },
+      headers: {
+        ...getLanguageHeaders(currentLocale),
+      },
+    };
+    axios.get('/product-reviews', options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.productReviews) {
+          resolve({
+            reviews: response.data.productReviews,
+            totalPages: response.data.totalPages,
+            currentPage: response.data.currentPage,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get All Product Reviews ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 

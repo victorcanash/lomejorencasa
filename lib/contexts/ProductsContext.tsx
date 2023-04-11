@@ -1,7 +1,15 @@
-import { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import {
+  createContext,
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  Dispatch,
+  SetStateAction
+} from 'react';
 import { StaticImageData } from 'next/image';
 
-import type { Product, ProductInventory, ProductPack } from '@core/types/products';
+import type { Product, ProductInventory, ProductPack, ListProductReviews } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { 
   convertToProduct,
@@ -24,6 +32,8 @@ type ProductsContext = {
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[] | StaticImageData[],
   getProductPacks: (product: Product) => ProductPack[],
   productVariants: (ProductInventory | ProductPack)[],
+  listProductReviews: ListProductReviews,
+  setListProductReviews: Dispatch<SetStateAction<ListProductReviews>>,
 };
 
 const ProductsContext = createContext<ProductsContext>({
@@ -37,6 +47,8 @@ const ProductsContext = createContext<ProductsContext>({
   getProductDetailImgsUrl: () => [],
   getProductPacks: () => [],
   productVariants: [],
+  listProductReviews: {} as ListProductReviews,
+  setListProductReviews: () => {},
 });
 
 export const useProductsContext = () => {
@@ -53,6 +65,11 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   const [everfreshPacks, setEverfreshPacks] = useState<ProductPack[]>([]);
   const [bagsPacks, setBagsPacks] = useState<ProductPack[]>([]);
   const [productVariants, setProductVariants] = useState<(ProductInventory | ProductPack)[]>([]);
+  const [listProductReviews, setListProductReviews] = useState<ListProductReviews>({
+    reviews: [],
+    totalPages: 1,
+    currentPage: 0,
+  });
 
   const initProducts = (products: Product[], packs: ProductPack[]) => {
     products.forEach((item) => {
@@ -163,6 +180,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getProductDetailImgsUrl,
         getProductPacks,
         productVariants,
+        listProductReviews,
+        setListProductReviews,
       }}
     >
       {children}

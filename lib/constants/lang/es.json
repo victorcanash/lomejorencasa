@@ -201,7 +201,7 @@
   "productDetail.shipping.title": "Envíos",
   "productDetail.shipping.1": "Realizamos envíos únicamente dentro de la península ibérica.",
   "productDetail.shipping.2": "Envío mediante Correos express en 24-48h.",
-  "productDetail.shipping.3": "Consulta el estado del pedido con nuestro tracking.",
+  "productDetail.shipping.3": "Consulta el estado del pedi do con nuestro tracking.",
   "productDetail.shipping.link": "Click aquí para consultar un pedido.",
   "productDetail.refund.title": "Devoluciones y garantía",
   "productDetail.refund.1": "Garantía de 2 años del fabricante.",
@@ -209,6 +209,7 @@
   "productDetail.refund.link": "Click aquí para solicitar una devolución",
   "productDetail.reviews.title": "Reseñas de usuarios",
   "productDetail.reviews.date": "Revisado en España el {date}",
+  "productDetail.reviews.noItems": "No existe ninguna reseña.",
 
   "everfresh.metas.title": "Envasadora EverFresh",
   "everfresh.metas.description": "Página de Envasadora EverFresh",
@@ -543,6 +544,7 @@
   "forms.productReview.successBtn": "Enviar reseña",
   "forms.productReview.success.default": "Reseña enviada y publicada correctamente.",
   "forms.productReview.errors.fileSize": "El tamaño máximo para subir una imagen es de {maxSize}.",
+  "forms.productReview.errors.unlogged": "Inicia sesión para crear una reseña con este correo.",
   "forms.productReview.errors.notBought": "Lo sentimos, pero no has comprado el producto seleccionado para poder escribir una reseña con este correo.",
 
   "forms.register.title": "Registrarse",

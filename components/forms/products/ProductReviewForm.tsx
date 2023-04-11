@@ -10,6 +10,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 
 import { FormFieldTypes } from '@core/constants/forms';
+import type { UploadFile } from '@core/types/multimedia';
 import type { User } from '@core/types/user';
 import type { CreateProductReview } from '@core/types/products';
 import { getUserFullName } from '@core/utils/user';
@@ -19,12 +20,23 @@ import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
-import useProducts from '@lib/hooks/useProducts';
 import useMultimedia from '@lib/hooks/useMultimedia';
 import BaseForm from '@components/forms/BaseForm';
 import UploadInput from '@components/multimedia/UploadInput';
 
-const ProductReviewForm = () => {
+type ProductReviewFormProps = {
+  errorMsg: string,
+  successMsg: string,
+  createProductReview: (productReview: CreateProductReview, uploadImgs: UploadFile[], onSuccess?: (() => void) | undefined) => Promise<void>,
+};
+
+const ProductReviewForm = (props: ProductReviewFormProps) => {
+  const {
+    errorMsg,
+    successMsg,
+    createProductReview,
+  } = props;
+
   const { productVariants } = useProductsContext();
   const { user, isLogged } = useAuthContext();
 
@@ -33,7 +45,6 @@ const ProductReviewForm = () => {
     userFieldsInitValues,
     reviewFieldsInitValues,
   } = useForms();
-  const { createProductReview, errorMsg, successMsg } = useProducts();
   const { 
     uploadInputRef,
     uploadImgs,

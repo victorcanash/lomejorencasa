@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -9,96 +7,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
-import StarOutlinedIcon from '@mui/icons-material/StarOutlined';
+import Rating from '@mui/material/Rating';
 
-import type { Source } from '@core/types/multimedia';
 import CustomImage from '@core/components/CustomImage';
 
+import { useProductsContext } from '@lib/contexts/ProductsContext';
+import useReviews from '@lib/hooks/useReviews';
 import Title from '@components/ui/Title';
+import Pagination from '@components/ui/Pagination';
 import ProductReviewForm from '@components/forms/products/ProductReviewForm';
-import review1 from 'public/images/reviews/review1.jpg';
-import review2 from 'public/images/reviews/review2.jpg';
-import review3 from 'public/images/reviews/review3.jpg';
-import review4 from 'public/images/reviews/review4.jpg';
 
 const DetailReviews = () => {
-  const router = useRouter();
+  const { listProductReviews } = useProductsContext();
 
-  const starsImgs = (stars: 0 | 1 | 2 | 3 | 4 | 5) => {
-    const starsIcons: JSX.Element[] = [];
-    for (let i = 0; i < 5; i++) {
-      if (stars > i) {
-        starsIcons.push(<StarOutlinedIcon key={i} fontSize="medium" />);
-      } else {
-        starsIcons.push(<StarBorderOutlinedIcon key={i} fontSize="medium" />);
-      }
-    }
-    return starsIcons;
-  };
-
-  const review = (
-    source: Source,
-    username: string,
-    title: string,
-    description: string,
-    stars: 0 | 1 | 2 | 3 | 4 | 5,
-    date: Date,
-  ) => {
-    return (
-      <Grid
-        item 
-        xs={6}
-        sm_md={4}
-      > 
-        <Box
-          sx={{
-            maxWidth: '300px',
-            margin: 'auto',
-          }}
-        >
-          <Card 
-            sx={{
-              borderRadius: '15px',
-            }}
-          >
-            <CardMedia>
-              <div style={{ position: 'relative', width: '100%' }}>
-                <CustomImage
-                  src={source.src}
-                  alt="Product image"
-                  layout="responsive"
-                  objectFit="cover"
-                />
-              </div>
-            </CardMedia>
-            <CardContent>
-              <Typography component="div" variant="body2" mb={1}>
-                { username }
-              </Typography>
-              <Grid container mb={1}>
-                <Grid item>
-                  {starsImgs(stars)}
-                </Grid>
-              </Grid>
-              <Typography component="div" variant="body2" mb={1}>
-                { title }
-              </Typography>
-              <Typography component="div" variant="body2" mb={1}>
-                <FormattedMessage
-                  id="productDetail.reviews.date"
-                  values={{ date: date.toLocaleDateString(router.locale) }}
-                />
-              </Typography>
-              <Typography component="div" variant="body2">
-                { description }
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
-      </Grid>
-    );
-  };
+  const { errorMsg, successMsg, handleChangePage, createProductReview} = useReviews();
 
   return (
     <Container id="reviews">
@@ -117,50 +39,94 @@ const DetailReviews = () => {
         />
 
         <Box mb={4}>
-          <ProductReviewForm />
+          <ProductReviewForm
+            errorMsg={errorMsg}
+            successMsg={successMsg}
+            createProductReview={createProductReview}
+          />
         </Box>
 
-        <Grid
-          container
-          spacing={2}
-        >
-          { review(
-              { src: review1 } as Source,
-              'Carlos Pérez',
-              'Envasadora EverFresh',
-              'La máquina funciona genial, lo que sí es importante asegurarse de que esté bien colocada con el agujero de la válvula, sino no succiona. En general cumple con lo esperado.',
-              4,
-              new Date('2023-01-02')
-            )
-          }
-          { review(
-              { src: review2 } as Source,
-              'Alba Sánchez',
-              'Envasadora EverFresh',
-              'Muy práctica la envasadora, pero recomendaría comprarla con el pack, ya que sino te quedarás justo de bolsas en poco tiempo. Por lo demás funciona correctamente.',
-              5,
-              new Date('2023-02-10')
-            )
-          }
-          { review(
-              { src: review3 } as Source,
-              'Paula Martín',
-              'Envasadora EverFresh',
-              'Relación calidad precio inmejorable. Envío correcto y puntual.',
-              5,
-              new Date('2023-01-17')
-            )
-          }
-          { review(
-              { src: review4 } as Source,
-              'Ramón Poblet',
-              'Envasadora EverFresh',
-              'La envasadora es muy pequeña, no molesta en la cocina y te la puedes llevar en el avión. Producto útil',
-              4,
-              new Date('2023-02-13')
-            )
-          }
-        </Grid>
+        { listProductReviews.reviews.length > 0 ?
+          <Grid
+            container
+            spacing={2}
+          >
+            { listProductReviews.reviews.map((item, index) => (
+              <Grid
+                key={index}
+                item 
+                xs={6}
+                sm_md={4}
+              >
+                <Box
+                  sx={{
+                    maxWidth: '300px',
+                    margin: 'auto',
+                  }}
+                >
+                  <Card 
+                    sx={{
+                      borderRadius: '15px',
+                    }}
+                  >
+                    { item.imageUrl &&
+                      <CardMedia>
+                        <Box sx={{ position: 'relative', width: '100%' }}>
+                          <CustomImage
+                            src={item.imageUrl}
+                            alt="Product review"
+                            layout="fill"
+                            objectFit="contain"
+                          />
+                        </Box>
+                      </CardMedia>
+                    }
+                    <CardContent>
+                      <Typography component="div" variant="body2" mb={1}>
+                        { item.publicName }
+                      </Typography>
+                      <Grid container mb={1}>
+                        <Grid item>
+                          <Rating
+                            value={item.rating}
+                            precision={0.5}
+                            readOnly
+                          />
+                        </Grid>
+                      </Grid>
+                      <Typography component="div" variant="body2" mb={1}>
+                        { item.title }
+                      </Typography>
+                      <Typography component="div" variant="body2" mb={1}>
+                        <FormattedMessage
+                          id="productDetail.reviews.date"
+                          values={{ date: item.createdAt }}
+                        />
+                      </Typography>
+                      <Typography component="div" variant="body2">
+                        { item.description }
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
+          :
+          <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
+            <FormattedMessage
+              id="productDetail.reviews.noItems"
+            />
+          </Typography>
+        }
+
+        <Box mt={4} />
+
+        <Pagination
+          totalPages={listProductReviews.totalPages}
+          currentPage={listProductReviews.currentPage}
+          onChangePage={handleChangePage}
+        />
       </Box>
     </Container>
   );

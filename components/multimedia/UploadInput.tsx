@@ -63,7 +63,7 @@ const UploadInput = (props: UploadInputProps) => {
             <>
               <Image
                 src={uploadImgs[0].url}
-                alt="Image"
+                alt="Upload image"
                 layout="fill"
                 objectFit="contain"
               />

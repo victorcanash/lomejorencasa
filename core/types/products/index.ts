@@ -61,6 +61,21 @@ export type ProductDiscount = {
   active: boolean,
 };
 
+export type ProductReview = {
+  id: number,
+  createdAt: Date,
+  userId?: number,
+  guestUserId?: number,
+  inventoryId?: number,
+  packId?: number,
+  rating: number,
+  title: string,
+  description: string,
+  email: string,
+  publicName: string,
+  imageUrl?: string,
+};
+
 export type CreateProductReview = {
   // ID of variant products array in products context
   relatedProduct: string,
@@ -69,4 +84,10 @@ export type CreateProductReview = {
   description: string,
   email: string,
   publicName: string,
+};
+
+export type ListProductReviews = {
+  reviews: ProductReview[],
+  totalPages: number,
+  currentPage: number,
 };

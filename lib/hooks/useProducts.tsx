@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import { useIntl } from 'react-intl';
-import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
 import type { 
@@ -10,11 +9,9 @@ import type {
   ProductInventory,
   ProductDiscount,
   ProductPack,
-  CreateProductReview,
 } from '@core/types/products';
 import type { UploadFile } from '@core/types/multimedia';
 import {
-  createProductReview as createProductReviewMW,
   manageProduct as manageProductMW,
   uploadProductImgs,
   deleteProductImg,
@@ -24,73 +21,19 @@ import {
   manageProductPack as manageProductPackMW,
 } from '@core/utils/products';
 
-import { uploadImgMaxSize } from '@lib/constants/multimedia';
-import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 const useProducts = () => {
   const { setLoading } = useAppContext();
-  const { token, isLogged } = useAuthContext();
+  const { token } = useAuthContext();
   const { productCategories, setProductCategories } = useSearchContext();
-  const { productVariants } = useProductsContext();
 
   const intl = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-
-  const createProductReview = async (
-    productReview: CreateProductReview,
-    uploadImgs: UploadFile[],
-    onSuccess?: () => void,
-  ) => {
-    setSuccessMsg('');
-    if (parseInt(productReview.relatedProduct) >= productVariants.length) {
-      setErrorMsg(intl.formatMessage({ id: 'app.errors.default' }));
-      return;
-    }
-    if (uploadImgs.length > 1) {
-      uploadImgs.splice(uploadImgs.length, uploadImgs.length - 1);
-    }
-    setLoading(true);
-    setErrorMsg('');
-    const reviewImg = uploadImgs.length > 1 ? uploadImgs[0].file : undefined;
-    const pVariantsIndex = parseInt(productReview.relatedProduct);
-    const inventoryId = (productVariants[pVariantsIndex] as ProductInventory)?.sku ? productVariants[pVariantsIndex].id : undefined;
-    const packId = (productVariants[pVariantsIndex] as ProductPack)?.inventories ? productVariants[pVariantsIndex].id : undefined;
-    createProductReviewMW(
-      isLogged() ? token : '',
-      intl.locale,
-      inventoryId,
-      packId,
-      productReview,
-      reviewImg
-    ).then(() => {
-        setLoading(false);
-        enqueueSnackbar(
-          intl.formatMessage({ id: 'forms.productReview.success.default' }), 
-          { variant: 'success', autoHideDuration: snackbarConfig.durations.long }
-        );
-        if (onSuccess) {
-          onSuccess();
-        }
-      }).catch((error: Error) => {
-        let errorMsg = error.message;
-        if (errorMsg.includes('File size')) {
-          errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.fileSize' }, { maxSize: uploadImgMaxSize });
-        } else if (errorMsg.includes('You have not bought the related product') || errorMsg.includes('getting guest user')) {
-          errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.notBought' });
-        } else {
-          errorMsg = intl.formatMessage({ id: 'app.errors.default' });
-        }
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
-  };
 
   /* Admin */
 
@@ -349,7 +292,6 @@ const deleteProduct = async (
   };
 
   return {
-    createProductReview,
     validateProductImgs,
     createProduct,
     updateProduct,
