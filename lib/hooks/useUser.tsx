@@ -14,6 +14,7 @@ import {
 } from '@core/utils/user';
 
 import { pages } from '@lib/constants/navigation';
+import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -96,7 +97,7 @@ const useUser = () => {
     router.push(pages.home.path);
     enqueueSnackbar(
       intl.formatMessage({ id: 'contact.successes.default' }), 
-      { variant: 'success' }
+      { variant: 'success', autoHideDuration: snackbarConfig.durations.long }
     );
   };
 

@@ -25,6 +25,7 @@ import { getCountryCode } from '@core/utils/addresses';
 
 import { pages } from '@lib/constants/navigation';
 import { paypalHostedFieldsStyle } from '@lib/constants/themes/elements';
+import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -56,7 +57,6 @@ const usePayments = () => {
   const [rememberFieldValue, setRememberFieldValue] = useState(false);
   const [cardHolderNameFieldValue, setCardHolderNameFieldValue] = useState(checkoutData?.card?.holderName || '');
 
-  const snachbarDuration = 10000;
   const paypalButtonsDependencies: Array<unknown> = [
     intl.locale,
     checkoutData,
@@ -325,7 +325,7 @@ const usePayments = () => {
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.message'}));
     enqueueSnackbar(intl.formatMessage(
       { id: 'checkout.successes.snackbar' }), 
-      { variant: 'success', autoHideDuration: snachbarDuration }
+      { variant: 'success', autoHideDuration: snackbarConfig.durations.long }
     );
   };
 

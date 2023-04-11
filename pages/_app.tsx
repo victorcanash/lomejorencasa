@@ -31,6 +31,7 @@ import envConfig from '@core/config/env.config';
 
 import { messages } from '@lib/constants/lang';
 import theme from '@lib/constants/themes';
+import snackbarConfig from '@lib/constants/snackbar';
 import { AppProvider } from '@lib/contexts/AppContext';
 import { SearchProvider } from '@lib/contexts/SearchContext';
 import { ProductsProvider } from '@lib/contexts/ProductsContext';
@@ -102,7 +103,7 @@ function MyApp(props: MyAppProps) {
 
       <IntlProvider locale={locale} messages={messages[locale]}>
         <CacheProvider value={emotionCache}>
-          <SnackbarProvider maxSnack={3} autoHideDuration={5000}>     
+          <SnackbarProvider maxSnack={snackbarConfig.maxSnack} autoHideDuration={snackbarConfig.durations.default}>     
               <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
