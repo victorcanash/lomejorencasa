@@ -225,14 +225,20 @@ const useForms = () => {
     description: Yup
       .string()
       .min(3)
-      .max(99)
+      .max(200)
       .required(),
+    publicName: Yup
+      .string()
+      .min(3)
+      .max(101)
+      .required(), 
   };
 
   const reviewFieldsInitValues = {
     rating: 5,
     title: '',
     description: '',
+    publicName: '',
   };
 
   const localizedTextsFieldsValidation = {
@@ -406,7 +412,7 @@ const useForms = () => {
     title: reviewFieldsValidation.title,
     description: reviewFieldsValidation.description,
     email: userFieldsValidation.email,
-    firstName: userFieldsValidation.firstName,
+    publicName: reviewFieldsValidation.publicName,
   });
 
   const contactUserFormValidation = Yup.object().shape({

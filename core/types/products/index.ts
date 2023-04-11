@@ -66,5 +66,5 @@ export type CreateProductReview = {
   title: string,
   description: string,
   email: string,
-  firstName: string,
+  publicName: string,
 };

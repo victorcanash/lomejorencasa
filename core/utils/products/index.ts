@@ -18,36 +18,36 @@ import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 export const createProductReview = (
   token: string,
   currentLocale: string,
-  id: number,
+  inventoryId: number | undefined,
+  packId: number | undefined,
   productReview: CreateProductReview,
-  reviewImgs: File[]
+  reviewImg?: File
 ) => {
   return new Promise((resolve, reject) => {
-    resolve({});
-    return;
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
         'Content-Type': 'multipart/form-data',
       },
-      params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      }
     };
     const data = new FormData();
-    for (let i = 0; i < reviewImgs.length; i++) {
-      data.append('images', reviewImgs[i]);
+    if (inventoryId) {
+      data.append('inventoryId', inventoryId.toString());
+    } else if (packId) {
+      data.append('packId', packId.toString());
     }
     data.append('rating', productReview.rating.toString());
     data.append('title', productReview.title);
     data.append('description', productReview.description);
     data.append('email', productReview.email);
-    data.append('firstName', productReview.firstName);
-    axios.post(`products/${id}/review`, data, options)
+    data.append('publicName', productReview.publicName);
+    if (reviewImg) {
+      data.append('image', reviewImg);
+    }
+    axios.post('product-reviews', data, options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
+        if (response.status === StatusCodes.CREATED && response.data?.productReview) {
           resolve({});
         } else {
           throw new Error('Something went wrong');

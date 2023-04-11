@@ -470,6 +470,7 @@
   "forms.lastName": "Last name",
   "forms.shipping.lastName": "Last name",
   "forms.billing.lastName": "Last name",
+  "forms.publicName": "Nombre público",
   "forms.birthday": "Birthday",
   "forms.getEmails": "I want to receive inspiration, marketing promotions and updates via email",
   "forms.shipping": "Shipping address",
@@ -540,7 +541,9 @@
   "forms.productReview.title": "Haz click aquí para escribir una reseña",
   "forms.productReview.description": "Rellena el siguiente formulario para compartir con nosotros tu experiencia con nuestros servicios y productos.",
   "forms.productReview.successBtn": "Enviar reseña",
-  "forms.errors.validateProductImg": "Debes de enviar una imagen.",
+  "forms.productReview.success.default": "Reseña enviada y publicada correctamente.",
+  "forms.productReview.errors.fileSize": "El tamaño máximo para subir una imagen es de {maxSize}.",
+  "forms.productReview.errors.notBought": "Lo sentimos, pero no has comprado el producto seleccionado para poder escribir una reseña con este correo.",
 
   "forms.register.title": "Sign up",
   "forms.register.successBtn": "Sign up",

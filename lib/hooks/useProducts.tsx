@@ -24,6 +24,8 @@ import {
   manageProductPack as manageProductPackMW,
 } from '@core/utils/products';
 
+import { uploadImgMaxSize } from '@lib/constants/multimedia';
+import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -41,43 +43,53 @@ const useProducts = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const createProductReview = async (productReview: CreateProductReview, uploadImgs: UploadFile[]) => {
+  const createProductReview = async (
+    productReview: CreateProductReview,
+    uploadImgs: UploadFile[],
+    onSuccess?: () => void,
+  ) => {
     setSuccessMsg('');
-    if (uploadImgs.length <= 0) {
-      setErrorMsg(intl.formatMessage({ id: 'contact.errors.validateProductImgs' }));
-      return;
-    } else if (uploadImgs.length > 1) {
-      uploadImgs.splice(uploadImgs.length, uploadImgs.length - 1);
-    }
     if (parseInt(productReview.relatedProduct) >= productVariants.length) {
       setErrorMsg(intl.formatMessage({ id: 'app.errors.default' }));
       return;
     }
+    if (uploadImgs.length > 1) {
+      uploadImgs.splice(uploadImgs.length, uploadImgs.length - 1);
+    }
     setLoading(true);
     setErrorMsg('');
+    const reviewImg = uploadImgs.length > 1 ? uploadImgs[0].file : undefined;
+    const pVariantsIndex = parseInt(productReview.relatedProduct);
+    const inventoryId = (productVariants[pVariantsIndex] as ProductInventory)?.sku ? productVariants[pVariantsIndex].id : undefined;
+    const packId = (productVariants[pVariantsIndex] as ProductPack)?.inventories ? productVariants[pVariantsIndex].id : undefined;
     createProductReviewMW(
       isLogged() ? token : '',
       intl.locale,
-      productVariants[parseInt(productReview.relatedProduct)].id,
+      inventoryId,
+      packId,
       productReview,
-      uploadImgs.map((item) => { return item.file; }))
-    .then(() => {
-      onCreateProductReviewSuccess(productReview);
-    }).catch((error: Error) => {
-      let errorMsg = error.message;
-      errorMsg = intl.formatMessage({ id: 'app.errors.default' });
-      setErrorMsg(errorMsg);
-      setLoading(false);
-    });
-  };
-
-  const onCreateProductReviewSuccess = (_productReview: CreateProductReview) => {
-    setLoading(false);
-    window.scrollTo(0, 0);
-    enqueueSnackbar(
-      intl.formatMessage({ id: 'contact.successes.default' }), 
-      { variant: 'success' }
-    );
+      reviewImg
+    ).then(() => {
+        setLoading(false);
+        enqueueSnackbar(
+          intl.formatMessage({ id: 'forms.productReview.success.default' }), 
+          { variant: 'success', autoHideDuration: snackbarConfig.durations.long }
+        );
+        if (onSuccess) {
+          onSuccess();
+        }
+      }).catch((error: Error) => {
+        let errorMsg = error.message;
+        if (errorMsg.includes('File size')) {
+          errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.fileSize' }, { maxSize: uploadImgMaxSize });
+        } else if (errorMsg.includes('You have not bought the related product') || errorMsg.includes('getting guest user')) {
+          errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.notBought' });
+        } else {
+          errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+        }
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
   };
 
   /* Admin */

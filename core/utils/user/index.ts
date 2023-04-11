@@ -105,3 +105,7 @@ export const sendUserContactEmail = (token: string, currentLocale: string, userC
       });
   })
 };
+
+export const getUserFullName = (user: User) => {
+  return `${user.firstName} ${user.lastName}`;
+};

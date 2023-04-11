@@ -1,4 +1,7 @@
+import { useRef, useState } from 'react';
+
 import { FormattedMessage } from 'react-intl';
+import { FormikProps } from 'formik';
 
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
@@ -9,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { User } from '@core/types/user';
 import type { CreateProductReview } from '@core/types/products';
+import { getUserFullName } from '@core/utils/user';
 
 import colors from '@lib/constants/themes/colors';
 import type { FormButtonsNormal } from '@lib/types/forms';
@@ -37,14 +41,27 @@ const ProductReviewForm = () => {
     handleClickDeleteUploadBtn,
   } = useMultimedia();
 
+  const formRef = useRef<FormikProps<CreateProductReview> | null>(null);
+
+  const [expanded, setExpanded] = useState(true);
+
   const maxWidth = '500px';
 
   const handleSubmit = async (values: CreateProductReview) => {
-    createProductReview(values, uploadImgs);
+    createProductReview(values, uploadImgs, onCreateProductReviewSuccess);
+  };
+
+  const onCreateProductReviewSuccess = () => {
+    setExpanded(false);
+    formRef.current?.resetForm();
+  };
+
+  const handleChange = (_event: React.SyntheticEvent, isExpanded: boolean) => {
+    setExpanded(isExpanded);
   };
 
   return (
-    <Accordion defaultExpanded={true}>
+    <Accordion defaultExpanded={true} expanded={expanded} onChange={handleChange}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
       >
@@ -55,6 +72,7 @@ const ProductReviewForm = () => {
       <AccordionDetails sx={{ backgroundColor: colors.background.primary }}>
         { productVariants.length > 0 &&
           <BaseForm
+            formikRef={formRef}
             maxWidth={maxWidth}
             initialValues={{
               relatedProduct: '0',
@@ -62,7 +80,7 @@ const ProductReviewForm = () => {
               title: reviewFieldsInitValues.title,
               description: reviewFieldsInitValues.description,
               email: user.email || userFieldsInitValues.email,
-              firstName: (user as User)?.firstName || userFieldsInitValues.firstName,
+              publicName: (user as User)?.firstName ? getUserFullName(user as User) : reviewFieldsInitValues.publicName,
             } as CreateProductReview}
             validationSchema={productReviewFormValidation}
             enableReinitialize={true}
@@ -109,7 +127,7 @@ const ProductReviewForm = () => {
                     disabled: isLogged(),
                   },
                   {
-                    name: 'firstName',
+                    name: 'publicName',
                     type: FormFieldTypes.text,
                     required: true,
                     disabled: isLogged(),
