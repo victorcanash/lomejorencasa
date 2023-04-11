@@ -76,3 +76,19 @@ export const homeVideoIds = [
   'v1680692799/laenvasadora/HOME%20PAGE/VIDEOS/PASO_3_GUIA_DE_USO_utlcnx.mp4',
   'v1680692696/laenvasadora/LANDING%20PAGE/VIDEO_SUCCION_RESUBIDO_shudab.mp4',
 ];
+
+export const uploadImgExtensions = [
+  '.jpg',
+  '.jpeg',
+  '.jfif',
+  '.pjpeg',
+  '.pjp',
+  '.gif',
+  '.png',
+  '.apng',
+  '.avif',
+  '.svg',
+  '.webp',
+];
+
+export const uploadImgMaxSize = '10mb';
