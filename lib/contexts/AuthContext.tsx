@@ -1,11 +1,12 @@
-import { 
-  createContext, 
-  useContext, 
-  useState, 
-  useRef, 
-  useEffect, 
-  Dispatch, 
-  SetStateAction 
+import {
+  createContext,
+  useContext,
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 import { useRouter } from 'next/router';
 
@@ -81,21 +82,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({} as CheckoutData);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
-  const removeUser = () => {
+  const removeUser = useCallback(() => {
     setUser({
       email: undefined,
     } as GuestUser);
     setCheckoutData({} as CheckoutData);
-  };
+  }, []);
 
-  const isLogged = () => {
+  const isLogged = useCallback(() => {
     if (!token || !(user as User)?.id) {
       return false;
     }
     return true;
-  };
+  }, [token, user]);
 
-  const isProtectedPath = () => {
+  const isProtectedPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
       if (page.filepath == router.pathname) {
         if (page.protection == Protections.user) {
@@ -105,9 +106,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     return false;
-  };
+  }, [router.pathname]);
 
-  const isAdminPath = () => {
+  const isAdminPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
       if (page.filepath == router.pathname) {
         if (page.protection == Protections.admin) {
@@ -117,32 +118,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     }
     return false;
-  };
+  }, [router.pathname]);
 
-  const getRedirectProtectedPath = () => {
+  const getRedirectProtectedPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
       if (page.filepath == router.pathname) {
         return page.redirectPathOnProtected || pages.login.path;
       }
     }
     return pages.login.path;
-  };
+  }, [router.pathname]);
 
-  const getRedirectLogoutPath = () => {
+  const getRedirectLogoutPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
       if (page.filepath == router.pathname) {
         return page.redirectPathOnLogout;
       }
     }
     return undefined;
-  };
+  }, [router.pathname]);
 
-  const convertPriceToString = (price: number) => {
+  const convertPriceToString = useCallback((price: number) => {
     if (currency === 'EUR') {
       return `${price.toFixed(2)}€`;
     }
     return `${price.toFixed(2)}$`;
-  };
+  }, [currency]);
 
   useEffect(() => {
     Object.entries(pages).forEach(([_key, page]) => {

@@ -1,14 +1,17 @@
-import { 
+import {
   createContext,
   Dispatch,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
-  useState
+  useState,
 } from 'react';
 
 import NP from 'number-precision'
 
+import envConfig from '@core/config/env.config';
+import { Environments } from '@core/constants/app';
 import type { Cart } from '@core/types/cart';
 import { getItemAmount } from '@core/utils/cart';
 
@@ -74,7 +77,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const closeDrawer  = () => {
+  const closeDrawer = () => {
     if (drawerOpen) {
       setDrawerOpen(false);
     }
@@ -86,9 +89,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const initCart = (cart: Cart) => {
+  const initCart = useCallback((cart: Cart) => {
     setCart(cart);
-  };
+  }, []);
 
   const cleanCart = () => {
     setCart({
@@ -99,7 +102,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setTotalPrice(0);
   };
 
-  const removeCart = () => {
+  const removeCart = useCallback(() => {
     setCart({
       id: -1,
       userId: -1,
@@ -107,16 +110,16 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     });
     setTotalQuantity(0);
     setTotalPrice(0);
-  };
+  }, []);
 
-  const disabledCheckoutPage = () => {
-    /*if (envConfig.NEXT_PUBLIC_APP_ENV === Environments.development) {
+  const disabledCheckoutPage = useCallback(() => {
+    if (envConfig.NEXT_PUBLIC_APP_ENV === Environments.development) {
       return true;
     } else if (totalPrice <= 0) {
       return true;
-    }*/
+    }
     return false;
-  };
+  }, [totalPrice]);
 
   useEffect(() => {
     let totalPriceResult = 0;
