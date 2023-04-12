@@ -13,19 +13,17 @@ const packIds = {
   bagsMIX: 7,
 };
 
-export const allCategoryIds: number[] = [];
-
-export const allProductIds = [
+export const allProductIds: number[] | undefined = [
   productIds.everfresh,
-  productIds.bags
+  productIds.bags,
 ];
 
-export const allPackIds = [
+export const allPackIds: number[] | undefined = [
   packIds.everfresh,
   packIds.bagsXS,
   packIds.bagsS,
   packIds.bagsM,
   packIds.bagsL,
   packIds.bagsXL,
-  packIds.bagsMIX
+  packIds.bagsMIX,
 ];

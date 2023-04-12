@@ -22,7 +22,7 @@ import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { convertCartToGuestCart, convertGuestCartCheckToCart, getGuestCart } from '@core/utils/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 
-export const init = async (currentLocale: string, categoryIds: number[], productIds: number[], packIds: number[]) => {
+export const init = async (currentLocale: string, categoryIds?: number[], productIds?: number[], packIds?: number[]) => {
   const guestCart = await getGuestCart();
   return new Promise<{
     productCategories: ProductCategory[],

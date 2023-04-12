@@ -10,7 +10,7 @@ import type { PaypalCredentials } from '@core/types/paypal';
 import type { GoogleCredentials } from '@core/types/google';
 import { init } from '@core/utils/auth';
 
-import { allCategoryIds, allProductIds, allPackIds } from '@lib/constants/products';
+import { allProductIds, allPackIds } from '@lib/constants/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
@@ -41,7 +41,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     if (pageType !== PageTypes.link) {
       await init(
         intl.locale,
-        allCategoryIds,
+        pageType === PageTypes.admin ? [] : undefined,
         allProductIds,
         allPackIds
       ).then(async (
