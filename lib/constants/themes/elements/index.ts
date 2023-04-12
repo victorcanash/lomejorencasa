@@ -648,14 +648,6 @@ export const themeCustomElements: ThemeCustomElements = {
             hover: colors.text.white,
           },
         },
-        spacing: {
-          default: {
-            padding: {
-              top: 2,
-              bottom: 2,
-            },
-          },
-        },
       },
     },
   },
