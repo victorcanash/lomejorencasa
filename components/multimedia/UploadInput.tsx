@@ -89,6 +89,7 @@ const UploadInput = (props: UploadInputProps) => {
                     layout="responsive"
                     objectFit="cover"
                   />
+                  <Box mb={1} />
                   <RemoveBtn index={index} />
                 </Grid>
               ))}

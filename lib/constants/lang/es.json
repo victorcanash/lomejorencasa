@@ -546,17 +546,17 @@
   "forms.productReview.errors.unlogged": "Inicia sesión para crear una reseña con este correo.",
   "forms.productReview.errors.notBought": "Lo sentimos, pero no has comprado el producto seleccionado para poder escribir una reseña con este correo.",
 
-  "forms.register.title": "Registrarse",
+  "forms.register.title": "Regístrate",
   "forms.register.successBtn": "Registrarse",
   "forms.register.loginLink": "Ya tienes una cuenta? Inicia sesión",
 
-  "forms.login.title": "Iniciar sesión",
+  "forms.login.title": "Inicia sesión",
   "forms.login.successBtn": "Iniciar sesión",
   "forms.login.forgotLink": "Contraseña olvidada?",
   "forms.login.registerLink": "No tienes una cuenta? Regístrate",
 
   "forms.forgotPassword.title": "Contraseña olvidada",                            
-  "forms.forgotPassword.description": "Introduce tu dirección de correo y te enviaremos un correo con un link para poner tu nueva contraseña.",
+  "forms.forgotPassword.description": "Introduce tu dirección de correo y te enviaremos un link para cambiar tu contraseña.",
   "forms.forgotPassword.successBtn": "Enviar correo",
   "forms.forgotPassword.loginLink": "Volver a inicio de sesión",
 

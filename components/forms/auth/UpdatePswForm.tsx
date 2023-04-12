@@ -27,6 +27,7 @@ const UpdatePswForm = () => {
         {
           titleTxt: {
             id: 'forms.updatePassword.title',
+            textAlign: 'center',
           },
           descriptionTxt: {
             id: 'forms.updatePassword.description',

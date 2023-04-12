@@ -25,6 +25,7 @@ const UpdateEmailForm = () => {
         {
           titleTxt: {
             id: 'forms.updateEmail.title',
+            textAlign: 'center',
           },
           descriptionTxt: {
             id: 'forms.updateEmail.description',

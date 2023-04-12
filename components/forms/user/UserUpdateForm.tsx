@@ -34,6 +34,7 @@ const UserUpdateForm = () => {
         {
           titleTxt: {
             id: 'forms.updateUser.title',
+            textAlign: 'center',
           },
           formFields: [
             {
