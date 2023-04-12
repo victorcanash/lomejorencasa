@@ -91,6 +91,12 @@ const ProductDetail = (props: ProductDetailProps) => {
   }, [isBagsProduct, isEverfreshProduct, product]);
 
   const productRating = useCallback(() => {
+    const ReviewsCountText = (props: { value: number }) => (
+      <Typography component="span" variant="body1">
+        {`(${props.value})`}
+      </Typography>
+    )
+
     if (!initialized || !selectedInventory) {
       return (
         <LoadingRating />
@@ -98,11 +104,18 @@ const ProductDetail = (props: ProductDetailProps) => {
     }
     const rating = parseInt(selectedInventory.rating);
     return (
-      <Rating
-        value={rating}
-        precision={0.5}
-        readOnly
-      />
+      <Grid container>
+        <Grid item>
+          <Rating
+            value={rating}
+            precision={0.5}
+            readOnly
+          />
+        </Grid>
+        <Grid item sx={{ mt: '2px', ml: '6px' }}>
+          <ReviewsCountText value={selectedInventory.reviewsCount} />
+        </Grid>
+      </Grid>
     );
   }, [initialized, selectedInventory]);
 

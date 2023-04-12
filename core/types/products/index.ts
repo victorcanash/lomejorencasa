@@ -37,6 +37,7 @@ export type ProductInventory = {
   },
   product: Product,
   rating: string,
+  reviewsCount: number,
 };
 
 export type ProductPack = {
@@ -50,6 +51,7 @@ export type ProductPack = {
   inventories: ProductInventory[],
   inventoriesIds: number[],
   rating: string,
+  reviewsCount: number,
 };
 
 export type ProductDiscount = {
