@@ -26,12 +26,11 @@ export const init = async (currentLocale: string, categoryIds: number[], product
   const guestCart = await getGuestCart();
   return new Promise<{
     productCategories: ProductCategory[],
-    products: Product[], 
+    products: Product[],
     packs: ProductPack[],
     cart: Cart,
-    token?: string, 
+    token?: string,
     user?: User,
-    currency: string,
     paypal?: PaypalCredentials,
     google: GoogleCredentials,
   }>(async (resolve, reject) => {
@@ -46,16 +45,15 @@ export const init = async (currentLocale: string, categoryIds: number[], product
       timeout: 20000,
     };
     axios.post('/auth/init', { 
-      categoryIds, 
-      productIds, 
-      packIds, 
-      guestCart 
+      categoryIds,
+      productIds,
+      packIds,
+      guestCart
     }, options)
       .then(async (response: AxiosResponse) => {
         if (
             response.status === StatusCodes.CREATED && 
             response.data?.categories && response.data?.products && response.data?.packs &&
-            response.data?.currency &&
             response.data?.paypal?.merchantId && response.data?.paypal?.clientId && response.data?.paypal?.token &&
             response.data?.google?.oauthId
           ) {
@@ -80,7 +78,6 @@ export const init = async (currentLocale: string, categoryIds: number[], product
             cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
             token: token,
             user: response.data.user || undefined,
-            currency: response.data.currency,
             paypal: {
               merchantId: response.data.paypal.merchantId,
               clientId: response.data.paypal.clientId,

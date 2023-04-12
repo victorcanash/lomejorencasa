@@ -26,7 +26,6 @@ const useApp = (pageType: PageTypes | undefined) => {
   const { 
     setToken,
     setUser,
-    setCurrency,
     setPaypal,
     setGoogle,
   } = useAuthContext();
@@ -53,7 +52,6 @@ const useApp = (pageType: PageTypes | undefined) => {
             cart: Cart,
             token?: string, 
             user?: User,
-            currency: string,
             paypal?: PaypalCredentials,
             google: GoogleCredentials,
           }
@@ -65,7 +63,6 @@ const useApp = (pageType: PageTypes | undefined) => {
             setToken(response.token);
             setUser(response.user);
           } 
-          setCurrency(response.currency);
           setPaypal(response.paypal);
           setGoogle(response.google);
           setInitialized(true);
@@ -75,7 +72,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, pageType, setCurrency, setGoogle, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initProducts, intl.locale, pageType, setGoogle, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {

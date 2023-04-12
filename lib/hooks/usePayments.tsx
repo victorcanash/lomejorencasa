@@ -36,6 +36,7 @@ const usePayments = () => {
     token, 
     user,
     setUser,
+    currency,
     checkoutData,
     setCheckoutData,
     isLogged,
@@ -194,6 +195,7 @@ const usePayments = () => {
       await createPTransactionMW(
           isLogged() ? token : '', 
           intl.locale,
+          currency,
           newCheckoutData,
           !isLogged() ? cart : undefined
         )
@@ -205,7 +207,7 @@ const usePayments = () => {
             reject(new Error(errorMsg))
           });
     });
-  }, [cart, getNewData, intl.locale, isLogged, setLoading, token]);
+  }, [cart, currency, getNewData, intl.locale, isLogged, setLoading, token]);
 
   const onSuccessPaypalTransaction = (captureCheckoutData: CheckoutData) => {
     capturePaypalTransaction(captureCheckoutData);

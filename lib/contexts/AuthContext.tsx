@@ -27,7 +27,6 @@ type ContextType = {
   user: User | GuestUser,
   setUser: Dispatch<SetStateAction<User | GuestUser>>,
   currency: string,
-  setCurrency: Dispatch<SetStateAction<string>>,
   checkoutData: CheckoutData,
   setCheckoutData: Dispatch<SetStateAction<CheckoutData>>,
   removeUser: () => void,
@@ -50,7 +49,6 @@ export const AuthContext = createContext<ContextType>({
   user: {} as GuestUser,
   setUser: () => {},
   currency: '',
-  setCurrency: () => {},
   checkoutData: {} as CheckoutData,
   setCheckoutData: () => {},
   removeUser: () => {},
@@ -79,7 +77,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [paypal, setPaypal] = useState<PaypalCredentials | undefined>(undefined);
   const [google, setGoogle] = useState<GoogleCredentials>({} as GoogleCredentials);
   const [user, setUser] = useState<User | GuestUser>({} as GuestUser);
-  const [currency, setCurrency] = useState('');
+  const [currency, _setCurrency] = useState('EUR');
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({} as CheckoutData);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
 
@@ -169,7 +167,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         user,
         setUser,
         currency,
-        setCurrency,
         checkoutData,
         setCheckoutData,
         removeUser,

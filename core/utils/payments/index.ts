@@ -36,7 +36,7 @@ export const getPaypalUserToken = (token: string, currentLocale: string) => {
   });
 };
 
-export const createPaypalTransaction = (token: string, currentLocale: string, checkoutData: CheckoutData, unloggedCart?: Cart) => {
+export const createPaypalTransaction = (token: string, currentLocale: string, currency: string, checkoutData: CheckoutData, unloggedCart?: Cart) => {
   return new Promise<{paypalTransactionId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
@@ -45,6 +45,7 @@ export const createPaypalTransaction = (token: string, currentLocale: string, ch
       },
     };
     const body = {
+      currency: currency,
       checkoutData: {
         email: checkoutData.checkoutEmail,
         shipping: checkoutData.shipping,
