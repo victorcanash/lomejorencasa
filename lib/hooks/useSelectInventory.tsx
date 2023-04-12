@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -19,6 +19,18 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory | Prod
   const [selectedItem, setSelectedItem] = useState<ProductInventory | ProductPack | undefined>(undefined);
   const [packs, _setPacks] = useState<ProductPack[]>(getProductPacks(product))
 
+  const handleSelectChange = useCallback((event: SelectChangeEvent) => {
+    const itemName = event.target.value as string;
+    const inventory = product.inventories?.find(item => item.name.current === itemName);
+    let pack: ProductPack | undefined;
+    if (!inventory) {
+      pack = packs.find(item => item.name.current === itemName);
+    }
+    if (inventory || pack) {
+      setSelectedItem(inventory ? inventory : pack);
+    }
+  }, [packs, product.inventories]);
+
   useEffect(() => {
     if (!loaded) {
       if (!product.inventories || product.inventories.length <= 0) {
@@ -37,51 +49,46 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory | Prod
     }
   }, [initItem, loaded, product.id, product.inventories, router.asPath]);
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    const itemName = event.target.value as string;
-    const inventory = product.inventories?.find(item => item.name.current === itemName);
-    let pack: ProductPack | undefined;
-    if (!inventory) {
-      pack = packs.find(item => item.name.current === itemName);
-    }
-    if (inventory || pack) {
-      setSelectedItem(inventory ? inventory : pack);
-    }
-  };
-
   const Select = () => {
     return(
       <>
-        { loaded &&
-          <>
-            <MuiSelect
-              id="inventory-select"
-              value={selectedItem?.name.current || ''}
-              onChange={handleSelectChange}
-            >
-              { product.inventories?.map((item) => (
-                <MenuItem key={item.id} value={item.name.current}>
-                  <FormattedMessage
-                    id="forms.selectInventory.content"
-                    values={{
-                      name: item.name.current,
-                    }}
-                  />
-                </MenuItem>
-              ))}
-              { packs.map((item) => (
-                <MenuItem key={item.id} value={item.name.current}>
-                  <FormattedMessage
-                    id="forms.selectInventory.content"
-                    values={{
-                      name: item.name.current,
-                    }}
-                  />
-                </MenuItem>
-              ))}
-            </MuiSelect>
-          </>
-        }
+        <MuiSelect
+          id="inventory-select"
+          value={selectedItem?.name.current || ''}
+          onChange={handleSelectChange}
+          sx={{
+            position: 'relative',
+            width: {
+              xs: '80vw',
+              xs_sm: '300px',
+            },
+            maxWidth: {
+              xs: '230px',
+              xs_sm: '300px',
+            },
+          }}
+        >
+          { product.inventories?.map((item) => (
+            <MenuItem key={item.id} value={item.name.current}>
+              <FormattedMessage
+                id="forms.selectInventory.content"
+                values={{
+                  name: item.name.current,
+                }}
+              />
+            </MenuItem>
+          ))}
+          { packs.map((item) => (
+            <MenuItem key={item.id} value={item.name.current}>
+              <FormattedMessage
+                id="forms.selectInventory.content"
+                values={{
+                  name: item.name.current,
+                }}
+              />
+            </MenuItem>
+          ))}
+        </MuiSelect>
       </>
     );
   };
@@ -89,7 +96,6 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory | Prod
   return {
     Select,
     selectedInventory: selectedItem,
-    loaded,
   };
 };
 

@@ -9,7 +9,13 @@ import {
 } from 'react';
 import { StaticImageData } from 'next/image';
 
-import type { Product, ProductInventory, ProductPack, ListProductReviews } from '@core/types/products';
+import type {
+  Product,
+  ProductInventory,
+  ProductPack,
+  ProductDiscount,
+  ListProductReviews,
+} from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { 
   convertToProduct,
@@ -22,8 +28,8 @@ import { productIds } from '@lib/constants/products';
 import { everfreshImgIds, bagsImgIds, placeholderImgId } from '@lib/constants/multimedia';
 
 type ProductsContext = {
-  everfreshProduct: Product | undefined,
-  bagsProduct: Product | undefined,
+  everfreshProduct: Product,
+  bagsProduct: Product,
   initProducts: (newProducts: Product[], newPacks: ProductPack[]) => void,
   isEverfreshProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   isBagsProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
@@ -39,8 +45,8 @@ type ProductsContext = {
 };
 
 const ProductsContext = createContext<ProductsContext>({
-  everfreshProduct: undefined,
-  bagsProduct: undefined,
+  everfreshProduct: {} as Product,
+  bagsProduct: {} as Product,
   initProducts: () => {},
   isEverfreshProduct: () => false,
   isBagsProduct: () => false,
@@ -64,8 +70,102 @@ export const useProductsContext = () => {
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [everfreshProduct, setEverfreshProduct] = useState<Product | undefined>(undefined);
-  const [bagsProduct, setBagsProduct] = useState<Product | undefined>(undefined);
+  const [everfreshProduct, setEverfreshProduct] = useState<Product>({
+    id: 1,
+    categoryId: 1,
+    name: {
+      en: 'EverFresh Vacuum Machine',
+      es: 'Envasadora EverFresh',
+      current: 'Envasadora EverFresh',
+    },
+    description: {
+      en: 'EverFresh Vacuum Machine',
+      es: 'Envasadora EverFresh',
+      current: 'Envasadora EverFresh',
+    },
+    lowestPrice: 31.37,
+    lowestRealPrice: 22.65,
+    imageNames: [],
+    inventories: [
+      {
+        id: 1,
+        productId: 1,
+        sku: '',
+        name: {
+          en: 'EverFresh Vacuum Machine',
+          es: 'Envasadora EverFresh',
+          current: 'Envasadora EverFresh',
+        },
+        description: {
+          en: 'EverFresh Vacuum Machine',
+          es: 'Envasadora EverFresh',
+          current: 'Envasadora EverFresh',
+        },
+        price: 31.37,
+        quantity: 1,
+        realPrice: 22.65,
+        bigbuy: {
+          id: '',
+          name: '',
+          description: '',
+          price: 0,
+          quantity: 1,
+        },
+        product: {} as Product,
+        rating: '0',
+      },
+    ],
+    discounts: [] as ProductDiscount[],
+    activeDiscount: {} as ProductDiscount,
+  });
+  const [bagsProduct, setBagsProduct] = useState<Product>({
+    id: 3,
+    categoryId: 2,
+    name: {
+      en: 'Box of 10 vacuum bags with valve',
+      es: 'Paquete de 10 bolsas de vacío con válvula',
+      current: 'Paquete de 10 bolsas de vacío con válvula',
+    },
+    description: {
+      en: 'Box of 10 vacuum bags with valve',
+      es: 'Paquete de 10 bolsas de vacío con válvula',
+      current: 'Paquete de 10 bolsas de vacío con válvula',
+    },
+    lowestPrice: 14.59,
+    lowestRealPrice: 14.59,
+    imageNames: [],
+    inventories: [
+      {
+        id: 6,
+        productId: 3,
+        sku: '',
+        name: {
+          en: 'XS (22cm x 21cm)',
+          es: 'XS (22cm x 21cm)',
+          current: 'XS (22cm x 21cm)',
+        },
+        description: {
+          en: 'Box of 10 vacuum bags with valve (22cm x 21cm)',
+          es: 'Paquete de 10 bolsas de vacío con válvula (22cm x 21cm)',
+          current: 'Paquete de 10 bolsas de vacío con válvula (22cm x 21cm)',
+        },
+        price: 14.59,
+        quantity: 1,
+        realPrice: 14.59,
+        bigbuy: {
+          id: '',
+          name: '',
+          description: '',
+          price: 0,
+          quantity: 1,
+        },
+        product: {} as Product,
+        rating: '0',
+      },
+    ],
+    discounts: undefined,
+    activeDiscount: undefined,
+  });
   const [everfreshPacks, setEverfreshPacks] = useState<ProductPack[]>([]);
   const [bagsPacks, setBagsPacks] = useState<ProductPack[]>([]);
   const [productVariants, setProductVariants] = useState<(ProductInventory | ProductPack)[]>([]);

@@ -23,11 +23,9 @@ const Bags: NextPage = () => {
         marginTop={true}
       />
 
-      { bagsProduct &&
-        <ProductDetail 
-          product={bagsProduct}
-        />
-      }
+      <ProductDetail 
+        product={bagsProduct}
+      />
     </>
   );
 };

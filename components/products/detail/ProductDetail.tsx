@@ -25,10 +25,13 @@ import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
+import LoadingBtn from '@components/ui/LoadingBtn';
+import LoadingRating from '@components/ui/LoadingRating';
 import ProductCarousel from '@components/products/detail/ProductCarousel';
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
@@ -40,6 +43,7 @@ type ProductDetailProps = {
 const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
 
+  const { initialized } = useAppContext();
   const {
     isEverfreshProduct,
     isBagsProduct,
@@ -78,19 +82,21 @@ const ProductDetail = (props: ProductDetailProps) => {
     return (
       <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
         { formatted ? 
-            <FormattedMessage id={text} defaultMessage={text} />
-            :
-            <>{ text }</>
+          <FormattedMessage id={text} defaultMessage={text} />
+          :
+          <>{ text }</>
         }
       </Typography>
     );
   }, [isBagsProduct, isEverfreshProduct, product]);
 
   const productRating = useCallback(() => {
-    let rating = 0;
-    if (selectedInventory) {
-      rating = parseInt(selectedInventory.rating);
+    if (!initialized || !selectedInventory) {
+      return (
+        <LoadingRating />
+      );
     }
+    const rating = parseInt(selectedInventory.rating);
     return (
       <Rating
         value={rating}
@@ -98,7 +104,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         readOnly
       />
     );
-  }, [selectedInventory]);
+  }, [initialized, selectedInventory]);
 
   const productTitle = useCallback(() => {
     let text = product.name.current;
@@ -283,22 +289,35 @@ const ProductDetail = (props: ProductDetailProps) => {
                 <Grid item>
                   <SelectInventory />
                 </Grid>
-                <Grid item mr={1} mb={2}>
+                <Grid item mb={2}>
                   <SelectQuantity />
                 </Grid>
               </Grid>
-              <Button
-                fullWidth
-                variant="contained"
-                onClick={onClickAddCartBtn}
-                disabled={!selectedInventory || selectedInventory.quantity == 0}
-                sx={{
-                  ...convertElementToSx(themeCustomElements.button.action.primary),
-                  mb: 4,
-                }}
-              >
-                <FormattedMessage id="productDetail.addCartBtn" />
-              </Button>
+              { initialized && selectedInventory ?
+                <Button
+                  fullWidth
+                  variant="contained"
+                  onClick={onClickAddCartBtn}
+                  disabled={selectedInventory.quantity == 0}
+                  sx={{
+                    ...convertElementToSx(themeCustomElements.button.action.primary),
+                    mb: 4,
+                  }}
+                >
+                  <FormattedMessage id="productDetail.addCartBtn" />
+                </Button>
+                :
+                <LoadingBtn
+                  fullWidth
+                  variant="contained"
+                  sx={{
+                    ...convertElementToSx(themeCustomElements.button.action.primary),
+                    mb: 4,
+                  }}
+                >
+                  <FormattedMessage id="productDetail.addCartBtn" />
+                </LoadingBtn>
+              }
             </Container>
             {/* Icons */}
             <Grid 
@@ -370,7 +389,7 @@ const ProductDetail = (props: ProductDetailProps) => {
       { (isEverfreshProduct(product) || isBagsProduct(product)) &&
         <Box sx={{ marginTop: '16px' }}>
           { isEverfreshProduct(product) &&
-            <EverfreshDetail />      
+            <EverfreshDetail />
           }
           { isBagsProduct(product) &&
             <BagsDetail />

@@ -8,7 +8,7 @@ import type { ProductInventory, ProductPack } from '@core/types/products';
 import type { CartItem } from '@core/types/cart';
 
 const useSelectInventoryQuantity = (
-  item: ProductInventory | ProductPack | CartItem | undefined, 
+  item: ProductInventory | ProductPack | CartItem | undefined,
   onChange?: (quantity: number) => void,
 ) => {
   const [selectedQuantity, setSelectedQuantity] = useState(0);
@@ -70,22 +70,22 @@ const useSelectInventoryQuantity = (
     return newMenuItems;
   }, [currentItem]);
 
-  const disabled = () => {
+  const disabled = useCallback(() => {
     const cItem = currentItem();
     if (!cItem || cItem.quantity <= 0) {
       return true;
     }
     return false;
-  };
+  }, [currentItem]);
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
+  const handleSelectChange = useCallback((event: SelectChangeEvent) => {
     const quantity = parseInt(event.target.value);
     setSelectedQuantity(quantity);
     setMenuItems(checkMenuItems(quantity));
     if (onChange) {
       onChange(quantity);
     }
-  };
+  }, [checkMenuItems, onChange]);
 
   useEffect(() => {
     if (!loaded) {
@@ -121,16 +121,26 @@ const useSelectInventoryQuantity = (
   const Select = () => {
     return (
       <>
-        { loaded && item &&
+        { loaded && item ?
           <MuiSelect
-            id="inventory-quantity-select"
             value={selectedQuantity.toString()}
             onChange={handleSelectChange}
             disabled={disabled()}
+            sx={{ width: '62px' }}
           >
             { menuItems }
           </MuiSelect>
-        }
+          :
+          <MuiSelect
+            value="0"
+            disabled={true}
+            sx={{ width: '62px' }}
+          >
+            <MenuItem value="0">
+              { 0 }
+            </MenuItem>
+          </MuiSelect>
+        } 
       </>
     );
   };

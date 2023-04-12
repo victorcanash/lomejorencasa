@@ -23,11 +23,9 @@ const Everfresh: NextPage = () => {
         marginTop={true}
       />
 
-      { everfreshProduct &&
-        <ProductDetail 
-          product={everfreshProduct}
-        />
-      }
+      <ProductDetail 
+        product={everfreshProduct}
+      />
     </>
   );
 };
