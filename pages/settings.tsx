@@ -6,6 +6,7 @@ import Divider from '@mui/material/Divider';
 import { PageTypes } from '@core/constants/navigation';
 import type { User } from '@core/types/user';
 
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
@@ -14,6 +15,7 @@ import UpdateEmailForm from '@components/forms/auth/UpdateEmailForm';
 import UpdatePswForm from '@components/forms/auth/UpdatePswForm';
 
 const Settings: NextPage = () => { 
+  const { initialized } = useAppContext();
   const { user } = useAuthContext();
 
   const page = usePage();
@@ -34,22 +36,23 @@ const Settings: NextPage = () => {
         }}
       />
 
-      <Container>
-      
-        <UserUpdateForm />
+      { initialized && page.checked &&
+        <Container>  
+          <UserUpdateForm />
 
-        { !(user as User)?.authProvider &&
-          <>
-            <Divider sx={{ mb: 3, mt: 5 }} />
+          { !(user as User)?.authProvider &&
+            <>
+              <Divider sx={{ mb: 3, mt: 5 }} />
 
-            <UpdateEmailForm />
+              <UpdateEmailForm />
 
-            <Divider sx={{ mb: 3, mt: 5 }} />
+              <Divider sx={{ mb: 3, mt: 5 }} />
 
-            <UpdatePswForm />
-          </>
-        }
-      </Container>
+              <UpdatePswForm />
+            </>
+          }
+        </Container>
+      }
     </>
   );
 };

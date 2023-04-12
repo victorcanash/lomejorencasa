@@ -45,10 +45,10 @@ const usePage = (setLoaded = true) => {
   }, [getRedirectProtectedPath, isAdminPath, isLogged, isProtectedPath, onCheckSuccess, router, token]);
 
   useEffect(() => {
-    if (initialized) {      
+    if (initialized) { 
       checkPage();
     }
-  }, [checkPage, initialized]);
+  }, [initialized, checkPage]);
 
   useEffect(() => {
     const path = window.location.hash;
@@ -68,7 +68,7 @@ const usePage = (setLoaded = true) => {
   }, []);
 
   return {
-    checked
+    checked,
   };
 };
 

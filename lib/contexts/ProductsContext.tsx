@@ -75,7 +75,23 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     currentPage: 0,
   });
 
-  const initProducts = (products: Product[], packs: ProductPack[]) => {
+  const isEverfreshProduct = useCallback((item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
+    const product = convertToProduct(item);
+    if (product?.id === productIds.everfresh) {
+      return true;
+    }
+    return false;
+  }, []);
+
+  const isBagsProduct = useCallback((item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
+    const product = convertToProduct(item);
+    if (product?.id === productIds.bags) {
+      return true;
+    }
+    return false;
+  }, []);
+
+  const initProducts = useCallback((products: Product[], packs: ProductPack[]) => {
     products.forEach((item) => {
       if (isEverfreshProduct(item)) {
         setEverfreshProduct(item);
@@ -91,25 +107,9 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         setBagsPacks(current => [...current, item]);
       }
     });
-  };
+  }, [isBagsProduct, isEverfreshProduct]);
 
-  const isEverfreshProduct = (item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
-    const product = convertToProduct(item);
-    if (product?.id === productIds.everfresh) {
-      return true;
-    }
-    return false;
-  };
-  
-  const isBagsProduct = (item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
-    const product = convertToProduct(item);
-    if (product?.id === productIds.bags) {
-      return true;
-    }
-    return false;
-  };
-
-  const getProductPageUrl = (item: Product | CartItem | GuestCartCheckItem) => {
+  const getProductPageUrl = useCallback((item: Product | CartItem | GuestCartCheckItem) => {
     const product = convertToProduct(item);
     if (product) {
       if (isEverfreshProduct(product)) {
@@ -120,9 +120,9 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       return `${pages.productDetail.path}/${product.name.current}?id=${product.id}`;
     }
     return pages.productList.path;
-  };
+  }, [isBagsProduct, isEverfreshProduct]);
   
-  const getProductImgUrl = (item: Product | CartItem | GuestCartCheckItem, index = 0) => {
+  const getProductImgUrl = useCallback((item: Product | CartItem | GuestCartCheckItem, index = 0) => {
     const product = convertToProduct(item);
     if (product) {
       if (isEverfreshProduct(product)) {
@@ -133,9 +133,9 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       return getProductImgUrlMW(product, index) || placeholderImgId;
     }
     return placeholderImgId;
-  };
+  }, [isBagsProduct, isEverfreshProduct]);
   
-  const getProductDetailImgsUrl = (item: Product | CartItem | GuestCartCheckItem) => {
+  const getProductDetailImgsUrl = useCallback((item: Product | CartItem | GuestCartCheckItem) => {
     const product = convertToProduct(item);
     if (product) {
       if (isEverfreshProduct(product)) {
@@ -147,7 +147,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       return imgsUrl.length >= 1 ? imgsUrl : [placeholderImgId]
     }
     return [placeholderImgId];
-  };
+  }, [isBagsProduct, isEverfreshProduct]);
 
   const getProductPacks = useCallback((product?: Product) => {
     if (product) {
@@ -159,7 +159,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       return [];
     }
     return everfreshPacks.concat(bagsPacks);
-  }, [bagsPacks, everfreshPacks]);
+  }, [bagsPacks, everfreshPacks, isBagsProduct, isEverfreshProduct]);
 
   const getProductInventory = useCallback((id: number) => {
     const everfreshInventories = everfreshProduct?.inventories || [];

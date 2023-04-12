@@ -8,7 +8,7 @@ type ContextType = {
 };
 
 export const AppContext = createContext<ContextType>({
-  loading: true,
+  loading: false,
   setLoading: () => {},
   initialized: false,
   setInitialized: () => {},
@@ -24,7 +24,7 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
 
   return (

@@ -20,7 +20,7 @@ import OrderDetail from '@components/orders/OrderDetail';
 const Orders: NextPage = () => {
   const router = useRouter();
 
-  const { setLoading } = useAppContext();
+  const { initialized, setLoading } = useAppContext();
   const { isLogged } = useAuthContext();
 
   const page = usePage(false);
@@ -86,32 +86,34 @@ const Orders: NextPage = () => {
         }}
       />
 
-      <Container>
-        { isLogged() &&
-            <OrderList 
-              orders={loggedOrders} 
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onChangePage={onChangePage}
-              onClickShowOrder={showOrder}
-            />
-        }
-        { !isLogged() &&
-          <>
-            { !unloggedOrder ?
-              <GetOrderForm 
-                onSuccess={onSuccessGetOrder}
+      { initialized && page.checked &&
+        <Container>
+          { isLogged() &&
+              <OrderList 
+                orders={loggedOrders} 
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onChangePage={onChangePage}
+                onClickShowOrder={showOrder}
               />
-              :
-              <OrderDetail 
-                order={unloggedOrder} 
-                backBtn={true}
-                onClickBack={onClickBack}
-              />
-            }
-          </>
-        }
-      </Container>
+          }
+          { !isLogged() &&
+            <>
+              { !unloggedOrder ?
+                <GetOrderForm 
+                  onSuccess={onSuccessGetOrder}
+                />
+                :
+                <OrderDetail 
+                  order={unloggedOrder} 
+                  backBtn={true}
+                  onClickBack={onClickBack}
+                />
+              }
+            </>
+          }
+        </Container>
+      }
     </>
   );
 };
