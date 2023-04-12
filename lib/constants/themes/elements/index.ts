@@ -246,7 +246,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
     icon: {
       text: {
         color: {
-          default: colors.text.ratingIcon,
+          default: colors.background.ratingIcon,
         },
       },
     }

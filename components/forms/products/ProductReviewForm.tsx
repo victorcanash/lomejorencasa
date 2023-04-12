@@ -54,7 +54,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
 
   const formRef = useRef<FormikProps<CreateProductReview> | null>(null);
 
-  const [expanded, setExpanded] = useState(true);
+  const [expanded, setExpanded] = useState(false);
   const [maxWidth, _setMaxWidth] = useState('500px');
 
   const handleSubmit = async (values: CreateProductReview) => {
@@ -71,7 +71,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
   };
 
   return (
-    <Accordion defaultExpanded={true} expanded={expanded} onChange={handleChange}>
+    <Accordion defaultExpanded={false} expanded={expanded} onChange={handleChange}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
       >

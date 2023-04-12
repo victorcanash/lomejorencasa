@@ -220,8 +220,7 @@ const useForms = () => {
     title: Yup
       .string()
       .min(3)
-      .max(35)
-      .required(),
+      .max(35),
     description: Yup
       .string()
       .min(3)

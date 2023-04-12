@@ -16,6 +16,7 @@ import Rating from '@mui/material/Rating';
 import type { ProductReview } from '@core/types/products';
 import CustomImage from '@core/components/CustomImage';
 
+import colors from '@lib/constants/themes/colors';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useReviews from '@lib/hooks/useReviews';
 import Title from '@components/ui/Title';
@@ -92,8 +93,7 @@ const DetailReviews = () => {
                               value={item.rating}
                               precision={0.5}
                               readOnly
-                            />
-                              
+                            />        
                           </Grid>
                           <Grid item>
                             <Typography component="div" variant="body2" color="text.disabled" width="min-content">
@@ -103,9 +103,16 @@ const DetailReviews = () => {
                         </Grid>
                       }
                       subheader={
-                        <Typography component="div" variant="body1">
-                          {item.publicName}
-                        </Typography>
+                        <>
+                          <Typography component="div" variant="body1" color="text.primary">
+                            {item.publicName}
+                          </Typography>
+                          <Typography component="div" variant="body2" sx={{ color: colors.text.verified }}>
+                            <FormattedMessage
+                              id="productDetail.reviews.verified"
+                            />
+                          </Typography>
+                        </>
                       }
                     />
                     { item.imageUrl &&

@@ -17,6 +17,7 @@ const colors = {
     actionSecondaryHover: '#FDC28B',
     success: '#D1FFD1',
     error: '#FFC7C7',
+    ratingIcon: '#FAAF00',
   },
   text: {
     black: '#000000',
@@ -25,7 +26,7 @@ const colors = {
     title: '#1F4F2F',
     footer: '#E1E8CB',
     action: '#D32F2F',
-    ratingIcon: '#FAAF00'
+    verified: '#0072C3',
   },
   border: {
     divider: '#586453',
