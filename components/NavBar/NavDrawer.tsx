@@ -109,11 +109,11 @@ const NavDrawer = (props: NavDrawerProps) => {
     >
       <Toolbar
         className="drawerToolbar"
-        variant="dense" 
+        variant="dense"
         disableGutters
       />
       <Box
-        sx={{ 
+        sx={{
           overflow: 'auto',
           width: '200px',
         }}

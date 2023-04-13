@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -23,6 +24,8 @@ import Rating from '@mui/material/Rating';
 import type { Product, ProductInventory, ProductPack } from '@core/types/products';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
+import { scrollToSection } from '@core/utils/navigation';
+import Link from '@core/components/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -42,6 +45,8 @@ type ProductDetailProps = {
 
 const ProductDetail = (props: ProductDetailProps) => {
   const { product } = props;
+
+  const router = useRouter();
 
   const { initialized } = useAppContext();
   const {
@@ -91,33 +96,36 @@ const ProductDetail = (props: ProductDetailProps) => {
   }, [isBagsProduct, isEverfreshProduct, product]);
 
   const productRating = useCallback(() => {
-    const ReviewsCountText = (props: { value: number }) => (
-      <Typography component="span" variant="body1">
-        {`(${props.value})`}
-      </Typography>
-    )
-
     if (!initialized || !selectedInventory) {
       return (
         <LoadingRating />
       );
-    }
+    };
     const rating = parseInt(selectedInventory.rating);
     return (
-      <Grid container>
-        <Grid item>
-          <Rating
-            value={rating}
-            precision={0.5}
-            readOnly
-          />
+      <Link
+        href={router.pathname}
+        scroll={false}
+        onClick={() => scrollToSection('reviews')}
+        sx={{ textDecoration: 'none' }}
+      >
+        <Grid container>
+          <Grid item>
+            <Rating
+              value={rating}
+              precision={0.5}
+              readOnly
+            />
+          </Grid>
+          <Grid item sx={{ mt: '2px', ml: '6px' }}>
+            <Typography component="span" variant="body1">
+              {`(${selectedInventory.reviewsCount})`}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item sx={{ mt: '2px', ml: '6px' }}>
-          <ReviewsCountText value={selectedInventory.reviewsCount} />
-        </Grid>
-      </Grid>
+      </Link>
     );
-  }, [initialized, selectedInventory]);
+  }, [initialized, router.pathname, selectedInventory]);
 
   const productTitle = useCallback(() => {
     let text = product.name.current;
@@ -228,7 +236,6 @@ const ProductDetail = (props: ProductDetailProps) => {
       <FontAwesomeIcon 
         size="2xl" 
         icon={icon}
-        //style={{ color: "#ffffff" }}
       />
     );
   }, []);

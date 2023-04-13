@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { isAdminUser } from '@core/utils/auth';
+import { scrollToSection } from '@core/utils/navigation';
 
 import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -53,17 +54,7 @@ const usePage = (setLoaded = true) => {
   useEffect(() => {
     const path = window.location.hash;
     if (path && path.includes('#')) {
-      setTimeout(() => {
-        const id = path.replace('#', '');
-        const element = window.document.getElementById(id);
-        if (element) {
-          const r = element.getBoundingClientRect();
-          window.top?.scroll({
-            top: scrollY + r.top,
-            behavior: 'smooth',
-          });
-        }
-      }, 600)
+      scrollToSection();
     }
   }, []);
 

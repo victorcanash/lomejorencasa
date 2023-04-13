@@ -2,6 +2,8 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -111,6 +113,9 @@ const DetailReviews = () => {
                             <FormattedMessage
                               id="productDetail.reviews.verified"
                             />
+                            <Box component="span" sx={{ ml: '2px' }}>
+                              <FontAwesomeIcon icon={faCircleCheck} />
+                            </Box>
                           </Typography>
                         </>
                       }
