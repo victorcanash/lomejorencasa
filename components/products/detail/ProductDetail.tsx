@@ -264,7 +264,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               sx={{
                 maxWidth: maxWidthCarousel, 
                 m: 'auto',
-              }}  
+              }}
             >
               <ProductCarousel 
                 sources={getProductDetailImgsUrl(product).map((item) => { 

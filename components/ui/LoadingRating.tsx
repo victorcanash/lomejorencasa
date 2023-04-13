@@ -8,7 +8,7 @@ const LoadingRating = () => {
       value={5}
       icon={<CircularProgress color="inherit" size={17} sx={{ m: '4px' }} />}
       readOnly
-      sx={{ mb: '6px' }}
+      sx={{ mb: '7px' }}
     />
   );
 };
