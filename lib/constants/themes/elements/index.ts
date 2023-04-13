@@ -163,7 +163,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
   inputLabel: {
     text: {
       font: {
-        default: typographies.content,
+        default: typographies.input,
       },
       color: {
         default: colors.text.black,
@@ -179,7 +179,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
     },
     text: {
       font: {
-        default: typographies.content,
+        default: typographies.input,
       },
       color: {
         default: colors.text.black,

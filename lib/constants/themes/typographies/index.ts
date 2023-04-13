@@ -31,6 +31,11 @@ const typographies = {
     fontWeight: '300',
     lineHeight: '26px',
   } as ThemeFontPropertyElement,
+  input: {
+    fontSize: '14px',
+    fontWeight: '300',
+    lineHeight: '20px',
+  } as ThemeFontPropertyElement,
   button: {
     fontSize: '16px',
     fontWeight: '500',
