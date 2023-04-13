@@ -530,6 +530,11 @@ export const themeCustomElements: ThemeCustomElements = {
           color: {
             default: colors.text.action,
           },
+          font: {
+            default: {
+              fontSize: '20px',
+            },
+          },
         },
       },
       // originalTxt: undefined,

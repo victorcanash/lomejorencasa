@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import type { NavDrawerItems } from '@core/types/navigation';
@@ -36,8 +37,6 @@ const NavDrawer = (props: NavDrawerProps) => {
     handleCollapse,
    } = props;
 
-  const intl = useIntl();
-
   const { logout } = useAuth(); 
 
   const handleItemBtn = (item: NavDrawerItems) => {
@@ -62,9 +61,15 @@ const NavDrawer = (props: NavDrawerProps) => {
 
   const listItemBtnContent = (item: NavDrawerItems) => (
     <>
-      <ListItemText 
+      <ListItemText
         primary={
-          intl.formatMessage({ id: `header.drawerItems.${item.text.id}`, defaultMessage: item.text.id }, item.text.values)
+          <Typography variant="bodyHead">
+            <FormattedMessage
+              id={`header.drawerItems.${item.text.id}`}
+              defaultMessage={item.text.id}
+              values={item.text.values}
+            />
+          </Typography>
         }
       />
       { item.items?.length > 0 &&

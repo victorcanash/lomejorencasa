@@ -117,7 +117,7 @@ const DetailReviews = () => {
                             <FormattedMessage
                               id="productDetail.reviews.verified"
                             />
-                            <Box component="span" sx={{ ml: '2px' }}>
+                            <Box component="span" sx={{ ml: '4px' }}>
                               <FontAwesomeIcon icon={faCircleCheck} />
                             </Box>
                           </Typography>
@@ -148,13 +148,13 @@ const DetailReviews = () => {
                         mt: item.imageUrl ? undefined : -2,
                       }}
                     >
-                      <Typography component="div" variant="bodyHead" mb={1}>
+                      <Typography component="div" variant="bodyHead" mb={1} sx={{ fontSize: '16px', fontWeight: '600' }}>
                         { getRelatedProductName(item) }
                       </Typography>
-                      <Typography component="div" variant="body1" mb={1}>
+                      <Typography component="div" variant="bodyHead" mb={1}>
                         { item.title }
                       </Typography>
-                      <Typography component="div" variant="body2">
+                      <Typography component="div" variant="body1">
                         { item.description }
                       </Typography>
                     </CardContent>
