@@ -10,7 +10,7 @@ type CartDrawerProps = {
 };
 
 const CartDrawer = (props: CartDrawerProps) => {
-  const { 
+  const {
     anchor,
    } = props;
 
@@ -26,6 +26,11 @@ const CartDrawer = (props: CartDrawerProps) => {
       onClose={handleDrawerOpen}
       sx={{
         flexShrink: 0,
+      }}
+      PaperProps={{
+        sx: {
+          backgroundColor: 'primary.main',
+        },
       }}
     >
       <Toolbar
