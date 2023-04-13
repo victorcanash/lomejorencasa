@@ -144,7 +144,7 @@ const DetailReviews = () => {
                         mt: item.imageUrl ? undefined : -2,
                       }}
                     >
-                      <Typography component="div" variant="body1" mb={1} fontWeight={700}>
+                      <Typography component="div" variant="bodyHead" mb={1}>
                         { getRelatedProductName(item) }
                       </Typography>
                       <Typography component="div" variant="body1" mb={1}>

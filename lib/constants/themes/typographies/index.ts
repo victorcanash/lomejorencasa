@@ -4,17 +4,22 @@ const typographies = {
   default: {
     textAlign: 'left',
     lineHeight: '26px',
-    letterSpacing: '-0.33px',   
+    letterSpacing: '-0.33px',
   } as ThemeFontPropertyElement,
   title: {
-    fontSize: '24px',
-    fontWeight: '500',
+    fontSize: '26px',
+    fontWeight: '600',
     lineHeight: '30px',
   } as ThemeFontPropertyElement,
   secondTitle: {
-    fontSize: '20px',
-    fontWeight: '500',
+    fontSize: '22px',
+    fontWeight: '600',
     lineHeight: '28px',
+  } as ThemeFontPropertyElement,
+  contentHead: {
+    fontSize: '14px',
+    fontWeight: '500',
+    lineHeight: '26px',
   } as ThemeFontPropertyElement,
   content: {
     fontSize: '14px',

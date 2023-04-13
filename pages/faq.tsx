@@ -32,7 +32,7 @@ const Faq: NextPage = () => {
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
           >
-            <Typography component="div" variant="body1">
+            <Typography component="div" variant="bodyHead">
               <FormattedMessage id={`faq.${textBaseId}.q.${questions[i].text.id}`} values={questions[i].text.values} />
             </Typography>
           </AccordionSummary>

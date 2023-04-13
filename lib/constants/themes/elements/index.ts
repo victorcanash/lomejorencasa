@@ -63,6 +63,13 @@ export const themeDefaultElements: ThemeDefaultElements = {
           },
         },
       },
+      bodyHead: {
+        text: {
+          font: { 
+            default: typographies.contentHead,
+          },
+        },
+      },
       body1: {
         text: {
           font: { 

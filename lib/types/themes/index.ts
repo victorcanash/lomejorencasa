@@ -19,6 +19,7 @@ export type ThemeDefaultElements = {
       h2: ThemeElement,
       h3: ThemeElement,
       h4: ThemeElement,
+      bodyHead: ThemeElement,
       body1: ThemeElement,
       body2: ThemeElement,
     },
