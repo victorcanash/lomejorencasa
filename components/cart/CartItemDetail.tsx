@@ -141,7 +141,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 >
                   <CustomImage
                     src={getProductImgUrl(item)}
-                    alt="Product image"
+                    alt="Envasadora al Vacío Everfresh"
                     width="1080"
                     height="1080"
                     layout="responsive"

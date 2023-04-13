@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -22,7 +24,7 @@ type HomeCharacteristicsProps = {
 const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
   const { type } = props;
 
-  const characteristicIcon = (
+  const characteristicIcon = useCallback((
     source: Source,
     alt: string,
     widthSrc?: string, 
@@ -59,9 +61,9 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
         </Box>
       </Box>
     );
-  };
+  }, []);
 
-  const characteristic = (
+  const characteristic = useCallback((
     textId: string, 
     source: Source, 
     alt: string, 
@@ -99,7 +101,7 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
         }
       </Grid>
     );
-  };
+  }, [characteristicIcon, type]);
 
   return (
     <>

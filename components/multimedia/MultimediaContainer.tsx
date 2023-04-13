@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import Box from '@mui/material/Box';
 
 import type { Source } from '@core/types/multimedia';
@@ -23,7 +25,7 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
     borderRadius,
   } = props;
 
-  const getMaxWidth = () => {
+  const getMaxWidth = useCallback(() => {
     if (maxWidth) {
       return maxWidth;
     }
@@ -35,9 +37,9 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       return 'md_lg';
     }
     return maxWidth;
-  };
+  }, [maxWidth, type]);
 
-  const getWidth = () => {
+  const getWidth = useCallback(() => {
     if (width) {
       return width;
     }
@@ -49,9 +51,9 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       };
     }
     return width;
-  };
+  }, [type, width]);
 
-  const getMt = () => {
+  const getMt = useCallback(() => {
     if (mt !== undefined) {
       return mt;
     }
@@ -67,9 +69,9 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       };
     }
     return mt;
-  };
+  }, [mt, type]);
 
-  const getBorderRadius = () => {
+  const getBorderRadius = useCallback(() => {
     if (borderRadius) {
       return borderRadius;
     }
@@ -77,12 +79,12 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       return '17px';
     }
     return borderRadius;
-  };
+  }, [borderRadius, type]);
 
-  const getSourceWidth = () => {
+  const getSourceWidth = useCallback(() => {
     const right = getBorderRadius() || '0px';
     return `calc(100% + (${right} * 2))`;
-  };
+  }, [getBorderRadius]);
 
   return (
     <Box

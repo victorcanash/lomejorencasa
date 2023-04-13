@@ -39,6 +39,10 @@ const DetailReviews = () => {
     return getProductPack(item.packId || -1)?.name.current || '';
   }, [getProductInventory, getProductPack]);
 
+  const convertToDate = useCallback((date: Date | string) => {
+    return new Date(date).toLocaleDateString(router.locale)
+  }, [router.locale]);
+
   return (
     <Container id="reviews">
       <Box 
@@ -99,7 +103,7 @@ const DetailReviews = () => {
                           </Grid>
                           <Grid item>
                             <Typography component="div" variant="body2" color="text.disabled" width="min-content">
-                              {new Date(item.createdAt).toLocaleDateString(router.locale)}
+                              { convertToDate(item.createdAt) }
                             </Typography>
                           </Grid>
                         </Grid>

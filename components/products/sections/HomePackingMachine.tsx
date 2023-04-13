@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 import { Autoplay, EffectCards } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -16,14 +18,14 @@ import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomePackingMachine = () => {
-  const getCardSx = (index: number) => {
+  const getCardSx = useCallback((index: number) => {
     if (index == 0) {
       return convertElementToSx(themeCustomElements.home.packingMachine.card.first);
     } else if (index == 1) {
       return convertElementToSx(themeCustomElements.home.packingMachine.card.second);
     }
     return convertElementToSx(themeCustomElements.home.packingMachine.card.third);
-  };
+  }, []);
 
   return (
     <>
@@ -99,7 +101,7 @@ const HomePackingMachine = () => {
           type="homePackingMachine"
           source={{ 
             src: homePackingMachineImgIds[0],
-            alt: 'Packing machine',
+            alt: 'Envasadora al Vacío Everfresh',
             priority: true,
             width: '8000',
             height: '4500',

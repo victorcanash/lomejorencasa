@@ -1,3 +1,5 @@
+import { useCallback, useMemo } from 'react';
+
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -18,75 +20,79 @@ import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 const HomeConservation = () => {
   const intl = useIntl();
 
-  const createData = (
+  const createData = useCallback((
     food: string,
     noVacuum: string,
     vacuumFridge: string,
     vacuumFrozen: string,
   ) => {
     return { food, noVacuum, vacuumFridge, vacuumFrozen };
-  }
+  }, []);
 
-  const rows = [
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.1' }),
-      `3-5 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.2' }),
-      `3-5 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.3' }),
-      `1-2 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.4' }),
-      `1-2 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.5' }),
-      `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.6' }),
-      `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.7' }),
-      `3-5 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.8' }),
-      `3-4 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `3-4 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-    createData(
-      intl.formatMessage({ id: 'home.conservation.table.food.9' }),
-      `1-2 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
-      `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
-      `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-    ),
-  ];
+  const rows = useMemo(() => {
+    return [
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.1' }),
+        `3-5 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.2' }),
+        `3-5 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.3' }),
+        `1-2 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `2-3 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.4' }),
+        `1-2 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `2-3 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.5' }),
+        `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.6' }),
+        `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.7' }),
+        `3-5 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `2-3 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.8' }),
+        `3-4 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `3-4 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+      createData(
+        intl.formatMessage({ id: 'home.conservation.table.food.9' }),
+        `1-2 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
+        `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
+        `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
+      ),
+    ];
+  }, [createData, intl]);
 
-  const tableCellSx = {
-    p: 1,
-  };
+  const tableCellSx = useMemo(() => {
+    return {
+      p: 1,
+    };
+  }, []);
 
   return (
     <>
@@ -159,7 +165,7 @@ const HomeConservation = () => {
         type="default"
         source={{ 
           src: homeBannerImgIds[2],
-          alt: 'Food conservation',
+          alt: 'Envasadora al Vacío Everfresh',
         }}
       />
     </>

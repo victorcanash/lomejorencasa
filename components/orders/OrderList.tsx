@@ -1,4 +1,5 @@
-import { Fragment } from 'react';
+import { useCallback, Fragment } from 'react';
+import { useRouter } from 'next/router';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
@@ -23,6 +24,7 @@ const OrderList = (props: OrderListProps) => {
   const { orders, totalPages, currentPage, onChangePage, onClickShowOrder } = props;
 
   const intl = useIntl();
+  const router = useRouter();
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
     onChangePage(page);
@@ -31,6 +33,10 @@ const OrderList = (props: OrderListProps) => {
   const handleClickShowBtn = (order: Order) => {
     onClickShowOrder(order);
   };
+
+  const convertToDate = useCallback((date: Date | string) => {
+    return new Date(date).toLocaleDateString(router.locale)
+  }, [router.locale]);
 
   return (
     <>
@@ -45,7 +51,7 @@ const OrderList = (props: OrderListProps) => {
                 <Grid container spacing={1} py={3}>
                   <Grid item xs={6}>
                     <Typography component="div" variant="body1">
-                      {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString()}`}
+                      {`${intl.formatMessage({ id: "orderDetail.date" })}: ${convertToDate(order.createdAt)}`}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>

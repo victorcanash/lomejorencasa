@@ -1,3 +1,5 @@
+import { useMemo, useCallback } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,20 +21,22 @@ import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 const HomeBanner = () => {
   const isMdBreakpoint = useMediaQuery('(max-width:600px)');
 
-  const styleXs = {
-    containerWidth: '2103px',
-    containerLeft: -673,
-    imgSeparatorWidth: '95vw',
-  } 
+  const styleXs = useMemo(() => {
+    return {
+      containerWidth: '2103px',
+      containerLeft: -673,
+      imgSeparatorWidth: '95vw',
+    };
+  }, []);
 
-  const getSxContent = () => {
+  const getSxContent = useCallback(() => {
     if (isMdBreakpoint) {
       return convertElementToSx(themeCustomElements.home.banner.small);
     }
     return convertElementToSx(themeCustomElements.home.banner.default);
-  };
+  }, [isMdBreakpoint]);
 
-  const getContent = (index: number) => {
+  const getContent = useCallback((index: number) => {
     const text: FormatText = {
       id: 'home.banner.1',
     };
@@ -84,9 +88,24 @@ const HomeBanner = () => {
         </Grid>
       </Grid>
     );
-  };
+  }, [getSxContent, styleXs.containerLeft, styleXs.imgSeparatorWidth]);
 
-  return ( 
+  const getAltImg = useCallback((index: number) => {
+    switch (index) {
+      case 0:
+        return 'Máquina de Vacío';
+      case 1:
+        return 'Selladora de Alimentos';
+      case 2:
+        return 'Máquina de Vacío';
+      case 3:
+        return 'Selladora de Alimentos';
+      default:
+        return 'Máquina de Vacío';
+    }
+  }, []);
+
+  return (
     <Box 
       sx={{
         position: 'relative',
@@ -138,7 +157,7 @@ const HomeBanner = () => {
                 type="banner"
                 source={{ 
                   src,
-                  alt: 'Everfresh banner images',
+                  alt: getAltImg(index),
                   priority: true,
                   width: '1920',
                   height: '1080', 

@@ -266,10 +266,16 @@ const ProductDetail = (props: ProductDetailProps) => {
                 m: 'auto',
               }}
             >
-              <ProductCarousel 
-                sources={getProductDetailImgsUrl(product).map((item) => { 
-                  return { src: item } as Source;
-                })}
+              <ProductCarousel
+                sources={
+                  getProductDetailImgsUrl(product).map((item) => {
+                    return {
+                      src: item,
+                      alt: isEverfreshProduct(product) ? 'Envasadora al Vacío Everfresh' : 'Bolsas de Vacío',
+                      priority: true,
+                    } as Source;
+                  })
+                }
               />
             </Box>
           </Container>

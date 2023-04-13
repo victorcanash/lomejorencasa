@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
@@ -15,7 +17,7 @@ import { homeQuestions } from '@lib/constants/faq';
 import Title from '@components/ui/Title';
 
 const HomeFaq = () => {
-  const getTextBaseId = (index: number) => {
+  const getTextBaseId = useCallback((index: number) => {
     let textBaseId = 'packing';
     if (index == 1) {
       textBaseId = 'conservation';
@@ -23,7 +25,7 @@ const HomeFaq = () => {
       textBaseId = 'shipping';
     }
     return textBaseId;
-  };
+  }, []);
 
   return (
     <Container id="faq">

@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { useCallback, Fragment } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -18,7 +18,7 @@ import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeUse = () => {
-  const getPackingMachineStep = (index: number, source: Source) => {
+  const getPackingMachineStep = useCallback((index: number, source: Source) => {
     return (
       <>
         <Container>
@@ -49,7 +49,7 @@ const HomeUse = () => {
         />
       </>
     );
-  };
+  }, []);
 
   return (
     <>
@@ -109,8 +109,8 @@ const HomeUse = () => {
         }}
       >
         <CustomImage
-          src={homeUseImgIds[0]} 
-          alt="Use food preparation EverFresh"
+          src={homeUseImgIds[0]}
+          alt="Máquina de Vacío"
           width="628"
           height="628"
           layout="responsive" 
@@ -150,7 +150,7 @@ const HomeUse = () => {
         type="default"
         source={{ 
           src: homeUseImgIds[2],
-          alt: 'Use bag selection image',
+          alt: 'Bolsas de Vacío',
           width: '8001',
           height: '2800',
         }}
@@ -174,7 +174,7 @@ const HomeUse = () => {
             type="default"
             source={{ 
               src: homeUseImgIds[3],
-              alt: 'Use bag selection sizes image',
+              alt: 'Bolsas de Vacío',
               width: '1080',
               height: '1080',
             }}
@@ -219,22 +219,22 @@ const HomeUse = () => {
           {
             type: 'video',
             src: homeVideoIds[0],
-            alt: 'Use packing machine step 1',
+            alt: 'Selladora de Alimentos',
           },
           {
             type: 'image',
             src: homeUseImgIds[4],
-            alt: 'Use packing machine step 2',
+            alt: 'Selladora de Alimentos',
           },
           {
             type: 'video',
             src: homeVideoIds[1],
-            alt: 'Use packing machine step 3',
+            alt: 'Máquina de Vacío',
           },
           {
             type: 'video',
             src: homeVideoIds[2],
-            alt: 'Use packing machine step 4',
+            alt: 'Máquina de Vacío',
           }
         ] as Source[]).map((item, index) => (
           <Fragment key={index}>

@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useIntl, FormattedMessage } from 'react-intl';
 
@@ -9,7 +10,7 @@ import { AddressTypes } from '@core/constants/addresses'
 import type { Order } from '@core/types/orders';
 import type { UserAddress } from '@core/types/user';
 
-import CartDetail from '@components/cart/CartDetail';
+//import CartDetail from '@components/cart/CartDetail';
 import AddressDetail from '@components/addresses/AddressDetail';
 import GoBackBtn from '@components/ui/GoBackBtn';
 
@@ -23,8 +24,11 @@ const OrderDetail = (props: OrderDetailProps) => {
   const { order, backBtn, onClickBack } = props;
 
   const router = useRouter();
-
   const intl = useIntl();
+
+  const convertToDate = useCallback((date: Date | string) => {
+    return new Date(date).toLocaleDateString(router.locale)
+  }, [router.locale]);
 
   return (
     <>
@@ -39,7 +43,7 @@ const OrderDetail = (props: OrderDetailProps) => {
       <Grid container spacing={1} py={3}>
         <Grid item xs={12} sm={6}>
           <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: "orderDetail.date" })}: ${new Date(order.createdAt).toLocaleDateString(router.locale)}`}
+            {`${intl.formatMessage({ id: "orderDetail.date" })}: ${convertToDate(order.createdAt)}`}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>

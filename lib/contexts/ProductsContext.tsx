@@ -7,7 +7,6 @@ import {
   Dispatch,
   SetStateAction
 } from 'react';
-import { StaticImageData } from 'next/image';
 
 import type {
   Product,
@@ -34,8 +33,8 @@ type ProductsContext = {
   isEverfreshProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   isBagsProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   getProductPageUrl: (item: Product | CartItem | GuestCartCheckItem) => string,
-  getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string | StaticImageData,
-  getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[] | StaticImageData[],
+  getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string,
+  getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[],
   getProductPacks: (product: Product) => ProductPack[],
   getProductInventory: (id: number) => ProductInventory | undefined,
   getProductPack: (id: number) => ProductPack | undefined,

@@ -29,12 +29,12 @@ const ProductCarousel = (props: ProductCarouselProps) => {
             >
               <CustomImage 
                 src={source.src}
-                alt="Product image" 
-                width="1080"
-                height="1080"
+                alt={source.alt}
+                width={source.width || '1080'}
+                height={source.height || '1080'}
                 layout="responsive" 
                 objectFit="cover"
-                priority
+                priority={source.priority || false}
                 style={{ borderRadius: '10px' }}
               />
             </div>
