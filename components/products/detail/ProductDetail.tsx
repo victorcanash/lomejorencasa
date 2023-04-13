@@ -117,7 +117,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               readOnly
             />
           </Grid>
-          <Grid item sx={{ mt: '2px', ml: '6px' }}>
+          <Grid item sx={{ ml: '6px' }}>
             <Typography component="span" variant="body1">
               {`(${selectedInventory.reviewsCount})`}
             </Typography>
@@ -133,7 +133,7 @@ const ProductDetail = (props: ProductDetailProps) => {
       text = selectedInventory.description.current;
     }
     return (
-      <Typography component="h2" variant="h1">
+      <Typography component="h2" variant="h1" color="text.primary">
         { text }
       </Typography>
     );

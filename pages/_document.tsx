@@ -21,8 +21,8 @@ export default class MyDocument extends Document {
           />*/}
           <link
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,700;0,800;0,900;1,500&display=swap" 
-          />
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap"
+          /> 
           <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
