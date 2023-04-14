@@ -63,7 +63,7 @@ const useReviews = () => {
     ).then((response: { review: ProductReview }) => {
         setListProductReviews({
           ...listProductReviews,
-          reviews: [...listProductReviews.reviews, response.review],
+          reviews: [response.review, ...listProductReviews.reviews],
         })
         setLoading(false);
         enqueueSnackbar(

@@ -123,7 +123,6 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
                   {
                     name: 'title',
                     type: FormFieldTypes.text,
-                    required: true,
                   },
                   {
                     name: 'description',
