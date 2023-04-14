@@ -1,9 +1,15 @@
+import { ReactNode } from 'react';
+
 import { FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+
+import Link from '@core/components/Link';
+
+import { pages } from '@lib/constants/navigation';
 
 type CookiesBannerProps = {
   open: boolean,
@@ -57,7 +63,16 @@ const CookiesBanner = (props: CookiesBannerProps) => {
             <FormattedMessage id="banners.cookies.title" />
           </Typography>
           <Typography component='div' variant='body1'>
-            <FormattedMessage id="banners.cookies.content"/>
+            <FormattedMessage
+              id="banners.cookies.content"
+              values={{
+                'link': (...chunks: ReactNode[]) => (
+                  <Link href={pages.cookies.path} color="inherit">
+                    {chunks}
+                  </Link>
+                ),
+              }}
+            />
           </Typography>
         </Box>
         <Box 
