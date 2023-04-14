@@ -20,11 +20,12 @@ import {
   convertToProduct,
   getProductImgUrl as getProductImgUrlMW, 
   getAllProductImgsUrl as getAllProductImgsUrlMW,
+  convertToProductPack,
 } from '@core/utils/products';
 
 import { pages } from '@lib/constants/navigation';
-import { productIds } from '@lib/constants/products';
-import { everfreshImgIds, bagsImgIds, placeholderImgId } from '@lib/constants/multimedia';
+import { productIds, packIds } from '@lib/constants/products';
+import { everfreshImgIds, bagsImgIds, placeholderImgId, everfreshPackImgIds, bagsPackImgIds } from '@lib/constants/multimedia';
 
 type ProductsContext = {
   everfreshProduct: Product,
@@ -34,6 +35,7 @@ type ProductsContext = {
   isBagsProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   getProductPageUrl: (item: Product | CartItem | GuestCartCheckItem) => string,
   getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string,
+  getCartItemImgUrl: (item: CartItem | GuestCartCheckItem) => string,
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[],
   getProductPacks: (product: Product) => ProductPack[],
   getProductInventory: (id: number) => ProductInventory | undefined,
@@ -51,6 +53,7 @@ const ProductsContext = createContext<ProductsContext>({
   isBagsProduct: () => false,
   getProductPageUrl: () => '',
   getProductImgUrl: () => '',
+  getCartItemImgUrl: () => '',
   getProductDetailImgsUrl: () => [],
   getProductPacks: () => [],
   getProductInventory: () => undefined,
@@ -192,6 +195,29 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return false;
   }, []);
 
+  const isEverfreshPack = useCallback((item: ProductPack | CartItem | GuestCartCheckItem) => {
+    const productPack = convertToProductPack(item);
+    if (productPack?.id === packIds.everfresh) {
+      return true;
+    }
+    return false;
+  }, []);
+
+  const isBagsPack = useCallback((item: ProductPack | CartItem | GuestCartCheckItem) => {
+    const productPack = convertToProductPack(item);
+    if (
+      productPack?.id === packIds.bagsXS ||
+      productPack?.id === packIds.bagsS ||
+      productPack?.id === packIds.bagsM ||
+      productPack?.id === packIds.bagsL ||
+      productPack?.id === packIds.bagsXL ||
+      productPack?.id === packIds.bagsMIX
+    ) {
+      return true;
+    }
+    return false;
+  }, []);
+
   const initProducts = useCallback((products: Product[], packs: ProductPack[]) => {
     products.forEach((item) => {
       if (isEverfreshProduct(item)) {
@@ -235,6 +261,27 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     }
     return placeholderImgId;
   }, [isBagsProduct, isEverfreshProduct]);
+
+  const getProductPackImgUrl = useCallback((item: ProductPack | CartItem | GuestCartCheckItem) => {
+    const productPack = convertToProductPack(item);
+    if (productPack) {
+      if (isEverfreshPack(item)) {
+        return everfreshPackImgIds[0];
+      } else if (isBagsPack(item)) {
+        return bagsPackImgIds[0];
+      }
+    }
+    return placeholderImgId;
+  }, [isBagsPack, isEverfreshPack]);
+
+  const getCartItemImgUrl = useCallback((item: CartItem | GuestCartCheckItem) => {
+    if (item.pack) {
+      return getProductPackImgUrl(item.pack);
+    } else if (item.inventory) {
+      return getProductImgUrl(item);
+    }
+    return placeholderImgId;
+  }, [getProductImgUrl, getProductPackImgUrl]);
   
   const getProductDetailImgsUrl = useCallback((item: Product | CartItem | GuestCartCheckItem) => {
     const product = convertToProduct(item);
@@ -294,6 +341,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         isBagsProduct,
         getProductPageUrl,
         getProductImgUrl,
+        getCartItemImgUrl,
         getProductDetailImgsUrl,
         getProductPacks,
         getProductInventory,

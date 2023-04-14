@@ -3,7 +3,7 @@ export const productIds = {
   bags: 3,
 };
 
-const packIds = {
+export const packIds = {
   everfresh: 1,
   bagsXS: 2,
   bagsS: 3,

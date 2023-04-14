@@ -15,6 +15,14 @@ export const bagsImgIds = [
   'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
 ];
 
+export const everfreshPackImgIds = [
+  'v1680726536/laenvasadora/LANDING%20PAGE/FOTO_2_fgnlnf.jpg',
+];
+
+export const bagsPackImgIds = [
+  'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
+];
+
 export const homeBannerImgIds = [
   'v1681038418/laenvasadora/HOME%20PAGE/BANNER/FOTO_5_zbi5lg.jpg',
   'v1681038421/laenvasadora/HOME%20PAGE/BANNER/FOTO_1_cbslc0.jpg',

@@ -49,7 +49,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     priorityImg 
   } = props;
 
-  const { getProductPageUrl, getProductImgUrl } = useProductsContext();
+  const { getProductPageUrl, getCartItemImgUrl } = useProductsContext();
   const { closeDrawer } = useCartContext();
   const { convertPriceToString } = useAuthContext();
 
@@ -140,8 +140,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   }}
                 >
                   <CustomImage
-                    src={getProductImgUrl(item)}
-                    alt="Envasadora al Vacío Everfresh"
+                    src={getCartItemImgUrl(item)}
+                    alt="Cart Item"
                     width="1080"
                     height="1080"
                     layout="responsive"
