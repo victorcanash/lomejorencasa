@@ -85,7 +85,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       es: 'Envasadora EverFresh',
       current: 'Envasadora EverFresh',
     },
-    lowestPrice: 31.37,
+    lowestPrice: 22.65,
     lowestRealPrice: 22.65,
     imageNames: [],
     inventories: [
@@ -103,7 +103,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
           es: 'Envasadora EverFresh',
           current: 'Envasadora EverFresh',
         },
-        price: 31.37,
+        price: 22.65,
         quantity: 1,
         realPrice: 22.65,
         bigbuy: {
@@ -118,8 +118,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         reviewsCount: 0,
       },
     ],
-    discounts: [] as ProductDiscount[],
-    activeDiscount: {} as ProductDiscount,
+    discounts: undefined,
+    activeDiscount: undefined,
   });
   const [bagsProduct, setBagsProduct] = useState<Product>({
     id: 3,
