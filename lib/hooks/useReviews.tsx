@@ -3,10 +3,6 @@ import { useState, useCallback, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import {
-  createProductReview as createProductReviewMW,
-  getAllProductReviews as getAllProductReviewsMW,
-} from '@core/utils/products';
 import type { UploadFile } from '@core/types/multimedia';
 import type {
   ProductReview,
@@ -14,6 +10,11 @@ import type {
   ProductInventory,
   ProductPack
 } from '@core/types/products';
+import { scrollToSection } from '@core/utils/navigation';
+import {
+  createProductReview as createProductReviewMW,
+  getAllProductReviews as getAllProductReviewsMW,
+} from '@core/utils/products';
 
 import { uploadImgMaxSize } from '@lib/constants/multimedia';
 import snackbarConfig from '@lib/constants/snackbar';
@@ -91,6 +92,7 @@ const useReviews = () => {
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);
+    scrollToSection('reviews', false);
   }, []);
 
   const getAllProductReviews = useCallback(async () => {
@@ -104,7 +106,7 @@ const useReviews = () => {
           reviews: response.reviews,
           totalPages: response.totalPages,
           currentPage: response.currentPage,
-        })
+        });
       }).catch((_error: Error) => {
         setListProductReviews({
           reviews: [],

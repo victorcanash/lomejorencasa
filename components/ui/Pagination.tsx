@@ -24,7 +24,13 @@ const Pagination = (props: PaginationProps) => {
         }}
         count={totalPages}
         page={currentPage}
-        onChange={onChangePage}
+        onChange={
+          (event: React.ChangeEvent<unknown>, page: number) => {
+            if (page !== currentPage) {
+              onChangePage(event, page);
+            }
+          }
+        }
         variant="outlined"
         shape="rounded"
       />
