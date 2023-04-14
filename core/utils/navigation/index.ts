@@ -1,4 +1,4 @@
-export const scrollToSection = (id?: string) => {
+export const scrollToSection = (id?: string, addedY = 121) => {
   setTimeout(() => {
     if (!id) {
       id = window.location.hash.replace('#', '');
@@ -7,7 +7,7 @@ export const scrollToSection = (id?: string) => {
     if (element) {
       const r = element.getBoundingClientRect();
       window.top?.scroll({
-        top: scrollY + r.top,
+        top: scrollY + (r.top - addedY),
         behavior: 'smooth',
       });
     }
