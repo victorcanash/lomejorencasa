@@ -63,7 +63,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
           },
         },
       },
-      bodyHead: {
+      body1Head: {
         text: {
           font: { 
             default: typographies.contentHead,
@@ -74,6 +74,13 @@ export const themeDefaultElements: ThemeDefaultElements = {
         text: {
           font: { 
             default: typographies.content,
+          },
+        },
+      },
+      body2Head: {
+        text: {
+          font: { 
+            default: typographies.secondContentHead,
           },
         },
       },
@@ -327,9 +334,6 @@ export const themeCustomElements: ThemeCustomElements = {
             color: {
               default: colors.text.white,
             },
-            font: {
-              default: typographies.headerBanner,
-            },
           },
         },
         icon: {
@@ -342,11 +346,6 @@ export const themeCustomElements: ThemeCustomElements = {
         content: {
           backgroundColor: {
             default: colors.background.third,
-          },
-          text: {
-            font: {
-              default: typographies.headerBanner,
-            },
           },
         },
         icon: {

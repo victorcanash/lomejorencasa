@@ -71,7 +71,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
             expandIcon={<ExpandMoreIcon />}
             sx={convertElementToSx(themeCustomElements.landing.accordion.head)}
           >
-            <Typography component="div" variant="bodyHead" align={title.textAlign}>
+            <Typography component="div" variant="body1Head" align={title.textAlign}>
               <FormattedMessage id={title.id} values={title.values} defaultMessage={title.id} />
             </Typography>
           </AccordionSummary>

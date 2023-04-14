@@ -26,6 +26,11 @@ const typographies = {
     fontWeight: '300',
     lineHeight: '26px',
   } as ThemeFontPropertyElement,
+  secondContentHead: {
+    fontSize: '12px',
+    fontWeight: '500',
+    lineHeight: '26px',
+  } as ThemeFontPropertyElement,
   secondContent: {
     fontSize: '12px',
     fontWeight: '300',
@@ -41,13 +46,6 @@ const typographies = {
     fontWeight: '500',
     lineHeight: '26px',
     textTransform: 'uppercase',
-  } as ThemeFontPropertyElement,
-  headerBanner: {
-    fontSize: '16px',
-    fontWeight: '500',
-    lineHeight: '26px',
-    textAlign: 'center',
-    textTransform:'uppercase',
   } as ThemeFontPropertyElement,
   homeBanner: {
     default: {

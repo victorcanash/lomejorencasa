@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 
-import Box from '@mui/material/Box';
-
+import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
@@ -9,9 +8,9 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <NavBar />
-      <Box component="main">
+      <MainComponent>
         {children}
-      </Box>
+      </MainComponent>
     </>
   );
 };

@@ -26,6 +26,7 @@ type NavDrawerProps = {
   items: NavDrawerItems[],
   handleOpen: () => void,
   handleCollapse: (item: NavDrawerItems) => void,
+  smallBreakpoint: boolean,
 };
 
 const NavDrawer = (props: NavDrawerProps) => {
@@ -35,6 +36,7 @@ const NavDrawer = (props: NavDrawerProps) => {
     items, 
     handleOpen,
     handleCollapse,
+    smallBreakpoint,
    } = props;
 
   const { logout } = useAuth(); 
@@ -63,7 +65,7 @@ const NavDrawer = (props: NavDrawerProps) => {
     <>
       <ListItemText
         primary={
-          <Typography variant="bodyHead">
+          <Typography variant="body1Head">
             <FormattedMessage
               id={`header.drawerItems.${item.text.id}`}
               defaultMessage={item.text.id}
@@ -113,9 +115,11 @@ const NavDrawer = (props: NavDrawerProps) => {
       }}
     >
       <Toolbar
-        className="drawerToolbar"
         variant="dense"
         disableGutters
+        sx={{
+          minHeight: smallBreakpoint ? '70px' : '98px',
+        }}
       />
       <Box
         sx={{

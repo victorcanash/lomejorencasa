@@ -18,16 +18,19 @@ declare module '@mui/material/styles' {
   }
 
   interface TypographyVariants {
-    bodyHead: React.CSSProperties;
+    body1Head: React.CSSProperties;
+    body2Head: React.CSSProperties;
   }
   interface TypographyVariantsOptions {
-    bodyHead: React.CSSProperties;
+    body1Head: React.CSSProperties;
+    body2Head: React.CSSProperties;
   }
 };
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    bodyHead: true;
+    body1Head: true;
+    body2Head: true;
   }
 };
 
@@ -71,7 +74,8 @@ const themeOptions: ThemeOptions = {
     h4: convertElementToSx(themeDefaultElements.default.typography.h4),
     body1: convertElementToSx(themeDefaultElements.default.typography.body1),
     body2: convertElementToSx(themeDefaultElements.default.typography.body2),
-    bodyHead: convertElementToSx(themeDefaultElements.default.typography.bodyHead),
+    body1Head: convertElementToSx(themeDefaultElements.default.typography.body1Head),
+    body2Head: convertElementToSx(themeDefaultElements.default.typography.body2Head),
   },
   components: {
     MuiLink: {

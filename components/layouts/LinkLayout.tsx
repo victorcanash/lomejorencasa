@@ -1,14 +1,14 @@
 import { ReactNode } from 'react';
 
-import Box from '@mui/material/Box';
+import MainComponent from '@components/layouts/MainComponent';
 
 const LinkLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <Box component="main">
+      <MainComponent>
         {children}
-      </Box>
+      </MainComponent>
     </>
   );
 };

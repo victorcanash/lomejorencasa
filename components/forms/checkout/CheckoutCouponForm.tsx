@@ -32,7 +32,7 @@ const CheckoutCouponForm: NextPage = () => {
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
         >
-          <Typography component="div" variant="bodyHead">
+          <Typography component="div" variant="body1Head">
             <FormattedMessage id="checkout.coupon.title" />
           </Typography>
         </AccordionSummary>

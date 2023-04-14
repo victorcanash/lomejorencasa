@@ -2,16 +2,6 @@ html {
   white-space: pre-line;
 }
 
-main {
-  margin-top: 120px;
-  margin-bottom: 48px;
-  min-height: 51vh;
-}
-
-.drawerToolbar {
-  min-height: 114px;
-}
-
 
 /* Swiper */
 

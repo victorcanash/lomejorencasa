@@ -19,7 +19,7 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const HomeBanner = () => {
-  const isMdBreakpoint = useMediaQuery('(max-width:600px)');
+  const smallBreakpoint = useMediaQuery('(max-width:600px)');
 
   const styleXs = useMemo(() => {
     return {
@@ -30,11 +30,11 @@ const HomeBanner = () => {
   }, []);
 
   const getSxContent = useCallback(() => {
-    if (isMdBreakpoint) {
+    if (smallBreakpoint) {
       return convertElementToSx(themeCustomElements.home.banner.small);
     }
     return convertElementToSx(themeCustomElements.home.banner.default);
-  }, [isMdBreakpoint]);
+  }, [smallBreakpoint]);
 
   const getContent = useCallback((index: number) => {
     const text: FormatText = {

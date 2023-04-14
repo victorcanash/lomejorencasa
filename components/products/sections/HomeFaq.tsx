@@ -47,7 +47,7 @@ const HomeFaq = () => {
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
             >
-              <Typography component="div" variant="bodyHead">
+              <Typography component="div" variant="body1Head">
                 <FormattedMessage id={`faq.${getTextBaseId(index)}.q.${item.text.id}`} values={item.text.values} />
               </Typography>
             </AccordionSummary>

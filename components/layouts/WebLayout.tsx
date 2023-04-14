@@ -1,8 +1,7 @@
 import { ReactNode } from 'react';
 
-import Box from '@mui/material/Box';
-
 import useCookies from '@lib/hooks/useCookies';
+import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
 import MaintenanceBanner from '@components/banners/MaintenanceBanner';
@@ -13,9 +12,9 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <NavBar />
-      <Box component="main">
+      <MainComponent>
         {children}
-      </Box>
+      </MainComponent>
       <Footer />
       <CookiesBanner />
       <MaintenanceBanner />

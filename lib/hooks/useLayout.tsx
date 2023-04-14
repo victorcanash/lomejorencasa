@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import { PageTypes } from '@core/constants/navigation';
 
 import { pages } from '@lib/constants/navigation';

@@ -43,7 +43,7 @@ const MaintenanceBanner = () => {
             <Grid item>
               <Typography
                 component="div"
-                variant="inherit"
+                variant="body1Head"
               >
                 <FormattedMessage id="banners.maintenance" />
               </Typography>

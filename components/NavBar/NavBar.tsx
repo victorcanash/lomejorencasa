@@ -4,12 +4,12 @@ import { FormattedMessage } from 'react-intl';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -19,6 +19,7 @@ import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 // import HideOnScroll from '@core/components/HideOnScroll';
 
+import typographies from '@lib/constants/themes/typographies';
 import { pages } from '@lib/constants/navigation';
 import { navbarLogoId } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -31,6 +32,7 @@ const NavBar = () => {
   const { totalQuantity, handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
 
   const router = useRouter();
+  const smallBreakpoint = useMediaQuery('(max-width:450px)');
 
   const navDrawer = useNavDrawer();
 
@@ -46,6 +48,22 @@ const NavBar = () => {
     handleCartDrawerOpen();
   };
 
+  const CartIcon = () => (
+    <Badge
+      badgeContent={
+        <Box
+          sx={{
+            ...typographies.secondContentHead,
+          }}
+        >
+          {totalQuantity > 9 ? '+9' : totalQuantity}
+        </Box>
+      }
+    >
+      <ShoppingCartIcon sx={{ fontSize: smallBreakpoint ? 25: 30 }} />
+    </Badge>
+  );
+
   return (
     <>
       {/*<HideOnScroll direction="down">*/}
@@ -57,35 +75,34 @@ const NavBar = () => {
           onClick={handleAppBarOnClick}
         >
           {/* Shipping Banner */}
-          <Grid
-            container
-            wrap="nowrap"
-            alignItems="center"
-            justifyContent="center"
-            py="0px"
-            px="12px"
-            sx={convertElementToSx(themeCustomElements.header.banners.shipping.content)}
+          <Box
+            sx={{
+              ...convertElementToSx(themeCustomElements.header.banners.shipping.content),
+              px: '5px',
+            }}
           >
-            <Grid item mr={1}>
+            <Typography
+              variant={smallBreakpoint ? 'body2Head': 'body1Head'}
+              textAlign="center"
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              lineHeight="18px"
+            >
               <LocalShippingIcon
                 sx={{
                   ...themeCustomElements.header.banners.shipping.icon,
-                  fontSize: 30, 
-                  mt: '5px',
+                  fontSize: smallBreakpoint ? 20 : 25,
+                  mr: smallBreakpoint ? '1px' : '5px',
                 }} 
               />
-            </Grid>
-            <Grid item>
-              <Typography
-                component="div"
-                sx={convertElementToSx(themeCustomElements.header.banners.shipping.content)}
-              >
-                <FormattedMessage id="header.banners.shipping" />
-              </Typography>
-            </Grid>
-          </Grid> 
+              <FormattedMessage id="header.banners.shipping" />
+            </Typography>
+          </Box> 
           {/* NavBar */}
-          <Toolbar 
+          <Toolbar
             variant="dense" 
             disableGutters
           >
@@ -93,26 +110,25 @@ const NavBar = () => {
             <IconButton
               size="large"
               onClick={handleNavBarBtnOnClick}
-              sx={{ mr: 1 }}
             >
-              <MenuIcon sx={{ fontSize: 30 }} />
+              <MenuIcon sx={{ fontSize: smallBreakpoint ? 25: 30 }} />
             </IconButton>
             {/* Logo */}
-            <Container 
-              maxWidth={false} 
+            <Container
+              maxWidth={false}
               disableGutters
-              sx={{ 
+              sx={{
                 display: 'flex',
-                justifyContent: 'center', 
+                justifyContent: 'center',
               }}
-            > 
+            >
               <IconButton
                 size="small"
                 component={Link}
                 href={pages.home.path}
                 sx={{
                   p: 0,
-                  pt: 1,
+                  pt: smallBreakpoint ? '5px' : '8px',
                   borderRadius: '10px',
                 }}
               >
@@ -124,10 +140,10 @@ const NavBar = () => {
                 <CustomImage
                   src={navbarLogoId}
                   alt="Logo"
-                  height="70px"
-                  width="156px"
+                  height={smallBreakpoint ? '50px' :'70px'}
+                  width={smallBreakpoint ? '136px' : '156px'}
                   layout="fixed"
-                  objectFit="cover"
+                  objectFit="contain"
                   priority
                 />
               </IconButton>
@@ -136,24 +152,18 @@ const NavBar = () => {
             {/* Cart Button */}
             { router.pathname === pages.cart.path || router.pathname === pages.checkout.path ?
               <IconButton
-                size='large'
+                size="large"
                 component={Link}
                 href={pages.cart.path}
-                sx={{ ml: 1 }}
               >
-                <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity}>
-                  <ShoppingCartIcon sx={{ fontSize: 30 }} />
-                </Badge>
+                <CartIcon />
               </IconButton>
               :
               <IconButton
-                size='large'
+                size="large"
                 onClick={handleCartBtnOnClick}
-                sx={{ ml: 1 }}
               >
-                <Badge badgeContent={totalQuantity > 9 ? '+9' : totalQuantity}>
-                  <ShoppingCartIcon sx={{ fontSize: 30 }} />
-                </Badge>
+                <CartIcon />
               </IconButton>
             }
           </Toolbar>
@@ -166,10 +176,12 @@ const NavBar = () => {
         items={navDrawer.items}
         handleOpen={navDrawer.handleOpen}
         handleCollapse={navDrawer.handleCollapse}
+        smallBreakpoint={smallBreakpoint}
       />
 
       <CartDrawer
         anchor="right"
+        smallBreakpoint={smallBreakpoint}
       />
     </>
   );
