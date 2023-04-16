@@ -65,6 +65,7 @@ function MyApp(props: MyAppProps) {
 
   useEffect(() => {
     NP.enableBoundaryChecking(false)
+
     TagManager.initialize({ 
       gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
     });
@@ -77,8 +78,9 @@ function MyApp(props: MyAppProps) {
         description={description}
         openGraph={{
           type: 'website',
+          locale: 'es_ES',
           title: title,
-          url: `https://${envConfig.NEXT_PUBLIC_APP_URL}${props.router.asPath}`,
+          url: envConfig.NEXT_PUBLIC_APP_URL,
           description: description,
           /*images: [
             {
@@ -92,7 +94,21 @@ function MyApp(props: MyAppProps) {
       />
 
       <Head>
-        <meta name="keywords" content="ecommerce, shop, laenvasadora, la envasadora, envasadora, al vacío" />
+        <meta
+          name="keywords"
+          content={
+            [
+              'Laenvasadora',
+              'La Envasadora',
+              'Envasadora al Vacío',
+              'Envasadora al Vacío Everfresh',
+              'Bolsas de Vacío',
+              'Bolsas de Vacío con Válvula',
+              'Máquina de Vacío',
+              'Selladora de Alimentos',
+            ].join(',')
+          }
+        />
         <meta name="author" content={title} />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Head>
