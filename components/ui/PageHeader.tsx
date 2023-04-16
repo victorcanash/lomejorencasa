@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 // import Head from 'next/head';
 import { useRouter } from 'next/router';
 
@@ -39,7 +40,7 @@ const PageHeader = (props: PageHeaderProps) => {
   const router = useRouter();
   const intl = useIntl();
 
-  const getTitle = () => {
+  const getTitle = useCallback(() => {
     let title = '';
     if (metas.titleId) {
       title = intl.formatMessage({ id: metas.titleId });
@@ -48,8 +49,9 @@ const PageHeader = (props: PageHeaderProps) => {
       title += metas.titleAdd;
     }
     return title;
-  };
-  const getDescription = () => {
+  }, [intl, metas.titleAdd, metas.titleId]);
+
+  const getDescription = useCallback(() => {
     let description = '';
     if (metas.descriptionId) {
       description = intl.formatMessage({ id: metas.descriptionId });
@@ -58,7 +60,7 @@ const PageHeader = (props: PageHeaderProps) => {
       description += metas.descriptionAdd;
     }
     return description;
-  };
+  }, [intl, metas.descriptionAdd, metas.descriptionId]);
 
   return (
     <>
