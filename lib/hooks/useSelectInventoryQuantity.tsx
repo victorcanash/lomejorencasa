@@ -1,11 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 
+import { FormattedMessage } from 'react-intl';
+
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 import { rangeChangeItemQuantity } from '@core/constants/cart';
 import type { ProductInventory, ProductPack } from '@core/types/products';
 import type { CartItem } from '@core/types/cart';
+import { convertElementToSx } from '@core/utils/themes';
+
+import { themeCustomElements } from '@lib/constants/themes/elements';
 
 const useSelectInventoryQuantity = (
   item: ProductInventory | ProductPack | CartItem | undefined,
@@ -118,15 +125,27 @@ const useSelectInventoryQuantity = (
     }
   }, [checkMenuItems, item, item?.quantity, loaded, prevItem]);
 
-  const Select = () => {
+  const Select = (props: { label?: boolean }) => {
+    const { label } = props;
+
     return (
-      <>
+      <Box>
+        { label && 
+          <Typography
+            component="div"
+            variant="h3"
+            sx={convertElementToSx(themeCustomElements.landing.quantityLabel)}
+            mb={1}
+          >
+            <FormattedMessage id="forms.quantity" />
+          </Typography>
+        }
         { loaded && item ?
           <MuiSelect
             value={selectedQuantity.toString()}
             onChange={handleSelectChange}
             disabled={disabled()}
-            sx={{ width: '62px' }}
+            fullWidth
           >
             { menuItems }
           </MuiSelect>
@@ -134,14 +153,14 @@ const useSelectInventoryQuantity = (
           <MuiSelect
             value="0"
             disabled={true}
-            sx={{ width: '62px' }}
+            fullWidth
           >
             <MenuItem value="0">
               { 0 }
             </MenuItem>
           </MuiSelect>
-        } 
-      </>
+        }
+      </Box>
     );
   };
 

@@ -1,18 +1,21 @@
 import { useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   IconDefinition,
+  faCcVisa,
+  faCcMastercard,
+  faCcPaypal,
+} from '@fortawesome/free-brands-svg-icons';
+import {
   faTruck,
   faLock,
   faPhoneVolume,
   faArrowRightArrowLeft,
-  faWallet,
-  faWarehouse,
-  faHourglass,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -22,14 +25,18 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 
 import type { Product, ProductInventory, ProductPack } from '@core/types/products';
+import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import { scrollToSection } from '@core/utils/navigation';
 import Link from '@core/components/Link';
+import CustomImage from '@core/components/CustomImage';
 
+import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
 import useSelectInventory from '@lib/hooks/useSelectInventory';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
@@ -50,11 +57,17 @@ const ProductDetail = (props: ProductDetailProps) => {
 
   const { initialized } = useAppContext();
   const {
+    everfreshProduct,
+    bagsProduct,
     isEverfreshProduct,
     isBagsProduct,
-    //getProductPacks,
+    getProductPacks,
     getProductDetailImgsUrl,
+    getProductImgUrl,
   } = useProductsContext();
+  const { convertPriceToString } = useAuthContext();
+
+  const intl = useIntl();
 
   const { addCartItem } = useCart(false);
   const {
@@ -73,6 +86,13 @@ const ProductDetail = (props: ProductDetailProps) => {
       addCartItem(selectedInventory, selectedQuantity);
     }
   }, [addCartItem, selectedInventory, selectedQuantity]);
+
+  const onClickAddCartPackBtn = useCallback(() => {
+    const everfreshPack = getProductPacks(everfreshProduct).length > 0 ? getProductPacks(everfreshProduct)[0] : undefined;
+    if (everfreshPack) {
+      addCartItem(everfreshPack, 1);
+    }
+  }, [addCartItem, everfreshProduct, getProductPacks]);
 
   const productH1 = useCallback(() => {
     let formatted = false;
@@ -139,21 +159,18 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, [product.name, selectedInventory]);
 
-  const productPrice = useCallback(() => {
-    let price = product.lowestRealPrice;
-    if ((selectedInventory as ProductInventory)?.realPrice) {
-      price = (selectedInventory as ProductInventory).realPrice;
-    } else if ((selectedInventory as ProductPack)?.inventories) {
-      price = (selectedInventory as ProductPack).price;
-    }
+  const priceIcon = useCallback((icon: IconDefinition) => {
     return (
-      <Typography component="h2" variant="h1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-        {`${price} €`} 
-      </Typography>
+      <Grid item>
+        <FontAwesomeIcon 
+          size="2xl" 
+          icon={icon}
+        />
+      </Grid>
     );
-  }, [product.lowestRealPrice, selectedInventory]);
+  }, []);
 
-  const productPriceWithDiscount = useCallback(() => {
+  const productPrice = useCallback(() => {
     let price = product.lowestRealPrice;
     let originPrice = product.lowestPrice;
     if ((selectedInventory as ProductInventory)?.realPrice) {
@@ -163,19 +180,76 @@ const ProductDetail = (props: ProductDetailProps) => {
       price = (selectedInventory as ProductPack).price;
       originPrice = (selectedInventory as ProductPack).originalPrice;
     }
+    const discount = (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ? true : false;
     return (
-      <Typography component="h2" variant="h1" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-        <span
-          style={{ fontWeight: 500, textDecoration: 'line-through' }}
-        >
-          <span style={{ color: '#7a7a7a' }}>
-            {`${originPrice}€`}
-          </span>
-        </span>
-        {` ${price}€`}
-      </Typography>
+      <Grid container spacing={2}>
+        <Grid item>
+          <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+            { discount ?
+              <>
+                <span
+                  style={{ fontWeight: 500, textDecoration: 'line-through' }}
+                >
+                  <span style={{ color: colors.text.disabled }}>
+                    {`${convertPriceToString(originPrice)}`}
+                  </span>
+                </span>
+                {` ${convertPriceToString(price)}`}
+              </>
+              :
+              <>
+                {`${convertPriceToString(price)}`}
+              </>
+            }
+          </Typography>
+        </Grid>
+        <Grid item sx={{ mt: '3px' }}>
+          <Typography variant="body2">
+            <FormattedMessage id="productDetail.price.iva" />
+          </Typography>
+        </Grid>
+        { priceIcon(faCcVisa) }
+        { priceIcon(faCcMastercard) }
+        { priceIcon(faCcPaypal) }
+      </Grid>
     );
-  }, [product.lowestPrice, product.lowestRealPrice, selectedInventory]);
+  }, [convertPriceToString, priceIcon, product.activeDiscount, product.lowestPrice, product.lowestRealPrice, selectedInventory]);
+
+  const everfreshPackPrice = useCallback(() => {
+    const everfreshPack = getProductPacks(everfreshProduct).length > 0 ? getProductPacks(everfreshProduct)[0] : undefined;
+    if (!everfreshPack) {
+      return (<></>);
+    }
+    const price = everfreshPack.price;
+    const originPrice = everfreshPack.originalPrice;
+    const percent = everfreshPack.discountPercent;
+    return (
+      <Grid container columnSpacing={2} rowSpacing={1}>
+        <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
+          <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+            <span
+              style={{ color: colors.text.black }}
+            >
+              {`${intl.formatMessage({ id: 'productDetail.pack.price' })}: `}
+            </span>
+            <span
+              style={{ fontWeight: 500, textDecoration: 'line-through' }}
+            >
+              <span style={{ color: colors.text.disabled }}>
+                {`${convertPriceToString(originPrice)}`}
+              </span>
+            </span>
+            {` ${convertPriceToString(price)}`}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography component="div" variant="body1Head" sx={convertElementToSx(themeCustomElements.landing.priceContent.percentText)}>
+            <FormattedMessage id="productDetail.pack.percent" values={{ value: percent }} />
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }, [intl, convertPriceToString, everfreshProduct, getProductPacks]);
 
   /*const productDiscountPercent = useCallback(() => {
     let percent = product.activeDiscount?.discountPercent || 0;
@@ -189,7 +263,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, [product.activeDiscount?.discountPercent, selectedInventory]);*/
 
-  const productDescription = useCallback(() => {
+  /*const productDescription = useCallback(() => {
     let formatted = false;
     let text = product.description.current;
     if (isEverfreshProduct(product)) { 
@@ -208,13 +282,31 @@ const ProductDetail = (props: ProductDetailProps) => {
         }
       </Typography>
     );
-  }, [isBagsProduct, isEverfreshProduct, product]);
+  }, [isBagsProduct, isEverfreshProduct, product]);*/
+
+  const landingIcon = useCallback((icon: IconDefinition, text: FormatText, columnSpacing: number) => {
+    return (
+      <Grid item xs={12} container columnSpacing={columnSpacing}>
+        <Grid item>
+          <FontAwesomeIcon 
+            size="2xl" 
+            icon={icon}
+          />
+        </Grid>
+        <Grid item>
+          <Typography variant="body1Head">
+            <FormattedMessage id={text.id} defaultMessage={text.id} values={text.values} />
+          </Typography>
+        </Grid>
+      </Grid>
+    );
+  }, []);
 
   const productComments = useCallback(() => {
     if (isEverfreshProduct(product) || isBagsProduct(product)) {
       return (
         <>
-          <Typography component="div" variant="body1" mb={4}>
+          <Typography component="div" variant="body1">
             <FormattedMessage id={isEverfreshProduct(product) ? 'everfresh.comment' : 'bags.comment'} />
           </Typography>
           {/*<LinkButton
@@ -230,15 +322,6 @@ const ProductDetail = (props: ProductDetailProps) => {
     }
     return (<></>);
   }, [isBagsProduct, isEverfreshProduct, product]);
-
-  const landingIcon = useCallback((icon: IconDefinition) => {
-    return (
-      <FontAwesomeIcon 
-        size="2xl" 
-        icon={icon}
-      />
-    );
-  }, []);
 
   return (
     <Box 
@@ -297,26 +380,28 @@ const ProductDetail = (props: ProductDetailProps) => {
               <Box>
                 { productRating() }
               </Box>
-              <Box sx={{ mb: 3 }}>
+              <Box sx={{ mb: 2 }}>
                 { productTitle() }
               </Box>
-              { (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ?
-                <Box sx={{ mb: 1 }}>
-                  { productPriceWithDiscount() }
-                </Box>
-                :
-                <Box sx={{ mb: 1 }}>
-                  { productPrice() }
-                </Box>
-              }
-              { productDescription() }
+              <Box sx={{ mb: 2 }}>
+                { productPrice() }
+              </Box>
+              {/* Icons */}
+              <Grid container spacing={2} mb={3}>
+                { landingIcon(faTruck, { id: 'productDetail.icons.shipping' }, 2) }
+                { landingIcon(faLock, { id: 'productDetail.icons.payment' }, 3) }
+                { landingIcon(faPhoneVolume, { id: 'productDetail.icons.support' }, 2.5) }
+                { landingIcon(faArrowRightArrowLeft, { id: 'productDetail.icons.guarantee' }, 3) }
+              </Grid>
               {/* Cart inputs */}
-              <Grid container mt={4} mb={1}>
-                <Grid item>
-                  <SelectInventory />
-                </Grid>
+              <Grid container>
+                { !isEverfreshProduct(product) &&
+                  <Grid item>
+                    <SelectInventory />
+                  </Grid>
+                }
                 <Grid item mb={2}>
-                  <SelectQuantity />
+                  <SelectQuantity label={isEverfreshProduct(product) ? true : false} />
                 </Grid>
               </Grid>
               { initialized && selectedInventory ?
@@ -327,7 +412,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                   disabled={selectedInventory.quantity == 0}
                   sx={{
                     ...convertElementToSx(themeCustomElements.button.action.primary),
-                    mb: 4,
+                    mb: 3,
                   }}
                 >
                   <FormattedMessage id="productDetail.addCartBtn" />
@@ -338,82 +423,111 @@ const ProductDetail = (props: ProductDetailProps) => {
                   variant="contained"
                   sx={{
                     ...convertElementToSx(themeCustomElements.button.action.primary),
-                    mb: 4,
+                    mb: 3,
                   }}
                 >
                   <FormattedMessage id="productDetail.addCartBtn" />
                 </LoadingBtn>
               }
             </Container>
-            {/* Icons */}
-            <Grid 
-              container
-              sx={{
-                backgroundColor: '#d3d3d3',
-                mb: 2,
-                py: 2,
-                justifyContent: 'space-around',
-              }}
-            >
-              <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                { landingIcon(faTruck) }
-                <Typography component="div" variant="body2" sx={{ textAlign: 'center', lineHeight: '12px', mt: '7px', fontSize: '10px' }}>
-                  {'ENVÍOS\n24/48H'}
-                </Typography>
-              </Grid>
-              <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                { landingIcon(faLock) }
-                <Typography component="div" variant="body2" sx={{ textAlign: 'center', lineHeight: '12px', mt: '7px', fontSize: '10px' }}>
-                  {'PAGO\nSEGURO'}
-                </Typography>
-              </Grid>
-              <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                { landingIcon(faPhoneVolume) }
-                <Typography component="div" variant="body2" sx={{ textAlign: 'center', lineHeight: '12px', mt: '7px', fontSize: '10px' }}>
-                  {'ATENCIÓN\nAL CLIENTE'}
-                </Typography>
-              </Grid>
-              <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                { landingIcon(faArrowRightArrowLeft) }
-                <Typography component="div" variant="body2" sx={{ textAlign: 'center', lineHeight: '12px', mt: '7px', fontSize: '10px' }}>
-                  {'CAMBIOS Y\nDEVOLUCIONES'}
-                </Typography>
-              </Grid>
-            </Grid>
-            <Container sx={{ mt: 4 }}>
+            <Container sx={{ mb: 1.5 }}>
               { productComments() }
             </Container>
-            <Grid
-              container
-              mt={4}
-              justifyContent="space-evenly"
-            >
-              <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                { landingIcon(faWallet) }
-                <Typography component="div" variant="body2" sx={{ textAlign: 'center', lineHeight: '12px', mt: '7px', fontSize: '10px' }}>
-                  {'Ahorra\ndinero'}
-                </Typography>
+          </Box>
+        </Grid>
+
+        {/* Everfresh Pack */}
+        <Grid 
+          item 
+          xs={12}
+          md={6}
+          sx={{
+            mt: {
+              xs: '0px',
+              //md: '-178px',
+            }
+          }}
+        >
+          <Box
+            sx={{
+              maxWidth: maxWidthCarousel, 
+              m: 'auto',
+            }}  
+          >
+            <Container>
+              <Typography variant="h3" color="text.primary" sx={{...convertElementToSx(themeCustomElements.landing.quantityLabel), textAlign: 'center'}}>
+                <FormattedMessage id="productDetail.pack.title" />
+              </Typography>
+              <Grid container mt={2} justifyContent="center" alignItems="center" columnSpacing={1}>
+                <Grid item xs={5.5}>
+                  <CustomImage
+                    src={getProductImgUrl(everfreshProduct)}
+                    alt="Máquina de Vacío"
+                    width="1080"
+                    height="1080"
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{ borderRadius: '10px' }}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <Box>
+                    <FontAwesomeIcon
+                      size="2xl"
+                      icon={faPlus}
+                      style={{ margin: 'auto', display: 'block' }}
+                    />
+                  </Box>
+                </Grid>
+                <Grid item xs={5.5}>
+                  <CustomImage
+                    src={getProductImgUrl(bagsProduct)}
+                    alt="Bolsas de Vacío con Válvula"
+                    width="1080"
+                    height="1080"
+                    layout="responsive"
+                    objectFit="cover"
+                    style={{ borderRadius: '10px' }}
+                  />
+                </Grid>
+                <Grid item xs={12} mt={2}>
+                  { everfreshPackPrice() }
+                </Grid>
+                <Grid item xs={12} mt={2}>
+                  { initialized ?
+                    <Button
+                      variant="contained"
+                      onClick={onClickAddCartPackBtn}
+                      sx={{
+                        ...convertElementToSx(themeCustomElements.button.action.primary),
+                        py: 1,
+                        mb: 3,
+                      }}
+                    >
+                      <FormattedMessage id="productDetail.addCartPackBtn" />
+                    </Button>
+                  :
+                    <LoadingBtn
+                      variant="contained"
+                      sx={{
+                        ...convertElementToSx(themeCustomElements.button.action.primary),
+                        py: 1,
+                        mb: 3,
+                      }}
+                    >
+                      <FormattedMessage id="productDetail.addCartPackBtn" />
+                    </LoadingBtn>
+                  }
+                </Grid>
               </Grid>
-              <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                { landingIcon(faWarehouse) }
-                <Typography component="div" variant="body2" sx={{ textAlign: 'center', lineHeight: '12px', mt: '7px', fontSize: '10px' }}>
-                  {'Ahorra\nespacio'}
-                </Typography>
-              </Grid>
-              <Grid item sx={{ display: 'flex', flexDirection: 'column' }}>
-                { landingIcon(faHourglass) }
-                <Typography component="div" variant="body2" sx={{ textAlign: 'center', lineHeight: '12px', mt: '7px', fontSize: '10px' }}>
-                  {'Ahorra\ntiempo'}
-                </Typography>
-              </Grid>
-            </Grid>
+            </Container>
           </Box>
         </Grid>
       </Grid>
 
       {/* Type Product Section */}
       { (isEverfreshProduct(product) || isBagsProduct(product)) &&
-        <Box sx={{ marginTop: '16px' }}>
+        <Box>
           { isEverfreshProduct(product) &&
             <EverfreshDetail />
           }

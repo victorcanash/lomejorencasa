@@ -114,10 +114,12 @@ export type ThemeCustomElements = {
     },
   },
   landing: {
+    quantityLabel: ThemeElement,
     priceContent: {
       priceText: ThemeElement,
       //originalText: ThemeElement,
       discountText: ThemeElement,
+      percentText: ThemeElement,
     },
     accordion: {
       default: ThemeElement,

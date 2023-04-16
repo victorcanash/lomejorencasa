@@ -88,7 +88,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
       <Grid
         container
         spacing={1}
-        mt={6}
+        mt={2.5}
       >
         { isEverfreshProduct(product) &&
           <>

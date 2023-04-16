@@ -523,6 +523,18 @@ export const themeCustomElements: ThemeCustomElements = {
     },
   },
   landing: {
+    quantityLabel: {
+      text: {
+        color: {
+          default: colors.text.black,
+        },
+        font: {
+          default: {
+            fontSize: '20px',
+          },
+        },
+      }
+    },
     priceContent: {
       priceText: {
         text: {
@@ -541,6 +553,28 @@ export const themeCustomElements: ThemeCustomElements = {
         text: {
           color: {
             default: colors.text.action,
+          },
+        },
+      },
+      percentText: {
+        backgroundColor: {
+          default: colors.background.third,
+        },
+        border: {
+          default: {
+            radius: {
+              all: '45px',
+            },
+          },
+        },
+        spacing: {
+          default: {
+            padding: {
+              top: '5px',
+              bottom: '5px',
+              right: '10px',
+              left: '10px',
+            },
           },
         },
       },

@@ -150,7 +150,7 @@ const CartDetail = (props: CartDetailProps) => {
                     {`${convertPriceToString(totalAmount.total)}`}
                   </Typography>
                   <Typography component="span" variant="body2">
-                    {` (${intl.formatMessage({ id: 'cart.vat' }, { value: convertPriceToString(totalAmount.totalVat) })})`}
+                    {` (${intl.formatMessage({ id: 'productDetail.price.iva' })})`}
                   </Typography>
                 </Grid>
               </Grid>
