@@ -78,7 +78,7 @@ const NavBar = () => {
           <Box
             sx={{
               ...convertElementToSx(themeCustomElements.header.banners.shipping.content),
-              px: '5px',
+              p: '5px',
             }}
           >
             <Typography
