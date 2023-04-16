@@ -36,7 +36,8 @@ const useReviews = () => {
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-  const [page, setPage] = useState(listProductReviews.currentPage);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
 
   const createProductReview = async (
     productReview: CreateProductReview,
@@ -92,14 +93,14 @@ const useReviews = () => {
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);
+    setTotalPages(listProductReviews.totalPages);
     scrollToSection('reviews', false);
-  }, []);
+  }, [listProductReviews.totalPages]);
 
   const getAllProductReviews = useCallback(async () => {
     const limit = 10;
     const sortBy = 'id';
     const order = 'desc';
-
     await getAllProductReviewsMW(intl.locale, page, limit, sortBy, order)
       .then((response: { reviews: ProductReview[], totalPages: number, currentPage: number }) => {
         setListProductReviews({
@@ -110,11 +111,11 @@ const useReviews = () => {
       }).catch((_error: Error) => {
         setListProductReviews({
           reviews: [],
-          totalPages: 1,
-          currentPage: 0,
+          totalPages: totalPages,
+          currentPage: page,
         })
       });
-  }, [intl.locale, page, setListProductReviews]);
+  }, [intl.locale, page, setListProductReviews, totalPages]);
 
   useEffect(() => {
     getAllProductReviews();
