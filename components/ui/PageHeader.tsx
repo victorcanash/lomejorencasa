@@ -1,10 +1,13 @@
-import Head from 'next/head';
+// import Head from 'next/head';
+import { useRouter } from 'next/router';
 
+import { NextSeo } from 'next-seo';
 import { useIntl } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
+import envConfig from '@core/config/env.config';
 import { PageTypes } from '@core/constants/navigation';
 import type { FormatText } from '@core/types/texts';
 
@@ -33,6 +36,7 @@ const PageHeader = (props: PageHeaderProps) => {
     texts,
   } = props;
 
+  const router = useRouter();
   const intl = useIntl();
 
   const getTitle = () => {
@@ -58,10 +62,29 @@ const PageHeader = (props: PageHeaderProps) => {
 
   return (
     <>
-      <Head>
+      {/*<Head>
         <title>{getTitle()}</title>
         <meta name="description" content={getDescription()} />
-      </Head>
+      </Head>*/}
+      <NextSeo
+        title={getTitle()}
+        description={getDescription()}
+        openGraph={{
+          type: 'website',
+          locale: 'es_ES',
+          title: `${envConfig.NEXT_PUBLIC_APP_URL}${router.asPath}`,
+          url: envConfig.NEXT_PUBLIC_APP_URL,
+          description: getDescription(),
+          /*images: [
+            {
+              url: `https://${envConfig.NEXT_PUBLIC_APP_URL}/logo_lg.png`,
+              width: 1000,
+              height: 750,
+            },
+          ],*/
+          siteName: getTitle(),
+        }}
+      />
 
       { (pageType == PageTypes.main || 
          pageType == PageTypes.admin || 
