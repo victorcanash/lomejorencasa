@@ -2,6 +2,10 @@ import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faTruck,
+} from '@fortawesome/free-solid-svg-icons';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
@@ -10,7 +14,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Badge from '@mui/material/Badge';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
@@ -91,12 +94,12 @@ const NavBar = () => {
               }}
               lineHeight="18px"
             >
-              <LocalShippingIcon
-                sx={{
-                  ...themeCustomElements.header.banners.shipping.icon,
-                  fontSize: smallBreakpoint ? 20 : 25,
-                  mr: smallBreakpoint ? '1px' : '5px',
-                }} 
+              <FontAwesomeIcon 
+                size="lg" 
+                icon={faTruck}
+                style={{
+                  marginRight: smallBreakpoint ? '2px' : '5px',
+                }}
               />
               <FormattedMessage id="header.banners.shipping" />
             </Typography>
