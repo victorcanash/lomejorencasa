@@ -428,7 +428,7 @@ const ProductDetail = (props: ProductDetailProps) => {
   }, [checkedBagsPack, currentBagsPack]);
 
   return (
-    <Box>
+    <Box sx={{ overflow: 'hidden' }}>
       { productH1 }
       <Container>
         {/* General Product Section */}
