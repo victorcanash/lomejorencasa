@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage, useIntl } from 'react-intl';
+import { useInView } from 'react-intersection-observer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -76,6 +77,9 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { addCartItem } = useCart(false);
   const { Select: SelectInventory, selectedInventory } = useSelectInventory(product);
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
+  const { ref: payNowBtnRef, inView: payNowInView, entry } = useInView({
+    threshold: 0,
+  });
 
   const [checkedBagsPack, setCheckedBagsPack] = useState(false);
   const [selectedBagsPack, setSelectedBagsPack] = useState<ProductPack | undefined>(undefined);
@@ -328,6 +332,93 @@ const ProductDetail = (props: ProductDetailProps) => {
     return (<></>);
   }, [isBagsProduct, isEverfreshProduct, product]);
 
+  const addCartBtn = useMemo(() => {
+    if (initialized && selectedItem) {
+      return (
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={onClickAddCartBtn}
+          disabled={selectedItem.quantity == 0}
+          sx={{
+            ...convertElementToSx(themeCustomElements.button.action.primary),
+            mb: 3,
+          }}
+        >
+          <FormattedMessage id="productDetail.addCartBtn" />
+        </Button>
+      );
+    }
+    return (
+      <LoadingBtn
+        fullWidth
+        variant="contained"
+        sx={{
+          ...convertElementToSx(themeCustomElements.button.action.primary),
+          mb: 3,
+        }}
+      >
+        <FormattedMessage id="productDetail.addCartBtn" />
+      </LoadingBtn>
+    );
+  }, [initialized, onClickAddCartBtn, selectedItem]);
+
+  const payNowBtn = useMemo(() => {
+    if (initialized && selectedItem) {
+      return (
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={onClickPayNowBtn}
+          disabled={selectedItem.quantity == 0}
+          ref={payNowBtnRef}
+          sx={{
+            ...convertElementToSx(themeCustomElements.button.buyNow),
+            mb: 3,
+          }}
+        >
+          <FormattedMessage id="productDetail.payNowBtn" />
+        </Button>
+      );
+    }
+    return (
+      <LoadingBtn
+        fullWidth
+        variant="contained"
+        sx={{
+          ...convertElementToSx(themeCustomElements.button.buyNow),
+          mb: 3,
+        }}
+      >
+        <FormattedMessage id="productDetail.payNowBtn" />
+      </LoadingBtn>
+    );
+  }, [initialized, onClickPayNowBtn, payNowBtnRef, selectedItem]);
+
+  const payNowBtnStatic = useMemo(() => {
+    if (initialized && selectedItem && !payNowInView) {
+      return (
+        <Button
+          fullWidth
+          variant="contained"
+          onClick={onClickPayNowBtn}
+          disabled={selectedItem && selectedItem.quantity == 0}
+          sx={{
+            ...convertElementToSx(themeCustomElements.button.buyNow),
+            position: 'fixed',
+            bottom: '0px',
+            left: '0px',
+            zIndex: 10,
+            borderRadius: '0px',
+          }}
+        >
+          <FormattedMessage id="productDetail.payNowBtn" />
+        </Button>
+      );
+    }
+    return (<></>);
+  }, [initialized, onClickPayNowBtn, payNowInView, selectedItem]);
+
   useEffect(() => {
     if (checkedBagsPack) {
       setSelectedBagsPack(currentBagsPack);
@@ -431,57 +522,9 @@ const ProductDetail = (props: ProductDetailProps) => {
                   />
                 </Box>
               }
-              { initialized && selectedItem ?
-                <>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={onClickAddCartBtn}
-                    disabled={selectedItem.quantity == 0}
-                    sx={{
-                      ...convertElementToSx(themeCustomElements.button.action.primary),
-                      mb: 3,
-                    }}
-                  >
-                    <FormattedMessage id="productDetail.addCartBtn" />
-                  </Button>
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={onClickPayNowBtn}
-                    disabled={selectedItem.quantity == 0}
-                    sx={{
-                      ...convertElementToSx(themeCustomElements.button.buyNow),
-                      mb: 3,
-                    }}
-                  >
-                    <FormattedMessage id="productDetail.payNowBtn" />
-                  </Button>
-                </>
-                :
-                <>
-                  <LoadingBtn
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                      ...convertElementToSx(themeCustomElements.button.action.primary),
-                      mb: 3,
-                    }}
-                  >
-                    <FormattedMessage id="productDetail.addCartBtn" />
-                  </LoadingBtn>
-                  <LoadingBtn
-                    fullWidth
-                    variant="contained"
-                    sx={{
-                      ...convertElementToSx(themeCustomElements.button.buyNow),
-                      mb: 3,
-                    }}
-                  >
-                    <FormattedMessage id="productDetail.payNowBtn" />
-                  </LoadingBtn>
-                </>
-              }
+              { addCartBtn }
+              { payNowBtn }
+              { payNowBtnStatic }
               <Box>
                 { productComments }
               </Box>
