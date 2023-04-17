@@ -142,6 +142,7 @@ const useSelectInventoryQuantity = (
         }
         { loaded && item ?
           <MuiSelect
+            id="quantity-select"
             value={selectedQuantity.toString()}
             onChange={handleSelectChange}
             disabled={disabled()}
@@ -151,6 +152,7 @@ const useSelectInventoryQuantity = (
           </MuiSelect>
           :
           <MuiSelect
+            id="quantity-select"
             value="0"
             disabled={true}
             fullWidth

@@ -12,7 +12,6 @@ import type {
   Product,
   ProductInventory,
   ProductPack,
-  ProductDiscount,
   ListProductReviews,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
@@ -38,6 +37,7 @@ type ProductsContext = {
   getCartItemImgUrl: (item: CartItem | GuestCartCheckItem) => string,
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[],
   getProductPacks: (product: Product) => ProductPack[],
+  getBagsPack: (inventory: ProductInventory) => ProductPack | undefined,
   getProductInventory: (id: number) => ProductInventory | undefined,
   getProductPack: (id: number) => ProductPack | undefined,
   productVariants: (ProductInventory | ProductPack)[],
@@ -56,6 +56,7 @@ const ProductsContext = createContext<ProductsContext>({
   getCartItemImgUrl: () => '',
   getProductDetailImgsUrl: () => [],
   getProductPacks: () => [],
+  getBagsPack: () => undefined,
   getProductInventory: () => undefined,
   getProductPack: () => undefined,
   productVariants: [],
@@ -309,6 +310,14 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return everfreshPacks.concat(bagsPacks);
   }, [bagsPacks, everfreshPacks, isBagsProduct, isEverfreshProduct]);
 
+  const getBagsPack = useCallback((inventory: ProductInventory) => {
+    const bagsPack = getProductPacks(bagsProduct).find((pack) => {
+      const foundInventory = pack.inventories.find((item) => item.id === inventory.id)
+      return foundInventory !== undefined;
+    });
+    return bagsPack;
+  }, [bagsProduct, getProductPacks]);
+
   const getProductInventory = useCallback((id: number) => {
     const everfreshInventories = everfreshProduct?.inventories || [];
     const bagsInventories = bagsProduct?.inventories || [];
@@ -344,6 +353,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getCartItemImgUrl,
         getProductDetailImgsUrl,
         getProductPacks,
+        getBagsPack,
         getProductInventory,
         getProductPack,
         productVariants,

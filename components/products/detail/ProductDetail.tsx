@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useMemo, useCallback, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -23,6 +23,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 import Masonry from '@mui/lab/Masonry';
 
 import type { Product, ProductInventory, ProductPack } from '@core/types/products';
@@ -63,6 +65,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     isEverfreshProduct,
     isBagsProduct,
     getProductPacks,
+    getBagsPack,
     getProductDetailImgsUrl,
     getProductImgUrl,
   } = useProductsContext();
@@ -74,14 +77,32 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { Select: SelectInventory, selectedInventory } = useSelectInventory(product);
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
+  const [checkedBagsPack, setCheckedBagsPack] = useState(false);
+  const [selectedBagsPack, setSelectedBagsPack] = useState<ProductPack | undefined>(undefined);
   const [maxWidthSmall, _setMaxWidthSmall] = useState('540px');
   const [maxWidthMedium, _setMaxWidthMedium] = useState('623px');
 
-  const onClickAddCartBtn = useCallback(() => {
-    if (selectedInventory) {
-      addCartItem(selectedInventory, selectedQuantity);
+  const selectedItem = useMemo(() => {
+    return selectedBagsPack ?
+      selectedBagsPack : selectedInventory;
+  }, [selectedBagsPack, selectedInventory]);
+
+  const currentBagsPack = useMemo(() => {
+    if (isBagsProduct(product) && selectedInventory) {
+      return getBagsPack(selectedInventory);
     }
-  }, [addCartItem, selectedInventory, selectedQuantity]);
+    return undefined;
+  }, [getBagsPack, isBagsProduct, product, selectedInventory]);
+
+  const handleCheckedBagsPackChange = useCallback((_event: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    setCheckedBagsPack(checked);
+  }, []);
+
+  const onClickAddCartBtn = useCallback(() => {
+    if (selectedItem) {
+      addCartItem(selectedItem, selectedQuantity);
+    }
+  }, [addCartItem, selectedItem, selectedQuantity]);
 
   const onClickAddCartPackBtn = useCallback(() => {
     const everfreshPack = getProductPacks(everfreshProduct).length > 0 ? getProductPacks(everfreshProduct)[0] : undefined;
@@ -90,7 +111,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     }
   }, [addCartItem, everfreshProduct, getProductPacks]);
 
-  const productH1 = useCallback(() => {
+  const productH1 = useMemo(() => {
     let formatted = false;
     let text = product.name.current;
     if (isEverfreshProduct(product)) { 
@@ -111,13 +132,13 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, [isBagsProduct, isEverfreshProduct, product]);
 
-  const productRating = useCallback(() => {
-    if (!initialized || !selectedInventory) {
+  const productRating = useMemo(() => {
+    if (!initialized || !selectedItem) {
       return (
         <LoadingRating />
       );
     };
-    const rating = parseInt(selectedInventory.rating);
+    const rating = parseInt(selectedItem.rating);
     return (
       <Link
         href={router.pathname}
@@ -135,25 +156,25 @@ const ProductDetail = (props: ProductDetailProps) => {
           </Grid>
           <Grid item sx={{ ml: '6px' }}>
             <Typography component="span" variant="body1">
-              {`(${selectedInventory.reviewsCount})`}
+              {`(${selectedItem.reviewsCount})`}
             </Typography>
           </Grid>
         </Grid>
       </Link>
     );
-  }, [initialized, router.pathname, selectedInventory]);
+  }, [initialized, router.pathname, selectedItem]);
 
-  const productTitle = useCallback(() => {
+  const productTitle = useMemo(() => {
     let text = product.name.current;
-    if (selectedInventory) {
-      text = selectedInventory.description.current;
+    if (selectedItem) {
+      text = selectedItem.description.current;
     }
     return (
       <Typography component="h2" variant="h1" color="text.primary">
         { text }
       </Typography>
     );
-  }, [product.name, selectedInventory]);
+  }, [product.name, selectedItem]);
 
   const priceIcon = useCallback((icon: IconDefinition) => {
     return (
@@ -166,18 +187,17 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, []);
 
-  const productPrice = useCallback(() => {
+  const productPrice = useMemo(() => {
     let price = product.lowestRealPrice;
     let originPrice = product.lowestPrice;
-    if ((selectedInventory as ProductInventory)?.realPrice) {
-      price = (selectedInventory as ProductInventory).realPrice;
-      originPrice = (selectedInventory as ProductInventory).price;
-    } /*else if ((selectedInventory as ProductPack)?.inventories) {
-      price = (selectedInventory as ProductPack).price;
-      originPrice = (selectedInventory as ProductPack).originalPrice;
-    }*/
-    //const discount = (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ? true : false;
-    const discount = product.activeDiscount ? true : false;
+    if ((selectedItem as ProductInventory)?.realPrice) {
+      price = (selectedItem as ProductInventory).realPrice;
+      originPrice = (selectedItem as ProductInventory).price;
+    } else if ((selectedItem as ProductPack)?.inventories) {
+      price = (selectedItem as ProductPack).price;
+      originPrice = (selectedItem as ProductPack).originalPrice;
+    }
+    const discount = (product.activeDiscount || (selectedItem as ProductPack)?.inventories) ? true : false;
     return (
       <Grid container spacing={2}>
         <Grid item>
@@ -210,9 +230,9 @@ const ProductDetail = (props: ProductDetailProps) => {
         { priceIcon(faCcPaypal) }
       </Grid>
     );
-  }, [convertPriceToString, priceIcon, product.activeDiscount, product.lowestPrice, product.lowestRealPrice, selectedInventory]);
+  }, [convertPriceToString, priceIcon, product.activeDiscount, product.lowestPrice, product.lowestRealPrice, selectedItem]);
 
-  const everfreshPackPrice = useCallback(() => {
+  const everfreshPackPrice = useMemo(() => {
     const everfreshPack = getProductPacks(everfreshProduct).length > 0 ? getProductPacks(everfreshProduct)[0] : undefined;
     if (!everfreshPack) {
       return (<></>);
@@ -248,7 +268,11 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, [intl, convertPriceToString, everfreshProduct, getProductPacks]);
 
-  /*const productDescription = useCallback(() => {
+  const bagsPackDiscountPercent = useMemo(() => {
+    return currentBagsPack?.discountPercent || 0;
+  }, [currentBagsPack?.discountPercent]);
+
+  /*const productDescription = useMemo(() => {
     let formatted = false;
     let text = product.description.current;
     if (isEverfreshProduct(product)) { 
@@ -287,7 +311,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, []);
 
-  const productComments = useCallback(() => {
+  const productComments = useMemo(() => {
     if (isEverfreshProduct(product) || isBagsProduct(product)) {
       return (
         <Typography component="div" variant="body1">
@@ -298,12 +322,21 @@ const ProductDetail = (props: ProductDetailProps) => {
     return (<></>);
   }, [isBagsProduct, isEverfreshProduct, product]);
 
+  useEffect(() => {
+    if (checkedBagsPack) {
+      setSelectedBagsPack(currentBagsPack);
+    } else {
+      setSelectedBagsPack(undefined);
+    }
+  }, [checkedBagsPack, currentBagsPack]);
+
   return (
     <Box>
-      { productH1() }
+      { productH1 }
       <Container>
         {/* General Product Section */}
         <Masonry columns={{ xs: 1, md: 2 }} spacing={0}>
+
           {/* Images */}
           <Box>
             <Box
@@ -348,13 +381,13 @@ const ProductDetail = (props: ProductDetailProps) => {
               }}  
             >
               <Box>
-                { productRating() }
+                { productRating }
               </Box>
               <Box sx={{ mb: 2 }}>
-                { productTitle() }
+                { productTitle }
               </Box>
               <Box sx={{ mb: 2 }}>
-                { productPrice() }
+                { productPrice }
               </Box>
               {/* Icons */}
               <Grid container spacing={2} mb={3}>
@@ -374,12 +407,31 @@ const ProductDetail = (props: ProductDetailProps) => {
                   <SelectQuantity label={true} />
                 </Grid>
               </Grid>
-              { initialized && selectedInventory ?
+              { isBagsProduct(product) &&
+                <Box mb={2}>
+                  <FormControlLabel
+                    label={
+                      <Typography variant="body1Head">
+                        {intl.formatMessage({ id: `bags.pack.title` }, { value: bagsPackDiscountPercent })}
+                      </Typography>
+                    }
+                    control={
+                      <Checkbox
+                        id="bags-pack-select"
+                        disabled={!initialized || !selectedItem}
+                        checked={checkedBagsPack}
+                        onChange={handleCheckedBagsPackChange}
+                      />
+                    }
+                  />
+                </Box>
+              }
+              { initialized && selectedItem ?
                 <Button
                   fullWidth
                   variant="contained"
                   onClick={onClickAddCartBtn}
-                  disabled={selectedInventory.quantity == 0}
+                  disabled={selectedItem.quantity == 0}
                   sx={{
                     ...convertElementToSx(themeCustomElements.button.action.primary),
                     mb: 3,
@@ -400,7 +452,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </LoadingBtn>
               }
               <Box>
-                { productComments() }
+                { productComments }
               </Box>
             </Box>
           </Box>
@@ -455,7 +507,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                   />
                 </Grid>
                 <Grid item xs={12} mt={2}>
-                  { everfreshPackPrice() }
+                  { everfreshPackPrice }
                 </Grid>
                 <Grid item xs={12} mt={2}>
                   { initialized ?
@@ -486,6 +538,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               </Grid>
             </Box>
           </Box>
+
         </Masonry>
       </Container>
 
