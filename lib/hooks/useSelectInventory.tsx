@@ -1,35 +1,42 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-import type { Product, ProductInventory, ProductPack } from '@core/types/products';
+import type { Product, ProductInventory } from '@core/types/products';
+import { convertElementToSx } from '@core/utils/themes';
 
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 
-const useSelectInventory = (product: Product, initItem?: ProductInventory | ProductPack) => {
-  const { getProductPacks } = useProductsContext();
-  
+const useSelectInventory = (product: Product, initItem?: ProductInventory) => {
+  const {
+    isBagsProduct,
+  } = useProductsContext();
+
   const router = useRouter();
+  const intl = useIntl();
 
   const [loaded, setLoaded] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<ProductInventory | ProductPack | undefined>(undefined);
-  const [packs, _setPacks] = useState<ProductPack[]>(getProductPacks(product))
+  const [selectedItem, setSelectedItem] = useState<ProductInventory | undefined>(undefined);
 
   const handleSelectChange = useCallback((event: SelectChangeEvent) => {
     const itemName = event.target.value as string;
     const inventory = product.inventories?.find(item => item.name.current === itemName);
-    let pack: ProductPack | undefined;
-    if (!inventory) {
-      pack = packs.find(item => item.name.current === itemName);
+    setSelectedItem(inventory);
+  }, [product.inventories]);
+
+  const getItemText = useCallback((item: ProductInventory, index: number) => {
+    if (isBagsProduct(product)) {
+      return intl.formatMessage({ id: `forms.selectInventory.bags.${index + 1}` });
     }
-    if (inventory || pack) {
-      setSelectedItem(inventory ? inventory : pack);
-    }
-  }, [packs, product.inventories]);
+    return intl.formatMessage({ id: 'forms.selectInventory.content' }, { name: item.name.current });
+  }, [intl, isBagsProduct, product]);
 
   useEffect(() => {
     if (!loaded) {
@@ -38,20 +45,31 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory | Prod
       }
       if (!initItem) {
         setSelectedItem(product.inventories[0]);
+      } else if (initItem.productId != product.id) {
+        return;
       } else {
-        if ((initItem as ProductInventory)?.sku && 
-            (initItem as ProductInventory).productId != product.id) {
-          return;
-        }
+        console.log(product.inventories)
         setSelectedItem(initItem);
       }
       setLoaded(true);
     }
   }, [initItem, loaded, product.id, product.inventories, router.asPath]);
 
-  const Select = () => {
+  const Select = (props: { label?: boolean }) => {
+    const { label } = props;
+
     return(
-      <>
+      <Box>
+        { label && 
+          <Typography
+            component="div"
+            variant="h3"
+            sx={convertElementToSx(themeCustomElements.landing.quantityLabel)}
+            mb={1}
+          >
+            <FormattedMessage id="forms.size" />
+          </Typography>
+        }
         <MuiSelect
           id="inventory-select"
           value={selectedItem?.name.current || ''}
@@ -68,28 +86,16 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory | Prod
             },
           }}
         >
-          { product.inventories?.map((item) => (
-            <MenuItem key={item.id} value={item.name.current}>
-              <FormattedMessage
-                id="forms.selectInventory.content"
-                values={{
-                  name: item.name.current,
-                }}
-              />
-            </MenuItem>
-          ))}
-          { packs.map((item) => (
-            <MenuItem key={item.id} value={item.name.current}>
-              <FormattedMessage
-                id="forms.selectInventory.content"
-                values={{
-                  name: item.name.current,
-                }}
-              />
+          { product.inventories?.map((item, index) => (
+            <MenuItem
+              key={index}
+              value={item.name.current}
+            >
+              { getItemText(item, index) }
             </MenuItem>
           ))}
         </MuiSelect>
-      </>
+      </Box>
     );
   };
 

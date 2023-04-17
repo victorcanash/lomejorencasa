@@ -172,11 +172,12 @@ const ProductDetail = (props: ProductDetailProps) => {
     if ((selectedInventory as ProductInventory)?.realPrice) {
       price = (selectedInventory as ProductInventory).realPrice;
       originPrice = (selectedInventory as ProductInventory).price;
-    } else if ((selectedInventory as ProductPack)?.inventories) {
+    } /*else if ((selectedInventory as ProductPack)?.inventories) {
       price = (selectedInventory as ProductPack).price;
       originPrice = (selectedInventory as ProductPack).originalPrice;
-    }
-    const discount = (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ? true : false;
+    }*/
+    //const discount = (product.activeDiscount || (selectedInventory as ProductPack)?.inventories) ? true : false;
+    const discount = product.activeDiscount ? true : false;
     return (
       <Grid container spacing={2}>
         <Grid item>
@@ -363,14 +364,14 @@ const ProductDetail = (props: ProductDetailProps) => {
                 { landingIcon(faArrowRightArrowLeft, { id: 'productDetail.icons.guarantee' }, 3) }
               </Grid>
               {/* Cart inputs */}
-              <Grid container>
-                { !isEverfreshProduct(product) &&
+              <Grid container columnSpacing={2} rowSpacing={1}>
+                { isBagsProduct(product) &&
                   <Grid item>
-                    <SelectInventory />
+                    <SelectInventory label={true} />
                   </Grid>
                 }
                 <Grid item mb={2}>
-                  <SelectQuantity label={isEverfreshProduct(product) ? true : false} />
+                  <SelectQuantity label={true} />
                 </Grid>
               </Grid>
               { initialized && selectedInventory ?
@@ -426,6 +427,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                     alt="Máquina de Vacío"
                     width="1080"
                     height="1080"
+                    priority
                     layout="responsive"
                     objectFit="cover"
                     style={{ borderRadius: '10px' }}
@@ -446,6 +448,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                     alt="Bolsas de Vacío con Válvula"
                     width="1080"
                     height="1080"
+                    priority
                     layout="responsive"
                     objectFit="cover"
                     style={{ borderRadius: '10px' }}
