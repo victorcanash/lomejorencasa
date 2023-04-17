@@ -23,6 +23,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
+import Masonry from '@mui/lab/Masonry';
 
 import type { Product, ProductInventory, ProductPack } from '@core/types/products';
 import type { FormatText } from '@core/types/texts';
@@ -70,16 +71,11 @@ const ProductDetail = (props: ProductDetailProps) => {
   const intl = useIntl();
 
   const { addCartItem } = useCart(false);
-  const {
-    Select: SelectInventory,
-    selectedInventory,
-  } = useSelectInventory(
-    product,
-    //getProductPacks(product).length > 0 ? getProductPacks(product)[0] : undefined
-  );
+  const { Select: SelectInventory, selectedInventory } = useSelectInventory(product);
   const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
-  const [maxWidthCarousel, _setMaxWidthCarousel] = useState('540px');
+  const [maxWidthSmall, _setMaxWidthSmall] = useState('540px');
+  const [maxWidthMedium, _setMaxWidthMedium] = useState('623px');
 
   const onClickAddCartBtn = useCallback(() => {
     if (selectedInventory) {
@@ -251,18 +247,6 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, [intl, convertPriceToString, everfreshProduct, getProductPacks]);
 
-  /*const productDiscountPercent = useCallback(() => {
-    let percent = product.activeDiscount?.discountPercent || 0;
-    if ((selectedInventory as ProductPack)?.inventories) {
-      percent = (selectedInventory as ProductPack).discountPercent;
-    }
-    return (
-      <Typography component="span" variant="body1" sx={convertElementToSx(themeCustomElements.landing.priceContent.discountText)}> 
-        {` -${percent}%`}
-      </Typography>
-    );
-  }, [product.activeDiscount?.discountPercent, selectedInventory]);*/
-
   /*const productDescription = useCallback(() => {
     let formatted = false;
     let text = product.description.current;
@@ -305,47 +289,29 @@ const ProductDetail = (props: ProductDetailProps) => {
   const productComments = useCallback(() => {
     if (isEverfreshProduct(product) || isBagsProduct(product)) {
       return (
-        <>
-          <Typography component="div" variant="body1">
-            <FormattedMessage id={isEverfreshProduct(product) ? 'everfresh.comment' : 'bags.comment'} />
-          </Typography>
-          {/*<LinkButton
-            href={isEverfreshProduct(product) ? pages.bags.path : pages.everfresh.path}
-            sx={convertElementToSx(themeCustomElements.button.action)}
-          >
-            <FormattedMessage
-              id={isEverfreshProduct(product) ? 'everfresh.bagsButton' : 'bags.everfreshButton'}
-            />
-          </LinkButton>*/}
-        </>
+        <Typography component="div" variant="body1">
+          <FormattedMessage id={isEverfreshProduct(product) ? 'everfresh.comment' : 'bags.comment'} />
+        </Typography>
       );
     }
     return (<></>);
   }, [isBagsProduct, isEverfreshProduct, product]);
 
   return (
-    <Box 
-      sx={{
-        overflow: 'hidden',
-      }}
-    >
+    <Box>
       { productH1() }
-
-      {/* General Product Section */}
-      <Grid 
-        container 
-        spacing={3}
-      >
-        {/* Images */}
-        <Grid
-          item
-          xs={12}
-          md={6}
-        >
-          <Container>
+      <Container>
+        {/* General Product Section */}
+        <Masonry columns={{ xs: 1, md: 2 }} spacing={0}>
+          {/* Images */}
+          <Box>
             <Box
               sx={{
-                maxWidth: maxWidthCarousel, 
+                maxHeight: '599.13px',
+                maxWidth: {
+                  xs: maxWidthSmall,
+                  md: maxWidthMedium,
+                },
                 m: 'auto',
               }}
             >
@@ -361,22 +327,25 @@ const ProductDetail = (props: ProductDetailProps) => {
                 }
               />
             </Box>
-          </Container>
-        </Grid>
+          </Box>
 
-        {/* Content */}
-        <Grid 
-          item 
-          xs={12}
-          md={6}
-        >
-          <Box
-            sx={{
-              maxWidth: maxWidthCarousel, 
-              m: 'auto',
-            }}  
-          >
-            <Container>
+          {/* Content */}
+          <Box>
+            <Box
+              sx={{
+                maxWidth: {
+                  xs: maxWidthSmall,
+                  md: 'max-content',
+                },
+                m: 'auto',
+                ml: {
+                  xs: 'auto',
+                  md: 4,
+                  md_lg: 5,
+                  lg: 6,
+                }
+              }}  
+            >
               <Box>
                 { productRating() }
               </Box>
@@ -429,32 +398,24 @@ const ProductDetail = (props: ProductDetailProps) => {
                   <FormattedMessage id="productDetail.addCartBtn" />
                 </LoadingBtn>
               }
-            </Container>
-            <Container sx={{ mb: 1.5 }}>
-              { productComments() }
-            </Container>
+              <Box>
+                { productComments() }
+              </Box>
+            </Box>
           </Box>
-        </Grid>
 
-        {/* Everfresh Pack */}
-        <Grid 
-          item 
-          xs={12}
-          md={6}
-          sx={{
-            mt: {
-              xs: '0px',
-              //md: '-178px',
-            }
-          }}
-        >
-          <Box
-            sx={{
-              maxWidth: maxWidthCarousel, 
-              m: 'auto',
-            }}  
-          >
-            <Container>
+          {/* Everfresh Pack */}
+          <Box>
+            <Box
+              sx={{
+                maxWidth: {
+                  xs: maxWidthSmall,
+                  md: maxWidthMedium,
+                },
+                m: 'auto',
+                pt: 3,
+              }}  
+            >
               <Typography variant="h3" color="text.primary" sx={{...convertElementToSx(themeCustomElements.landing.quantityLabel), textAlign: 'center'}}>
                 <FormattedMessage id="productDetail.pack.title" />
               </Typography>
@@ -520,10 +481,10 @@ const ProductDetail = (props: ProductDetailProps) => {
                   }
                 </Grid>
               </Grid>
-            </Container>
+            </Box>
           </Box>
-        </Grid>
-      </Grid>
+        </Masonry>
+      </Container>
 
       {/* Type Product Section */}
       { (isEverfreshProduct(product) || isBagsProduct(product)) &&
