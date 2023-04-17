@@ -201,6 +201,7 @@
   "productDetail.icons.support": "Atención al cliente las 24h.",
   "productDetail.icons.guarantee": "Garantía del fabricante de 2 años.",
   "productDetail.addCartBtn": "Añadir al carrito",
+  "productDetail.payNowBtn": "Comprar ahora",
   "productDetail.pack.title": "Aprovecha nuestro pack",
   "productDetail.pack.price": "Precio total",
   "productDetail.pack.percent": "Ahorra {value}%",

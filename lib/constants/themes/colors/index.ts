@@ -11,10 +11,20 @@ const colors = {
     tableRowEven: '#ECF7DC',
     input: '#FFFFFF',
     inputHover: '#E5ECDC',
-    actionPrimary: '#E85D4A',
-    actionPrimaryHover: '#DC867A',
-    actionSecondary: '#FFA856',
-    actionSecondaryHover: '#FDC28B',
+    action: {
+      primary: {
+        default: '#E85D4A',
+        hover: '#DC867A',
+      },
+      secondary: {
+        default: '#FFA856',
+        hover: '#FDC28B',
+      },
+    },
+    buyNow: {
+      default: '#000000',
+      hover: '#585858',
+    },
     success: '#D1FFD1',
     error: '#FFC7C7',
     ratingIcon: '#FAAF00',

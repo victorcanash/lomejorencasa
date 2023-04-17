@@ -104,6 +104,12 @@ const ProductDetail = (props: ProductDetailProps) => {
     }
   }, [addCartItem, selectedItem, selectedQuantity]);
 
+  const onClickPayNowBtn = useCallback(() => {
+    if (selectedItem) {
+      addCartItem(selectedItem, selectedQuantity, true);
+    }
+  }, [addCartItem, selectedItem, selectedQuantity])
+
   const onClickAddCartPackBtn = useCallback(() => {
     const everfreshPack = getProductPacks(everfreshProduct).length > 0 ? getProductPacks(everfreshProduct)[0] : undefined;
     if (everfreshPack) {
@@ -341,7 +347,6 @@ const ProductDetail = (props: ProductDetailProps) => {
           <Box>
             <Box
               sx={{
-                maxHeight: '599.13px',
                 maxWidth: {
                   xs: maxWidthSmall,
                   md: maxWidthMedium,
@@ -427,29 +432,55 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </Box>
               }
               { initialized && selectedItem ?
-                <Button
-                  fullWidth
-                  variant="contained"
-                  onClick={onClickAddCartBtn}
-                  disabled={selectedItem.quantity == 0}
-                  sx={{
-                    ...convertElementToSx(themeCustomElements.button.action.primary),
-                    mb: 3,
-                  }}
-                >
-                  <FormattedMessage id="productDetail.addCartBtn" />
-                </Button>
+                <>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={onClickAddCartBtn}
+                    disabled={selectedItem.quantity == 0}
+                    sx={{
+                      ...convertElementToSx(themeCustomElements.button.action.primary),
+                      mb: 3,
+                    }}
+                  >
+                    <FormattedMessage id="productDetail.addCartBtn" />
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={onClickPayNowBtn}
+                    disabled={selectedItem.quantity == 0}
+                    sx={{
+                      ...convertElementToSx(themeCustomElements.button.buyNow),
+                      mb: 3,
+                    }}
+                  >
+                    <FormattedMessage id="productDetail.payNowBtn" />
+                  </Button>
+                </>
                 :
-                <LoadingBtn
-                  fullWidth
-                  variant="contained"
-                  sx={{
-                    ...convertElementToSx(themeCustomElements.button.action.primary),
-                    mb: 3,
-                  }}
-                >
-                  <FormattedMessage id="productDetail.addCartBtn" />
-                </LoadingBtn>
+                <>
+                  <LoadingBtn
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      ...convertElementToSx(themeCustomElements.button.action.primary),
+                      mb: 3,
+                    }}
+                  >
+                    <FormattedMessage id="productDetail.addCartBtn" />
+                  </LoadingBtn>
+                  <LoadingBtn
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                      ...convertElementToSx(themeCustomElements.button.buyNow),
+                      mb: 3,
+                    }}
+                  >
+                    <FormattedMessage id="productDetail.payNowBtn" />
+                  </LoadingBtn>
+                </>
               }
               <Box>
                 { productComments }

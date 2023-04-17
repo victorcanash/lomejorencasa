@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
@@ -14,6 +15,7 @@ import {
   getTotalAmount,
 } from '@core/utils/cart';
 
+import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -31,6 +33,7 @@ const useCart = (checkTotalAmount = true) => {
     openDrawer,
   } = useCartContext();
 
+  const router = useRouter();
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -43,7 +46,7 @@ const useCart = (checkTotalAmount = true) => {
     totalQuantity: 0,
   } as TotalAmount);
 
-  const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number) => {
+  const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number, goToCheckout?: boolean) => {
     if (totalQuantity + quantity > maxQuantity) {
       onMaxCartQuantityError();
       return;
@@ -77,7 +80,7 @@ const useCart = (checkTotalAmount = true) => {
       manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
           cart.items[cartItemIndex] = cartItem;
-          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity);
+          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
@@ -88,18 +91,22 @@ const useCart = (checkTotalAmount = true) => {
         .then((response: { cartItem: CartItem }) => {
           cartItem.id = response.cartItem.id;
           cart.items.push(cartItem);
-          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity);
+          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout);
         }).catch((_error: Error) => {
           onAddCartItemError();
         });
     };
   };
 
-  const onAddCartItemSuccess = (quantity: number, itemPrice: number) => {
+  const onAddCartItemSuccess = (quantity: number, itemPrice: number, goToCheckout?: boolean) => {
     setTotalQuantity(totalQuantity + quantity);
     setTotalPrice(totalPrice + itemPrice);
-    setLoading(false);
-    openDrawer();
+    if (!goToCheckout) {
+      setLoading(false);
+      openDrawer();
+    } else {
+      router.push(pages.checkout.path);
+    }
   };
 
   const onAddCartItemError = () => {

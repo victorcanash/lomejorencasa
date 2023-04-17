@@ -293,7 +293,7 @@ export const themeDefaultElements: ThemeDefaultElements = {
   },
   badge: {
     backgroundColor: {
-      default: colors.background.actionPrimary,
+      default: colors.background.action.primary.default,
     },
     text: {
       color: {
@@ -328,7 +328,7 @@ export const themeCustomElements: ThemeCustomElements = {
       maintenance: {
         content: {
           backgroundColor: {
-            default: colors.background.actionPrimary,
+            default: colors.background.action.primary.default,
           },
           text: {
             color: {
@@ -654,8 +654,8 @@ export const themeCustomElements: ThemeCustomElements = {
     action: {
       primary: {
         backgroundColor: {
-          default: colors.background.actionPrimary,
-          hover: colors.background.actionPrimaryHover, 
+          default: colors.background.action.primary.default,
+          hover: colors.background.action.primary.hover, 
         },
         text: {
           font: {
@@ -679,8 +679,8 @@ export const themeCustomElements: ThemeCustomElements = {
       },
       secondary: {
         backgroundColor: {
-          default: colors.background.actionSecondary,
-          hover: colors.background.actionSecondaryHover, 
+          default: colors.background.action.secondary.default,
+          hover: colors.background.action.secondary.hover, 
         },
         text: {
           font: {
@@ -691,6 +691,31 @@ export const themeCustomElements: ThemeCustomElements = {
           color: {
             default: colors.text.white,
             hover: colors.text.white,
+          },
+        },
+      },
+    },
+    buyNow: {
+      backgroundColor: {
+        default: colors.background.buyNow.default,
+        hover: colors.background.buyNow.hover,
+      },
+      text: {
+        font: {
+          default: {
+            textAlign: 'center',
+          },
+        },
+        color: {
+          default: colors.text.white,
+          hover: colors.text.white,
+        },
+      },
+      spacing: {
+        default: {
+          padding: {
+            top: 2,
+            bottom: 2,
           },
         },
       },

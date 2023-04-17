@@ -140,5 +140,6 @@ export type ThemeCustomElements = {
       primary: ThemeElement,
       secondary: ThemeElement,
     },
+    buyNow: ThemeElement,
   },
 };
