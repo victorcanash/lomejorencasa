@@ -1,8 +1,7 @@
 import { SxProps, Theme } from '@mui/material/styles';
-import Button, { ButtonProps } from '@mui/material/Button';
-import CircularProgress from '@mui/material/CircularProgress';
-
-import colors from '@lib/constants/themes/colors';
+import { ButtonProps } from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
+import SaveIcon from '@mui/icons-material/Save';
 
 type LoadingBtnProps = {
   sx?: SxProps<Theme>
@@ -12,14 +11,15 @@ const LoadingBtn = (props: ButtonProps & LoadingBtnProps) => {
   const { sx } = props;
 
   return (
-    <Button
-      disabled={true}
+    <LoadingButton
       {...props}
-      startIcon={<CircularProgress size={24} sx={{ color: colors.text.black }} />}
+      loading
+      loadingPosition="start"
+      startIcon={<SaveIcon fontSize="large" />}
       sx={sx}
     >
       { props.children }
-    </Button>
+    </LoadingButton>
   );
 };
 
