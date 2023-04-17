@@ -14,6 +14,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
+import Masonry from '@mui/lab/Masonry';
 
 import type { ProductReview } from '@core/types/products';
 import CustomImage from '@core/components/CustomImage';
@@ -68,22 +69,18 @@ const DetailReviews = () => {
         </Box>
         {/* ProductReview List */}
         { listProductReviews.reviews.length > 0 ?
-          <Grid
-            container
-            spacing={2}
-          >
+          <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={0}>
             { listProductReviews.reviews.map((item, index) => (
-              <Grid
-                key={index}
-                item
-                xs={12}
-                sm={6}
-                md={4}
-              >
+              <Box key={index}>
                 <Box
                   sx={{
                     maxWidth: '350px',
-                    margin: 'auto',
+                    m: 'auto',
+                    mb: 2,
+                    px: {
+                      xs: 0,
+                      sm: 1,
+                    }
                   }}
                 >
                   <Card 
@@ -160,9 +157,9 @@ const DetailReviews = () => {
                     </CardContent>
                   </Card>
                 </Box>
-              </Grid>
+              </Box>
             ))}
-          </Grid>
+          </Masonry>
           :
           <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
             <FormattedMessage
@@ -171,7 +168,7 @@ const DetailReviews = () => {
           </Typography>
         }
         {/* Pagination */}
-        <Box mt={5} />
+        <Box mt={listProductReviews.reviews.length > 0 ? 3 : 5} />
         <Pagination
           totalPages={listProductReviews.totalPages}
           currentPage={listProductReviews.currentPage}
