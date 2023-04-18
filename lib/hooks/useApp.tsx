@@ -66,8 +66,8 @@ const useApp = (pageType: PageTypes | undefined) => {
           setPaypal(response.paypal);
           setGoogle(response.google);
           setInitialized(true);
-        }).catch(async (error: Error) => {
-          throw error;
+        }).catch(async (_error: Error) => {
+          //throw error;
         });
     } else {
       setInitialized(true);

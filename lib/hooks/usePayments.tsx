@@ -32,8 +32,8 @@ import { useCartContext } from '@lib/contexts/CartContext';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
-  const { 
-    token, 
+  const {
+    token,
     user,
     setUser,
     currency,
