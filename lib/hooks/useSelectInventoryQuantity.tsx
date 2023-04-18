@@ -125,7 +125,7 @@ const useSelectInventoryQuantity = (
     }
   }, [checkMenuItems, item, item?.quantity, loaded, prevItem]);
 
-  const Select = (props: { label?: boolean }) => {
+  const Select = useCallback((props: { label?: boolean }) => {
     const { label } = props;
 
     return (
@@ -164,7 +164,7 @@ const useSelectInventoryQuantity = (
         }
       </Box>
     );
-  };
+  }, [disabled, handleSelectChange, item, loaded, menuItems, selectedQuantity]);
 
   return {
     Select,

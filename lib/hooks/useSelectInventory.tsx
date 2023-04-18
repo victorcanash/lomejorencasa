@@ -17,6 +17,7 @@ import { useProductsContext } from '@lib/contexts/ProductsContext';
 const useSelectInventory = (product: Product, initItem?: ProductInventory) => {
   const {
     isBagsProduct,
+    getProductInventories,
   } = useProductsContext();
 
   const router = useRouter();
@@ -27,9 +28,9 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory) => {
 
   const handleSelectChange = useCallback((event: SelectChangeEvent) => {
     const itemName = event.target.value as string;
-    const inventory = product.inventories?.find(item => item.name.current === itemName);
+    const inventory = getProductInventories(product)?.find(item => item.name.current === itemName);
     setSelectedItem(inventory);
-  }, [product.inventories]);
+  }, [getProductInventories, product]);
 
   const getItemText = useCallback((item: ProductInventory, index: number) => {
     if (isBagsProduct(product)) {
@@ -40,22 +41,21 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory) => {
 
   useEffect(() => {
     if (!loaded) {
-      if (!product.inventories || product.inventories.length <= 0) {
+      if (getProductInventories(product).length <= 0) {
         return;
       }
       if (!initItem) {
-        setSelectedItem(product.inventories[0]);
+        setSelectedItem(getProductInventories(product)[0]);
       } else if (initItem.productId != product.id) {
         return;
       } else {
-        console.log(product.inventories)
         setSelectedItem(initItem);
       }
       setLoaded(true);
     }
-  }, [initItem, loaded, product.id, product.inventories, router.asPath]);
+  }, [getProductInventories, initItem, loaded, product, product.id, router.asPath]);
 
-  const Select = (props: { label?: boolean }) => {
+  const Select = useCallback((props: { label?: boolean }) => {
     const { label } = props;
 
     return(
@@ -86,7 +86,7 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory) => {
             },
           }}
         >
-          { product.inventories?.map((item, index) => (
+          { getProductInventories(product).map((item, index) => (
             <MenuItem
               key={index}
               value={item.name.current}
@@ -97,7 +97,7 @@ const useSelectInventory = (product: Product, initItem?: ProductInventory) => {
         </MuiSelect>
       </Box>
     );
-  };
+  }, [getItemText, getProductInventories, handleSelectChange, product, selectedItem?.name]);
 
   return {
     Select,

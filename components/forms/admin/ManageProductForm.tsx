@@ -37,7 +37,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   } = props;
 
   const { productCategories } = useSearchContext();
-  const { getProductDetailImgsUrl } = useProductsContext();
+  const { getProductDetailImgsUrl, getProductInventories } = useProductsContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
   const { validateProductImgs, updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
@@ -116,7 +116,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
           lowestPrice: product?.lowestPrice || 0,
           lowestRealPrice: product?.lowestRealPrice || 0,
           imageNames: product?.imageNames || [],
-          inventories: product?.inventories || [],
+          inventories: getProductInventories(product),
         } as Product}
         validationSchema={manageProductFormValidation}
         enableReinitialize={true}

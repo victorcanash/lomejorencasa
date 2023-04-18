@@ -24,7 +24,13 @@ import {
 
 import { pages } from '@lib/constants/navigation';
 import { productIds, packIds } from '@lib/constants/products';
-import { everfreshImgIds, bagsImgIds, placeholderImgId, everfreshPackImgIds, bagsPackImgIds } from '@lib/constants/multimedia';
+import {
+  everfreshImgIds,
+  bagsImgIds,
+  placeholderImgId,
+  everfreshPackImgIds,
+  bagsPackImgIds,
+} from '@lib/constants/multimedia';
 
 type ProductsContext = {
   everfreshProduct: Product,
@@ -36,7 +42,8 @@ type ProductsContext = {
   getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string,
   getCartItemImgUrl: (item: CartItem | GuestCartCheckItem) => string,
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[],
-  getProductPacks: (product: Product) => ProductPack[],
+  getProductInventories: (product?: Product) => ProductInventory[],
+  getProductPacks: (product?: Product) => ProductPack[],
   getBagsPack: (inventory: ProductInventory) => ProductPack | undefined,
   getProductInventory: (id: number) => ProductInventory | undefined,
   getProductPack: (id: number) => ProductPack | undefined,
@@ -55,6 +62,7 @@ const ProductsContext = createContext<ProductsContext>({
   getProductImgUrl: () => '',
   getCartItemImgUrl: () => '',
   getProductDetailImgsUrl: () => [],
+  getProductInventories: () => [],
   getProductPacks: () => [],
   getBagsPack: () => undefined,
   getProductInventory: () => undefined,
@@ -298,6 +306,13 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return [placeholderImgId];
   }, [isBagsProduct, isEverfreshProduct]);
 
+  const getProductInventories = useCallback((product?: Product) => {
+    if (product) {
+      return product.inventories || [];
+    }
+    return (everfreshProduct.inventories || []).concat(bagsProduct.inventories || []);
+  }, [bagsProduct.inventories, everfreshProduct.inventories]);
+
   const getProductPacks = useCallback((product?: Product) => {
     if (product) {
       if (isEverfreshProduct(product)) {
@@ -319,11 +334,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, [bagsProduct, getProductPacks]);
 
   const getProductInventory = useCallback((id: number) => {
-    const everfreshInventories = everfreshProduct?.inventories || [];
-    const bagsInventories = bagsProduct?.inventories || [];
-    const inventories = everfreshInventories.concat(bagsInventories);
-    return inventories.find(item => item.id === id);
-  }, [bagsProduct?.inventories, everfreshProduct?.inventories]);
+    return getProductInventories().find(item => item.id === id);
+  }, [getProductInventories]);
 
   const getProductPack = useCallback((id: number) => {
     const packs = getProductPacks();
@@ -331,14 +343,12 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, [getProductPacks]);
 
   useEffect(() => {
-    const everfreshInventories = everfreshProduct?.inventories || [];
-    const bagsInventories = bagsProduct?.inventories || [];
-    const inventories = everfreshInventories.concat(bagsInventories);
+    const inventories = getProductInventories();
     const packs = getProductPacks();
     let variants: (ProductInventory | ProductPack)[] = [];
     variants = variants.concat(inventories, packs);
     setProductVariants(variants);
-  }, [bagsProduct?.inventories, everfreshProduct?.inventories, getProductPacks]);
+  }, [getProductInventories, getProductPacks]);
 
   return (
     <ProductsContext.Provider
@@ -352,6 +362,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getProductImgUrl,
         getCartItemImgUrl,
         getProductDetailImgsUrl,
+        getProductInventories,
         getProductPacks,
         getBagsPack,
         getProductInventory,
