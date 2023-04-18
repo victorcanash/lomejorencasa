@@ -69,7 +69,6 @@ const ProductDetail = (props: ProductDetailProps) => {
     getBagsPack,
     getProductDetailImgsUrl,
     getProductImgUrl,
-    getProductRating,
   } = useProductsContext();
   const { convertPriceToString } = useAuthContext();
 
@@ -149,7 +148,6 @@ const ProductDetail = (props: ProductDetailProps) => {
         <LoadingRating />
       );
     };
-    const { rating, reviewsCount } = getProductRating(product);
     return (
       <Link
         href={router.pathname}
@@ -160,20 +158,20 @@ const ProductDetail = (props: ProductDetailProps) => {
         <Grid container>
           <Grid item>
             <Rating
-              value={rating}
+              value={parseFloat(product.rating)}
               precision={0.5}
               readOnly
             />
           </Grid>
           <Grid item sx={{ ml: '6px' }}>
             <Typography component="span" variant="body1">
-              {`(${reviewsCount})`}
+              {`(${product.reviewsCount})`}
             </Typography>
           </Grid>
         </Grid>
       </Link>
     );
-  }, [initialized, getProductRating, product, router.pathname]);
+  }, [initialized, product, router.pathname]);
 
   const productTitle = useMemo(() => {
     let text = product.name.current;

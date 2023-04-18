@@ -19,8 +19,6 @@ import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 export const createProductReview = (
   token: string,
   currentLocale: string,
-  inventoryId: number | undefined,
-  packId: number | undefined,
   productReview: CreateProductReview,
   reviewImg?: File
 ) => {
@@ -33,11 +31,7 @@ export const createProductReview = (
       },
     };
     const data = new FormData();
-    if (inventoryId) {
-      data.append('inventoryId', inventoryId.toString());
-    } else if (packId) {
-      data.append('packId', packId.toString());
-    }
+    data.append('productId', productReview.relatedProduct.toString());
     data.append('rating', productReview.rating.toString());
     data.append('title', productReview.title);
     data.append('description', productReview.description);

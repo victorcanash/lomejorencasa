@@ -11,6 +11,8 @@ export type Product = {
   categoryId: number,
   name: LocalizedText,
   description: LocalizedText,
+  rating: string,
+  reviewsCount: number,
   lowestPrice: number,
   lowestRealPrice: number,
   imageNames: string[],
@@ -36,8 +38,6 @@ export type ProductInventory = {
     quantity: number,
   },
   product: Product,
-  rating: string,
-  reviewsCount: number,
 };
 
 export type ProductPack = {
@@ -50,8 +50,6 @@ export type ProductPack = {
   discountPercent: number,
   inventories: ProductInventory[],
   inventoriesIds: number[],
-  rating: string,
-  reviewsCount: number,
 };
 
 export type ProductDiscount = {
@@ -68,19 +66,18 @@ export type ProductReview = {
   createdAt: Date,
   userId?: number,
   guestUserId?: number,
-  inventoryId?: number,
-  packId?: number,
+  productId: number,
   rating: number,
   title: string,
   description: string,
   email: string,
   publicName: string,
   imageUrl?: string,
+  product: Product,
 };
 
 export type CreateProductReview = {
-  // ID of variant products array in products context
-  relatedProduct: string,
+  relatedProduct: number,
   rating: number,
   title: string,
   description: string,

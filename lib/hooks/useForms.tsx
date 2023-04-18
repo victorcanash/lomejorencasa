@@ -87,7 +87,6 @@ const useForms = () => {
     comments: Yup
       .string()
       .min(1)
-      .max(99)
       .required(),
   };
 
@@ -108,7 +107,6 @@ const useForms = () => {
     type: Yup
       .string()
       .min(3)
-      .max(30)
       .required(),
   };
 
@@ -224,7 +222,6 @@ const useForms = () => {
     description: Yup
       .string()
       .min(3)
-      .max(200)
       .required(),
     publicName: Yup
       .string()

@@ -7,8 +7,6 @@ import type { UploadFile } from '@core/types/multimedia';
 import type {
   ProductReview,
   CreateProductReview,
-  ProductInventory,
-  ProductPack
 } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
 import {
@@ -25,7 +23,6 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 const useReviews = () => {
   const { setLoading } = useAppContext();
   const {
-    getProductVariants,
     listProductReviews,
     setListProductReviews,
   } = useProductsContext();
@@ -44,23 +41,13 @@ const useReviews = () => {
     uploadImgs: UploadFile[],
     onSuccess?: () => void,
   ) => {
-    setSuccessMsg('');
-    const productVariants = getProductVariants();
-    if (parseInt(productReview.relatedProduct) >= productVariants.length) {
-      setErrorMsg(intl.formatMessage({ id: 'app.errors.default' }));
-      return;
-    }
     setLoading(true);
+    setSuccessMsg('');
     setErrorMsg('');
     const reviewImg = uploadImgs.length >= 1 ? uploadImgs[0].file : undefined;
-    const pVariantsIndex = parseInt(productReview.relatedProduct);
-    const inventoryId = (productVariants[pVariantsIndex] as ProductInventory)?.sku ? productVariants[pVariantsIndex].id : undefined;
-    const packId = (productVariants[pVariantsIndex] as ProductPack)?.inventories ? productVariants[pVariantsIndex].id : undefined;
     createProductReviewMW(
       isLogged() ? token : '',
       intl.locale,
-      inventoryId,
-      packId,
       productReview,
       reviewImg
     ).then((response: { review: ProductReview }) => {
@@ -90,7 +77,7 @@ const useReviews = () => {
         setErrorMsg(errorMsg);
         setLoading(false);
       });
-  }, [enqueueSnackbar, getProductVariants, intl, isLogged, listProductReviews, setListProductReviews, setLoading, token]);
+  }, [enqueueSnackbar, intl, isLogged, listProductReviews, setListProductReviews, setLoading, token]);
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);

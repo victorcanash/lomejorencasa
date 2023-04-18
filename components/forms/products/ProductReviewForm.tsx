@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { FormikProps } from 'formik';
@@ -37,7 +37,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     createProductReview,
   } = props;
 
-  const { getProductVariants } = useProductsContext();
+  const { everfreshProduct, bagsProduct } = useProductsContext();
   const { user, isLogged } = useAuthContext();
 
   const { 
@@ -56,10 +56,6 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
 
   const [expanded, setExpanded] = useState(false);
   const [maxWidth, _setMaxWidth] = useState('500px');
-
-  const productVariants = useMemo(() => {
-    return getProductVariants();
-  }, [getProductVariants]);
 
   const handleSubmit = async (values: CreateProductReview) => {
     createProductReview(values, uploadImgs, onCreateProductReviewSuccess);
@@ -84,91 +80,89 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
         </Typography>
       </AccordionSummary>
       <AccordionDetails sx={{ backgroundColor: colors.background.primary }}>
-        { productVariants.length > 0 &&
-          <BaseForm
-            formikRef={formRef}
-            maxWidth={maxWidth}
-            initialValues={{
-              relatedProduct: '0',
-              rating: reviewFieldsInitValues.rating,
-              title: reviewFieldsInitValues.title,
-              description: reviewFieldsInitValues.description,
-              email: user.email || userFieldsInitValues.email,
-              publicName: (user as User)?.firstName ? getUserFullName(user as User) : reviewFieldsInitValues.publicName,
-            } as CreateProductReview}
-            validationSchema={productReviewFormValidation}
-            enableReinitialize={true}
-            formFieldGroups={[
-              {
-                descriptionTxt: {
-                  id: 'forms.productReview.description',
-                },
-                formFields: [
-                  {
-                    name: 'relatedProduct',
-                    type: FormFieldTypes.select,
-                    required: true,
-                    menuItems: productVariants.map((item, index) => {
-                      return {
-                        text: {
-                          id: 'forms.selectInventory.content',
-                          values: {
-                            name: item.name.current,
-                          },
-                        },
-                        value: index.toString(),
-                      };
-                    }),
-                  },
-                  {
-                    name: 'rating',
-                    type: FormFieldTypes.rating,
-                  },
-                  {
-                    name: 'title',
-                    type: FormFieldTypes.text,
-                  },
-                  {
-                    name: 'description',
-                    type: FormFieldTypes.multiline,
-                    required: true,
-                  },
-                  {
-                    name: 'email',
-                    type: FormFieldTypes.text,
-                    required: true,
-                    disabled: isLogged(),
-                  },
-                  {
-                    name: 'publicName',
-                    type: FormFieldTypes.text,
-                    required: true,
-                    disabled: isLogged(),
-                  },
-                ],
-                extraElements:
-                  <UploadInput
-                    uploadInputRef={uploadInputRef}
-                    uploadImgs={uploadImgs}
-                    handleChangeUploadInput={handleChangeUploadInput}
-                    handleClickDeleteUploadBtn={handleClickDeleteUploadBtn}
-                    maxFiles={1}
-                    maxWidth={maxWidth}
-                  />,
-              }
-            ]}
-            formButtons={{
-              submit: {
-                text: { 
-                  id: 'forms.productReview.successBtn',
-                },
-                onSubmit: handleSubmit,
+        <BaseForm
+          formikRef={formRef}
+          maxWidth={maxWidth}
+          initialValues={{
+            relatedProduct: everfreshProduct.id,
+            rating: reviewFieldsInitValues.rating,
+            title: reviewFieldsInitValues.title,
+            description: reviewFieldsInitValues.description,
+            email: user.email || userFieldsInitValues.email,
+            publicName: (user as User)?.firstName ? getUserFullName(user as User) : reviewFieldsInitValues.publicName,
+          } as CreateProductReview}
+          validationSchema={productReviewFormValidation}
+          enableReinitialize={true}
+          formFieldGroups={[
+            {
+              descriptionTxt: {
+                id: 'forms.productReview.description',
               },
-            } as FormButtonsNormal}
-            successMsg={successMsg}
-            errorMsg={errorMsg}
-          />
-        }
+              formFields: [
+                {
+                  name: 'relatedProduct',
+                  type: FormFieldTypes.select,
+                  required: true,
+                  menuItems: [everfreshProduct, bagsProduct].map((item) => {
+                    return {
+                      text: {
+                        id: 'forms.selectProduct.content',
+                        values: {
+                          name: item.name.current,
+                        },
+                      },
+                      value: item.id,
+                    };
+                  }),
+                },
+                {
+                  name: 'rating',
+                  type: FormFieldTypes.rating,
+                },
+                {
+                  name: 'title',
+                  type: FormFieldTypes.text,
+                },
+                {
+                  name: 'description',
+                  type: FormFieldTypes.multiline,
+                  required: true,
+                },
+                {
+                  name: 'email',
+                  type: FormFieldTypes.text,
+                  required: true,
+                  disabled: isLogged(),
+                },
+                {
+                  name: 'publicName',
+                  type: FormFieldTypes.text,
+                  required: true,
+                  disabled: isLogged(),
+                },
+              ],
+              extraElements:
+                <UploadInput
+                  uploadInputRef={uploadInputRef}
+                  uploadImgs={uploadImgs}
+                  handleChangeUploadInput={handleChangeUploadInput}
+                  handleClickDeleteUploadBtn={handleClickDeleteUploadBtn}
+                  maxFiles={1}
+                  maxWidth={maxWidth}
+                />,
+            }
+          ]}
+          formButtons={{
+            submit: {
+              text: { 
+                id: 'forms.productReview.successBtn',
+              },
+              onSubmit: handleSubmit,
+            },
+          } as FormButtonsNormal}
+          successMsg={successMsg}
+          errorMsg={errorMsg}
+        />
       </AccordionDetails>
     </Accordion>
   );

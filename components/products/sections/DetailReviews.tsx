@@ -16,7 +16,6 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Masonry from '@mui/lab/Masonry';
 
-import type { ProductReview } from '@core/types/products';
 import CustomImage from '@core/components/CustomImage';
 
 import colors from '@lib/constants/themes/colors';
@@ -27,18 +26,11 @@ import Pagination from '@components/ui/Pagination';
 import ProductReviewForm from '@components/forms/products/ProductReviewForm';
 
 const DetailReviews = () => {
-  const { listProductReviews, getProductInventory, getProductPack } = useProductsContext();
+  const { listProductReviews } = useProductsContext();
 
   const router = useRouter();
 
   const { errorMsg, successMsg, handleChangePage, createProductReview} = useReviews();
-
-  const getRelatedProductName = useCallback((item: ProductReview) => {
-    if (item.inventoryId) {
-      return getProductInventory(item.inventoryId)?.name.current || '';
-    }
-    return getProductPack(item.packId || -1)?.name.current || '';
-  }, [getProductInventory, getProductPack]);
 
   const convertToDate = useCallback((date: Date | string) => {
     return new Date(date).toLocaleDateString(router.locale)
@@ -146,7 +138,7 @@ const DetailReviews = () => {
                       }}
                     >
                       <Typography component="div" variant="body1Head" mb={1} sx={{ fontSize: '16px', fontWeight: '600' }}>
-                        { getRelatedProductName(item) }
+                        { item.product.name.current }
                       </Typography>
                       <Typography component="div" variant="body1Head" mb={1}>
                         { item.title }
