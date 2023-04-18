@@ -69,6 +69,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     getBagsPack,
     getProductDetailImgsUrl,
     getProductImgUrl,
+    getProductRating,
   } = useProductsContext();
   const { convertPriceToString } = useAuthContext();
 
@@ -143,12 +144,12 @@ const ProductDetail = (props: ProductDetailProps) => {
   }, [isBagsProduct, isEverfreshProduct, product]);
 
   const productRating = useMemo(() => {
-    if (!initialized || !selectedItem) {
+    if (!initialized) {
       return (
         <LoadingRating />
       );
     };
-    const rating = parseInt(selectedItem.rating);
+    const { rating, reviewsCount } = getProductRating(product);
     return (
       <Link
         href={router.pathname}
@@ -166,13 +167,13 @@ const ProductDetail = (props: ProductDetailProps) => {
           </Grid>
           <Grid item sx={{ ml: '6px' }}>
             <Typography component="span" variant="body1">
-              {`(${selectedItem.reviewsCount})`}
+              {`(${reviewsCount})`}
             </Typography>
           </Grid>
         </Grid>
       </Link>
     );
-  }, [initialized, router.pathname, selectedItem]);
+  }, [initialized, getProductRating, product, router.pathname]);
 
   const productTitle = useMemo(() => {
     let text = product.name.current;

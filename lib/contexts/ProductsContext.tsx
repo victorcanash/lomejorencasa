@@ -49,6 +49,10 @@ type ProductsContext = {
   getBagsPack: (inventory: ProductInventory) => ProductPack | undefined,
   getProductInventory: (id: number) => ProductInventory | undefined,
   getProductPack: (id: number) => ProductPack | undefined,
+  getProductRating: (product?: Product) => {
+    rating: number;
+    reviewsCount: number;
+  },
   listProductReviews: ListProductReviews,
   setListProductReviews: Dispatch<SetStateAction<ListProductReviews>>,
 };
@@ -69,6 +73,7 @@ const ProductsContext = createContext<ProductsContext>({
   getBagsPack: () => undefined,
   getProductInventory: () => undefined,
   getProductPack: () => undefined,
+  getProductRating: () => { return { rating: 0, reviewsCount: 0 } },
   listProductReviews: {} as ListProductReviews,
   setListProductReviews: () => {},
 });
@@ -350,6 +355,21 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return packs.find(item => item.id === id);
   }, [getProductPacks]);
 
+  const getProductRating = useCallback((product?: Product) => {
+    let total = 0;
+    let reviewsCount = 0;
+    const productVariants = getProductVariants(product);
+    productVariants.forEach((item) => {
+      total += parseFloat(item.rating);
+      reviewsCount += item.reviewsCount;
+    });
+    const rating = total === 0 && productVariants.length === 0 ? 0 : NP.round(NP.divide(total, productVariants.length), 2);
+    return {
+      rating: rating,
+      reviewsCount: reviewsCount,
+    };
+  }, [getProductVariants]);
+
   return (
     <ProductsContext.Provider
       value={{
@@ -368,6 +388,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getBagsPack,
         getProductInventory,
         getProductPack,
+        getProductRating,
         listProductReviews,
         setListProductReviews,
       }}
