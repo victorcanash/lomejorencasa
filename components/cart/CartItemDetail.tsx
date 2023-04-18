@@ -49,7 +49,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     priorityImg 
   } = props;
 
-  const { getProductPageUrl, getCartItemImgUrl } = useProductsContext();
+  const { getProductPageUrl, getProductImgUrl } = useProductsContext();
   const { closeDrawer } = useCartContext();
   const { convertPriceToString } = useAuthContext();
 
@@ -140,7 +140,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   }}
                 >
                   <CustomImage
-                    src={getCartItemImgUrl(item)}
+                    src={getProductImgUrl(item)}
                     alt="Cart Item"
                     width="1080"
                     height="1080"

@@ -2,26 +2,46 @@ export const navbarLogoId = 'v1680693087/laenvasadora/LOGOS/LOGO_ENVASADORA_CON_
 
 export const placeholderImgId = 'v1681059169/laenvasadora/LANDING%20PAGE/placeholder_tl7jks.jpg';
 
-export const everfreshImgIds = [
+export const everfreshLandingImgIds = [
   'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
   'v1680878929/laenvasadora/LANDING%20PAGE/FOTO_3_lzky3y.jpg',
   'v1680726664/laenvasadora/LANDING%20PAGE/FOTO_5_g6vcri.jpg',
   'v1680726760/laenvasadora/LANDING%20PAGE/FOTO_1_yarwhg.jpg',
 ];
 
-export const bagsImgIds = [
+export const bagsLandingImgIds = [
   'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
   'v1680878418/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k.jpg',
   'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
 ];
 
-export const everfreshPackImgIds = [
-  'v1680726536/laenvasadora/LANDING%20PAGE/FOTO_2_fgnlnf.jpg',
-];
+export const everfreshImgId = 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg';
 
-export const bagsPackImgIds = [
-  'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
-];
+export const bagsXSImgId = 'v1681818112/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/TAMA%C3%91O-XS_ercfwu.jpg';
+
+export const bagsSImgId = 'v1681818112/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/TAMA%C3%91O-S_leboha.jpg';
+
+export const bagsMImgId = 'v1681818112/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/TAMA%C3%91O-M_wzz69l.jpg';
+
+export const bagsLImgId = 'v1681818112/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/TAMA%C3%91O-L_yoido7.jpg';
+
+export const bagsXLImgId = 'v1681818112/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/TAMA%C3%91O-XL_hxtzub.jpg';
+
+export const bagsMIXImgId = 'v1681818112/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/TAMA%C3%91O-MIX_npqlem.jpg';
+
+export const everfreshPackImgId = 'v1680726536/laenvasadora/LANDING%20PAGE/FOTO_2_fgnlnf.jpg';
+
+export const bagsPackXSImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+
+export const bagsPackSImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+
+export const bagsPackMImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+
+export const bagsPackLImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+
+export const bagsPackXLImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+
+export const bagsPackMIXImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
 
 export const homeBannerImgIds = [
   'v1681038418/laenvasadora/HOME%20PAGE/BANNER/FOTO_5_zbi5lg.jpg',

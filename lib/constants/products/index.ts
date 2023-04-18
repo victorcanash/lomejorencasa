@@ -3,6 +3,16 @@ export const productIds = {
   bags: 3,
 };
 
+export const inventoryIds = {
+  everfresh: 1,
+  bagsXS: 6,
+  bagsS: 7,
+  bagsM: 8,
+  bagsL: 9,
+  bagsXL: 10,
+  bagsMIX: 11,
+}
+
 export const packIds = {
   everfresh: 1,
   bagsXS: 2,

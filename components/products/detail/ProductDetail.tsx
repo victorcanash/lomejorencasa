@@ -38,6 +38,7 @@ import CustomImage from '@core/components/CustomImage';
 
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
+import { bagsMIXImgId, everfreshImgId } from '@lib/constants/multimedia';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -548,7 +549,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               <Grid container mt={2} justifyContent="center" alignItems="center" columnSpacing={1}>
                 <Grid item xs={5.5}>
                   <CustomImage
-                    src={getProductImgUrl(everfreshProduct)}
+                    src={everfreshImgId}
                     alt="Máquina de Vacío"
                     width="1080"
                     height="1080"
@@ -569,7 +570,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 </Grid>
                 <Grid item xs={5.5}>
                   <CustomImage
-                    src={getProductImgUrl(bagsProduct)}
+                    src={bagsMIXImgId}
                     alt="Bolsas de Vacío con Válvula"
                     width="1080"
                     height="1080"

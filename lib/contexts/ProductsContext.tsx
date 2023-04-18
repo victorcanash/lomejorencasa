@@ -14,21 +14,29 @@ import type {
   ListProductReviews,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import { 
+import {
   convertToProduct,
-  getProductImgUrl as getProductImgUrlMW, 
   getAllProductImgsUrl as getAllProductImgsUrlMW,
-  convertToProductPack,
 } from '@core/utils/products';
 
 import { pages } from '@lib/constants/navigation';
-import { productIds, packIds } from '@lib/constants/products';
+import { productIds, inventoryIds, packIds } from '@lib/constants/products';
 import {
-  everfreshImgIds,
-  bagsImgIds,
+  everfreshLandingImgIds,
+  bagsLandingImgIds,
   placeholderImgId,
-  everfreshPackImgIds,
-  bagsPackImgIds,
+  everfreshPackImgId,
+  everfreshImgId,
+  bagsXSImgId,
+  bagsSImgId,
+  bagsMImgId,
+  bagsLImgId,
+  bagsXLImgId,
+  bagsPackXSImgId,
+  bagsPackSImgId,
+  bagsPackMImgId,
+  bagsPackLImgId,
+  bagsPackXLImgId,
 } from '@lib/constants/multimedia';
 
 type ProductsContext = {
@@ -38,8 +46,7 @@ type ProductsContext = {
   isEverfreshProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   isBagsProduct: (item: Product | ProductPack | CartItem | GuestCartCheckItem) => boolean,
   getProductPageUrl: (item: Product | CartItem | GuestCartCheckItem) => string,
-  getProductImgUrl: (item: Product | CartItem | GuestCartCheckItem, index?: number) => string,
-  getCartItemImgUrl: (item: CartItem | GuestCartCheckItem) => string,
+  getProductImgUrl: (item: Product | ProductInventory | ProductPack | CartItem | GuestCartCheckItem) => string,
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[],
   getProductInventories: (product?: Product) => ProductInventory[],
   getProductPacks: (product?: Product) => ProductPack[],
@@ -60,7 +67,6 @@ const ProductsContext = createContext<ProductsContext>({
   isBagsProduct: () => false,
   getProductPageUrl: () => '',
   getProductImgUrl: () => '',
-  getCartItemImgUrl: () => '',
   getProductDetailImgsUrl: () => [],
   getProductInventories: () => [],
   getProductPacks: () => [],
@@ -204,29 +210,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return false;
   }, []);
 
-  const isEverfreshPack = useCallback((item: ProductPack | CartItem | GuestCartCheckItem) => {
-    const productPack = convertToProductPack(item);
-    if (productPack?.id === packIds.everfresh) {
-      return true;
-    }
-    return false;
-  }, []);
-
-  const isBagsPack = useCallback((item: ProductPack | CartItem | GuestCartCheckItem) => {
-    const productPack = convertToProductPack(item);
-    if (
-      productPack?.id === packIds.bagsXS ||
-      productPack?.id === packIds.bagsS ||
-      productPack?.id === packIds.bagsM ||
-      productPack?.id === packIds.bagsL ||
-      productPack?.id === packIds.bagsXL ||
-      productPack?.id === packIds.bagsMIX
-    ) {
-      return true;
-    }
-    return false;
-  }, []);
-
   const initProducts = useCallback((products: Product[], packs: ProductPack[]) => {
     products.forEach((item) => {
       if (isEverfreshProduct(item)) {
@@ -258,47 +241,71 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return pages.productList.path;
   }, [isBagsProduct, isEverfreshProduct]);
   
-  const getProductImgUrl = useCallback((item: Product | CartItem | GuestCartCheckItem, index = 0) => {
-    const product = convertToProduct(item);
+  const getProductImgUrl = useCallback((item: Product | ProductInventory | ProductPack | CartItem | GuestCartCheckItem) => {
+    // Get item type
+    let product: Product | undefined;
+    let inventory: ProductInventory | undefined;
+    let pack: ProductPack | undefined;
+    if ((item as Product)?.categoryId) {
+      product = item as Product;
+    } else if ((item as ProductInventory)?.sku) {
+      inventory = item as ProductInventory;
+    } else if ((item as ProductPack)?.inventories) {
+      pack = item as ProductPack;
+    } else if ((item as CartItem | GuestCartCheckItem)?.inventory) {
+      inventory = (item as CartItem | GuestCartCheckItem)?.inventory;
+    } else if ((item as CartItem | GuestCartCheckItem)?.pack) {
+      pack = (item as CartItem | GuestCartCheckItem)?.pack;
+    }
+    // Get image
     if (product) {
-      if (isEverfreshProduct(product)) {
-        return everfreshImgIds[0];
-      } else if (isBagsProduct(product)) {
-        return bagsImgIds[0];
+      switch (product.id) {
+        case productIds.everfresh:
+          return everfreshLandingImgIds[0];
+        case productIds.bags:
+          return bagsLandingImgIds[0];
       }
-      return getProductImgUrlMW(product, index) || placeholderImgId;
-    }
-    return placeholderImgId;
-  }, [isBagsProduct, isEverfreshProduct]);
-
-  const getProductPackImgUrl = useCallback((item: ProductPack | CartItem | GuestCartCheckItem) => {
-    const productPack = convertToProductPack(item);
-    if (productPack) {
-      if (isEverfreshPack(item)) {
-        return everfreshPackImgIds[0];
-      } else if (isBagsPack(item)) {
-        return bagsPackImgIds[0];
+    } else if (inventory) {
+      switch (inventory.id) {
+        case inventoryIds.everfresh:
+          return everfreshImgId;
+        case inventoryIds.bagsXS:
+          return bagsXSImgId;
+        case inventoryIds.bagsS:
+          return bagsSImgId;
+        case inventoryIds.bagsM:
+          return bagsMImgId;
+        case inventoryIds.bagsL:
+          return bagsLImgId;
+        case inventoryIds.bagsXL:
+          return bagsXLImgId;
+      }
+    } else if (pack) {
+      switch (pack.id) {
+        case packIds.everfresh:
+          return everfreshPackImgId;
+        case packIds.bagsXS:
+          return bagsPackXSImgId;
+        case packIds.bagsS:
+          return bagsPackSImgId;
+        case packIds.bagsM:
+          return bagsPackMImgId;
+        case packIds.bagsL:
+          return bagsPackLImgId;
+        case packIds.bagsXL:
+          return bagsPackXLImgId;
       }
     }
     return placeholderImgId;
-  }, [isBagsPack, isEverfreshPack]);
-
-  const getCartItemImgUrl = useCallback((item: CartItem | GuestCartCheckItem) => {
-    if (item.pack) {
-      return getProductPackImgUrl(item.pack);
-    } else if (item.inventory) {
-      return getProductImgUrl(item);
-    }
-    return placeholderImgId;
-  }, [getProductImgUrl, getProductPackImgUrl]);
+  }, []);
   
   const getProductDetailImgsUrl = useCallback((item: Product | CartItem | GuestCartCheckItem) => {
     const product = convertToProduct(item);
     if (product) {
       if (isEverfreshProduct(product)) {
-        return everfreshImgIds;
+        return everfreshLandingImgIds;
       } else if (isBagsProduct(product)) {
-        return bagsImgIds;
+        return bagsLandingImgIds;
       }
       const imgsUrl = getAllProductImgsUrlMW(product);
       return imgsUrl.length >= 1 ? imgsUrl : [placeholderImgId]
@@ -382,7 +389,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         isBagsProduct,
         getProductPageUrl,
         getProductImgUrl,
-        getCartItemImgUrl,
         getProductDetailImgsUrl,
         getProductInventories,
         getProductPacks,
