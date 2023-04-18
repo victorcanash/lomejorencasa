@@ -25,6 +25,7 @@ const useReviews = () => {
   const {
     listProductReviews,
     setListProductReviews,
+    setProductRating,
   } = useProductsContext();
   const { token, isLogged } = useAuthContext();
 
@@ -50,14 +51,19 @@ const useReviews = () => {
       intl.locale,
       productReview,
       reviewImg
-    ).then((response: { review: ProductReview }) => {
+    ).then((response) => {
         setListProductReviews({
           ...listProductReviews,
           reviews: [response.review, ...listProductReviews.reviews],
         })
+        setProductRating(
+          response.review.product,
+          response.productRating.rating,
+          response.productRating.reviewsCount
+        );
         setLoading(false);
         enqueueSnackbar(
-          intl.formatMessage({ id: 'forms.productReview.success.default' }), 
+          intl.formatMessage({ id: 'forms.productReview.success.default' }),
           { variant: 'success', autoHideDuration: snackbarConfig.durations.long }
         );
         if (onSuccess) {
@@ -77,7 +83,7 @@ const useReviews = () => {
         setErrorMsg(errorMsg);
         setLoading(false);
       });
-  }, [enqueueSnackbar, intl, isLogged, listProductReviews, setListProductReviews, setLoading, token]);
+  }, [enqueueSnackbar, intl, isLogged, listProductReviews, setListProductReviews, setLoading, setProductRating, token]);
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);

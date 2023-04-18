@@ -20,9 +20,15 @@ export const createProductReview = (
   token: string,
   currentLocale: string,
   productReview: CreateProductReview,
-  reviewImg?: File
+  reviewImg?: File,
 ) => {
-  return new Promise<{ review: ProductReview }>((resolve, reject) => {
+  return new Promise<{
+    review: ProductReview,
+    productRating: {
+      rating: string,
+      reviewsCount: number,
+    },
+  }>((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
@@ -42,8 +48,18 @@ export const createProductReview = (
     }
     axios.post('product-reviews', data, options)
       .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED && response.data?.productReview) {
-          resolve({ review: response.data.productReview });
+        if (
+            response.status === StatusCodes.CREATED &&
+            response.data?.productReview &&
+            response.data?.productRating
+          ) {
+          resolve({
+            review: response.data.productReview,
+            productRating: {
+              rating: response.data.productRating.rating,
+              reviewsCount: response.data.productRating.reviewsCount,
+            },
+          });
         } else {
           throw new Error('Something went wrong');
         }

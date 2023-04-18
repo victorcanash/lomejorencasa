@@ -49,6 +49,7 @@ type ProductsContext = {
   getProductPack: (id: number) => ProductPack | undefined,
   listProductReviews: ListProductReviews,
   setListProductReviews: Dispatch<SetStateAction<ListProductReviews>>,
+  setProductRating: (product: Product, rating: string, reviewsCount: number) => void,
 };
 
 const ProductsContext = createContext<ProductsContext>({
@@ -69,6 +70,7 @@ const ProductsContext = createContext<ProductsContext>({
   getProductPack: () => undefined,
   listProductReviews: {} as ListProductReviews,
   setListProductReviews: () => {},
+  setProductRating: () => {},
 });
 
 export const useProductsContext = () => {
@@ -354,6 +356,22 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return packs.find(item => item.id === id);
   }, [getProductPacks]);
 
+  const setProductRating = useCallback((product: Product, rating: string, reviewsCount: number) => {
+    if (isEverfreshProduct(product)) {
+      setEverfreshProduct({
+        ...everfreshProduct,
+        rating: rating,
+        reviewsCount: reviewsCount,
+      });
+    } else if (isBagsProduct(product)) {
+      setBagsProduct({
+        ...bagsProduct,
+        rating: rating,
+        reviewsCount: reviewsCount,
+      });
+    }
+  }, [bagsProduct, everfreshProduct, isBagsProduct, isEverfreshProduct]);
+
   return (
     <ProductsContext.Provider
       value={{
@@ -374,6 +392,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getProductPack,
         listProductReviews,
         setListProductReviews,
+        setProductRating,
       }}
     >
       {children}
