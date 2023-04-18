@@ -253,23 +253,34 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
   },
   {
     text: {
-      id: 'shop',
+      id: 'everfresh',
     },
-    path: undefined,
-    items: [
-      {
-        text: {
-          id: 'everfresh',
-        },
-        path: pages.everfresh.path,
-      },
-      {
-        text: {
-          id: 'bags',
-        },
-        path: pages.bags.path,
-      },
-    ],
+    path: pages.everfresh.path,
+    items: [],
+    open: false,
+  },
+  {
+    text: {
+      id: 'bags',
+    },
+    path: pages.bags.path,
+    items: [],
+    open: false,
+  },
+  {
+    text: {
+      id: 'orders',
+    },
+    path: pages.orderList.path,
+    items: [],
+    open: false,
+  },
+  {
+    text: {
+      id: 'faq',
+    },
+    path: pages.faq.path,
+    items: [],
     open: false,
   },
   {
@@ -278,12 +289,6 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
     },
     path: undefined,
     items: [
-      {
-        text: {
-          id: 'orders',
-        },
-        path: pages.orderList.path,
-      },
       {
         text: {
           id: 'contact',
@@ -296,12 +301,6 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
         },
         path: pages.about.path,
       },
-      {
-        text: {
-          id: 'faq',
-        },
-        path: pages.faq.path,
-      },
     ],
     open: false,
   },
@@ -310,7 +309,7 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
 export const loggedNavDrawerItems: NavDrawerItems[] = [
   {
     text: {
-      id: 'profile',
+      id: 'loggedProfile',
     },
     path: undefined,
     items: [
@@ -334,7 +333,7 @@ export const loggedNavDrawerItems: NavDrawerItems[] = [
 export const unloggedNavDrawerItems: NavDrawerItems[] = [
   {
     text: {
-      id: 'profile',
+      id: 'unloggedProfile',
     },
     path: undefined,
     items: [
