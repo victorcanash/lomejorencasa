@@ -312,22 +312,28 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, [isBagsProduct, isEverfreshProduct]);
 
   const getProductInventories = useCallback((product?: Product) => {
+    let inventories = [] as ProductInventory[];
     if (product) {
-      return product.inventories || [];
+      inventories = product.inventories || [] as ProductInventory[];
+    } else {
+      inventories = (everfreshProduct.inventories || [] as ProductInventory[])
+        .concat(bagsProduct.inventories || [] as ProductInventory[]);
     }
-    return (everfreshProduct.inventories || []).concat(bagsProduct.inventories || []);
+    return inventories;
   }, [bagsProduct.inventories, everfreshProduct.inventories]);
 
   const getProductPacks = useCallback((product?: Product) => {
+    let packs = [] as ProductPack[];
     if (product) {
       if (isEverfreshProduct(product)) {
-        return everfreshPacks;
+        packs = everfreshPacks;
       } else if (isBagsProduct(product)) {
-        return bagsPacks;
+        packs = bagsPacks;
       }
-      return [];
+    } else {
+      packs = everfreshPacks.concat(bagsPacks);
     }
-    return everfreshPacks.concat(bagsPacks);
+    return packs;
   }, [bagsPacks, everfreshPacks, isBagsProduct, isEverfreshProduct]);
 
   const getProductVariants = useCallback((product?: Product) => {
