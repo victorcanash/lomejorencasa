@@ -69,7 +69,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     getProductPacks,
     getBagsPack,
     getProductDetailImgsUrl,
-    getProductImgUrl,
+    getProductPageUrl,
   } = useProductsContext();
   const { convertPriceToString } = useAuthContext();
 
@@ -242,7 +242,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     );
   }, [convertPriceToString, priceIcon, product.activeDiscount, product.lowestPrice, product.lowestRealPrice, selectedItem]);
 
-  const everfreshPackPrice = useMemo(() => {
+  const everfreshPackText = useMemo(() => {
     const everfreshPack = getProductPacks(everfreshProduct).length > 0 ? getProductPacks(everfreshProduct)[0] : undefined;
     if (!everfreshPack) {
       return (<></>);
@@ -251,30 +251,42 @@ const ProductDetail = (props: ProductDetailProps) => {
     const originPrice = everfreshPack.originalPrice;
     const percent = everfreshPack.discountPercent;
     return (
-      <Grid container columnSpacing={2} rowSpacing={1}>
-        <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
-          <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-            <span
-              style={{ color: colors.text.black }}
+      <>
+        <Grid container mb={1}>
+          <Grid item>
+            <Typography
+              component="h2"
+              variant="body1Head"
             >
-              {`${intl.formatMessage({ id: 'productDetail.pack.price' })}: `}
-            </span>
-            <span
-              style={{ fontWeight: 500, textDecoration: 'line-through' }}
-            >
-              <span style={{ color: colors.text.disabled }}>
-                {`${convertPriceToString(originPrice)}`}
+              { everfreshPack.name.current }
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container columnSpacing={1} rowSpacing={1}>
+          <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
+            <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+              <span
+                style={{ color: colors.text.black }}
+              >
+                {`${intl.formatMessage({ id: 'productDetail.pack.price' })}: `}
               </span>
-            </span>
-            {` ${convertPriceToString(price)}`}
-          </Typography>
+              <span
+                style={{ fontWeight: 500, textDecoration: 'line-through' }}
+              >
+                <span style={{ color: colors.text.disabled }}>
+                  {`${convertPriceToString(originPrice)}`}
+                </span>
+              </span>
+              {` ${convertPriceToString(price)}`}
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography component="div" variant="body1Head" sx={convertElementToSx(themeCustomElements.landing.priceContent.percentText)}>
+              <FormattedMessage id="productDetail.pack.percent" values={{ value: percent }} />
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Typography component="div" variant="body1Head" sx={convertElementToSx(themeCustomElements.landing.priceContent.percentText)}>
-            <FormattedMessage id="productDetail.pack.percent" values={{ value: percent }} />
-          </Typography>
-        </Grid>
-      </Grid>
+      </>
     );
   }, [intl, convertPriceToString, everfreshProduct, getProductPacks]);
 
@@ -548,16 +560,21 @@ const ProductDetail = (props: ProductDetailProps) => {
               </Typography>
               <Grid container mt={2} justifyContent="center" alignItems="center" columnSpacing={1}>
                 <Grid item xs={5.5}>
-                  <CustomImage
-                    src={everfreshImgId}
-                    alt="Máquina de Vacío"
-                    width="1080"
-                    height="1080"
-                    priority
-                    layout="responsive"
-                    objectFit="cover"
-                    style={{ borderRadius: '10px' }}
-                  />
+                  <Link
+                    href={getProductPageUrl(everfreshProduct)}
+                    noLinkStyle
+                  >
+                    <CustomImage
+                      src={everfreshImgId}
+                      alt="Máquina de Vacío"
+                      width="1080"
+                      height="1080"
+                      priority
+                      layout="responsive"
+                      objectFit="cover"
+                      style={{ borderRadius: '10px' }}
+                    />
+                  </Link>
                 </Grid>
                 <Grid item xs={1}>
                   <Box>
@@ -569,19 +586,24 @@ const ProductDetail = (props: ProductDetailProps) => {
                   </Box>
                 </Grid>
                 <Grid item xs={5.5}>
-                  <CustomImage
-                    src={bagsMIXImgId}
-                    alt="Bolsas de Vacío con Válvula"
-                    width="1080"
-                    height="1080"
-                    priority
-                    layout="responsive"
-                    objectFit="cover"
-                    style={{ borderRadius: '10px' }}
-                  />
+                  <Link
+                    href={getProductPageUrl(bagsProduct)}
+                    noLinkStyle
+                  >
+                    <CustomImage
+                      src={bagsMIXImgId}
+                      alt="Bolsas de Vacío con Válvula"
+                      width="1080"
+                      height="1080"
+                      priority
+                      layout="responsive"
+                      objectFit="cover"
+                      style={{ borderRadius: '10px' }}
+                    />
+                  </Link>
                 </Grid>
-                <Grid item xs={12} mt={2}>
-                  { everfreshPackPrice }
+                <Grid item xs={12} mt={1}>
+                  { everfreshPackText }
                 </Grid>
                 <Grid item xs={12} mt={2}>
                   { initialized ?
