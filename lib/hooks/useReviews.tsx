@@ -25,7 +25,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 const useReviews = () => {
   const { setLoading } = useAppContext();
   const {
-    productVariants,
+    getProductVariants,
     listProductReviews,
     setListProductReviews,
   } = useProductsContext();
@@ -39,12 +39,13 @@ const useReviews = () => {
   const [page, setPage] = useState(0);
   const [totalPages, setTotalPages] = useState(1);
 
-  const createProductReview = async (
+  const createProductReview = useCallback(async (
     productReview: CreateProductReview,
     uploadImgs: UploadFile[],
     onSuccess?: () => void,
   ) => {
     setSuccessMsg('');
+    const productVariants = getProductVariants();
     if (parseInt(productReview.relatedProduct) >= productVariants.length) {
       setErrorMsg(intl.formatMessage({ id: 'app.errors.default' }));
       return;
@@ -89,7 +90,7 @@ const useReviews = () => {
         setErrorMsg(errorMsg);
         setLoading(false);
       });
-  };
+  }, [enqueueSnackbar, getProductVariants, intl, isLogged, listProductReviews, setListProductReviews, setLoading, token]);
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);

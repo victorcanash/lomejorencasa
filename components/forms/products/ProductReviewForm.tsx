@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { FormikProps } from 'formik';
@@ -37,7 +37,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     createProductReview,
   } = props;
 
-  const { productVariants } = useProductsContext();
+  const { getProductVariants } = useProductsContext();
   const { user, isLogged } = useAuthContext();
 
   const { 
@@ -56,6 +56,10 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
 
   const [expanded, setExpanded] = useState(false);
   const [maxWidth, _setMaxWidth] = useState('500px');
+
+  const productVariants = useMemo(() => {
+    return getProductVariants();
+  }, [getProductVariants]);
 
   const handleSubmit = async (values: CreateProductReview) => {
     createProductReview(values, uploadImgs, onCreateProductReviewSuccess);

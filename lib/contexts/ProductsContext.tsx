@@ -1,12 +1,13 @@
 import {
   createContext,
   useState,
-  useEffect,
   useContext,
   useCallback,
   Dispatch,
   SetStateAction
 } from 'react';
+
+import NP from 'number-precision';
 
 import type {
   Product,
@@ -44,10 +45,10 @@ type ProductsContext = {
   getProductDetailImgsUrl: (item: Product | CartItem | GuestCartCheckItem) => string[],
   getProductInventories: (product?: Product) => ProductInventory[],
   getProductPacks: (product?: Product) => ProductPack[],
+  getProductVariants: (product?: Product) => (ProductInventory | ProductPack)[],
   getBagsPack: (inventory: ProductInventory) => ProductPack | undefined,
   getProductInventory: (id: number) => ProductInventory | undefined,
   getProductPack: (id: number) => ProductPack | undefined,
-  productVariants: (ProductInventory | ProductPack)[],
   listProductReviews: ListProductReviews,
   setListProductReviews: Dispatch<SetStateAction<ListProductReviews>>,
 };
@@ -64,10 +65,10 @@ const ProductsContext = createContext<ProductsContext>({
   getProductDetailImgsUrl: () => [],
   getProductInventories: () => [],
   getProductPacks: () => [],
+  getProductVariants: () => [],
   getBagsPack: () => undefined,
   getProductInventory: () => undefined,
   getProductPack: () => undefined,
-  productVariants: [],
   listProductReviews: {} as ListProductReviews,
   setListProductReviews: () => {},
 });
@@ -181,7 +182,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   });
   const [everfreshPacks, setEverfreshPacks] = useState<ProductPack[]>([]);
   const [bagsPacks, setBagsPacks] = useState<ProductPack[]>([]);
-  const [productVariants, setProductVariants] = useState<(ProductInventory | ProductPack)[]>([]);
   const [listProductReviews, setListProductReviews] = useState<ListProductReviews>({
     reviews: [],
     totalPages: 1,
@@ -325,9 +325,17 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return everfreshPacks.concat(bagsPacks);
   }, [bagsPacks, everfreshPacks, isBagsProduct, isEverfreshProduct]);
 
+  const getProductVariants = useCallback((product?: Product) => {
+    const inventories = getProductInventories(product);
+    const packs = getProductPacks(product);
+    let variants: (ProductInventory | ProductPack)[] = [];
+    variants = variants.concat(inventories, packs);
+    return variants;
+  }, [getProductInventories, getProductPacks]);
+
   const getBagsPack = useCallback((inventory: ProductInventory) => {
     const bagsPack = getProductPacks(bagsProduct).find((pack) => {
-      const foundInventory = pack.inventories.find((item) => item.id === inventory.id)
+      const foundInventory = pack.inventories.find((item) => item.id === inventory.id);
       return foundInventory !== undefined;
     });
     return bagsPack;
@@ -341,14 +349,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     const packs = getProductPacks();
     return packs.find(item => item.id === id);
   }, [getProductPacks]);
-
-  useEffect(() => {
-    const inventories = getProductInventories();
-    const packs = getProductPacks();
-    let variants: (ProductInventory | ProductPack)[] = [];
-    variants = variants.concat(inventories, packs);
-    setProductVariants(variants);
-  }, [getProductInventories, getProductPacks]);
 
   return (
     <ProductsContext.Provider
@@ -364,10 +364,10 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getProductDetailImgsUrl,
         getProductInventories,
         getProductPacks,
+        getProductVariants,
         getBagsPack,
         getProductInventory,
         getProductPack,
-        productVariants,
         listProductReviews,
         setListProductReviews,
       }}
