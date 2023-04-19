@@ -23,7 +23,6 @@ export type Pages = {
   
   contact: Page,
   orderList: Page,
-  orderDetail: Page,
   settings: Page,
 
   activation: Page,

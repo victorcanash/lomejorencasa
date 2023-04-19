@@ -45,7 +45,7 @@ const OrderList = (props: OrderListProps) => {
           {orders?.map((order) => (
             <Fragment key={order.id}>   
               <Grid item xs={12}>
-                <Typography component="h3" variant="h1">
+                <Typography variant="h3">
                   {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.bigbuyId}`}
                 </Typography>
                 <Grid container spacing={1} py={3}>

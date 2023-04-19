@@ -3,21 +3,27 @@ import type { Order, OrderContact } from '@core/types/orders';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
-import useOrders from '@lib/hooks/useOrders';
 import BaseForm from '@components/forms/BaseForm';
 
 type GetOrderFormProps = {
+  getOrder: (orderContact: OrderContact, onSuccess?: ((order: Order) => void) | undefined, onError?: ((errorMsg: string) => void) | undefined) => Promise<void>,
   onSuccess: (order: Order) => void,
+  successMsg: string,
+  errorMsg: string,
 }
 
 const GetOrderForm = (props: GetOrderFormProps) => {
-  const { onSuccess } = props;
+  const {
+    getOrder,
+    onSuccess,
+    successMsg,
+    errorMsg,
+  } = props;
 
   const { getOrderFormValidation, orderFieldsInitValues } = useForms();
-  const { getUnloggedOrder, successMsg, errorMsg } = useOrders();
 
   const handleSubmit = async (values: OrderContact) => {
-    getUnloggedOrder(values, onSuccess);
+    getOrder(values, onSuccess);
   };
 
   return (

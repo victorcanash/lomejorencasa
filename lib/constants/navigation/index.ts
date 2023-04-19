@@ -181,18 +181,6 @@ export const pages: Pages = {
       enabled: true,
     },
   },
-  orderDetail: {
-    path: '/orders',
-    filepath: '/orders/[id]',
-    protection: Protections.user,
-    type: PageTypes.main,
-    savePathOnLogin: {
-      enabled: true,
-      path: '/orders',
-    },
-    redirectPathOnProtected: '/orders',
-    redirectPathOnLogout: '/orders',
-  },
   settings: {
     path: '/settings',
     filepath: '/settings',

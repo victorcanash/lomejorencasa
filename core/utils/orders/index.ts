@@ -42,29 +42,7 @@ export const getOrders = (token: string, page: number, sortBy: string, order: st
   })
 };
 
-export const getLoggedOrder = (token: string, id: number) => {
-  return new Promise<{order: Order}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: getAuthHeaders(token),
-    };
-    axios.get(`/orders/${id}`, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK && response.data?.order) {
-          resolve({
-            order: response.data.order,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get Order By Id ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
-      }); 
-  })
-};
-
-export const getUnloggedOrder = (orderContact: OrderContact) => {
+export const getOrder = (orderContact: OrderContact) => {
   return new Promise<{order: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       params: {

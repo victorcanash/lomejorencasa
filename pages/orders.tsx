@@ -24,11 +24,11 @@ const Orders: NextPage = () => {
   const { isLogged } = useAuthContext();
 
   const page = usePage(false);
-  const { getOrders } = useOrders();
+  const { getOrder, getOrders, successMsg, errorMsg } = useOrders();
 
   const [loadedOrders, setLoadedOrders] = useState(false);
   const [loggedOrders, setLoggedOrders] = useState<Order[]>([]);
-  const [unloggedOrder, setUnloggedOrder] = useState<Order | undefined>(undefined);
+  const [selectedOrder, setSelectedOrder] = useState<Order | undefined>(undefined);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -40,24 +40,25 @@ const Orders: NextPage = () => {
     setLoggedOrders(orders);
     setTotalPages(totalPages);
     setCurrentPage(currentPage);
-  }, []);
+    setLoading(false);
+  }, [setLoading]);
 
   const onErrorGetOrders = useCallback((_errorMsg: string) => {
     router.push(pages.home.path);
   }, [router]);
 
-  const showOrder = (order: Order) => {
-    router.push(`${pages.orderDetail.path}/${order.id}`);
-  };
+  const showOrder = useCallback((order: Order) => {
+    setSelectedOrder(order);
+  }, []);
 
-  const onSuccessGetOrder = (order: Order) => {
-    setUnloggedOrder(order);
-  };
+  const onSuccessGetOrder = useCallback((order: Order) => {
+    setSelectedOrder(order);
+  }, []);
 
-  const onClickBack = () => {
-    setUnloggedOrder(undefined);
+  const onClickBack = useCallback(() => {
+    setSelectedOrder(undefined);
     window.scrollTo(0, 0);
-  };
+  }, []);
 
   useEffect(() => {
     if (page.checked && !loadedOrders) {
@@ -89,23 +90,36 @@ const Orders: NextPage = () => {
       { initialized && page.checked &&
         <Container>
           { isLogged() &&
-              <OrderList 
-                orders={loggedOrders} 
-                totalPages={totalPages}
-                currentPage={currentPage}
-                onChangePage={onChangePage}
-                onClickShowOrder={showOrder}
-              />
-          }
-          { !isLogged() &&
             <>
-              { !unloggedOrder ?
-                <GetOrderForm 
-                  onSuccess={onSuccessGetOrder}
+              { !selectedOrder ?
+                <OrderList 
+                  orders={loggedOrders} 
+                  totalPages={totalPages}
+                  currentPage={currentPage}
+                  onChangePage={onChangePage}
+                  onClickShowOrder={showOrder}
                 />
                 :
                 <OrderDetail 
-                  order={unloggedOrder} 
+                  order={selectedOrder} 
+                  backBtn={true}
+                  onClickBack={onClickBack}
+                />
+              }
+            </>
+          }
+          { !isLogged() &&
+            <>
+              { !selectedOrder ?
+                <GetOrderForm
+                  getOrder={getOrder}
+                  onSuccess={onSuccessGetOrder}
+                  successMsg={successMsg}
+                  errorMsg={errorMsg}
+                />
+                :
+                <OrderDetail 
+                  order={selectedOrder} 
                   backBtn={true}
                   onClickBack={onClickBack}
                 />
