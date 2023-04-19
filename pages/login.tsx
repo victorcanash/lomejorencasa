@@ -31,6 +31,8 @@ const Login: NextPage = () => {
         metas={{
           titleId: 'login.metas.title',
           descriptionId: 'login.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
       />

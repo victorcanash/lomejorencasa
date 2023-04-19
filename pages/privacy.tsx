@@ -20,6 +20,8 @@ const Privacy: NextPage = () => {
         metas={{
           titleId: 'privacy.metas.title',
           descriptionId: 'privacy.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         texts={{
           title: {

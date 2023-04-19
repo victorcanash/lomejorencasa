@@ -20,6 +20,8 @@ const Refunds: NextPage = () => {
         metas={{
           titleId: 'refunds.metas.title',
           descriptionId: 'refunds.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
         texts={{

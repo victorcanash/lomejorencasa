@@ -18,6 +18,8 @@ const Forgot: NextPage = () => {
         metas={{
           titleId: 'forgot.metas.title',
           descriptionId: 'forgot.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
       />

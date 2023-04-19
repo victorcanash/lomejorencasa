@@ -52,6 +52,8 @@ const Checkout: NextPage = () => {
         metas={{
           titleId: 'checkout.metas.title',
           descriptionId: 'checkout.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
       />

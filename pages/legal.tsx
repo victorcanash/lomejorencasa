@@ -20,6 +20,8 @@ const Legal: NextPage = () => {
         metas={{
           titleId: 'legal.metas.title',
           descriptionId: 'legal.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         texts={{
           title: {

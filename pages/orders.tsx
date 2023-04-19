@@ -78,6 +78,8 @@ const Orders: NextPage = () => {
         metas={{
           titleId: 'orderList.metas.title',
           descriptionId: 'orderList.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
         texts={{

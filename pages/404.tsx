@@ -20,6 +20,8 @@ const NotFound: NextPage = () => {
         metas={{
           titleId: 'notfound.metas.title',
           descriptionId: 'notfound.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
       />

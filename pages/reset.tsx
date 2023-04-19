@@ -18,6 +18,8 @@ const Reset: NextPage = () => {
         metas={{
           titleId: 'reset.metas.title',
           descriptionId: 'reset.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
       />
 

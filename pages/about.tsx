@@ -24,6 +24,8 @@ const About: NextPage = () => {
         metas={{
           titleId: 'about.metas.title',
           descriptionId: 'about.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
         texts={{

@@ -21,6 +21,8 @@ type PageHeaderProps = {
     titleAdd?: string,
     descriptionId?: string,
     descriptionAdd?: string,
+    noindex?: boolean,
+    nofollow?: boolean,
   },
   marginTop?: boolean,
   texts?: {
@@ -67,6 +69,8 @@ const PageHeader = (props: PageHeaderProps) => {
       <NextSeo
         title={getTitle()}
         description={getDescription()}
+        noindex={metas.noindex}
+        nofollow={metas.nofollow}
         openGraph={{
           type: 'website',
           locale: 'es_ES',

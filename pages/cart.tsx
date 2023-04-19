@@ -62,6 +62,8 @@ const Cart: NextPage = () => {
         metas={{
           titleId: 'cart.metas.title',
           descriptionId: 'cart.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
         texts={{

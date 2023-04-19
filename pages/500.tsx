@@ -20,6 +20,8 @@ const Error: NextPage = () => {
         metas={{
           titleId: 'error.metas.title',
           descriptionId: 'error.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
       />

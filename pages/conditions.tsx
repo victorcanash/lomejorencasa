@@ -20,6 +20,8 @@ const Conditions: NextPage = () => {
         metas={{
           titleId: 'conditions.metas.title',
           descriptionId: 'conditions.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
         texts={{

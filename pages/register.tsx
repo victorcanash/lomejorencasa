@@ -27,6 +27,8 @@ const Register: NextPage = () => {
         metas={{
           titleId: 'register.metas.title',
           descriptionId: 'register.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
       />

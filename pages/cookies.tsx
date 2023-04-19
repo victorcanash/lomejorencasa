@@ -19,6 +19,8 @@ const Cookies: NextPage = () => {
         metas={{
           titleId: 'cookies.metas.title',
           descriptionId: 'cookies.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
         texts={{

@@ -72,6 +72,8 @@ const Admin: NextPage = () => {
         metas={{
           titleId: 'admin.metas.title',
           descriptionId: 'admin.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
         marginTop={true}
       />

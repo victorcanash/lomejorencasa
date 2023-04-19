@@ -21,6 +21,8 @@ const Activation: NextPage<ActivationProps> = (props) => {
         metas={{
           titleId: 'activation.metas.title',
           descriptionId: 'activation.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
       />
 

@@ -18,6 +18,8 @@ const NewEmail: NextPage = () => {
         metas={{
           titleId: 'newemail.metas.title',
           descriptionId: 'newemail.metas.description',
+          noindex: true,
+          nofollow: true,
         }}
       />
 
