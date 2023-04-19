@@ -242,17 +242,17 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
   },
   {
     text: {
-      id: 'everfresh',
+      id: 'bags',
     },
-    path: pages.everfresh.path,
+    path: pages.bags.path,
     items: [],
     open: false,
   },
   {
     text: {
-      id: 'bags',
+      id: 'everfresh',
     },
-    path: pages.bags.path,
+    path: pages.everfresh.path,
     items: [],
     open: false,
   },
