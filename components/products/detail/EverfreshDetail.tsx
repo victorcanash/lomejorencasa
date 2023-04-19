@@ -1,7 +1,6 @@
 import { pages } from '@lib/constants/navigation';
 import { everfreshVideoIds } from '@lib/constants/multimedia';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
-
 import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
 import DetailTutorial from '@components/products/sections/DetailTutorial';
 import DetailReviews from '@components/products/sections/DetailReviews';
@@ -44,6 +43,12 @@ const EverfreshDetail = () => {
             content={{
               id: 'everfresh.videoComment.2.content',
             }}
+            button={{
+              text: {
+                id: 'everfresh.videoComment.2.bagsButton',
+              },
+              path: pages.bags.path,
+            }}
             source={{ 
               type: 'video',
               src: everfreshVideoIds[1],
@@ -57,6 +62,12 @@ const EverfreshDetail = () => {
             }}
             content={{
               id: 'everfresh.videoComment.3.content',
+            }}
+            button={{
+              text: {
+                id: 'everfresh.videoComment.3.button',
+              },
+              path: pages.faq.path,
             }}
             source={{ 
               type: 'video',
