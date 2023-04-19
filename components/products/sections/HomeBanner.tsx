@@ -13,6 +13,7 @@ import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
+import seoConfig from '@lib/constants/seo';
 import { pages } from '@lib/constants/navigation';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -93,15 +94,15 @@ const HomeBanner = () => {
   const getAltImg = useCallback((index: number) => {
     switch (index) {
       case 0:
-        return 'Máquina de Vacío';
+        return seoConfig.keywords.vacuumMachine.others[0];
       case 1:
-        return 'Selladora de Alimentos';
+        return seoConfig.keywords.vacuumMachine.others[1];
       case 2:
-        return 'Máquina de Vacío';
+        return seoConfig.keywords.vacuumMachine.others[0];
       case 3:
-        return 'Selladora de Alimentos';
+        return seoConfig.keywords.vacuumMachine.others[1];
       default:
-        return 'Máquina de Vacío';
+        return seoConfig.keywords.vacuumMachine.others[0];
     }
   }, []);
 

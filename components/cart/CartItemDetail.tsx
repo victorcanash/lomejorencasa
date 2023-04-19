@@ -141,7 +141,6 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 >
                   <CustomImage
                     src={getProductImgUrl(item)}
-                    alt="Cart Item"
                     width="1080"
                     height="1080"
                     layout="responsive"

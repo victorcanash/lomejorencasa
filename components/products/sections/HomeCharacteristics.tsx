@@ -158,7 +158,6 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
           >
             <CustomImage 
               src={homeCharacteristicsBgImgIds[0]}
-              alt={'Vacuum machine characteristics background'}
               width="597"
               height="9125"
               layout="responsive" 
@@ -184,20 +183,20 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
         >
           { type == 'characteristics' ?
             <>
-              { characteristic('home.characteristics.description.1', { src: homeCharacteristicsIconsIds[0] } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.2', { src: homeCharacteristicsIconsIds[1] } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.3', { src: homeCharacteristicsIconsIds[2] } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.4', { src: homeCharacteristicsIconsIds[3] } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.5', { src: homeCharacteristicsIconsIds[4] } as Source, 'everfresh characteristic') }
-              { characteristic('home.characteristics.description.6', {src: homeCharacteristicsIconsIds[5] } as Source, 'everfresh characteristic') }
+              { characteristic('home.characteristics.description.1', { src: homeCharacteristicsIconsIds[0] } as Source, '') }
+              { characteristic('home.characteristics.description.2', { src: homeCharacteristicsIconsIds[1] } as Source, '') }
+              { characteristic('home.characteristics.description.3', { src: homeCharacteristicsIconsIds[2] } as Source, '') }
+              { characteristic('home.characteristics.description.4', { src: homeCharacteristicsIconsIds[3] } as Source, '') }
+              { characteristic('home.characteristics.description.5', { src: homeCharacteristicsIconsIds[4] } as Source, '') }
+              { characteristic('home.characteristics.description.6', {src: homeCharacteristicsIconsIds[5] } as Source, '') }
             </>
             :
             <>
-              { characteristic('home.advantages.description.1', { src: homeAdvantagesIconsIds[0] } as Source, 'everfresh advantage') }
-              { characteristic('home.advantages.description.2', { src: homeAdvantagesIconsIds[1] } as Source, 'everfresh advantage', '81px') }
-              { characteristic('home.advantages.description.3', { src: homeAdvantagesIconsIds[2] } as Source, 'everfresh advantage') }
-              { characteristic('home.advantages.description.4', { src: homeAdvantagesIconsIds[3] } as Source, 'everfresh advantage') }
-              { characteristic('home.advantages.description.5', { src: homeAdvantagesIconsIds[4] } as Source, 'everfresh advantage', '76px') }
+              { characteristic('home.advantages.description.1', { src: homeAdvantagesIconsIds[0] } as Source, '') }
+              { characteristic('home.advantages.description.2', { src: homeAdvantagesIconsIds[1] } as Source, '', '81px') }
+              { characteristic('home.advantages.description.3', { src: homeAdvantagesIconsIds[2] } as Source, '') }
+              { characteristic('home.advantages.description.4', { src: homeAdvantagesIconsIds[3] } as Source, '') }
+              { characteristic('home.advantages.description.5', { src: homeAdvantagesIconsIds[4] } as Source, '', '76px') }
             </>
           }
           <Grid 

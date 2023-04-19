@@ -13,6 +13,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+import seoConfig from '@lib/constants/seo';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
@@ -163,9 +164,9 @@ const HomeConservation = () => {
 
       <MultimediaContainer
         type="default"
-        source={{ 
+        source={{
           src: homeBannerImgIds[2],
-          alt: 'Envasadora al Vacío Everfresh',
+          alt: seoConfig.keywords.vacuumMachine.main,
         }}
       />
     </>

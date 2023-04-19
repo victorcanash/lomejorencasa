@@ -11,6 +11,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 import CustomImage from '@core/components/CustomImage';
 
+import seoConfig from '@lib/constants/seo';
 import { pages } from '@lib/constants/navigation';
 import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -110,7 +111,7 @@ const HomeUse = () => {
       >
         <CustomImage
           src={homeUseImgIds[0]}
-          alt="Máquina de Vacío"
+          alt={seoConfig.keywords.vacuumMachine.others[0]}
           width="628"
           height="628"
           layout="responsive" 
@@ -121,7 +122,6 @@ const HomeUse = () => {
         type="default"
         source={{
           src: homeUseImgIds[1],
-          alt: 'Use food preparation image',
         }}
         mt={10}
       />
@@ -150,7 +150,7 @@ const HomeUse = () => {
         type="default"
         source={{ 
           src: homeUseImgIds[2],
-          alt: 'Bolsas de Vacío',
+          alt: seoConfig.keywords.bags.others[0],
           width: '8001',
           height: '2800',
         }}
@@ -174,7 +174,7 @@ const HomeUse = () => {
             type="default"
             source={{ 
               src: homeUseImgIds[3],
-              alt: 'Bolsas de Vacío',
+              alt: seoConfig.keywords.bags.others[0],
               width: '1080',
               height: '1080',
             }}
@@ -219,22 +219,22 @@ const HomeUse = () => {
           {
             type: 'video',
             src: homeVideoIds[0],
-            alt: 'Selladora de Alimentos',
+            alt: seoConfig.keywords.vacuumMachine.others[1],
           },
           {
             type: 'image',
             src: homeUseImgIds[4],
-            alt: 'Selladora de Alimentos',
+            alt: seoConfig.keywords.bags.main,
           },
           {
             type: 'video',
             src: homeVideoIds[1],
-            alt: 'Máquina de Vacío',
+            alt: seoConfig.keywords.vacuumMachine.others[0],
           },
           {
             type: 'video',
             src: homeVideoIds[2],
-            alt: 'Máquina de Vacío',
+            alt: seoConfig.keywords.vacuumMachine.others[0],
           }
         ] as Source[]).map((item, index) => (
           <Fragment key={index}>

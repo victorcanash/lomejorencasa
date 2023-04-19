@@ -20,7 +20,6 @@ const ImagesDetail = (props: ImagesDetailProps) => {
         <Grid item xs={6} key={sourceIndex}>
           <CustomImage
             src={source.src}
-            alt="Image"
             width="1080"
             height="1080"
             layout="responsive" 

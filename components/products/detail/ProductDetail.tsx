@@ -37,6 +37,7 @@ import { scrollToSection } from '@core/utils/navigation';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
+import seoConfig from '@lib/constants/seo';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { bagsMIXImgId, everfreshImgId } from '@lib/constants/multimedia';
@@ -480,7 +481,8 @@ const ProductDetail = (props: ProductDetailProps) => {
                   getProductDetailImgsUrl(product).map((item) => {
                     return {
                       src: item,
-                      alt: isEverfreshProduct(product) ? 'Envasadora al Vacío Everfresh' : 'Bolsas de Vacío',
+                      alt: isEverfreshProduct(product) ?
+                        seoConfig.keywords.vacuumMachine.main : seoConfig.keywords.bags.main,
                       priority: true,
                     } as Source;
                   })
@@ -584,7 +586,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                   >
                     <CustomImage
                       src={everfreshImgId}
-                      alt="Máquina de Vacío"
+                      alt={seoConfig.keywords.vacuumMachine.others[0]}
                       width="1080"
                       height="1080"
                       priority
@@ -610,7 +612,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                   >
                     <CustomImage
                       src={bagsMIXImgId}
-                      alt="Bolsas de Vacío con Válvula"
+                      alt={seoConfig.keywords.bags.others[0]}
                       width="1080"
                       height="1080"
                       priority

@@ -18,6 +18,7 @@ import Masonry from '@mui/lab/Masonry';
 
 import CustomImage from '@core/components/CustomImage';
 
+import seoConfig from '@lib/constants/seo';
 import colors from '@lib/constants/themes/colors';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useReviews from '@lib/hooks/useReviews';
@@ -125,7 +126,7 @@ const DetailReviews = () => {
                         >
                           <CustomImage
                             src={item.imageUrl}
-                            alt="Product review"
+                            alt={seoConfig.keywords.vacuumMachine.main}
                             layout="fill"
                             objectFit="cover"
                           />

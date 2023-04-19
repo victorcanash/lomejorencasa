@@ -69,7 +69,6 @@ const ProductList = (props: ProductListProps) => {
                     <div>
                       <CustomImage
                         src={getProductImgUrl(item)}
-                        alt="Product image"
                         width="1080"
                         height="1080"
                         layout="responsive" 

@@ -32,7 +32,6 @@ const HomeFoodStorage = () => {
           type="default"
           source={{ 
             src: homeFoodStorageImgIds[0],
-            alt: 'Food storage',
             width: '1920',
             height: '960',
           }}

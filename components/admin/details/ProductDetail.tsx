@@ -69,7 +69,6 @@ const ProductDetail = (props: ProductDetailProps) => {
                     <div style={{ marginBottom: "40px"}}>
                       <CustomImage 
                         src={imgSrc}
-                        alt="Product image" 
                         width="1080"
                         height="1080"
                         layout="responsive" 

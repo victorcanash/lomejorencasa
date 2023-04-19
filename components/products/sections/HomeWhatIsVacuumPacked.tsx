@@ -4,6 +4,11 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import { convertElementToSx } from '@core/utils/themes';
+import LinkButton from '@core/components/LinkButton';
+
+import { pages } from '@lib/constants/navigation';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 
 const HomeWhatIsVacuumPacked = () => {
@@ -25,9 +30,19 @@ const HomeWhatIsVacuumPacked = () => {
           }}
           divider={true}
         />
-        <Typography component="div" variant="body1">
+
+        <Typography variant="body1" sx={{ mb: 4 }}>
           <FormattedMessage id="home.whatIsVacuumPacked.description" />
         </Typography>
+
+        <LinkButton
+          href={pages.faq.path}
+          sx={convertElementToSx(themeCustomElements.button.action.primary)}
+        >
+          <FormattedMessage
+            id="home.whatIsVacuumPacked.faqBtn"
+          />
+        </LinkButton>
       </Box>
     </Container>
   );

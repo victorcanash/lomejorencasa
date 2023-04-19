@@ -73,7 +73,6 @@ const HomeWhyVacuumPacked = () => {
           >
             <CustomImage
               src={homeWhyVacuumPackedImgIds[0]}
-              alt="Vacuum packed"
               width="5000"
               height="5000"
               layout="responsive"
@@ -91,7 +90,6 @@ const HomeWhyVacuumPacked = () => {
           >
             <CustomImage
               src={homeWhyVacuumPackedImgIds[1]}
-              alt="Vacuum packed"
               width="1920"
               height="1771"
               layout="responsive"
