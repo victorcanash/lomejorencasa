@@ -250,6 +250,8 @@ const ProductDetail = (props: ProductDetailProps) => {
     const price = everfreshPack.price;
     const originPrice = everfreshPack.originalPrice;
     const percent = everfreshPack.discountPercent;
+    const dividerPackText = ' + ';
+    const packTexts = everfreshPack.name.current.split(dividerPackText);
     return (
       <>
         <Grid container mb={1}>
@@ -258,7 +260,21 @@ const ProductDetail = (props: ProductDetailProps) => {
               component="h2"
               variant="body1Head"
             >
-              { everfreshPack.name.current }
+              <Link
+                href={getProductPageUrl(everfreshProduct)}
+                noLinkStyle
+                //sx={{ textDecoration: 'none', color: colors.text.black }}
+              >
+                { packTexts[0] }
+              </Link>
+              { dividerPackText }
+              <Link
+                href={getProductPageUrl(bagsProduct)}
+                noLinkStyle
+                //sx={{ textDecoration: 'none', color: colors.text.black }}
+              >
+                { packTexts[1] }
+              </Link>
             </Typography>
           </Grid>
         </Grid>
@@ -288,7 +304,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         </Grid>
       </>
     );
-  }, [intl, convertPriceToString, everfreshProduct, getProductPacks]);
+  }, [getProductPacks, everfreshProduct, getProductPageUrl, bagsProduct, intl, convertPriceToString]);
 
   const bagsPackDiscountPercent = useMemo(() => {
     return currentBagsPack?.discountPercent || 0;
