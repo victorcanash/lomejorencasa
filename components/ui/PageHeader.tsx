@@ -64,10 +64,6 @@ const PageHeader = (props: PageHeaderProps) => {
 
   return (
     <>
-      {/*<Head>
-        <title>{getTitle()}</title>
-        <meta name="description" content={getDescription()} />
-      </Head>*/}
       <NextSeo
         title={getTitle()}
         description={getDescription()}

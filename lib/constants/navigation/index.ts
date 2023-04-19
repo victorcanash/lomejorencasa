@@ -2,7 +2,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
 import type { NavDrawerItems } from '@core/types/navigation';
 
-import { productSlugs } from '@lib/constants/products';
+import { productPaths } from '@lib/constants/products';
 import type { Pages } from '@lib/types/navigation';
 
 export const pages: Pages = {
@@ -34,7 +34,7 @@ export const pages: Pages = {
     },
   },
   everfresh: {
-    path: `/productos/${productSlugs.everfresh}`,
+    path: `/productos/${productPaths.everfresh}`,
     filepath: '/productos/[product]',
     protection: Protections.none,
     type: PageTypes.main,
@@ -43,7 +43,7 @@ export const pages: Pages = {
     },
   },
   bags: {
-    path: `/productos/${productSlugs.bags}`,
+    path: `/productos/${productPaths.bags}`,
     filepath: '/productos/[product]',
     protection: Protections.none,
     type: PageTypes.main,

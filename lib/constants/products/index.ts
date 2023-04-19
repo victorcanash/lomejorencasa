@@ -1,11 +1,11 @@
-export const productSlugs = {
+export const productPaths = {
   everfresh: 'envasadora-al-vacio',
   bags: 'bolsas-para-envasadora-al-vacio',
 };
 
-export const allProductSlugs = [
-  productSlugs.everfresh,
-  productSlugs.bags,
+export const allProductPaths = [
+  productPaths.everfresh,
+  productPaths.bags,
 ];
 
 export const productIds = {

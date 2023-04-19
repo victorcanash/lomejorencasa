@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from 'querystring';
 import { PageTypes } from '@core/constants/navigation';
 import type { Product } from '@core/types/products';
 
-import { allProductSlugs, productSlugs } from '@lib/constants/products';
+import { allProductPaths, productPaths } from '@lib/constants/products';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
@@ -13,11 +13,11 @@ import ProductDetail from '@components/products/detail';
 import seoConfig from '@lib/constants/seo';
 
 type ProductProps = {
-  slug: string,
+  path: string,
 };
 
 const Product: NextPage<ProductProps> = (props) => {
-  const { slug } = props;
+  const { path } = props;
 
   const { everfreshProduct, bagsProduct } = useProductsContext();
 
@@ -26,20 +26,20 @@ const Product: NextPage<ProductProps> = (props) => {
   const [product, setProduct] = useState<Product | undefined>(undefined);
 
   const getMetaTitle = useCallback(() => {
-    if (slug === productSlugs.bags) {
+    if (path === productPaths.bags) {
       return seoConfig.keywords.bags.main
     } else {
       return seoConfig.keywords.vacuumMachine.main
     }
-  }, [slug]);
+  }, [path]);
 
   useEffect(() => {
-    if (slug === productSlugs.bags) {
+    if (path === productPaths.bags) {
       setProduct(bagsProduct);
     } else {
       setProduct(everfreshProduct);
     }
-  }, [bagsProduct, everfreshProduct, slug]);
+  }, [bagsProduct, everfreshProduct, path]);
 
   return (
     <>
@@ -47,7 +47,7 @@ const Product: NextPage<ProductProps> = (props) => {
         pageType={PageTypes.main}
         metas={{
           titleAdd: getMetaTitle(),
-          descriptionId: getMetaTitle(),
+          descriptionAdd: getMetaTitle(),
         }}
         marginTop={true}
       />
@@ -64,14 +64,14 @@ const Product: NextPage<ProductProps> = (props) => {
 export default Product;
 
 interface IParams extends ParsedUrlQuery {
-  slug: string
+  product: string
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
-  const paths = allProductSlugs.map((slug) => {
+  const paths = allProductPaths.map((path) => {
       return {
         params: {
-          slug,
+          product: path,
         },
       };
   });
@@ -82,10 +82,10 @@ export const getStaticPaths: GetStaticPaths = () => {
 };
 
 export const getStaticProps: GetStaticProps = (context) => {
-  const { slug } = context.params as IParams
+  const { product } = context.params as IParams
   return {
     props: {
-      slug: slug,
+      path: product,
     } as ProductProps,
   };
 };
