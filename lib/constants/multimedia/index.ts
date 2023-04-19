@@ -31,17 +31,17 @@ export const bagsMIXImgId = 'v1681818112/laenvasadora/LANDING%20PAGE/MARCA%20DE%
 
 export const everfreshPackImgId = 'v1680726536/laenvasadora/LANDING%20PAGE/FOTO_2_fgnlnf.jpg';
 
-export const bagsPackXSImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+export const bagsPackXSImgId = 'v1681851571/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/20UNIDADES/TAMA%C3%91O-XS-20U_b313ir.jpg';
 
-export const bagsPackSImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+export const bagsPackSImgId = 'v1681851570/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/20UNIDADES/TAMA%C3%91O-S-20U_kgjjpe.jpg';
 
-export const bagsPackMImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+export const bagsPackMImgId = 'v1681851582/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/20UNIDADES/TAMA%C3%91O-M-20U_mcqulv.jpg';
 
-export const bagsPackLImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+export const bagsPackLImgId = 'v1681851570/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/20UNIDADES/TAMA%C3%91O-L-20U_lx27eq.jpg';
 
-export const bagsPackXLImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+export const bagsPackXLImgId = 'v1681851570/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/20UNIDADES/TAMA%C3%91O-XL-20U_w8bslc.jpg';
 
-export const bagsPackMIXImgId = 'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg';
+export const bagsPackMIXImgId = 'v1681851582/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/20UNIDADES/TAMA%C3%91O-MIX-20U_cuev1i.jpg';
 
 export const homeBannerImgIds = [
   'v1681038418/laenvasadora/HOME%20PAGE/BANNER/FOTO_5_zbi5lg.jpg',

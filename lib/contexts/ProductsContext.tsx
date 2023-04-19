@@ -32,11 +32,13 @@ import {
   bagsMImgId,
   bagsLImgId,
   bagsXLImgId,
+  bagsMIXImgId,
   bagsPackXSImgId,
   bagsPackSImgId,
   bagsPackMImgId,
   bagsPackLImgId,
   bagsPackXLImgId,
+  bagsPackMIXImgId,
 } from '@lib/constants/multimedia';
 
 type ProductsContext = {
@@ -279,6 +281,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
           return bagsLImgId;
         case inventoryIds.bagsXL:
           return bagsXLImgId;
+        case inventoryIds.bagsMIX:
+          return bagsMIXImgId;
       }
     } else if (pack) {
       switch (pack.id) {
@@ -294,6 +298,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
           return bagsPackLImgId;
         case packIds.bagsXL:
           return bagsPackXLImgId;
+        case packIds.bagsMIX:
+          return bagsPackMIXImgId;
       }
     }
     return placeholderImgId;
