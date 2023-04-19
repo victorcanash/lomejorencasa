@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback, ChangeEvent, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage, useIntl } from 'react-intl';
+import NP from 'number-precision'
 import { useInView } from 'react-intersection-observer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -249,7 +250,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     }
     const price = everfreshPack.price;
     const originPrice = everfreshPack.originalPrice;
-    const percent = everfreshPack.discountPercent;
+    const percent = NP.round(everfreshPack.discountPercent, 0);
     const dividerPackText = ' + ';
     const packTexts = everfreshPack.name.current.split(dividerPackText);
     return (
@@ -307,7 +308,8 @@ const ProductDetail = (props: ProductDetailProps) => {
   }, [getProductPacks, everfreshProduct, getProductPageUrl, bagsProduct, intl, convertPriceToString]);
 
   const bagsPackDiscountPercent = useMemo(() => {
-    return currentBagsPack?.discountPercent || 0;
+    const value = currentBagsPack?.discountPercent ? NP.round(currentBagsPack?.discountPercent, 0) : 0;
+    return value;
   }, [currentBagsPack?.discountPercent]);
 
   /*const productDescription = useMemo(() => {
