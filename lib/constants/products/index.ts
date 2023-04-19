@@ -1,3 +1,13 @@
+export const productSlugs = {
+  everfresh: 'envasadora-al-vacio',
+  bags: 'bolsas-para-envasadora-al-vacio',
+};
+
+export const allProductSlugs = [
+  productSlugs.everfresh,
+  productSlugs.bags,
+];
+
 export const productIds = {
   everfresh: 1,
   bags: 3,

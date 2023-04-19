@@ -1,6 +1,6 @@
 {
   "app.metas.title": "La Envasadora",
-  "app.metas.description": "Envasadora al Vacío Everfresh",
+  "app.metas.description": "La Envasadora",
   "app.goBackBtn": "Ir atrás",
   "app.backBtn": "Atrás",
   "app.continueBtn": "Continuar",
@@ -196,8 +196,6 @@
   "productList.allCategories": "Todo",
   "productList.noItems": "No existe ningún producto.",
 
-  "productDetail.metas.title": "Detalles del Producto",
-  "productDetail.metas.description": "Detalles del Producto",
   "productDetail.price.iva": "IVA incluido",
   "productDetail.icons.shipping": "Entrega GRATIS en 24-48h.",
   "productDetail.icons.payment": "Pago seguro mediante PayPal.",
@@ -222,9 +220,6 @@
   "productDetail.reviews.noItems": "No existe ninguna reseña.",
   "productDetail.reviews.verified": "Verificada",
 
-  "everfresh.metas.title": "Envasadora Everfresh",
-  "everfresh.metas.description": "Envasadora al Vacío Everfresh",
-  "everfresh.h1": "Envasadora al Vacío Everfresh",
   "everfresh.description": "¡Prolonga la vida de tus alimentos en un solo click!",
   "everfresh.comment": "La Envasadora Everfresh es la solución perfecta para ahorrar dinero, tiempo y espacio. No desperdicies más comida y prolonga la vida de tus alimentos con el envasado. Además, su diseño compacto y portátil la convierten en la compañera ideal para tus viajes.",
   "everfresh.bagsButton": "Añadir bolsas de vacío con válvula",
@@ -258,9 +253,6 @@
   "everfresh.videoComment.3.content": "Con un tamaño y peso reducido, nuestra envasadora se convierte en la mejor opción para llevar en tu viajes.\n\nYa no tendrás que preocuparte por perder tiempo organizando tu equipaje o por los costosos gastos de las aerolíneas por el tamaño de tu mochila.\nCon ella puedes envasar ropa, alimentos o lo que se te ocurra al momento.",
   "everfresh.videoComment.3.button": "Preguntas frequentes",
 
-  "bags.metas.title": "Bolsas de Vacío",
-  "bags.metas.description": "Bolsas de Vacío con Válvula",
-  "bags.h1": "Bolsas de Vacío con Válvula",
   "bags.description": "Todos nuestros paquetes de bolsas contienen 10 unidades del producto.\n\nAñade la Envasadora Everfresh para aprovechar el descuento incluido.",
   "bags.comment": "En La Envasadora ofrecemos una amplia gama de tamaños, cada uno pensado para un uso especifico. Es importante elegir el tamaño que mejor se adapte a tu necesidad con el fin de obtener un envasado óptimo y eficaz.",
   "bags.pack.title": "Añade otro paquete de 10 bolsas en tu compra y obtén un descuento del {value}%",

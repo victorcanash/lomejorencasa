@@ -74,9 +74,9 @@ const PageHeader = (props: PageHeaderProps) => {
         openGraph={{
           type: 'website',
           locale: 'es_ES',
-          title: `${envConfig.NEXT_PUBLIC_APP_URL}${router.asPath}`,
-          url: envConfig.NEXT_PUBLIC_APP_URL,
+          title: getTitle(),
           description: getDescription(),
+          url: `${envConfig.NEXT_PUBLIC_APP_URL}${router.asPath}`,
           /*images: [
             {
               url: `https://${envConfig.NEXT_PUBLIC_APP_URL}/logo_lg.png`,

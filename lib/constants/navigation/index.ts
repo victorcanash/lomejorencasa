@@ -2,6 +2,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
 import type { NavDrawerItems } from '@core/types/navigation';
 
+import { productSlugs } from '@lib/constants/products';
 import type { Pages } from '@lib/types/navigation';
 
 export const pages: Pages = {
@@ -33,8 +34,8 @@ export const pages: Pages = {
     },
   },
   everfresh: {
-    path: '/everfresh',
-    filepath: '/everfresh',
+    path: `/productos/${productSlugs.everfresh}`,
+    filepath: '/productos/[product]',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
@@ -42,8 +43,8 @@ export const pages: Pages = {
     },
   },
   bags: {
-    path: '/bags',
-    filepath: '/bags',
+    path: `/productos/${productSlugs.bags}`,
+    filepath: '/productos/[product]',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {

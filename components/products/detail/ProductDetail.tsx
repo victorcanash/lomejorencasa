@@ -125,25 +125,16 @@ const ProductDetail = (props: ProductDetailProps) => {
   }, [addCartItem, everfreshProduct, getProductPacks]);
 
   const productH1 = useMemo(() => {
-    let formatted = false;
-    let text = product.name.current;
-    if (isEverfreshProduct(product)) { 
-      formatted = true
-      text = 'everfresh.h1';
-    } else if (isBagsProduct(product)) {
-      formatted = true
-      text = 'bags.h1';
+    let text = seoConfig.keywords.vacuumMachine.main;
+    if (isBagsProduct(product)) {
+      text = seoConfig.keywords.bags.main;
     }
     return (
       <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
-        { formatted ? 
-          <FormattedMessage id={text} defaultMessage={text} />
-          :
-          <>{ text }</>
-        }
+        { text }
       </Typography>
     );
-  }, [isBagsProduct, isEverfreshProduct, product]);
+  }, [isBagsProduct, product]);
 
   const productRating = useMemo(() => {
     if (!initialized) {
