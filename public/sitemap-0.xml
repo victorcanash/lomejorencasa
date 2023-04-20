@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+<url><loc>http://localhost:3000</loc><lastmod>2023-04-20T15:09:15.330Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/about</loc><lastmod>2023-04-20T15:09:15.330Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/activation</loc><lastmod>2023-04-20T15:09:15.330Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/admin</loc><lastmod>2023-04-20T15:09:15.330Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/cart</loc><lastmod>2023-04-20T15:09:15.330Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/checkout</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/conditions</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/contacto</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/cookies</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/faq</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/forgot</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/legal</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/login</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/newemail</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/orders</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/privacy</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/refunds</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/register</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/reset</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/settings</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/productos/envasadora-al-vacio</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>http://localhost:3000/productos/bolsas-para-envasadora-al-vacio</loc><lastmod>2023-04-20T15:09:15.331Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+</urlset>
