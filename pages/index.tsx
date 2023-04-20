@@ -15,8 +15,8 @@ const Home: NextPage = () => {
       <PageHeader
         pageType={PageTypes.main}
         metas={{
-          titleId: keywords.vacuumMachine.main,
-          descriptionId: keywords.vacuumMachine.main,
+          titleAdd: keywords.vacuumMachine.main,
+          descriptionAdd: keywords.vacuumMachine.main,
         }}
       />
 
