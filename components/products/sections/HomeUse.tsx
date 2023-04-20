@@ -11,7 +11,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 import CustomImage from '@core/components/CustomImage';
 
-import seoConfig from '@lib/constants/seo';
+import { keywords } from '@lib/config/next-seo.config';
 import { pages } from '@lib/constants/navigation';
 import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -111,7 +111,7 @@ const HomeUse = () => {
       >
         <CustomImage
           src={homeUseImgIds[0]}
-          alt={seoConfig.keywords.vacuumMachine.others[0]}
+          alt={keywords.vacuumMachine.others[0]}
           width="628"
           height="628"
           layout="responsive" 
@@ -150,7 +150,7 @@ const HomeUse = () => {
         type="default"
         source={{ 
           src: homeUseImgIds[2],
-          alt: seoConfig.keywords.bags.others[0],
+          alt: keywords.bags.others[0],
           width: '8001',
           height: '2800',
         }}
@@ -174,7 +174,7 @@ const HomeUse = () => {
             type="default"
             source={{ 
               src: homeUseImgIds[3],
-              alt: seoConfig.keywords.bags.others[0],
+              alt: keywords.bags.others[0],
               width: '1080',
               height: '1080',
             }}
@@ -219,22 +219,22 @@ const HomeUse = () => {
           {
             type: 'video',
             src: homeVideoIds[0],
-            alt: seoConfig.keywords.vacuumMachine.others[1],
+            alt: keywords.vacuumMachine.others[1],
           },
           {
             type: 'image',
             src: homeUseImgIds[4],
-            alt: seoConfig.keywords.bags.main,
+            alt: keywords.bags.main,
           },
           {
             type: 'video',
             src: homeVideoIds[1],
-            alt: seoConfig.keywords.vacuumMachine.others[0],
+            alt: keywords.vacuumMachine.others[0],
           },
           {
             type: 'video',
             src: homeVideoIds[2],
-            alt: seoConfig.keywords.vacuumMachine.others[0],
+            alt: keywords.vacuumMachine.others[0],
           }
         ] as Source[]).map((item, index) => (
           <Fragment key={index}>

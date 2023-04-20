@@ -5,12 +5,12 @@ import { ParsedUrlQuery } from 'querystring';
 import { PageTypes } from '@core/constants/navigation';
 import type { Product } from '@core/types/products';
 
+import { keywords } from '@lib/config/next-seo.config';
 import { allProductPaths, productPaths } from '@lib/constants/products';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ProductDetail from '@components/products/detail';
-import seoConfig from '@lib/constants/seo';
 
 type ProductProps = {
   path: string,
@@ -32,9 +32,9 @@ const Product: NextPage<ProductProps> = (props) => {
 
   const metaTitle = useMemo(() => {
     if (path === productPaths.bags) {
-      return seoConfig.keywords.bags.main
+      return keywords.bags.main
     }
-    return seoConfig.keywords.vacuumMachine.main;
+    return keywords.vacuumMachine.main;
   }, [path]);
 
   return (

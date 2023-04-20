@@ -22,7 +22,7 @@ import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 // import HideOnScroll from '@core/components/HideOnScroll';
 
-import seoConfig from '@lib/constants/seo';
+import { keywords } from '@lib/config/next-seo.config';
 import typographies from '@lib/constants/themes/typographies';
 import { pages } from '@lib/constants/navigation';
 import { navbarLogoId } from '@lib/constants/multimedia';
@@ -143,7 +143,7 @@ const NavBar = () => {
                 }
                 <CustomImage
                   src={navbarLogoId}
-                  alt={seoConfig.keywords.vacuumMachine.main}
+                  alt={keywords.vacuumMachine.main}
                   height={smallBreakpoint ? '50px' :'70px'}
                   width={smallBreakpoint ? '136px' : '156px'}
                   layout="fixed"

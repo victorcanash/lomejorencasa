@@ -13,7 +13,7 @@ import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
-import seoConfig from '@lib/constants/seo';
+import { keywords } from '@lib/config/next-seo.config';
 import { pages } from '@lib/constants/navigation';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -94,15 +94,15 @@ const HomeBanner = () => {
   const getAltImg = useCallback((index: number) => {
     switch (index) {
       case 0:
-        return seoConfig.keywords.vacuumMachine.others[0];
+        return keywords.vacuumMachine.others[0];
       case 1:
-        return seoConfig.keywords.vacuumMachine.others[1];
+        return keywords.vacuumMachine.others[1];
       case 2:
-        return seoConfig.keywords.vacuumMachine.others[0];
+        return keywords.vacuumMachine.others[0];
       case 3:
-        return seoConfig.keywords.vacuumMachine.others[1];
+        return keywords.vacuumMachine.others[1];
       default:
-        return seoConfig.keywords.vacuumMachine.others[0];
+        return keywords.vacuumMachine.others[0];
     }
   }, []);
 

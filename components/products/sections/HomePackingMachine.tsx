@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 
 import { convertElementToSx } from '@core/utils/themes';
 
-import seoConfig from '@lib/constants/seo';
+import { keywords } from '@lib/config/next-seo.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { homePackingMachineImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
@@ -102,7 +102,7 @@ const HomePackingMachine = () => {
           type="homePackingMachine"
           source={{ 
             src: homePackingMachineImgIds[0],
-            alt: seoConfig.keywords.vacuumMachine.main,
+            alt: keywords.vacuumMachine.main,
             priority: true,
             width: '8000',
             height: '4500',

@@ -13,7 +13,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import seoConfig from '@lib/constants/seo';
+import { keywords } from '@lib/config/next-seo.config';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
@@ -166,7 +166,7 @@ const HomeConservation = () => {
         type="default"
         source={{
           src: homeBannerImgIds[2],
-          alt: seoConfig.keywords.vacuumMachine.main,
+          alt: keywords.vacuumMachine.main,
         }}
       />
     </>

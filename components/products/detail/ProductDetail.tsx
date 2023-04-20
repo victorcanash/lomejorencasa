@@ -37,7 +37,7 @@ import { scrollToSection } from '@core/utils/navigation';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
-import seoConfig from '@lib/constants/seo';
+import { keywords } from '@lib/config/next-seo.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { bagsMIXImgId, everfreshImgId } from '@lib/constants/multimedia';
@@ -129,9 +129,9 @@ const ProductDetail = (props: ProductDetailProps) => {
   const productH1 = useMemo(() => {
     let text = '';
     if (isEverfreshProduct(product)) {
-      text = seoConfig.keywords.vacuumMachine.main;
+      text = keywords.vacuumMachine.main;
     } else if (isBagsProduct(product)) {
-      text = seoConfig.keywords.bags.main;
+      text = keywords.bags.main;
     }
     return (
       <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
@@ -477,7 +477,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                     return {
                       src: item,
                       alt: isEverfreshProduct(product) ?
-                        seoConfig.keywords.vacuumMachine.main : seoConfig.keywords.bags.main,
+                        keywords.vacuumMachine.main : keywords.bags.main,
                       priority: true,
                     } as Source;
                   })
@@ -584,7 +584,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                   >
                     <CustomImage
                       src={everfreshImgId}
-                      alt={seoConfig.keywords.vacuumMachine.others[0]}
+                      alt={keywords.vacuumMachine.others[0]}
                       width="1080"
                       height="1080"
                       priority
@@ -610,7 +610,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                   >
                     <CustomImage
                       src={bagsMIXImgId}
-                      alt={seoConfig.keywords.bags.others[0]}
+                      alt={keywords.bags.others[0]}
                       width="1080"
                       height="1080"
                       priority

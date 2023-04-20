@@ -9,7 +9,6 @@ import 'styles/globals.css';
 
 import { useEffect } from 'react';
 import type { AppProps } from 'next/app';
-import Head from 'next/head';
 // import { useRouter } from 'next/router';
 
 import NP from 'number-precision'
@@ -29,6 +28,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 import createEmotionCache from '@core/cache/createEmotionCache';
 import envConfig from '@core/config/env.config';
 
+import seoConfig from '@lib/config/next-seo.config';
 import { messages } from '@lib/constants/lang';
 import theme from '@lib/constants/themes';
 import snackbarConfig from '@lib/constants/snackbar';
@@ -60,9 +60,6 @@ function MyApp(props: MyAppProps) {
   //const { locale } = useRouter();
   const locale = 'es';
 
-  const title = messages[locale]['app.metas.title'];
-  const description = messages[locale]['app.metas.description'];
-
   useEffect(() => {
     NP.enableBoundaryChecking(false)
 
@@ -74,44 +71,8 @@ function MyApp(props: MyAppProps) {
   return (
     <>
       <DefaultSeo
-        title={title}
-        description={description}
-        openGraph={{
-          type: 'website',
-          locale: 'es_ES',
-          title: title,
-          url: envConfig.NEXT_PUBLIC_APP_URL,
-          description: description,
-          /*images: [
-            {
-              url: `https://${envConfig.NEXT_PUBLIC_APP_URL}/logo_lg.png`,
-              width: 1000,
-              height: 750,
-            },
-          ],*/
-          siteName: title,
-        }}
+        { ...seoConfig }
       />
-
-      <Head>
-        <meta
-          name="keywords"
-          content={
-            [
-              'Laenvasadora',
-              'La Envasadora',
-              'Envasadora al Vacío',
-              'Envasadora al Vacío Everfresh',
-              'Bolsas de Vacío',
-              'Bolsas de Vacío con Válvula',
-              'Máquina de Vacío',
-              'Selladora de Alimentos',
-            ].join(',')
-          }
-        />
-        <meta name="author" content={title} />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
 
       <GoogleAnalythics
         measurementId={envConfig.NEXT_PUBLIC_GOOGLE_AM_ID}
