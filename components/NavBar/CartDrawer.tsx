@@ -39,7 +39,7 @@ const CartDrawer = (props: CartDrawerProps) => {
         variant="dense"
         disableGutters
         sx={{
-          minHeight: smallBreakpoint ? '70px' : '98px',
+          minHeight: smallBreakpoint ? '75px' : '98px',
         }}
       />
       <Box

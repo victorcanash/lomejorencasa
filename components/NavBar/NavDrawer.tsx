@@ -144,13 +144,13 @@ const NavDrawer = (props: NavDrawerProps) => {
         variant="dense"
         disableGutters
         sx={{
-          minHeight: smallBreakpoint ? '70px' : '98px',
+          minHeight: smallBreakpoint ? '75px' : '98px',
         }}
       />
       <Box
         sx={{
           overflow: 'auto',
-          width: '200px',
+          width: '250px',
         }}
       >
         <List component="div">
