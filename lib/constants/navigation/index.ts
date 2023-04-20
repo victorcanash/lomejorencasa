@@ -195,8 +195,8 @@ export const pages: {
   },
   
   contact: {
-    path: '/contact',
-    filepath: '/contact',
+    path: '/contacto',
+    filepath: '/contacto',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
