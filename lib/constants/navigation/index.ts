@@ -91,8 +91,8 @@ export const pages: {
     },
   },
   faq: {
-    path: '/faq',
-    filepath: '/faq',
+    path: '/preguntas-frequentes',
+    filepath: '/preguntas-frequentes',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
