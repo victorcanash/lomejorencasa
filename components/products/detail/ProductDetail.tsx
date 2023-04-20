@@ -45,11 +45,11 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
-import useSelectInventory from '@lib/hooks/useSelectInventory';
 import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import LoadingBtn from '@components/ui/LoadingBtn';
 import LoadingRating from '@components/ui/LoadingRating';
 import ProductCarousel from '@components/products/detail/ProductCarousel';
+import SelectInventory from '@components/products/inputs/SelectInventory'
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
 
@@ -68,6 +68,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     bagsProduct,
     isEverfreshProduct,
     isBagsProduct,
+    getProductInventories,
     getProductPacks,
     getBagsPack,
     getProductDetailImgsUrl,
@@ -78,11 +79,12 @@ const ProductDetail = (props: ProductDetailProps) => {
   const intl = useIntl();
 
   const { addCartItem } = useCart(false);
-  const { Select: SelectInventory, selectedInventory } = useSelectInventory(product);
-  const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
   const { ref: payNowBtnRef, inView: payNowInView, entry } = useInView({
     threshold: 0,
   });
+
+  const [selectedInventory, setSelectedInventory] = useState<ProductInventory | undefined>(getProductInventories(product)[0]);
+  const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
 
   const [checkedBagsPack, setCheckedBagsPack] = useState(false);
   const [selectedBagsPack, setSelectedBagsPack] = useState<ProductPack | undefined>(undefined);
@@ -125,8 +127,10 @@ const ProductDetail = (props: ProductDetailProps) => {
   }, [addCartItem, everfreshProduct, getProductPacks]);
 
   const productH1 = useMemo(() => {
-    let text = seoConfig.keywords.vacuumMachine.main;
-    if (isBagsProduct(product)) {
+    let text = '';
+    if (isEverfreshProduct(product)) {
+      text = seoConfig.keywords.vacuumMachine.main;
+    } else if (isBagsProduct(product)) {
       text = seoConfig.keywords.bags.main;
     }
     return (
@@ -134,7 +138,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         { text }
       </Typography>
     );
-  }, [isBagsProduct, product]);
+  }, [isBagsProduct, isEverfreshProduct, product]);
 
   const productRating = useMemo(() => {
     if (!initialized) {
@@ -517,11 +521,14 @@ const ProductDetail = (props: ProductDetailProps) => {
               </Grid>
               {/* Cart inputs */}
               <Grid container columnSpacing={2} rowSpacing={1}>
-                { isBagsProduct(product) &&
+                {/* isBagsProduct(product) && */}
                   <Grid item>
-                    <SelectInventory label={true} />
+                    <SelectInventory
+                      product={product}
+                      selectedInventory={selectedInventory}
+                      setSelectedInventory={setSelectedInventory}
+                    />
                   </Grid>
-                }
                 <Grid item mb={2}>
                   <SelectQuantity label={true} />
                 </Grid>

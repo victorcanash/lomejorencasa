@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useMemo } from 'react';
 import type { NextPage, GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
@@ -21,42 +21,36 @@ const Product: NextPage<ProductProps> = (props) => {
 
   const { everfreshProduct, bagsProduct } = useProductsContext();
 
-  const page = usePage();
+  const _page = usePage();
 
-  const [product, setProduct] = useState<Product | undefined>(undefined);
+  const product = useMemo(() => {
+    if (path === productPaths.bags) {
+      return bagsProduct;
+    }
+    return everfreshProduct;
+  }, [bagsProduct, everfreshProduct, path]);
 
-  const getMetaTitle = useCallback(() => {
+  const metaTitle = useMemo(() => {
     if (path === productPaths.bags) {
       return seoConfig.keywords.bags.main
-    } else {
-      return seoConfig.keywords.vacuumMachine.main
     }
+    return seoConfig.keywords.vacuumMachine.main;
   }, [path]);
-
-  useEffect(() => {
-    if (path === productPaths.bags) {
-      setProduct(bagsProduct);
-    } else {
-      setProduct(everfreshProduct);
-    }
-  }, [bagsProduct, everfreshProduct, path]);
 
   return (
     <>
       <PageHeader
         pageType={PageTypes.main}
         metas={{
-          titleAdd: getMetaTitle(),
-          descriptionAdd: getMetaTitle(),
+          titleAdd: metaTitle,
+          descriptionAdd: metaTitle,
         }}
         marginTop={true}
       />
 
-      { product &&
-        <ProductDetail 
-          product={product}
-        />
-      }
+      <ProductDetail 
+        product={product}
+      />
     </>
   );
 };
