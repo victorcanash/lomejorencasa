@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useCallback, useMemo } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -41,7 +41,7 @@ const NavDrawer = (props: NavDrawerProps) => {
 
   const { logout } = useAuth(); 
 
-  const handleItemBtn = (item: NavDrawerItems) => {
+  const handleItemBtn = useCallback((item: NavDrawerItems) => {
     if (item.items?.length > 0) {
       handleCollapse(item);
     } else {
@@ -50,18 +50,18 @@ const NavDrawer = (props: NavDrawerProps) => {
         logout();
       }
     }
-  };
+  }, [handleCollapse, handleOpen, logout]);
 
-  const listItemBtnSx = (item: NavDrawerItems) => {
+  const listItemBtnSx = useCallback((item: NavDrawerItems) => {
     if (!item.items) {
       return { 
         pl: 4 
       };
     }
     return undefined;
-  };
+  }, []);
 
-  const listItemBtnContent = (item: NavDrawerItems) => (
+  const listItemBtnContent = useCallback((item: NavDrawerItems) => (
     <>
       <ListItemText
         primary={
@@ -80,9 +80,9 @@ const NavDrawer = (props: NavDrawerProps) => {
         </>
       }
     </>
-  );
+  ), []);
 
-  const listItemBtn = (item: NavDrawerItems) => (
+  const listItemBtn = useCallback((item: NavDrawerItems) => (
     <>
       { item.path ?
         <ListItemButton 
@@ -103,7 +103,33 @@ const NavDrawer = (props: NavDrawerProps) => {
         </ListItemButton>
       }
     </>
-  );
+  ), [handleItemBtn, listItemBtnContent, listItemBtnSx]);
+
+  const listItems = useMemo(() => (
+    <>
+      { items.map((item, index) => (
+        <Fragment key={index}>
+          { listItemBtn(item) }
+          { item.items.length > 0  &&
+            <Collapse
+              in={item.open} 
+              timeout="auto" 
+              unmountOnExit
+            >
+              <List component="div" disablePadding>
+                { item.items.map((subitem) => (
+                  <Fragment key={subitem.text.id}>
+                    { listItemBtn(subitem as NavDrawerItems) }
+                  </Fragment>
+                ))}
+              </List>
+            </Collapse>
+          }
+          <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider)} />
+        </Fragment>
+      ))}
+    </>
+  ), [items, listItemBtn]);
 
   return (
     <Drawer
@@ -128,27 +154,7 @@ const NavDrawer = (props: NavDrawerProps) => {
         }}
       >
         <List component="div">
-          { items.map((item, index) => (
-            <Fragment key={index}>
-              { listItemBtn(item) }
-              { item.items.length > 0  &&
-                <Collapse
-                  in={item.open} 
-                  timeout="auto" 
-                  unmountOnExit
-                >
-                  <List component="div" disablePadding>
-                    { item.items.map((subitem) => (
-                      <Fragment key={subitem.text.id}>
-                        { listItemBtn(subitem as NavDrawerItems) }
-                      </Fragment>
-                    ))}
-                  </List>
-                </Collapse>
-              }
-              <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider)} />
-            </Fragment>
-          ))}
+          { listItems }
         </List>
       </Box>
     </Drawer>

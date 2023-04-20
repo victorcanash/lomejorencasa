@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -40,19 +41,19 @@ const NavBar = () => {
 
   const navDrawer = useNavDrawer();
 
-  const handleAppBarOnClick = () => {
+  const handleAppBarOnClick = useCallback(() => {
     navDrawer.close();
-  };
+  }, [navDrawer]);
 
-  const handleNavBarBtnOnClick = () => {
+  const handleNavBarBtnOnClick = useCallback(() => {
     navDrawer.handleOpen();
-  };
+  }, [navDrawer]);
 
-  const handleCartBtnOnClick = () => {
+  const handleCartBtnOnClick = useCallback(() => {
     handleCartDrawerOpen();
-  };
+  }, [handleCartDrawerOpen]);
 
-  const CartIcon = () => (
+  const CartIcon = useCallback(() => (
     <Badge
       badgeContent={
         <Box
@@ -66,7 +67,7 @@ const NavBar = () => {
     >
       <ShoppingCartIcon sx={{ fontSize: smallBreakpoint ? 25: 30 }} />
     </Badge>
-  );
+  ), [smallBreakpoint, totalQuantity]);
 
   return (
     <>
