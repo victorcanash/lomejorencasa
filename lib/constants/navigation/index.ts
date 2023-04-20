@@ -1,11 +1,41 @@
 import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
+import type { Page } from '@core/types/navigation';
 import type { NavDrawerItems } from '@core/types/navigation';
 
 import { productPaths } from '@lib/constants/products';
-import type { Pages } from '@lib/types/navigation';
 
-export const pages: Pages = {
+export const pages: {
+  home: Page,
+  productList: Page,
+  productDetail: Page,
+  everfresh: Page,
+  bags: Page,
+  about: Page,
+  faq: Page,
+  cart: Page,
+  checkout: Page,
+
+  privacy: Page,
+  cookies: Page,
+  legal: Page,
+  conditions: Page,
+  refunds: Page,
+
+  login: Page,
+  register: Page,
+  forgot: Page,
+  
+  contact: Page,
+  orderList: Page,
+  settings: Page,
+
+  activation: Page,
+  reset: Page,
+  newemail: Page,
+  
+  admin: Page,
+} = {
   home: {
     path: '/',
     filepath: '/',
