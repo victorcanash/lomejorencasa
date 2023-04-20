@@ -15,8 +15,6 @@ import NP from 'number-precision'
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { SnackbarProvider } from 'notistack';
-import GoogleAnalythics from '@bradgarropy/next-google-analytics';
-import TagManager from 'react-gtm-module';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
@@ -26,7 +24,6 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { config } from '@fortawesome/fontawesome-svg-core';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
-import envConfig from '@core/config/env.config';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { messages } from '@lib/constants/lang';
@@ -46,6 +43,8 @@ config.autoAddCss = false;
 
 const clientSideEmotionCache = createEmotionCache();
 
+const locale = 'es';
+
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
@@ -58,24 +57,15 @@ function MyApp(props: MyAppProps) {
   } = props;
 
   //const { locale } = useRouter();
-  const locale = 'es';
 
   useEffect(() => {
     NP.enableBoundaryChecking(false)
-
-    TagManager.initialize({ 
-      gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
-    });
   }, []);
 
   return (
     <>
       <DefaultSeo
         { ...seoConfig }
-      />
-
-      <GoogleAnalythics
-        measurementId={envConfig.NEXT_PUBLIC_GOOGLE_AM_ID}
       />
 
       <IntlProvider locale={locale} messages={messages[locale]}>
