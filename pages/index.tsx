@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 
 import { PageTypes } from '@core/constants/navigation';
 
+import { keywords } from '@lib/config/next-seo.config';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import EverfreshHome from '@components/products/home';
@@ -14,8 +15,8 @@ const Home: NextPage = () => {
       <PageHeader
         pageType={PageTypes.main}
         metas={{
-          titleId: 'home.metas.title',
-          descriptionId: 'home.metas.description',
+          titleId: keywords.vacuumMachine.main,
+          descriptionId: keywords.vacuumMachine.main,
         }}
       />
 

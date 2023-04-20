@@ -138,7 +138,7 @@ const NavBar = () => {
               >
                 { pages.home.filepath === router.pathname &&
                   <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
-                    <FormattedMessage id="home.h1" />
+                    { keywords.vacuumMachine.main }
                   </Typography>
                 }
                 <CustomImage
