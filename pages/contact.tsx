@@ -18,8 +18,6 @@ const Contact: NextPage = () => {
         metas={{
           titleId: 'contact.metas.title',
           descriptionId: 'contact.metas.description',
-          noindex: true,
-          nofollow: true,
         }}
         marginTop={true}
         texts={{
