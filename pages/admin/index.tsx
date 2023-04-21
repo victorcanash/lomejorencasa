@@ -12,7 +12,7 @@ import { AdminSections } from '@core/constants/admin';
 import usePage from '@lib/hooks/usePage';
 import useAdmin from '@lib/hooks/useAdmin';
 import PageHeader from '@components/ui/PageHeader';
-import GoBackBtn from '@components/ui/GoBackBtn';
+import BackBtn from '@components/ui/BackBtn';
 import HomeSection from '@components/admin/sections/HomeSection';
 import CheckCategoriesSection from '@components/admin/sections/CheckCategoriesSection';
 import CheckProductsSection from '@components/admin/sections/CheckProductsSection';
@@ -85,7 +85,7 @@ const Admin: NextPage = () => {
               <FormattedMessage id="admin.h1" />
             </Typography>
             :
-            <GoBackBtn />
+            <BackBtn />
           }
           <Divider sx={{ mt: 1, mb: 4 }} />
           { getCurrentSection() }
