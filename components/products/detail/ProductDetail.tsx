@@ -79,8 +79,9 @@ const ProductDetail = (props: ProductDetailProps) => {
   const intl = useIntl();
 
   const { addCartItem } = useCart(false);
-  const { ref: payNowBtnRef, inView: payNowInView, entry } = useInView({
+  const { ref: payNowBtnRef, inView: payNowInView } = useInView({
     threshold: 0,
+    rootMargin: '-83px 0px 1000px 0px',
   });
 
   const [selectedInventory, setSelectedInventory] = useState<ProductInventory | undefined>(getProductInventories(product)[0]);
