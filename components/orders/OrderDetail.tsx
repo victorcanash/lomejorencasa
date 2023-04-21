@@ -4,7 +4,6 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
 
 import { AddressTypes } from '@core/constants/addresses'
 import type { Order } from '@core/types/orders';
@@ -12,7 +11,7 @@ import type { UserAddress } from '@core/types/user';
 
 //import CartDetail from '@components/cart/CartDetail';
 import AddressDetail from '@components/addresses/AddressDetail';
-import GoBackBtn from '@components/ui/GoBackBtn';
+import BackBtn from '@components/ui/BackBtn';
 
 type OrderDetailProps = {
   order: Order,
@@ -32,99 +31,78 @@ const OrderDetail = (props: OrderDetailProps) => {
 
   return (
     <>
-      <Typography component="h1" variant="h1" mb={1}>
+      <Typography component="div" variant="h3">
         {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.bigbuyId}`}
       </Typography>
 
-      <Typography component="div" variant="body1" pt={2}>
+      <Typography component="div" variant="body1Head" mt={3}>
         {`${intl.formatMessage({ id: "orderDetail.status" })}: ${order.bigbuy.status}`}
       </Typography>
 
-      <Grid container spacing={1} py={3}>
-        <Grid item xs={12} sm={6}>
-          <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: "orderDetail.date" })}: ${convertToDate(order.createdAt)}`}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          { order.transaction.creditCard.cardType != '' &&
-            <Typography component="div" variant="body1">
-              <FormattedMessage 
-                id="orderDetail.paidCard" 
-                values={{
-                  cardType: order.transaction.creditCard.cardType,
-                  last4: order.transaction.creditCard.last4,
-                }}
-              />
-            </Typography>
-          }
-          { order.transaction.paypalAccount.payerEmail != '' &&
-            <Typography component="div" variant="body1">
-              <FormattedMessage 
-                id="orderDetail.paidPaypal" 
-                values={{
-                  payerEmail: order.transaction.paypalAccount.payerEmail,
-                }}
-              />
-            </Typography>
-          }
-        </Grid>
-      </Grid>
+      <Typography component="div" variant="body1Head" mt={3}>
+        {`${intl.formatMessage({ id: "orderDetail.date" })}: ${convertToDate(order.createdAt)}`}
+      </Typography>
 
-      <Grid container spacing={1} pb={3}>
+      { order.transaction.creditCard.cardType != '' &&
+        <Typography component="div" variant="body1Head" mt={3}>
+          <FormattedMessage 
+            id="orderDetail.paidCard" 
+            values={{
+              cardType: order.transaction.creditCard.cardType,
+              last4: order.transaction.creditCard.last4,
+            }}
+          />
+        </Typography>
+      }
+      { order.transaction.paypalAccount.payerEmail != '' &&
+        <Typography component="div" variant="body1Head" mt={3}>
+          <FormattedMessage 
+            id="orderDetail.paidPaypal" 
+            values={{
+              payerEmail: order.transaction.paypalAccount.payerEmail,
+            }}
+          />
+        </Typography>
+      }
+
+      <Grid container mt={3}>
         <Grid item xs={6}>
-          <Typography component="div" variant="body1">
-            <FormattedMessage 
-              id="forms.shipping" 
-            />
-          </Typography>
-          <Box mt={1}>
+          <AddressDetail 
+            address={{
+              id: 0,
+              userId: 0,
+              type: AddressTypes.shipping,
+              firstName: order.bigbuy.shippingAddress.firstName,
+              lastName: order.bigbuy.shippingAddress.lastName,
+              addressLine1: order.bigbuy.shippingAddress.address,
+              addressLine2: undefined,
+              postalCode: order.bigbuy.shippingAddress.postcode,
+              locality: order.bigbuy.shippingAddress.town,
+              country: order.bigbuy.shippingAddress.country,
+            } as UserAddress}
+          />
+        </Grid>
+        { order.transaction.billing.addressLine1 != '' &&
+          <Grid item xs={6}>
             <AddressDetail 
               address={{
                 id: 0,
                 userId: 0,
-                type: AddressTypes.shipping,
-                firstName: order.bigbuy.shippingAddress.firstName,
-                lastName: order.bigbuy.shippingAddress.lastName,
-                addressLine1: order.bigbuy.shippingAddress.address,
-                addressLine2: undefined,
-                postalCode: order.bigbuy.shippingAddress.postcode,
-                locality: order.bigbuy.shippingAddress.town,
-                country: order.bigbuy.shippingAddress.country,
+                type: AddressTypes.billing,
+                firstName: order.transaction.billing.firstName,
+                lastName: order.transaction.billing.lastName,
+                addressLine1: order.transaction.billing.addressLine1,
+                addressLine2: order.transaction.billing.addressLine2,
+                postalCode: order.transaction.billing.postalCode,
+                locality: order.transaction.billing.locality,
+                country: order.transaction.billing.country,
               } as UserAddress}
-              variant="body2"
             />
-          </Box>
-        </Grid>
-        { order.transaction.billing.addressLine1 != '' &&
-          <Grid item xs={6}>
-            <Typography component="div" variant="body1">
-              <FormattedMessage 
-                id="forms.billing" 
-              />
-            </Typography>
-            <Box mt={1}>
-              <AddressDetail 
-                address={{
-                  id: 0,
-                  userId: 0,
-                  type: AddressTypes.billing,
-                  firstName: order.transaction.billing.firstName,
-                  lastName: order.transaction.billing.lastName,
-                  addressLine1: order.transaction.billing.addressLine1,
-                  addressLine2: order.transaction.billing.addressLine2,
-                  postalCode: order.transaction.billing.postalCode,
-                  locality: order.transaction.billing.locality,
-                  country: order.transaction.billing.country,
-                } as UserAddress}
-                variant="body2"
-              />
-            </Box>
           </Grid>
         }
       </Grid>
 
-      <Typography component="div" variant="body1" mb={2}>
+      <Typography component="div" variant="body1Head" mt={3}>
         {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
       </Typography>
       {/*<CartDetail
@@ -140,10 +118,10 @@ const OrderDetail = (props: OrderDetailProps) => {
             flexWrap: 'nowrap',
             justifyContent: 'space-between',
           }}
-          mt={3}
+          mt={4}
         >
           <Grid item>
-            <GoBackBtn onClick={onClickBack} />
+            <BackBtn onClick={onClickBack} />
           </Grid>
         </Grid>
       }
