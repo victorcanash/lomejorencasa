@@ -8,6 +8,7 @@ import 'swiper/css/effect-cards';
 import 'styles/globals.css';
 
 import { useEffect } from 'react';
+import Head from 'next/head';
 import type { AppProps } from 'next/app';
 // import { useRouter } from 'next/router';
 
@@ -67,6 +68,10 @@ function MyApp(props: MyAppProps) {
       <DefaultSeo
         { ...seoConfig }
       />
+
+      <Head>
+        <meta name="facebook-domain-verification" content="ogx6uggctpg463pxxngpttfinfajqg" />
+      </Head>
 
       <IntlProvider locale={locale} messages={messages[locale]}>
         <CacheProvider value={emotionCache}>
