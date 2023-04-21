@@ -150,6 +150,16 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiSwitch: {
+      styleOverrides: {
+        thumb: {
+          '&.MuiSwitch-thumb': convertElementToSx(themeDefaultElements.switch.thumb),
+        },
+        root: {
+          '& .MuiSwitch-switchBase.Mui-checked  + .MuiSwitch-track': convertElementToSx(themeDefaultElements.switch.base),
+        },
+      },
+    },
     MuiListItemText: {
       styleOverrides: {
         primary: convertElementToSx(themeDefaultElements.listItem),

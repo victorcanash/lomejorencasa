@@ -222,6 +222,28 @@ export const themeDefaultElements: ThemeDefaultElements = {
       },
     },
   },
+  switch: {
+    base: {
+      text: {
+        color: {
+          default: colors.text.black,
+        },
+      },
+      backgroundColor: {
+        default: colors.text.black,
+      },
+    },
+    thumb: {
+      text: {
+        color: {
+          default: colors.background.third,
+        },
+      },
+      backgroundColor: {
+        default: colors.background.third,
+      },
+    },
+  },
   listItem: {
     text: {
       font: {

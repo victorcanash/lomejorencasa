@@ -8,6 +8,7 @@ import {
   useEffect,
 } from 'react';
 
+// import { removeCookies } from 'cookies-next';
 import GoogleAnalythics from '@bradgarropy/next-google-analytics';
 import TagManager from 'react-gtm-module';
 
@@ -25,6 +26,10 @@ type ContextType = {
   setInitialized: Dispatch<SetStateAction<boolean>>,
   CookiesBanner: () => JSX.Element,
   GoogleAnalythics: () => JSX.Element,
+  acceptedCookies: boolean,
+  openCookiesBanner: boolean,
+  refuseCookies: () => void,
+  acceptCookies: () => void
 };
 
 export const AppContext = createContext<ContextType>({
@@ -34,6 +39,10 @@ export const AppContext = createContext<ContextType>({
   setInitialized: () => {},
   CookiesBanner: () => <></>,
   GoogleAnalythics: () => <></>,
+  acceptedCookies: false,
+  openCookiesBanner: false,
+  refuseCookies: () => {},
+  acceptCookies: () => {},
 });
 
 export const useAppContext = () => {
@@ -55,12 +64,12 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     setOpenCookiesBanner(!openCookiesBanner);
   };
 
-  const onRefuseCookies = useCallback(() => {
+  const refuseCookies = useCallback(() => {
     setAcceptedCookies(false);
     setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.refused);
   }, []);
 
-  const onAcceptCookies = useCallback(() => {
+  const acceptCookies = useCallback(() => {
     setAcceptedCookies(true);
     setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.accepted);
   }, []);
@@ -74,10 +83,21 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   }, [acceptedCookies]);
 
   useEffect(() => {
-    if (!getStorageItem(Storages.local, CookiesConsentKey)) {
+    const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey)
+    if (!cookiesConsentValue) {
       setOpenCookiesBanner(true);
+      setAcceptedCookies(false);
     } else {
-      setOpenCookiesBanner(false);
+      if (cookiesConsentValue === CookiesConsentValues.accepted) {
+        setOpenCookiesBanner(false);
+        setAcceptedCookies(true);
+      } else if (cookiesConsentValue === CookiesConsentValues.refused) {
+        setOpenCookiesBanner(false);
+        setAcceptedCookies(false);
+      } else {
+        setOpenCookiesBanner(true);
+        setAcceptedCookies(false);
+      }
     }
   }, []);
 
@@ -85,8 +105,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     <CookiesBanner
       open={openCookiesBanner}
       handleBanner={handleCookiesBanner}
-      onRefuse={onRefuseCookies}
-      onAccept={onAcceptCookies}
+      onRefuse={refuseCookies}
+      onAccept={acceptCookies}
     />
   );
 
@@ -109,6 +129,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         setInitialized,
         CookiesBanner: CookiesBannerComponent,
         GoogleAnalythics: GoogleAnalythicsComponent,
+        acceptedCookies,
+        openCookiesBanner,
+        refuseCookies,
+        acceptCookies,
       }}
     >
       {children}
