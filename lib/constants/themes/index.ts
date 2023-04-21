@@ -201,6 +201,7 @@ const themeOptions: ThemeOptions = {
         root: convertElementToSx(themeDefaultElements.alert.default),
         standardSuccess: convertElementToSx(themeDefaultElements.alert.success),
         standardError: convertElementToSx(themeDefaultElements.alert.error),
+        icon: convertElementToSx(themeDefaultElements.alert.icon),
       },
     },
   },

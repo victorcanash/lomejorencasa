@@ -319,6 +319,15 @@ export const themeDefaultElements: ThemeDefaultElements = {
         default: colors.background.error,
       },
     },
+    icon: {
+      spacing: {
+        default: {
+          padding: {
+            top: '10px',
+          },
+        },
+      },
+    },
   },
 };
 

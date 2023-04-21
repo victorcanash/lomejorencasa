@@ -34,10 +34,10 @@ const convertElementToEventSx = (
     borderTopLeftRadius: themeElement.border?.[themeElementType]?.radius?.topLeft,
     borderBottomRightRadius: themeElement.border?.[themeElementType]?.radius?.bottomRight,
     borderBottomLeftRadius: themeElement.border?.[themeElementType]?.radius?.bottomLeft,
-    p: themeElement.spacing?.[themeElementType]?.padding?.all,
-    pr: themeElement.spacing?.[themeElementType]?.padding?.right,
-    pl: themeElement.spacing?.[themeElementType]?.padding?.left,
-    pt: themeElement.spacing?.[themeElementType]?.padding?.top,
-    pb: themeElement.spacing?.[themeElementType]?.padding?.bottom,
+    padding: themeElement.spacing?.[themeElementType]?.padding?.all,
+    paddingRight: themeElement.spacing?.[themeElementType]?.padding?.right,
+    paddingLeft: themeElement.spacing?.[themeElementType]?.padding?.left,
+    paddingTop: themeElement.spacing?.[themeElementType]?.padding?.top,
+    paddingBottom: themeElement.spacing?.[themeElementType]?.padding?.bottom,
   });
 };

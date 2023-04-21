@@ -62,6 +62,7 @@ export type ThemeDefaultElements = {
     default: ThemeElement,
     success: ThemeElement,
     error: ThemeElement,
+    icon: ThemeElement,
   },
 };
 
