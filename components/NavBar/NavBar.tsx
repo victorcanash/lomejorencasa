@@ -37,6 +37,7 @@ const NavBar = () => {
   const { totalQuantity, handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
 
   const router = useRouter();
+  const superSmallBreakpoint = useMediaQuery('(max-width:328px)')
   const smallBreakpoint = useMediaQuery('(max-width:450px)');
 
   const navDrawer = useNavDrawer();
@@ -64,10 +65,20 @@ const NavBar = () => {
           {totalQuantity > 9 ? '+9' : totalQuantity}
         </Box>
       }
+      invisible={totalQuantity < 1}
     >
       <ShoppingCartIcon sx={{ fontSize: smallBreakpoint ? 25: 30 }} />
     </Badge>
   ), [smallBreakpoint, totalQuantity]);
+
+  const getShippingTruckMr = useCallback(() => {
+    if (superSmallBreakpoint) {
+      return '0px';
+    } else if (smallBreakpoint) {
+      return '2px';
+    }
+    return '5px';
+  }, [smallBreakpoint, superSmallBreakpoint]);
 
   return (
     <>
@@ -84,6 +95,7 @@ const NavBar = () => {
             sx={{
               ...convertElementToSx(themeCustomElements.header.banners.shipping.content),
               p: '5px',
+              px: superSmallBreakpoint ? '0px' : undefined,
             }}
           >
             <Typography
@@ -100,7 +112,7 @@ const NavBar = () => {
                 size="lg" 
                 icon={faTruck}
                 style={{
-                  marginRight: smallBreakpoint ? '2px' : '5px',
+                  marginRight: getShippingTruckMr(),
                 }}
               />
               <FormattedMessage id="header.banners.shipping" />
@@ -155,7 +167,7 @@ const NavBar = () => {
             </Container>
             <Box sx={{ flexGrow: 1 }} />
             {/* Cart Button */}
-            { router.pathname === pages.cart.path || router.pathname === pages.checkout.path ?
+            { (router.pathname === pages.cart.path || router.pathname === pages.checkout.path) ?
               <IconButton
                 size="large"
                 component={Link}
