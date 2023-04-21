@@ -21,18 +21,24 @@ type OrderListProps = {
 };
 
 const OrderList = (props: OrderListProps) => {
-  const { orders, totalPages, currentPage, onChangePage, onClickShowOrder } = props;
+  const {
+    orders,
+    totalPages,
+    currentPage,
+    onChangePage,
+    onClickShowOrder,
+  } = props;
 
   const intl = useIntl();
   const router = useRouter();
 
-  const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
+  const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     onChangePage(page);
-  };
+  }, [onChangePage]);
 
-  const handleClickShowBtn = (order: Order) => {
+  const handleClickShowBtn = useCallback((order: Order) => {
     onClickShowOrder(order);
-  };
+  }, [onClickShowOrder]);
 
   const convertToDate = useCallback((date: Date | string) => {
     return new Date(date).toLocaleDateString(router.locale)

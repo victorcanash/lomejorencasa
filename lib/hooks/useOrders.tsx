@@ -7,7 +7,8 @@ import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail } fro
 import type { User } from '@core/types/user';
 import { 
   getOrders as getOrdersMW, 
-  getOrder as getOrderMW,
+  getOrderByBigbuyId as getOrderByBigbuyIdMW,
+  getOrderById as getOrderByIdMW,
   createFailedOrder as createFailedOrderMW,
   sendFailedOrderEmail as sendFailedOrderEmailMW,
 } from '@core/utils/orders';
@@ -69,7 +70,32 @@ const useOrders = () => {
     setSuccessMsg(intl.formatMessage({ id: 'orderDetail.successes.default' }));
   }, [intl, setLoading]);
 
-  const getOrder = useCallback( async (
+  const getOrderById = useCallback(async (
+    id: number,
+    onSuccess?: (order: Order) => void,
+    onError?: (errorMsg: string) => void
+  ) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await getOrderByIdMW(token, id)
+      .then((response: { order: Order }) => {
+        onGetOrderSuccess(response.order, onSuccess);
+      }).catch((error) => {
+        const errorMsg = error.message;
+        setErrorMsg(errorMsg);
+        setLoading(false);
+        enqueueSnackbar(
+          intl.formatMessage({ id: 'orderDetail.errors.default' }), 
+          { variant: 'error' }
+        );
+        if (onError) {
+          onError(errorMsg);
+        }
+      });
+  }, [enqueueSnackbar, intl, onGetOrderSuccess, setLoading, token]);
+
+  const getOrderByBigbuyId = useCallback(async (
     orderContact: OrderContact,
     onSuccess?: (order: Order) => void,
     onError?: (errorMsg: string) => void
@@ -77,7 +103,7 @@ const useOrders = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    await getOrderMW(orderContact)
+    await getOrderByBigbuyIdMW(orderContact)
       .then((response: { order: Order }) => {
         onGetOrderSuccess(response.order, onSuccess);
       }).catch((error) => {
@@ -162,7 +188,8 @@ const useOrders = () => {
     errorMsg,
     successMsg,
     getOrders,
-    getOrder,
+    getOrderByBigbuyId,
+    getOrderById,
     createFailedOrder,
     sendFailedOrderEmail,
   };

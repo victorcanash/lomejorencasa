@@ -24,17 +24,19 @@ const Orders: NextPage = () => {
   const { isLogged } = useAuthContext();
 
   const page = usePage(false);
-  const { getOrder, getOrders, successMsg, errorMsg } = useOrders();
+  const {
+    getOrders,
+    getOrderByBigbuyId,
+    getOrderById,
+    successMsg,
+    errorMsg,
+  } = useOrders();
 
   const [loadedOrders, setLoadedOrders] = useState(false);
   const [loggedOrders, setLoggedOrders] = useState<Order[]>([]);
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>(undefined);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-
-  const onChangePage = (page: number) => {
-    getOrders(page, onSuccessGetOrders, onErrorGetOrders);
-  };
 
   const onSuccessGetOrders = useCallback((orders: Order[], totalPages: number, currentPage: number) => {
     setLoggedOrders(orders);
@@ -47,13 +49,17 @@ const Orders: NextPage = () => {
     router.push(pages.home.path);
   }, [router]);
 
-  const showOrder = useCallback((order: Order) => {
-    setSelectedOrder(order);
-  }, []);
+  const onChangePage = useCallback((page: number) => {
+    getOrders(page, onSuccessGetOrders, onErrorGetOrders);
+  }, [getOrders, onErrorGetOrders, onSuccessGetOrders]);
 
   const onSuccessGetOrder = useCallback((order: Order) => {
     setSelectedOrder(order);
   }, []);
+
+  const showOrder = useCallback((order: Order) => {
+    getOrderById(order.id, onSuccessGetOrder)
+  }, [getOrderById, onSuccessGetOrder]);
 
   const onClickBack = useCallback(() => {
     setSelectedOrder(undefined);
@@ -114,7 +120,7 @@ const Orders: NextPage = () => {
             <>
               { !selectedOrder ?
                 <GetOrderForm
-                  getOrder={getOrder}
+                  getOrder={getOrderByBigbuyId}
                   onSuccess={onSuccessGetOrder}
                   successMsg={successMsg}
                   errorMsg={errorMsg}

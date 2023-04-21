@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Order, OrderContact } from '@core/types/orders';
 
@@ -10,7 +12,7 @@ type GetOrderFormProps = {
   onSuccess: (order: Order) => void,
   successMsg: string,
   errorMsg: string,
-}
+};
 
 const GetOrderForm = (props: GetOrderFormProps) => {
   const {
@@ -22,9 +24,9 @@ const GetOrderForm = (props: GetOrderFormProps) => {
 
   const { getOrderFormValidation, orderFieldsInitValues } = useForms();
 
-  const handleSubmit = async (values: OrderContact) => {
+  const handleSubmit = useCallback(async (values: OrderContact) => {
     getOrder(values, onSuccess);
-  };
+  }, [getOrder, onSuccess]);
 
   return (
     <BaseForm 
