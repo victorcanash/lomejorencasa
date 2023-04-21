@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -14,11 +14,23 @@ import { convertElementToSx } from '@core/utils/themes';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 
-const useSelectInventoryQuantity = (
+type SelectInventoryQuantityProps = {
   item: ProductInventory | ProductPack | CartItem | undefined,
+  selectedQuantity: number,
+  setSelectedQuantity: Dispatch<SetStateAction<number>>,
+  label?: boolean,
   onChange?: (quantity: number) => void,
-) => {
-  const [selectedQuantity, setSelectedQuantity] = useState(0);
+};
+
+const SelectInventoryQuantity = (props: SelectInventoryQuantityProps) => {
+  const {
+    item,
+    selectedQuantity,
+    setSelectedQuantity,
+    label,
+    onChange,
+  } = props;
+
   const [menuItems, setMenuItems] = useState<JSX.Element[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [prevItem, setPrevItem] = useState<ProductInventory | ProductPack | undefined>(undefined);
@@ -92,7 +104,7 @@ const useSelectInventoryQuantity = (
     if (onChange) {
       onChange(quantity);
     }
-  }, [checkMenuItems, onChange]);
+  }, [checkMenuItems, onChange, setSelectedQuantity]);
 
   useEffect(() => {
     if (!loaded) {
@@ -123,54 +135,44 @@ const useSelectInventoryQuantity = (
     } else if ((item as ProductPack)?.inventories) {
       setPrevItem(item as ProductPack);
     }
-  }, [checkMenuItems, item, item?.quantity, loaded, prevItem]);
+  }, [checkMenuItems, item, item?.quantity, loaded, prevItem, setSelectedQuantity]);
 
-  const Select = (props: { label?: boolean }) => {
-    const { label } = props;
-
-    return (
-      <Box>
-        { label && 
-          <Typography
-            component="div"
-            variant="h3"
-            sx={convertElementToSx(themeCustomElements.landing.quantityLabel)}
-            mb={1}
-          >
-            <FormattedMessage id="forms.quantity" />
-          </Typography>
-        }
-        { loaded && item ?
-          <MuiSelect
-            id="quantity-select"
-            value={selectedQuantity.toString()}
-            onChange={handleSelectChange}
-            disabled={disabled()}
-            fullWidth
-          >
-            { menuItems }
-          </MuiSelect>
-          :
-          <MuiSelect
-            id="quantity-select"
-            value="0"
-            disabled={true}
-            fullWidth
-          >
-            <MenuItem value="0">
-              { 0 }
-            </MenuItem>
-          </MuiSelect>
-        }
-      </Box>
-    );
-  };
-
-  return {
-    Select,
-    selectedQuantity,
-    loaded,
-  };
+  return (
+    <Box>
+      { label &&
+        <Typography
+          component="div"
+          variant="h3"
+          sx={convertElementToSx(themeCustomElements.landing.quantityLabel)}
+          mb={1}
+        >
+          <FormattedMessage id="forms.quantity" />
+        </Typography>
+      }
+      { loaded && item ?
+        <MuiSelect
+        id="select-inventory-quantity"
+          value={selectedQuantity.toString()}
+          onChange={handleSelectChange}
+          disabled={disabled()}
+          fullWidth
+        >
+          { menuItems }
+        </MuiSelect>
+        :
+        <MuiSelect
+          id="select-inventory-quantity"
+          value="0"
+          disabled={true}
+          fullWidth
+        >
+          <MenuItem value="0">
+            { 0 }
+          </MenuItem>
+        </MuiSelect>
+      }
+    </Box>
+  );
 };
 
-export default useSelectInventoryQuantity;
+export default SelectInventoryQuantity;

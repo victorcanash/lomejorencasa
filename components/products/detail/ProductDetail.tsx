@@ -45,11 +45,11 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
-import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import LoadingBtn from '@components/ui/LoadingBtn';
 import LoadingRating from '@components/ui/LoadingRating';
 import ProductCarousel from '@components/products/detail/ProductCarousel';
 import SelectInventory from '@components/products/inputs/SelectInventory'
+import SelectInventoryQuantity from '@components/products/inputs/SelectInventoryQuantity'
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
 
@@ -84,7 +84,7 @@ const ProductDetail = (props: ProductDetailProps) => {
   });
 
   const [selectedInventory, setSelectedInventory] = useState<ProductInventory | undefined>(getProductInventories(product)[0]);
-  const { Select: SelectQuantity, selectedQuantity } = useSelectInventoryQuantity(selectedInventory);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
 
   const [checkedBagsPack, setCheckedBagsPack] = useState(false);
   const [selectedBagsPack, setSelectedBagsPack] = useState<ProductPack | undefined>(undefined);
@@ -530,7 +530,12 @@ const ProductDetail = (props: ProductDetailProps) => {
                     />
                   </Grid>
                 <Grid item mb={2}>
-                  <SelectQuantity label={true} />
+                  <SelectInventoryQuantity
+                    item={selectedInventory}
+                    selectedQuantity={selectedQuantity}
+                    setSelectedQuantity={setSelectedQuantity}
+                    label={true}
+                  />
                 </Grid>
               </Grid>
               { isBagsProduct(product) &&

@@ -24,10 +24,10 @@ import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useSelectInventoryQuantity from '@lib/hooks/useSelectInventoryQuantity';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
+import SelectInventoryQuantity from '@components/products/inputs/SelectInventoryQuantity'
 
 type CartItemDetailProps = {
   item: CartItem | GuestCartCheckItem,
@@ -55,29 +55,27 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
   const intl = useIntl();
 
-  const { Select: SelectQuantity } = useSelectInventoryQuantity(
-    item as CartItem,
-    // On change
-    (quantity: number) => {
-      if (updateQuantity) {
-        updateQuantity(item as CartItem, quantity);
-      }
-    }
-  );
   const { couponFormValidation, couponFieldsInitValues } = useForms();
   const { applyCoupon, errorMsg } = useAuth();
 
+  const [selectedQuantity, setSelectedQuantity] = useState(item.quantity);
   const [availableQuantity, setAvailableQuantity] = useState(true);
 
-  const handleRemoveItem = () => {
+  const handleRemoveItem = useCallback(() => {
     if (updateQuantity) {
       updateQuantity(item as CartItem, 0, true);
     }
-  };
+  }, [item, updateQuantity]);
 
-  const handleCouponSubmit = async (_values: { couponCode: string }) => {
+  const handleSelectedQuantityChange = useCallback((quantity: number) => {
+    if (updateQuantity) {
+      updateQuantity(item as CartItem, quantity);
+    }
+  }, [item, updateQuantity]);
+
+  const handleCouponSubmit = useCallback(async (_values: { couponCode: string }) => {
     applyCoupon();
-  };
+  }, [applyCoupon]);
 
   const checkAvailableQuantity = useCallback(() => {
     if ((item as CartItem)?.cartId) {
@@ -207,7 +205,12 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   </Typography>
                   :
                   <>
-                    <SelectQuantity />      
+                    <SelectInventoryQuantity
+                      item={item as CartItem}
+                      selectedQuantity={selectedQuantity}
+                      setSelectedQuantity={setSelectedQuantity}
+                      onChange={handleSelectedQuantityChange}
+                    /> 
                     { ((item.inventory || item.pack) && item.quantity <= 0) &&
                       <Typography 
                         variant="body2"

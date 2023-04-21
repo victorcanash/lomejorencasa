@@ -84,15 +84,7 @@ const SelectInventory = (props: SelectInventoryProps) => {
             value={selectedInventory?.name.current || ''}
             onChange={handleSelectChange}
             sx={{
-              position: 'relative',
-              width: {
-                xs: '80vw',
-                xs_sm: '300px',
-              },
-              maxWidth: {
-                xs: '230px',
-                xs_sm: '300px',
-              },
+              width: '180px',
             }}
           >
             { items.map((item, index) => (
