@@ -46,6 +46,7 @@ export const getOrderById = (token: string, id: number) => {
   return new Promise<{order: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
+      timeout: 20000,
     };
     axios.get(`/orders/${id}`, options)
       .then(async (response: AxiosResponse) => {
@@ -70,7 +71,8 @@ export const getOrderByBigbuyId = (orderContact: OrderContact) => {
       params: {
         bigbuyId: orderContact.orderId,
         guestUserEmail: orderContact.guestUserEmail,
-      }
+      },
+      timeout: 20000,
     };
     axios.get(`/orders/-1`, options)
       .then(async (response: AxiosResponse) => {

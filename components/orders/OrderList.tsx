@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 
 import type { Order } from '@core/types/orders';
+import { convertToDate } from '@core/utils/dates';
 
 import Pagination from '@components/ui/Pagination';
 
@@ -29,8 +30,8 @@ const OrderList = (props: OrderListProps) => {
     onClickShowOrder,
   } = props;
 
-  const intl = useIntl();
   const router = useRouter();
+  const intl = useIntl();
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     onChangePage(page);
@@ -40,10 +41,6 @@ const OrderList = (props: OrderListProps) => {
     onClickShowOrder(order);
   }, [onClickShowOrder]);
 
-  const convertToDate = useCallback((date: Date | string) => {
-    return new Date(date).toLocaleDateString(router.locale)
-  }, [router.locale]);
-
   return (
     <>
       { orders.length > 0 ?
@@ -52,12 +49,12 @@ const OrderList = (props: OrderListProps) => {
             <Fragment key={order.id}>   
               <Grid item xs={12}>
                 <Typography variant="h3">
-                  {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.bigbuyId}`}
+                  {`${intl.formatMessage({ id: "orders.detail.number" })}: ${order.bigbuyId}`}
                 </Typography>
                 <Grid container spacing={1} py={3}>
                   <Grid item xs={6}>
                     <Typography component="div" variant="body1">
-                      {`${intl.formatMessage({ id: "orderDetail.date" })}: ${convertToDate(order.createdAt)}`}
+                      {`${intl.formatMessage({ id: "orders.detail.date" })}: ${convertToDate(order.createdAt, router.locale)}`}
                     </Typography>
                   </Grid>
                   <Grid item xs={6}>
@@ -65,7 +62,7 @@ const OrderList = (props: OrderListProps) => {
                       variant="contained"
                       onClick={() => handleClickShowBtn(order)}
                     >
-                      <FormattedMessage id="orderDetail.showBtn" />
+                      <FormattedMessage id="orders.detail.showBtn" />
                     </Button>
                   </Grid>
                 </Grid>
@@ -76,7 +73,7 @@ const OrderList = (props: OrderListProps) => {
         </Grid>
         :
         <Typography component="div" variant="body1" align="center" sx={{ my: 5 }}>
-          <FormattedMessage id="orderList.noItems" />
+          <FormattedMessage id="orders.list.noItems" />
         </Typography>
       }
 

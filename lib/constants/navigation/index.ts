@@ -27,7 +27,7 @@ export const pages: {
   forgot: Page,
   
   contact: Page,
-  orderList: Page,
+  orders: Page,
   settings: Page,
 
   activation: Page,
@@ -203,7 +203,7 @@ export const pages: {
       enabled: true,
     },
   },
-  orderList: {
+  orders: {
     path: '/orders',
     filepath: '/orders',
     protection: Protections.none,
@@ -290,7 +290,7 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
     text: {
       id: 'orders',
     },
-    path: pages.orderList.path,
+    path: pages.orders.path,
     items: [],
     open: false,
   },

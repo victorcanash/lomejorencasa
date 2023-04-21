@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
@@ -31,7 +31,7 @@ const useOrders = () => {
       onSuccess(orders, totalPages, currentPage);
     }
     setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'orderList.successes.default' }));
+    setSuccessMsg(intl.formatMessage({ id: 'orders.list.successes.default' }));
   }, [intl, setLoading]);
 
   const getOrders = useCallback(async (
@@ -53,7 +53,7 @@ const useOrders = () => {
         setErrorMsg(errorMsg);
         setLoading(false);
         enqueueSnackbar(
-          intl.formatMessage({ id: 'orderList.errors.default' }),
+          intl.formatMessage({ id: 'orders.list.errors.default' }),
           { variant: 'error' }
         );
         if (onError) {
@@ -67,7 +67,7 @@ const useOrders = () => {
       onSuccess(order);
     }
     setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'orderDetail.successes.default' }));
+    setSuccessMsg(intl.formatMessage({ id: 'orders.detail.successes.default' }));
   }, [intl, setLoading]);
 
   const getOrderById = useCallback(async (
@@ -86,7 +86,7 @@ const useOrders = () => {
         setErrorMsg(errorMsg);
         setLoading(false);
         enqueueSnackbar(
-          intl.formatMessage({ id: 'orderDetail.errors.default' }), 
+          intl.formatMessage({ id: 'orders.detail.errors.default' }), 
           { variant: 'error' }
         );
         if (onError) {
@@ -109,13 +109,13 @@ const useOrders = () => {
       }).catch((error) => {
         let errorMsg = error.message; 
         if (errorMsg.includes('bigbuyId')) {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.bigbuyId' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.bigbuyId' });
         } else if (errorMsg.includes('email')) {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.guestUserEmail' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.guestUserEmail' });
         } else if (errorMsg.includes('be logged')) {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.loggedOrder' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.loggedOrder' });
         } else {
-          errorMsg = intl.formatMessage({ id: 'orderDetail.errors.default' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.default' });
         }
         setErrorMsg(errorMsg);
         setLoading(false);
@@ -183,6 +183,11 @@ const useOrders = () => {
         setLoading(false);
       });
   }, [onSendFailedOrderEmailSuccess, setLoading, token]);
+
+  useEffect(() => {
+    setSuccessMsg('');
+    setErrorMsg('');
+  }, [isLogged, token]);
 
   return {
     errorMsg,

@@ -82,15 +82,15 @@ const Orders: NextPage = () => {
       <PageHeader
         pageType={PageTypes.main}
         metas={{
-          titleId: 'orderList.metas.title',
-          descriptionId: 'orderList.metas.description',
+          titleId: 'orders.metas.title',
+          descriptionId: 'orders.metas.description',
           noindex: true,
           nofollow: true,
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'orderList.h1',
+            id: 'orders.h1',
           },
         }}
       />

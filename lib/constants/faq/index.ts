@@ -136,7 +136,7 @@ export const questions: {
       text: { 
         id: '2',
       },
-      path: pages.orderList.path,
+      path: pages.orders.path,
     },
     {
       text: { 

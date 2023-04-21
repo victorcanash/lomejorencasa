@@ -169,7 +169,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
               { id: 'productDetail.shipping.1' }, { id: 'productDetail.shipping.2' }, { id: 'productDetail.shipping.3' }
             ],
             {
-              path: pages.orderList.path,
+              path: pages.orders.path,
               text: {
                 id: 'productDetail.shipping.link',
               },

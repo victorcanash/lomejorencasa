@@ -21,7 +21,7 @@ const AddressDetail = (props: AddressDetailProps) => {
           id={address.type === AddressTypes.shipping ? 'forms.shipping' : 'forms.billing'}
         />
       </Typography>
-      <Box mt={1} pl={0.5}>
+      <Box pl={0.5}>
         <Typography component="div" variant="body1">
           {`${address.firstName} ${address.lastName}`}
         </Typography>

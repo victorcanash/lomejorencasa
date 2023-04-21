@@ -40,29 +40,50 @@ export type OrderBigbuyProduct = {
 };
 
 export type OrderTransaction = {
-  amount: string
+  amount: {
+    currencyCode: string,
+    value: string,
+    breakdown: {
+      itemTotal: {
+        currencyCode: string,
+        value: string,
+      },
+      taxTotal: {
+        currencyCode: string,
+        value: string,
+      },
+      discount: {
+        currencyCode: string,
+        value: string,
+      },
+      shipping: {
+        currencyCode: string,
+        value: string,
+      },
+    },
+  },
   billing: {
-    firstName: string
-    lastName: string
-    country: string
-    postalCode: string
-    locality: string
-    addressLine1: string
-    addressLine2: string
-  }
+    firstName: string,
+    lastName: string,
+    country: string,
+    postalCode: string,
+    locality: string,
+    addressLine1: string,
+    addressLine2: string,
+  },
   creditCard: {
-    cardType: string
-    last4: string
-  }
+    cardType: string,
+    last4: string,
+  },
   paypalAccount: {
-    payerEmail: string
-  }
-}
+    payerEmail: string,
+  },
+};
 
 export type OrderContact = {
   orderId: string,
   guestUserEmail: string,
-}
+};
 
 export type OrderFailedCreate = {
   locale: string,

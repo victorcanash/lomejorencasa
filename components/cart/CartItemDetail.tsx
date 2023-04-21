@@ -159,7 +159,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             {/* Product Name */}
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <Typography component="div" variant="body1Head">
                   <FormattedMessage
                     id="cart.product"
                   />
@@ -176,7 +176,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             {/* Product Price */}
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <Typography component="div" variant="body1Head">
                   <FormattedMessage
                     id="cart.price"
                   />
@@ -192,7 +192,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             {/* Product Quantity */}
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <Typography component="div" variant="body1Head">
                   <FormattedMessage
                     id="cart.quantity"
                   />
@@ -230,7 +230,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             {/* Product Subtotal */}
             <Grid container justifyContent="space-between">
               <Grid item>
-                <Typography component="div" variant="body1" sx={{ fontWeight: 700 }}>
+                <Typography component="div" variant="body1Head">
                   <FormattedMessage
                     id="cart.subtotal"
                   />

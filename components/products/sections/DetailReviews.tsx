@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -16,6 +15,7 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Masonry from '@mui/lab/Masonry';
 
+import { convertToDate } from '@core/utils/dates';
 import CustomImage from '@core/components/CustomImage';
 
 import { keywords } from '@lib/config/next-seo.config';
@@ -32,10 +32,6 @@ const DetailReviews = () => {
   const router = useRouter();
 
   const { errorMsg, successMsg, handleChangePage, createProductReview} = useReviews();
-
-  const convertToDate = useCallback((date: Date | string) => {
-    return new Date(date).toLocaleDateString(router.locale)
-  }, [router.locale]);
 
   return (
     <Container id="reviews">
@@ -93,7 +89,7 @@ const DetailReviews = () => {
                           </Grid>
                           <Grid item>
                             <Typography component="div" variant="body2" color="text.disabled" width="min-content">
-                              { convertToDate(item.createdAt) }
+                              { convertToDate(item.createdAt, router.locale) }
                             </Typography>
                           </Grid>
                         </Grid>

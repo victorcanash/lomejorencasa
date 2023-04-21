@@ -1,17 +1,19 @@
-import { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
 
 import { AddressTypes } from '@core/constants/addresses'
 import type { Order } from '@core/types/orders';
 import type { UserAddress } from '@core/types/user';
+import { convertToDate } from '@core/utils/dates';
 
-//import CartDetail from '@components/cart/CartDetail';
-import AddressDetail from '@components/addresses/AddressDetail';
+import { pages } from '@lib/constants/navigation';
 import BackBtn from '@components/ui/BackBtn';
+import AddressDetail from '@components/addresses/AddressDetail';
+import CartDetail from '@components/cart/CartDetail';
 
 type OrderDetailProps = {
   order: Order,
@@ -25,28 +27,23 @@ const OrderDetail = (props: OrderDetailProps) => {
   const router = useRouter();
   const intl = useIntl();
 
-  const convertToDate = useCallback((date: Date | string) => {
-    return new Date(date).toLocaleDateString(router.locale)
-  }, [router.locale]);
-
   return (
     <>
-      <Typography component="div" variant="h3">
-        {`${intl.formatMessage({ id: "orderDetail.number" })}: ${order.bigbuyId}`}
+      {/* Order General Info */}
+      <Typography component="div" variant="h3" mb={2}>
+        {`${intl.formatMessage({ id: "orders.detail.number" })}: ${order.bigbuyId}`}
       </Typography>
-
-      <Typography component="div" variant="body1Head" mt={3}>
-        {`${intl.formatMessage({ id: "orderDetail.status" })}: ${order.bigbuy.status}`}
+      <Typography component="div" variant="body1Head" mb={3}>
+        {`${intl.formatMessage({ id: "orders.detail.date" })}: ${convertToDate(order.createdAt, router.locale)}`}
       </Typography>
-
-      <Typography component="div" variant="body1Head" mt={3}>
-        {`${intl.formatMessage({ id: "orderDetail.date" })}: ${convertToDate(order.createdAt)}`}
+      <Typography component="div" variant="h3" mb={2}>
+        {`${intl.formatMessage({ id: "orders.detail.status" })}: ${order.bigbuy.status}`}
       </Typography>
-
+      {/* Order Payment Info */}
       { order.transaction.creditCard.cardType != '' &&
-        <Typography component="div" variant="body1Head" mt={3}>
+        <Typography component="div" variant="body1Head" mb={2}>
           <FormattedMessage 
-            id="orderDetail.paidCard" 
+            id="orders.detail.paidCard" 
             values={{
               cardType: order.transaction.creditCard.cardType,
               last4: order.transaction.creditCard.last4,
@@ -55,17 +52,17 @@ const OrderDetail = (props: OrderDetailProps) => {
         </Typography>
       }
       { order.transaction.paypalAccount.payerEmail != '' &&
-        <Typography component="div" variant="body1Head" mt={3}>
-          <FormattedMessage 
-            id="orderDetail.paidPaypal" 
-            values={{
-              payerEmail: order.transaction.paypalAccount.payerEmail,
-            }}
-          />
+        <Typography component="div" variant="body1Head" mb={2}>
+          <FormattedMessage id="orders.detail.paidPaypal" />
+          <Box pl={0.5}>
+            <Typography component="div" variant="body1">
+              { order.transaction.paypalAccount.payerEmail }
+            </Typography>
+          </Box>
         </Typography>
       }
-
-      <Grid container mt={3}>
+      {/* Order Addresses Info */}
+      <Grid container mb={3}>
         <Grid item xs={6}>
           <AddressDetail 
             address={{
@@ -101,16 +98,15 @@ const OrderDetail = (props: OrderDetailProps) => {
           </Grid>
         }
       </Grid>
-
-      <Typography component="div" variant="body1Head" mt={3}>
-        {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
+      {/* Order Products Info */}
+      <Typography component="div" variant="h3" mb={3}>
+        {`${intl.formatMessage({ id: "orders.detail.products" })}:`}
       </Typography>
-      {/*<CartDetail
-        items={order.items || []}
-        totalPrice={Number(order.transaction.amount)}
-        showEmptyItems={true}
-      />*/}
-
+      <CartDetail
+        page={pages.orders}
+        order={order}
+      />
+      {/* Back Button */}
       { backBtn &&
         <Grid
           container
@@ -118,7 +114,7 @@ const OrderDetail = (props: OrderDetailProps) => {
             flexWrap: 'nowrap',
             justifyContent: 'space-between',
           }}
-          mt={4}
+          mt={6}
         >
           <Grid item>
             <BackBtn onClick={onClickBack} />
