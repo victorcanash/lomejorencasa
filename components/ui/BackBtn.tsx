@@ -5,11 +5,11 @@ import { FormattedMessage } from 'react-intl';
 import Button, { ButtonProps } from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-type GoBackBtnProps = {
+type BackBtnProps = {
    onClick?: () => void,
 };
 
-const GoBackBtn = (props: ButtonProps & GoBackBtnProps) => {
+const BackBtn = (props: ButtonProps & BackBtnProps) => {
   const { onClick } = props;
 
   const router = useRouter();
@@ -20,9 +20,9 @@ const GoBackBtn = (props: ButtonProps & GoBackBtnProps) => {
 
   return (
     <Button variant="contained" {...props} startIcon={<ArrowBackIcon />} onClick={onClick || onClickDefault}>
-      <FormattedMessage id="app.goBackBtn" />
+      <FormattedMessage id="app.backBtn" />
     </Button>
   );
 };
 
-export default GoBackBtn;
+export default BackBtn;
