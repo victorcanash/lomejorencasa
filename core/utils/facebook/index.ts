@@ -25,6 +25,6 @@ export const sendAddToCartFBEvent = (cartItem: CartItem) => {
     products: productsEvent,
     //value: 1000, // optional
     //currency: 'USD', // optional
-    //enableStandardPixel: false // default false (Require Facebook Pixel to be loaded, see step 2)
+    enableStandardPixel: true // default false (Require Facebook Pixel to be loaded, see step 2)
   });
 }
