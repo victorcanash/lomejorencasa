@@ -14,6 +14,7 @@ import {
   getItemAmount,
   getTotalAmount,
 } from '@core/utils/cart';
+import { sendAddToCartFBEvent } from '@core/utils/facebook';
 
 import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -62,6 +63,8 @@ const useCart = (checkTotalAmount = true) => {
       pack: (productItem as ProductInventory)?.sku ? undefined : productItem,
       quantity: quantity,
     } as CartItem;
+
+    sendAddToCartFBEvent(cartItem);
 
     let cartItemIndex = -1;
     cart.items.forEach((item, index) => {
