@@ -365,4 +365,4 @@ export const unloggedNavDrawerItems: NavDrawerItems[] = [
 
 export const tiktokHref = 'https://www.tiktok.com/@laenvasadora';
 export const instagramHref = 'https://www.instagram.com/laenvasadora/';
-export const facebookHref = 'https://www.facebook.com/profile.php?id=100090179633575';
+export const facebookHref = 'https://www.facebook.com/profile.php?id=100092231104587';
