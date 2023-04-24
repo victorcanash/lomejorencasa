@@ -140,17 +140,10 @@ const Footer = () => {
               />
             </Typography>
           </Box>
-          <Box mb={2}>
+          <Box>
             <Typography component={Link} href={pages.conditions.path} variant="body1" color="inherit">
               <FormattedMessage 
                 id="footer.utility.conditions" 
-              />
-            </Typography>
-          </Box>
-          <Box>
-            <Typography component={Link} href={pages.refunds.path} variant="body1" color="inherit">
-              <FormattedMessage 
-                id="footer.utility.refunds" 
               />
             </Typography>
           </Box>

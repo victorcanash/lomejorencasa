@@ -20,7 +20,6 @@ export const pages: {
   cookies: Page,
   legal: Page,
   conditions: Page,
-  refunds: Page,
 
   login: Page,
   register: Page,
@@ -150,15 +149,6 @@ export const pages: {
   conditions: {
     path: '/conditions',
     filepath: '/conditions',
-    protection: Protections.none,
-    type: PageTypes.main,
-    savePathOnLogin: {
-      enabled: true,
-    },
-  },
-  refunds: {
-    path: '/refunds',
-    filepath: '/refunds',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
