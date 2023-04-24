@@ -67,10 +67,10 @@ const useForms = () => {
     birthday: Yup
       .date()
       .max(
-        subtractYears(16), 
+        subtractYears(14), 
         intl.formatMessage(
           { id: 'forms.errors.maxBirthday' }, 
-          { minYears: 16 }
+          { minYears: 14 }
         )
       )
       .nullable()
