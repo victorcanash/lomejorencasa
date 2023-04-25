@@ -31,6 +31,7 @@ const Product: NextPage<ProductProps> = (props) => {
   }, [bagsProduct, everfreshProduct, path]);
 
   const metaTitle = useMemo(() => {
+    window.scrollTo(0, 0);
     if (path === productPaths.bags) {
       return keywords.bags.main
     }

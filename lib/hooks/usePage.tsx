@@ -52,13 +52,13 @@ const usePage = (setLoaded = true) => {
   }, [initialized, checkPage]);
 
   useEffect(() => {
-    const path = router.asPath;
+    const path = window.location.hash;
     if (path && path.includes('#')) {
       scrollToSection();
     } else {
       window.scrollTo(0, 0);
     }
-  }, [router.asPath]);
+  }, []);
 
   return {
     checked,
