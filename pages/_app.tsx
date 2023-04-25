@@ -58,7 +58,7 @@ function MyApp(props: MyAppProps) {
     pageProps 
   } = props;
 
-  //const { locale } = useRouter();
+  // const { locale } = useRouter();
 
   useEffect(() => {
     NP.enableBoundaryChecking(false)

@@ -27,6 +27,7 @@ import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import useFacebook from '@lib/hooks/useFacebook';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();
@@ -46,12 +47,15 @@ const useAuth = () => {
   const router = useRouter();
   const intl = useIntl();
 
+  const { sendCompleteRegistrationEvent } = useFacebook();
+
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
   const register = async (authRegister: AuthRegister, onSuccess?: (email: string) => void) => {
     setErrorMsg('');
     setLoading(true);
+    sendCompleteRegistrationEvent(authRegister.email);
     registerUser(authRegister).then(() => {
       onRegisterSuccess(authRegister, onSuccess);
     }).catch((error: Error) => {

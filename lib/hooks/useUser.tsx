@@ -17,6 +17,7 @@ import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import useFacebook from '@lib/hooks/useFacebook';
 
 const useUser = () => {
   const { setLoading } = useAppContext();
@@ -26,6 +27,8 @@ const useUser = () => {
   const router = useRouter();
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
+
+  const { sendContactEvent } = useFacebook();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
@@ -62,6 +65,7 @@ const useUser = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
+    sendContactEvent(userContact.email);
     sendUserContactEmailMW(
       isLogged() ? token : '',
       intl.locale,

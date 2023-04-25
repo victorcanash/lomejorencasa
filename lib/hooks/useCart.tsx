@@ -14,12 +14,12 @@ import {
   getItemAmount,
   getTotalAmount,
 } from '@core/utils/cart';
-import { sendAddToCartFBEvent } from '@core/utils/facebook';
 
 import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import useFacebook from '@lib/hooks/useFacebook';
 
 const useCart = (checkTotalAmount = true) => {
   const { setLoading } = useAppContext();
@@ -38,6 +38,8 @@ const useCart = (checkTotalAmount = true) => {
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
+  const { sendAddToCartEvent } = useFacebook();
+
   const [totalAmount, setTotalAmount] = useState({
     itemsAmount: [],
     subtotal: 0,
@@ -54,6 +56,8 @@ const useCart = (checkTotalAmount = true) => {
     }
     setLoading(true);
 
+    sendAddToCartEvent(productItem, quantity);
+
     const cartItem = {
       id: 0,
       cartId: cart.id,
@@ -63,8 +67,6 @@ const useCart = (checkTotalAmount = true) => {
       pack: (productItem as ProductInventory)?.sku ? undefined : productItem,
       quantity: quantity,
     } as CartItem;
-
-    sendAddToCartFBEvent(cartItem);
 
     let cartItemIndex = -1;
     cart.items.forEach((item, index) => {
