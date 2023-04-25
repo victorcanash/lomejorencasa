@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { 
   Formik, 
@@ -172,7 +172,23 @@ const BaseForm = (props: FormBase) => {
     } else if (formField.type == FormFieldTypes.checkbox) { 
       return (
         <FormControlLabel
-          label={intl.formatMessage({ id: `forms.${formField.name}` })}
+          label={
+            formField.name === 'acceptPolicy' ?
+              intl.formatMessage(
+                {
+                  id: `forms.${formField.name}`,
+                },
+                {
+                  'link': (...chunks: ReactNode[]) => (
+                    <Link href={pages.privacy.path} target="_blank">
+                      {chunks}
+                    </Link>
+                  ),
+                }, 
+              )
+              :
+              intl.formatMessage({ id: `forms.${formField.name}` })
+          }
           control={
             <Checkbox 
               id={formField.name}

@@ -26,6 +26,7 @@ export const pages: {
   forgot: Page,
   
   contact: Page,
+  resolutions: Page,
   orders: Page,
   settings: Page,
 
@@ -193,6 +194,15 @@ export const pages: {
       enabled: true,
     },
   },
+  resolutions: {
+    path: '/resolutions',
+    filepath: '/resolutions',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
   orders: {
     path: '/orders',
     filepath: '/orders',
@@ -303,6 +313,12 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
           id: 'contact',
         },
         path: pages.contact.path,
+      },
+      {
+        text: {
+          id: 'resolutions',
+        },
+        path: pages.resolutions.path,
       },
       {
         text: {

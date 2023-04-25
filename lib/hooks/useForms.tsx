@@ -88,6 +88,8 @@ const useForms = () => {
       .string()
       .min(1)
       .required(),
+    acceptPolicy: Yup
+      .boolean(),
   };
 
   const userFieldsInitValues = { 
@@ -101,6 +103,7 @@ const useForms = () => {
     remember: true,
     tlf: '',
     comments: '',
+    acceptPolicy: false,
   };
 
   const contactFieldsValidation = {
@@ -411,14 +414,14 @@ const useForms = () => {
     publicName: reviewFieldsValidation.publicName,
   });
 
-  const contactUserFormValidation = Yup.object().shape({
-    type: contactFieldsValidation.type,
-    email: userFieldsValidation.email,
+  const userContactFormValidation = Yup.object().shape({
     firstName: userFieldsValidation.firstName,
+    email: userFieldsValidation.email,
     comments: userFieldsValidation.comments,
+    acceptPolicy: userFieldsValidation.acceptPolicy,
   });
 
-  const contactOrderUserFormValidation = Yup.object().shape({
+  const userResolutionFormValidation = Yup.object().shape({
     type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
     firstName: userFieldsValidation.firstName,
@@ -564,8 +567,8 @@ const useForms = () => {
     updateEmailFormValidation,
     resetPasswordFormValidation,
     updateUserFormValidation,
-    contactUserFormValidation,
-    contactOrderUserFormValidation,
+    userContactFormValidation,
+    userResolutionFormValidation,
     checkoutContactFormValidation,
     couponFormValidation,
     productReviewFormValidation,

@@ -34,6 +34,7 @@ export type UserContact = {
   firstName: string,
   orderId?: string,
   comments: string,
+  acceptPolicy: boolean,
 };
 
 export type GuestUser = {

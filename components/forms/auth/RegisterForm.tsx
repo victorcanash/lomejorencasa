@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 /*import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
@@ -28,8 +30,17 @@ const RegisterForm = (props: RegisterFormProps) => {
   const { registerFormValidation, userFieldsInitValues } = useForms();
   const { register, /*loginGoogle, */errorMsg } = useAuth();
 
+  const [acceptPolicy, setAcceptPolicy] = useState(false);
+
   const handleSubmit = async (values: AuthRegister) => {
     register(values, onSuccess);
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (event: any) => {
+    if (event.target.name === 'acceptPolicy') {
+      setAcceptPolicy(event.target.checked);
+    }
   };
 
   const maxWidth = '500px';
@@ -37,6 +48,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   return (
     <>
       <BaseForm
+        onChange={handleChange}
         maxWidth={maxWidth}
         initialValues={{
           email: userFieldsInitValues.email,
@@ -46,6 +58,7 @@ const RegisterForm = (props: RegisterFormProps) => {
           lastName: userFieldsInitValues.lastName,
           birthday: userFieldsInitValues.birthday,
           getEmails: userFieldsInitValues.getEmails,
+          acceptPolicy: userFieldsInitValues.acceptPolicy,
         } as AuthRegister}
         validationSchema={registerFormValidation}
         formFieldGroups={[
@@ -89,6 +102,10 @@ const RegisterForm = (props: RegisterFormProps) => {
                 name: 'getEmails',
                 type: FormFieldTypes.checkbox,
               },
+              {
+                name: 'acceptPolicy',
+                type: FormFieldTypes.checkbox,
+              },
             ],
           }
         ]}
@@ -98,6 +115,7 @@ const RegisterForm = (props: RegisterFormProps) => {
               id: 'forms.register.successBtn',
             },
             onSubmit: handleSubmit,
+            disabled: !acceptPolicy,
           },
         } as FormButtonsNormal}
         errorMsg={errorMsg}
