@@ -12,9 +12,6 @@ const envConfig = {
   NEXT_PUBLIC_GOOGLE_GTM_ID: process.env.NEXT_PUBLIC_GOOGLE_GTM_ID || '',
   NEXT_PUBLIC_FB_PIXEL_ID: process.env.NEXT_PUBLIC_FB_PIXEL_ID || '',
   NEXT_PUBLIC_FB_DEBUG: process.env.NEXT_PUBLIC_FB_DEBUG || 'true',
-  NEXT_PUBLIC_HOTJAR_ID: process.env.NEXT_PUBLIC_HOTJAR_ID || '',
-  NEXT_PUBLIC_HOTJAR_VERSION: process.env.NEXT_PUBLIC_HOTJAR_VERSION || '',
-  NEXT_PUBLIC_HOTJAR_DEBUG: process.env.NEXT_PUBLIC_HOTJAR_DEBUG || 'true',
 };
 
 export default envConfig;

@@ -11,7 +11,6 @@ import {
 // import { removeCookies } from 'cookies-next';
 import GoogleAnalythics from '@bradgarropy/next-google-analytics';
 import TagManager from 'react-gtm-module';
-import { hotjar } from 'react-hotjar'
 
 import envConfig from '@core/config/env.config';
 import { Storages } from '@core/constants/storage';
@@ -80,11 +79,6 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       TagManager.initialize({ 
         gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
       });
-      hotjar.initialize(
-        parseInt(envConfig.NEXT_PUBLIC_HOTJAR_ID),
-        parseInt(envConfig.NEXT_PUBLIC_HOTJAR_VERSION),
-        envConfig.NEXT_PUBLIC_HOTJAR_DEBUG as unknown as boolean
-      );
     }
   }, [acceptedCookies]);
 
