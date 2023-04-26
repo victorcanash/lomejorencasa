@@ -63,11 +63,6 @@ const UserContactForm = () => {
                   {chunks}
                 </Link>
               ),
-              'resolutionLink': (...chunks: ReactNode[]) => (
-                <Link href={pages.resolutions.path}>
-                  {chunks}
-                </Link>
-              ),
             },
           },
           formFields: [
@@ -105,6 +100,14 @@ const UserContactForm = () => {
           disabled: !acceptPolicy,
         },
       } as FormButtonsNormal}
+      linksItems={[
+        {
+          text: {
+            id: 'contact.resolutionsLink',
+          },
+          path: pages.resolutions.path,
+        }
+      ]}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

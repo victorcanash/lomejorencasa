@@ -20,11 +20,9 @@ const UserResolutionsForm = () => {
     userResolutionFormValidation, 
     userFieldsInitValues, 
     orderFieldsInitValues,
-    contactFieldsInitValues,
   } = useForms();
   const { sendUserContactEmail, errorMsg, successMsg } = useUser();
 
-  const [contactType, setContactType] = useState(contactFieldsInitValues.type);
   const [acceptPolicy, setAcceptPolicy] = useState(isLogged() ? true : false);
 
   const maxWidth = '500px';
@@ -35,9 +33,7 @@ const UserResolutionsForm = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
-    if (event.target.name === 'type') {
-      setContactType(event.target.value as ContactTypes);
-    } else if (event.target.name === 'acceptPolicy') {
+    if (event.target.name === 'acceptPolicy') {
       setAcceptPolicy(event.target.checked);
     }
   };
@@ -121,6 +117,14 @@ const UserResolutionsForm = () => {
           disabled: !acceptPolicy,
         },
       } as FormButtonsNormal}
+      linksItems={[
+        {
+          text: {
+            id: 'resolutions.contactLink',
+          },
+          path: pages.contact.path,
+        }
+      ]}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

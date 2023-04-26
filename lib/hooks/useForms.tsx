@@ -4,11 +4,9 @@ import dayjs from 'dayjs';
 
 import { FormFieldTypes } from '@core/constants/forms';
 import { CountryOptions } from '@core/constants/addresses';
-import { ContactTypes } from '@core/constants/contact';
 import type { FormField } from '@core/types/forms';
 import { getCountryName } from '@core/utils/addresses';
 import { subtractYears } from '@core/utils/dates';
-import { getContactTypeName } from '@core/utils/contact';
 
 const useForms = () => {
   const intl = useIntl();
@@ -111,10 +109,6 @@ const useForms = () => {
       .string()
       .min(3)
       .required(),
-  };
-
-  const contactFieldsInitValues = {
-    type: getContactTypeName(Object.keys(ContactTypes)[0]),
   };
 
   const addressFieldsValidation = {
@@ -548,7 +542,6 @@ const useForms = () => {
     initForms,
     
     userFieldsInitValues,
-    contactFieldsInitValues,
     addressFieldsInitValues,
     orderFieldsInitValues,
     orderProductFieldsInitValues,
