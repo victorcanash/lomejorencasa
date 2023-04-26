@@ -33,7 +33,7 @@ const CartDetail = (props: CartDetailProps) => {
     order,
   } = props;
 
-  const { cart, totalPrice, isEmpty, disabledCheckoutPage, closeDrawer } = useCartContext();
+  const { cart, totalPrice, disabledCheckoutPage, closeDrawer } = useCartContext();
   const { convertPriceToString } = useAuthContext();
 
   const intl = useIntl();
@@ -77,7 +77,7 @@ const CartDetail = (props: CartDetailProps) => {
 
   return (
     <>
-      { !isEmpty ?
+      { items.length > 0 ?
         <>
           {/* Cart Items Detail */}
           <Box>
