@@ -1,5 +1,6 @@
 import { Fragment, useCallback, useMemo } from 'react';
 
+import NP from 'number-precision'
 import { useIntl, FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
@@ -63,13 +64,14 @@ const CartDetail = (props: CartDetailProps) => {
   const breakdown = useMemo(() => {
     return {
       subtotal: page !== pages.orders ?
-        totalPrice : parseFloat(order?.transaction.amount.breakdown.itemTotal.value || '0'),
+        totalPrice : NP.plus(
+          parseFloat(order?.transaction.amount.breakdown.itemTotal.value || '0'),
+          parseFloat(order?.transaction.amount.breakdown.taxTotal.value || '0')
+        ),
       discount: page !== pages.orders ?
         totalAmount.totalDiscount : parseFloat(order?.transaction.amount.breakdown.discount.value || '0'),
       shipping: page !== pages.orders ?
         0 : parseFloat(order?.transaction.amount.breakdown.shipping.value || '0'),
-      taxTotal: page !== pages.orders ?
-        0 : parseFloat(order?.transaction.amount.breakdown.taxTotal.value || '0'),
       total: page !== pages.orders ?
         totalAmount.total : parseFloat(order?.transaction.amount.value || '0'),
     }
