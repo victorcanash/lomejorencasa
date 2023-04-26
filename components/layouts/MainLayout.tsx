@@ -7,12 +7,14 @@ import Box from '@mui/material/Box';
 
 import { PageTypes } from '@core/constants/navigation';
 
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useApp from '@lib/hooks/useApp';
 import useLayout from '@lib/hooks/useLayout';
 import Loading from '@components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
+  const { loading } = useAppContext();
   const { google, paypal, currency } = useAuthContext();
 
   const { layout, pageType } = useLayout(children);
@@ -20,7 +22,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
 
   const content = (
     <Box>
-      <Loading />
+      <Loading open={loading} />
       { layout }
     </Box>
   );
