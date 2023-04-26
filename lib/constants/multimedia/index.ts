@@ -4,14 +4,14 @@ export const placeholderImgId = 'v1681059169/laenvasadora/LANDING%20PAGE/placeho
 
 export const everfreshLandingImgIds = [
   'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
-  'v1680878929/laenvasadora/LANDING%20PAGE/FOTO_3_lzky3y.jpg',
+  'v1682517395/laenvasadora/LANDING%20PAGE/FOTO_3_lzky3y_e7qbp2.jpg',
   'v1680726664/laenvasadora/LANDING%20PAGE/FOTO_5_g6vcri.jpg',
-  'v1680726760/laenvasadora/LANDING%20PAGE/FOTO_1_yarwhg.jpg',
+  'v1682517390/laenvasadora/LANDING%20PAGE/FOTO_1_yarwhg_vcukbn.jpg',
 ];
 
 export const bagsLandingImgIds = [
-  'v1680692733/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
-  'v1680878418/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k.jpg',
+  'v1682517414/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul_irxx9g.jpg',
+  'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
   'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
 ];
 
