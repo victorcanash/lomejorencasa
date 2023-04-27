@@ -44,22 +44,17 @@ const OrderDetail = (props: OrderDetailProps) => {
       </Typography>
       {/* Order Tracking */}
       { order.bigbuy.tracking ?
-        <>
-          <Typography component="div" variant="body1Head" mb={1}>
-            {`${intl.formatMessage({ id: "orders.detail.trackingNumber" })}: ${order.bigbuy.tracking.trackingNumber}`}
-          </Typography>
-          <LinkButton
-            href="https://s.correosexpress.com"
-            target="_blank"
-            sx={{
-              ...convertElementToSx(themeCustomElements.button.action.primary),
-              py: 1,
-              mb: 2,
-            }}
-          >
-            <FormattedMessage id="orders.detail.correosBtn" />
-          </LinkButton>
-        </>
+        <LinkButton
+          href={`https://s.correosexpress.com/c?n=${order.bigbuy.tracking.trackingNumber}`}
+          target="_blank"
+          sx={{
+            ...convertElementToSx(themeCustomElements.button.action.primary),
+            py: 1,
+            mb: 2,
+          }}
+        >
+          <FormattedMessage id="orders.detail.correosBtn" />
+        </LinkButton>
         :
         <Typography component="div" variant="body1Head" mb={2}>
           {`${intl.formatMessage({ id: "orders.detail.noTrackingYet" })}`}
