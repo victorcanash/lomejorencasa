@@ -15,7 +15,6 @@ import {
 import {
   faTruck,
   faLock,
-  faTruckArrowRight,
   faPhoneVolume,
   faArrowRightArrowLeft,
   faPlus,
@@ -39,6 +38,7 @@ import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
 import { keywords } from '@lib/config/next-seo.config';
+import { pages } from '@lib/constants/navigation';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { bagsMIXImgId, everfreshImgId } from '@lib/constants/multimedia';
@@ -351,9 +351,16 @@ const ProductDetail = (props: ProductDetailProps) => {
   const productComments = useMemo(() => {
     if (isEverfreshProduct(product) || isBagsProduct(product)) {
       return (
-        <Typography component="div" variant="body1">
-          <FormattedMessage id={isEverfreshProduct(product) ? 'everfresh.comment' : 'bags.comment'} />
-        </Typography>
+        <>
+          <Typography component="div" variant="body1">
+            <FormattedMessage id={isEverfreshProduct(product) ? 'everfresh.comment' : 'bags.comment'} />
+          </Typography>
+          <Box mt={2}>
+            <Link href={pages.orders.path} variant="body1">
+              <FormattedMessage id="productDetail.trackingLink" />
+            </Link>
+          </Box>
+        </>
       );
     }
     return (<></>);
@@ -517,7 +524,6 @@ const ProductDetail = (props: ProductDetailProps) => {
               <Grid container spacing={2} mb={3}>
                 { landingIcon(faTruck, { id: 'productDetail.icons.shipping' }, 2) }
                 { landingIcon(faLock, { id: 'productDetail.icons.payment' }, 3) }
-                { landingIcon(faTruckArrowRight, { id: 'productDetail.icons.tracking' }, 2) }
                 { landingIcon(faPhoneVolume, { id: 'productDetail.icons.support' }, 2.5) }
                 { landingIcon(faArrowRightArrowLeft, { id: 'productDetail.icons.guarantee' }, 3) }
               </Grid>
