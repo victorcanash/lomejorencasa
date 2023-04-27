@@ -13,10 +13,9 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import useOrders from '@lib/hooks/useOrders';
 import PageHeader from '@components/ui/PageHeader';
-import Loading from '@components/ui/Loading';
+import OrderDetail from '@components/orders/OrderDetail';
 import OrderList from '@components/orders/OrderList';
 import GetOrderForm from '@components/forms/orders/GetOrderForm';
-import OrderDetail from '@components/orders/OrderDetail';
 
 const Orders: NextPage = () => {
   const router = useRouter();
@@ -36,7 +35,7 @@ const Orders: NextPage = () => {
   } = useOrders();
 
   const [loadedOrders, setLoadedOrders] = useState(false);
-  const [loadingOrderQueries, setLoadingOrderQueries] = useState(false);
+  const [loadingOrderQueries, setLoadingOrderQueries] = useState(true);
   const [loggedOrders, setLoggedOrders] = useState<Order[] | undefined>(undefined);
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>(undefined);
   const [totalPages, setTotalPages] = useState(0);
@@ -71,7 +70,6 @@ const Orders: NextPage = () => {
   }, []);
 
   const getOrderByQueries = useCallback((queries: { id: string, email: string }) => {
-    setLoadingOrderQueries(true);
     getOrderByBigbuyId({ orderId: queries.id, guestUserEmail: queries.email }, onSuccessGetOrder, onErrorGetOrderByQueries);
   }, [getOrderByBigbuyId, onErrorGetOrderByQueries, onSuccessGetOrder]);
 
@@ -87,20 +85,68 @@ const Orders: NextPage = () => {
   }, [router.query]);
 
   const onClickBack = useCallback(() => {
+    router.replace(pages.orders.path, undefined, { shallow: true })
     setSelectedOrder(undefined);
     window.scrollTo(0, 0);
-  }, []);
+    if (isLogged() && !loggedOrders) {
+      getOrders(0, onSuccessGetOrders, onErrorGetOrders);
+    }
+  }, [getOrders, isLogged, loggedOrders, onErrorGetOrders, onSuccessGetOrders, router]);
+
+  const ActiveComponent = useCallback(() => {
+    if (
+        (initialized && page.checked) &&
+        ((!selectedOrder && !loadingOrderQueries) || selectedOrder)
+      ) {
+      if (selectedOrder) {
+        return (  
+          <OrderDetail 
+            order={selectedOrder} 
+            backBtn={true}
+            onClickBack={onClickBack}
+          />
+        );
+      } else if (isLogged()) {
+          return(
+            <OrderList 
+              orders={loggedOrders || []} 
+              totalPages={totalPages}
+              currentPage={currentPage}
+              onChangePage={onChangePage}
+              onClickShowOrder={showOrder}
+            />
+          );
+      } else {
+        return (
+          <GetOrderForm
+            getOrder={getOrderByBigbuyId}
+            onSuccess={onSuccessGetOrder}
+            successMsg={successMsg}
+            errorMsg={errorMsg}
+          />
+        );
+      }
+    }
+    return (
+      <></>
+    );
+  }, [currentPage, errorMsg, getOrderByBigbuyId, initialized, isLogged, loadingOrderQueries, loggedOrders, onChangePage, onClickBack, onSuccessGetOrder, page.checked, selectedOrder, showOrder, successMsg, totalPages]);
 
   useEffect(() => {
-    if (page.checked && !loadedOrders) {
+    if (!page.checked) {
+      setLoading(true);
+    } else if (page.checked && !loadedOrders) {
       setLoadedOrders(true);
       const queries = getOrderQueries();
       if (queries) {
         getOrderByQueries(queries);
-      } else if (isLogged()) {
-        getOrders(0, onSuccessGetOrders, onErrorGetOrders);
       } else {
-        setLoading(false);
+        setLoadingOrderQueries(false);
+        if (isLogged()) {
+          getOrders(0, onSuccessGetOrders, onErrorGetOrders);
+        } else {
+          setLoading(false);
+        }
       }
     } else if (loadedOrders) {
       if (!isLogged() && loggedOrders) {
@@ -133,51 +179,9 @@ const Orders: NextPage = () => {
         }}
       />
 
-      { initialized && page.checked && ((isLogged() && loggedOrders) || (!isLogged())) ?
-        <Container>
-          { isLogged() &&
-            <>
-              { (!selectedOrder && !loadingOrderQueries) &&
-                <OrderList 
-                  orders={loggedOrders || []} 
-                  totalPages={totalPages}
-                  currentPage={currentPage}
-                  onChangePage={onChangePage}
-                  onClickShowOrder={showOrder}
-                />
-              }
-              { selectedOrder &&
-                <OrderDetail 
-                  order={selectedOrder} 
-                  backBtn={true}
-                  onClickBack={onClickBack}
-                />
-              }
-            </>
-          }
-          { !isLogged() &&
-            <>
-              { (!selectedOrder && !loadingOrderQueries) &&
-                <GetOrderForm
-                  getOrder={getOrderByBigbuyId}
-                  onSuccess={onSuccessGetOrder}
-                  successMsg={successMsg}
-                  errorMsg={errorMsg}
-                />
-              }
-              { selectedOrder &&
-                <OrderDetail 
-                  order={selectedOrder} 
-                  backBtn={true}
-                  onClickBack={onClickBack}
-                />
-              }
-            </>
-          }
-        </Container>
-        :
-        <Loading open={true} />
-      }
+      <Container>
+        <ActiveComponent />
+      </Container>
     </>
   );
 };
