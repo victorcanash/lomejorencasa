@@ -36,6 +36,7 @@ const Orders: NextPage = () => {
   } = useOrders();
 
   const [loadedOrders, setLoadedOrders] = useState(false);
+  const [loadingOrderQueries, setLoadingOrderQueries] = useState(false);
   const [loggedOrders, setLoggedOrders] = useState<Order[] | undefined>(undefined);
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>(undefined);
   const [totalPages, setTotalPages] = useState(0);
@@ -58,15 +59,21 @@ const Orders: NextPage = () => {
 
   const onSuccessGetOrder = useCallback((order: Order) => {
     setSelectedOrder(order);
+    setLoadingOrderQueries(false);
   }, []);
 
   const showOrder = useCallback((order: Order) => {
     getOrderById(order.id, onSuccessGetOrder);
   }, [getOrderById, onSuccessGetOrder]);
 
+  const onErrorGetOrderByQueries = useCallback((_errorMsg: string) => {
+    setLoadingOrderQueries(false);
+  }, []);
+
   const getOrderByQueries = useCallback((queries: { id: string, email: string }) => {
-    getOrderByBigbuyId({ orderId: queries.id, guestUserEmail: queries.email }, onSuccessGetOrder)
-  }, [getOrderByBigbuyId, onSuccessGetOrder]);
+    setLoadingOrderQueries(true);
+    getOrderByBigbuyId({ orderId: queries.id, guestUserEmail: queries.email }, onSuccessGetOrder, onErrorGetOrderByQueries);
+  }, [getOrderByBigbuyId, onErrorGetOrderByQueries, onSuccessGetOrder]);
 
   const getOrderQueries = useCallback(() => {
     const { id, email } = router.query;
@@ -130,7 +137,7 @@ const Orders: NextPage = () => {
         <Container>
           { isLogged() &&
             <>
-              { !selectedOrder ?
+              { (!selectedOrder && !loadingOrderQueries) &&
                 <OrderList 
                   orders={loggedOrders || []} 
                   totalPages={totalPages}
@@ -138,7 +145,8 @@ const Orders: NextPage = () => {
                   onChangePage={onChangePage}
                   onClickShowOrder={showOrder}
                 />
-                :
+              }
+              { selectedOrder &&
                 <OrderDetail 
                   order={selectedOrder} 
                   backBtn={true}
@@ -149,14 +157,15 @@ const Orders: NextPage = () => {
           }
           { !isLogged() &&
             <>
-              { !selectedOrder ?
+              { (!selectedOrder && !loadingOrderQueries) &&
                 <GetOrderForm
                   getOrder={getOrderByBigbuyId}
                   onSuccess={onSuccessGetOrder}
                   successMsg={successMsg}
                   errorMsg={errorMsg}
                 />
-                :
+              }
+              { selectedOrder &&
                 <OrderDetail 
                   order={selectedOrder} 
                   backBtn={true}
