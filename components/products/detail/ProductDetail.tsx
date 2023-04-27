@@ -15,6 +15,7 @@ import {
 import {
   faTruck,
   faLock,
+  faTruckArrowRight,
   faPhoneVolume,
   faArrowRightArrowLeft,
   faPlus,
@@ -516,6 +517,7 @@ const ProductDetail = (props: ProductDetailProps) => {
               <Grid container spacing={2} mb={3}>
                 { landingIcon(faTruck, { id: 'productDetail.icons.shipping' }, 2) }
                 { landingIcon(faLock, { id: 'productDetail.icons.payment' }, 3) }
+                { landingIcon(faTruckArrowRight, { id: 'productDetail.icons.tracking' }, 2) }
                 { landingIcon(faPhoneVolume, { id: 'productDetail.icons.support' }, 2.5) }
                 { landingIcon(faArrowRightArrowLeft, { id: 'productDetail.icons.guarantee' }, 3) }
               </Grid>
