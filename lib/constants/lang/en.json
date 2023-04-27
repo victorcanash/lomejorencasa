@@ -218,9 +218,7 @@
   "productDetail.reviews.noItems": "No existe ninguna reseña.",
   "productDetail.reviews.verified": "Verificada",
 
-  "everfresh.description": "¡Prolonga la vida de tus alimentos en un solo click!",
   "everfresh.comment": "La Envasadora Everfresh es la solución perfecta para ahorrar dinero, tiempo y espacio. No desperdicies más comida y prolonga la vida de tus alimentos con el envasado. Además, su diseño compacto y portátil la convierten en la compañera ideal para tus viajes.",
-  "everfresh.bagsButton": "Añadir bolsas de vacío con válvula",
   "everfresh.details.title": "Detalles del producto",
   "everfresh.details.1": "Marca: Innovagoods.",
   "everfresh.details.2": "Rápida extracción del aire en un solo click.",
@@ -251,10 +249,8 @@
   "everfresh.videoComment.3.content": "Con un tamaño y peso reducido, nuestra envasadora se convierte en la mejor opción para llevar en tu viajes.\n\nYa no tendrás que preocuparte por perder tiempo organizando tu equipaje o por los costosos gastos de las aerolíneas por el tamaño de tu mochila.\nCon ella puedes envasar ropa, alimentos o lo que se te ocurra al momento.",
   "everfresh.videoComment.3.button": "Preguntas frequentes",
 
-  "bags.description": "Todos nuestros paquetes de bolsas contienen 10 unidades del producto.\n\nAñade la Envasadora Everfresh para aprovechar el descuento incluido.",
   "bags.comment": "En La Envasadora ofrecemos una amplia gama de tamaños, cada uno pensado para un uso especifico. Es importante elegir el tamaño que mejor se adapte a tu necesidad con el fin de obtener un envasado óptimo y eficaz.",
   "bags.pack.title": "Añade otro paquete de 10 bolsas en tu compra y obtén un descuento del {value}%",
-  "bags.everfreshButton": "Añadir Envasadora Everfresh",
   "bags.details.title": "Detalles del producto",
   "bags.details.1": "Marca: TM Electron.",
   "bags.small.title": "Bolsas de vacío de tamaño pequeño (XS, S)",
