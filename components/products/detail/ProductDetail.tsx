@@ -256,12 +256,11 @@ const ProductDetail = (props: ProductDetailProps) => {
           <Grid item>
             <Typography
               component="h2"
-              variant="body1Head"
+              variant="body1"
             >
               <Link
                 href={getProductPageUrl(everfreshProduct)}
                 noLinkStyle
-                //sx={{ textDecoration: 'none', color: colors.text.black }}
               >
                 { packTexts[0] }
               </Link>
@@ -269,7 +268,6 @@ const ProductDetail = (props: ProductDetailProps) => {
               <Link
                 href={getProductPageUrl(bagsProduct)}
                 noLinkStyle
-                //sx={{ textDecoration: 'none', color: colors.text.black }}
               >
                 { packTexts[1] }
               </Link>
