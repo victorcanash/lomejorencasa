@@ -353,7 +353,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           <Typography component="div" variant="body1">
             <FormattedMessage id={isEverfreshProduct(product) ? 'everfresh.comment' : 'bags.comment'} />
           </Typography>
-          <Box mt={2}>
+          <Box mt={1}>
             <Link href={pages.orders.path} variant="body1">
               <FormattedMessage id="productDetail.trackingLink" />
             </Link>
