@@ -184,7 +184,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
               { id: 'productDetail.refund.1' }, { id: 'productDetail.refund.2' }
             ],
             {
-              path: pages.contact.path,
+              path: pages.resolutions.path,
               text: {
                 id: 'productDetail.refund.link',
               },

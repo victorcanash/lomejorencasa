@@ -1,9 +1,9 @@
 import { ReactNode, useState } from 'react';
 
-import envConfig from '@core/config/env.config';
 import { FormFieldTypes } from '@core/constants/forms';
 import { ContactTypes } from '@core/constants/contact';
 import type { User, UserContact } from '@core/types/user';
+import { getContactTypeName } from '@core/utils/contact';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
@@ -13,12 +13,12 @@ import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';
 import BaseForm from '@components/forms/BaseForm';
 
-const UserContactForm = () => {
+const UserResolutionsForm = () => {
   const { user, isLogged } = useAuthContext();
 
-  const {
-    userContactFormValidation,
-    userFieldsInitValues,
+  const { 
+    userResolutionFormValidation, 
+    userFieldsInitValues, 
     orderFieldsInitValues,
   } = useForms();
   const { sendUserContactEmail, errorMsg, successMsg } = useUser();
@@ -40,32 +40,44 @@ const UserContactForm = () => {
 
   return (
     <BaseForm
-      onChange={handleChange}
       maxWidth={maxWidth}
       initialValues={{
-        type: ContactTypes.normal,
+        type: ContactTypes.refundOrder,
         email: user.email || userFieldsInitValues.email,
         firstName: (user as User)?.firstName || userFieldsInitValues.firstName,
         orderId: orderFieldsInitValues.bigbuyId,
         comments: userFieldsInitValues.comments,
         acceptPolicy: isLogged() ? true : false,
       } as UserContact}
-      validationSchema={userContactFormValidation}
+      validationSchema={userResolutionFormValidation}
       enableReinitialize={true}
+      onChange={handleChange}
       formFieldGroups={[
         {
           descriptionTxt: {
-            id: 'contact.description',
+            id: 'resolutions.description',
             values: {
-              email: envConfig.NEXT_PUBLIC_EMAIL,
-              'linkEmail': (...chunks: ReactNode[]) => (
-                <Link href={`mailto:${envConfig.NEXT_PUBLIC_EMAIL}`} target="_blank">
+              'contactLink': (...chunks: ReactNode[]) => (
+                <Link href={pages.contact.path}>
                   {chunks}
                 </Link>
               ),
             },
           },
           formFields: [
+            {
+              name: 'type',
+              type: FormFieldTypes.select,
+              required: true,
+              menuItems: Object.keys(ContactTypes).filter((value) => getContactTypeName(value) !== ContactTypes.normal).map((typeKey) => {
+                return {
+                  text: {
+                    id: `forms.selectContactType.${typeKey}`,
+                  },
+                  value: getContactTypeName(typeKey),
+                };
+              }), 
+            },
             {
               name: 'firstName',
               type: FormFieldTypes.text,
@@ -77,6 +89,11 @@ const UserContactForm = () => {
               type: FormFieldTypes.text,
               required: true,
               disabled: isLogged(),
+            },
+            {
+              name: 'orderId',
+              type: FormFieldTypes.text,
+              required: true,
             },
             {
               name: 'comments',
@@ -103,9 +120,9 @@ const UserContactForm = () => {
       linksItems={[
         {
           text: {
-            id: 'contact.resolutionsLink',
+            id: 'resolutions.contactLink',
           },
-          path: pages.resolutions.path,
+          path: pages.contact.path,
         }
       ]}
       successMsg={successMsg}
@@ -114,4 +131,4 @@ const UserContactForm = () => {
   );
 };
 
-export default UserContactForm;
+export default UserResolutionsForm;

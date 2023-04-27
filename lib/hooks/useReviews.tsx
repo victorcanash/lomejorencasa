@@ -21,7 +21,7 @@ import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
 const useReviews = () => {
-  const { setLoading } = useAppContext();
+  const { initialized, setLoading } = useAppContext();
   const {
     listProductReviews,
     setListProductReviews,
@@ -112,8 +112,10 @@ const useReviews = () => {
   }, [intl.locale, page, setListProductReviews, totalPages]);
 
   useEffect(() => {
-    getAllProductReviews();
-  }, [getAllProductReviews]);
+    if (initialized) {
+      getAllProductReviews();
+    }
+  }, [getAllProductReviews, initialized]);
 
   return {
     successMsg,

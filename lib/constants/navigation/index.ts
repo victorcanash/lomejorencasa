@@ -20,13 +20,13 @@ export const pages: {
   cookies: Page,
   legal: Page,
   conditions: Page,
-  refunds: Page,
 
   login: Page,
   register: Page,
   forgot: Page,
   
   contact: Page,
+  resolutions: Page,
   orders: Page,
   settings: Page,
 
@@ -156,15 +156,6 @@ export const pages: {
       enabled: true,
     },
   },
-  refunds: {
-    path: '/refunds',
-    filepath: '/refunds',
-    protection: Protections.none,
-    type: PageTypes.main,
-    savePathOnLogin: {
-      enabled: true,
-    },
-  },
 
   login: {
     path: '/login',
@@ -197,6 +188,15 @@ export const pages: {
   contact: {
     path: '/contacto',
     filepath: '/contacto',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
+  resolutions: {
+    path: '/resolutions',
+    filepath: '/resolutions',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
@@ -316,6 +316,12 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
       },
       {
         text: {
+          id: 'resolutions',
+        },
+        path: pages.resolutions.path,
+      },
+      {
+        text: {
           id: 'about',
         },
         path: pages.about.path,
@@ -375,4 +381,4 @@ export const unloggedNavDrawerItems: NavDrawerItems[] = [
 
 export const tiktokHref = 'https://www.tiktok.com/@laenvasadora';
 export const instagramHref = 'https://www.instagram.com/laenvasadora/';
-export const facebookHref = 'https://www.facebook.com/profile.php?id=100090179633575';
+export const facebookHref = 'https://www.facebook.com/profile.php?id=100092231104587';

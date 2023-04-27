@@ -149,8 +149,7 @@ const ProductDetail = (props: ProductDetailProps) => {
     };
     return (
       <Link
-        href={router.pathname}
-        scroll={false}
+        href={getProductPageUrl(product)}
         onClick={() => scrollToSection('reviews')}
         sx={{ textDecoration: 'none' }}
       >
@@ -170,7 +169,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         </Grid>
       </Link>
     );
-  }, [initialized, product, router.pathname]);
+  }, [getProductPageUrl, initialized, product]);
 
   const productTitle = useMemo(() => {
     let text = product.name.current;

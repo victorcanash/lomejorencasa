@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback } from 'react';
 
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
@@ -184,14 +184,11 @@ const useOrders = () => {
       });
   }, [onSendFailedOrderEmailSuccess, setLoading, token]);
 
-  useEffect(() => {
-    setSuccessMsg('');
-    setErrorMsg('');
-  }, [isLogged, token]);
-
   return {
     errorMsg,
     successMsg,
+    setSuccessMsg,
+    setErrorMsg,
     getOrders,
     getOrderByBigbuyId,
     getOrderById,

@@ -4,11 +4,9 @@ import dayjs from 'dayjs';
 
 import { FormFieldTypes } from '@core/constants/forms';
 import { CountryOptions } from '@core/constants/addresses';
-import { ContactTypes } from '@core/constants/contact';
 import type { FormField } from '@core/types/forms';
 import { getCountryName } from '@core/utils/addresses';
 import { subtractYears } from '@core/utils/dates';
-import { getContactTypeName } from '@core/utils/contact';
 
 const useForms = () => {
   const intl = useIntl();
@@ -67,10 +65,10 @@ const useForms = () => {
     birthday: Yup
       .date()
       .max(
-        subtractYears(16), 
+        subtractYears(14), 
         intl.formatMessage(
           { id: 'forms.errors.maxBirthday' }, 
-          { minYears: 16 }
+          { minYears: 14 }
         )
       )
       .nullable()
@@ -88,6 +86,8 @@ const useForms = () => {
       .string()
       .min(1)
       .required(),
+    acceptPolicy: Yup
+      .boolean(),
   };
 
   const userFieldsInitValues = { 
@@ -101,6 +101,7 @@ const useForms = () => {
     remember: true,
     tlf: '',
     comments: '',
+    acceptPolicy: false,
   };
 
   const contactFieldsValidation = {
@@ -108,10 +109,6 @@ const useForms = () => {
       .string()
       .min(3)
       .required(),
-  };
-
-  const contactFieldsInitValues = {
-    type: getContactTypeName(Object.keys(ContactTypes)[0]),
   };
 
   const addressFieldsValidation = {
@@ -411,14 +408,14 @@ const useForms = () => {
     publicName: reviewFieldsValidation.publicName,
   });
 
-  const contactUserFormValidation = Yup.object().shape({
-    type: contactFieldsValidation.type,
-    email: userFieldsValidation.email,
+  const userContactFormValidation = Yup.object().shape({
     firstName: userFieldsValidation.firstName,
+    email: userFieldsValidation.email,
     comments: userFieldsValidation.comments,
+    acceptPolicy: userFieldsValidation.acceptPolicy,
   });
 
-  const contactOrderUserFormValidation = Yup.object().shape({
+  const userResolutionFormValidation = Yup.object().shape({
     type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
     firstName: userFieldsValidation.firstName,
@@ -545,7 +542,6 @@ const useForms = () => {
     initForms,
     
     userFieldsInitValues,
-    contactFieldsInitValues,
     addressFieldsInitValues,
     orderFieldsInitValues,
     orderProductFieldsInitValues,
@@ -564,8 +560,8 @@ const useForms = () => {
     updateEmailFormValidation,
     resetPasswordFormValidation,
     updateUserFormValidation,
-    contactUserFormValidation,
-    contactOrderUserFormValidation,
+    userContactFormValidation,
+    userResolutionFormValidation,
     checkoutContactFormValidation,
     couponFormValidation,
     productReviewFormValidation,

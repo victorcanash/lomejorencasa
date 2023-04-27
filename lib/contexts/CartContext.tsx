@@ -21,7 +21,6 @@ type ContextType = {
   setTotalQuantity: Dispatch<SetStateAction<number>>,
   totalPrice: number,
   setTotalPrice: Dispatch<SetStateAction<number>>,
-  isEmpty: boolean,
   initCart: (cart: Cart) => void,
   cleanCart: () => void,
   removeCart: () => void,
@@ -42,7 +41,6 @@ export const CartContext = createContext<ContextType>({
   setTotalQuantity: () => {},
   totalPrice: 0,
   setTotalPrice: () => {},
-  isEmpty: true,
   initCart: () => {},
   cleanCart: () => {},
   removeCart: () => {},
@@ -70,7 +68,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   });
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [isEmpty, setIsEmpty] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleDrawerOpen = () => {
@@ -129,9 +126,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         totalPriceResult = NP.plus(totalPriceResult, getItemAmount(item).itemTotalWithQuantity)
         totalQuantityResult = NP.plus(totalQuantityResult, item.quantity)
       });
-      setIsEmpty(false);
-    } else {
-      setIsEmpty(true);
     }
     setTotalPrice(totalPriceResult);
     setTotalQuantity(totalQuantityResult);
@@ -145,7 +139,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         setTotalQuantity,
         totalPrice,
         setTotalPrice,
-        isEmpty,
         initCart,
         cleanCart,
         removeCart,

@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Order, OrderContact } from '@core/types/orders';
 
+import { pages } from '@lib/constants/navigation';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import BaseForm from '@components/forms/BaseForm';
@@ -63,6 +64,14 @@ const GetOrderForm = (props: GetOrderFormProps) => {
           onSubmit: handleSubmit,
         },
       } as FormButtonsNormal}
+      linksItems={[
+        {
+          text: {
+            id: 'forms.getOrder.contactLink',
+          },
+          path: pages.contact.path,
+        }
+      ]}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

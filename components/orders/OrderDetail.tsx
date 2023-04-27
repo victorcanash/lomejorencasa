@@ -9,8 +9,11 @@ import { AddressTypes } from '@core/constants/addresses'
 import type { Order } from '@core/types/orders';
 import type { UserAddress } from '@core/types/user';
 import { convertToDate } from '@core/utils/dates';
+import { convertElementToSx } from '@core/utils/themes';
+import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import BackBtn from '@components/ui/BackBtn';
 import AddressDetail from '@components/addresses/AddressDetail';
 import CartDetail from '@components/cart/CartDetail';
@@ -39,6 +42,29 @@ const OrderDetail = (props: OrderDetailProps) => {
       <Typography component="div" variant="h3" mb={2}>
         {`${intl.formatMessage({ id: "orders.detail.status" })}: ${order.bigbuy.status}`}
       </Typography>
+      {/* Order Tracking */}
+      { order.bigbuy.tracking ?
+        <>
+          <Typography component="div" variant="body1Head" mb={1}>
+            {`${intl.formatMessage({ id: "orders.detail.trackingNumber" })}: ${order.bigbuy.tracking.trackingNumber}`}
+          </Typography>
+          <LinkButton
+            href="https://s.correosexpress.com"
+            target="_blank"
+            sx={{
+              ...convertElementToSx(themeCustomElements.button.action.primary),
+              py: 1,
+              mb: 2,
+            }}
+          >
+            <FormattedMessage id="orders.detail.correosBtn" />
+          </LinkButton>
+        </>
+        :
+        <Typography component="div" variant="body1Head" mb={2}>
+          {`${intl.formatMessage({ id: "orders.detail.noTrackingYet" })}`}
+        </Typography>
+      }
       {/* Order Payment Info */}
       { order.transaction.creditCard.cardType != '' &&
         <Typography component="div" variant="body1Head" mb={2}>

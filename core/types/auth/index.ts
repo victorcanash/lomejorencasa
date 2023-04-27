@@ -14,6 +14,7 @@ export type AuthRegister = {
   lastName: string,
   birthday: Date | Dayjs,
   getEmails: boolean,
+  acceptPolicy: boolean,
 };
 
 export type AuthUpdateEmail = {

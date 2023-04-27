@@ -29,6 +29,7 @@ import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import useFacebook from '@lib/hooks/useFacebook';
 
 const usePayments = () => {
   const { setLoading } = useAppContext();
@@ -47,7 +48,13 @@ const usePayments = () => {
   const router = useRouter();
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
-  const [{ isResolved, options }, dispatch] = usePayPalScriptReducer();
+  const [{ isResolved, options }, _dispatch] = usePayPalScriptReducer();
+
+  const {
+    sendAddPaymentInfoEvent,
+    sendInitiateCheckoutEvent,
+    sendPurchaseEvent,
+  } = useFacebook();
 
   const contactFormRef = useRef<FormikProps<CheckoutContact> | null>(null);
 
@@ -192,6 +199,7 @@ const usePayments = () => {
         return;
       }
       const { newCheckoutData } = getNewData();
+      sendAddPaymentInfoEvent(newCheckoutData.checkoutEmail || '');
       await createPTransactionMW(
           isLogged() ? token : '', 
           intl.locale,
@@ -207,7 +215,7 @@ const usePayments = () => {
             reject(new Error(errorMsg))
           });
     });
-  }, [cart, currency, getNewData, intl.locale, isLogged, setLoading, token]);
+  }, [cart, currency, getNewData, intl.locale, isLogged, sendAddPaymentInfoEvent, setLoading, token]);
 
   const onSuccessPaypalTransaction = (captureCheckoutData: CheckoutData) => {
     capturePaypalTransaction(captureCheckoutData);
@@ -309,20 +317,22 @@ const usePayments = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
+    sendInitiateCheckoutEvent(captureCheckoutData.checkoutEmail || '');
     await capturePTransactionMW(
       isLogged() ? token : '', 
       intl.locale, 
       captureCheckoutData,
       !isLogged() ? cart : undefined
     ).then((_response: { paypalTransactionId: string }) => {
-      onCompleteTransaction();
+      onCompleteTransaction(captureCheckoutData);
     }).catch((error) => {
       onErrorPaypalTransaction(error);
     });
   };
 
-  const onCompleteTransaction = () => {
+  const onCompleteTransaction = (captureCheckoutData: CheckoutData) => {
     router.push(pages.home.path);
+    sendPurchaseEvent(captureCheckoutData.checkoutEmail || '');
     cleanCart();
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.message'}));
     enqueueSnackbar(intl.formatMessage(

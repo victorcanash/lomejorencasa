@@ -16,6 +16,7 @@ import NP from 'number-precision'
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { SnackbarProvider } from 'notistack';
+import { FBPixelScript, FBPixelProvider } from '@rivercode/facebook-conversion-api-nextjs/components';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
@@ -57,7 +58,7 @@ function MyApp(props: MyAppProps) {
     pageProps 
   } = props;
 
-  //const { locale } = useRouter();
+  // const { locale } = useRouter();
 
   useEffect(() => {
     NP.enableBoundaryChecking(false)
@@ -73,35 +74,38 @@ function MyApp(props: MyAppProps) {
         <meta name="facebook-domain-verification" content="ogx6uggctpg463pxxngpttfinfajqg" />
       </Head>
 
-      <IntlProvider locale={locale} messages={messages[locale]}>
-        <CacheProvider value={emotionCache}>
-          <SnackbarProvider maxSnack={snackbarConfig.maxSnack} autoHideDuration={snackbarConfig.durations.default}>     
-              <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
-                    
-                  <ErrorBoundary>
-                    <AppProvider>
-                      <SearchProvider>
-                        <ProductsProvider>
-                          <CartProvider>
-                            <AuthProvider>
-                              <MainLayout>
-                                <Component {...pageProps} />
-                              </MainLayout> 
-                            </AuthProvider>
-                          </CartProvider>
-                        </ProductsProvider>          
-                      </SearchProvider>
-                    </AppProvider>
-                  </ErrorBoundary>
+      <FBPixelScript />
+      <FBPixelProvider>
+        <IntlProvider locale={locale} messages={messages[locale]}>
+          <CacheProvider value={emotionCache}>
+            <SnackbarProvider maxSnack={snackbarConfig.maxSnack} autoHideDuration={snackbarConfig.durations.default}>     
+                <ThemeProvider theme={theme}>
+                  <CssBaseline />
+                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+                      
+                    <ErrorBoundary>
+                      <AppProvider>
+                        <SearchProvider>
+                          <ProductsProvider>
+                            <CartProvider>
+                              <AuthProvider>
+                                <MainLayout>
+                                  <Component {...pageProps} />
+                                </MainLayout> 
+                              </AuthProvider>
+                            </CartProvider>
+                          </ProductsProvider>          
+                        </SearchProvider>
+                      </AppProvider>
+                    </ErrorBoundary>
 
-                </LocalizationProvider>    
-              </ThemeProvider>
+                  </LocalizationProvider>    
+                </ThemeProvider>
 
-          </SnackbarProvider>
-        </CacheProvider>
-      </IntlProvider>
+            </SnackbarProvider>
+          </CacheProvider>
+        </IntlProvider>
+      </FBPixelProvider>
     </>
   );
 };

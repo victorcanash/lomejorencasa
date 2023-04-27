@@ -13,6 +13,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import usePage from '@lib/hooks/usePage';
 import useOrders from '@lib/hooks/useOrders';
 import PageHeader from '@components/ui/PageHeader';
+import Loading from '@components/ui/Loading';
 import OrderList from '@components/orders/OrderList';
 import GetOrderForm from '@components/forms/orders/GetOrderForm';
 import OrderDetail from '@components/orders/OrderDetail';
@@ -30,10 +31,12 @@ const Orders: NextPage = () => {
     getOrderById,
     successMsg,
     errorMsg,
+    setSuccessMsg,
+    setErrorMsg,
   } = useOrders();
 
   const [loadedOrders, setLoadedOrders] = useState(false);
-  const [loggedOrders, setLoggedOrders] = useState<Order[]>([]);
+  const [loggedOrders, setLoggedOrders] = useState<Order[] | undefined>(undefined);
   const [selectedOrder, setSelectedOrder] = useState<Order | undefined>(undefined);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -74,8 +77,18 @@ const Orders: NextPage = () => {
       } else {
         setLoading(false);
       }
+    } else if (loadedOrders) {
+      if (!isLogged() && loggedOrders) {
+        setLoggedOrders(undefined);
+        setSelectedOrder(undefined);
+      }
     }
-  }, [getOrders, isLogged, loadedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked, setLoading]);
+  }, [getOrders, isLogged, loadedOrders, loggedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked, setLoading]);
+
+  useEffect(() => {
+    setSuccessMsg('');
+    setErrorMsg('');
+  }, [isLogged, selectedOrder, setErrorMsg, setSuccessMsg]);
 
   return (
     <>
@@ -95,13 +108,13 @@ const Orders: NextPage = () => {
         }}
       />
 
-      { initialized && page.checked &&
+      { initialized && page.checked && ((isLogged() && loggedOrders) || (!isLogged())) ?
         <Container>
           { isLogged() &&
             <>
               { !selectedOrder ?
                 <OrderList 
-                  orders={loggedOrders} 
+                  orders={loggedOrders || []} 
                   totalPages={totalPages}
                   currentPage={currentPage}
                   onChangePage={onChangePage}
@@ -135,6 +148,8 @@ const Orders: NextPage = () => {
             </>
           }
         </Container>
+        :
+        <Loading open={true} />
       }
     </>
   );

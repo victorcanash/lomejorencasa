@@ -1,17 +1,19 @@
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { useAppContext } from '@lib/contexts/AppContext';
+type LoadingProps = {
+  open: boolean
+};
 
-const Loading = () => {
-  const { loading } = useAppContext();
+const Loading = (props: LoadingProps) => {
+  const { open } = props;
 
   return (
     <Backdrop
       sx={{ 
         zIndex: (theme) => theme.zIndex.modal + 5 
       }}
-      open={loading}
+      open={open}
     >
       <CircularProgress
         size='60px'

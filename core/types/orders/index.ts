@@ -15,28 +15,34 @@ export type Order = {
 };
 
 export type OrderBigbuy = {
-  id: string
-  status: string
+  id: string,
+  status: string,
   shippingAddress: {
-    firstName: string
-    lastName: string
-    country: string
-    postcode: string
-    town: string
-    address: string
-    phone: string
-    email: string
-    companyName: string
-  }
-  products: OrderBigbuyProduct[]
-}
+    firstName: string,
+    lastName: string,
+    country: string,
+    postcode: string,
+    town: string,
+    address: string,
+    phone: string,
+    email: string,
+    companyName: string,
+  },
+  products: OrderBigbuyProduct[],
+  tracking?: OrderBigbuyTracking,
+};
 
 export type OrderBigbuyProduct = {
-  id?: string
-  reference: string
-  quantity: number
-  name?: string
-  internalReference: string
+  id?: string,
+  reference: string,
+  quantity: number,
+  name?: string,
+  internalReference: string,
+};
+
+export type OrderBigbuyTracking = {
+  trackingNumber: string,
+  statusDescription: string,
 };
 
 export type OrderTransaction = {

@@ -67,31 +67,22 @@ const deleteUser = (token: string, user: User) => {
   return axios.delete(`/users/${user.id}`, options)
 }
 
-export const sendUserContactEmail = (token: string, currentLocale: string, userContact: UserContact, contactImgs: File[]) => {
+export const sendUserContactEmail = (token: string, currentLocale: string, userContact: UserContact) => {
   return new Promise((resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
-        'Content-Type': 'multipart/form-data',
       },
       params: {
         appName: envConfig.NEXT_PUBLIC_APP_NAME,
         appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      }
+      },
     };
-    const data = new FormData();
-    for (let i = 0; i < contactImgs.length; i++) {
-      data.append('images', contactImgs[i]);
-    }
-    data.append('type', userContact.type);
-    data.append('email', userContact.email);
-    data.append('firstName', userContact.firstName);
-    if (userContact.orderId) {
-      data.append('orderBigbuyId', userContact.orderId);
-    }
-    data.append('comments', userContact.comments);
-    axios.post('users/send-email/contact', data, options)
+    axios.post('users/send-email/contact', {
+      ...userContact,
+      orderBigbuyId: userContact.orderId,
+    }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({});

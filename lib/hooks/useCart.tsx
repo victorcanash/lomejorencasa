@@ -19,6 +19,7 @@ import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
+import useFacebook from '@lib/hooks/useFacebook';
 
 const useCart = (checkTotalAmount = true) => {
   const { setLoading } = useAppContext();
@@ -37,6 +38,8 @@ const useCart = (checkTotalAmount = true) => {
   const intl = useIntl();
   const { enqueueSnackbar } = useSnackbar();
 
+  const { sendAddToCartEvent } = useFacebook();
+
   const [totalAmount, setTotalAmount] = useState({
     itemsAmount: [],
     subtotal: 0,
@@ -52,6 +55,8 @@ const useCart = (checkTotalAmount = true) => {
       return;
     }
     setLoading(true);
+
+    sendAddToCartEvent(productItem, quantity);
 
     const cartItem = {
       id: 0,
