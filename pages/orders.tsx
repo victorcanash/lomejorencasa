@@ -61,8 +61,23 @@ const Orders: NextPage = () => {
   }, []);
 
   const showOrder = useCallback((order: Order) => {
-    getOrderById(order.id, onSuccessGetOrder)
+    getOrderById(order.id, onSuccessGetOrder);
   }, [getOrderById, onSuccessGetOrder]);
+
+  const getOrderByQueries = useCallback((queries: { id: string, email: string }) => {
+    getOrderByBigbuyId({ orderId: queries.id, guestUserEmail: queries.email }, onSuccessGetOrder)
+  }, [getOrderByBigbuyId, onSuccessGetOrder]);
+
+  const getOrderQueries = useCallback(() => {
+    const { id, email } = router.query;
+    if (
+        (id && typeof id === 'string') &&
+        (email && typeof email === 'string')
+      ) {
+      return { id, email };
+    }
+    return undefined;
+  }, [router.query]);
 
   const onClickBack = useCallback(() => {
     setSelectedOrder(undefined);
@@ -72,7 +87,10 @@ const Orders: NextPage = () => {
   useEffect(() => {
     if (page.checked && !loadedOrders) {
       setLoadedOrders(true);
-      if (isLogged()) {
+      const queries = getOrderQueries();
+      if (queries) {
+        getOrderByQueries(queries);
+      } else if (isLogged()) {
         getOrders(0, onSuccessGetOrders, onErrorGetOrders);
       } else {
         setLoading(false);
@@ -83,7 +101,7 @@ const Orders: NextPage = () => {
         setSelectedOrder(undefined);
       }
     }
-  }, [getOrders, isLogged, loadedOrders, loggedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked, setLoading]);
+  }, [getOrderByQueries, getOrderQueries, getOrders, isLogged, loadedOrders, loggedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked, setLoading]);
 
   useEffect(() => {
     setSuccessMsg('');
