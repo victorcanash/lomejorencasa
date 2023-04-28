@@ -10,11 +10,8 @@ import type {
   ProductDiscount,
   ProductPack,
 } from '@core/types/products';
-import type { UploadFile } from '@core/types/multimedia';
 import {
   manageProduct as manageProductMW,
-  uploadProductImgs,
-  deleteProductImg,
   manageProductCategory as manageProductCategoryMW,
   manageProductInventory as manageProductInventoryMW,
   manageProductDiscount as manageProductDiscountMW,
@@ -37,48 +34,19 @@ const useProducts = () => {
 
   /* Admin */
 
-  const validateProductImgs = (
-    product: Product, 
-    uploadImgs?: UploadFile[],
-    deleteImgs?: number[], 
-    onSuccess?: (product: Product, uploadImgs?: UploadFile[]) => void
-  ) => {
-    /*const totalImgs = product.imageNames.length - 
-      (deleteImgs ? deleteImgs.length : 0) + 
-      ((uploadImgs ? uploadImgs.length : 0));
-    if (totalImgs < 1) {
-      setSuccessMsg('');
-      setErrorMsg(intl.formatMessage({ id: 'admin.errors.validateProductImgs' }));
-      return false;
-    }*/
-    if (onSuccess) {
-      onSuccess(product, uploadImgs);
-    }
-    return true;
-  };
-
   const createProduct = async (
-    product: Product, 
-    uploadImgs: UploadFile[],
+    product: Product,
     inventories: ProductInventory[], 
     discounts: ProductDiscount[],
     onSuccess: () => void
   ) => {
-    if (!validateProductImgs(product, uploadImgs, undefined)) {
-      return;
-    }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
     let productId = -1;
-    let productImages: string[] = [];
 
     try {
       productId = await (await manageProductMW(ManageActions.create, token, intl.locale, product)).product.id;
-
-      if (uploadImgs.length > 0) {
-        productImages = await (await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productId)).productImages;
-      }
       
       for (const inventory of inventories) {
         inventory.productId = productId;
@@ -93,11 +61,6 @@ const useProducts = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (productId > -1) {
-        if (productImages.length > 0) {
-          for (let i = productImages.length - 1; i >= 0; i--) {
-            await deleteProductImg(token, i, productId);
-          }
-        }
         product = { ...product, id: productId }
         await manageProductMW(ManageActions.delete, token, intl.locale, product);
       }
@@ -112,14 +75,9 @@ const useProducts = () => {
   };
 
   const updateProduct = async (
-    product: Product, 
-    uploadImgs?: UploadFile[], 
-    deleteImgs?: number[], 
-    onSuccess?: (product: Product, uploadImgs?: UploadFile[]) => void
+    product: Product,
+    onSuccess?: (product: Product) => void
   ) => {
-    if (!validateProductImgs(product, uploadImgs, deleteImgs)) {
-      return;
-    }
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
@@ -127,16 +85,6 @@ const useProducts = () => {
 
     try {
       productResponse = await (await manageProductMW(ManageActions.update, token, intl.locale, product)).product;
-
-      if (deleteImgs && deleteImgs.length > 0) {
-        for (let i = deleteImgs.length - 1; i >= 0; i--) {
-          await deleteProductImg(token, deleteImgs[i], productResponse.id);
-        }
-      }
-      
-      if (uploadImgs && uploadImgs.length > 0) {
-        await uploadProductImgs(token, uploadImgs.map((item) => { return item.file; }), productResponse.id);
-      }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -148,7 +96,7 @@ const useProducts = () => {
     setLoading(false);
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateProduct' }));
     if (onSuccess) {
-      onSuccess(product, uploadImgs);
+      onSuccess(product);
     }
 };
 
@@ -160,14 +108,7 @@ const deleteProduct = async (
     setSuccessMsg('');
 
     try {
-      if (product.imageNames && product.imageNames.length > 0) {
-        for (let i = product.imageNames.length - 1; i >= 0; i--) {
-          await deleteProductImg(token, i, product.id);
-        }
-      }
-
       await manageProductMW(ManageActions.delete, token, intl.locale, product);
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setErrorMsg(error.message);
@@ -292,7 +233,6 @@ const deleteProduct = async (
   };
 
   return {
-    validateProductImgs,
     createProduct,
     updateProduct,
     deleteProduct,

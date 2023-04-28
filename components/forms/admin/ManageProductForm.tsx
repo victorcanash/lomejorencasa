@@ -1,15 +1,6 @@
-import { useState, useRef } from 'react';
-
-import { FormattedMessage } from 'react-intl';
-
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-
 import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Product } from '@core/types/products';
-import type { Source, UploadFile } from '@core/types/multimedia';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -17,12 +8,11 @@ import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useForms from '@lib/hooks/useForms';
 import useProducts from '@lib/hooks/useProducts';
 import BaseForm from '@components/forms/BaseForm';
-import ImagesDetail from '@components/admin/details/ImagesDetail';
 
 type ManageProductFormProps = {
   action: ManageActions.create | ManageActions.update,
   product?: Product,
-  onSubmitSuccess?: (product: Product, uploadImgs?: UploadFile[]) => void,
+  onSubmitSuccess?: (product: Product) => void,
   onDeleteSuccess?: () => void,
   onCancel?: () => void,
 };
@@ -37,56 +27,18 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   } = props;
 
   const { productCategories } = useSearchContext();
-  const { getProductDetailImgsUrl, getProductInventories } = useProductsContext();
+  const { getProductInventories } = useProductsContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
-  const { validateProductImgs, updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
-
-  const uploadImgsInputRef = useRef<HTMLInputElement | null>(null);
-
-  const [uploadImgs, setUploadImgs] = useState<UploadFile[]>([]);
-  const [deleteExistingImgs, setDeleteExistingImgs] = useState<number[]>([]);
-
-  // on set files to the upload input we add it in uploadFiles
-  const handleChangeUploadImgsInput = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    if (files && files.length > 0) {
-      Array.from(files).forEach((file) => {
-        setUploadImgs(current => [...current, { 
-          url: URL.createObjectURL(file),
-          file: file,
-        }]);
-      })
-    }
-    if (uploadImgsInputRef.current) {
-      uploadImgsInputRef.current.value = '';
-    }
-  };
-
-  // on click the delete button from a uploaded img we remove it from uploadImgs
-  const handleClickDeleteUploadImgBtn = (uploadImgIndex: number) => {
-    setUploadImgs(
-      uploadImgs.filter((_item, index) => index !== uploadImgIndex)
-    );
-  };
-
-  // on click the delete button from an existing img we add its index in deleteExistingImgs
-  const handleClickDeleteExistingImgBtn = (deleteExistingImg: number) => {
-    setDeleteExistingImgs(current => [...current, deleteExistingImg]);
-  };
-
-  // on click the discard button from an existing img we remove its index from deleteExistingImgs
-  const handleClickRecoverExistingImgBtn = (deleteExistingImg: number) => {
-    setDeleteExistingImgs(
-      deleteExistingImgs.filter((item) => item !== deleteExistingImg)
-    );
-  };
+  const { updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
 
   const handleSubmit = async (values: Product) => {
     if (action == ManageActions.create) {
-      validateProductImgs(values, uploadImgs, undefined, onSubmitSuccess);
+      if (onSubmitSuccess) {
+        onSubmitSuccess(values);
+      }
     } else if (action == ManageActions.update) {
-      updateProduct(values, uploadImgs, deleteExistingImgs, onSubmitSuccess);
+      updateProduct(values, onSubmitSuccess);
     }
   };
 
@@ -115,7 +67,6 @@ const ManageProductForm = (props: ManageProductFormProps) => {
           description: product?.description || productFieldsInitValues.description,
           lowestPrice: product?.lowestPrice || 0,
           lowestRealPrice: product?.lowestRealPrice || 0,
-          imageNames: product?.imageNames || [],
           inventories: getProductInventories(product),
         } as Product}
         validationSchema={manageProductFormValidation}
@@ -194,106 +145,6 @@ const ManageProductForm = (props: ManageProductFormProps) => {
         successMsg={successMsg}
         errorMsg={errorMsg}
       />
-
-      <Box mt={3} />
-
-      { uploadImgs && uploadImgs.length > 0 &&
-        <Box 
-          sx={{
-            maxWidth: maxWidth, 
-            margin: 'auto',
-          }} 
-          mb={2}
-        >
-          <Typography component="h3" variant="body1">
-            <FormattedMessage 
-              id="forms.manageProductImgs.newImgs" 
-            />
-          </Typography>
-          <ImagesDetail
-            sources={uploadImgs.map((item) => { 
-              return { src: item.url } as Source;
-            })}
-            getImgActionComponent={(srcImgIndex: number) => {
-              return (
-                <Button variant="contained" onClick={()=>handleClickDeleteUploadImgBtn(srcImgIndex)}>
-                  <FormattedMessage 
-                    id="app.removeBtn" 
-                  />
-                </Button>
-              )
-            }}
-          />
-        </Box>
-      }
-
-      <Box
-        sx={{
-          maxWidth: maxWidth,
-          margin: 'auto',
-        }}  
-        mb={2}
-      >
-        <Button 
-          variant="contained" 
-          fullWidth
-          component="label" 
-        >
-          <FormattedMessage 
-            id="forms.manageProductImgs.upload" 
-          />
-          <input 
-            ref={uploadImgsInputRef} 
-            hidden 
-            accept="image/*" 
-            multiple 
-            type="file" 
-            onChange={handleChangeUploadImgsInput} 
-          />
-        </Button>
-      </Box>
-
-      { product?.imageNames && product?.imageNames.length > 0 &&
-        <Box
-          sx={{
-            maxWidth: maxWidth,
-            margin: 'auto',
-          }}
-        >
-          <Typography component="h3" variant="body1">
-            <FormattedMessage 
-              id="forms.manageProductImgs.existingImgs" 
-            />
-          </Typography>
-          <ImagesDetail
-            sources={getProductDetailImgsUrl(product).map((item) => { 
-              return { src: item } as Source;
-            })}
-            getImgActionComponent={(srcImgIndex: number) => {
-              const component = deleteExistingImgs.includes(srcImgIndex) ?
-                <>
-                  <Typography component="div" variant="body2">
-                    <FormattedMessage 
-                      id="forms.manageProductImgs.deleted" 
-                    />
-                  </Typography>
-                  <Button variant="contained" onClick={()=>handleClickRecoverExistingImgBtn(srcImgIndex)}>
-                    <FormattedMessage 
-                      id="app.recoverBtn" 
-                    />
-                  </Button>
-                </>
-              :
-                <Button variant="contained" onClick={()=>handleClickDeleteExistingImgBtn(srcImgIndex)}>
-                  <FormattedMessage 
-                    id="app.deleteBtn" 
-                  />
-                </Button>
-              return component;
-            }}
-          />
-        </Box>
-      }
     </>
   );
 };

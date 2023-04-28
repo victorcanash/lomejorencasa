@@ -175,7 +175,7 @@ const ProductDetail = (props: ProductDetailProps) => {
   const productTitle = useMemo(() => {
     let text = product.name.current;
     if (selectedItem) {
-      text = selectedItem.description.current;
+      text = selectedItem.name.current;
     }
     return (
       <Typography component="h2" variant="h1" color="text.primary">

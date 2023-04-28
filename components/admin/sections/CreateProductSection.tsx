@@ -13,7 +13,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
-import type { Source, UploadFile } from '@core/types/multimedia';
 
 import { pages } from '@lib/constants/navigation';
 import useProducts from '@lib/hooks/useProducts';
@@ -23,7 +22,6 @@ import ManagePDiscountForm from '@components/forms/admin/ManagePDiscountForm';
 import ProductDetail from '@components/admin/details/ProductDetail';
 import InventoriesDetail from '@components/admin/details/InventoriesDetail';
 import DiscountsDetail from '@components/admin/details/DiscountsDetail';
-import ImagesDetail from '@components/admin/details/ImagesDetail';
 
 const CreateProductSection = () => {
   const router = useRouter();
@@ -31,15 +29,11 @@ const CreateProductSection = () => {
   const { createProduct, errorMsg, successMsg } = useProducts();
 
   const [product, setProduct] = useState<Product | undefined>(undefined);
-  const [uploadImgs, setUploadImgs] = useState<UploadFile[]>([]);
   const [inventories, setInventories] = useState<ProductInventory[]>([]);
   const [discounts, setDiscounts] = useState<ProductDiscount[]>([]);
 
-  const onSuccessCreateProduct = (product: Product, uploadImgs?: UploadFile[]) => {
+  const onSuccessCreateProduct = (product: Product) => {
     setProduct(product);
-    if (uploadImgs) {
-      setUploadImgs(uploadImgs);
-    }
   };
 
   const onSuccessCreateInventory = (inventory: ProductInventory) => {
@@ -64,7 +58,7 @@ const CreateProductSection = () => {
 
   const onClickConfirmBtn = () => {
     if (product && inventories && inventories.length > 0) {
-      createProduct(product, uploadImgs, inventories, discounts, onSuccessConfirm);
+      createProduct(product, inventories, discounts, onSuccessConfirm);
     }
   };
 
@@ -96,20 +90,6 @@ const CreateProductSection = () => {
             product={product}
             created={false}
           />
-          { uploadImgs && uploadImgs.length > 0 &&
-            <>
-              <Typography component="div" variant="body1">
-                <FormattedMessage
-                  id="forms.manageProductImgs.newImgs"
-                />
-              </Typography>
-              <ImagesDetail
-                sources={uploadImgs.map((item) => { 
-                  return { src: item.url } as Source; 
-                })}
-              />
-            </>
-          }
 
           <Divider sx={{ my: 2 }} />
 

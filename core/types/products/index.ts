@@ -15,10 +15,22 @@ export type Product = {
   reviewsCount: number,
   lowestPrice: number,
   lowestRealPrice: number,
-  imageNames: string[],
   inventories?: ProductInventory[],
   discounts?: ProductDiscount[],
   activeDiscount?: ProductDiscount,
+};
+
+export type ProductPack = {
+  id: number,
+  name: LocalizedText,
+  description: LocalizedText,
+  price: number,
+  quantity: number,
+  image?: string,
+  originalPrice: number,
+  discountPercent: number,
+  inventories: ProductInventory[],
+  inventoriesIds: number[],
 };
 
 export type ProductInventory = {
@@ -29,6 +41,7 @@ export type ProductInventory = {
   description: LocalizedText,
   price: number,
   quantity: number,
+  image?: string,
   realPrice: number,
   bigbuy: {
     id: string,
@@ -38,18 +51,6 @@ export type ProductInventory = {
     quantity: number,
   },
   product: Product,
-};
-
-export type ProductPack = {
-  id: number,
-  name: LocalizedText,
-  description: LocalizedText,
-  price: number,
-  quantity: number,
-  originalPrice: number,
-  discountPercent: number,
-  inventories: ProductInventory[],
-  inventoriesIds: number[],
 };
 
 export type ProductDiscount = {
