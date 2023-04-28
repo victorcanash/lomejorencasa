@@ -2,8 +2,9 @@ import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
 import type { Page } from '@core/types/navigation';
 import type { NavDrawerItems } from '@core/types/navigation';
+import { getLandingPathByConfig } from '@core/utils/products';
 
-import { productPaths } from '@lib/constants/products';
+import inventoryConfig from '@lib/constants/products';
 
 export const pages: {
   home: Page,
@@ -11,6 +12,8 @@ export const pages: {
   productDetail: Page,
   everfresh: Page,
   bags: Page,
+  everfreshPack: Page,
+  bagsPack: Page,
   about: Page,
   faq: Page,
   cart: Page,
@@ -64,8 +67,8 @@ export const pages: {
     },
   },
   everfresh: {
-    path: `/productos/${productPaths.everfresh}`,
-    filepath: '/productos/[product]',
+    path: getLandingPathByConfig(inventoryConfig.vacuumMachine),
+    filepath: '/productos/[landing]',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
@@ -73,8 +76,26 @@ export const pages: {
     },
   },
   bags: {
-    path: `/productos/${productPaths.bags}`,
-    filepath: '/productos/[product]',
+    path: getLandingPathByConfig(inventoryConfig.vacuumBags),
+    filepath: '/productos/[landing]',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
+  everfreshPack: {
+    path: getLandingPathByConfig(inventoryConfig.vacuumPack),
+    filepath: '/productos/[landing]',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
+  bagsPack: {
+    path: getLandingPathByConfig(inventoryConfig.vacuumBagsPack),
+    filepath: '/productos/[landing]',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
@@ -283,6 +304,22 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
       id: 'everfresh',
     },
     path: pages.everfresh.path,
+    items: [],
+    open: false,
+  },
+  {
+    text: {
+      id: 'bagsPack',
+    },
+    path: pages.bagsPack.path,
+    items: [],
+    open: false,
+  },
+  {
+    text: {
+      id: 'everfreshPack',
+    },
+    path: pages.everfreshPack.path,
     items: [],
     open: false,
   },

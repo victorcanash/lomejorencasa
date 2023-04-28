@@ -1,15 +1,15 @@
 import { useIntl } from 'react-intl';
-import { Pagination } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+// import { Pagination } from 'swiper';
+// import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
 
 import type { Product } from '@core/types/products';
-import CustomImage from '@core/components/CustomImage';
+// import CustomImage from '@core/components/CustomImage';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
+// import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 type ProductDetailProps = {
   product: Product,
@@ -20,7 +20,7 @@ const ProductDetail = (props: ProductDetailProps) => {
   const { product, created } = props;
 
   const { productCategories } = useSearchContext();
-  const { getProductDetailImgsUrl } = useProductsContext();
+  // const { getLandingImgsUrl } = useProductsContext();
 
   const intl = useIntl();
 
@@ -55,7 +55,7 @@ const ProductDetail = (props: ProductDetailProps) => {
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
           </Typography>
-          <Box sx={{width: "360px"}}>
+          {/*<Box sx={{width: "360px"}}>
             <Box>
               <Swiper
                 modules={[Pagination]}
@@ -81,7 +81,7 @@ const ProductDetail = (props: ProductDetailProps) => {
                 ))}
               </Swiper>
             </Box>
-          </Box>
+          </Box>*/}
         </>
       }
     </>

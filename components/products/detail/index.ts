@@ -1,3 +1,3 @@
-import ProductDetail from './ProductDetail';
+import LandingDetail from './LandingDetail';
 
-export default ProductDetail;
+export default LandingDetail;

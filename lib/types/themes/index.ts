@@ -119,7 +119,7 @@ export type ThemeCustomElements = {
     },
   },
   landing: {
-    quantityLabel: ThemeElement,
+    selectLabel: ThemeElement,
     priceContent: {
       priceText: ThemeElement,
       //originalText: ThemeElement,

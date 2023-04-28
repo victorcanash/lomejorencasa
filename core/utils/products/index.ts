@@ -2,9 +2,10 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
-import envConfig from '@core/config/env.config';
 import { ManageActions } from '@core/constants/app';
 import type {
+  LandingConfig,
+  Landing,
   Product,
   ProductCategory,
   ProductInventory,
@@ -16,59 +17,88 @@ import type {
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 
-export const createProductReview = (
-  token: string,
-  currentLocale: string,
-  productReview: CreateProductReview,
-  reviewImg?: File,
-) => {
-  return new Promise<{
-    review: ProductReview,
-    productRating: {
-      rating: string,
-      reviewsCount: number,
-    },
-  }>((resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: {
-        ...getAuthHeaders(token),
-        ...getLanguageHeaders(currentLocale),
-        'Content-Type': 'multipart/form-data',
-      },
+export const generateLandings = (landingConfigs: LandingConfig[]) => {
+  const landings: Landing[] = [];
+  landingConfigs.forEach((landingConfig) => {
+    const landing: Landing = {
+      ...{} as Landing,
+      id: landingConfig.id,
+      name: landingConfig.name,
+      images: landingConfig.images,
+      products: [],
+      packs: [],
     };
-    const data = new FormData();
-    data.append('productId', productReview.relatedProduct.toString());
-    data.append('rating', productReview.rating.toString());
-    data.append('title', productReview.title);
-    data.append('description', productReview.description);
-    data.append('email', productReview.email);
-    data.append('publicName', productReview.publicName);
-    if (reviewImg) {
-      data.append('image', reviewImg);
-    }
-    axios.post('product-reviews', data, options)
-      .then(async (response: AxiosResponse) => {
-        if (
-            response.status === StatusCodes.CREATED &&
-            response.data?.productReview &&
-            response.data?.productRating
-          ) {
-          resolve({
-            review: response.data.productReview,
-            productRating: {
-              rating: response.data.productRating.rating,
-              reviewsCount: response.data.productRating.reviewsCount,
-            },
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Create Product Review ERROR', error);
-        logBackendError(errorMsg);
-        reject(new Error(errorMsg));
+    if (landingConfig.product) {
+      landing.products.push({ 
+        ...{} as Product,
       });
-  })
+      const product = landing.products[0];
+      landingConfig.product.inventories.forEach((itemConfig) => {
+        product.inventories?.push({
+          ...{} as ProductInventory,
+          name: itemConfig.name,
+          price: itemConfig.price,
+          realPrice: itemConfig.realPrice,
+          image: itemConfig.image,
+        });
+      });
+    } else if (landingConfig.packs) {
+      landingConfig.packs.variations.forEach((itemConfig) => {
+        landing.packs.push({
+          ...{} as ProductPack,
+          name: itemConfig.name,
+          price: itemConfig.price,
+          originalPrice: itemConfig.realPrice,
+          image: itemConfig.image,
+        });
+      });
+    }
+    landings.push(landing);
+  });
+  return landings;
+};
+
+export const getLandingConfigByPath = (path: string, landingConfigs: LandingConfig[]) => {
+  return landingConfigs.find((landingConfig) => {
+    if (landingConfig.path === path) {
+      return landingConfig;
+    }
+  });
+};
+
+export const getLandingConfigByCartItem = (item: CartItem | GuestCartCheckItem, landingConfigs: LandingConfig[]) => {
+  return landingConfigs.find((landingConfig) => {
+    if (item.inventory && item.inventory.product.landingId === landingConfig.id) {
+      return landingConfig;
+    } else if (item.pack && item.pack.landingId === landingConfig.id) {
+      return landingConfig;
+    }
+  });
+};
+
+export const getLandingPathByConfig = (landingConfig: LandingConfig) => {
+  return `/productos/${landingConfig.path}`;
+};
+
+export const getLandingItems = (landing: Landing) => {
+  let landingItems: (ProductInventory | ProductPack)[] = [];
+  if (landing.products.length > 0) {
+    const landingInventories = landing.products[0].inventories;
+    if (landingInventories && landingInventories.length > 0) {
+      landingItems = landingInventories;
+    }
+  } else if (landing.packs.length > 0) {
+    landingItems = landing.packs;
+  }
+  return landingItems;
+};
+
+export const getFirstLandingItem = (landing: Landing) => {
+  const landingItems = getLandingItems(landing);
+  if (landingItems.length > 0) {
+    return landingItems[0];
+  }
+  return undefined;
 };
 
 export const getAllProducts = async (
@@ -170,6 +200,61 @@ export const getAllPacks = async (
   });
 };
 
+export const createProductReview = (
+  token: string,
+  currentLocale: string,
+  productReview: CreateProductReview,
+  reviewImg?: File,
+) => {
+  return new Promise<{
+    review: ProductReview,
+    productRating: {
+      rating: string,
+      reviewsCount: number,
+    },
+  }>((resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: {
+        ...getAuthHeaders(token),
+        ...getLanguageHeaders(currentLocale),
+        'Content-Type': 'multipart/form-data',
+      },
+    };
+    const data = new FormData();
+    data.append('productId', productReview.relatedProduct.toString());
+    data.append('rating', productReview.rating.toString());
+    data.append('title', productReview.title);
+    data.append('description', productReview.description);
+    data.append('email', productReview.email);
+    data.append('publicName', productReview.publicName);
+    if (reviewImg) {
+      data.append('image', reviewImg);
+    }
+    axios.post('product-reviews', data, options)
+      .then(async (response: AxiosResponse) => {
+        if (
+            response.status === StatusCodes.CREATED &&
+            response.data?.productReview &&
+            response.data?.productRating
+          ) {
+          resolve({
+            review: response.data.productReview,
+            productRating: {
+              rating: response.data.productRating.rating,
+              reviewsCount: response.data.productRating.reviewsCount,
+            },
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Create Product Review ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      });
+  })
+};
+
 export const getAllProductReviews = async (
   currentLocale: string, 
   page: number,
@@ -241,53 +326,6 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
   });
 };
 
-export const convertToProduct = (item: Product | ProductPack | CartItem | GuestCartCheckItem) => {
-  if ((item as Product)?.categoryId) {
-    return item as Product;
-  } 
-  if ((item as ProductPack)?.inventories) {
-    return getProductByPack(item as ProductPack);
-  } else if ((item as CartItem | GuestCartCheckItem)?.inventory || 
-             (item as CartItem | GuestCartCheckItem)?.pack ) {
-    return getProductByCartItem(item as (CartItem | GuestCartCheckItem));
-  }
-  return undefined;
-};
-
-const getProductByCartItem = (item: CartItem | GuestCartCheckItem) => {
-  if (item.inventory?.product) {
-    return item.inventory.product;
-  }  else if (item.pack?.inventories && item.pack.inventories.length > 0 && item.pack.inventories[0].product) {
-    return item.pack.inventories[0].product;
-  }
-  return undefined;
-};
-
-const getProductByPack = (pack: ProductPack) => {
-  if (pack.inventories && pack.inventories.length > 0 && pack.inventories[0].product) {
-    return pack.inventories[0].product;
-  }
-  return undefined;
-};
-
-export const getProductImgUrl = (product: Product, index = 0) => {
-  if (product.imageNames.length > index && product.imageNames[index]) {
-    return `${envConfig.NEXT_PUBLIC_BACKEND_URL}/products/${product.id}/images/${index}`
-  }
-  return undefined;
-};
-
-export const getAllProductImgsUrl = (product: Product) => {
-  const imgUrls: string[] = [];
-  product.imageNames.forEach((_item, index) => { 
-    const imgUrl = getProductImgUrl(product, index);
-    if (imgUrl) {
-      imgUrls.push(imgUrl); 
-    }
-  });
-  return imgUrls;
-};
-
 export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     let promiseMW = createProduct;
@@ -348,57 +386,6 @@ const deleteProduct = (token: string, currentLocale: string, product: Product) =
   };
   return axios.delete(`/products/${product.id}`, options)
 }
-
-export const uploadProductImgs = (token: string, productImages: File[], productId: number) => {
-  return new Promise<{productImages: string[]}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: {
-        ...getAuthHeaders(token),
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-    const data = new FormData();
-    for (let i = 0; i < productImages.length; i++) {
-      data.append('images', productImages[i]);
-    }
-    axios.post(`/products/${productId}/images`, data, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.CREATED) {
-          resolve({
-            productImages: response.data.productImages,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Upload Product Images ERROR', error);
-        logBackendError(errorMsg)
-        reject(new Error(errorMsg));
-      });
-  }); 
-};
-
-export const deleteProductImg = (token: string, id: number, productId: number) => {
-  return new Promise<{productImages: string[]}>(async (resolve, reject) => {
-    const options: AxiosRequestConfig = {
-      headers: getAuthHeaders(token),
-    };
-    axios.delete(`/products/${productId}/images/${id}`, options)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === StatusCodes.OK) {
-          resolve({
-            productImages: response.data.productImages,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Delete Product Image ERROR', error);
-        logBackendError(errorMsg)
-        reject(new Error(errorMsg));
-      });
-  }); 
-};
 
 export const manageProductCategory = (action: ManageActions, token: string, currentLocale: string, productCategory: ProductCategory) => {
   return new Promise<{productCategory: ProductCategory}>(async (resolve, reject) => {

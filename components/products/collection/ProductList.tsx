@@ -33,7 +33,7 @@ type ProductListProps = {
 };
 
 const ProductList = (props: ProductListProps) => {
-  const { category, products, totalPages, currentPage, keywords } = props;
+  /*const { category, products, totalPages, currentPage, keywords } = props;
 
   const { getHref } = useSearchContext();
   const { getProductImgUrl } = useProductsContext();
@@ -122,7 +122,8 @@ const ProductList = (props: ProductListProps) => {
         onChangePage={handleChangePage}
       />
     </Container>
-  );
+  );*/
+  return (<></>);
 };
 
 export default ProductList;

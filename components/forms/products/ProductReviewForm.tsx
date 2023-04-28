@@ -37,7 +37,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     createProductReview,
   } = props;
 
-  const { everfreshProduct, bagsProduct } = useProductsContext();
+  const { getAllProducts } = useProductsContext();
   const { user, isLogged } = useAuthContext();
 
   const { 
@@ -84,7 +84,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
           formikRef={formRef}
           maxWidth={maxWidth}
           initialValues={{
-            relatedProduct: everfreshProduct.id,
+            relatedProduct: getAllProducts()[0].id,
             rating: reviewFieldsInitValues.rating,
             title: reviewFieldsInitValues.title,
             description: reviewFieldsInitValues.description,
@@ -103,7 +103,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
                   name: 'relatedProduct',
                   type: FormFieldTypes.select,
                   required: true,
-                  menuItems: [everfreshProduct, bagsProduct].map((item) => {
+                  menuItems: getAllProducts().map((item) => {
                     return {
                       text: {
                         id: 'forms.selectProduct.content',

@@ -14,7 +14,7 @@ import { convertElementToSx } from '@core/utils/themes';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 
-type SelectInventoryQuantityProps = {
+type SelectItemQuantityProps = {
   item: ProductInventory | ProductPack | CartItem | undefined,
   selectedQuantity: number,
   setSelectedQuantity: Dispatch<SetStateAction<number>>,
@@ -22,7 +22,7 @@ type SelectInventoryQuantityProps = {
   onChange?: (quantity: number) => void,
 };
 
-const SelectInventoryQuantity = (props: SelectInventoryQuantityProps) => {
+const SelectItemQuantity = (props: SelectItemQuantityProps) => {
   const {
     item,
     selectedQuantity,
@@ -143,7 +143,7 @@ const SelectInventoryQuantity = (props: SelectInventoryQuantityProps) => {
         <Typography
           component="div"
           variant="h3"
-          sx={convertElementToSx(themeCustomElements.landing.quantityLabel)}
+          sx={convertElementToSx(themeCustomElements.landing.selectLabel)}
           mb={1}
         >
           <FormattedMessage id="forms.quantity" />
@@ -175,4 +175,4 @@ const SelectInventoryQuantity = (props: SelectInventoryQuantityProps) => {
   );
 };
 
-export default SelectInventoryQuantity;
+export default SelectItemQuantity;

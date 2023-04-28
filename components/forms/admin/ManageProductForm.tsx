@@ -4,7 +4,6 @@ import type { Product } from '@core/types/products';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useForms from '@lib/hooks/useForms';
 import useProducts from '@lib/hooks/useProducts';
 import BaseForm from '@components/forms/BaseForm';
@@ -27,7 +26,6 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   } = props;
 
   const { productCategories } = useSearchContext();
-  const { getProductInventories } = useProductsContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
   const { updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
@@ -67,7 +65,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
           description: product?.description || productFieldsInitValues.description,
           lowestPrice: product?.lowestPrice || 0,
           lowestRealPrice: product?.lowestRealPrice || 0,
-          inventories: getProductInventories(product),
+          inventories: product ? product.inventories : [],
         } as Product}
         validationSchema={manageProductFormValidation}
         enableReinitialize={true}

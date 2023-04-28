@@ -17,7 +17,6 @@ import type { Product, ProductCategory, ProductInventory, ProductDiscount } from
 import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
 import Pagination from '@components/ui/Pagination';
 import ManageProductForm from '@components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/admin/ManagePInventoryForm';
@@ -46,7 +45,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
   } = props;
 
   const { getHref } = useSearchContext();
-  const { getProductInventories } = useProductsContext();
 
   const router = useRouter();
 
@@ -124,10 +122,10 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
   }
   
   const onClickUpdateInventoryBtn = (product: Product, inventoryIndex: number) => {
-    if (getProductInventories(product)) {
+    if (product.inventories) {
       setSelectedModel({
         product: product,
-        inventory: getProductInventories(product)[inventoryIndex],
+        inventory: product.inventories[inventoryIndex],
         discount: undefined,
       });
     }
@@ -371,9 +369,9 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     />
                   </Button>
                 </div>
-                { item.checkInventories && getProductInventories(item.product).length > 0 &&
+                { item.checkInventories && item.product.inventories && item.product.inventories.length > 0 &&
                   <InventoriesDetail
-                    inventories={getProductInventories(item.product)}
+                    inventories={item.product.inventories}
                     created={true}
                     getInventoryActionComponent={(inventoryIndex: number) => {
                       return (

@@ -3,14 +3,13 @@ import { useRef, useEffect, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 
 import { PageTypes } from '@core/constants/navigation';
-import type { Product, ProductCategory, ProductPack } from '@core/types/products';
+import type { Landing, ProductCategory } from '@core/types/products';
 import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
 import type { PaypalCredentials } from '@core/types/paypal';
 import type { GoogleCredentials } from '@core/types/google';
 import { init } from '@core/utils/auth';
 
-import { allProductIds, allPackIds } from '@lib/constants/products';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
@@ -21,7 +20,7 @@ import useForms from '@lib/hooks/useForms';
 const useApp = (pageType: PageTypes | undefined) => {
   const { setInitialized } = useAppContext();
   const { setProductCategories } = useSearchContext();
-  const { initProducts } = useProductsContext();
+  const { initLandings } = useProductsContext();
   const { initCart } = useCartContext();
   const { 
     setToken,
@@ -41,14 +40,12 @@ const useApp = (pageType: PageTypes | undefined) => {
     if (pageType !== PageTypes.link) {
       await init(
         intl.locale,
+        [],
         pageType === PageTypes.admin ? [] : undefined,
-        allProductIds,
-        allPackIds
       ).then(async (
           response: {
             productCategories: ProductCategory[], 
-            products: Product[],
-            packs: ProductPack[], 
+            landings: Landing[],
             cart: Cart,
             token?: string, 
             user?: User,
@@ -57,7 +54,7 @@ const useApp = (pageType: PageTypes | undefined) => {
           }
         ) => {
           setProductCategories(response.productCategories);
-          initProducts(response.products, response.packs);
+          initLandings(response.landings);
           initCart(response.cart);
           if (response.token && response.user) {
             setToken(response.token);
@@ -72,7 +69,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initProducts, intl.locale, pageType, setGoogle, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initLandings, intl.locale, pageType, setGoogle, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {

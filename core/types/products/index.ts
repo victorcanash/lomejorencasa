@@ -1,4 +1,54 @@
-import { LocalizedText } from '@core/types/texts';
+import type { FormatText, LocalizedText } from '@core/types/texts';
+
+export type LandingItemConfig = {
+  name: {
+    en: string,
+    es: string,
+    current: string,
+  },
+  price: number,
+  realPrice: number,
+  image: string,
+};
+
+export type LandingConfig = {
+  id: number,
+  path: string,
+  metas: {
+    title: string,
+  },
+  name: {
+    en: string,
+    es: string,
+    current: string,
+  },
+  comment: FormatText,
+  images: string[],
+  alt: string,
+  product?: {
+    selectInputTexts?: {
+      label: FormatText,
+      content?: FormatText,
+    },
+    inventories: LandingItemConfig[],
+  },
+  packs?: {
+    selectInputTexts?: {
+      label: FormatText,
+      content?: FormatText,
+    },
+    variations: LandingItemConfig[],
+  },
+};
+
+export type Landing = {
+  id: number,
+  name: LocalizedText,
+  description: LocalizedText,
+  images: string[],
+  products: Product[],
+  packs: ProductPack[],
+};
 
 export type ProductCategory = {
   id: number,
@@ -8,6 +58,7 @@ export type ProductCategory = {
 
 export type Product = {
   id: number,
+  landingId: number,
   categoryId: number,
   name: LocalizedText,
   description: LocalizedText,
@@ -22,6 +73,7 @@ export type Product = {
 
 export type ProductPack = {
   id: number,
+  landingId: number,
   name: LocalizedText,
   description: LocalizedText,
   price: number,

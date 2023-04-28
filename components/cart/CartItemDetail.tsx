@@ -27,7 +27,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
-import SelectInventoryQuantity from '@components/products/inputs/SelectInventoryQuantity'
+import SelectItemQuantity from '@components/products/inputs/SelectItemQuantity'
 
 type CartItemDetailProps = {
   item: CartItem | GuestCartCheckItem,
@@ -49,7 +49,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     priorityImg 
   } = props;
 
-  const { getProductPageUrl, getProductImgUrl } = useProductsContext();
+  const { getCartItemPageUrl, getItemImgUrl } = useProductsContext();
   const { closeDrawer } = useCartContext();
   const { convertPriceToString } = useAuthContext();
 
@@ -128,7 +128,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             >*/}
               <Link
                 onClick={closeDrawer}
-                href={getProductPageUrl(item)}
+                href={getCartItemPageUrl(item)}
                 noLinkStyle
               >
                 <Box
@@ -138,7 +138,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   }}
                 >
                   <CustomImage
-                    src={getProductImgUrl(item)}
+                    src={getItemImgUrl(item)}
                     width="1080"
                     height="1080"
                     layout="responsive"
@@ -205,7 +205,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   </Typography>
                   :
                   <>
-                    <SelectInventoryQuantity
+                    <SelectItemQuantity
                       item={item as CartItem}
                       selectedQuantity={selectedQuantity}
                       setSelectedQuantity={setSelectedQuantity}

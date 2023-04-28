@@ -10,7 +10,7 @@ export const keywords = {
       'Selladora de Alimentos',
     ],
   },
-  bags: {
+  vacuumBags: {
     main: 'Bolsas para Envasadora al Vacío',
     others: [
       'Bolsas de Vacío con Válvula',
@@ -25,8 +25,8 @@ const config: DefaultSeoProps = {
     content: [
       keywords.vacuumMachine.main,
       keywords.vacuumMachine.others.join(','),
-      keywords.bags.main,
-      keywords.bags.others.join(','),
+      keywords.vacuumBags.main,
+      keywords.vacuumBags.others.join(','),
     ].join(','),
   }, {
     name: 'viewport',

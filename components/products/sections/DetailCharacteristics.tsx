@@ -11,22 +11,20 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
-import type { Product } from '@core/types/products';
+import type { LandingConfig } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
+import inventoryConfig from '@lib/constants/products';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 type DetailCharacteristicsProps = {
-  product: Product,
+  landingConfig: LandingConfig,
 };
 
 const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
-  const { product } = props;
-
-  const { isEverfreshProduct, isBagsProduct } = useProductsContext();
+  const { landingConfig } = props;
 
   const characteristicsGroup = (
     title: FormatText,
@@ -61,9 +59,9 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
       );
     }
     return (
-      <Grid 
-        item 
-        xs={12} 
+      <Grid
+        item
+        xs={12}
         sm={6}
       >
         <Accordion sx={convertElementToSx(themeCustomElements.landing.accordion.default)}>
@@ -90,7 +88,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
         spacing={1}
         mt={2.5}
       >
-        { isEverfreshProduct(product) &&
+        { (landingConfig.id === inventoryConfig.vacuumMachine.id || landingConfig.id === inventoryConfig.vacuumPack.id) &&
           <>
             { characteristicsGroup(
                 {
@@ -121,7 +119,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
             }
           </>
         }
-        { isBagsProduct(product) &&
+        { (landingConfig.id === inventoryConfig.vacuumBags.id || landingConfig.id === inventoryConfig.vacuumBagsPack.id) &&
           <>
             { characteristicsGroup(
                 {

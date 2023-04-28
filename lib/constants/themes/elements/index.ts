@@ -554,7 +554,7 @@ export const themeCustomElements: ThemeCustomElements = {
     },
   },
   landing: {
-    quantityLabel: {
+    selectLabel: {
       text: {
         color: {
           default: colors.text.black,

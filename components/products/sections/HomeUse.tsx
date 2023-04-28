@@ -150,7 +150,7 @@ const HomeUse = () => {
         type="default"
         source={{ 
           src: homeUseImgIds[2],
-          alt: keywords.bags.others[0],
+          alt: keywords.vacuumBags.others[0],
           width: '8001',
           height: '2800',
         }}
@@ -174,7 +174,7 @@ const HomeUse = () => {
             type="default"
             source={{ 
               src: homeUseImgIds[3],
-              alt: keywords.bags.others[0],
+              alt: keywords.vacuumBags.others[0],
               width: '1080',
               height: '1080',
             }}
@@ -224,7 +224,7 @@ const HomeUse = () => {
           {
             type: 'image',
             src: homeUseImgIds[4],
-            alt: keywords.bags.main,
+            alt: keywords.vacuumBags.main,
           },
           {
             type: 'video',
