@@ -23,29 +23,32 @@ export const generateLandings = (landingConfigs: LandingConfig[]) => {
     const landing: Landing = {
       ...{} as Landing,
       id: landingConfig.id,
-      name: landingConfig.name,
       images: landingConfig.images,
       products: [],
       packs: [],
     };
     if (landingConfig.product) {
-      landing.products.push({ 
+      const product = {
         ...{} as Product,
-      });
-      const product = landing.products[0];
+        landingId: landingConfig.id,
+        inventories: [],
+      };
+      landing.products.push(product);
       landingConfig.product.inventories.forEach((itemConfig) => {
-        product.inventories?.push({
+        landing.products[0].inventories?.push({
           ...{} as ProductInventory,
           name: itemConfig.name,
           price: itemConfig.price,
           realPrice: itemConfig.realPrice,
           image: itemConfig.image,
+          product: product,
         });
       });
     } else if (landingConfig.packs) {
       landingConfig.packs.variations.forEach((itemConfig) => {
         landing.packs.push({
           ...{} as ProductPack,
+          landingId: landingConfig.id,
           name: itemConfig.name,
           price: itemConfig.price,
           originalPrice: itemConfig.realPrice,
@@ -99,6 +102,25 @@ export const getFirstLandingItem = (landing: Landing) => {
     return landingItems[0];
   }
   return undefined;
+};
+
+export const getProductPriceData = (product: Product | ProductInventory | ProductPack) => {
+  let price = 0;
+  let originPrice = 0;
+  if ((product as Product)?.lowestPrice) {
+    price = (product as Product).lowestRealPrice;
+    originPrice = (product as Product).lowestPrice;
+  } else if ((product as ProductInventory)?.realPrice) {
+    price = (product as ProductInventory).realPrice;
+    originPrice = (product as ProductInventory).price;
+  } else if ((product as ProductPack)?.originalPrice) {
+    price = (product as ProductPack).price;
+    originPrice = (product as ProductPack).originalPrice;
+  }
+  return {
+    price,
+    originPrice,
+  };
 };
 
 export const getAllProducts = async (

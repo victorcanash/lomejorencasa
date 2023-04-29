@@ -16,15 +16,10 @@ export type LandingConfig = {
   path: string,
   metas: {
     title: string,
-  },
-  name: {
-    en: string,
-    es: string,
-    current: string,
+    imgsAlt: string,
   },
   comment: FormatText,
   images: string[],
-  alt: string,
   product?: {
     selectInputTexts?: {
       label: FormatText,

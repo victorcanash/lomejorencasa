@@ -50,7 +50,7 @@ const SelectItem = (props: SelectItemProps) => {
   }, [intl, selectInputContent?.id, selectInputContent?.values]);
 
   const enabled = useCallback((itemCheck: ProductInventory | ProductPack) => {
-    if ((itemCheck as ProductInventory)?.product.landingId === landingId) {
+    if ((itemCheck as ProductInventory)?.product?.landingId === landingId) {
       return true;
     } else if ((itemCheck as ProductPack)?.landingId === landingId) {
       return true;

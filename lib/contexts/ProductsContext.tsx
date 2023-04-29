@@ -4,7 +4,8 @@ import {
   useContext,
   useCallback,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  useEffect
 } from 'react';
 
 import { allLandingConfigs } from '@lib/constants/products';
@@ -56,7 +57,7 @@ export const useProductsContext = () => {
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [landings, setLandings] = useState<Landing[]>(generateLandings(allLandingConfigs));
+  const [landings, setLandings] = useState<Landing[]>([]);
   const [listProductReviews, setListProductReviews] = useState<ListProductReviews>({
     reviews: [],
     totalPages: 1,
@@ -116,6 +117,10 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     }
     return [placeholderImgId];
   }, []);
+
+  useEffect(() => {
+    setLandings(generateLandings(allLandingConfigs));
+  }, [])
 
   return (
     <ProductsContext.Provider

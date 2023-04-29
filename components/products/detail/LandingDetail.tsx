@@ -30,7 +30,7 @@ import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import { scrollToSection } from '@core/utils/navigation';
-import { getFirstLandingItem, getLandingItems, getLandingPathByConfig } from '@core/utils/products';
+import { getFirstLandingItem, getLandingItems, getLandingPathByConfig, getProductPriceData } from '@core/utils/products';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
@@ -150,43 +150,33 @@ const LandingDetail = (props: ProductDetailProps) => {
   }, []);
 
   const productPrice = useMemo(() => {
-    let price = 0;
-    let originPrice = 0;
-    const firstItem = getFirstLandingItem(landingModel);
-    if ((firstItem as ProductInventory)?.realPrice) {
-      price = (firstItem as ProductInventory).realPrice;
-      originPrice = (firstItem as ProductInventory).price;
-    } else if ((firstItem as ProductPack)?.inventories) {
-      price = (firstItem as ProductPack).price;
-      originPrice = (firstItem as ProductPack).originalPrice;
+    let priceData = { price: 0, originPrice: 0 };
+    if (selectedItem) {
+      priceData = getProductPriceData(selectedItem);
+    } else {
+      const firstItem = getFirstLandingItem(landingModel);
+      if (firstItem) {
+        priceData = getProductPriceData(firstItem);
+      }
     }
-    if ((selectedItem as ProductInventory)?.realPrice) {
-      price = (selectedItem as ProductInventory).realPrice;
-      originPrice = (selectedItem as ProductInventory).price;
-    } else if ((selectedItem as ProductPack)?.inventories) {
-      price = (selectedItem as ProductPack).price;
-      originPrice = (selectedItem as ProductPack).originalPrice;
-    }
-    const product = landingModel.products.length > 0 ? landingModel.products[0] : undefined;
-    const discount = (product?.activeDiscount || (selectedItem as ProductPack)?.inventories) ? true : false;
     return (
       <Grid container spacing={2}>
         <Grid item>
           <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
-            { discount ?
+            { priceData.price !== priceData.originPrice ?
               <>
                 <span
                   style={{ fontWeight: 500, textDecoration: 'line-through' }}
                 >
                   <span style={{ color: colors.text.disabled }}>
-                    {`${convertPriceToString(originPrice)}`}
+                    {`${convertPriceToString(priceData.originPrice)}`}
                   </span>
                 </span>
-                {` ${convertPriceToString(price)}`}
+                {` ${convertPriceToString(priceData.price)}`}
               </>
               :
               <>
-                {`${convertPriceToString(price)}`}
+                {`${convertPriceToString(priceData.price)}`}
               </>
             }
           </Typography>
@@ -303,7 +293,7 @@ const LandingDetail = (props: ProductDetailProps) => {
 
   const payNowBtnStatic = useMemo(() => {
     return (
-      <Slide appear={initialized && selectedItem && !payNowInView} direction="up">
+      <Slide appear={false} in={initialized && selectedItem && !payNowInView} direction="up">
         <Button
           fullWidth
           variant="contained"
@@ -347,7 +337,7 @@ const LandingDetail = (props: ProductDetailProps) => {
                   getLandingImgsUrl(landingModel).map((item) => {
                     return {
                       src: item,
-                      alt: landingConfig.alt,
+                      alt: landingConfig.metas.imgsAlt,
                       priority: true,
                     } as Source;
                   })
@@ -395,8 +385,8 @@ const LandingDetail = (props: ProductDetailProps) => {
                   <SelectItem
                     landingId={landingModel.id}
                     items={getLandingItems(landingModel)}
-                    selectInputLabel={landingConfig.product?.selectInputTexts?.label}
-                    selectInputContent={landingConfig.product?.selectInputTexts?.content}
+                    selectInputLabel={landingConfig.product?.selectInputTexts?.label || landingConfig.packs?.selectInputTexts?.label}
+                    selectInputContent={landingConfig.product?.selectInputTexts?.content || landingConfig.packs?.selectInputTexts?.content}
                     selectedItem={selectedItem}
                     setSelectedItem={setSelectedItem}
                   />

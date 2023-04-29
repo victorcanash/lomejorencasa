@@ -13,11 +13,7 @@ const inventoryConfig: {
     path: 'envasadora-al-vacio',
     metas: {
       title: keywords.vacuumMachine.main,
-    },
-    name: {
-      en: 'Everfresh vacuum machine',
-      es: 'Envasadora al vacío Everfresh',
-      current: 'Envasadora al vacío Everfresh',
+      imgsAlt: keywords.vacuumMachine.main,
     },
     comment: {
       id: 'everfresh.comment',
@@ -28,7 +24,6 @@ const inventoryConfig: {
       'v1680726664/laenvasadora/LANDING%20PAGE/FOTO_5_g6vcri.jpg',
       'v1682517390/laenvasadora/LANDING%20PAGE/FOTO_1_yarwhg_vcukbn.jpg',
     ],
-    alt: keywords.vacuumMachine.main,
     product: {
       inventories: [
         {
@@ -49,11 +44,7 @@ const inventoryConfig: {
     path: 'bolsas-para-envasadora-al-vacio',
     metas: {
       title: keywords.vacuumBags.main,
-    },
-    name: {
-      en: 'Box of 10 vacuum bags with valve',
-      es: 'Paquete de 10 bolsas de vacío con válvula',
-      current: 'Paquete de 10 bolsas de vacío con válvula',
+      imgsAlt: keywords.vacuumBags.main,
     },
     comment: {
       id: 'bags.comment',
@@ -63,7 +54,6 @@ const inventoryConfig: {
       'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
     ],
-    alt: keywords.vacuumBags.main,
     product: {
       selectInputTexts: {
         label: {
@@ -142,11 +132,7 @@ const inventoryConfig: {
     path: 'pack-envasadora-al-vacio',
     metas: {
       title: keywords.vacuumMachine.main,
-    },
-    name: {
-      en: 'Everfresh vacuum machine + Box of 10 vacuum bags with valve',
-      es: 'Envasadora al vacío Everfresh + Paquete de 10 bolsas de vacío con válvula',
-      current: 'Envasadora al vacío Everfresh + Paquete de 10 bolsas de vacío con válvula',
+      imgsAlt: keywords.vacuumMachine.main,
     },
     comment: {
       id: 'everfresh.comment',
@@ -158,7 +144,6 @@ const inventoryConfig: {
       'v1680726760/laenvasadora/LANDING%20PAGE/bundle%20pack%20envasadora%2Bbolsas/FOTO_1_yarwhg.jpg',
       'v1680692733/laenvasadora/LANDING%20PAGE/bundle%20pack%20envasadora%2Bbolsas/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
     ],
-    alt: keywords.vacuumMachine.main,
     packs: {
       variations: [
         {
@@ -179,11 +164,7 @@ const inventoryConfig: {
     path: 'pack-bolsas-para-envasadora-al-vacio',
     metas: {
       title: keywords.vacuumBags.main,
-    },
-    name: {
-      en: 'Pack of 20 vacuum bags with valve',
-      es: 'Pack de 20 bolsas de vacío con válvula',
-      current: 'Pack de 20 bolsas de vacío con válvula',
+      imgsAlt: keywords.vacuumBags.main,
     },
     comment: {
       id: 'bags.comment',
@@ -193,7 +174,6 @@ const inventoryConfig: {
       'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
     ],
-    alt: keywords.vacuumBags.main,
     packs: {
       selectInputTexts: {
         label: {
