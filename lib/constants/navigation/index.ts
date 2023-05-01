@@ -309,18 +309,23 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
   },
   {
     text: {
-      id: 'bagsPack',
+      id: 'packs',
     },
-    path: pages.bagsPack.path,
-    items: [],
-    open: false,
-  },
-  {
-    text: {
-      id: 'everfreshPack',
-    },
-    path: pages.everfreshPack.path,
-    items: [],
+    path: undefined,
+    items: [
+      {
+        text: {
+          id: 'bagsPack',
+        },
+        path: pages.bagsPack.path,
+      },
+      {
+        text: {
+          id: 'everfreshPack',
+        },
+        path: pages.everfreshPack.path,
+      },
+    ],
     open: false,
   },
   {
