@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -37,6 +37,7 @@ const NavBar = () => {
   const { totalQuantity, handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
 
   const router = useRouter();
+  const xsBreakpoint = useMediaQuery('(max-width:318px)');
   const superSmallBreakpoint = useMediaQuery('(max-width:328px)')
   const smallBreakpoint = useMediaQuery('(max-width:450px)');
 
@@ -71,7 +72,7 @@ const NavBar = () => {
     </Badge>
   ), [smallBreakpoint, totalQuantity]);
 
-  const getShippingTruckMr = useCallback(() => {
+  const shippingTruckMr = useMemo(() => {
     if (superSmallBreakpoint) {
       return '0px';
     } else if (smallBreakpoint) {
@@ -79,6 +80,15 @@ const NavBar = () => {
     }
     return '5px';
   }, [smallBreakpoint, superSmallBreakpoint]);
+
+  const minDrawerHeight = useMemo(() => {
+    if (xsBreakpoint) {
+      return '87px';
+    } else if (smallBreakpoint) {
+      return '69px';
+    }
+    return '80px';
+  }, [smallBreakpoint, xsBreakpoint]);
 
   return (
     <>
@@ -95,7 +105,7 @@ const NavBar = () => {
             sx={{
               ...convertElementToSx(themeCustomElements.header.banners.shipping.content),
               p: '5px',
-              px: superSmallBreakpoint ? '0px' : undefined,
+              px: superSmallBreakpoint ? '1px' : undefined,
             }}
           >
             <Typography
@@ -112,7 +122,7 @@ const NavBar = () => {
                 size="lg" 
                 icon={faTruck}
                 style={{
-                  marginRight: getShippingTruckMr(),
+                  marginRight: shippingTruckMr,
                 }}
               />
               <FormattedMessage id="header.banners.shipping" />
@@ -192,12 +202,12 @@ const NavBar = () => {
         items={navDrawer.items}
         handleOpen={navDrawer.handleOpen}
         handleCollapse={navDrawer.handleCollapse}
-        smallBreakpoint={smallBreakpoint}
+        minHeight={minDrawerHeight}
       />
 
       <CartDrawer
         anchor="right"
-        smallBreakpoint={smallBreakpoint}
+        minHeight={minDrawerHeight}
       />
     </>
   );

@@ -7,13 +7,13 @@ import CartDetail from '@components/cart/CartDetail';
 
 type CartDrawerProps = {
   anchor: 'top' | 'left' | 'bottom' | 'right',
-  smallBreakpoint: boolean,
+  minHeight: string,
 };
 
 const CartDrawer = (props: CartDrawerProps) => {
   const {
     anchor,
-    smallBreakpoint,
+    minHeight,
    } = props;
 
   const {
@@ -39,7 +39,7 @@ const CartDrawer = (props: CartDrawerProps) => {
         variant="dense"
         disableGutters
         sx={{
-          minHeight: smallBreakpoint ? '69px' : '80px',
+          minHeight: minHeight,
         }}
       />
       <Box

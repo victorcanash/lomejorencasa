@@ -26,7 +26,7 @@ type NavDrawerProps = {
   items: NavDrawerItems[],
   handleOpen: () => void,
   handleCollapse: (item: NavDrawerItems) => void,
-  smallBreakpoint: boolean,
+  minHeight: string,
 };
 
 const NavDrawer = (props: NavDrawerProps) => {
@@ -36,7 +36,7 @@ const NavDrawer = (props: NavDrawerProps) => {
     items, 
     handleOpen,
     handleCollapse,
-    smallBreakpoint,
+    minHeight,
    } = props;
 
   const { logout } = useAuth(); 
@@ -144,7 +144,7 @@ const NavDrawer = (props: NavDrawerProps) => {
         variant="dense"
         disableGutters
         sx={{
-          minHeight: smallBreakpoint ? '69px' : '80px',
+          minHeight: minHeight,
         }}
       />
       <Box

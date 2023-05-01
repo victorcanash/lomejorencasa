@@ -4,16 +4,16 @@ import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const MainComponent = ({ children }: { children: ReactNode }) => {
-  const xsBreakpoint = useMediaQuery('(max-width:328px)');
+  const xsBreakpoint = useMediaQuery('(max-width:317px)');
   const smallBreakpoint = useMediaQuery('(max-width:450px)');
 
   const getMarginTop = useCallback(() => {
     if (xsBreakpoint) {
-      return '91px';
+      return '95px';
     } else if (smallBreakpoint) {
-      return '75px';
+      return '77px';
     }
-    return '103px';
+    return '88px';
   }, [smallBreakpoint, xsBreakpoint]);
 
   return (
