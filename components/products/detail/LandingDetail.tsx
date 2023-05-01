@@ -1,7 +1,8 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { useInView } from 'react-intersection-observer';
+import { type Swiper as SwiperRef } from 'swiper';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -71,6 +72,8 @@ const LandingDetail = (props: ProductDetailProps) => {
     threshold: 0,
     rootMargin: '-83px 0px 1000px 0px',
   });
+
+  const swiperRef = useRef<SwiperRef>()
 
   const [selectedItem, setSelectedItem] = useState<ProductInventory | ProductPack | undefined>();
   const [selectedQuantity, setSelectedQuantity] = useState(0);
@@ -331,6 +334,11 @@ const LandingDetail = (props: ProductDetailProps) => {
     );
   }, [initialized, onClickPayNowBtn, payNowInView, selectedItem]);
 
+  useEffect(() => {
+    swiperRef.current?.slideTo(1, undefined, false);
+  }, [landingModel]);
+
+
   return (
     <Box sx={{ overflow: 'hidden' }}>
       { productH1 }
@@ -359,6 +367,7 @@ const LandingDetail = (props: ProductDetailProps) => {
                     } as Source;
                   })
                 }
+                swiperRef={swiperRef}
               />
             </Box>
           </Box>

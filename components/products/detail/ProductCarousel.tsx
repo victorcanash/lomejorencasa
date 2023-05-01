@@ -1,4 +1,6 @@
-import { Pagination } from 'swiper';
+import { MutableRefObject } from 'react';
+
+import { Pagination, type Swiper as SwiperRef } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Box from '@mui/material/Box';
@@ -8,14 +10,18 @@ import CustomImage from '@core/components/CustomImage';
 
 type ProductCarouselProps = {
   sources: Source[],
+  swiperRef: MutableRefObject<SwiperRef | undefined>,
 };
 
 const ProductCarousel = (props: ProductCarouselProps) => {
-  const { sources } = props;
-  
+  const { sources, swiperRef } = props;
+
   return (
     <Box>
       <Swiper
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
         modules={[Pagination]}
         loop
         pagination={{
