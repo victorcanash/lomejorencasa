@@ -63,16 +63,19 @@ const DetailReviews = () => {
           </Box>
           {/* ProductReview List */}
           { listProductReviews.reviews.length > 0 ?
-            <Masonry columns={{ xs: 1, sm: 2, md: 3 }} spacing={0}>
+            <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={0}>
               { listProductReviews.reviews.map((item, index) => (
                 <Box key={index}>
                   <Box
                     sx={{
                       maxWidth: '350px',
                       m: 'auto',
-                      mb: 2,
+                      mb: {
+                        xs: 1,
+                        sm: 2,
+                      },
                       px: {
-                        xs: 0,
+                        xs: 0.5,
                         sm: 1,
                       }
                     }}
