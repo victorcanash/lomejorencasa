@@ -144,7 +144,7 @@ const NavDrawer = (props: NavDrawerProps) => {
         variant="dense"
         disableGutters
         sx={{
-          minHeight: smallBreakpoint ? '75px' : '98px',
+          minHeight: smallBreakpoint ? '69px' : '80px',
         }}
       />
       <Box

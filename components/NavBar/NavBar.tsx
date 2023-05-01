@@ -140,12 +140,11 @@ const NavBar = () => {
               }}
             >
               <IconButton
-                size="small"
+                size="large"
                 component={Link}
                 href={pages.home.path}
                 sx={{
                   p: 0,
-                  pt: smallBreakpoint ? '5px' : '8px',
                   borderRadius: '10px',
                 }}
               >
@@ -157,8 +156,8 @@ const NavBar = () => {
                 <CustomImage
                   src={navbarLogoId}
                   alt={keywords.vacuumMachine.main}
-                  height={smallBreakpoint ? '50px' :'70px'}
-                  width={smallBreakpoint ? '136px' : '156px'}
+                  height={smallBreakpoint ? '40px' :'60px'}
+                  width={smallBreakpoint ? '126px' : '146px'}
                   layout="fixed"
                   objectFit="contain"
                   priority
