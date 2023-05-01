@@ -102,6 +102,15 @@ const LandingDetail = (props: ProductDetailProps) => {
         <LoadingRating />
       );
     };
+    let rating = 0;
+    let reviewsCount = 0;
+    if (landingModel.products.length > 0) {
+      rating = parseFloat(landingModel.products[0].rating);
+      reviewsCount = landingModel.products[0].reviewsCount;
+    } else if (landingModel.packs.length > 0) {
+      rating = parseFloat(landingModel.packs[0].rating);
+      reviewsCount = landingModel.packs[0].reviewsCount;
+    }
     return (
       <Link
         href={getLandingPathByConfig(landingConfig)}
@@ -111,20 +120,20 @@ const LandingDetail = (props: ProductDetailProps) => {
         <Grid container>
           <Grid item>
             <Rating
-              value={/*parseFloat(landing.rating)*/0}
+              value={rating}
               precision={0.5}
               readOnly
             />
           </Grid>
           <Grid item sx={{ ml: '6px' }}>
             <Typography component="span" variant="body1">
-              {`(${/*product.reviewsCount*/0})`}
+              {`(${reviewsCount})`}
             </Typography>
           </Grid>
         </Grid>
       </Link>
     );
-  }, [initialized, landingConfig]);
+  }, [initialized, landingConfig, landingModel.packs, landingModel.products]);
 
   const productTitle = useMemo(() => {
     let text = getFirstLandingItem(landingModel)?.name.current || '';
@@ -385,8 +394,8 @@ const LandingDetail = (props: ProductDetailProps) => {
                   <SelectItem
                     landingId={landingModel.id}
                     items={getLandingItems(landingModel)}
-                    selectInputLabel={landingConfig.product?.selectInputTexts?.label || landingConfig.packs?.selectInputTexts?.label}
-                    selectInputContent={landingConfig.product?.selectInputTexts?.content || landingConfig.packs?.selectInputTexts?.content}
+                    selectInputLabel={landingConfig.product?.selectInputTexts?.label || landingConfig.pack?.selectInputTexts?.label}
+                    selectInputContent={landingConfig.product?.selectInputTexts?.content || landingConfig.pack?.selectInputTexts?.content}
                     selectedItem={selectedItem}
                     setSelectedItem={setSelectedItem}
                   />

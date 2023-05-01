@@ -44,8 +44,8 @@ export const generateLandings = (landingConfigs: LandingConfig[]) => {
           product: product,
         });
       });
-    } else if (landingConfig.packs) {
-      landingConfig.packs.variations.forEach((itemConfig) => {
+    } else if (landingConfig.pack) {
+      landingConfig.pack.variations.forEach((itemConfig) => {
         landing.packs.push({
           ...{} as ProductPack,
           landingId: landingConfig.id,
@@ -64,6 +64,14 @@ export const generateLandings = (landingConfigs: LandingConfig[]) => {
 export const getLandingConfigByPath = (path: string, landingConfigs: LandingConfig[]) => {
   return landingConfigs.find((landingConfig) => {
     if (landingConfig.path === path) {
+      return landingConfig;
+    }
+  });
+};
+
+export const getLandingConfigById = (id: number, landingConfigs: LandingConfig[]) => {
+  return landingConfigs.find((landingConfig) => {
+    if (landingConfig.id === id) {
       return landingConfig;
     }
   });
@@ -102,6 +110,15 @@ export const getFirstLandingItem = (landing: Landing) => {
     return landingItems[0];
   }
   return undefined;
+};
+
+export const getPackGeneralName = (pack: ProductPack, landingConfigs: LandingConfig[]) => {
+  let name = pack.name?.current || '';
+  const landingConfig = getLandingConfigById(pack.landingId, landingConfigs);
+  if (landingConfig?.pack?.name?.current) {
+    name = landingConfig.pack.name.current;
+  }
+  return name;
 };
 
 export const getProductPriceData = (product: Product | ProductInventory | ProductPack) => {
@@ -226,6 +243,8 @@ export const createProductReview = (
   token: string,
   currentLocale: string,
   productReview: CreateProductReview,
+  relatedProductId: number,
+  isPack: boolean,
   reviewImg?: File,
 ) => {
   return new Promise<{
@@ -243,7 +262,10 @@ export const createProductReview = (
       },
     };
     const data = new FormData();
-    data.append('productId', productReview.relatedProduct.toString());
+    data.append(
+      isPack ? 'packId' : 'productId',
+      relatedProductId.toString()
+    );
     data.append('rating', productReview.rating.toString());
     data.append('title', productReview.title);
     data.append('description', productReview.description);

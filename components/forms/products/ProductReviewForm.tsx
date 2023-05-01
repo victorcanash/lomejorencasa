@@ -12,9 +12,11 @@ import Typography from '@mui/material/Typography';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { UploadFile } from '@core/types/multimedia';
 import type { User } from '@core/types/user';
-import type { CreateProductReview } from '@core/types/products';
+import type { CreateProductReview, ProductPack } from '@core/types/products';
 import { getUserFullName } from '@core/utils/user';
+import { getPackGeneralName } from '@core/utils/products';
 
+import { allLandingConfigs } from '@lib/constants/products';
 import colors from '@lib/constants/themes/colors';
 import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
@@ -37,7 +39,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     createProductReview,
   } = props;
 
-  const { getAllProducts } = useProductsContext();
+  const { getAllLandingsProducts } = useProductsContext();
   const { user, isLogged } = useAuthContext();
 
   const { 
@@ -84,7 +86,8 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
           formikRef={formRef}
           maxWidth={maxWidth}
           initialValues={{
-            relatedProduct: getAllProducts()[0].id,
+            relatedProduct: (getAllLandingsProducts()[0] as ProductPack)?.originalPrice ?
+              `${getAllLandingsProducts()[0].id}.pack` : `${getAllLandingsProducts()[0].id}.product`,
             rating: reviewFieldsInitValues.rating,
             title: reviewFieldsInitValues.title,
             description: reviewFieldsInitValues.description,
@@ -103,15 +106,19 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
                   name: 'relatedProduct',
                   type: FormFieldTypes.select,
                   required: true,
-                  menuItems: getAllProducts().map((item) => {
+                  menuItems: getAllLandingsProducts().map((item) => {
+                    const name = (item as ProductPack)?.originalPrice ?
+                      getPackGeneralName(item as ProductPack, allLandingConfigs) : item.name?.current;
+                    const value = (item as ProductPack)?.originalPrice ?
+                      `${item.id}.pack` : `${item.id}.product`;
                     return {
                       text: {
                         id: 'forms.selectProduct.content',
                         values: {
-                          name: item.name.current,
+                          name: name,
                         },
                       },
-                      value: item.id,
+                      value: value,
                     };
                   }),
                 },

@@ -27,7 +27,8 @@ export type LandingConfig = {
     },
     inventories: LandingItemConfig[],
   },
-  packs?: {
+  pack?: {
+    name?: LocalizedText,
     selectInputTexts?: {
       label: FormatText,
       content?: FormatText,
@@ -74,6 +75,8 @@ export type ProductPack = {
   price: number,
   quantity: number,
   image?: string,
+  rating: string,
+  reviewsCount: number,
   originalPrice: number,
   discountPercent: number,
   inventories: ProductInventory[],
@@ -114,18 +117,20 @@ export type ProductReview = {
   createdAt: Date,
   userId?: number,
   guestUserId?: number,
-  productId: number,
+  productId?: number,
+  packId?: number,
   rating: number,
   title: string,
   description: string,
   email: string,
   publicName: string,
   imageUrl?: string,
-  product: Product,
+  product?: Product,
+  pack?: ProductPack,
 };
 
 export type CreateProductReview = {
-  relatedProduct: number,
+  relatedProduct: string,
   rating: number,
   title: string,
   description: string,

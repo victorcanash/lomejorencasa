@@ -144,7 +144,7 @@ const inventoryConfig: {
       'v1680726760/laenvasadora/LANDING%20PAGE/bundle%20pack%20envasadora%2Bbolsas/FOTO_1_yarwhg.jpg',
       'v1680692733/laenvasadora/LANDING%20PAGE/bundle%20pack%20envasadora%2Bbolsas/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
     ],
-    packs: {
+    pack: {
       variations: [
         {
           name: {
@@ -174,7 +174,12 @@ const inventoryConfig: {
       'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
     ],
-    packs: {
+    pack: {
+      name: {
+        en: 'Pack of 20 vacuum bags with valve',
+        es: 'Pack de 20 bolsas de vacío con válvula',
+        current: 'Pack de 20 bolsas de vacío con válvula',
+      },
       selectInputTexts: {
         label: {
           id: 'forms.size',

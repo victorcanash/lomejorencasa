@@ -16,9 +16,11 @@ import Rating from '@mui/material/Rating';
 import Masonry from '@mui/lab/Masonry';
 
 import { convertToDate } from '@core/utils/dates';
+import { getPackGeneralName } from '@core/utils/products';
 import CustomImage from '@core/components/CustomImage';
 
 import { keywords } from '@lib/config/next-seo.config';
+import { allLandingConfigs } from '@lib/constants/products';
 import colors from '@lib/constants/themes/colors';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
@@ -138,7 +140,10 @@ const DetailReviews = () => {
                         }}
                       >
                         <Typography component="div" variant="body1Head" mb={1} sx={{ fontSize: '16px', fontWeight: '600' }}>
-                          { item.product.name.current }
+                          {
+                            item.pack ?
+                              getPackGeneralName(item.pack, allLandingConfigs) : item.product?.name.current
+                          }
                         </Typography>
                         <Typography component="div" variant="body1Head" mb={1}>
                           { item.title }

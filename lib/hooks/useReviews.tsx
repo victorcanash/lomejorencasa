@@ -26,6 +26,7 @@ const useReviews = () => {
     listProductReviews,
     setListProductReviews,
     setProductRating,
+    setPackRating,
   } = useProductsContext();
   const { token, isLogged } = useAuthContext();
 
@@ -45,22 +46,37 @@ const useReviews = () => {
     setLoading(true);
     setSuccessMsg('');
     setErrorMsg('');
+    const relatedProductTexts = productReview.relatedProduct.split('.');
+    const id = parseInt(relatedProductTexts[0]);
+    const type = relatedProductTexts[1];
+    const isPack = type === 'pack' ? true : false;
     const reviewImg = uploadImgs.length >= 1 ? uploadImgs[0].file : undefined;
     createProductReviewMW(
       isLogged() ? token : '',
       intl.locale,
       productReview,
+      id,
+      isPack,
       reviewImg
     ).then((response) => {
         setListProductReviews({
           ...listProductReviews,
           reviews: [response.review, ...listProductReviews.reviews],
-        })
-        setProductRating(
-          response.review.product,
-          response.productRating.rating,
-          response.productRating.reviewsCount
-        );
+        });
+        if (response.review.product) {
+          setProductRating(
+            response.review.product,
+            response.productRating.rating,
+            response.productRating.reviewsCount
+          );
+        } else if (response.review.pack) {
+          setPackRating(
+            response.review.pack,
+            response.productRating.rating,
+            response.productRating.reviewsCount
+          );
+        }
+        scrollToSection('reviews', false);
         setLoading(false);
         enqueueSnackbar(
           intl.formatMessage({ id: 'forms.productReview.success.default' }),
@@ -83,7 +99,7 @@ const useReviews = () => {
         setErrorMsg(errorMsg);
         setLoading(false);
       });
-  }, [enqueueSnackbar, intl, isLogged, listProductReviews, setListProductReviews, setLoading, setProductRating, token]);
+  }, [enqueueSnackbar, intl, isLogged, listProductReviews, setListProductReviews, setLoading, setPackRating, setProductRating, token]);
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     setPage(page);

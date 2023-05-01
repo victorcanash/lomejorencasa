@@ -13,6 +13,7 @@ import type {
   ListProductReviews,
   Landing,
   Product,
+  ProductPack,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import {
@@ -30,9 +31,13 @@ type ProductsContext = {
   initLandings: (landings: Landing[]) => void,
   getLandingByPath: (path: string) => Landing | undefined,
   getAllProducts: () => Product[],
+  getAllPacks: () => ProductPack[],
+  getAllLandingsProducts: () => (ProductPack | Product)[],
   getCartItemPageUrl: (item: CartItem | GuestCartCheckItem) => string,
   getItemImgUrl: (item: Landing | CartItem | GuestCartCheckItem) => string,
   getLandingImgsUrl: (landing: Landing) => string[],
+  setProductRating: (product: Product, rating: string, reviewsCount: number) => void,
+  setPackRating: (pack: ProductPack, rating: string, reviewsCount: number) => void,
   listProductReviews: ListProductReviews,
   setListProductReviews: Dispatch<SetStateAction<ListProductReviews>>,
 };
@@ -41,9 +46,13 @@ const ProductsContext = createContext<ProductsContext>({
   initLandings: () => {},
   getLandingByPath: () => undefined,
   getAllProducts: () => [],
+  getAllPacks: () => [],
+  getAllLandingsProducts: () => [],
   getCartItemPageUrl: () => '',
   getItemImgUrl: () => '',
   getLandingImgsUrl: () => [],
+  setProductRating: () => {},
+  setPackRating: () => {},
   listProductReviews: {} as ListProductReviews,
   setListProductReviews: () => {},
 });
@@ -87,6 +96,18 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     })
   }, [landings]);
 
+  const getAllPacks = useCallback(() => {
+    return landings.filter((item) => item.packs.length > 0).map((item) => {
+      return item.packs[0];
+    })
+  }, [landings]);
+
+  const getAllLandingsProducts = useCallback(() => {
+    let landingsProducts: (Product | ProductPack)[] = getAllProducts();
+    landingsProducts = landingsProducts.concat(getAllPacks());
+    return landingsProducts;
+  }, [getAllPacks, getAllProducts]);
+
   const getCartItemPageUrl = useCallback((item: CartItem | GuestCartCheckItem) => {
     const foundLandingConfig = getLandingConfigByCartItem(item, allLandingConfigs);
     return foundLandingConfig ?
@@ -118,6 +139,46 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return [placeholderImgId];
   }, []);
 
+  const setProductRating = useCallback((product: Product, rating: string, reviewsCount: number) => {
+    const oldLandings = [...landings];
+    let foundLanding: Landing | undefined = undefined;
+    let foundLandingIndex = -1;
+    for (let i = 0; i < oldLandings.length; i++) {
+      if (oldLandings[i].products.length > 0 && oldLandings[i].products[0].id === product.id) {
+        foundLanding = {...oldLandings[i]};
+        foundLandingIndex = i;
+        foundLanding.products[0].rating = rating;
+        foundLanding.products[0].reviewsCount = reviewsCount;
+        break;
+      }
+    }
+    if (!foundLanding) {
+      return;
+    }
+    oldLandings[foundLandingIndex] = foundLanding;
+    setLandings([...oldLandings]);
+  }, [landings]);
+
+  const setPackRating = useCallback((pack: ProductPack, rating: string, reviewsCount: number) => {
+    const oldLandings = [...landings];
+    let foundLanding: Landing | undefined = undefined;
+    let foundLandingIndex = -1;
+    for (let i = 0; i < oldLandings.length; i++) {
+      if (oldLandings[i].packs.length > 0 && oldLandings[i].packs[0].id === pack.id) {
+        foundLanding = {...oldLandings[i]};
+        foundLandingIndex = i;
+        foundLanding.packs[0].rating = rating;
+        foundLanding.packs[0].reviewsCount = reviewsCount;
+        break;
+      }
+    }
+    if (!foundLanding) {
+      return;
+    }
+    oldLandings[foundLandingIndex] = foundLanding;
+    setLandings([...oldLandings]);
+  }, [landings]);
+
   useEffect(() => {
     setLandings(generateLandings(allLandingConfigs));
   }, [])
@@ -128,9 +189,13 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         initLandings,
         getLandingByPath,
         getAllProducts,
+        getAllPacks,
+        getAllLandingsProducts,
         getCartItemPageUrl,
         getItemImgUrl,
         getLandingImgsUrl,
+        setProductRating,
+        setPackRating,
         listProductReviews,
         setListProductReviews,
       }}
