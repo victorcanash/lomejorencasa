@@ -149,17 +149,6 @@ const LandingDetail = (props: ProductDetailProps) => {
     );
   }, [landingModel, selectedItem]);
 
-  const priceIcon = useCallback((icon: IconDefinition) => {
-    return (
-      <Grid item>
-        <FontAwesomeIcon 
-          size="2xl" 
-          icon={icon}
-        />
-      </Grid>
-    );
-  }, []);
-
   const productPrice = useMemo(() => {
     let priceData = { price: 0, originPrice: 0 };
     if (selectedItem) {
@@ -171,7 +160,7 @@ const LandingDetail = (props: ProductDetailProps) => {
       }
     }
     return (
-      <Grid container spacing={2}>
+      <Grid container columnSpacing={2} rowSpacing={0.5}>
         <Grid item>
           <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
             { priceData.price !== priceData.originPrice ?
@@ -197,12 +186,29 @@ const LandingDetail = (props: ProductDetailProps) => {
             <FormattedMessage id="productDetail.price.iva" />
           </Typography>
         </Grid>
-        { priceIcon(faCcVisa) }
-        { priceIcon(faCcMastercard) }
-        { priceIcon(faCcPaypal) }
+        <Grid item sx={{ display: 'flex', mb: 0.5 }}>
+          <Box>
+            <FontAwesomeIcon 
+              size="2xl" 
+              icon={faCcVisa}
+            />
+          </Box>
+          <Box ml={1}>
+            <FontAwesomeIcon 
+              size="2xl" 
+              icon={faCcMastercard}
+            />
+          </Box>
+          <Box ml={1}>
+            <FontAwesomeIcon 
+              size="2xl" 
+              icon={faCcPaypal}
+            />
+          </Box>
+        </Grid>
       </Grid>
     );
-  }, [convertPriceToString, landingModel, priceIcon, selectedItem]);
+  }, [convertPriceToString, landingModel, selectedItem]);
 
   const landingIcon = useCallback((icon: IconDefinition, text: FormatText, columnSpacing: number) => {
     return (
