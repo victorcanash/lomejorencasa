@@ -46,9 +46,10 @@ import LoadingRating from '@components/ui/LoadingRating';
 import ProductCarousel from '@components/products/detail/ProductCarousel';
 import SelectItem from '@components/products/inputs/SelectItem'
 import SelectItemQuantity from '@components/products/inputs/SelectItemQuantity'
-import DetailCharacteristics from '@components/products/sections/DetailCharacteristics';
+import DetailCharacteristics from '@components/products/characteristics';
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
+import DetailReviews from '@components/products/sections/DetailReviews';
 
 type ProductDetailProps = {
   landingModel: Landing,
@@ -432,6 +433,7 @@ const LandingDetail = (props: ProductDetailProps) => {
         { (landingConfig.id === inventoryConfig.vacuumBags.id || landingConfig.id === inventoryConfig.vacuumBagsPack.id) &&
           <BagsDetail />
         }
+        <DetailReviews />
       </Box>
     </Box>
   );

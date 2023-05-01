@@ -1,7 +1,6 @@
 import { pages } from '@lib/constants/navigation';
 import { everfreshVideoIds } from '@lib/constants/multimedia';
 import DetailTutorial from '@components/products/sections/DetailTutorial';
-import DetailReviews from '@components/products/sections/DetailReviews';
 
 const EverfreshDetail = () => {
 
@@ -66,8 +65,6 @@ const EverfreshDetail = () => {
           alt: "Packing machine tutorial 3",
         }} 
       />
-      
-      <DetailReviews />
     </>
   );
 };

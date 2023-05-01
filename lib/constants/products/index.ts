@@ -24,6 +24,26 @@ const inventoryConfig: {
       'v1680726664/laenvasadora/LANDING%20PAGE/FOTO_5_g6vcri.jpg',
       'v1682517390/laenvasadora/LANDING%20PAGE/FOTO_1_yarwhg_vcukbn.jpg',
     ],
+    characteristics: {
+      details: {
+        text: {
+          id: 'everfresh.details',
+        },
+        count: 10,
+      },
+      includes: {
+        text: {
+          id: 'everfresh.includes',
+        },
+        count: 4,
+      },
+      dimensions: {
+        text: {
+          id: 'everfresh.dimensions',
+        },
+        count: 2,
+      },
+    },
     product: {
       inventories: [
         {
@@ -54,6 +74,26 @@ const inventoryConfig: {
       'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
     ],
+    characteristics: {
+      details: {
+        text: {
+          id: 'bags.details',
+        },
+        count: 4,
+      },
+      includes: {
+        text: {
+          id: 'bags.includes',
+        },
+        count: 1,
+      },
+      dimensions: {
+        text: {
+          id: 'bags.dimensions',
+        },
+        count: 6,
+      },
+    },
     product: {
       selectInputTexts: {
         label: {
@@ -144,6 +184,26 @@ const inventoryConfig: {
       'v1680726760/laenvasadora/LANDING%20PAGE/bundle%20pack%20envasadora%2Bbolsas/FOTO_1_yarwhg.jpg',
       'v1680692733/laenvasadora/LANDING%20PAGE/bundle%20pack%20envasadora%2Bbolsas/Foto_bolsas_detalle_cuadrada_jcsiul.jpg',
     ],
+    characteristics: {
+      details: {
+        text: {
+          id: 'everfresh.details',
+        },
+        count: 10,
+      },
+      includes: {
+        text: {
+          id: 'everfresh.includes',
+        },
+        count: 4,
+      },
+      dimensions: {
+        text: {
+          id: 'everfresh.dimensions',
+        },
+        count: 2,
+      },
+    },
     pack: {
       variations: [
         {
@@ -174,6 +234,26 @@ const inventoryConfig: {
       'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
     ],
+    characteristics: {
+      details: {
+        text: {
+          id: 'bags.details',
+        },
+        count: 4,
+      },
+      includes: {
+        text: {
+          id: 'bags.includes',
+        },
+        count: 1,
+      },
+      dimensions: {
+        text: {
+          id: 'bags.dimensions',
+        },
+        count: 6,
+      },
+    },
     pack: {
       name: {
         en: 'Pack of 20 vacuum bags with valve',

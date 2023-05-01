@@ -20,6 +20,20 @@ export type LandingConfig = {
   },
   comment: FormatText,
   images: string[],
+  characteristics: {
+    details: {
+      text: FormatText,
+      count: number,
+    },
+    includes: {
+      text: FormatText,
+      count: number,
+    },
+    dimensions: {
+      text: FormatText,
+      count: number,
+    },
+  },
   product?: {
     selectInputTexts?: {
       label: FormatText,
