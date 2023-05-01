@@ -67,6 +67,7 @@ const LandingDetail = (props: ProductDetailProps) => {
 
   const { addCartItem } = useCart(false);
   const { ref: payNowBtnRef, inView: payNowInView } = useInView({
+    initialInView: true,
     threshold: 0,
     rootMargin: '-83px 0px 1000px 0px',
   });
@@ -303,7 +304,7 @@ const LandingDetail = (props: ProductDetailProps) => {
 
   const payNowBtnStatic = useMemo(() => {
     return (
-      <Slide appear={false} in={initialized && selectedItem && !payNowInView} direction="up">
+      <Slide appear={true} in={initialized && selectedItem && !payNowInView} direction="up">
         <Button
           fullWidth
           variant="contained"
