@@ -5,12 +5,12 @@ import { PageTypes } from '@core/constants/navigation';
 import { ProductProps, getProductProps } from '@lib/server/product';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import LandingDetail from '@components/products/detail';
+// import LandingDetail from '@components/products/detail';
 
 const Product: NextPage<ProductProps> = (props) => {
   const { product } = props;
 
-  const page = usePage();
+  const _page = usePage();
 
   return (
     <>
@@ -23,9 +23,9 @@ const Product: NextPage<ProductProps> = (props) => {
         marginTop={true}
       />
 
-      <LandingDetail 
+      {/*<LandingDetail 
         product={product}
-      />
+      />*/}
     </>
   );
 };

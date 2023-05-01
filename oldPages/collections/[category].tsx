@@ -6,18 +6,18 @@ import { capitalizeFirstLetter } from '@core/utils/strings';
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import ProductList from '@components/products/collection';
+//import ProductList from '@components/products/collection';
 
 const Search: NextPage<CollectionProps> = (props) => {
   const { 
-    products, 
-    currentPage, 
-    totalPages, 
+    //products, 
+    //currentPage, 
+    //totalPages, 
     productCategory,  
-    keywords 
+    //keywords 
   } = props;
 
-  const page = usePage();
+  const _page = usePage();
 
   return (
     <>
@@ -36,13 +36,13 @@ const Search: NextPage<CollectionProps> = (props) => {
         }}
       />
 
-      <ProductList 
+      {/*<ProductList 
         category={productCategory}
         products={products} 
         totalPages={totalPages}
         currentPage={currentPage}
         keywords={keywords}
-      />
+      />*/}
     </>
   );
 };
