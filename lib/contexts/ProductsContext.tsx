@@ -14,6 +14,7 @@ import type {
   Landing,
   Product,
   ProductPack,
+  ProductInventory,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import {
@@ -35,7 +36,7 @@ type ProductsContext = {
   getAllLandingsProducts: () => (ProductPack | Product)[],
   getCartItemPageUrl: (item: CartItem | GuestCartCheckItem) => string,
   getItemImgUrl: (item: Landing | CartItem | GuestCartCheckItem) => string,
-  getLandingImgsUrl: (landing: Landing) => string[],
+  getLandingImgsUrl: (landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => string[],
   setProductRating: (product: Product, rating: string, reviewsCount: number) => void,
   setPackRating: (pack: ProductPack, rating: string, reviewsCount: number) => void,
   listProductReviews: ListProductReviews,
@@ -132,9 +133,14 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return imgUrl;
   }, []);
   
-  const getLandingImgsUrl = useCallback((landing: Landing) => {
+  const getLandingImgsUrl = useCallback((landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => {
     if (landing.images.length > 0) {
-      return landing.images;
+      return landing.images.map((image, index) => {
+        if (index === 0) {
+          return selectedItem?.image || image;
+        }
+        return image;
+      });
     }
     return [placeholderImgId];
   }, []);

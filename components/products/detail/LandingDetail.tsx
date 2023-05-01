@@ -344,7 +344,7 @@ const LandingDetail = (props: ProductDetailProps) => {
             >
               <ProductCarousel
                 sources={
-                  getLandingImgsUrl(landingModel).map((item) => {
+                  getLandingImgsUrl(landingModel, selectedItem).map((item) => {
                     return {
                       src: item,
                       alt: landingConfig.metas.imgsAlt,
