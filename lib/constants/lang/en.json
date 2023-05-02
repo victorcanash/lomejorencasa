@@ -265,6 +265,8 @@
   "bags.dimensions.5": "XL: 30cm x 34cm.",
   "bags.dimensions.6": "MIX: 2 x tamaño.",
 
+  "bagsPack.includes.1": "20 bolsas reutilizables",
+
   "login.metas.title": "Inicio de Sesión",
   "login.metas.description": "Inicio de Sesión",
   "login.errors.email": "Correo incorrecto",

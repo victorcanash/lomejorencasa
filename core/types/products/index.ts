@@ -32,6 +32,7 @@ export type LandingConfig = {
     dimensions: {
       text: FormatText,
       count: number,
+      image?: string,
     },
   },
   product?: {

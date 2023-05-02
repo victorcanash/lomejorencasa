@@ -338,7 +338,6 @@ const LandingDetail = (props: ProductDetailProps) => {
     swiperRef.current?.slideTo(1, undefined, false);
   }, [landingModel]);
 
-
   return (
     <Box sx={{ overflow: 'hidden' }}>
       { productH1 }

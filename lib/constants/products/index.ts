@@ -92,6 +92,7 @@ const inventoryConfig: {
           id: 'bags.dimensions',
         },
         count: 6,
+        image: 'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
       },
     },
     product: {
@@ -243,7 +244,7 @@ const inventoryConfig: {
       },
       includes: {
         text: {
-          id: 'bags.includes',
+          id: 'bagsPack.includes',
         },
         count: 1,
       },
@@ -252,6 +253,7 @@ const inventoryConfig: {
           id: 'bags.dimensions',
         },
         count: 6,
+        image: 'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
       },
     },
     pack: {

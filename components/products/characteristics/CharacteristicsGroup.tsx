@@ -12,8 +12,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
+import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
+import CustomImage from '@core/components/CustomImage';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 
@@ -21,6 +23,7 @@ type CharacteristicsGroupProps = {
   title: FormatText,
   elements: FormatText[],
   link?: NavItem,
+  source?: Source,
 };
 
 const CharacteristicsGroup = (props: CharacteristicsGroupProps) => {
@@ -28,6 +31,7 @@ const CharacteristicsGroup = (props: CharacteristicsGroupProps) => {
     title,
     elements,
     link,
+    source,
   } = props;
 
   const items = useMemo(() => {
@@ -77,7 +81,37 @@ const CharacteristicsGroup = (props: CharacteristicsGroupProps) => {
           </Typography>
         </AccordionSummary>
         <Box mt={1}>
-          { items }
+          { source ?
+            <Grid container justifyContent="space-between">
+              <Grid item>
+                { items }
+              </Grid>
+              <Box
+                component="span"
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  maxWidth: '350px',
+                  p: '8px 16px 16px',
+                }}
+              >
+                <CustomImage
+                  src={source.src}
+                  alt={source.alt}
+                  width={source.width || '1080'}
+                  height={source.height || '1080'}
+                  layout="responsive" 
+                  objectFit="cover"
+                  priority={source.priority || false}
+                  style={{ borderRadius: '10px' }}
+                />
+              </Box>
+            </Grid>
+            :
+            <>
+              { items }
+            </>
+          }
         </Box>
       </Accordion>
     </Grid>

@@ -65,6 +65,11 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
               landingConfig.characteristics.dimensions.count
             )
           }
+          source={ landingConfig.characteristics.dimensions.image ?
+            {
+              src: landingConfig.characteristics.dimensions.image,
+            } : undefined
+          }
         />
         <CharacteristicsGroup
           title={{
