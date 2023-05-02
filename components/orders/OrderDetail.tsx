@@ -40,10 +40,10 @@ const OrderDetail = (props: OrderDetailProps) => {
         {`${intl.formatMessage({ id: "orders.detail.date" })}: ${convertToDate(order.createdAt, router.locale)}`}
       </Typography>
       <Typography component="div" variant="h3" mb={2}>
-        {`${intl.formatMessage({ id: "orders.detail.status" })}: ${order.bigbuy.status}`}
+        {`${intl.formatMessage({ id: "orders.detail.status" })}: ${order.bigbuy.tracking?.statusDescription || order.bigbuy.status.toUpperCase()}`}
       </Typography>
       {/* Order Tracking */}
-      { order.bigbuy.tracking ?
+      { order.bigbuy.tracking?.trackingNumber ?
         <LinkButton
           href={`https://s.correosexpress.com/c?n=${order.bigbuy.tracking.trackingNumber}`}
           target="_blank"
