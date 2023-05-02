@@ -142,7 +142,7 @@ const HomeBanner = () => {
           m: 'auto',
         }}
       >
-        <Swiper 
+        <Swiper
           modules={[Autoplay]}
           speed={1000} 
           loop
@@ -152,14 +152,14 @@ const HomeBanner = () => {
             disableOnInteraction: false,
           }}
         >
-          { homeBannerImgIds.map((src, index) => (
+          { homeBannerImgIds.map((src, index, srcs) => (
             <SwiperSlide key={index}>
               <MultimediaContainer
                 type="banner"
                 source={{ 
                   src,
                   alt: getAltImg(index),
-                  priority: true,
+                  priority: index > 0 && index < srcs.length - 1  ? false : true,
                   width: '1920',
                   height: '1080', 
                 }}
