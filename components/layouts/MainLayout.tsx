@@ -5,6 +5,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 import Box from '@mui/material/Box';
 
+import envConfig from '@core/config/env.config';
 import { PageTypes } from '@core/constants/navigation';
 
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -15,7 +16,7 @@ import Loading from '@components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { loading } = useAppContext();
-  const { google, paypal, currency } = useAuthContext();
+  const { paypal, currency } = useAuthContext();
 
   const { layout, pageType } = useLayout(children);
   const app = useApp(pageType);
@@ -31,14 +32,14 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
     <>
       { (pageType !== PageTypes.link) ?
         <GoogleOAuthProvider 
-          clientId={google.oauthId}
+          clientId={envConfig.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID}
         >
           { paypal ?
             <PayPalScriptProvider
               options={{
                 'locale': 'es_ES',
-                'merchant-id': paypal.merchantId,
-                'client-id': paypal.clientId,
+                'merchant-id': envConfig.NEXT_PUBLIC_PAYPAL_MERCHANT_ID,
+                'client-id': envConfig.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
                 'data-client-token': paypal.token,
                 'currency': currency,
                 'intent': 'capture',

@@ -7,7 +7,6 @@ import type { Landing, ProductCategory } from '@core/types/products';
 import type { User } from '@core/types/user';
 import type { Cart } from '@core/types/cart';
 import type { PaypalCredentials } from '@core/types/paypal';
-import type { GoogleCredentials } from '@core/types/google';
 import { init } from '@core/utils/auth';
 
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -26,7 +25,6 @@ const useApp = (pageType: PageTypes | undefined) => {
     setToken,
     setUser,
     setPaypal,
-    setGoogle,
   } = useAuthContext();
 
   const intl = useIntl();
@@ -50,7 +48,6 @@ const useApp = (pageType: PageTypes | undefined) => {
             token?: string, 
             user?: User,
             paypal?: PaypalCredentials,
-            google: GoogleCredentials,
           }
         ) => {
           setProductCategories(response.productCategories);
@@ -61,7 +58,6 @@ const useApp = (pageType: PageTypes | undefined) => {
             setUser(response.user);
           } 
           setPaypal(response.paypal);
-          setGoogle(response.google);
           setInitialized(true);
         }).catch(async (_error: Error) => {
           //throw error;
@@ -69,7 +65,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initLandings, intl.locale, pageType, setGoogle, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
+  }, [initCart, initForms, initLandings, intl.locale, pageType, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {

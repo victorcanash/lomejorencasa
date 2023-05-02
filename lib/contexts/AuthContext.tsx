@@ -12,7 +12,6 @@ import { useRouter } from 'next/router';
 
 import { Protections } from '@core/constants/auth';
 import type { PaypalCredentials } from '@core/types/paypal';
-import type { GoogleCredentials } from '@core/types/google';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
 
@@ -23,8 +22,6 @@ type ContextType = {
   setToken: Dispatch<SetStateAction<string>>,
   paypal?: PaypalCredentials,
   setPaypal: Dispatch<SetStateAction<PaypalCredentials | undefined>>,
-  google: GoogleCredentials,
-  setGoogle: Dispatch<SetStateAction<GoogleCredentials>>,
   user: User | GuestUser,
   setUser: Dispatch<SetStateAction<User | GuestUser>>,
   currency: string,
@@ -45,8 +42,6 @@ export const AuthContext = createContext<ContextType>({
   setToken: () => {},
   paypal: undefined,
   setPaypal: () => {},
-  google: {} as GoogleCredentials,
-  setGoogle: () => {},
   user: {} as GuestUser,
   setUser: () => {},
   currency: '',
@@ -76,7 +71,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const [token, setToken] = useState('');
   const [paypal, setPaypal] = useState<PaypalCredentials | undefined>(undefined);
-  const [google, setGoogle] = useState<GoogleCredentials>({} as GoogleCredentials);
   const [user, setUser] = useState<User | GuestUser>({} as GuestUser);
   const [currency, _setCurrency] = useState('EUR');
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({} as CheckoutData);
@@ -163,8 +157,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setToken,
         paypal,
         setPaypal,
-        google,
-        setGoogle,
         user,
         setUser,
         currency,

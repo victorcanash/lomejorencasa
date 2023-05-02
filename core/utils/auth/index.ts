@@ -8,7 +8,6 @@ import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
 import type { Page } from '@core/types/navigation';
 import type { PaypalCredentials } from '@core/types/paypal';
-import type { GoogleCredentials } from '@core/types/google';
 import type { User } from '@core/types/user';
 import type { 
   AuthLogin, 
@@ -31,7 +30,6 @@ export const init = async (currentLocale: string, landingIds?: number[], categor
     token?: string,
     user?: User,
     paypal?: PaypalCredentials,
-    google: GoogleCredentials,
   }>(async (resolve, reject) => {
     const token = await getStorageItem(Storages.local, JWTTokenKey) || undefined;
     const options = token ? {
@@ -50,11 +48,10 @@ export const init = async (currentLocale: string, landingIds?: number[], categor
     }, options)
       .then(async (response: AxiosResponse) => {
         if (
-            response.status === StatusCodes.CREATED &&
-            response.data?.landings && response.data?.categories &&
-            response.data?.paypal?.merchantId && response.data?.paypal?.clientId && response.data?.paypal?.token &&
-            response.data?.google?.oauthId
-          ) {
+          response.status === StatusCodes.CREATED &&
+          response.data?.landings && response.data?.categories &&
+          response.data?.paypal?.token
+        ) {
           if (response.data.user) {
             if (response.data.user.lockedOut/* || !response.data.user.isActivated*/) {
               let errorMsg = '';
@@ -76,13 +73,8 @@ export const init = async (currentLocale: string, landingIds?: number[], categor
             token: token,
             user: response.data.user || undefined,
             paypal: {
-              merchantId: response.data.paypal.merchantId,
-              clientId: response.data.paypal.clientId,
               token: response.data.paypal.token,
               advancedCards: response.data.paypal.advancedCards,
-            },
-            google: {
-              oauthId: response.data.google.oauthId,
             },
           });
         } else {
