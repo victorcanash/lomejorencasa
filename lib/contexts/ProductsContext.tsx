@@ -1,16 +1,12 @@
 import {
   createContext,
-  useState,
+  useRef,
   useContext,
   useCallback,
-  Dispatch,
-  SetStateAction,
-  useEffect
 } from 'react';
 
 import { allLandingConfigs } from '@lib/constants/products';
 import type {
-  ListProductReviews,
   Landing,
   Product,
   ProductPack,
@@ -29,7 +25,7 @@ import { pages } from '@lib/constants/navigation';
 import { placeholderImgId } from '@lib/constants/multimedia';
 
 type ProductsContext = {
-  initLandings: (landings: Landing[]) => void,
+  initLandings: (newLandings: Landing[]) => void,
   getLandingByPath: (path: string) => Landing | undefined,
   getAllProducts: () => Product[],
   getAllPacks: () => ProductPack[],
@@ -39,8 +35,6 @@ type ProductsContext = {
   getLandingImgsUrl: (landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => string[],
   setProductRating: (product: Product, rating: string, reviewsCount: number) => void,
   setPackRating: (pack: ProductPack, rating: string, reviewsCount: number) => void,
-  listProductReviews: ListProductReviews,
-  setListProductReviews: Dispatch<SetStateAction<ListProductReviews>>,
 };
 
 const ProductsContext = createContext<ProductsContext>({
@@ -54,8 +48,6 @@ const ProductsContext = createContext<ProductsContext>({
   getLandingImgsUrl: () => [],
   setProductRating: () => {},
   setPackRating: () => {},
-  listProductReviews: {} as ListProductReviews,
-  setListProductReviews: () => {},
 });
 
 export const useProductsContext = () => {
@@ -67,22 +59,17 @@ export const useProductsContext = () => {
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
-  const [landings, setLandings] = useState<Landing[]>([]);
-  const [listProductReviews, setListProductReviews] = useState<ListProductReviews>({
-    reviews: [],
-    totalPages: 1,
-    currentPage: 0,
-  });
+  const landings = useRef<Landing[]>(generateLandings(allLandingConfigs));
 
-  const initLandings = useCallback((landings: Landing[]) => {
-    setLandings(landings);
+  const initLandings = useCallback((newLandings: Landing[]) => {
+    landings.current = newLandings;
   }, []);
 
   const getLandingByPath = useCallback((path: string) => {
     let foundLanding: Landing | undefined = undefined;
     const foundLandingConfig = getLandingConfigByPath(path, allLandingConfigs);
     if (foundLandingConfig) {
-      foundLanding = landings.find((landing) => {
+      foundLanding = landings.current.find((landing) => {
         if (landing.id === foundLandingConfig.id) {
           return landing;
         }
@@ -92,13 +79,13 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, [landings]);
 
   const getAllProducts = useCallback(() => {
-    return landings.filter((item) => item.products.length > 0).map((item) => {
+    return landings.current.filter((item) => item.products.length > 0).map((item) => {
       return item.products[0];
     })
   }, [landings]);
 
   const getAllPacks = useCallback(() => {
-    return landings.filter((item) => item.packs.length > 0).map((item) => {
+    return landings.current.filter((item) => item.packs.length > 0).map((item) => {
       return item.packs[0];
     })
   }, [landings]);
@@ -146,7 +133,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, []);
 
   const setProductRating = useCallback((product: Product, rating: string, reviewsCount: number) => {
-    const oldLandings = [...landings];
+    const oldLandings = [...landings.current];
     let foundLanding: Landing | undefined = undefined;
     let foundLandingIndex = -1;
     for (let i = 0; i < oldLandings.length; i++) {
@@ -162,11 +149,11 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       return;
     }
     oldLandings[foundLandingIndex] = foundLanding;
-    setLandings([...oldLandings]);
+    landings.current = [...oldLandings];
   }, [landings]);
 
   const setPackRating = useCallback((pack: ProductPack, rating: string, reviewsCount: number) => {
-    const oldLandings = [...landings];
+    const oldLandings = [...landings.current];
     let foundLanding: Landing | undefined = undefined;
     let foundLandingIndex = -1;
     for (let i = 0; i < oldLandings.length; i++) {
@@ -182,12 +169,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       return;
     }
     oldLandings[foundLandingIndex] = foundLanding;
-    setLandings([...oldLandings]);
+    landings.current = [...oldLandings];
   }, [landings]);
-
-  useEffect(() => {
-    setLandings(generateLandings(allLandingConfigs));
-  }, [])
 
   return (
     <ProductsContext.Provider
@@ -202,8 +185,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getLandingImgsUrl,
         setProductRating,
         setPackRating,
-        listProductReviews,
-        setListProductReviews,
       }}
     >
       {children}

@@ -151,9 +151,3 @@ export type CreateProductReview = {
   email: string,
   publicName: string,
 };
-
-export type ListProductReviews = {
-  reviews: ProductReview[],
-  totalPages: number,
-  currentPage: number,
-};

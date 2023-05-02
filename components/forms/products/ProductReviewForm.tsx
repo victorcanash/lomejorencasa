@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { Dispatch, useRef, useState, SetStateAction } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { FormikProps } from 'formik';
@@ -30,6 +30,8 @@ type ProductReviewFormProps = {
   errorMsg: string,
   successMsg: string,
   createProductReview: (productReview: CreateProductReview, uploadImgs: UploadFile[], onSuccess?: (() => void) | undefined) => Promise<void>,
+  setExpanded: Dispatch<SetStateAction<boolean>>,
+  expanded: boolean,
 };
 
 const ProductReviewForm = (props: ProductReviewFormProps) => {
@@ -37,6 +39,8 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     errorMsg,
     successMsg,
     createProductReview,
+    setExpanded,
+    expanded,
   } = props;
 
   const { getAllLandingsProducts } = useProductsContext();
@@ -56,7 +60,6 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
 
   const formRef = useRef<FormikProps<CreateProductReview> | null>(null);
 
-  const [expanded, setExpanded] = useState(false);
   const [maxWidth, _setMaxWidth] = useState('500px');
 
   const handleSubmit = async (values: CreateProductReview) => {

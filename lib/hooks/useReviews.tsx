@@ -23,8 +23,6 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 const useReviews = () => {
   const { initialized, setLoading } = useAppContext();
   const {
-    listProductReviews,
-    setListProductReviews,
     setProductRating,
     setPackRating,
   } = useProductsContext();
@@ -35,7 +33,8 @@ const useReviews = () => {
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-  const [page, setPage] = useState(0);
+  const [reviews, setReviews] = useState<ProductReview[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   const createProductReview = useCallback(async (
@@ -59,83 +58,76 @@ const useReviews = () => {
       isPack,
       reviewImg
     ).then((response) => {
-        setListProductReviews({
-          ...listProductReviews,
-          reviews: [response.review, ...listProductReviews.reviews],
-        });
-        if (response.review.product) {
-          setProductRating(
-            response.review.product,
-            response.productRating.rating,
-            response.productRating.reviewsCount
-          );
-        } else if (response.review.pack) {
-          setPackRating(
-            response.review.pack,
-            response.productRating.rating,
-            response.productRating.reviewsCount
-          );
-        }
-        scrollToSection('reviews', false);
-        setLoading(false);
-        enqueueSnackbar(
-          intl.formatMessage({ id: 'forms.productReview.success.default' }),
-          { variant: 'success', autoHideDuration: snackbarConfig.durations.long }
+      setReviews([response.review, ...reviews]);
+      setCurrentPage(1);
+      if (response.review.product) {
+        setProductRating(
+          response.review.product,
+          response.productRating.rating,
+          response.productRating.reviewsCount
         );
-        if (onSuccess) {
-          onSuccess();
-        }
-      }).catch((error: Error) => {
-        let errorMsg = error.message;
-        if (errorMsg.includes('File size')) {
-          errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.fileSize' }, { maxSize: uploadImgMaxSize });
-        } else if (errorMsg.includes('You have to be logged to use this email')) {
-          errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.unlogged' });
-        } else if (errorMsg.includes('You have not bought the related product') || errorMsg.includes('getting guest user')) {
-          errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.notBought' });
-        } else {
-          errorMsg = intl.formatMessage({ id: 'app.errors.default' });
-        }
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
-  }, [enqueueSnackbar, intl, isLogged, listProductReviews, setListProductReviews, setLoading, setPackRating, setProductRating, token]);
+      } else if (response.review.pack) {
+        setPackRating(
+          response.review.pack,
+          response.productRating.rating,
+          response.productRating.reviewsCount
+        );
+      }
+      scrollToSection('reviews', false);
+      setLoading(false);
+      enqueueSnackbar(
+        intl.formatMessage({ id: 'forms.productReview.success.default' }),
+        { variant: 'success', autoHideDuration: snackbarConfig.durations.long }
+      );
+      if (onSuccess) {
+        onSuccess();
+      }
+    }).catch((error: Error) => {
+      let errorMsg = error.message;
+      if (errorMsg.includes('File size')) {
+        errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.fileSize' }, { maxSize: uploadImgMaxSize });
+      } else if (errorMsg.includes('You have to be logged to use this email')) {
+        errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.unlogged' });
+      } else if (errorMsg.includes('You have not bought the related product') || errorMsg.includes('getting guest user')) {
+        errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.notBought' });
+      } else {
+        errorMsg = intl.formatMessage({ id: 'app.errors.default' });
+      }
+      setErrorMsg(errorMsg);
+      setLoading(false);
+    });
+  }, [enqueueSnackbar, intl, isLogged, reviews, setLoading, setPackRating, setProductRating, token]);
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
-    setPage(page);
-    setTotalPages(listProductReviews.totalPages);
+    setCurrentPage(page);
     scrollToSection('reviews', false);
-  }, [listProductReviews.totalPages]);
+  }, []);
 
-  const getAllProductReviews = useCallback(async () => {
+  const getAllProductReviews = useCallback(async (page: number) => {
     const limit = 10;
     const sortBy = 'id';
     const order = 'desc';
     await getAllProductReviewsMW(intl.locale, page, limit, sortBy, order)
       .then((response: { reviews: ProductReview[], totalPages: number, currentPage: number }) => {
-        setListProductReviews({
-          reviews: response.reviews,
-          totalPages: response.totalPages,
-          currentPage: response.currentPage,
-        });
+        setReviews(response.reviews);
+        setTotalPages(response.totalPages);
       }).catch((_error: Error) => {
-        setListProductReviews({
-          reviews: [],
-          totalPages: totalPages,
-          currentPage: page,
-        })
+        setReviews([]);
       });
-  }, [intl.locale, page, setListProductReviews, totalPages]);
+  }, [intl.locale]);
 
   useEffect(() => {
     if (initialized) {
-      getAllProductReviews();
+      getAllProductReviews(currentPage);
     }
-  }, [getAllProductReviews, initialized]);
+  }, [currentPage, getAllProductReviews, initialized]);
 
   return {
     successMsg,
     errorMsg,
+    reviews,
+    currentPage,
+    totalPages,
     handleChangePage,
     createProductReview,
   };

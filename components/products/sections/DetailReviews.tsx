@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -23,7 +24,6 @@ import { keywords } from '@lib/config/next-seo.config';
 import { allLandingConfigs } from '@lib/constants/products';
 import colors from '@lib/constants/themes/colors';
 import { useAppContext } from '@lib/contexts/AppContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
 import useReviews from '@lib/hooks/useReviews';
 import Title from '@components/ui/Title';
 import Pagination from '@components/ui/Pagination';
@@ -31,11 +31,20 @@ import ProductReviewForm from '@components/forms/products/ProductReviewForm';
 
 const DetailReviews = () => {
   const { initialized } = useAppContext();
-  const { listProductReviews } = useProductsContext();
 
   const router = useRouter();
 
-  const { errorMsg, successMsg, handleChangePage, createProductReview} = useReviews();
+  const {
+    errorMsg,
+    successMsg,
+    reviews,
+    currentPage,
+    totalPages,
+    handleChangePage,
+    createProductReview,
+  } = useReviews();
+
+  const [expandedForm, setExpandedForm] = useState(false);
 
   return (
     <>
@@ -61,6 +70,8 @@ const DetailReviews = () => {
                   errorMsg={errorMsg}
                   successMsg={successMsg}
                   createProductReview={createProductReview}
+                  setExpanded={setExpandedForm}
+                  expanded={expandedForm}
                 />
               </Box>
             </Box>
@@ -71,9 +82,9 @@ const DetailReviews = () => {
               m="auto"
             >
               {/* ProductReview List */}
-              { listProductReviews.reviews.length > 0 ?
+              { reviews.length > 0 ?
                 <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={0}>
-                  { listProductReviews.reviews.map((item, index) => (
+                  { reviews.map((item, index) => (
                     <Box key={index}>
                       <Box
                         sx={{
@@ -177,11 +188,14 @@ const DetailReviews = () => {
                 </Typography>
               }
               {/* Pagination */}
-              <Box mt={listProductReviews.reviews.length > 0 ? 3 : 5} />
+              <Box mt={reviews.length > 0 ? 3 : 5} />
               <Pagination
-                totalPages={listProductReviews.totalPages}
-                currentPage={listProductReviews.currentPage}
-                onChangePage={handleChangePage}
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onChangePage={(event, page) => {
+                  setExpandedForm(false);
+                  handleChangePage(event, page);
+                }}
               />
             </Box>
           </Container>
