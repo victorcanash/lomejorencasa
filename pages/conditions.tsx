@@ -112,7 +112,7 @@ const Conditions: NextPage = () => {
         <Typography variant="body1">
           <FormattedMessage id="conditions.refunds.withdrawalRight.description" />
         </Typography>
-        <Link href={pages.contact.path}>
+        <Link href={pages.resolutions.path}>
           {`${envConfig.NEXT_PUBLIC_APP_URL}${pages.resolutions.path}`}
         </Link>
         <Typography variant="h3" mt={3} mb={2}>

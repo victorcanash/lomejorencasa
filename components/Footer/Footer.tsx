@@ -83,6 +83,7 @@ const Footer = () => {
               <IconButton
                 size="small"
                 href={tiktokHref}
+                target="_blank"
               >
                 { socialMediaIcon(faTiktok) }
               </IconButton>
@@ -91,6 +92,7 @@ const Footer = () => {
               <IconButton
                 size="small"
                 href={instagramHref}
+                target="_blank"
               >
                 { socialMediaIcon(faInstagram) }
               </IconButton>
@@ -99,6 +101,7 @@ const Footer = () => {
               <IconButton
                 size="small"
                 href={facebookHref}
+                target="_blank"
               >
                 { socialMediaIcon(faFacebook) }
               </IconButton>
