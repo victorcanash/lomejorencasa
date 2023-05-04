@@ -71,6 +71,7 @@ function MyApp(props: MyAppProps) {
       />
 
       <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="facebook-domain-verification" content="ogx6uggctpg463pxxngpttfinfajqg" />
       </Head>
 

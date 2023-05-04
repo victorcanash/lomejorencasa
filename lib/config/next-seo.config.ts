@@ -29,9 +29,6 @@ const config: DefaultSeoProps = {
       keywords.vacuumBags.others.join(','),
     ].join(','),
   }, {
-    name: 'viewport',
-    content: 'width=device-width, initial-scale=1.0'
-  }, {
     name: 'author',
     content: keywords.vacuumMachine.main,
   }],

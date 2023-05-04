@@ -14,6 +14,8 @@ export default class MyDocument extends Document {
         <Head>
           <meta name="theme-color" content={theme.palette.primary.main} />
           <meta name="emotion-insertion-point" content="" />
+          <meta name="color-scheme" content="light" />
+          <meta name="supported-color-schemes" content="light" />
           <link rel="shortcut icon" type="image/png" href="/favicon.png" />
           {/*<link
             rel="stylesheet"
