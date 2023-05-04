@@ -2,7 +2,6 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
-import envConfig from '@core/config/env.config';
 import { Storages } from '@core/constants/storage';
 import { GuestCartKey } from '@core/constants/cart';
 import type { CheckoutData } from '@core/types/checkout';
@@ -72,20 +71,17 @@ export const createPaypalTransaction = (token: string, currentLocale: string, cu
   })
 };
 
-export const capturePaypalTransaction = (token: string, currentLocale: string, checkoutData: CheckoutData, unloggedCart?: Cart) => {
+export const capturePaypalTransaction = (token: string, currentLocale: string, currency: string, checkoutData: CheckoutData, unloggedCart?: Cart) => {
   return new Promise<{paypalTransactionId: string}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: {
         ...getAuthHeaders(token),
         ...getLanguageHeaders(currentLocale),
       },
-      params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      },
       timeout: 20000,
     };
     const body = {
+      currency: currency,
       checkoutData: {
         email: checkoutData.checkoutEmail,
         shipping: checkoutData.shipping,

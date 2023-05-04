@@ -98,9 +98,11 @@ export type OrderFailedCreate = {
   notes?: string,
   shipping: UserAddress,
   products: GuestCartItem[],
+  currency: string,
 };
 
 export type OrderFailedSendEmail = {
   orderId: number,
   locale: string,
+  currency: string,
 };

@@ -36,6 +36,7 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
       initialValues={{
         orderId: orderFieldsInitValues.id,
         locale: orderFieldsInitValues.locale,
+        currency: orderFieldsInitValues.currency,
       } as OrderFailedSendEmail}
       validationSchema={sendFailedOrderEmailFormValidation}
       formFieldGroups={[
@@ -69,6 +70,12 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
                   value: 'es',
                 }
               ],       
+            },
+            {
+              name: 'currency',
+              type: FormFieldTypes.text,
+              required: true,
+              disabled: true,
             },
           ],
         }

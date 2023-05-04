@@ -2,7 +2,6 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders } from '@core/config/axios.config';
-import envConfig from '@core/config/env.config';
 import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
 import type { GuestCart } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
@@ -95,10 +94,6 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
   return new Promise<{order?: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
-      params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      },
       timeout: 20000,
     };
     axios.post('/orders/admin', { 
@@ -114,6 +109,7 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
         items: order.products,
       } as GuestCart,
       paypalTransactionId: order.paypalTransactionId,
+      currency: order.currency,
     }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
@@ -139,13 +135,12 @@ export const sendFailedOrderEmail = (token: string, order: OrderFailedSendEmail)
   return new Promise<{order: Order}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       headers: getAuthHeaders(token),
-      params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-      },
       timeout: 20000,
     };
-    axios.post(`/orders/send-email/check/${order.orderId}`, { locale: order.locale}, options)
+    axios.post(`/orders/send-email/check/${order.orderId}`, {
+      locale: order.locale,
+      currency: order.currency,
+    }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve({

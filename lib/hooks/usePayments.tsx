@@ -320,7 +320,8 @@ const usePayments = () => {
     sendInitiateCheckoutEvent(captureCheckoutData.checkoutEmail || '');
     await capturePTransactionMW(
       isLogged() ? token : '', 
-      intl.locale, 
+      intl.locale,
+      currency,
       captureCheckoutData,
       !isLogged() ? cart : undefined
     ).then((_response: { paypalTransactionId: string }) => {

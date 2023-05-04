@@ -175,6 +175,8 @@ const useForms = () => {
       .required(),
     notes: Yup
       .string(),
+    currency: Yup
+      .string(),
   };
 
   const orderFieldsInitValues = {
@@ -185,6 +187,7 @@ const useForms = () => {
     guestUserEmail: '',
     paypalTransactionId: '',
     notes: '',
+    currency: 'EUR',
   };
 
   const orderProductFieldsValidation = {
@@ -431,6 +434,7 @@ const useForms = () => {
   const createFailedOrderFormValidation = Yup.object().shape({
     locale: orderFieldsValidation.locale,
     paypalTransactionId: orderFieldsValidation.paypalTransactionId,
+    currency: orderFieldsValidation.currency,
     checkoutEmail: userFieldsValidation.email,
     notes: orderFieldsValidation.notes,
     shipping: Yup.object().shape(addressFieldsValidation),
@@ -444,6 +448,7 @@ const useForms = () => {
   const sendFailedOrderEmailFormValidation = Yup.object().shape({
     orderId: orderFieldsValidation.id,
     locale: orderFieldsValidation.locale,
+    currency: orderFieldsValidation.currency,
   });
 
   const manageProductFormValidation = Yup.object().shape({

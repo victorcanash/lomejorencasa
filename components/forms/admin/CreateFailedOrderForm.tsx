@@ -84,6 +84,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
             ...addressFieldsInitValues,
           },
           products: [],
+          currency: orderFieldsInitValues.currency,
         } as OrderFailedCreate}
         validationSchema={createFailedOrderFormValidation}
         formFieldGroups={[
@@ -117,6 +118,12 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 name: 'paypalTransactionId',
                 type: FormFieldTypes.text,
                 required: true,
+              },
+              {
+                name: 'currency',
+                type: FormFieldTypes.text,
+                required: true,
+                disabled: true,
               },
               {
                 name: 'checkoutEmail',
