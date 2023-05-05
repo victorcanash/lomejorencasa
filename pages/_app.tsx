@@ -7,12 +7,10 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-cards';
 import 'styles/globals.css';
 
-import { useEffect } from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
 // import { useRouter } from 'next/router';
 
-import NP from 'number-precision'
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { SnackbarProvider } from 'notistack';
@@ -59,10 +57,6 @@ function MyApp(props: MyAppProps) {
   } = props;
 
   // const { locale } = useRouter();
-
-  useEffect(() => {
-    NP.enableBoundaryChecking(false)
-  }, []);
 
   return (
     <>

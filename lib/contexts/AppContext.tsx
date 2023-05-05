@@ -8,7 +8,7 @@ import {
   useEffect,
 } from 'react';
 
-// import { removeCookies } from 'cookies-next';
+import NP from 'number-precision'
 import GoogleAnalythics from '@bradgarropy/next-google-analytics';
 import TagManager from 'react-gtm-module';
 
@@ -83,6 +83,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   }, [acceptedCookies]);
 
   useEffect(() => {
+    NP.enableBoundaryChecking(false);
+
     const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey)
     if (!cookiesConsentValue) {
       setOpenCookiesBanner(true);
