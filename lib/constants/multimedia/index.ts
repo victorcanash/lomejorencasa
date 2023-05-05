@@ -1,4 +1,4 @@
-export const navbarLogoId = 'v1682614268/laenvasadora/LOGOS/LOGO-NUEVO-NAVBAR_nhsupl.png';
+export const navbarLogoId = 'v1683277258/laenvasadora/LOGOS/LOGO-NUEVO-NAVBAR-SPACE-GREY_rjnkl7.png';
 
 export const placeholderImgId = 'v1681059169/laenvasadora/LANDING%20PAGE/placeholder_tl7jks.jpg';
 
