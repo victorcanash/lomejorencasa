@@ -133,12 +133,12 @@ const Orders: NextPage = () => {
   }, [currentPage, errorMsg, getOrderByBigbuyId, initialized, isLogged, loadingOrderQueries, loggedOrders, onChangePage, onClickBack, onSuccessGetOrder, page.checked, selectedOrder, showOrder, successMsg, totalPages]);
 
   useEffect(() => {
-    if (!page.checked) {
+    if (!page.checked || !initialized) {
       setLoading(true);
-    } else if (page.checked && !loadedOrders) {
+    } else if (page.checked && initialized && !loadedOrders) {
       setLoadedOrders(true);
       const queries = getOrderQueries();
-      if (queries) {
+      if (queries && !isLogged()) {
         getOrderByQueries(queries);
       } else {
         setLoadingOrderQueries(false);
@@ -154,7 +154,7 @@ const Orders: NextPage = () => {
         setSelectedOrder(undefined);
       }
     }
-  }, [getOrderByQueries, getOrderQueries, getOrders, isLogged, loadedOrders, loggedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked, setLoading]);
+  }, [getOrderByQueries, getOrderQueries, getOrders, initialized, isLogged, loadedOrders, loggedOrders, onErrorGetOrders, onSuccessGetOrders, page.checked, setLoading]);
 
   useEffect(() => {
     setSuccessMsg('');
