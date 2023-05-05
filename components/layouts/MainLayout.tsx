@@ -22,7 +22,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   const app = useApp(pageType);
 
   const content = (
-    <Box>
+    <Box sx={{ whiteSpace: 'pre-line' }}>
       <Loading open={loading} />
       { layout }
     </Box>
