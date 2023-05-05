@@ -297,7 +297,7 @@ export const originRedirects: {
     'laenvasadora.store',
     'www.laenvasadora.store',
   ],
-  to: 'laenvasadora.es',
+  to: 'https://laenvasadora.es',
 };
 
 export const mainNavDrawerItems: NavDrawerItems[] = [
