@@ -282,6 +282,24 @@ export const pages: {
   },
 };
 
+export const originRedirects: {
+  from: string[],
+  to: string,
+} = {
+  from: [
+    'www.laenvasadora.es',
+    'laenvasadora.com',
+    'www.laenvasadora.com',
+    'laenvasadora.online',
+    'www.laenvasadora.online',
+    'laenvasadora.site',
+    'www.laenvasadora.site',
+    'laenvasadora.store',
+    'www.laenvasadora.store',
+  ],
+  to: 'laenvasadora.es',
+};
+
 export const mainNavDrawerItems: NavDrawerItems[] = [
   {
     text: {

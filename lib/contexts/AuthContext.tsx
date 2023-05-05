@@ -15,7 +15,7 @@ import type { PaypalCredentials } from '@core/types/paypal';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
 
-import { pages } from '@lib/constants/navigation';
+import { pages, originRedirects } from '@lib/constants/navigation';
 
 type ContextType = {
   token: string,
@@ -139,7 +139,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return `${price.toFixed(2)}$`;
   }, [currency]);
 
+  const originRedirect = useCallback(() => {
+    const origin = location.origin;
+    for (let i = 0; i < originRedirects.from.length; i++) {
+      if (origin.includes(originRedirects.from[i])) {
+        router.push(`${originRedirects.to}${router.asPath}`);
+        return true;
+      }
+    }
+    return false;
+  }, [router]);
+
   useEffect(() => {
+    if (originRedirect()) {
+      return;
+    }
     Object.entries(pages).forEach(([_key, page]) => {
       if (page.filepath == router.pathname) {
         if (page.savePathOnLogin.enabled) {
@@ -148,7 +162,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
     });
-  }, [router.asPath, router.pathname])
+  }, [originRedirect, router.asPath, router.pathname])
 
   return (
     <AuthContext.Provider
