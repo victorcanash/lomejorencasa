@@ -10,7 +10,7 @@
   "app.successes.default": "Logrado",
   "app.errors.default": "Algo falló, inténtalo otra vez",
 
-  "banners.cookies.title": "Alguien dijo... cookies?",
+  "banners.cookies.title": "¿Alguien dijo... cookies?",
   "banners.cookies.content": "Utilizamos cookies para ofrecerte un servicio mejor, más seguro y más rápido y para apoyar nuestro negocio. Algunas cookies son necesarias para utilizar nuestros servicios, mejorarlos y asegurarse de que funcionan correctamente. Si haces clic en 'Aceptar todas las cookies', también permites utilizar cookies para ofrecerte anuncios y comunicaciones adaptados a tus intereses. Si haces clic en 'Rechazar cookies no necesarias', no utilizaremos las cookies para recopilar datos adicionales para mostrar anuncios y comunicaciones personalizados. Para obtener más información visite la <link>página de cookies</link>.",
   "banners.cookies.acceptBtn": "Aceptar todas las cookies",
   "banners.cookies.refuseBtn": "Rechazar cookies no necesarias",
@@ -704,12 +704,12 @@
 
   "forms.register.title": "Regístrate",
   "forms.register.successBtn": "Registrarse",
-  "forms.register.loginLink": "Ya tienes una cuenta? Inicia sesión",
+  "forms.register.loginLink": "¿Ya tienes una cuenta? Inicia sesión",
 
   "forms.login.title": "Inicia sesión",
   "forms.login.successBtn": "Iniciar sesión",
-  "forms.login.forgotLink": "Contraseña olvidada?",
-  "forms.login.registerLink": "No tienes una cuenta? Regístrate",
+  "forms.login.forgotLink": "¿Contraseña olvidada?",
+  "forms.login.registerLink": "¿No tienes una cuenta? Regístrate",
 
   "forms.forgotPassword.title": "Contraseña olvidada",                            
   "forms.forgotPassword.description": "Introduce tu dirección de correo y te enviaremos un link para cambiar tu contraseña.",
@@ -738,7 +738,7 @@
   "forms.resetPassword.successBtn": "Resetear",
 
   "forms.resendActivation.title": "Activa tu cuenta",
-  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta.\n\nUna vez verificada, procede a <link>iniciar sesión</link>.\n\nNo recibiste el correo? {resend}",
+  "forms.resendActivation.description": "Hemos enviado un correo a {email} con un link para activar tu cuenta.\n\nUna vez verificada, procede a <link>iniciar sesión</link>.\n\n¿No recibiste el correo? {resend}",
   "forms.resendActivation.successBtn": "Reenviar",
   "forms.resendActivation.resendTime": "Reenviar en {timeLeft}.",
   "forms.resendActivation.resendNow": "Reenviar ahora.",
