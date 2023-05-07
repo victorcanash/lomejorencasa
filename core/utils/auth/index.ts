@@ -89,9 +89,12 @@ export const init = async (currentLocale: string, landingIds?: number[], categor
   });
 };
 
-export const registerUser = async (authRegister: AuthRegister) => {
+export const registerUser = async (currentLocale: string, authRegister: AuthRegister) => {
   return new Promise<true>((resolve, reject) => {
-    axios.post('/auth/register', authRegister)
+    const options: AxiosRequestConfig = {
+      headers: getLanguageHeaders(currentLocale),
+    };
+    axios.post('/auth/register', authRegister, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {
           resolve(true);

@@ -56,7 +56,7 @@ const useAuth = () => {
     setErrorMsg('');
     setLoading(true);
     sendCompleteRegistrationEvent(authRegister.email);
-    registerUser(authRegister).then(() => {
+    registerUser(intl.locale, authRegister).then(() => {
       onRegisterSuccess(authRegister, onSuccess);
     }).catch((error: Error) => {
       let errorMsg = error.message;
