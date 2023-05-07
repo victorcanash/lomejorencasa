@@ -96,7 +96,7 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
       headers: getAuthHeaders(token),
       timeout: 20000,
     };
-    axios.post('/orders/admin', { 
+    axios.post('/orders', { 
       locale: order.locale,
       checkoutData: {
         email: order.checkoutEmail,
