@@ -137,7 +137,7 @@ export const sendFailedOrderEmail = (token: string, order: OrderFailedSendEmail)
       headers: getAuthHeaders(token),
       timeout: 20000,
     };
-    axios.post(`/orders/send-email/check/${order.orderId}`, {
+    axios.post(`/orders/send-email/breakdown/${order.orderId}`, {
       locale: order.locale,
       currency: order.currency,
     }, options)
