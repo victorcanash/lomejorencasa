@@ -103,6 +103,25 @@ const HomeSection = () => {
         <Box sx={{ m: 2 }}>
           <Typography variant="h1" component="h2" gutterBottom>
             <FormattedMessage
+              id="admin.manageEmails"
+            />
+          </Typography>
+          <Button
+            variant="contained"
+            sx={{ m: 2 }}
+            onClick={() => onClickSectionBtn(AdminSections.sendOrderEmail)}
+          >
+            <FormattedMessage
+              id="admin.sendOrderEmailBtn"
+            />
+          </Button>
+        </Box>
+
+        <Divider sx={{ my: 3 }} />
+
+        <Box sx={{ m: 2 }}>
+          <Typography variant="h1" component="h2" gutterBottom>
+            <FormattedMessage
               id="admin.manageErrors"
             />
           </Typography>

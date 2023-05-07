@@ -7,5 +7,11 @@ export enum AdminSections {
   createProduct = 'createProduct',
   createProductPack='createProductPack',
   createFailedOrder = 'createFailedOrder',
+  sendOrderEmail = 'sendOrderEmail',
   sendFailedOrderEmail = 'sendFailedOrderEmail',
+};
+
+export enum OrderEmailTypes {
+  review = 'review',
+  issued = 'issued',
 };

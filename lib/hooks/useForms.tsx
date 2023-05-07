@@ -151,11 +151,6 @@ const useForms = () => {
   };
 
   const orderFieldsValidation = {
-    locale: Yup
-      .string()
-      .min(2)
-      .max(5)
-      .required(),
     id: Yup
       .number()
       .min(0)
@@ -182,7 +177,6 @@ const useForms = () => {
   const orderFieldsInitValues = {
     id: 0,
     bigbuyId: '',
-    locale: 'es',// intl.defaultLocale,
     userId: 0,
     guestUserEmail: '',
     paypalTransactionId: '',
@@ -252,6 +246,22 @@ const useForms = () => {
     en: '',
     es: '',
   };
+
+  const emailsFieldsValidation = {
+    emailType: Yup
+      .string()
+      .min(3)
+      .required(),
+    locale: Yup
+      .string()
+      .min(2)
+      .max(5)
+      .required(),
+  };
+
+  const emailsFieldsInitValues = {
+    locale: 'es', // intl.defaultLocale,
+  }
 
   const productFieldsValidation = {
     categoryId: Yup
@@ -432,7 +442,7 @@ const useForms = () => {
   });
 
   const createFailedOrderFormValidation = Yup.object().shape({
-    locale: orderFieldsValidation.locale,
+    locale: emailsFieldsValidation.locale,
     paypalTransactionId: orderFieldsValidation.paypalTransactionId,
     currency: orderFieldsValidation.currency,
     checkoutEmail: userFieldsValidation.email,
@@ -444,10 +454,16 @@ const useForms = () => {
     quantity: orderProductFieldsValidation.quantity,
     inventoryId: orderProductFieldsValidation.inventoryId,
   });
+
+  const sendOrderEmailFormValidation = Yup.object().shape({
+    orderId: orderFieldsValidation.id,
+    locale: emailsFieldsValidation.locale,
+    emailType: emailsFieldsValidation.emailType,
+  });
   
   const sendFailedOrderEmailFormValidation = Yup.object().shape({
     orderId: orderFieldsValidation.id,
-    locale: orderFieldsValidation.locale,
+    locale: emailsFieldsValidation.locale,
     currency: orderFieldsValidation.currency,
   });
 
@@ -539,7 +555,7 @@ const useForms = () => {
             value: getCountryName(countryKey),
           };
         }),
-      }
+      },
     ] as FormField[];
   };
 
@@ -552,6 +568,7 @@ const useForms = () => {
     orderProductFieldsInitValues,
     couponFieldsInitValues,
     reviewFieldsInitValues,
+    emailsFieldsInitValues,
     productFieldsInitValues,
     categoryFieldsInitValues,
     inventoryFieldsInitValues,
@@ -573,6 +590,7 @@ const useForms = () => {
     getOrderFormValidation,
     createFailedOrderFormValidation,
     createFailedOrderProductFormValidation,
+    sendOrderEmailFormValidation,
     sendFailedOrderEmailFormValidation,
     manageProductFormValidation,
     manageCategoryFormValidation,

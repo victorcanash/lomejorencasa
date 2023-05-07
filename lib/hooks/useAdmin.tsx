@@ -107,6 +107,9 @@ const useAdmin = (checkedPage: boolean) => {
           case AdminSections.createFailedOrder.toString():
             sectionSearch = AdminSections.createFailedOrder;
             break;
+          case AdminSections.sendOrderEmail.toString():
+            sectionSearch = AdminSections.sendOrderEmail;
+            break;
           case AdminSections.sendFailedOrderEmail.toString():
             sectionSearch = AdminSections.sendFailedOrderEmail;
             break;

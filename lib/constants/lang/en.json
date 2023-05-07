@@ -559,6 +559,8 @@
   "admin.createCategoryBtn": "Añadir nueva categoría de productos",
   "admin.createProductBtn": "Añadir nuevo producto",
   "admin.createPackBtn": "Añadir nuevo pack de productos",
+  "admin.manageEmails": "Manejar correos",
+  "admin.sendOrderEmailBtn": "Enviar correo de pedido",
   "admin.manageErrors": "Manejar errores",
   "admin.createFailedOrderBtn": "Crear pedido fallido",
   "admin.sendFailedOrderEmailBtn": "Enviar correo de pedido fallido",
@@ -579,7 +581,7 @@
   "admin.confirmBtn": "Confirmar creación",
   "admin.refreshBigbuyBtn": "Actualizar datos de bigbuy",
   "admin.successes.createOrder": "Pedido creado",
-  "admin.successes.sendOrderEmail": "Correo de checkeo del pedido enviado",
+  "admin.successes.sendOrderEmail": "Correo enviado",
   "admin.successes.createProduct": "Producto creado",
   "admin.successes.updateProduct": "Producto actualizado",
   "admin.successes.deleteProduct": "Producto borrado",
@@ -661,6 +663,7 @@
   "forms.userId": "ID del usuario",
   "forms.guestUserEmail": "Dirección de correo",
   "forms.type": "Asunto",
+  "forms.emailType": "Tipo de correo",
   "forms.relatedProduct": "Producto relacionado",
   "forms.categoryId": "ID de la categoría",
   "forms.productId": "ID del producto",
@@ -777,6 +780,8 @@
   "forms.updatePack.inventories": "Inventarios del pack",
   "forms.createPackInventory.title": "Añadir inventario del pack",
   "forms.createPackInventory.successBtn": "Añadir inventario del pack",
+
+  "forms.sendOrderEmail.title": "Enviar correo de un pedido",
   
   "forms.sendFailedOrderEmail.title": "Enviar correo fallido de un pedido",
 
@@ -821,5 +826,8 @@
   "dialogs.confirm.cancelBtn": "Cancelar",
 
   "ES": "España",
-  "es": "España"
+  "es": "España",
+
+  "review": "Valoracion del pedido",
+  "issued": "Pedido expedido"
 }

@@ -2,9 +2,10 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { StatusCodes } from 'http-status-codes';
 
 import axios, { getAuthHeaders } from '@core/config/axios.config';
-import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
+import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail, OrderSendEmail } from '@core/types/orders';
 import type { GuestCart } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+import { OrderEmailTypes } from '@core/constants/admin';
 
 export const getOrders = (token: string, page: number, sortBy: string, order: string, userId: number) => {
   return new Promise<{
@@ -127,6 +128,31 @@ export const createFailedOrder = (token: string, order: OrderFailedCreate) => {
         } else {
           reject(new Error(errorMsg));
         }
+      }); 
+  })
+};
+
+export const sendOrderEmail = (token: string, order: OrderSendEmail) => {
+  return new Promise<{order: Order}>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: getAuthHeaders(token),
+      timeout: 20000,
+    };
+    axios.post(`/orders/send-email/${order.emailType === OrderEmailTypes.issued ? 'issued' : 'review'}/${order.orderId}`, {
+      locale: order.locale,
+    }, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.CREATED) {
+          resolve({
+            order: response.data.order,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Send Order Email ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
       }); 
   })
 };

@@ -1,28 +1,30 @@
 // import { useRouter } from 'next/router'
 
 import { FormFieldTypes } from '@core/constants/forms';
-import type { Order, OrderFailedSendEmail } from '@core/types/orders';
+import { OrderEmailTypes } from '@core/constants/admin';
+import type { Order, OrderSendEmail } from '@core/types/orders';
 
 import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useOrders from '@lib/hooks/useOrders';
 import BaseForm from '@components/forms/BaseForm';
+import { getOrderEmailValue } from '@core/utils/admin';
 
-type SendFailedOrderEmailFormProps = {
+type SendOrderEmailFormProps = {
   onSubmitSuccess?: (order: Order) => void,
   onCancel?: () => void,
 };
 
-const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
+const SendOrderEmailForm = (props: SendOrderEmailFormProps) => {
   const { onSubmitSuccess, onCancel } = props;
 
   // const router = useRouter();
 
-  const { sendFailedOrderEmailFormValidation, orderFieldsInitValues, emailsFieldsInitValues } = useForms();
-  const { sendFailedOrderEmail, errorMsg, successMsg } = useOrders();
+  const { sendOrderEmailFormValidation, orderFieldsInitValues, emailsFieldsInitValues } = useForms();
+  const { sendOrderEmail, errorMsg, successMsg } = useOrders();
 
-  const handleSubmit = async (values: OrderFailedSendEmail) => {
-    sendFailedOrderEmail(values, onSubmitSuccess);
+  const handleSubmit = async (values: OrderSendEmail) => {
+    sendOrderEmail(values, onSubmitSuccess);
   };
 
   const handleCancelBtn = () => {
@@ -36,13 +38,13 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
       initialValues={{
         orderId: orderFieldsInitValues.id,
         locale: emailsFieldsInitValues.locale,
-        currency: orderFieldsInitValues.currency,
-      } as OrderFailedSendEmail}
-      validationSchema={sendFailedOrderEmailFormValidation}
+        emailType: OrderEmailTypes.issued,
+      } as OrderSendEmail}
+      validationSchema={sendOrderEmailFormValidation}
       formFieldGroups={[
         {
           titleTxt: {
-            id: 'forms.sendFailedOrderEmail.title',
+            id: 'forms.sendOrderEmail.title',
           },
           formFields: [
             {
@@ -72,10 +74,17 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
               ],       
             },
             {
-              name: 'currency',
-              type: FormFieldTypes.text,
+              name: 'emailType',
+              type: FormFieldTypes.select,
               required: true,
-              disabled: true,
+              menuItems: Object.keys(OrderEmailTypes).map((key) => {
+                return {
+                  text: {
+                    id: key,
+                  },
+                  value: getOrderEmailValue(key),
+                };
+              }),
             },
           ],
         }
@@ -100,4 +109,4 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
   );
 };
 
-export default SendFailedOrderEmailForm;
+export default SendOrderEmailForm;

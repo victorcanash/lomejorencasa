@@ -1,3 +1,4 @@
+import { OrderEmailTypes } from '@core/constants/admin';
 import type { UserAddress } from '@core/types/user';
 import type { GuestCartCheckItem, GuestCartItem } from '@core/types/cart';
 
@@ -99,6 +100,12 @@ export type OrderFailedCreate = {
   shipping: UserAddress,
   products: GuestCartItem[],
   currency: string,
+};
+
+export type OrderSendEmail = {
+  orderId: number,
+  locale: string,
+  emailType: OrderEmailTypes,
 };
 
 export type OrderFailedSendEmail = {

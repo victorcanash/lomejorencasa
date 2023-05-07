@@ -3,13 +3,14 @@ import { useState, useCallback } from 'react';
 import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
-import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail } from '@core/types/orders';
+import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail, OrderSendEmail } from '@core/types/orders';
 import type { User } from '@core/types/user';
 import { 
   getOrders as getOrdersMW, 
   getOrderByBigbuyId as getOrderByBigbuyIdMW,
   getOrderById as getOrderByIdMW,
   createFailedOrder as createFailedOrderMW,
+  sendOrderEmail as sendOrderEmailMW,
   sendFailedOrderEmail as sendFailedOrderEmailMW,
 } from '@core/utils/orders';
 
@@ -156,7 +157,7 @@ const useOrders = () => {
       });
   }, [intl, onCreateFailedOrderSuccess, setLoading, token]);
 
-  const onSendFailedOrderEmailSuccess = useCallback((
+  const onSendOrderEmailSuccess = useCallback((
     order: Order,
     onSuccess?: (order: Order) => void
   ) => {
@@ -167,6 +168,23 @@ const useOrders = () => {
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.sendOrderEmail' }));
   }, [intl, setLoading]);
 
+  const sendOrderEmail = useCallback(async (
+    order: OrderSendEmail,
+    onSuccess?: (order: Order) => void
+  ) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    await sendOrderEmailMW(token, order)
+      .then((response: { order: Order }) => {
+        onSendOrderEmailSuccess(response.order, onSuccess);
+      }).catch((error) => {
+        const errorMsg = error.message;
+        setErrorMsg(errorMsg);
+        setLoading(false);
+      });
+  }, [onSendOrderEmailSuccess, setLoading, token]);
+
   const sendFailedOrderEmail = useCallback(async (
     order: OrderFailedSendEmail,
     onSuccess?: (order: Order) => void
@@ -176,13 +194,13 @@ const useOrders = () => {
     setSuccessMsg('');
     await sendFailedOrderEmailMW(token, order)
       .then((response: { order: Order }) => {
-        onSendFailedOrderEmailSuccess(response.order, onSuccess);
+        onSendOrderEmailSuccess(response.order, onSuccess);
       }).catch((error) => {
         const errorMsg = error.message;
         setErrorMsg(errorMsg);
         setLoading(false);
       });
-  }, [onSendFailedOrderEmailSuccess, setLoading, token]);
+  }, [onSendOrderEmailSuccess, setLoading, token]);
 
   return {
     errorMsg,
@@ -193,6 +211,7 @@ const useOrders = () => {
     getOrderByBigbuyId,
     getOrderById,
     createFailedOrder,
+    sendOrderEmail,
     sendFailedOrderEmail,
   };
 };

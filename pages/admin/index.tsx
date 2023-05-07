@@ -22,6 +22,7 @@ import CreateProductSection from '@components/admin/sections/CreateProductSectio
 import CreatePackSection from '@components/admin/sections/CreatePackSection';
 import CreateFailedOrderSection from '@components/admin/sections/CreateFailedOrderSection';
 import SendFailedOrderEmailSection from '@components/admin/sections/SendFailedOrderEmailSection';
+import SendOrderEmailSection from '@components/admin/sections/SendOrderEmailSection';
 
 const Admin: NextPage = () => {
   const page = usePage();
@@ -61,6 +62,8 @@ const Admin: NextPage = () => {
       return (<CreateFailedOrderSection />);
     } else if (section == AdminSections.sendFailedOrderEmail) {
       return (<SendFailedOrderEmailSection />);
+    } else if (section === AdminSections.sendOrderEmail) {
+      return (<SendOrderEmailSection />);
     }
     return undefined;
   };
