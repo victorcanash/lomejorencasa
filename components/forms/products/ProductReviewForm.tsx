@@ -32,6 +32,7 @@ type ProductReviewFormProps = {
   createProductReview: (productReview: CreateProductReview, uploadImgs: UploadFile[], onSuccess?: (() => void) | undefined) => Promise<void>,
   setExpanded: Dispatch<SetStateAction<boolean>>,
   expanded: boolean,
+  emailQuery?: string,
 };
 
 const ProductReviewForm = (props: ProductReviewFormProps) => {
@@ -41,6 +42,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     createProductReview,
     setExpanded,
     expanded,
+    emailQuery,
   } = props;
 
   const { getAllLandingsProducts } = useProductsContext();
@@ -94,7 +96,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
             rating: reviewFieldsInitValues.rating,
             title: reviewFieldsInitValues.title,
             description: reviewFieldsInitValues.description,
-            email: user.email || userFieldsInitValues.email,
+            email: user.email || emailQuery || userFieldsInitValues.email,
             publicName: (user as User)?.firstName ? getUserFullName(user as User) : reviewFieldsInitValues.publicName,
           } as CreateProductReview}
           validationSchema={productReviewFormValidation}

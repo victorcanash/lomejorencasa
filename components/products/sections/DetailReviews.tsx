@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -46,6 +46,21 @@ const DetailReviews = () => {
 
   const [expandedForm, setExpandedForm] = useState(false);
 
+  const getReviewsQueries = useCallback(() => {
+    const { email } = router.query;
+    if (email && typeof email === 'string') {
+      return { email };
+    }
+    return undefined;
+  }, [router.query]);
+
+  useEffect(() => {
+    const queries = getReviewsQueries();
+    if (queries) {
+      setExpandedForm(true);
+    }
+  }, [getReviewsQueries]);
+
   return (
     <>
       { initialized &&
@@ -72,6 +87,7 @@ const DetailReviews = () => {
                   createProductReview={createProductReview}
                   setExpanded={setExpandedForm}
                   expanded={expandedForm}
+                  emailQuery={getReviewsQueries()?.email}
                 />
               </Box>
             </Box>
