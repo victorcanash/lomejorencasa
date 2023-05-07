@@ -31,7 +31,8 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
   const intl = useIntl();
 
   const { 
-    createFailedOrderFormValidation, 
+    createFailedOrderFormValidation,
+    emailsFieldsInitValues,
     orderFieldsInitValues,
     userFieldsInitValues,
     addressFieldsInitValues,
@@ -73,7 +74,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
       <BaseForm
         maxWidth={maxWidth}
         initialValues={{
-          locale: orderFieldsInitValues.locale,
+          locale: emailsFieldsInitValues.locale,
           paypalTransactionId: orderFieldsInitValues.paypalTransactionId,
           checkoutEmail: userFieldsInitValues.email,
           notes: orderFieldsInitValues.notes,
