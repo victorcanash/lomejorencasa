@@ -674,6 +674,7 @@
   "forms.cardHolderName": "Nombre del titular",
   "forms.cvv": "CVV",
   "forms.cardExpiry": "Fecha de expiración",
+  "forms.currency": "Moneda",
   "forms.selectProduct.content": "{name}",
   "forms.selectInventory.bags.1": "XS (22cm x 21cm)",
   "forms.selectInventory.bags.2": "S (26cm x 28cm)",
