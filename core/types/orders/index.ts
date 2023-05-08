@@ -103,7 +103,7 @@ export type OrderFailedCreate = {
 };
 
 export type OrderSendEmail = {
-  orderId: number,
+  bigbuyId: string,
   locale: string,
   emailType: OrderEmailTypes,
 };

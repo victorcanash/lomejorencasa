@@ -456,7 +456,7 @@ const useForms = () => {
   });
 
   const sendOrderEmailFormValidation = Yup.object().shape({
-    orderId: orderFieldsValidation.id,
+    bigbuyId: orderFieldsValidation.bigbuyId,
     locale: emailsFieldsValidation.locale,
     emailType: emailsFieldsValidation.emailType,
   });

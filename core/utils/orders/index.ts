@@ -138,8 +138,9 @@ export const sendOrderEmail = (token: string, order: OrderSendEmail) => {
       headers: getAuthHeaders(token),
       timeout: 20000,
     };
-    axios.post(`/orders/send-email/${order.emailType === OrderEmailTypes.issued ? 'issued' : 'review'}/${order.orderId}`, {
+    axios.post(`/orders/send-email/${order.emailType === OrderEmailTypes.issued ? 'issued' : 'review'}`, {
       locale: order.locale,
+      bigbuyId: order.bigbuyId,
     }, options)
       .then(async (response: AxiosResponse) => {
         if (response.status === StatusCodes.CREATED) {

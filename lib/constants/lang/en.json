@@ -676,6 +676,7 @@
   "forms.packId": "ID del pack",
   "forms.activeDiscountId": "ID del descuento activo",
   "forms.orderId": "Número de pedido",
+  "forms.bigbuyId": "Número de pedido de Bigbuy",
   "forms.braintreeTransactionId": "ID de BraintreeTransaction",
   "forms.paypalTransactionId": "ID de PaypalTransaction",
   "forms.cardNumber": "Número de tarjeta",

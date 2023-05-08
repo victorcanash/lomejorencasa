@@ -36,7 +36,7 @@ const SendOrderEmailForm = (props: SendOrderEmailFormProps) => {
   return (
     <BaseForm 
       initialValues={{
-        orderId: orderFieldsInitValues.id,
+        bigbuyId: orderFieldsInitValues.bigbuyId,
         locale: emailsFieldsInitValues.locale,
         emailType: OrderEmailTypes.issued,
       } as OrderSendEmail}
@@ -48,8 +48,8 @@ const SendOrderEmailForm = (props: SendOrderEmailFormProps) => {
           },
           formFields: [
             {
-              name: 'orderId',
-              type: FormFieldTypes.numeric,
+              name: 'bigbuyId',
+              type: FormFieldTypes.text,
               required: true, 
             },
             {
