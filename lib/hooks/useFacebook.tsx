@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import type { FacebookEvent } from '@core/types/facebook';
 import type { ProductInventory, ProductPack } from '@core/types/products';
@@ -30,6 +30,20 @@ const useFacebook = () => {
     });
     return products;
   }, [cart.items]);
+
+  const sendViewContentEvent = useCallback(() => {
+    const fbEvent = {
+      eventName: 'ViewContent',
+      eventId: undefined,
+      emails: user.email ? [user.email] : undefined,
+      phones: undefined,
+      products: cartProducts,
+      value: totalPrice,
+      currency: currency,
+    } as FacebookEvent;
+
+    sendFBEvent(fbEvent);
+  }, [cartProducts, currency, totalPrice, user.email]);
 
   const sendAddToCartEvent = (productItem: ProductInventory | ProductPack, quantity: number) => {
     const fbEvent = {
@@ -132,6 +146,7 @@ const useFacebook = () => {
   };
 
   return {
+    sendViewContentEvent,
     sendAddToCartEvent,
     sendAddPaymentInfoEvent,
     sendInitiateCheckoutEvent,
