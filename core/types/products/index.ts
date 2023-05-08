@@ -92,6 +92,7 @@ export type ProductPack = {
   image?: string,
   rating: string,
   reviewsCount: number,
+  metaId?: string,
   originalPrice: number,
   discountPercent: number,
   inventories: ProductInventory[],
@@ -107,6 +108,7 @@ export type ProductInventory = {
   price: number,
   quantity: number,
   image?: string,
+  metaId?: string,
   realPrice: number,
   bigbuy: {
     id: string,

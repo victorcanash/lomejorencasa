@@ -5,6 +5,7 @@ const nextConfig = {
     domains: [
       'localhost', 
       'ecommerce-vc-api-eqhxa.ondigitalocean.app',
+      'www.facebook.com',
     ],
   },
   i18n: {

@@ -7,6 +7,7 @@ import {
   useCallback,
   useEffect,
 } from 'react';
+import { useRouter } from 'next/router';
 
 import NP from 'number-precision'
 import GoogleAnalythics from '@bradgarropy/next-google-analytics';
@@ -16,6 +17,7 @@ import envConfig from '@core/config/env.config';
 import { Storages } from '@core/constants/storage';
 import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
+import { sendPageViewFBEvent } from '@core/utils/facebook';
 
 import CookiesBanner from '@components/banners/CookiesBanner';
 
@@ -54,9 +56,10 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
+
   const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
-
   const [openCookiesBanner, setOpenCookiesBanner] = useState(false);
   const [acceptedCookies, setAcceptedCookies] = useState(false);
 
@@ -81,6 +84,18 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       });
     }
   }, [acceptedCookies]);
+
+  useEffect(() => {
+    // This pageview only triggers the first time (it's important for Pixel to have real information)
+    sendPageViewFBEvent();
+    const handleRouteChange = () => {
+      sendPageViewFBEvent();
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   useEffect(() => {
     NP.enableBoundaryChecking(false);

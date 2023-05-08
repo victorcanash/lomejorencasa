@@ -9,12 +9,11 @@ import 'styles/globals.css';
 
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-// import { useRouter } from 'next/router';
+import Script from 'next/script'
 
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { SnackbarProvider } from 'notistack';
-import { FBPixelScript, FBPixelProvider } from '@rivercode/facebook-conversion-api-nextjs/components';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
@@ -24,6 +23,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { config } from '@fortawesome/fontawesome-svg-core';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
+import envConfig from '@core/config/env.config';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { messages } from '@lib/constants/lang';
@@ -56,8 +56,6 @@ function MyApp(props: MyAppProps) {
     pageProps 
   } = props;
 
-  // const { locale } = useRouter();
-
   return (
     <>
       <DefaultSeo
@@ -69,38 +67,54 @@ function MyApp(props: MyAppProps) {
         <meta name="facebook-domain-verification" content="ogx6uggctpg463pxxngpttfinfajqg" />
       </Head>
 
-      <FBPixelScript />
-      <FBPixelProvider>
-        <IntlProvider locale={locale} messages={messages[locale]}>
-          <CacheProvider value={emotionCache}>
-            <SnackbarProvider maxSnack={snackbarConfig.maxSnack} autoHideDuration={snackbarConfig.durations.default}>     
-                <ThemeProvider theme={theme}>
-                  <CssBaseline />
-                  <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
-                      
-                    <ErrorBoundary>
-                      <AppProvider>
-                        <SearchProvider>
-                          <ProductsProvider>
-                            <CartProvider>
-                              <AuthProvider>
-                                <MainLayout>
-                                  <Component {...pageProps} />
-                                </MainLayout> 
-                              </AuthProvider>
-                            </CartProvider>
-                          </ProductsProvider>          
-                        </SearchProvider>
-                      </AppProvider>
-                    </ErrorBoundary>
+      {/* Global Site Code Pixel - Facebook Pixel */}
+      <Script
+        id="fb-pixel"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', ${envConfig.NEXT_PUBLIC_FB_PIXEL_ID});
+          `,
+        }}
+      />
 
-                  </LocalizationProvider>    
-                </ThemeProvider>
+      <IntlProvider locale={locale} messages={messages[locale]}>
+        <CacheProvider value={emotionCache}>
+          <SnackbarProvider maxSnack={snackbarConfig.maxSnack} autoHideDuration={snackbarConfig.durations.default}>     
+              <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
+                    
+                  <ErrorBoundary>
+                    <AppProvider>
+                      <SearchProvider>
+                        <ProductsProvider>
+                          <CartProvider>
+                            <AuthProvider>
+                              <MainLayout>
+                                <Component {...pageProps} />
+                              </MainLayout> 
+                            </AuthProvider>
+                          </CartProvider>
+                        </ProductsProvider>          
+                      </SearchProvider>
+                    </AppProvider>
+                  </ErrorBoundary>
 
-            </SnackbarProvider>
-          </CacheProvider>
-        </IntlProvider>
-      </FBPixelProvider>
+                </LocalizationProvider>    
+              </ThemeProvider>
+
+          </SnackbarProvider>
+        </CacheProvider>
+      </IntlProvider>
     </>
   );
 };

@@ -51,8 +51,8 @@ const usePayments = () => {
   const [{ isResolved, options }, _dispatch] = usePayPalScriptReducer();
 
   const {
-    sendAddPaymentInfoEvent,
     sendInitiateCheckoutEvent,
+    sendAddPaymentInfoEvent,
     sendPurchaseEvent,
   } = useFacebook();
 
@@ -199,7 +199,7 @@ const usePayments = () => {
         return;
       }
       const { newCheckoutData } = getNewData();
-      sendAddPaymentInfoEvent(newCheckoutData.checkoutEmail || '');
+      sendInitiateCheckoutEvent();
       await createPTransactionMW(
           isLogged() ? token : '', 
           intl.locale,
@@ -215,7 +215,7 @@ const usePayments = () => {
             reject(new Error(errorMsg))
           });
     });
-  }, [cart, currency, getNewData, intl.locale, isLogged, sendAddPaymentInfoEvent, setLoading, token]);
+  }, [cart, currency, getNewData, intl.locale, isLogged, sendInitiateCheckoutEvent, setLoading, token]);
 
   const onSuccessPaypalTransaction = (captureCheckoutData: CheckoutData) => {
     capturePaypalTransaction(captureCheckoutData);
@@ -317,7 +317,7 @@ const usePayments = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendInitiateCheckoutEvent(captureCheckoutData.checkoutEmail || '');
+    sendAddPaymentInfoEvent();
     await capturePTransactionMW(
       isLogged() ? token : '', 
       intl.locale,
@@ -331,9 +331,9 @@ const usePayments = () => {
     });
   };
 
-  const onCompleteTransaction = (captureCheckoutData: CheckoutData) => {
+  const onCompleteTransaction = (_captureCheckoutData: CheckoutData) => {
     router.push(pages.home.path);
-    sendPurchaseEvent(captureCheckoutData.checkoutEmail || '');
+    sendPurchaseEvent();
     cleanCart();
     setSuccessMsg(intl.formatMessage({ id: 'checkout.successes.message'}));
     enqueueSnackbar(intl.formatMessage(

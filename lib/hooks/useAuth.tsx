@@ -55,10 +55,10 @@ const useAuth = () => {
   const register = async (authRegister: AuthRegister, onSuccess?: (email: string) => void) => {
     setErrorMsg('');
     setLoading(true);
-    sendCompleteRegistrationEvent(authRegister.email);
     registerUser(intl.locale, authRegister).then(() => {
       onRegisterSuccess(authRegister, onSuccess);
     }).catch((error: Error) => {
+      sendCompleteRegistrationEvent(false);
       let errorMsg = error.message;
       if (errorMsg.includes('Unique validation failure with the email')) {
         errorMsg = intl.formatMessage({ id: 'register.errors.email' });
@@ -76,6 +76,7 @@ const useAuth = () => {
       onSuccess(email);
     }
     setLoading(false);*/
+    sendCompleteRegistrationEvent(true);
     await login({ email: authRegister.email, password: authRegister.password, remember: true})
   };
 

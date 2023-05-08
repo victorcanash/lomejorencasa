@@ -14,7 +14,6 @@ const envConfig = {
   NEXT_PUBLIC_GOOGLE_AM_ID: process.env.NEXT_PUBLIC_GOOGLE_AM_ID || '',
   NEXT_PUBLIC_GOOGLE_GTM_ID: process.env.NEXT_PUBLIC_GOOGLE_GTM_ID || '',
   NEXT_PUBLIC_FB_PIXEL_ID: process.env.NEXT_PUBLIC_FB_PIXEL_ID || '',
-  NEXT_PUBLIC_FB_DEBUG: process.env.NEXT_PUBLIC_FB_DEBUG || 'true',
 };
 
 export default envConfig;

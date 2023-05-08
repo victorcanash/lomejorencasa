@@ -7,7 +7,6 @@ import { scrollToSection } from '@core/utils/navigation';
 import { pages } from '@lib/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useFacebook from '@lib/hooks/useFacebook';
 
 const usePage = (setLoaded = true) => {
   const { initialized, setLoading } = useAppContext();
@@ -16,8 +15,6 @@ const usePage = (setLoaded = true) => {
   const [checked, setChecked] = useState(false);
 
   const router = useRouter();
-
-  const { sendViewContentEvent } = useFacebook();
 
   const onCheckSuccess = useCallback(() => {
     if (setLoaded) {
@@ -62,12 +59,6 @@ const usePage = (setLoaded = true) => {
       window.scrollTo(0, 0);
     }
   }, []);
-
-  useEffect(() => {
-    if (checked) {
-      sendViewContentEvent();
-    }
-  }, [checked, sendViewContentEvent]);
 
   return {
     checked,

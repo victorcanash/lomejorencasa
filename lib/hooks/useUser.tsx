@@ -65,7 +65,7 @@ const useUser = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    sendContactEvent(userContact.email);
+    sendContactEvent();
     sendUserContactEmailMW(
       isLogged() ? token : '',
       intl.locale,
