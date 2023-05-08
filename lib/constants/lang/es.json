@@ -15,6 +15,11 @@
   "banners.cookies.acceptBtn": "Aceptar todas las cookies",
   "banners.cookies.refuseBtn": "Rechazar cookies no necesarias",
 
+  "banners.register.title": "Obtén un descuento en tu primera compra",
+  "banners.register.content": "¡Regístrate y obtén un <activeTxt>10% de descuento</activeTxt> en tu primera compra!",
+  "banners.register.registerBtn": "Regístrate ahora",
+  "banners.register.laterBtn": "En otro momento",
+
   "banners.maintenance": "Actualmente en mantenimiento",
 
   "header.banners.shipping": "Envío gratuito dentro de la península (24-48h)",
