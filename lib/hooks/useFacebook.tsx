@@ -105,7 +105,7 @@ const useFacebook = () => {
   
   const sendCompleteRegistrationEvent = (email: string) => {
     const fbEvent = {
-      eventName: 'Purchase',
+      eventName: 'CompleteRegistration',
       eventId: undefined,
       emails: [email],
       phones: undefined,
