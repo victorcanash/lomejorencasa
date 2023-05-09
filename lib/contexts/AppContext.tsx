@@ -4,34 +4,18 @@ import {
   SetStateAction,
   useContext,
   useState,
-  useCallback,
   useEffect,
 } from 'react';
-import { useRouter } from 'next/router';
 
 import NP from 'number-precision'
-import GoogleAnalythics from '@bradgarropy/next-google-analytics';
-import TagManager from 'react-gtm-module';
-
-import envConfig from '@core/config/env.config';
-import { Storages } from '@core/constants/storage';
-import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
-import { getStorageItem, setStorageItem } from '@core/utils/storage';
-import { sendPageViewFBEvent } from '@core/utils/facebook';
-
-import CookiesBanner from '@components/banners/CookiesBanner';
 
 type ContextType = {
   loading: boolean,
   setLoading: Dispatch<SetStateAction<boolean>>,
   initialized: boolean,
   setInitialized: Dispatch<SetStateAction<boolean>>,
-  CookiesBanner: () => JSX.Element,
-  GoogleAnalythics: () => JSX.Element,
   acceptedCookies: boolean,
-  openCookiesBanner: boolean,
-  refuseCookies: () => void,
-  acceptCookies: () => void
+  setAcceptedCookies: Dispatch<SetStateAction<boolean>>,
 };
 
 export const AppContext = createContext<ContextType>({
@@ -39,12 +23,8 @@ export const AppContext = createContext<ContextType>({
   setLoading: () => {},
   initialized: false,
   setInitialized: () => {},
-  CookiesBanner: () => <></>,
-  GoogleAnalythics: () => <></>,
   acceptedCookies: false,
-  openCookiesBanner: false,
-  refuseCookies: () => {},
-  acceptCookies: () => {},
+  setAcceptedCookies: () => {},
 });
 
 export const useAppContext = () => {
@@ -56,86 +36,13 @@ export const useAppContext = () => {
 };
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
-
   const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
-  const [openCookiesBanner, setOpenCookiesBanner] = useState(false);
   const [acceptedCookies, setAcceptedCookies] = useState(false);
-
-  const handleCookiesBanner = () => {
-    setOpenCookiesBanner(!openCookiesBanner);
-  };
-
-  const refuseCookies = useCallback(() => {
-    setAcceptedCookies(false);
-    setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.refused);
-  }, []);
-
-  const acceptCookies = useCallback(() => {
-    setAcceptedCookies(true);
-    setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.accepted);
-  }, []);
-
-  useEffect(() => {
-    if (acceptedCookies) {
-      TagManager.initialize({ 
-        gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
-      });
-    }
-  }, [acceptedCookies]);
-
-  useEffect(() => {
-    // This pageview only triggers the first time (it's important for Pixel to have real information)
-    sendPageViewFBEvent();
-    const handleRouteChange = () => {
-      sendPageViewFBEvent();
-    };
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
 
   useEffect(() => {
     NP.enableBoundaryChecking(false);
-
-    const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey)
-    if (!cookiesConsentValue) {
-      setOpenCookiesBanner(true);
-      setAcceptedCookies(false);
-    } else {
-      if (cookiesConsentValue === CookiesConsentValues.accepted) {
-        setOpenCookiesBanner(false);
-        setAcceptedCookies(true);
-      } else if (cookiesConsentValue === CookiesConsentValues.refused) {
-        setOpenCookiesBanner(false);
-        setAcceptedCookies(false);
-      } else {
-        setOpenCookiesBanner(true);
-        setAcceptedCookies(false);
-      }
-    }
   }, []);
-
-  const CookiesBannerComponent = () => (
-    <CookiesBanner
-      open={openCookiesBanner}
-      handleBanner={handleCookiesBanner}
-      onRefuse={refuseCookies}
-      onAccept={acceptCookies}
-    />
-  );
-
-  const GoogleAnalythicsComponent = () => (
-    <>
-      { acceptedCookies &&
-        <GoogleAnalythics
-          measurementId={envConfig.NEXT_PUBLIC_GOOGLE_AM_ID}
-        />
-      }
-    </>
-  );
 
   return (
     <AppContext.Provider
@@ -144,12 +51,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading,
         initialized,
         setInitialized,
-        CookiesBanner: CookiesBannerComponent,
-        GoogleAnalythics: GoogleAnalythicsComponent,
         acceptedCookies,
-        openCookiesBanner,
-        refuseCookies,
-        acceptCookies,
+        setAcceptedCookies,
       }}
     >
       {children}

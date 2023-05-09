@@ -20,7 +20,7 @@ const useRegisterBanner = () => {
     setOpen(!open);
   };
 
-  const onClickRegister = () => {
+  const goToRegisterPage = () => {
     router.push(pages.register.path);
   };
 
@@ -37,7 +37,7 @@ const useRegisterBanner = () => {
     <RegisterBanner
       open={open}
       handleBanner={handleBanner}
-      onClickRegister={onClickRegister}
+      onClickRegister={goToRegisterPage}
     />
   );
 
