@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import Image from 'next/image';
@@ -32,10 +34,9 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
           <noscript>
-            <Image
+            <img
               height="1"
               width="1"
-              alt=""
               style={{ display: 'none' }}
               src={`https://www.facebook.com/tr?id=${envConfig.NEXT_PUBLIC_FB_PIXEL_ID}&ev=PageView&noscript=1`}
             />
