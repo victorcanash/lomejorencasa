@@ -14,6 +14,7 @@ import { Protections } from '@core/constants/auth';
 import type { PaypalCredentials } from '@core/types/paypal';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
+import { reinitFBEvents } from '@core/utils/facebook';
 
 import { pages, originRedirects } from '@lib/constants/navigation';
 
@@ -23,7 +24,7 @@ type ContextType = {
   paypal?: PaypalCredentials,
   setPaypal: Dispatch<SetStateAction<PaypalCredentials | undefined>>,
   user: User | GuestUser,
-  setUser: Dispatch<SetStateAction<User | GuestUser>>,
+  setUser: (user: User | GuestUser, reloadFBEvents?: boolean) => void
   currency: string,
   checkoutData: CheckoutData,
   setCheckoutData: Dispatch<SetStateAction<CheckoutData>>,
@@ -75,6 +76,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currency, _setCurrency] = useState('EUR');
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({} as CheckoutData);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
+
+  const updateUser = (user: User | GuestUser, reloadFBEvents = true) => {
+    if (reloadFBEvents) {
+      reinitFBEvents(user);
+    }
+    setUser(user);
+  };
 
   const removeUser = useCallback(() => {
     setUser({
@@ -172,7 +180,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         paypal,
         setPaypal,
         user,
-        setUser,
+        setUser: updateUser,
         currency,
         checkoutData,
         setCheckoutData,

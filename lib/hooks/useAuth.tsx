@@ -194,7 +194,7 @@ const useAuth = () => {
     setSuccessMsg('');
     resetUserPsw(updateToken, authResetPassword).then((response: {token: string, user: User}) => {
       setToken(response.token);
-      setUser(response.user);
+      setUser(response.user, false);
       setLoading(false);
       setSuccessMsg(intl.formatMessage({ id: 'reset.successes.default' }));
     }).catch((error: Error) => {

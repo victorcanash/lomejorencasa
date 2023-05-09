@@ -13,6 +13,7 @@ import NP from 'number-precision'
 import { Storages } from '@core/constants/storage';
 import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
+import { consentFBEvents } from '@core/utils/facebook';
 
 type ContextType = {
   loading: boolean,
@@ -51,12 +52,14 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [openCookiesBanner, setOpenCookiesBanner] = useState(true);
 
   const refuseCookies = useCallback(() => {
+    consentFBEvents(false);
     setOpenCookiesBanner(false);
     setAcceptedCookies(false);
     setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.refused);
   }, [setAcceptedCookies]);
 
   const acceptCookies = useCallback(() => {
+    consentFBEvents(true);
     setOpenCookiesBanner(false);
     setAcceptedCookies(true);
     setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.accepted);
@@ -73,6 +76,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       if (cookiesConsentValue === CookiesConsentValues.accepted) {
         setOpenCookiesBanner(false);
         setAcceptedCookies(true);
+        consentFBEvents(true);
       } else if (cookiesConsentValue === CookiesConsentValues.refused) {
         setOpenCookiesBanner(false);
         setAcceptedCookies(false);

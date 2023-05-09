@@ -22,6 +22,7 @@ import {
 } from '@core/utils/payments';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getCountryCode } from '@core/utils/addresses';
+import { reinitFBEvents } from '@core/utils/facebook';
 
 import { pages } from '@lib/constants/navigation';
 import { paypalHostedFieldsStyle } from '@lib/constants/themes/elements';
@@ -115,7 +116,7 @@ const usePayments = () => {
       remember: rememberFieldValue,
     };
     setCheckoutData(captureCheckoutData);
-    setUser(newUser);
+    setUser(newUser, false);
     onSuccessPaypalTransaction(captureCheckoutData);
   };
 
@@ -160,7 +161,7 @@ const usePayments = () => {
           remember: rememberFieldValue,
         };
         setCheckoutData(captureCheckoutData);
-        setUser(newUser);
+        setUser(newUser, false);
         if (response.liabilityShift && response.liabilityShift !== 'POSSIBLE') {
           onErrorPaypalTransaction(new Error('3dSecure'));
           return;
@@ -199,6 +200,7 @@ const usePayments = () => {
         return;
       }
       const { newCheckoutData } = getNewData();
+      reinitFBEvents(newCheckoutData);
       sendInitiateCheckoutEvent();
       await createPTransactionMW(
           isLogged() ? token : '', 
