@@ -11,11 +11,11 @@ import { sendPageViewFBEvent } from '@core/utils/facebook';
 
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useCookiesBanner from '@lib/hooks/useCookiesBanner';
 import useRegisterBanner from '@lib/hooks/useRegisterBanner';
 import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
+import CookiesBanner from '@components/banners/CookiesBanner';
 import MaintenanceBanner from '@components/banners/MaintenanceBanner';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
@@ -24,7 +24,6 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
 
   const router = useRouter();
 
-  const { CookiesBanner } = useCookiesBanner();
   const { RegisterBanner } = useRegisterBanner();
 
   useEffect(() => {

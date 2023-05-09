@@ -10,30 +10,17 @@ import Box from '@mui/material/Box';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
+import { useAppContext } from '@lib/contexts/AppContext';
 
-type CookiesBannerProps = {
-  open: boolean,
-  handleBanner: () => void,
-  onRefuse: () => void,
-  onAccept: () => void,
-};
-
-const CookiesBanner = (props: CookiesBannerProps) => {
-  const { 
-    open,
-    handleBanner,
-    onRefuse,
-    onAccept,
-  } = props;
+const CookiesBanner = () => {
+  const { openCookiesBanner, acceptCookies, refuseCookies } = useAppContext();
 
   const handleClickRefuseBtn = () => {
-    handleBanner();
-    onRefuse();
+    refuseCookies();
   };
 
   const handleClickAcceptBtn = () => {
-    handleBanner();
-    onAccept();
+    acceptCookies();
   };
 
   return (
@@ -48,7 +35,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
         display: 'inline-table',
         padding: '8px 15px 8px 15px',
       }}
-      open={open}
+      open={openCookiesBanner}
     >
       <Box 
         sx={{ 
