@@ -5,6 +5,7 @@ import type { Landing, ProductInventory, ProductPack } from '@core/types/product
 import { sendFBEvent } from '@core/utils/facebook';
 import { getProductPriceData } from '@core/utils/products';
 
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
@@ -12,6 +13,7 @@ const contentCategory = 'Camping Cookware';
 const contentType = 'product';
 
 const useFacebook = () => {
+  const { acceptedCookies } = useAppContext();
   const { currency } = useAuthContext();
   const { cart, totalPrice, totalQuantity } = useCartContext();
 
@@ -47,6 +49,10 @@ const useFacebook = () => {
   }, []);*/
 
   const sendViewContentEvent = useCallback((_landing: Landing | undefined, selectedItem: ProductInventory | ProductPack) => {
+    if (!acceptedCookies) {
+      return;
+    }
+
     const data = {
       content_category: contentCategory,
       content_type: contentType,
@@ -59,9 +65,13 @@ const useFacebook = () => {
     } as FacebookEvent;
 
     sendFBEvent('ViewContent', data);
-  }, [currency]);
+  }, [acceptedCookies, currency]);
 
   const sendAddToCartEvent = useCallback((item: ProductInventory | ProductPack, quantity: number) => {
+    if (!acceptedCookies) {
+      return;
+    }
+
     const data = {
       content_category: contentCategory,
       content_type: contentType,
@@ -75,9 +85,13 @@ const useFacebook = () => {
     } as FacebookEvent;
   
     sendFBEvent('AddToCart', data);
-  }, [currency]);
+  }, [acceptedCookies, currency]);
 
   const sendInitiateCheckoutEvent = useCallback(() => {
+    if (!acceptedCookies) {
+      return;
+    }
+
     const data = {
       content_category: contentCategory,
       content_type: contentType,
@@ -88,9 +102,13 @@ const useFacebook = () => {
     } as FacebookEvent;
 
     sendFBEvent('InitiateCheckout', data);
-  }, [cartContents, currency, totalPrice, totalQuantity]);
+  }, [acceptedCookies, cartContents, currency, totalPrice, totalQuantity]);
 
   const sendAddPaymentInfoEvent = useCallback(() => {
+    if (!acceptedCookies) {
+      return;
+    }
+
     const data = {
       content_category: contentCategory,
       content_type: contentType,
@@ -100,9 +118,13 @@ const useFacebook = () => {
     } as FacebookEvent;
 
     sendFBEvent('AddPaymentInfo', data);
-  }, [cartContents, currency, totalPrice]);
+  }, [acceptedCookies, cartContents, currency, totalPrice]);
 
   const sendPurchaseEvent = useCallback(() => {
+    if (!acceptedCookies) {
+      return;
+    }
+
     let contentName: string | undefined;
     if (cart.items.length > 0) {
       contentName = cart.items[0].inventory ?
@@ -119,20 +141,28 @@ const useFacebook = () => {
     } as FacebookEvent;
 
     sendFBEvent('Purchase', data);
-  }, [cart.items, cartContents, currency, totalPrice, totalQuantity]);
+  }, [acceptedCookies, cart.items, cartContents, currency, totalPrice, totalQuantity]);
   
   const sendCompleteRegistrationEvent = useCallback((success: boolean) => {
+    if (!acceptedCookies) {
+      return;
+    }
+
     const data = {
       currency: currency,
       status: success,
     } as FacebookEvent;
 
     sendFBEvent('CompleteRegistration', data);
-  }, [currency]);
+  }, [acceptedCookies, currency]);
 
   const sendContactEvent = useCallback(() => {
+    if (!acceptedCookies) {
+      return;
+    }
+
     sendFBEvent('Contact');
-  }, []);
+  }, [acceptedCookies]);
 
   return {
     sendViewContentEvent,
