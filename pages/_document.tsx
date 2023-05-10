@@ -2,7 +2,6 @@
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Document, { Html, Head, Main, NextScript } from 'next/document';
-import Image from 'next/image';
 
 import createEmotionServer from '@emotion/server/create-instance';
 
@@ -33,12 +32,22 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/icon?family=Material+Icons"
           />
+          {/* Facebook Pixel */}
           <noscript>
             <img
               height="1"
               width="1"
               style={{ display: 'none' }}
               src={`https://www.facebook.com/tr?id=${envConfig.NEXT_PUBLIC_FB_PIXEL_ID}&ev=PageView&noscript=1`}
+            />
+          </noscript>
+          {/* Google Tag Manager */}
+          <noscript>
+            <iframe
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+              src={`https://www.googletagmanager.com/ns.html?id=${envConfig.NEXT_PUBLIC_GTM_ID}`}
             />
           </noscript>
           {(this.props as any).emotionStyleTags}

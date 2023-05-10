@@ -42,7 +42,7 @@ export const consentFBEvents = (consent: boolean) => {
 };
 
 export const sendPageViewFBEvent = () => {
-  window.fbq('track', 'PageView')
+  window.fbq('track', 'PageView');
 };
 
 export const sendFBEvent = (name: string, data?: FacebookEvent, id?: string) => {

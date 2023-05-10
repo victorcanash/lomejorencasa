@@ -28,6 +28,7 @@ import { Storages } from '@core/constants/storage';
 import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
 import { getStorageItem } from '@core/utils/storage';
 import { consentFBEvents } from '@core/utils/facebook';
+import { consentGTMEvents } from '@core/utils/gtm';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { messages } from '@lib/constants/lang';
@@ -69,6 +70,15 @@ function MyApp(props: MyAppProps) {
     }
   };
 
+  const onReadyGTM = () => {
+    const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey);
+    if (cookiesConsentValue === CookiesConsentValues.accepted) {
+      setTimeout(() => {
+        consentGTMEvents(true);
+      }, 1000);
+    }
+  };
+
   return (
     <>
       <DefaultSeo
@@ -100,6 +110,37 @@ function MyApp(props: MyAppProps) {
         }}
         onReady={() => {
           onReadyPixelFB();
+        }}
+      />
+      {/* Google Tag Manager - Global base code */}
+      <Script
+        id="gtag-base"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            // Initialize the data layer for Google Tag Manager (this should mandatorily be done before the Privacy Controls and Cookie Solution is loaded)
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            // Default consent mode is "denied" for both ads and analytics as well as the optional types, but delay for 2 seconds until the Privacy Controls and Cookie Solution is loaded
+            gtag("consent", "default", {
+                ad_storage: "denied",
+                analytics_storage: "denied",
+                wait_for_update: 2000 // milliseconds
+            });
+            // Improve ad click measurement quality (optional)
+            gtag('set', 'url_passthrough', true);
+            // Further redact your ads data (optional)
+            gtag("set", "ads_data_redaction", true);
+            // Google Tag Manager
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer', '${envConfig.NEXT_PUBLIC_GTM_ID}');
+          `,
+        }}
+        onReady={() => {
+          onReadyGTM();
         }}
       />
 

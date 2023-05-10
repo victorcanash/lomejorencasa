@@ -3,13 +3,11 @@ import { useRouter } from 'next/router';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-import GoogleAnalythics from '@bradgarropy/next-google-analytics';
-import TagManager from 'react-gtm-module';
 
 import envConfig from '@core/config/env.config';
 import { sendPageViewFBEvent } from '@core/utils/facebook';
+import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
-import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useRegisterBanner from '@lib/hooks/useRegisterBanner';
 import MainComponent from '@components/layouts/MainComponent';
@@ -19,7 +17,6 @@ import CookiesBanner from '@components/banners/CookiesBanner';
 import MaintenanceBanner from '@components/banners/MaintenanceBanner';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
-  const { acceptedCookies } = useAppContext();
   const { paypal, currency } = useAuthContext();
 
   const router = useRouter();
@@ -27,18 +24,11 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
   const { RegisterBanner } = useRegisterBanner();
 
   useEffect(() => {
-    if (acceptedCookies) {
-      TagManager.initialize({ 
-        gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
-      });
-    }
-  }, [acceptedCookies]);
-
-  useEffect(() => {
     // This pageview only triggers the first time (it's important for Pixel to have real information)
     sendPageViewFBEvent();
-    const handleRouteChange = () => {
+    const handleRouteChange = (url: string) => {
       sendPageViewFBEvent();
+      sendPageViewGTMEvent(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
@@ -56,11 +46,6 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
       <CookiesBanner />
       {/*<RegisterBanner />*/}
       <MaintenanceBanner />
-      { acceptedCookies &&
-        <GoogleAnalythics
-          measurementId={envConfig.NEXT_PUBLIC_GOOGLE_AM_ID}
-        />
-      } 
     </>
   );
 

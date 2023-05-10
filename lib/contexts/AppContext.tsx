@@ -14,6 +14,7 @@ import { Storages } from '@core/constants/storage';
 import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
 import { getStorageItem, setStorageItem } from '@core/utils/storage';
 import { consentFBEvents } from '@core/utils/facebook';
+import { consentGTMEvents } from '@core/utils/gtm';
 
 type ContextType = {
   loading: boolean,
@@ -53,6 +54,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refuseCookies = useCallback(() => {
     consentFBEvents(false);
+    consentGTMEvents(false);
     setOpenCookiesBanner(false);
     setAcceptedCookies(false);
     setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.refused);
@@ -60,6 +62,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
 
   const acceptCookies = useCallback(() => {
     consentFBEvents(true);
+    consentGTMEvents(true);
     setOpenCookiesBanner(false);
     setAcceptedCookies(true);
     setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.accepted);
