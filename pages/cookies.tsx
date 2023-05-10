@@ -1,4 +1,4 @@
-import { useState, ChangeEvent, useEffect, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import type { NextPage } from 'next';
 
 import { FormattedMessage } from 'react-intl';
@@ -6,41 +6,15 @@ import { FormattedMessage } from 'react-intl';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
 
 import { PageTypes } from '@core/constants/navigation';
 import Link from '@core/components/Link';
 
-import { useAppContext } from '@lib/contexts/AppContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 
 const Cookies: NextPage = () => {
-  const {
-    acceptedCookies,
-    openCookiesBanner,
-    refuseCookies,
-    acceptCookies,
-  } = useAppContext();
-
   const page = usePage();
-
-  const [acceptedSwitch, setAcceptedSwitch] = useState(acceptedCookies);
-
-  const handleAcceptedSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const checked = event.target.checked;
-    setAcceptedSwitch(checked);
-    if (checked) {
-      acceptCookies();
-    } else {
-      refuseCookies();
-    }
-  };
-
-  useEffect(() => {
-    setAcceptedSwitch(acceptedCookies);
-  }, [acceptedCookies]);
 
   return (
     <>
@@ -138,21 +112,6 @@ const Cookies: NextPage = () => {
         <Typography variant="body1">
           <FormattedMessage id="cookies.refuse.description" />
         </Typography>
-
-        { !openCookiesBanner &&
-          <Stack direction="row" spacing={1} alignItems="center" mt={3}>
-            <Typography variant="body1Head">
-              <FormattedMessage id="cookies.refused" />
-            </Typography>
-            <Switch
-              checked={acceptedSwitch}
-              onChange={handleAcceptedSwitchChange}
-            />
-            <Typography variant="body1Head">
-              <FormattedMessage id="cookies.accepted" />
-            </Typography>
-          </Stack>
-        }
       </Container>
     </>
   );

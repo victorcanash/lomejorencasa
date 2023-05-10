@@ -14,6 +14,7 @@ import Script from 'next/script'
 import { DefaultSeo } from 'next-seo';
 import { IntlProvider } from 'react-intl';
 import { SnackbarProvider } from 'notistack';
+import { getCookie } from 'cookies-next';
 
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { ThemeProvider } from '@mui/material/styles';
@@ -24,9 +25,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
 import envConfig from '@core/config/env.config';
-import { Storages } from '@core/constants/storage';
-import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
-import { getStorageItem } from '@core/utils/storage';
+import { AdConsentKey, AnalyticConsentKey, ConsentKey, ConsentValues } from '@core/constants/cookies';
 import { consentFBEvents } from '@core/utils/facebook';
 import { consentGTMEvents } from '@core/utils/gtm';
 
@@ -62,17 +61,25 @@ function MyApp(props: MyAppProps) {
   } = props;
 
   const onReadyPixelFB = () => {
-    const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey);
-    if (cookiesConsentValue === CookiesConsentValues.accepted) {
+    const consentValue = getCookie(ConsentKey);
+    if (consentValue !== ConsentValues.accepted) {
+      return;
+    }
+    const adConsentValue = getCookie(AdConsentKey);
+    if (adConsentValue === ConsentValues.accepted) {
       setTimeout(() => {
         consentFBEvents(true);
-      }, 1000);
+      }, 3000);
     }
   };
 
   const onReadyGTM = () => {
-    const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey);
-    if (cookiesConsentValue === CookiesConsentValues.accepted) {
+    const consentValue = getCookie(ConsentKey);
+    if (consentValue !== ConsentValues.accepted) {
+      return;
+    }
+    const analyticConsentValue = getCookie(AnalyticConsentKey);
+    if (analyticConsentValue === ConsentValues.accepted) {
       setTimeout(() => {
         consentGTMEvents(true);
       }, 1000);

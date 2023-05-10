@@ -146,5 +146,6 @@ export type ThemeCustomElements = {
       secondary: ThemeElement,
     },
     buyNow: ThemeElement,
+    acceptCookies: ThemeElement,
   },
 };

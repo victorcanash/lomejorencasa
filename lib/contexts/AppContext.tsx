@@ -9,10 +9,18 @@ import {
 } from 'react';
 
 import NP from 'number-precision'
+import { setCookie, getCookie } from 'cookies-next';
 
-import { Storages } from '@core/constants/storage';
-import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
-import { getStorageItem, setStorageItem } from '@core/utils/storage';
+import {
+  ConsentKey,
+  FunctionalConsentKey,
+  AnalyticConsentKey,
+  PerformanceConsentKey,
+  AdConsentKey,
+  WithoutCategoryConsentKey,
+  ConsentValues,
+} from '@core/constants/cookies';
+import type { Consents } from '@core/types/cookies';
 import { consentFBEvents } from '@core/utils/facebook';
 import { consentGTMEvents } from '@core/utils/gtm';
 
@@ -21,10 +29,8 @@ type ContextType = {
   setLoading: Dispatch<SetStateAction<boolean>>,
   initialized: boolean,
   setInitialized: Dispatch<SetStateAction<boolean>>,
-  acceptedCookies: boolean,
   openCookiesBanner: boolean,
-  refuseCookies: () => void,
-  acceptCookies: () => void,
+  setConsentCookies: (consents: Consents) => void,
 };
 
 export const AppContext = createContext<ContextType>({
@@ -32,10 +38,8 @@ export const AppContext = createContext<ContextType>({
   setLoading: () => {},
   initialized: false,
   setInitialized: () => {},
-  acceptedCookies: false,
   openCookiesBanner: false,
-  refuseCookies: () => {},
-  acceptCookies: () => {},
+  setConsentCookies: () => {},
 });
 
 export const useAppContext = () => {
@@ -49,40 +53,45 @@ export const useAppContext = () => {
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [initialized, setInitialized] = useState(false);
-  const [acceptedCookies, setAcceptedCookies] = useState(false);
   const [openCookiesBanner, setOpenCookiesBanner] = useState(true);
 
-  const refuseCookies = useCallback(() => {
-    consentFBEvents(false);
-    consentGTMEvents(false);
+  const setConsentCookies = useCallback((consents: Consents) => {
+    consentFBEvents(consents.ad);
+    consentGTMEvents(consents.analytic);
     setOpenCookiesBanner(false);
-    setAcceptedCookies(false);
-    setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.refused);
-  }, [setAcceptedCookies]);
-
-  const acceptCookies = useCallback(() => {
-    consentFBEvents(true);
-    consentGTMEvents(true);
-    setOpenCookiesBanner(false);
-    setAcceptedCookies(true);
-    setStorageItem(Storages.local, CookiesConsentKey, CookiesConsentValues.accepted);
-  }, [setAcceptedCookies]);
+    setCookie(
+      ConsentKey,
+      ConsentValues.accepted,
+    );
+    setCookie(
+      FunctionalConsentKey,
+      consents.functional ? ConsentValues.accepted : ConsentValues.refused,
+    );
+    setCookie(
+      AnalyticConsentKey,
+      consents.analytic ? ConsentValues.accepted : ConsentValues.refused,
+    );
+    setCookie(
+      PerformanceConsentKey,
+      consents.performance ? ConsentValues.accepted : ConsentValues.refused,
+    );
+    setCookie(
+      AdConsentKey,
+      consents.ad ? ConsentValues.accepted : ConsentValues.refused,
+    );
+    setCookie(
+      WithoutCategoryConsentKey,
+      consents.withoutCategory ? ConsentValues.accepted : ConsentValues.refused,
+    );
+  }, []);
 
   useEffect(() => {
     NP.enableBoundaryChecking(false);
 
-    const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey)
-    if (cookiesConsentValue === CookiesConsentValues.accepted) {
-      setAcceptedCookies(true);
-      setOpenCookiesBanner(false);
-    } else {
-      setAcceptedCookies(false);
-      if (cookiesConsentValue === CookiesConsentValues.refused) {
-        setOpenCookiesBanner(false);
-      } else {
-        setOpenCookiesBanner(true);
-      }
-    }
+    setOpenCookiesBanner(
+      getCookie(ConsentKey) === ConsentValues.accepted ?
+        false : true
+    );
   }, []);
 
   return (
@@ -92,10 +101,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         setLoading,
         initialized,
         setInitialized,
-        acceptedCookies,
         openCookiesBanner,
-        refuseCookies,
-        acceptCookies,
+        setConsentCookies,
       }}
     >
       {children}

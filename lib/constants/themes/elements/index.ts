@@ -751,6 +751,31 @@ export const themeCustomElements: ThemeCustomElements = {
         },
       },
     },
+    acceptCookies: {
+      backgroundColor: {
+        default: colors.background.action.secondary.default,
+        hover: colors.background.action.secondary.hover, 
+      },
+      text: {
+        font: {
+          default: {
+            textAlign: 'center',
+          },
+        },
+        color: {
+          default: colors.text.black,
+          hover: colors.text.black,
+        },
+      },
+      spacing: {
+        default: {
+          padding: {
+            top: 1.5,
+            bottom: 1.5,
+          },
+        },
+      },
+    }
   },
 };
 
