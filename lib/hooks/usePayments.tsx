@@ -200,7 +200,7 @@ const usePayments = () => {
         return;
       }
       const { newCheckoutData } = getNewData();
-      reinitFBEvents(newCheckoutData);
+      reinitFBEvents(newCheckoutData, router.locale);
       sendInitiateCheckoutEvent();
       await createPTransactionMW(
           isLogged() ? token : '', 
@@ -217,7 +217,7 @@ const usePayments = () => {
             reject(new Error(errorMsg))
           });
     });
-  }, [cart, currency, getNewData, intl.locale, isLogged, sendInitiateCheckoutEvent, setLoading, token]);
+  }, [cart, currency, getNewData, intl.locale, isLogged, router.locale, sendInitiateCheckoutEvent, setLoading, token]);
 
   const onSuccessPaypalTransaction = (captureCheckoutData: CheckoutData) => {
     capturePaypalTransaction(captureCheckoutData);

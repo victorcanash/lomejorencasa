@@ -69,20 +69,15 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     NP.enableBoundaryChecking(false);
 
     const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey)
-    if (!cookiesConsentValue) {
-      setOpenCookiesBanner(true);
-      setAcceptedCookies(false);
+    if (cookiesConsentValue === CookiesConsentValues.accepted) {
+      setAcceptedCookies(true);
+      setOpenCookiesBanner(false);
     } else {
-      if (cookiesConsentValue === CookiesConsentValues.accepted) {
+      setAcceptedCookies(false);
+      if (cookiesConsentValue === CookiesConsentValues.refused) {
         setOpenCookiesBanner(false);
-        setAcceptedCookies(true);
-        consentFBEvents(true);
-      } else if (cookiesConsentValue === CookiesConsentValues.refused) {
-        setOpenCookiesBanner(false);
-        setAcceptedCookies(false);
       } else {
         setOpenCookiesBanner(true);
-        setAcceptedCookies(false);
       }
     }
   }, []);

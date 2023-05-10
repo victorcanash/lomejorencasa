@@ -24,6 +24,10 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 
 import createEmotionCache from '@core/cache/createEmotionCache';
 import envConfig from '@core/config/env.config';
+import { Storages } from '@core/constants/storage';
+import { CookiesConsentKey, CookiesConsentValues } from '@core/constants/cookies';
+import { getStorageItem } from '@core/utils/storage';
+import { consentFBEvents } from '@core/utils/facebook';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { messages } from '@lib/constants/lang';
@@ -56,6 +60,15 @@ function MyApp(props: MyAppProps) {
     pageProps 
   } = props;
 
+  const onReadyPixelFB = () => {
+    const cookiesConsentValue = getStorageItem(Storages.local, CookiesConsentKey);
+    if (cookiesConsentValue === CookiesConsentValues.accepted) {
+      setTimeout(() => {
+        consentFBEvents(true);
+      }, 1000);
+    }
+  };
+
   return (
     <>
       <DefaultSeo
@@ -81,8 +94,12 @@ function MyApp(props: MyAppProps) {
             t.src=v;s=b.getElementsByTagName(e)[0];
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('consent', 'revoke');
             fbq('init', ${envConfig.NEXT_PUBLIC_FB_PIXEL_ID});
           `,
+        }}
+        onReady={() => {
+          onReadyPixelFB();
         }}
       />
 

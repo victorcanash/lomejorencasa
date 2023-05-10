@@ -31,17 +31,20 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
       TagManager.initialize({ 
         gtmId: envConfig.NEXT_PUBLIC_GOOGLE_GTM_ID,
       });
-      // This pageview only triggers the first time (it's important for Pixel to have real information)
-      sendPageViewFBEvent();
-      const handleRouteChange = () => {
-        sendPageViewFBEvent();
-      };
-      router.events.on('routeChangeComplete', handleRouteChange);
-      return () => {
-        router.events.off('routeChangeComplete', handleRouteChange);
-      };
     }
-  }, [acceptedCookies, router.events]);
+  }, [acceptedCookies]);
+
+  useEffect(() => {
+    // This pageview only triggers the first time (it's important for Pixel to have real information)
+    sendPageViewFBEvent();
+    const handleRouteChange = () => {
+      sendPageViewFBEvent();
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   const Content = () => (
     <>

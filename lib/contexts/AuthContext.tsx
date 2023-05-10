@@ -79,7 +79,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateUser = (user: User | GuestUser, reloadFBEvents = true) => {
     if (reloadFBEvents) {
-      reinitFBEvents(user);
+      reinitFBEvents(user, router.locale);
     }
     setUser(user);
   };
