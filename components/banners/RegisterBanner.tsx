@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
 import { FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
@@ -11,19 +14,22 @@ import { convertElementToSx } from '@core/utils/themes';
 
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
+import { useAppContext } from '@lib/contexts/AppContext';
+import { useAuthContext } from '@lib/contexts/AuthContext';
+import { pages } from '@lib/constants/navigation';
 
-type RegisterBannerProps = {
-  open: boolean,
-  handleBanner: () => void,
-  onClickRegister: () => void,
-};
+const RegisterBanner = () => {
+  const { initialized } = useAppContext();
+  const { isLogged } = useAuthContext();
 
-const RegisterBanner = (props: RegisterBannerProps) => {
-  const { 
-    open,
-    handleBanner,
-    onClickRegister,
-  } = props;
+  const router = useRouter();
+
+  const [open, setOpen] = useState(false);
+  const [activated, setActivated] = useState(false);
+
+  const handleBanner = () => {
+    setOpen(!open);
+  };
 
   const handleClickLaterBtn = () => {
     handleBanner();
@@ -31,8 +37,17 @@ const RegisterBanner = (props: RegisterBannerProps) => {
 
   const handleClickRegisterBtn = () => {
     handleBanner();
-    onClickRegister();
+    router.push(pages.register.path);
   };
+
+  useEffect(() => {
+    if (!activated && initialized && !isLogged()) {
+      setActivated(true);
+      setTimeout(() => {
+        setOpen(true);
+      }, 5000);
+    }
+  }, [activated, initialized, isLogged]);
 
   return (
     <Backdrop

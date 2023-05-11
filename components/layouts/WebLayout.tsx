@@ -14,10 +14,11 @@ import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
 import CookiesBanner from '@components/banners/CookiesBanner';
+import RegisterBanner from '@components/banners/RegisterBanner';
 import MaintenanceBanner from '@components/banners/MaintenanceBanner';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
-  const { paypal, currency, RegisterBanner } = useAuthContext();
+  const { paypal, currency } = useAuthContext();
 
   const router = useRouter();
 

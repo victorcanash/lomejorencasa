@@ -25,7 +25,6 @@ const useApp = (pageType: PageTypes | undefined) => {
     setToken,
     setUser,
     setPaypal,
-    triggerRegisterBanner,
   } = useAuthContext();
 
   const intl = useIntl();
@@ -57,8 +56,6 @@ const useApp = (pageType: PageTypes | undefined) => {
           if (response.token && response.user) {
             setToken(response.token);
             setUser(response.user);
-          } else {
-            triggerRegisterBanner();
           }
           setPaypal(response.paypal);
           setInitialized(true);
@@ -68,7 +65,7 @@ const useApp = (pageType: PageTypes | undefined) => {
     } else {
       setInitialized(true);
     }
-  }, [initCart, initForms, initLandings, intl.locale, pageType, setInitialized, setPaypal, setProductCategories, setToken, setUser, triggerRegisterBanner]);
+  }, [initCart, initForms, initLandings, intl.locale, pageType, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
 
   useEffect(() => {
     if (!firstRenderRef.current && pageType) {
