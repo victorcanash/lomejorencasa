@@ -17,6 +17,7 @@ import type { CheckoutData } from '@core/types/checkout';
 import { reinitFBEvents } from '@core/utils/facebook';
 
 import { pages, originRedirects } from '@lib/constants/navigation';
+import RegisterBanner from '@components/banners/RegisterBanner';
 
 type ContextType = {
   token: string,
@@ -35,7 +36,9 @@ type ContextType = {
   isAdminPath: () => boolean,
   getRedirectProtectedPath: () => string,
   getRedirectLogoutPath: () => string | undefined,
-  convertPriceToString: (price: number) => string
+  convertPriceToString: (price: number) => string,
+  RegisterBanner: () => JSX.Element,
+  triggerRegisterBanner: () => void,
 };
 
 export const AuthContext = createContext<ContextType>({
@@ -56,6 +59,8 @@ export const AuthContext = createContext<ContextType>({
   getRedirectProtectedPath: () => '',
   getRedirectLogoutPath: () => undefined,
   convertPriceToString: () => '',
+  RegisterBanner: () => <></>,
+  triggerRegisterBanner: () => {},
 });
 
 export const useAuthContext = () => {
@@ -76,6 +81,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currency, _setCurrency] = useState('EUR');
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({} as CheckoutData);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
+  const [openBanner, setOpenBanner] = useState(false);
 
   const updateUser = (user: User | GuestUser, reloadFBEvents = true) => {
     if (reloadFBEvents) {
@@ -172,6 +178,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }, [originRedirect, router.asPath, router.pathname])
 
+  const handleBanner = () => {
+    setOpenBanner(!openBanner);
+  };
+
+  const triggerRegisterBanner = useCallback(() => {
+    setTimeout(() => {
+      setOpenBanner(true);
+    }, 5000);
+  }, []);
+
+  const RegisterBannerComponent = () => (
+    <RegisterBanner
+      open={openBanner}
+      handleBanner={handleBanner}
+      onClickRegister={() => router.push(pages.register.path)}
+    />
+  );
+
   return (
     <AuthContext.Provider
       value={{ 
@@ -192,6 +216,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         getRedirectProtectedPath,
         getRedirectLogoutPath,
         convertPriceToString,
+        triggerRegisterBanner,
+        RegisterBanner: RegisterBannerComponent,
       }}
     >
       {children}

@@ -10,7 +10,6 @@ import { sendPageViewFBEvent } from '@core/utils/facebook';
 import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useRegisterBanner from '@lib/hooks/useRegisterBanner';
 import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
@@ -18,11 +17,9 @@ import CookiesBanner from '@components/banners/CookiesBanner';
 import MaintenanceBanner from '@components/banners/MaintenanceBanner';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
-  const { paypal, currency } = useAuthContext();
+  const { paypal, currency, RegisterBanner } = useAuthContext();
 
   const router = useRouter();
-
-  const { RegisterBanner } = useRegisterBanner();
 
   useEffect(() => {
     // This pageview only triggers the first time (it's important for Pixel to have real information)
