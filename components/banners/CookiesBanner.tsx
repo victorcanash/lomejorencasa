@@ -30,7 +30,7 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/constants/navigation';
 
 const CookiesBanner = () => {
-  const [openCookiesBanner, setOpenCookiesBanner] = useState(true);
+  const [openCookiesBanner, setOpenCookiesBanner] = useState(false);
   const [customSection, setCustomSection] = useState(false);
   const [functionalSwitch, setFunctionalSwitch] = useState(true);
   const [analyticSwitch, setAnalyticSwitch] = useState(true);
