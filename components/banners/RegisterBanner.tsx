@@ -12,11 +12,11 @@ import Grid from '@mui/material/Grid';
 import { firstBuyDiscountPercent } from '@core/constants/payments';
 import { convertElementToSx } from '@core/utils/themes';
 
+import { pages } from '@lib/constants/navigation';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import { pages } from '@lib/constants/navigation';
 
 const RegisterBanner = () => {
   const { initialized } = useAppContext();
