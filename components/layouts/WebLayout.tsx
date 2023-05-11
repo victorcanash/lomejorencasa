@@ -5,6 +5,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 import envConfig from '@core/config/env.config';
+import { scrollToSection } from '@core/utils/navigation';
 import { sendPageViewFBEvent } from '@core/utils/facebook';
 import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
@@ -27,6 +28,12 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
     // This pageview only triggers the first time (it's important for Pixel to have real information)
     sendPageViewFBEvent();
     const handleRouteChange = (url: string) => {
+      const path = window.location.hash;
+      if (path && path.includes('#')) {
+        scrollToSection();
+      } else {
+        window.scrollTo(0, 0);
+      }
       sendPageViewFBEvent();
       sendPageViewGTMEvent(url);
     };

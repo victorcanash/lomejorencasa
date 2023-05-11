@@ -23,7 +23,6 @@ const Landing: NextPage<LandingProps> = (props) => {
   const _page = usePage();
 
   const data = useMemo(() => {
-    window.scrollTo(0, 0);
     const landingModel = getLandingByPath(path);
     const landingConfig = getLandingConfigByPath(path, allLandingConfigs);
     return {
