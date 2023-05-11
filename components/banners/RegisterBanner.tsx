@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -18,18 +18,23 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 
-const RegisterBanner = () => {
+type RegisterBannerProps = {
+  open: boolean,
+  setOpen: Dispatch<SetStateAction<boolean>>,
+  handleBanner: () => void,
+};
+
+const RegisterBanner = (props: RegisterBannerProps) => {
+  const {
+    open,
+    setOpen,
+    handleBanner,
+  } = props;
+
   const { initialized } = useAppContext();
-  const { isLogged } = useAuthContext();
+  const { isLogged, enabledRegisterBanner } = useAuthContext();
 
   const router = useRouter();
-
-  const [open, setOpen] = useState(false);
-  const [activated, setActivated] = useState(false);
-
-  const handleBanner = () => {
-    setOpen(!open);
-  };
 
   const handleClickLaterBtn = () => {
     handleBanner();
@@ -41,13 +46,13 @@ const RegisterBanner = () => {
   };
 
   useEffect(() => {
-    if (!activated && initialized && !isLogged()) {
-      setActivated(true);
+    if (initialized && !isLogged() && enabledRegisterBanner.current) {
+      enabledRegisterBanner.current = false;
       setTimeout(() => {
         setOpen(true);
       }, 5000);
     }
-  }, [activated, initialized, isLogged]);
+  }, [enabledRegisterBanner, initialized, isLogged, setOpen]);
 
   return (
     <Backdrop

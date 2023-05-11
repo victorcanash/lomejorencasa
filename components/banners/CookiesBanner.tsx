@@ -29,8 +29,14 @@ import Link from '@core/components/Link';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/constants/navigation';
 
-const CookiesBanner = () => {
-  const [openCookiesBanner, setOpenCookiesBanner] = useState(false);
+type CookiesBannerProps = {
+  onConsentCookies: () => void,
+};
+
+const CookiesBanner = (props: CookiesBannerProps) => {
+  const { onConsentCookies } = props;
+
+  const [open, setOpen] = useState(false);
   const [customSection, setCustomSection] = useState(false);
   const [functionalSwitch, setFunctionalSwitch] = useState(true);
   const [analyticSwitch, setAnalyticSwitch] = useState(true);
@@ -41,7 +47,8 @@ const CookiesBanner = () => {
   const setConsentCookies = useCallback((consents: Consents) => {
     consentFBEvents(consents.ad);
     consentGTMEvents(consents.analytic);
-    setOpenCookiesBanner(false);
+    onConsentCookies();
+    setOpen(false);
     setCookie(
       ConsentKey,
       ConsentValues.accepted,
@@ -66,7 +73,7 @@ const CookiesBanner = () => {
       WithoutCategoryConsentKey,
       consents.withoutCategory ? ConsentValues.accepted : ConsentValues.refused,
     );
-  }, []);
+  }, [onConsentCookies]);
 
   const handleClickAcceptBtn = () => {
     setConsentCookies({
@@ -117,7 +124,7 @@ const CookiesBanner = () => {
   };
 
   useEffect(() => {
-    setOpenCookiesBanner(
+    setOpen(
       getCookie(ConsentKey) === ConsentValues.accepted ?
         false : true
     );
@@ -159,7 +166,7 @@ const CookiesBanner = () => {
         backgroundColor: 'rgb(0 0 0 / 90%)',
         boxShadow: 3,
       }}
-      open={openCookiesBanner}
+      open={open}
     >
       { !customSection ?
         <Grid

@@ -13,9 +13,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
-import CookiesBanner from '@components/banners/CookiesBanner';
-import RegisterBanner from '@components/banners/RegisterBanner';
-import MaintenanceBanner from '@components/banners/MaintenanceBanner';
+import Banners from '@components/banners';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { paypal, currency } = useAuthContext();
@@ -44,13 +42,11 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
   const Content = () => (
     <>
       <NavBar />
+      <Banners />
       <MainComponent>
         {children}
       </MainComponent>
       <Footer />
-      <CookiesBanner />
-      <RegisterBanner />
-      <MaintenanceBanner />
     </>
   );
 

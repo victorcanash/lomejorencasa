@@ -7,9 +7,13 @@ import {
   useEffect,
   Dispatch,
   SetStateAction,
+  MutableRefObject,
 } from 'react';
 import { useRouter } from 'next/router';
 
+import { getCookie } from 'cookies-next';
+
+import { ConsentKey, ConsentValues } from '@core/constants/cookies';
 import { Protections } from '@core/constants/auth';
 import type { PaypalCredentials } from '@core/types/paypal';
 import type { User, GuestUser } from '@core/types/user';
@@ -36,6 +40,7 @@ type ContextType = {
   getRedirectProtectedPath: () => string,
   getRedirectLogoutPath: () => string | undefined,
   convertPriceToString: (price: number) => string,
+  enabledRegisterBanner: MutableRefObject<boolean>,
 };
 
 export const AuthContext = createContext<ContextType>({
@@ -56,6 +61,7 @@ export const AuthContext = createContext<ContextType>({
   getRedirectProtectedPath: () => '',
   getRedirectLogoutPath: () => undefined,
   convertPriceToString: () => '',
+  enabledRegisterBanner: {} as MutableRefObject<boolean>,
 });
 
 export const useAuthContext = () => {
@@ -76,6 +82,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [currency, _setCurrency] = useState('EUR');
   const [checkoutData, setCheckoutData] = useState<CheckoutData>({} as CheckoutData);
   const prevLoginPathRef = useRef<string | undefined>(undefined);
+  const enabledRegisterBanner = useRef(false);
 
   const updateUser = (user: User | GuestUser, reloadFBEvents = true) => {
     if (reloadFBEvents) {
@@ -172,6 +179,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   }, [originRedirect, router.asPath, router.pathname])
 
+  useEffect(() => {
+    if (getCookie(ConsentKey) === ConsentValues.accepted) {
+      enabledRegisterBanner.current = true;
+    }
+  }, []);
+
   return (
     <AuthContext.Provider
       value={{ 
@@ -192,6 +205,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         getRedirectProtectedPath,
         getRedirectLogoutPath,
         convertPriceToString,
+        enabledRegisterBanner,
       }}
     >
       {children}
