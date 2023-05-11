@@ -42,7 +42,6 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
-import useFacebook from '@lib/hooks/useFacebook';
 import LoadingBtn from '@components/ui/LoadingBtn';
 import LoadingRating from '@components/ui/LoadingRating';
 import ProductCarousel from '@components/products/detail/ProductCarousel';
@@ -73,7 +72,6 @@ const LandingDetail = (props: ProductDetailProps) => {
     threshold: 0,
     rootMargin: '-83px 0px 1000px 0px',
   });
-  const { sendViewContentEvent } = useFacebook();
 
   const swiperRef = useRef<SwiperRef>()
 
@@ -339,12 +337,6 @@ const LandingDetail = (props: ProductDetailProps) => {
   useEffect(() => {
     swiperRef.current?.slideTo(1, undefined, false);
   }, [landingModel]);
-
-  useEffect(() => {
-    if (selectedItem) {
-      sendViewContentEvent(undefined, selectedItem);
-    }
-  }, [selectedItem, sendViewContentEvent]);
 
   return (
     <Box sx={{ overflow: 'hidden' }}>

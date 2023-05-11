@@ -3,7 +3,7 @@ import { useCallback, useMemo } from 'react';
 import type { FacebookEvent, FacebookEventContent } from '@core/types/facebook';
 import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
 import { sendFBEvent } from '@core/utils/facebook';
-import { getProductPriceData } from '@core/utils/products';
+import { getFirstLandingItem, getProductPriceData } from '@core/utils/products';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
@@ -46,15 +46,16 @@ const useFacebook = () => {
     return contentIds;
   }, []);*/
 
-  const sendViewContentEvent = useCallback((_landing: Landing | undefined, selectedItem: ProductInventory | ProductPack) => {
+  const sendViewContentEvent = useCallback((landing: Landing) => {
+    const firstLandingItem = getFirstLandingItem(landing);
     const data = {
       content_category: contentCategory,
       content_type: contentType,
       content_ids: [
-        selectedItem.metaId || '',
+        firstLandingItem?.metaId || '',
       ],
-      content_name: selectedItem.name.current,
-      value: getProductPriceData(selectedItem).price,
+      content_name: firstLandingItem?.name.current || '',
+      value: firstLandingItem ? getProductPriceData(firstLandingItem).price : undefined,
       currency: currency,
     } as FacebookEvent;
 

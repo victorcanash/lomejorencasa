@@ -8,6 +8,7 @@ import { getLandingConfigByPath } from '@core/utils/products';
 import { allLandingConfigs } from '@lib/constants/products';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
+import useFacebook from '@lib/hooks/useFacebook';
 import PageHeader from '@components/ui/PageHeader';
 import LandingDetail from '@components/products/detail';
 
@@ -22,14 +23,19 @@ const Landing: NextPage<LandingProps> = (props) => {
 
   const _page = usePage();
 
+  const { sendViewContentEvent } = useFacebook();
+
   const data = useMemo(() => {
     const landingModel = getLandingByPath(path);
     const landingConfig = getLandingConfigByPath(path, allLandingConfigs);
+    if (landingModel?.name) {
+      sendViewContentEvent(landingModel);
+    }
     return {
       landingModel,
       landingConfig,
     };
-  }, [getLandingByPath, path]);
+  }, [getLandingByPath, path, sendViewContentEvent]);
 
   return (
     <>
