@@ -44,7 +44,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
       </MainComponent>
       <Footer />
       <CookiesBanner />
-      {/*<RegisterBanner />*/}
+      <RegisterBanner />
       <MaintenanceBanner />
     </>
   );

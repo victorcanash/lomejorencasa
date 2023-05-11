@@ -118,8 +118,9 @@ const CookiesBanner = () => {
           container
           flexWrap="wrap"
           justifyContent="space-around"
-          spacing={1}
-          p={2}
+          spacing={2}
+          px={1}
+          py={2}
         >
           <Grid
             item

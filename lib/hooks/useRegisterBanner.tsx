@@ -8,12 +8,12 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import RegisterBanner from '@components/banners/RegisterBanner';
 
 const useRegisterBanner = () => {
-  const { initialized } = useAppContext();
+  const { initialized, openCookiesBanner } = useAppContext();
   const { isLogged } = useAuthContext();
 
   const router = useRouter();
 
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [activated, setActivated] = useState(false);
 
   const handleBanner = () => {
@@ -25,13 +25,13 @@ const useRegisterBanner = () => {
   };
 
   useEffect(() => {
-    if (!activated && initialized && !isLogged()) {
+    if (!activated && initialized && !isLogged() && !openCookiesBanner) {
       setActivated(true);
       setTimeout(() => {
         setOpen(true);
       }, 5000);
     }
-  }, [activated, initialized, isLogged]);
+  }, [activated, initialized, isLogged, openCookiesBanner]);
 
   const RegisterBannerComponent = () => (
     <RegisterBanner

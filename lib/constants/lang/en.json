@@ -31,8 +31,9 @@
   "banners.cookies.custom.withoutCategory.content": "Otras cookies no categorizadas son las que se están analizando y aún no se han clasificado en una categoría.",
   "banners.cookies.custom.saveBtn": "Guardar mis preferencias",
 
-  "banners.register.title": "Obtén un descuento en tu primera compra",
-  "banners.register.content": "¡Regístrate y obtén un <activeTxt>10% de descuento</activeTxt> en tu primera compra!",
+  "banners.register.title": "Registrarse para disfrutar de precios VIP",
+  "banners.register.content.register": "Regístrate y obtén",
+  "banners.register.content.order": "en tu primer pedido",
   "banners.register.registerBtn": "Regístrate ahora",
   "banners.register.laterBtn": "En otro momento",
 

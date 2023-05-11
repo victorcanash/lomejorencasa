@@ -1,5 +1,3 @@
-import { ReactNode } from 'react';
-
 import { FormattedMessage } from 'react-intl';
 
 import Button from '@mui/material/Button';
@@ -8,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
+import { firstBuyDiscountPercent } from '@core/constants/payments';
 import { convertElementToSx } from '@core/utils/themes';
 
 import colors from '@lib/constants/themes/colors';
@@ -40,48 +39,88 @@ const RegisterBanner = (props: RegisterBannerProps) => {
       sx={{ 
         zIndex: (theme) => theme.zIndex.drawer + 1,
         position: 'fixed',
-        top: '35%',
+        top: '50%',
+        transform: 'translateY(-50%)',
         width: '100%',
         height: 'min-content',
-        padding: '20px 8px 25px 8px',
+        px: 1,
+        py: 2,
+        backgroundColor: 'rgb(0 0 0 / 90%)',
+        boxShadow: 3,
       }}
       open={open}
     >
       <Box>
         <Box>
-          <Typography component='div' variant='h3' textAlign="center" sx={{ mb: 2 }}>
+          <Typography
+            component='div'
+            variant='h3'
+            textAlign="center"
+            sx={{ mb: 3 }}
+          >
             <FormattedMessage id="banners.register.title" />
           </Typography>
-          <Typography component='div' variant='body1' textAlign="center" sx={{ mb: 2 }}>
-            <FormattedMessage
-              id="banners.register.content"
-              values={{
-                'activeTxt': (...chunks: ReactNode[]) => (
-                  <span style={{ color: colors.text.action, fontWeight: 700 }}>
-                    {chunks}
-                  </span>
-                ),
-              }}
-            />
-          </Typography>
+          <Grid
+            container
+            justifyContent="center"
+          >
+            <Grid item>
+              <Typography
+                component='div'
+                variant='h3'
+                textAlign="center"
+                sx={{ textTransform: 'uppercase', mb: 2 }}
+              >
+                <FormattedMessage
+                  id="banners.register.content.register"
+                />
+              </Typography>
+              <Typography
+                component='div'
+                variant='h3'
+                textAlign="center"
+                sx={{
+                  textTransform: 'uppercase',
+                  color: colors.text.action,
+                  fontWeight: 700,
+                  fontSize: '60px',
+                  mb: 2,
+                }}
+              >
+                {`-${firstBuyDiscountPercent}%`}
+              </Typography>
+              <Typography
+                component='div'
+                variant='h3'
+                textAlign="center"
+                sx={{ textTransform: 'uppercase', mb: 3 }}
+              >
+                <FormattedMessage
+                  id="banners.register.content.order"
+                />
+              </Typography>
+            </Grid>
+          </Grid>
         </Box>
         <Grid
           container
-          sx={{
-            gap: '15px',
-            justifyContent: 'space-around',
-          }}
+          direction="column"
+          flexWrap="nowrap"
+          justifyContent="center"
+          alignItems="center"
+          alignContent="center"
+          spacing={2}
         >
-          <Grid item>
+          <Grid item xs={12}>
             <Button 
               onClick={handleClickRegisterBtn}
               variant="contained"
-              sx={{ ...convertElementToSx(themeCustomElements.button.action.primary), }}
+              sx={convertElementToSx(themeCustomElements.button.action.primary)}
             >
               <FormattedMessage id="banners.register.registerBtn" />
             </Button>
           </Grid>
-          <Grid item>
+          <Grid item xs={12}>
             <Button 
               onClick={handleClickLaterBtn}
               variant="contained"
