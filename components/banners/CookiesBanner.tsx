@@ -108,6 +108,8 @@ const CookiesBanner = () => {
         top: 'auto',
         bottom: '0px',
         width: '100%',
+        backgroundColor: 'rgb(0 0 0 / 90%)',
+        boxShadow: 3,
       }}
       open={openCookiesBanner}
     >
