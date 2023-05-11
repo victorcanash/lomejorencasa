@@ -188,21 +188,22 @@ const inventoryConfig: {
     characteristics: {
       details: {
         text: {
-          id: 'everfresh.details',
+          id: 'everfreshPack.details',
         },
-        count: 10,
+        count: 16,
       },
       includes: {
         text: {
-          id: 'everfresh.includes',
+          id: 'everfreshPack.includes',
         },
-        count: 4,
+        count: 7,
       },
       dimensions: {
         text: {
-          id: 'everfresh.dimensions',
+          id: 'everfreshPack.dimensions',
         },
-        count: 2,
+        count: 10,
+        image: 'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
       },
     },
     pack: {

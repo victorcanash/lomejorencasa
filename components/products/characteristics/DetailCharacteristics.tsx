@@ -1,7 +1,8 @@
-import { useCallback } from 'react';
+import { ReactNode, useCallback } from 'react';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
 
 import type { FormatText } from '@core/types/texts';
 import type { LandingConfig } from '@core/types/products';
@@ -21,6 +22,16 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
     for (let i = 0; i < count; i++) {
       elements.push({
         id: `${text.id}.${i + 1}`,
+        values: {
+          'title': (...chunks: ReactNode[]) => (
+            <>
+              <span style={{ fontWeight: 500 }}>
+                {chunks}
+              </span>
+              <Divider sx={{ borderWidth: '1px' }} />
+            </>
+          ),
+        },
       })
     }
     return elements;
