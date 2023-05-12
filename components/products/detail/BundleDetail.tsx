@@ -124,7 +124,7 @@ const BundleDetail = (props: BundleDetailProps) => {
       <Grid container mt={2} justifyContent="center" alignItems="center" columnSpacing={bundleConfig.secondItem ? 1 : 2}>
         <Grid item xs={5.5}>
           <Link
-            href={getPageUrlByLandingId(bundleConfig.firstItem.landingId)}
+            href={getPageUrlByLandingId(bundleConfig.secondItem ? bundleConfig.firstItem.landingId : bundleConfig.landingId)}
             noLinkStyle
           >
             <CustomImage
