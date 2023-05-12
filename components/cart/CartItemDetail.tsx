@@ -49,7 +49,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
     priorityImg 
   } = props;
 
-  const { getCartItemPageUrl, getItemImgUrl } = useProductsContext();
+  const { getPageUrlByCartItem, getItemImgUrl } = useProductsContext();
   const { closeDrawer } = useCartContext();
   const { convertPriceToString } = useAuthContext();
 
@@ -128,7 +128,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
             >*/}
               <Link
                 onClick={closeDrawer}
-                href={getCartItemPageUrl(item)}
+                href={getPageUrlByCartItem(item)}
                 noLinkStyle
               >
                 <Box

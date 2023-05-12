@@ -226,7 +226,7 @@ const useCart = (checkTotalAmount = true) => {
     if (checkTotalAmount) {
       setTotalAmount(getTotalAmount(cart, user));
     }
-  }, [cart, cart.items, cart.items.length, checkTotalAmount, totalPrice, user])
+  }, [cart, cart.items, cart.items.length, checkTotalAmount, totalPrice, user]);
 
   return {
     totalAmount,

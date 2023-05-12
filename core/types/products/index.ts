@@ -50,6 +50,18 @@ export type LandingConfig = {
     },
     variations: LandingItemConfig[],
   },
+  bundle?: BundleConfig,
+};
+
+export type BundleConfig = {
+  landingId: number,
+  firstItem: BundleItemConfig,
+  secondItem: BundleItemConfig,
+};
+
+export type BundleItemConfig = {
+  landingId: number,
+  image: string,
 };
 
 export type Landing = {

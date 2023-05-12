@@ -58,6 +58,17 @@ const inventoryConfig: {
         },
       ],
     },
+    bundle: {
+      landingId: 3,
+      firstItem: {
+        landingId: 1,
+        image: 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
+      },
+      secondItem: {
+        landingId: 2,
+        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
+      },
+    },
   },
   vacuumBags: {
     id: 2,
@@ -167,6 +178,17 @@ const inventoryConfig: {
         },
       ],
     },
+    bundle: {
+      landingId: 3,
+      firstItem: {
+        landingId: 1,
+        image: 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
+      },
+      secondItem: {
+        landingId: 2,
+        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
+      },
+    },
   },
   vacuumPack: {
     id: 3,
@@ -219,6 +241,17 @@ const inventoryConfig: {
           image: 'v1682580509/laenvasadora/LANDING%20PAGE/bundle%20pack%20envasadora%2Bbolsas/FOTO_2_fgnlnf_ihuykx.jpg',
         },
       ],
+    },
+    bundle: {
+      landingId: 4,
+      firstItem: {
+        landingId: 2,
+        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
+      },
+      secondItem: {
+        landingId: 2,
+        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
+      },
     },
   },
   vacuumBagsPack: {
@@ -333,6 +366,17 @@ const inventoryConfig: {
           image: 'v1681851582/laenvasadora/LANDING%20PAGE/MARCA%20DE%20AGUA%20%28TAMA%C3%91OS%29/20UNIDADES/TAMA%C3%91O-MIX-20U_cuev1i.jpg',
         },
       ],
+    },
+    bundle: {
+      landingId: 3,
+      firstItem: {
+        landingId: 1,
+        image: 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
+      },
+      secondItem: {
+        landingId: 2,
+        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
+      },
     },
   },
 };

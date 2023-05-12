@@ -47,6 +47,7 @@ import LoadingRating from '@components/ui/LoadingRating';
 import ProductCarousel from '@components/products/detail/ProductCarousel';
 import SelectItem from '@components/products/inputs/SelectItem'
 import SelectItemQuantity from '@components/products/inputs/SelectItemQuantity'
+import BundleDetail from '@components/products/detail/BundleDetail';
 import DetailCharacteristics from '@components/products/characteristics';
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
@@ -433,6 +434,27 @@ const LandingDetail = (props: ProductDetailProps) => {
               </Box>
             </Box>
           </Box>
+
+          {/* Bundle */}
+          { landingConfig.bundle &&
+            <Box>
+              <Box
+                sx={{
+                  maxWidth: {
+                    xs: maxWidthSmall,
+                    md: maxWidthMedium,
+                  },
+                  m: 'auto',
+                  pt: 3,
+                }}  
+              >
+                <BundleDetail
+                  bundleConfig={landingConfig.bundle}
+                  addCartItem={addCartItem}
+                />
+              </Box>
+            </Box>
+          }
 
         </Masonry>
       </Container>

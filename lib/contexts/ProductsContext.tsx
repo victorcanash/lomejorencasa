@@ -17,6 +17,7 @@ import {
   generateLandings,
   getFirstLandingItem,
   getLandingConfigByCartItem,
+  getLandingConfigById,
   getLandingConfigByPath,
   getLandingPathByConfig,
 } from '@core/utils/products';
@@ -27,10 +28,12 @@ import { placeholderImgId } from '@lib/constants/multimedia';
 type ProductsContext = {
   initLandings: (newLandings: Landing[]) => void,
   getLandingByPath: (path: string) => Landing | undefined,
+  getLandingById: (id: number) => Landing | undefined,
   getAllProducts: () => Product[],
   getAllPacks: () => ProductPack[],
   getAllLandingsProducts: () => (ProductPack | Product)[],
-  getCartItemPageUrl: (item: CartItem | GuestCartCheckItem) => string,
+  getPageUrlByCartItem: (item: CartItem | GuestCartCheckItem) => string,
+  getPageUrlByLandingId: (landingId: number) => string,
   getItemImgUrl: (item: Landing | CartItem | GuestCartCheckItem) => string,
   getLandingImgsUrl: (landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => string[],
   setProductRating: (product: Product, rating: string, reviewsCount: number) => void,
@@ -40,10 +43,12 @@ type ProductsContext = {
 const ProductsContext = createContext<ProductsContext>({
   initLandings: () => {},
   getLandingByPath: () => undefined,
+  getLandingById: () => undefined,
   getAllProducts: () => [],
   getAllPacks: () => [],
   getAllLandingsProducts: () => [],
-  getCartItemPageUrl: () => '',
+  getPageUrlByCartItem: () => '',
+  getPageUrlByLandingId: () => '',
   getItemImgUrl: () => '',
   getLandingImgsUrl: () => [],
   setProductRating: () => {},
@@ -78,6 +83,16 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return foundLanding;
   }, [landings]);
 
+  const getLandingById = useCallback((id: number) => {
+    let foundLanding: Landing | undefined = undefined;
+    foundLanding = landings.current.find((landing) => {
+      if (landing.id === id) {
+        return landing;
+      }
+    });
+    return foundLanding;
+  }, [landings]);
+
   const getAllProducts = useCallback(() => {
     return landings.current.filter((item) => item.products.length > 0).map((item) => {
       return item.products[0];
@@ -96,8 +111,14 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     return landingsProducts;
   }, [getAllPacks, getAllProducts]);
 
-  const getCartItemPageUrl = useCallback((item: CartItem | GuestCartCheckItem) => {
+  const getPageUrlByCartItem = useCallback((item: CartItem | GuestCartCheckItem) => {
     const foundLandingConfig = getLandingConfigByCartItem(item, allLandingConfigs);
+    return foundLandingConfig ?
+      getLandingPathByConfig(foundLandingConfig) : pages.productList.path;
+  }, []);
+
+  const getPageUrlByLandingId = useCallback((landingId: number) => {
+    const foundLandingConfig = getLandingConfigById(landingId, allLandingConfigs);
     return foundLandingConfig ?
       getLandingPathByConfig(foundLandingConfig) : pages.productList.path;
   }, []);
@@ -177,10 +198,12 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       value={{
         initLandings,
         getLandingByPath,
+        getLandingById,
         getAllProducts,
         getAllPacks,
         getAllLandingsProducts,
-        getCartItemPageUrl,
+        getPageUrlByCartItem,
+        getPageUrlByLandingId,
         getItemImgUrl,
         getLandingImgsUrl,
         setProductRating,
