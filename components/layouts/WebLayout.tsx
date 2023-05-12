@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -9,6 +9,7 @@ import { scrollToSection } from '@core/utils/navigation';
 import { sendPageViewFBEvent } from '@core/utils/facebook';
 import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
+import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
@@ -16,20 +17,26 @@ import Footer from '@components/Footer';
 import Banners from '@components/banners';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
+  const { initialized } = useAppContext();
   const { paypal, currency } = useAuthContext();
 
   const router = useRouter();
 
+  const checkScroll = useCallback(() => {
+    const path = window.location.hash;
+    if (path && path.includes('#')) {
+      scrollToSection();
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, []);
+
   useEffect(() => {
+    checkScroll();
     // This pageview only triggers the first time (it's important for Pixel to have real information)
     sendPageViewFBEvent();
     const handleRouteChange = (url: string) => {
-      const path = window.location.hash;
-      if (path && path.includes('#')) {
-        scrollToSection();
-      } else {
-        window.scrollTo(0, 0);
-      }
+      checkScroll();
       sendPageViewFBEvent();
       sendPageViewGTMEvent(url);
     };
@@ -37,7 +44,13 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
     return () => {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
-  }, [router.events]);
+  }, [checkScroll, router.events]);
+
+  useEffect(() => {
+    if (initialized) {
+      checkScroll();
+    }
+  }, [checkScroll, initialized])
 
   const Content = () => (
     <>
