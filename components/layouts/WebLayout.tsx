@@ -1,16 +1,11 @@
 import { ReactNode, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-
-import envConfig from '@core/config/env.config';
 import { scrollToSection } from '@core/utils/navigation';
 import { sendPageViewFBEvent } from '@core/utils/facebook';
 import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
 import { useAppContext } from '@lib/contexts/AppContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
 import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@components/NavBar';
 import Footer from '@components/Footer';
@@ -18,7 +13,6 @@ import Banners from '@components/banners';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { initialized } = useAppContext();
-  const { paypal, currency } = useAuthContext();
 
   const router = useRouter();
 
@@ -52,7 +46,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
     }
   }, [checkScroll, initialized])
 
-  const Content = () => (
+  return (
     <>
       <NavBar />
       <Banners />
@@ -61,32 +55,6 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
       </MainComponent>
       <Footer />
     </>
-  );
-
-  return (
-    <GoogleOAuthProvider 
-      clientId={envConfig.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID}
-    >
-      { paypal ?
-        <PayPalScriptProvider
-          options={{
-            'locale': 'es_ES',
-            'merchant-id': envConfig.NEXT_PUBLIC_PAYPAL_MERCHANT_ID,
-            'client-id': envConfig.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
-            'data-client-token': paypal.token,
-            'currency': currency,
-            'intent': 'capture',
-            'components':
-              paypal.advancedCards ? 'buttons,hosted-fields' : 'buttons',
-            //'vault': true,
-          }}
-        >
-          <Content />
-        </PayPalScriptProvider>
-        :
-        <Content />
-      }
-    </GoogleOAuthProvider>
   );
 };
 
