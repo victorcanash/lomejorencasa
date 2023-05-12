@@ -67,7 +67,7 @@ const LandingDetail = (props: ProductDetailProps) => {
   } = useProductsContext();
   const { convertPriceToString } = useAuthContext();
 
-  const { addCartItem } = useCart(false);
+  const { addCartItem } = useCart();
   const { ref: payNowBtnRef, inView: payNowInView } = useInView({
     initialInView: true,
     threshold: 0,

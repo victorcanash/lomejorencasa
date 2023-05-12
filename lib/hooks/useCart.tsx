@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { useIntl } from 'react-intl';
@@ -6,13 +5,12 @@ import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
 import { maxQuantity } from '@core/constants/cart';
-import type { Cart, CartItem, TotalAmount } from '@core/types/cart';
+import type { Cart, CartItem } from '@core/types/cart';
 import type { ProductInventory, ProductPack } from '@core/types/products';
-import { 
-  manageCartItem, 
-  checkCart as checkCartMW, 
+import {
+  manageCartItem,
+  checkCart as checkCartMW,
   getItemAmount,
-  getTotalAmount,
 } from '@core/utils/cart';
 
 import { pages } from '@lib/constants/navigation';
@@ -21,9 +19,9 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useFacebook from '@lib/hooks/useFacebook';
 
-const useCart = (checkTotalAmount = true) => {
+const useCart = () => {
   const { setLoading } = useAppContext();
-  const { user, token, isLogged } = useAuthContext();
+  const { token, isLogged } = useAuthContext();
   const {
     cart,
     initCart,
@@ -39,15 +37,6 @@ const useCart = (checkTotalAmount = true) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const { sendAddToCartEvent } = useFacebook();
-
-  const [totalAmount, setTotalAmount] = useState({
-    itemsAmount: [],
-    subtotal: 0,
-    totalVat: 0,
-    totalDiscount: 0,
-    total: 0,
-    totalQuantity: 0,
-  } as TotalAmount);
 
   const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number, goToCheckout?: boolean) => {
     if (totalQuantity + quantity > maxQuantity) {
@@ -222,14 +211,7 @@ const useCart = (checkTotalAmount = true) => {
     );
   };
 
-  useEffect(() => {
-    if (checkTotalAmount) {
-      setTotalAmount(getTotalAmount(cart, user));
-    }
-  }, [cart, cart.items, cart.items.length, checkTotalAmount, totalPrice, user]);
-
   return {
-    totalAmount,
     addCartItem,
     updateCartItemQuantity,
     checkCart,

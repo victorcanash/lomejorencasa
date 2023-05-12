@@ -10,8 +10,10 @@ import Typography from '@mui/material/Typography';
 
 import { firstBuyDiscountPercent } from '@core/constants/payments';
 import type { Page } from '@core/types/navigation';
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import type { Order } from '@core/types/orders';
 import { convertElementToSx } from '@core/utils/themes';
+import { getTotalAmount } from '@core/utils/cart';
 import LinkButton from '@core/components/LinkButton';
 
 import colors from '@lib/constants/themes/colors';
@@ -21,7 +23,6 @@ import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
 import CartItemDetail from '@components/cart/CartItemDetail';
-import { CartItem, GuestCartCheckItem } from '@core/types/cart';
 
 type CartDetailProps = {
   page?: Page,
@@ -35,11 +36,15 @@ const CartDetail = (props: CartDetailProps) => {
   } = props;
 
   const { cart, totalPrice, disabledCheckoutPage, closeDrawer } = useCartContext();
-  const { convertPriceToString } = useAuthContext();
+  const { user, convertPriceToString } = useAuthContext();
 
   const intl = useIntl();
 
-  const { totalAmount, updateCartItemQuantity } = useCart();
+  const { updateCartItemQuantity } = useCart();
+
+  const totalAmount = useMemo(() => {
+    return getTotalAmount(cart, user);
+  }, [cart, user]);
 
   const Subdivider = useCallback((props: { mt?: number, mb?: number }) => (
     <Divider
