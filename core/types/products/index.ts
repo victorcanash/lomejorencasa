@@ -56,12 +56,13 @@ export type LandingConfig = {
 export type BundleConfig = {
   landingId: number,
   firstItem: BundleItemConfig,
-  secondItem: BundleItemConfig,
+  secondItem?: BundleItemConfig,
 };
 
 export type BundleItemConfig = {
   landingId: number,
   image: string,
+  name?: FormatText,
 };
 
 export type Landing = {

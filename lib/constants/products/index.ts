@@ -1,6 +1,33 @@
-import type { LandingConfig } from '@core/types/products';
+import type { BundleConfig, LandingConfig } from '@core/types/products';
 
 import { keywords } from '@lib/config/next-seo.config';
+
+const bundlesConfig: {
+  vacuumPack: BundleConfig,
+  vacuumBagsPack: BundleConfig,
+} = {
+  vacuumPack: {
+    landingId: 3,
+    firstItem: {
+      landingId: 1,
+      image: 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
+    },
+    secondItem: {
+      landingId: 2,
+      image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
+    },
+  },
+  vacuumBagsPack: {
+    landingId: 4,
+    firstItem: {
+      landingId: 2,
+      image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
+      name: {
+        id: 'bagsPack.bundle',
+      },
+    },
+  },
+};
 
 const inventoryConfig: {
   vacuumMachine: LandingConfig,
@@ -58,17 +85,7 @@ const inventoryConfig: {
         },
       ],
     },
-    bundle: {
-      landingId: 3,
-      firstItem: {
-        landingId: 1,
-        image: 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
-      },
-      secondItem: {
-        landingId: 2,
-        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
-      },
-    },
+    bundle: bundlesConfig.vacuumPack,
   },
   vacuumBags: {
     id: 2,
@@ -178,17 +195,7 @@ const inventoryConfig: {
         },
       ],
     },
-    bundle: {
-      landingId: 3,
-      firstItem: {
-        landingId: 1,
-        image: 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
-      },
-      secondItem: {
-        landingId: 2,
-        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
-      },
-    },
+    bundle: bundlesConfig.vacuumPack,
   },
   vacuumPack: {
     id: 3,
@@ -242,17 +249,7 @@ const inventoryConfig: {
         },
       ],
     },
-    bundle: {
-      landingId: 4,
-      firstItem: {
-        landingId: 2,
-        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
-      },
-      secondItem: {
-        landingId: 2,
-        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
-      },
-    },
+    bundle: bundlesConfig.vacuumBagsPack,
   },
   vacuumBagsPack: {
     id: 4,
@@ -367,17 +364,7 @@ const inventoryConfig: {
         },
       ],
     },
-    bundle: {
-      landingId: 3,
-      firstItem: {
-        landingId: 1,
-        image: 'v1680715068/laenvasadora/LANDING%20PAGE/FOTO_4_duno3s.jpg',
-      },
-      secondItem: {
-        landingId: 2,
-        image: 'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
-      },
-    },
+    bundle: bundlesConfig.vacuumPack,
   },
 };
 

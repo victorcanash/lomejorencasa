@@ -62,7 +62,13 @@ const BundleDetail = (props: BundleDetailProps) => {
     const price = productPack.price;
     const originPrice = productPack.originalPrice;
     const percent = productPack.discountPercent ? NP.round(productPack.discountPercent, 0) : undefined;
-    // const packTexts = productPack.name.current.split(' + ');
+    let packText = productPack.name.current;
+    if (bundleConfig.firstItem.name?.id) {
+      packText = `${intl.formatMessage({ id: bundleConfig.firstItem.name.id }, bundleConfig.firstItem.name.values)}`;
+      if (bundleConfig.secondItem?.name?.id) {
+        packText += ` + ${intl.formatMessage({ id: bundleConfig.secondItem.name.id }, bundleConfig.secondItem.name.values)}`;
+      }
+    }
     return (
       <>
         <Grid container mb={1}>
@@ -71,24 +77,11 @@ const BundleDetail = (props: BundleDetailProps) => {
               component="h2"
               variant="body1"
             >
-              {/*<Link
-                href={firstItemPath}
-                noLinkStyle
-              >
-                { packTexts[0] }
-              </Link>
-              { dividerPackText }
-              <Link
-                href={secondItemPath}
-                noLinkStyle
-              >
-                { packTexts[1] }
-              </Link>*/}
               <Link
                 href={getPageUrlByLandingId(bundleConfig.landingId)}
                 noLinkStyle
               >
-                { productPack.name.current }
+                { packText }
               </Link>
             </Typography>
           </Grid>
@@ -121,14 +114,14 @@ const BundleDetail = (props: BundleDetailProps) => {
         </Grid>
       </>
     );
-  }, [bundleConfig.landingId, convertPriceToString, getPageUrlByLandingId, intl, productPack]);
+  }, [bundleConfig.firstItem.name?.id, bundleConfig.firstItem.name?.values, bundleConfig.landingId, bundleConfig.secondItem?.name?.id, bundleConfig.secondItem?.name?.values, convertPriceToString, getPageUrlByLandingId, intl, productPack]);
 
   return (
     <>
       <Typography variant="h3" color="text.primary" sx={{...convertElementToSx(themeCustomElements.landing.selectLabel), textAlign: 'center'}}>
         <FormattedMessage id="productDetail.pack.title" />
       </Typography>
-      <Grid container mt={2} justifyContent="center" alignItems="center" columnSpacing={1}>
+      <Grid container mt={2} justifyContent="center" alignItems="center" columnSpacing={bundleConfig.secondItem ? 1 : 2}>
         <Grid item xs={5.5}>
           <Link
             href={getPageUrlByLandingId(bundleConfig.firstItem.landingId)}
@@ -146,32 +139,50 @@ const BundleDetail = (props: BundleDetailProps) => {
             />
           </Link>
         </Grid>
-        <Grid item xs={1}>
-          <Box>
-            <FontAwesomeIcon
-              size="2xl"
-              icon={faPlus}
-              style={{ margin: 'auto', display: 'block' }}
-            />
-          </Box>
-        </Grid>
-        <Grid item xs={5.5}>
-          <Link
-            href={getPageUrlByLandingId(bundleConfig.secondItem.landingId)}
-            noLinkStyle
-          >
-            <CustomImage
-              src={bundleConfig.secondItem.image}
-              alt=""
-              width="1080"
-              height="1080"
-              priority
-              layout="responsive"
-              objectFit="cover"
-              style={{ borderRadius: '10px' }}
-            />
-          </Link>
-        </Grid>
+        { bundleConfig.secondItem ?
+          <>
+            <Grid item xs={1}>
+              <Box>
+                <FontAwesomeIcon
+                  size="2xl"
+                  icon={faPlus}
+                  style={{ margin: 'auto', display: 'block' }}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={5.5}>
+              <Link
+                href={getPageUrlByLandingId(bundleConfig.secondItem.landingId)}
+                noLinkStyle
+              >
+                <CustomImage
+                  src={bundleConfig.secondItem.image}
+                  alt=""
+                  width="1080"
+                  height="1080"
+                  priority
+                  layout="responsive"
+                  objectFit="cover"
+                  style={{ borderRadius: '10px' }}
+                />
+              </Link>
+            </Grid>
+          </>
+          :
+          <Grid item xs={4.5}>
+            <Typography
+              component='div'
+              variant='h3'
+              sx={{
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                fontSize: '60px',
+              }}
+            >
+              {`x2`}
+            </Typography>
+          </Grid>
+        }
         <Grid item xs={12} mt={1}>
           <ProductPackTxt />
         </Grid>

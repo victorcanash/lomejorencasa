@@ -46,7 +46,7 @@
   "header.drawerItems.bags": "Bolsas",
   "header.drawerItems.packs": "Packs",
   "header.drawerItems.everfreshPack": "Pack Envasadora + Bolsas",
-  "header.drawerItems.bagsPack": "Pack Bolsas x2",
+  "header.drawerItems.bagsPack": "Pack Bolsas X2",
   "header.drawerItems.unloggedProfile": "Identifícate",
   "header.drawerItems.loggedProfile": "Tu perfil",
   "header.drawerItems.orders": "Sigue tu pedido",
@@ -287,6 +287,7 @@
   "bags.dimensions.5": "XL: 30cm x 34cm.",
   "bags.dimensions.6": "MIX: 2 x tamaño.",
 
+  "bagsPack.bundle": "Pack Bolsas de vacío con válvula X2",
   "bagsPack.includes.1": "20 bolsas reutilizables",
 
   "everfreshPack.details.1": "<title>DETALLES DE LA ENVASADORA</title>",
