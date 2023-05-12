@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import Typography from '@mui/material/Typography';
+
 import type { Order } from '@core/types/orders';
 
 import SendOrderEmailForm from '@components/forms/admin/SendOrderEmailForm';
@@ -22,11 +24,15 @@ const SendOrderEmailSection = () => {
         />
         :
         <>
-          { order &&
-            <OrderDetail 
-              order={order} 
+          { (order?.transaction && order?.bigbuy) ?
+            <OrderDetail
+              order={order}
               backBtn={false}
             />
+            :
+            <Typography component="div" variant="h3" mb={3}>
+              {'Success'}
+            </Typography>
           }
         </>
       }
