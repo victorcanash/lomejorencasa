@@ -46,11 +46,13 @@ const RegisterBanner = (props: RegisterBannerProps) => {
   };
 
   useEffect(() => {
-    if (initialized && !isLogged() && enabledRegisterBanner.current) {
+    if (initialized && enabledRegisterBanner.current) {
       enabledRegisterBanner.current = false;
-      setTimeout(() => {
-        setOpen(true);
-      }, 5000);
+      if (!isLogged()) {
+        setTimeout(() => {
+          setOpen(true);
+        }, 5000);
+      }
     }
   }, [enabledRegisterBanner, initialized, isLogged, setOpen]);
 

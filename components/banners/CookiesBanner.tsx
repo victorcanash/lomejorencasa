@@ -28,6 +28,7 @@ import Link from '@core/components/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/constants/navigation';
+import { useAppContext } from '@lib/contexts/AppContext';
 
 type CookiesBannerProps = {
   onConsentCookies: () => void,
@@ -35,6 +36,8 @@ type CookiesBannerProps = {
 
 const CookiesBanner = (props: CookiesBannerProps) => {
   const { onConsentCookies } = props;
+
+  const { initialized } = useAppContext();
 
   const [open, setOpen] = useState(false);
   const [customSection, setCustomSection] = useState(false);
@@ -124,11 +127,13 @@ const CookiesBanner = (props: CookiesBannerProps) => {
   };
 
   useEffect(() => {
-    setOpen(
-      getCookie(ConsentKey) === ConsentValues.accepted ?
-        false : true
-    );
-  }, []);
+    if (initialized) {
+      setOpen(
+        getCookie(ConsentKey) === ConsentValues.accepted ?
+          false : true
+      );
+    }
+  }, [initialized]);
 
   const CookiesType = (props: {
     textId: string,
