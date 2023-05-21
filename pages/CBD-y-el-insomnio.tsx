@@ -157,7 +157,7 @@ const CbdBlog = () => {
         <Typography variant="h2" my={3}>
           <FormattedMessage id="cbdBlog.sources.title" />
         </Typography>
-        <Box my={1} component="ul">
+        <Box mb={1} component="ul">
           <Typography component="li" variant="body1">
             <FormattedMessage id="cbdBlog.sources.1" />
           </Typography>
