@@ -21,6 +21,8 @@ export type NavItem = {
 };
 
 export type NavDrawerItems = NavItem & {
-  items: NavItem[],
-  open: boolean,
+  items: (NavItem & {
+    divider?: boolean,
+  })[],
+  open?: boolean,
 };

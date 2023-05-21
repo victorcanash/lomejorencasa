@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 import type { NavDrawerItems } from '@core/types/navigation';
 
@@ -17,7 +17,7 @@ const useNavDrawer = () => {
   const [items, setItems] = useState<NavDrawerItems[]>([]);
   const [open, setOpen] = useState(false);
 
-  const closeCollapses = useCallback(() => {
+  const closeCollapses = () => {
     setItems(
       items.map((current) => {
         return {
@@ -26,23 +26,23 @@ const useNavDrawer = () => {
         }
       })
     );
-  }, [items]);
+  };
 
-  const handleOpen = useCallback(() => {
+  const handleOpen = () => {
     closeCartDrawer();
     setOpen(!open);
     closeCollapses();
-  }, [closeCartDrawer, closeCollapses, open]);
+  };
 
-  const close = useCallback(() => {
+  const close = () => {
     closeCartDrawer();
     if (open) {
       setOpen(false);
       closeCollapses();
     }
-  }, [closeCartDrawer, closeCollapses, open])
+  };
 
-  const handleCollapse = useCallback((item: NavDrawerItems) => {
+  const handleCollapse = (item: NavDrawerItems) => {
     setItems(
       items.map((current) => {
         if (current.text == item.text) {
@@ -55,7 +55,7 @@ const useNavDrawer = () => {
         }
       })
     );
-  }, [items]);
+  };
 
   useEffect(() => {
     if (isLogged()) {

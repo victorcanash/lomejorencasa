@@ -329,30 +329,24 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
     },
     path: pages.home.path,
     items: [],
-    open: false,
   },
   {
     text: {
-      id: 'bags',
+      id: 'shop',
     },
-    path: pages.bags.path,
-    items: [],
-    open: false,
-  },
-  {
-    text: {
-      id: 'everfresh',
-    },
-    path: pages.everfresh.path,
-    items: [],
-    open: false,
-  },
-  {
-    text: {
-      id: 'packs',
-    },
-    path: undefined,
     items: [
+      {
+        text: {
+          id: 'bags',
+        },
+        path: pages.bags.path,
+      },
+      {
+        text: {
+          id: 'everfresh',
+        },
+        path: pages.everfresh.path,
+      },
       {
         text: {
           id: 'bagsPack',
@@ -366,7 +360,6 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
         path: pages.everfreshPack.path,
       },
     ],
-    open: false,
   },
   {
     text: {
@@ -374,21 +367,11 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
     },
     path: pages.orders.path,
     items: [],
-    open: false,
   },
   {
     text: {
-      id: 'faq',
+      id: 'info',
     },
-    path: pages.faq.path,
-    items: [],
-    open: false,
-  },
-  {
-    text: {
-      id: 'help',
-    },
-    path: undefined,
     items: [
       {
         text: {
@@ -408,15 +391,13 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
         },
         path: pages.about.path,
       },
-    ],
-    open: false,
-  },
-  {
-    text: {
-      id: 'blogs',
-    },
-    path: undefined,
-    items: [
+      {
+        text: {
+          id: 'faq',
+        },
+        path: pages.faq.path,
+        divider: true,
+      },
       {
         text: {
           id: 'vacuumBlog',
@@ -430,7 +411,6 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
         path: pages.cbdBlog.path,
       },
     ],
-    open: false,
   },
 ];
 
@@ -439,7 +419,6 @@ export const loggedNavDrawerItems: NavDrawerItems[] = [
     text: {
       id: 'loggedProfile',
     },
-    path: undefined,
     items: [
       {
         text: {
@@ -451,10 +430,8 @@ export const loggedNavDrawerItems: NavDrawerItems[] = [
         text: {
           id: 'signOut',
         },
-        path: undefined,
       },
     ],
-    open: false,
   },
 ];
 
@@ -463,7 +440,6 @@ export const unloggedNavDrawerItems: NavDrawerItems[] = [
     text: {
       id: 'unloggedProfile',
     },
-    path: undefined,
     items: [
       {
         text: {
@@ -478,7 +454,6 @@ export const unloggedNavDrawerItems: NavDrawerItems[] = [
         path: pages.register.path,
       },
     ],
-    open: false,
   },
 ];
 

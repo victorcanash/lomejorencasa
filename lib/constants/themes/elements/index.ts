@@ -388,9 +388,18 @@ export const themeCustomElements: ThemeCustomElements = {
     },
     drawer: {
       divider: {
-        border: {
-          default: {
-            border: `1px solid ${colors.border.dividerDrawer}`,
+        default: {
+          border: {
+            default: {
+              border: `1px solid ${colors.border.dividerDrawer}`,
+            },
+          },
+        },
+        highlight: {
+          border: {
+            default: {
+              border: `2px solid ${colors.border.dividerDrawer}`,
+            },
           },
         },
       },

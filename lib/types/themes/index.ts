@@ -83,7 +83,10 @@ export type ThemeCustomElements = {
       },
     },
     drawer: {
-      divider: ThemeElement,
+      divider: {
+        default: ThemeElement,
+        highlight: ThemeElement,
+      },
     },
   },
   footer: {

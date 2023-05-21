@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useMemo } from 'react';
+import { Fragment } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -41,8 +41,8 @@ const NavDrawer = (props: NavDrawerProps) => {
 
   const { logout } = useAuth(); 
 
-  const handleItemBtn = useCallback((item: NavDrawerItems) => {
-    if (item.items?.length > 0) {
+  const handleItemBtn = (item: NavDrawerItems) => {
+    if (item.items && item.items.length > 0) {
       handleCollapse(item);
     } else {
       handleOpen();
@@ -50,18 +50,18 @@ const NavDrawer = (props: NavDrawerProps) => {
         logout();
       }
     }
-  }, [handleCollapse, handleOpen, logout]);
+  };
 
-  const listItemBtnSx = useCallback((item: NavDrawerItems) => {
+  const listItemBtnSx = (item: NavDrawerItems) => {
     if (!item.items) {
       return { 
         pl: 4 
       };
     }
     return undefined;
-  }, []);
+  };
 
-  const listItemBtnContent = useCallback((item: NavDrawerItems) => (
+  const listItemBtnContent = (item: NavDrawerItems) => (
     <>
       <ListItemText
         primary={
@@ -74,15 +74,15 @@ const NavDrawer = (props: NavDrawerProps) => {
           </Typography>
         }
       />
-      { item.items?.length > 0 &&
+      { item.items && item.items?.length > 0 &&
         <>
           { item.open ? <ExpandLess /> : <ExpandMore /> }
         </>
       }
     </>
-  ), []);
+  );
 
-  const listItemBtn = useCallback((item: NavDrawerItems) => (
+  const listItemBtn = (item: NavDrawerItems) => (
     <>
       { item.path ?
         <ListItemButton 
@@ -103,14 +103,14 @@ const NavDrawer = (props: NavDrawerProps) => {
         </ListItemButton>
       }
     </>
-  ), [handleItemBtn, listItemBtnContent, listItemBtnSx]);
+  );
 
-  const listItems = useMemo(() => (
+  const listItems = (
     <>
       { items.map((item, index) => (
         <Fragment key={index}>
           { listItemBtn(item) }
-          { item.items.length > 0  &&
+          { item.items && item.items.length > 0  &&
             <Collapse
               in={item.open} 
               timeout="auto" 
@@ -120,16 +120,19 @@ const NavDrawer = (props: NavDrawerProps) => {
                 { item.items.map((subitem) => (
                   <Fragment key={subitem.text.id}>
                     { listItemBtn(subitem as NavDrawerItems) }
+                    { subitem.divider &&
+                      <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider.highlight)} />
+                    }
                   </Fragment>
                 ))}
               </List>
             </Collapse>
           }
-          <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider)} />
+          <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider.default)} />
         </Fragment>
       ))}
     </>
-  ), [items, listItemBtn]);
+  );
 
   return (
     <Drawer
