@@ -24,6 +24,9 @@ export const pages: {
   legal: Page,
   conditions: Page,
 
+  vacuumBlog: Page,
+  cbdBlog: Page,
+
   login: Page,
   register: Page,
   forgot: Page,
@@ -171,6 +174,25 @@ export const pages: {
   conditions: {
     path: '/conditions',
     filepath: '/conditions',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
+
+  vacuumBlog: {
+    path: '/el-envasado-al-vacio',
+    filepath: '/el-envasado-al-vacio',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: true,
+    },
+  },
+  cbdBlog: {
+    path: '/CBD-y-el-insomnio',
+    filepath: '/CBD-y-el-insomnio',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {
@@ -385,6 +407,27 @@ export const mainNavDrawerItems: NavDrawerItems[] = [
           id: 'about',
         },
         path: pages.about.path,
+      },
+    ],
+    open: false,
+  },
+  {
+    text: {
+      id: 'blogs',
+    },
+    path: undefined,
+    items: [
+      {
+        text: {
+          id: 'vacuumBlog',
+        },
+        path: pages.vacuumBlog.path,
+      },
+      {
+        text: {
+          id: 'cbdBlog',
+        },
+        path: pages.cbdBlog.path,
       },
     ],
     open: false,

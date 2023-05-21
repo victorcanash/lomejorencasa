@@ -78,3 +78,9 @@ export const uploadImgExtensions = [
 ];
 
 export const uploadImgMaxSize = '10mb';
+
+export const cbdBlogImgIds = [
+  'v1684694599/laenvasadora/CBD/insomnia_qnvyro.jpg',
+  'v1684693912/laenvasadora/CBD/cbd_mhfqbf.webp',
+  'v1684696237/laenvasadora/CBD/productos_cbd_ghahxt.webp',
+];
