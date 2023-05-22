@@ -8,7 +8,7 @@ import type { FormatText } from '@core/types/texts';
 import type { LandingConfig } from '@core/types/products';
 
 import { pages } from '@lib/constants/navigation';
-import CharacteristicsGroup from '@components/products/characteristics/CharacteristicsGroup';
+import CharacteristicsGroup from '@components/products/detail/characteristics/CharacteristicsGroup';
 
 type DetailCharacteristicsProps = {
   landingConfig: LandingConfig,

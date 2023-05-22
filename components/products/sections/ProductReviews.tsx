@@ -29,7 +29,7 @@ import Title from '@components/ui/Title';
 import Pagination from '@components/ui/Pagination';
 import ProductReviewForm from '@components/forms/products/ProductReviewForm';
 
-const DetailReviews = () => {
+const ProductReviews = () => {
   const { initialized } = useAppContext();
 
   const router = useRouter();
@@ -221,4 +221,4 @@ const DetailReviews = () => {
   );
 };
 
-export default DetailReviews;
+export default ProductReviews;

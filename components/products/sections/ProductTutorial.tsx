@@ -14,14 +14,14 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
-type DetailTutorialProps = {
+type ProductTutorialProps = {
   title?: FormatText,
   content: FormatText,
   button?: NavItem,
   source: Source,
 };
 
-const DetailTutorial = (props: DetailTutorialProps) => {
+const ProductTutorial = (props: ProductTutorialProps) => {
   const { title, content, button, source } = props;
 
   return (
@@ -80,4 +80,4 @@ const DetailTutorial = (props: DetailTutorialProps) => {
   );
 };
 
-export default DetailTutorial;
+export default ProductTutorial;

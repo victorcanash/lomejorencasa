@@ -7,9 +7,9 @@ import { PageTypes } from '@core/constants/navigation';
 import { keywords } from '@lib/config/next-seo.config';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import HomeBanner from '@components/products/sections/HomeBanner';
+import ProductBanner from '@components/products/sections/ProductBanner';
 import LandingList from '@components/products/collection/LandingList';
-import DetailReviews from '@components/products/sections/DetailReviews';
+import ProductReviews from '@components/products/sections/ProductReviews';
 
 const Home: NextPage = () => {
   const _page = usePage();
@@ -29,9 +29,9 @@ const Home: NextPage = () => {
           overflow: 'hidden',
         }}
       >
-        <HomeBanner />
+        <ProductBanner />
         <LandingList />
-        <DetailReviews />
+        <ProductReviews />
       </Box>
     </>
   );

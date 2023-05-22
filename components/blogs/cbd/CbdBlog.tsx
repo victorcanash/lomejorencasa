@@ -10,7 +10,7 @@ import CustomImage from '@core/components/CustomImage';
 
 import { cbdBlogImgIds } from '@lib/constants/multimedia';
 
-const CbdInsomniaBlog = () => {
+const CbdBlog = () => {
 
   return (
     <Container>
@@ -176,4 +176,4 @@ const CbdInsomniaBlog = () => {
   );
 };
 
-export default CbdInsomniaBlog;
+export default CbdBlog;

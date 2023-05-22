@@ -1,12 +1,12 @@
 import { pages } from '@lib/constants/navigation';
 import { everfreshVideoIds } from '@lib/constants/multimedia';
-import DetailTutorial from '@components/products/sections/DetailTutorial';
+import ProductTutorial from '@components/products/sections/ProductTutorial';
 
 const BagsDetail = () => {
 
   return (
     <>
-      <DetailTutorial
+      <ProductTutorial
         title={{
           id: 'everfresh.videoComment.1.title',
         }}
@@ -26,7 +26,7 @@ const BagsDetail = () => {
         }} 
       />
 
-      <DetailTutorial
+      <ProductTutorial
         title={{
           id: 'everfresh.videoComment.2.title',
         }}
@@ -46,7 +46,7 @@ const BagsDetail = () => {
         }} 
       />
 
-      <DetailTutorial
+      <ProductTutorial
         title={{
           id: 'everfresh.videoComment.3.title',
         }}

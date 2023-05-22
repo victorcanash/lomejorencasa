@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-const HomeIntro = () => {
+const Intro = () => {
 
   return (
     <Container id="intro">
@@ -20,4 +20,4 @@ const HomeIntro = () => {
   );
 };
 
-export default HomeIntro;
+export default Intro;

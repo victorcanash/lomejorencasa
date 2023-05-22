@@ -8,7 +8,7 @@ import { homeFoodStorageImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
-const HomeFoodStorage = () => {
+const FoodStorage = () => {
 
   return (
     <Container id="foodStorage">
@@ -43,4 +43,4 @@ const HomeFoodStorage = () => {
   );
 };
 
-export default HomeFoodStorage;
+export default FoodStorage;

@@ -12,7 +12,7 @@ import { homeWhyVacuumPackedImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 
-const HomeWhyVacuumPacked = () => {
+const WhyVacuumPacked = () => {
 
   return (
     <>
@@ -118,4 +118,4 @@ const HomeWhyVacuumPacked = () => {
   );
 };
 
-export default HomeWhyVacuumPacked;
+export default WhyVacuumPacked;

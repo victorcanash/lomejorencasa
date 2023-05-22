@@ -11,7 +11,7 @@ import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 
-const HomeWhatIsVacuumPacked = () => {
+const WhatIsVacuumPacked = () => {
 
   return (
     <Container id="whatIsVacuumPacked">
@@ -48,4 +48,4 @@ const HomeWhatIsVacuumPacked = () => {
   );
 };
 
-export default HomeWhatIsVacuumPacked;
+export default WhatIsVacuumPacked;

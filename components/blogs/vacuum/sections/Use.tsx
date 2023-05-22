@@ -18,7 +18,7 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
-const HomeUse = () => {
+const Use = () => {
   const getPackingMachineStep = useCallback((index: number, source: Source) => {
     return (
       <>
@@ -246,4 +246,4 @@ const HomeUse = () => {
   );
 };
 
-export default HomeUse;
+export default Use;

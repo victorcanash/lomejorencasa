@@ -18,7 +18,7 @@ import { homeBannerImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
-const HomeConservation = () => {
+const Conservation = () => {
   const intl = useIntl();
 
   const createData = useCallback((
@@ -173,4 +173,4 @@ const HomeConservation = () => {
   );
 };
 
-export default HomeConservation;
+export default Conservation;

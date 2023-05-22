@@ -18,7 +18,7 @@ import { homePackingMachineImgIds } from '@lib/constants/multimedia';
 import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
-const HomePackingMachine = () => {
+const PackingMachine = () => {
   const getCardSx = useCallback((index: number) => {
     if (index == 0) {
       return convertElementToSx(themeCustomElements.home.packingMachine.card.first);
@@ -113,4 +113,4 @@ const HomePackingMachine = () => {
   );
 };
 
-export default HomePackingMachine;
+export default PackingMachine;

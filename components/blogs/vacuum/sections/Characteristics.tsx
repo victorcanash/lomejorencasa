@@ -17,11 +17,11 @@ import { homeCharacteristicsBgImgIds, homeCharacteristicsIconsIds, homeAdvantage
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@components/ui/Title'; 
 
-type HomeCharacteristicsProps = {
+type CharacteristicsProps = {
   type: 'characteristics' | 'advantages',
 };
 
-const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
+const Characteristics = (props: CharacteristicsProps) => {
   const { type } = props;
 
   const characteristicIcon = useCallback((
@@ -221,4 +221,4 @@ const HomeCharacteristics = (props: HomeCharacteristicsProps) => {
   );
 };
 
-export default HomeCharacteristics;
+export default Characteristics;
