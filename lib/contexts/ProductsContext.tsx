@@ -15,7 +15,6 @@ import type {
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import {
   generateLandings,
-  getFirstLandingItem,
   getLandingConfigByCartItem,
   getLandingConfigById,
   getLandingConfigByPath,
@@ -26,6 +25,7 @@ import { pages } from '@lib/constants/navigation';
 import { placeholderImgId } from '@lib/constants/multimedia';
 
 type ProductsContext = {
+  getAllLandings: () => Landing[],
   initLandings: (newLandings: Landing[]) => void,
   getLandingByPath: (path: string) => Landing | undefined,
   getLandingById: (id: number) => Landing | undefined,
@@ -41,6 +41,7 @@ type ProductsContext = {
 };
 
 const ProductsContext = createContext<ProductsContext>({
+  getAllLandings: () => [],
   initLandings: () => {},
   getLandingByPath: () => undefined,
   getLandingById: () => undefined,
@@ -65,6 +66,10 @@ export const useProductsContext = () => {
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
   const landings = useRef<Landing[]>(generateLandings(allLandingConfigs));
+
+  const getAllLandings = useCallback(() => {
+    return landings.current;
+  }, []);
 
   const initLandings = useCallback((newLandings: Landing[]) => {
     landings.current = newLandings;
@@ -126,10 +131,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   const getItemImgUrl = useCallback((item: Landing | CartItem | GuestCartCheckItem) => {
     let imgUrl = placeholderImgId;
     if ((item as Landing)?.products) {
-      const landingItem = getFirstLandingItem(item as Landing);
-      if (landingItem?.image) {
-        imgUrl = landingItem.image;
-      }
+      imgUrl = (item as Landing).images[0];
     } else {
       const cartItem = item as CartItem | GuestCartCheckItem;
       if (cartItem.inventory?.image) {
@@ -196,6 +198,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   return (
     <ProductsContext.Provider
       value={{
+        getAllLandings,
         initLandings,
         getLandingByPath,
         getLandingById,

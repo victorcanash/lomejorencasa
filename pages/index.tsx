@@ -5,10 +5,12 @@ import { PageTypes } from '@core/constants/navigation';
 import { keywords } from '@lib/config/next-seo.config';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import EverfreshHome from '@components/products/home';
+import HomeBanner from '@components/products/sections/HomeBanner';
+import LandingList from '@components/products/collection/LandingList';
+import DetailReviews from '@components/products/sections/DetailReviews';
 
 const Home: NextPage = () => {
-  const page = usePage();
+  const _page = usePage();
 
   return (
     <>
@@ -20,7 +22,9 @@ const Home: NextPage = () => {
         }}
       />
 
-      <EverfreshHome />
+      <HomeBanner />
+      <LandingList />
+      <DetailReviews />
     </>
   );
 };

@@ -11,7 +11,7 @@ import HomeFoodStorage from '@components/products/sections/HomeFoodStorage';
 import HomeConservation from '@components/products/sections/HomeConservation';
 import DetailReviews from '@components/products/sections/DetailReviews';
 
-const EverfreshHome = () => {
+const VacuumPackedBlog = () => {
 
   return (
     <Box 
@@ -19,8 +19,6 @@ const EverfreshHome = () => {
         overflow: 'hidden',
       }}
     >
-      <HomeBanner />
-
       <HomeIntro />
 
       <HomePackingMachine />
@@ -48,4 +46,4 @@ const EverfreshHome = () => {
   );
 };
 
-export default EverfreshHome;
+export default VacuumPackedBlog;

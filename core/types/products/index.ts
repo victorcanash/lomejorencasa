@@ -36,6 +36,7 @@ export type LandingConfig = {
     },
   },
   product?: {
+    name?: LocalizedText,
     selectInputTexts?: {
       label: FormatText,
       content?: FormatText,

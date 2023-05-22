@@ -124,6 +124,11 @@ const inventoryConfig: {
       },
     },
     product: {
+      name: {
+        en: 'Box of 10 vacuum bags with valve',
+        es: 'Paquete de 10 bolsas de vacío con válvula',
+        current: 'Paquete de 10 bolsas de vacío con válvula',
+      },
       selectInputTexts: {
         label: {
           id: 'forms.size',
