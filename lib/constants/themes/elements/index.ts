@@ -398,7 +398,7 @@ export const themeCustomElements: ThemeCustomElements = {
         highlight: {
           border: {
             default: {
-              border: `2px solid ${colors.border.dividerDrawer}`,
+              border: `4px solid ${colors.border.dividerDrawer}`,
             },
           },
         },
