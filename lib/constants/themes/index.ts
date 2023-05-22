@@ -50,6 +50,7 @@ const themeOptions: ThemeOptions = {
   },
 
   palette: {
+    mode: 'light',
     primary: {
       main: themeDefaultElements.default.palette.backgroundColor.primary,
     },
