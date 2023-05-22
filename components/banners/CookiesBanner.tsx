@@ -2,6 +2,7 @@ import { ChangeEvent, useState, useCallback, useEffect } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { setCookie, getCookie } from 'cookies-next';
+import { OptionsType } from 'cookies-next/lib/types';
 
 import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
@@ -24,6 +25,7 @@ import type { Consents } from '@core/types/cookies';
 import { consentFBEvents } from '@core/utils/facebook';
 import { consentGTMEvents } from '@core/utils/gtm';
 import { convertElementToSx } from '@core/utils/themes';
+import { subtractYears } from '@core/utils/dates';
 import Link from '@core/components/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -52,29 +54,39 @@ const CookiesBanner = (props: CookiesBannerProps) => {
     consentGTMEvents(consents.analytic);
     onConsentCookies();
     setOpen(false);
+    const options: OptionsType = {
+      expires: subtractYears(-1),
+      sameSite: true,
+    };
     setCookie(
       ConsentKey,
       ConsentValues.accepted,
+      options,
     );
     setCookie(
       FunctionalConsentKey,
       consents.functional ? ConsentValues.accepted : ConsentValues.refused,
+      options,
     );
     setCookie(
       AnalyticConsentKey,
       consents.analytic ? ConsentValues.accepted : ConsentValues.refused,
+      options,
     );
     setCookie(
       PerformanceConsentKey,
       consents.performance ? ConsentValues.accepted : ConsentValues.refused,
+      options,
     );
     setCookie(
       AdConsentKey,
       consents.ad ? ConsentValues.accepted : ConsentValues.refused,
+      options,
     );
     setCookie(
       WithoutCategoryConsentKey,
       consents.withoutCategory ? ConsentValues.accepted : ConsentValues.refused,
+      options,
     );
   }, [onConsentCookies]);
 
