@@ -82,7 +82,7 @@ function MyApp(props: MyAppProps) {
     if (analyticConsentValue === ConsentValues.accepted) {
       setTimeout(() => {
         consentGTMEvents(true);
-      }, 1000);
+      }, 3000);
     }
   };
 
