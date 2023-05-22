@@ -49,6 +49,7 @@ const CbdBlog = () => {
         >
           <CustomImage
             src={cbdBlogImgIds[0]}
+            alt="cbd"
             width="5737"
             height="3825"
             layout="responsive"
@@ -86,13 +87,16 @@ const CbdBlog = () => {
                 maxWidth: '300px',
               }} 
             >
-              <CustomImage
-                src={cbdBlogImgIds[1]}
-                width="300"
-                height="300"
-                layout="responsive"
-                objectFit="cover"
-              />
+              <Link href="https://www.sensitivecbd.com/" target="_blank">
+                <CustomImage
+                  src={cbdBlogImgIds[1]}
+                  alt="cbd"
+                  width="300"
+                  height="300"
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </Link>
             </Box>
           </Grid>
         </Grid>
@@ -126,13 +130,16 @@ const CbdBlog = () => {
                 },
               }} 
             >
-              <CustomImage
-                src={cbdBlogImgIds[2]}
-                width="693"
-                height="520"
-                layout="responsive"
-                objectFit="cover"
-              />
+              <Link href="https://www.sensitivecbd.com/" target="_blank">
+                <CustomImage
+                  src={cbdBlogImgIds[2]}
+                  alt="cbd"
+                  width="693"
+                  height="520"
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </Link>
               <Box>
                 <Link href="https://www.sensitivecbd.com/" variant="body1Head" target="_blank">
                   <FormattedMessage id="cbdBlog.packed.link" />
