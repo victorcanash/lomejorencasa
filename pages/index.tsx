@@ -1,5 +1,7 @@
 import type { NextPage } from 'next';
 
+import Box from '@mui/material/Box';
+
 import { PageTypes } from '@core/constants/navigation';
 
 import { keywords } from '@lib/config/next-seo.config';
@@ -22,9 +24,15 @@ const Home: NextPage = () => {
         }}
       />
 
-      <HomeBanner />
-      <LandingList />
-      <DetailReviews />
+      <Box 
+        sx={{
+          overflow: 'hidden',
+        }}
+      >
+        <HomeBanner />
+        <LandingList />
+        <DetailReviews />
+      </Box>
     </>
   );
 };
