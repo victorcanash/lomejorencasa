@@ -98,7 +98,7 @@ const inventoryConfig: {
       id: 'bags.comment',
     },
     images: [
-      'v1682517414/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul_irxx9g.jpg',
+      'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
     ],
@@ -267,7 +267,7 @@ const inventoryConfig: {
       id: 'bags.comment',
     },
     images: [
-      'v1682517414/laenvasadora/LANDING%20PAGE/Foto_bolsas_detalle_cuadrada_jcsiul_irxx9g.jpg',
+      'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1682517407/laenvasadora/LANDING%20PAGE/bolsas_ayqf6k_hmc4ka.jpg',
       'v1680692777/laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
     ],
