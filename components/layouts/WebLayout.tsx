@@ -20,8 +20,6 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
     const path = window.location.hash;
     if (path && path.includes('#')) {
       scrollToSection();
-    } else {
-      window.scrollTo(0, 0);
     }
   }, []);
 

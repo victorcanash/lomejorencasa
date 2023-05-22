@@ -27,7 +27,7 @@ export const NextLinkComposed = forwardRef<HTMLAnchorElement, NextLinkComposedPr
         prefetch={prefetch}
         as={linkAs}
         replace={replace}
-        scroll={scroll || false}
+        scroll={scroll}
         shallow={shallow}
         passHref
         locale={locale}

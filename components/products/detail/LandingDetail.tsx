@@ -121,6 +121,7 @@ const LandingDetail = (props: ProductDetailProps) => {
       <Link
         href={getLandingPathByConfig(landingConfig)}
         onClick={() => scrollToSection('reviews')}
+        scroll={false}
         sx={{ textDecoration: 'none' }}
       >
         <Grid container>
