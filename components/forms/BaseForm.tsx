@@ -27,11 +27,13 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
 import { FormFieldTypes } from '@core/constants/forms';
-import type { FormField } from '@core/types/forms';
+import type {
+  FormField,
+  FormBase,
+} from '@core/types/forms';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
-import type { FormBase, FormButtonsNormal, FormButtonsCheckout } from '@lib/types/forms';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 
 const BaseForm = (props: FormBase) => {
@@ -65,14 +67,6 @@ const BaseForm = (props: FormBase) => {
     }
   };
 
-  const formButtonsNormal = () => {
-    return formButtons as FormButtonsNormal;
-  };
-
-  const formButtonsCheckout = () => {
-    return formButtons as FormButtonsCheckout;
-  };
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (values: any, formikHelpers: FormikHelpers<any>) => {
     let dirty = false;
@@ -89,23 +83,19 @@ const BaseForm = (props: FormBase) => {
   };
 
   const handleDelete = () => {
-    if (formButtonsNormal().delete?.confirm?.enabled) {
+    if (formButtons?.delete?.confirm?.enabled) {
       handleDialog();
     } else {
-      formButtonsNormal().delete?.onClick();
+      formButtons?.delete?.onClick();
     }
   };
 
   const onConfirmDelete = () => {
-    formButtonsNormal().delete?.onClick();
+    formButtons?.delete?.onClick();
   };
 
   const handleCancel = () => {
-    formButtonsNormal().cancel?.onClick();
-  };
-
-  const handleBack = () => {
-    formButtonsCheckout().back?.onClick();
+    formButtons?.cancel?.onClick();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -392,37 +382,18 @@ const BaseForm = (props: FormBase) => {
                 </Grid>
               }
 
-              { (formButtons?.submit || 
-                 formButtonsNormal()?.delete || 
-                 formButtonsNormal()?.cancel ||
-                 formButtonsCheckout()?.back) &&
+              {(
+                formButtons?.submit ||
+                formButtons?.delete ||
+                formButtons?.cancel
+              ) &&
                 <Grid 
                   container
-                  spacing={formButtonsCheckout()?.back ? 5 : undefined}
                 >
-                  { formButtonsCheckout()?.back &&
-                    <Grid item xs={6}>
-                      <Button
-                        fullWidth
-                        variant="contained"
-                        sx={{
-                          ...formButtonsCheckout().back.sx,
-                          mb: 2,
-                        }}
-                        onClick={handleBack}
-                        disabled={formButtonsCheckout().back.disabled}
-                      >
-                        <FormattedMessage 
-                          id={formButtonsCheckout().back.text.id}
-                          values={formButtonsCheckout().back.text.values}
-                        />
-                      </Button>
-                    </Grid>
-                  }
-                  { formButtons?.submit &&
+                  { formButtons.submit &&
                     <Grid 
                       item 
-                      xs={formButtonsCheckout()?.back ? 6 : 12}
+                      xs={12}
                     >
                       <Button
                         type="submit"
@@ -441,40 +412,40 @@ const BaseForm = (props: FormBase) => {
                       </Button>
                     </Grid>
                   }
-                  { formButtonsNormal()?.delete &&
+                  { formButtons.delete &&
                     <Grid item xs={12}>
                       <Button
                         fullWidth
                         variant="contained"
                         sx={{
-                          ...formButtonsNormal().delete?.sx,
+                          ...formButtons.delete.sx,
                           mb: 2,
                         }}
                         onClick={handleDelete}
-                        disabled={formButtonsNormal().delete?.disabled}
+                        disabled={formButtons.delete.disabled}
                       >
                         <FormattedMessage 
-                          id={formButtonsNormal().delete?.text.id}
-                          values={formButtonsNormal().delete?.text.values}
+                          id={formButtons.delete.text.id}
+                          values={formButtons.delete.text.values}
                         />
                       </Button>
                     </Grid>
                   }
-                  { formButtonsNormal()?.cancel &&
+                  { formButtons.cancel &&
                     <Grid item xs={12}>
                       <Button
                         fullWidth
                         variant="contained"
                         sx={{
-                          ...formButtonsNormal().cancel?.sx,
+                          ...formButtons.cancel.sx,
                           mb: 2,
                         }}
                         onClick={handleCancel}
-                        disabled={formButtonsNormal().cancel?.disabled}
+                        disabled={formButtons.cancel.disabled}
                       >
                         <FormattedMessage 
-                          id={formButtonsNormal().cancel?.text.id}
-                          values={formButtonsNormal().cancel?.text.values}
+                          id={formButtons.cancel.text.id}
+                          values={formButtons.cancel.text.values}
                         />
                       </Button>
                     </Grid>
@@ -516,7 +487,7 @@ const BaseForm = (props: FormBase) => {
         )}
       </Formik>
 
-      { formButtonsNormal()?.delete?.confirm?.enabled &&
+      { formButtons?.delete?.confirm?.enabled &&
         <ConfirmDialog
           open={openDialog}
           handleDialog={handleDialog}

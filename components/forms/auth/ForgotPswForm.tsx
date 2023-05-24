@@ -3,7 +3,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { FormFieldTypes } from '@core/constants/forms';
 
 import { pages } from '@lib/constants/navigation';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
@@ -52,7 +51,7 @@ const ForgotPswForm = () => {
           },
           onSubmit: handleSubmit,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
       linksItems={[

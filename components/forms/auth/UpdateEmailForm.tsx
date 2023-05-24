@@ -1,7 +1,6 @@
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthUpdateEmail } from '@core/types/auth';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
@@ -51,7 +50,7 @@ const UpdateEmailForm = () => {
           },
           onSubmit: handleSubmit,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

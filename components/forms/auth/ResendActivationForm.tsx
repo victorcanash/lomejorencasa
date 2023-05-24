@@ -5,7 +5,6 @@ import { useIntl } from 'react-intl';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useAuth from '@lib/hooks/useAuth';
 import useCountdown from '@lib/hooks/useCountdown';
 import BaseForm from '@components/forms/BaseForm';
@@ -62,7 +61,7 @@ const ResendActivationForm = (props: ResendActivationFormProps) => {
           onSubmit: handleSubmit,
           disabled: active,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

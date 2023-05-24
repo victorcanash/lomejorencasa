@@ -7,7 +7,6 @@ import type { User, UserContact } from '@core/types/user';
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';
@@ -99,7 +98,7 @@ const UserContactForm = () => {
           onSubmit: handleSubmit,
           disabled: !acceptPolicy,
         },
-      } as FormButtonsNormal}
+      }}
       linksItems={[
         {
           text: {

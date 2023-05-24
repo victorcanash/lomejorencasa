@@ -1,6 +1,5 @@
 import { FormFieldTypes } from '@core/constants/forms';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import BaseForm from '@components/forms/BaseForm';
 
@@ -42,7 +41,7 @@ const ManagePPackInventoryForm = (props: ManagePPackInventoryFormProps) => {
           },
           onSubmit: handleSubmit,
         },
-      } as FormButtonsNormal}
+      }}
     />
   );
 };

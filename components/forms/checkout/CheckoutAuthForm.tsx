@@ -13,7 +13,6 @@ import type { AuthLogin } from '@core/types/auth';
 
 import { pages } from '@lib/constants/navigation';
 import colors from '@lib/constants/themes/colors';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
@@ -77,7 +76,7 @@ const CheckoutAuthForm: NextPage = () => {
                 },
                 onSubmit: handleLoginSubmit,
               },
-            } as FormButtonsNormal}
+            }}
             errorMsg={errorMsg}
             linksItems={[
               {

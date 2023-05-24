@@ -2,7 +2,6 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { User } from '@core/types/user';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';
@@ -67,7 +66,7 @@ const UserUpdateForm = () => {
           },
           onSubmit: handleSubmit,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

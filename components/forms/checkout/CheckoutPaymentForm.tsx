@@ -21,7 +21,6 @@ import TextField from '@mui/material/TextField';
 import type { FormatText } from '@core/types/texts';
 
 import { paypalHostedFieldsSx } from '@lib/constants/themes/elements';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import BaseForm from '@components/forms/BaseForm';
 
@@ -179,7 +178,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
           onSubmit: handleAdvancedCardsSubmit,
           disabled: !advancedCardsInstance,
         },
-      } as FormButtonsNormal : undefined}
+      } : undefined}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

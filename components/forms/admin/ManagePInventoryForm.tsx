@@ -2,7 +2,6 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { ProductInventory, Product } from '@core/types/products';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useProducts from '@lib/hooks/useProducts';
 import BaseForm from '@components/forms/BaseForm';
@@ -149,7 +148,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
           },
           onClick: handleCancelBtn,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

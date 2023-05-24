@@ -3,7 +3,6 @@
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Order, OrderFailedSendEmail } from '@core/types/orders';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useOrders from '@lib/hooks/useOrders';
 import BaseForm from '@components/forms/BaseForm';
@@ -93,7 +92,7 @@ const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
           },
           onClick: handleCancelBtn,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

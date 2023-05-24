@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
 
@@ -35,7 +34,7 @@ const ConfirmNewEmailForm = () => {
           },
           onSubmit: handleSubmit,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

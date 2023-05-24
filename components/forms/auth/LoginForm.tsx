@@ -9,7 +9,6 @@ import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthLogin } from '@core/types/auth';
 
 import { pages } from '@lib/constants/navigation';
-import type { FormButtonsNormal } from '@lib/types/forms';
 // import { useAppContext } from '@lib/contexts/AppContext';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
@@ -69,7 +68,7 @@ const LoginForm = () => {
             },
             onSubmit: handleSubmit,
           },
-        } as FormButtonsNormal}
+        }}
         errorMsg={errorMsg}
         linksItems={[
           {

@@ -11,7 +11,6 @@ import Typography from '@mui/material/Typography';
 import { FormFieldTypes } from '@core/constants/forms';
 
 import colors from '@lib/constants/themes/colors';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
@@ -62,7 +61,7 @@ const CheckoutCouponForm: NextPage = () => {
                 },
                 onSubmit: handleCouponSubmit,
               },
-            } as FormButtonsNormal}
+            }}
             errorMsg={errorMsg}
           />
         </AccordionDetails>

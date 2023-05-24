@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthResetPsw } from '@core/types/auth';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
@@ -58,7 +57,7 @@ const ResetPswForm = () => {
           },
           onSubmit: handleSubmit,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

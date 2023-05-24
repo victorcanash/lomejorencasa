@@ -13,7 +13,6 @@ import { AddressTypes } from '@core/constants/addresses';
 import type { Order, OrderFailedCreate } from '@core/types/orders';
 import type { GuestCartItem } from '@core/types/cart';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useOrders from '@lib/hooks/useOrders';
 import BaseForm from '@components/forms/BaseForm';
@@ -152,7 +151,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
             },
             onClick: handleCancelBtn,
           },
-        } as FormButtonsNormal}
+        }}
         successMsg={successMsg}
         errorMsg={errorMsg}
       />

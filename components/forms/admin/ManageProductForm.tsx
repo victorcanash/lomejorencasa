@@ -2,7 +2,6 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Product } from '@core/types/products';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import useForms from '@lib/hooks/useForms';
 import useProducts from '@lib/hooks/useProducts';
@@ -139,7 +138,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
             },
             onClick: handleCancelBtn,
           },
-        } as FormButtonsNormal}
+        }}
         successMsg={successMsg}
         errorMsg={errorMsg}
       />

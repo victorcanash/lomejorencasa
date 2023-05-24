@@ -4,7 +4,6 @@ import { FormFieldTypes } from '@core/constants/forms';
 import { OrderEmailTypes } from '@core/constants/admin';
 import type { Order, OrderSendEmail } from '@core/types/orders';
 
-import type { FormButtonsNormal } from '@lib/types/forms';
 import useForms from '@lib/hooks/useForms';
 import useOrders from '@lib/hooks/useOrders';
 import BaseForm from '@components/forms/BaseForm';
@@ -102,7 +101,7 @@ const SendOrderEmailForm = (props: SendOrderEmailFormProps) => {
           },
           onClick: handleCancelBtn,
         },
-      } as FormButtonsNormal}
+      }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />

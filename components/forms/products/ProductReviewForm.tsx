@@ -18,7 +18,6 @@ import { getPackGeneralName } from '@core/utils/products';
 
 import { allLandingConfigs } from '@lib/constants/products';
 import colors from '@lib/constants/themes/colors';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
@@ -171,7 +170,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
               },
               onSubmit: handleSubmit,
             },
-          } as FormButtonsNormal}
+          }}
           successMsg={successMsg}
           errorMsg={errorMsg}
         />
