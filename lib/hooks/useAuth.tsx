@@ -52,11 +52,11 @@ const useAuth = () => {
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
-  const register = async (authRegister: AuthRegister, onSuccess?: (email: string) => void) => {
+  const register = async (authRegister: AuthRegister) => {
     setErrorMsg('');
     setLoading(true);
     registerUser(intl.locale, authRegister).then(() => {
-      onRegisterSuccess(authRegister, onSuccess);
+      onRegisterSuccess(authRegister);
     }).catch((error: Error) => {
       sendCompleteRegistrationEvent(false);
       let errorMsg = error.message;
@@ -70,23 +70,20 @@ const useAuth = () => {
     })
   };
 
-  const onRegisterSuccess = async (authRegister: AuthRegister, onSuccess?: (email: string) => void) => {
+  const onRegisterSuccess = async (authRegister: AuthRegister) => {
     /*await sendUserActivationEmail(intl.locale, email, pages.activation);
-    if (onSuccess) {
-      onSuccess(email);
-    }
     setLoading(false);*/
     sendCompleteRegistrationEvent(true);
     await login({ email: authRegister.email, password: authRegister.password, remember: true})
   };
 
-  const login = async (authLogin: AuthLogin, redirectUrl = true/*onFailByActivation: (email: string) => void*/) => {
+  const login = async (authLogin: AuthLogin, redirectUrl = true) => {
     setLoading(true);
     loginUser(authLogin, isLogged() ? undefined : cart)
       .then((response: {token: string, user: User, cart: Cart}) => {
         onLoginSuccess(response.token, response.user, response.cart, redirectUrl);
       }).catch((error: Error) => {
-        onLoginError(error, /*onFailByActivation, authLogin.email*/);
+        onLoginError(error, authLogin.email);
       });
   };
 
@@ -115,12 +112,12 @@ const useAuth = () => {
     }
   };
 
-  const onLoginError = (error: Error/*, onFailByActivation?: (email: string) => void, authEmail?: string*/) => {
+  const onLoginError = (error: Error, authEmail?: string) => {
     let errorMsg = error.message;
     if (errorMsg.includes('activate')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.activation' });
-      /*if (onFailByActivation) {
-        onFailByActivation(authEmail || '');
+      /*if (authEmail) {
+        router.push(`${pages.resendActivation.path}?email=${authEmail}`);
       }*/
     } else if (errorMsg.includes('email')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.email' });
@@ -128,13 +125,13 @@ const useAuth = () => {
       errorMsg = intl.formatMessage({ id: 'login.errors.password' });
     } else if (errorMsg.includes('locked out')) {
       errorMsg = intl.formatMessage({ id: 'login.errors.lockedOut' });
-    } /*else if (errorMsg.includes('provider')) {
-      if (onFailByActivation) {
+    } else if (errorMsg.includes('provider')) {
+      if (authEmail) {
         errorMsg = intl.formatMessage({ id: 'login.errors.provider.google' });
       } else {
         errorMsg = intl.formatMessage({ id: 'login.errors.provider.manual' });
       }
-    }*/ else {
+    } else {
       errorMsg = intl.formatMessage({ id: 'app.errors.default' });
     }
     setErrorMsg(errorMsg);

@@ -30,6 +30,7 @@ export const pages: {
   login: Page,
   register: Page,
   forgot: Page,
+  resendActivation: Page,
   
   contact: Page,
   resolutions: Page,
@@ -221,6 +222,15 @@ export const pages: {
   forgot: {
     path: '/forgot',
     filepath: '/forgot',
+    protection: Protections.none,
+    type: PageTypes.main,
+    savePathOnLogin: {
+      enabled: false,
+    },
+  },
+  resendActivation: {
+    path: '/resend-activation',
+    filepath: '/resend-activation',
     protection: Protections.none,
     type: PageTypes.main,
     savePathOnLogin: {

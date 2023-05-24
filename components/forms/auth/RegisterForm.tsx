@@ -18,13 +18,7 @@ import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
 // import GoogleLogin from '@components/google/GoogleLogin';
 
-type RegisterFormProps = {
-  onSuccess: (email: string) => void,
-}
-
-const RegisterForm = (props: RegisterFormProps) => {
-  const { onSuccess } = props;
-
+const RegisterForm = () => {
   // const { initialized } = useAppContext();
 
   const { registerFormValidation, userFieldsInitValues } = useForms();
@@ -33,7 +27,7 @@ const RegisterForm = (props: RegisterFormProps) => {
   const [acceptPolicy, setAcceptPolicy] = useState(false);
 
   const handleSubmit = async (values: AuthRegister) => {
-    register(values, onSuccess);
+    register(values);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

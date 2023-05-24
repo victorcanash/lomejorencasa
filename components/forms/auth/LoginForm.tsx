@@ -16,20 +16,14 @@ import useAuth from '@lib/hooks/useAuth';
 import BaseForm from '@components/forms/BaseForm';
 // import GoogleLogin from '@components/google/GoogleLogin';
 
-type LoginFormProps = {
-  onFailByActivation: (email: string) => void,
-}
-
-const LoginForm = (props: LoginFormProps) => {
-  const { onFailByActivation } = props;
-
+const LoginForm = () => {
   // const { initialized } = useAppContext();
 
   const { loginFormValidation, userFieldsInitValues } = useForms();
   const { login, /*loginGoogle, */errorMsg } = useAuth();
 
   const handleSubmit = async (values: AuthLogin) => {
-    login(values, /*onFailByActivation*/);
+    login(values);
   };
 
   const maxWidth = '500px';
