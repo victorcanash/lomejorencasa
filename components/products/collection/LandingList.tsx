@@ -99,61 +99,66 @@ const LandingList = () => {
 
   return (
     <Container>
-      <Title
-        type="h2"
-        texts={{
-          title: {
-            id: 'productList.allCategories',
-          },
-        }}
-        divider={true}
-      />
+      <Box 
+        maxWidth="md"
+        m="auto"
+      >
+        <Title
+          type="h2"
+          texts={{
+            title: {
+              id: 'productList.allCategories',
+            },
+          }}
+          divider={true}
+        />
 
-      { getAllLandings().length > 0 ?
-        <Masonry columns={{ xs: 1, xs_sm: 2, sm_md: 3, lg: 4 }} spacing={2}>
-          {getAllLandings().map((item, index) => (
-            <Box
-              key={index}
-            >
-              <Card>
-                <CardActionArea component={Link} href={getLandingPath(item.id)} noLinkStyle>
-                  <CardMedia>
-                    <Box>
-                      <CustomImage
-                        src={getItemImgUrl(item)}
-                        width="1080"
-                        height="1080"
-                        layout="responsive" 
-                        objectFit="cover"
-                        priority
-                      />
-                    </Box>
-                  </CardMedia>
-                  
-                  <CardContent>
-                    <Box>
-                      { landingName(item) }
-                      { landingPrice(item) }
-                    </Box>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Box>
-          ))}
-        </Masonry>
-        :
-        <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
-          <FormattedMessage
-            id="productList.noItems"
-          />
-        </Typography>
-      }
+        { getAllLandings().length > 0 ?
+          <Masonry columns={{ xs: 1, xs_sm: 2, sm_md: 3 }} spacing={2}>
+            {getAllLandings().map((item, index) => (
+              <Box
+                key={index}
+              >
+                <Card>
+                  <CardActionArea component={Link} href={getLandingPath(item.id)} noLinkStyle>
+                    <CardMedia>
+                      <Box>
+                        <CustomImage
+                          src={getItemImgUrl(item)}
+                          width="1080"
+                          height="1080"
+                          layout="responsive" 
+                          objectFit="cover"
+                          priority
+                        />
+                      </Box>
+                    </CardMedia>
+                    
+                    <CardContent>
+                      <Box>
+                        { landingName(item) }
+                        { landingPrice(item) }
+                      </Box>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Box>
+            ))}
+          </Masonry>
+          :
+          <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
+            <FormattedMessage
+              id="productList.noItems"
+            />
+          </Typography>
+        }
 
-      {/*<Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        onChangePage={handleChangePage}
-      />*/}
+        {/*<Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onChangePage={handleChangePage}
+        />*/}
+      </Box>
     </Container>
   );
 };
