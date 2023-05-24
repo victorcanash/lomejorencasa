@@ -9,25 +9,18 @@ import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { FormFieldTypes } from '@core/constants/forms';
 import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import { convertElementToSx } from '@core/utils/themes';
 import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
-// import colors from '@lib/constants/themes/colors';
 import { pages } from '@lib/constants/navigation';
-import { themeCustomElements } from '@lib/constants/themes/elements';
-import type { FormButtonsNormal } from '@lib/types/forms';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useForms from '@lib/hooks/useForms';
-import useAuth from '@lib/hooks/useAuth';
-import BaseForm from '@components/forms/BaseForm';
 import SelectItemQuantity from '@components/products/inputs/SelectItemQuantity'
+import ProductCouponForm from '@components/forms/products/ProductCouponForm';
 
 type CartItemDetailProps = {
   item: CartItem | GuestCartCheckItem,
@@ -55,9 +48,6 @@ const CartItemDetail = (props: CartItemDetailProps) => {
 
   const intl = useIntl();
 
-  const { couponFormValidation, couponFieldsInitValues } = useForms();
-  const { applyCoupon, errorMsg } = useAuth();
-
   const [selectedQuantity, setSelectedQuantity] = useState(item.quantity);
   const [availableQuantity, setAvailableQuantity] = useState(true);
 
@@ -72,10 +62,6 @@ const CartItemDetail = (props: CartItemDetailProps) => {
       updateQuantity(item as CartItem, quantity);
     }
   }, [item, updateQuantity]);
-
-  const handleCouponSubmit = useCallback(async (_values: { couponCode: string }) => {
-    applyCoupon();
-  }, [applyCoupon]);
 
   const checkAvailableQuantity = useCallback(() => {
     if ((item as CartItem)?.cartId) {
@@ -249,32 +235,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
           {/* Product Coupon Form */}
           { page === pages.cart &&
             <Box mt={-1} mb={1}>
-              <BaseForm
-                initialValues={couponFieldsInitValues}
-                validationSchema={couponFormValidation}
-                formFieldGroups={[
-                  {
-                    formFields: [
-                      {
-                        name: 'couponCode',
-                        type: FormFieldTypes.text,
-                        required: true,
-                      },
-                    ],
-                    formFieldsMb: 1,
-                  }
-                ]}
-                formButtons={{
-                  submit: {
-                    text: {
-                      id: 'cart.coupon.successBtn',
-                    },
-                    disabled: !availableQuantity,
-                    onSubmit: handleCouponSubmit,
-                    sx: convertElementToSx(themeCustomElements.button.action.secondary),
-                  },
-                } as FormButtonsNormal}
-                errorMsg={errorMsg}
+              <ProductCouponForm
+                disabled={!availableQuantity}
               />
             </Box>
           }
