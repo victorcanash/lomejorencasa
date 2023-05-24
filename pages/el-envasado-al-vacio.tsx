@@ -5,9 +5,9 @@ import { PageTypes } from '@core/constants/navigation';
 import { keywords } from '@lib/config/next-seo.config';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import VacuumBlogComponent from '@components/blogs/vacuum';
+import VacuumBlog from '@components/blogs/vacuum';
 
-const VacuumBlog: NextPage = () => {
+const VacuumBlogPage: NextPage = () => {
   const page = usePage();
 
   return (
@@ -26,9 +26,9 @@ const VacuumBlog: NextPage = () => {
         }}
       />
 
-      <VacuumBlogComponent />
+      <VacuumBlog />
     </>
   );
 };
 
-export default VacuumBlog;
+export default VacuumBlogPage;

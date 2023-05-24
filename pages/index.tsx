@@ -1,19 +1,14 @@
 import type { NextPage } from 'next';
 
-import Box from '@mui/material/Box';
-
 import { PageTypes } from '@core/constants/navigation';
 
 import { keywords } from '@lib/config/next-seo.config';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import ProductBanner from '@components/products/sections/ProductBanner';
-import LandingList from '@components/products/collection/LandingList';
-import BlogsList from '@components/blogs/BlogsList';
-import ProductReviews from '@components/products/sections/ProductReviews';
+import Home from '@components/home';
 
-const Home: NextPage = () => {
-  const _page = usePage();
+const HomePage: NextPage = () => {
+  const page = usePage();
 
   return (
     <>
@@ -25,18 +20,9 @@ const Home: NextPage = () => {
         }}
       />
 
-      <Box 
-        sx={{
-          overflow: 'hidden',
-        }}
-      >
-        <ProductBanner />
-        <LandingList />
-        <BlogsList />
-        <ProductReviews />
-      </Box>
+      <Home />
     </>
   );
 };
 
-export default Home;
+export default HomePage;

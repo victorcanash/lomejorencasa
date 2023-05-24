@@ -12,16 +12,16 @@ import useFacebook from '@lib/hooks/useFacebook';
 import PageHeader from '@components/ui/PageHeader';
 import LandingDetail from '@components/products/detail';
 
-type LandingProps = {
+type LandingPageProps = {
   path: string,
 };
 
-const Landing: NextPage<LandingProps> = (props) => {
+const LandingPage: NextPage<LandingPageProps> = (props) => {
   const { path } = props;
 
   const { getLandingByPath } = useProductsContext();
 
-  const _page = usePage();
+  const page = usePage();
 
   const { sendViewContentEvent } = useFacebook();
 
@@ -58,9 +58,9 @@ const Landing: NextPage<LandingProps> = (props) => {
   );
 };
 
-export default Landing;
+export default LandingPage;
 
-interface ILandingParams extends ParsedUrlQuery {
+interface ILandingPageParams extends ParsedUrlQuery {
   landing: string
 };
 
@@ -69,7 +69,7 @@ export const getStaticPaths: GetStaticPaths = () => {
     return {
       params: {
         landing: landingConfig.path,
-      } as ILandingParams,
+      } as ILandingPageParams,
     };
   });
   return {
@@ -79,10 +79,10 @@ export const getStaticPaths: GetStaticPaths = () => {
 };
 
 export const getStaticProps: GetStaticProps = (context) => {
-  const { landing } = context.params as ILandingParams;
+  const { landing } = context.params as ILandingPageParams;
   return {
     props: {
       path: landing,
-    } as LandingProps,
+    } as LandingPageProps,
   };
 };

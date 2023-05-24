@@ -5,7 +5,7 @@ import { injectIntl, IntlShape } from 'react-intl';
 import { PageTypes } from '@core/constants/navigation';
 
 import PageHeader from '@components/ui/PageHeader';
-import ErrorPage from '@components/exceptions/ErrorPage';
+import ErrorView from '@components/exceptions/ErrorView';
 
 type ErrorBoundaryProps = {
   children: React.ReactNode,
@@ -39,7 +39,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
             marginTop={true}
           />
 
-          <ErrorPage title={this.props.intl.formatMessage({ id: 'error.h1' })}/>
+          <ErrorView title={this.props.intl.formatMessage({ id: 'error.h1' })}/>
         </>
       );
     }

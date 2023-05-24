@@ -8,8 +8,8 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import RegisterForm from '@components/forms/auth/RegisterForm';
 
-const Register: NextPage = () => { 
-  const _page = usePage();
+const RegisterPage: NextPage = () => { 
+  const page = usePage();
 
   return (
     <>
@@ -31,4 +31,4 @@ const Register: NextPage = () => {
   );
 };
 
-export default Register;
+export default RegisterPage;

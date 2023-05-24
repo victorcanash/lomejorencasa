@@ -8,8 +8,8 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import LoginForm from '@components/forms/auth/LoginForm';
 
-const Login: NextPage = () => { 
-  const _page = usePage();
+const LoginPage: NextPage = () => { 
+  const page = usePage();
 
   return (
     <>
@@ -31,4 +31,4 @@ const Login: NextPage = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

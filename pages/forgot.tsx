@@ -8,7 +8,7 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
 
-const Forgot: NextPage = () => { 
+const ForgotPage: NextPage = () => { 
   const page = usePage();
 
   return (
@@ -31,4 +31,4 @@ const Forgot: NextPage = () => {
   )
 };
 
-export default Forgot;
+export default ForgotPage;

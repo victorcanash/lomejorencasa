@@ -2,9 +2,9 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import CbdBlogComponent from '@components/blogs/cbd';
+import CbdBlog from '@components/blogs/cbd';
 
-const CbdBlog = () => {
+const CbdBlogPage = () => {
   const page = usePage();
 
   return (
@@ -23,9 +23,9 @@ const CbdBlog = () => {
         }}
       />
 
-      <CbdBlogComponent />
+      <CbdBlog />
     </>
   );
 };
 
-export default CbdBlog;
+export default CbdBlogPage;

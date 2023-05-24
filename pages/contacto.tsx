@@ -8,7 +8,7 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import UserContactForm from '@components/forms/user/UserContactForm';
 
-const Contact: NextPage = () => {
+const ContactPage: NextPage = () => {
   const page = usePage();
 
   return (
@@ -34,4 +34,4 @@ const Contact: NextPage = () => {
   );
 };
 
-export default Contact;
+export default ContactPage;

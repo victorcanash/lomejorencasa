@@ -8,7 +8,7 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import UserResolutionsForm from '@components/forms/user/UserResolutionsForm';
 
-const Resolutions: NextPage = () => {
+const ResolutionsPage: NextPage = () => {
   const page = usePage();
 
   return (
@@ -36,4 +36,4 @@ const Resolutions: NextPage = () => {
   );
 };
 
-export default Resolutions;
+export default ResolutionsPage;

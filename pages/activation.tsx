@@ -9,7 +9,7 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ActivationForm from '@components/forms/auth/ActivationForm';
 
-const Activation: NextPage<ActivationProps> = (props) => {
+const ActivationPage: NextPage<ActivationProps> = (props) => {
   const { successMsg, errorMsg } = props;
 
   const page = usePage();
@@ -36,6 +36,6 @@ const Activation: NextPage<ActivationProps> = (props) => {
   );
 };
 
-export default Activation;
+export default ActivationPage;
 
 export const getServerSideProps = getActivationProps;

@@ -8,7 +8,7 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ConfirmNewEmailForm from '@components/forms/auth/ConfirmNewEmailForm';
 
-const NewEmail: NextPage = () => {
+const NewEmailPage: NextPage = () => {
   const page = usePage();
 
   return (
@@ -30,4 +30,4 @@ const NewEmail: NextPage = () => {
   );
 };
 
-export default NewEmail;
+export default NewEmailPage;

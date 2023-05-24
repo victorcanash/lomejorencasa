@@ -6,9 +6,9 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import ErrorPage from '@components/exceptions/ErrorPage';
+import ErrorView from '@components/exceptions/ErrorView';
 
-const NotFound: NextPage = () => {
+const NotFoundPage: NextPage = () => {
   const intl = useIntl();
 
   const page = usePage();
@@ -26,9 +26,9 @@ const NotFound: NextPage = () => {
         marginTop={true}
       />
 
-      <ErrorPage title={intl.formatMessage({ id: 'notfound.h1' })} />
+      <ErrorView title={intl.formatMessage({ id: 'notfound.h1' })} />
     </>
   );
 };
 
-export default NotFound;
+export default NotFoundPage;

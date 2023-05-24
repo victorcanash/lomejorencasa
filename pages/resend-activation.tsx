@@ -4,9 +4,9 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import ResendActivationComponent from '@components/auth/ResendActivation';
+import ResendActivation from '@components/auth/ResendActivation';
 
-const ResendActivation: NextPage = () => {
+const ResendActivationPage: NextPage = () => {
   const page = usePage();
 
   return (
@@ -22,9 +22,9 @@ const ResendActivation: NextPage = () => {
         marginTop={true}
       />
 
-      <ResendActivationComponent />
+      <ResendActivation />
     </>
   );
 };
 
-export default ResendActivation;
+export default ResendActivationPage;

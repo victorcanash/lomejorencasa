@@ -5,9 +5,9 @@ import { PageTypes } from '@core/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
-import SettingsComponent from '@components/settings';
+import Settings from '@components/settings';
 
-const Settings: NextPage = () => { 
+const SettingsPage: NextPage = () => { 
   const { initialized } = useAppContext();
 
   const page = usePage();
@@ -31,10 +31,10 @@ const Settings: NextPage = () => {
       />
 
       { initialized && page.checked &&
-        <SettingsComponent />
+        <Settings />
       }
     </>
   );
 };
 
-export default Settings;
+export default SettingsPage;

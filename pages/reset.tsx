@@ -8,7 +8,7 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ResetPswForm from '@components/forms/auth/ResetPswForm';
 
-const Reset: NextPage = () => {
+const ResetPage: NextPage = () => {
   const page = usePage();
 
   return (
@@ -30,4 +30,4 @@ const Reset: NextPage = () => {
   );
 };
 
-export default Reset;
+export default ResetPage;

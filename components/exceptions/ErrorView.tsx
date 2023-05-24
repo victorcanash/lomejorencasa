@@ -6,11 +6,11 @@ import Typography from '@mui/material/Typography';
 import LinkButton from '@core/components/LinkButton';
 import { pages } from '@lib/constants/navigation';
 
-type ErrorPageProps = {
+type ErrorViewProps = {
   title: string,
 };
 
-const ErrorPage = (props: ErrorPageProps) => {
+const ErrorView = (props: ErrorViewProps) => {
   const { title } = props;
 
   return (
@@ -37,4 +37,4 @@ const ErrorPage = (props: ErrorPageProps) => {
   );
 };
 
-export default ErrorPage;
+export default ErrorView;
