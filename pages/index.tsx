@@ -9,6 +9,7 @@ import usePage from '@lib/hooks/usePage';
 import PageHeader from '@components/ui/PageHeader';
 import ProductBanner from '@components/products/sections/ProductBanner';
 import LandingList from '@components/products/collection/LandingList';
+import BlogsList from '@components/blogs/BlogsList';
 import ProductReviews from '@components/products/sections/ProductReviews';
 
 const Home: NextPage = () => {
@@ -31,6 +32,7 @@ const Home: NextPage = () => {
       >
         <ProductBanner />
         <LandingList />
+        <BlogsList />
         <ProductReviews />
       </Box>
     </>
