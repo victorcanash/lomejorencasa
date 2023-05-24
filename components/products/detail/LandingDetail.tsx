@@ -51,7 +51,7 @@ import BundleDetail from '@components/products/detail/BundleDetail';
 import DetailCharacteristics from '@components/products/detail/characteristics';
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
-import ProductReviews from '@components/products/sections/ProductReviews';
+import ProductReviews from '@components/products/reviews';
 
 type ProductDetailProps = {
   landingModel: Landing,

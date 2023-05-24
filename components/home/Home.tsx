@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 
-import ProductBanner from '@components/products/sections/ProductBanner';
+import ProductBanner from '@components/products/banners';
 import LandingList from '@components/products/collection/LandingList';
 import BlogsList from '@components/blogs/BlogsList';
-import ProductReviews from '@components/products/sections/ProductReviews';
+import ProductReviews from '@components/products/reviews';
 
 const Home = () => {
 

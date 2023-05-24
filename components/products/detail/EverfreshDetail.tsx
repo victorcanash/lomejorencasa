@@ -1,6 +1,6 @@
 import { pages } from '@lib/constants/navigation';
 import { everfreshVideoIds } from '@lib/constants/multimedia';
-import ProductTutorial from '@components/products/sections/ProductTutorial';
+import ProductTutorial from '@components/products/detail/ProductTutorial';
 
 const EverfreshDetail = () => {
 

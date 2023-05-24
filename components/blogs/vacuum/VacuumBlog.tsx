@@ -8,7 +8,7 @@ import Characteristics from '@components/blogs/vacuum/sections/Characteristics';
 import Use from '@components/blogs/vacuum/sections/Use';
 import FoodStorage from '@components/blogs/vacuum/sections/FoodStorage';
 import Conservation from '@components/blogs/vacuum/sections/Conservation';
-import ProductReviews from '@components/products/sections/ProductReviews';
+import ProductReviews from '@components/products/reviews';
 
 const VacuumBlog = () => {
 
