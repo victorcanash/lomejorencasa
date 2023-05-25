@@ -112,7 +112,7 @@ const NavBar = () => {
                 <CustomImage
                   src={navbarLogoId}
                   alt={keywords.vacuumMachine.main}
-                  height={smallBreakpoint ? '40px' :'60px'}
+                  height={smallBreakpoint ? '49px' :'60px'}
                   width={smallBreakpoint ? '126px' : '146px'}
                   layout="fixed"
                   objectFit="contain"

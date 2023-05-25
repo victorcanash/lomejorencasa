@@ -15,7 +15,7 @@ export const themeDefaultElements: {
         secondary: string,
         disabled: string,
       },
-    }
+    },
     typography: {
       fontFamily: string[],
       h1: ThemeElement,
