@@ -7,7 +7,7 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import envConfig from '@core/config/env.config';
 import { Environments } from '@core/constants/app';
 import { convertElementToSx } from '@core/utils/themes';
-import HideOnScroll from '@core/components/HideOnScroll';
+import HideOnScroll from '@core/components/animations/HideOnScroll';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 
