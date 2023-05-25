@@ -120,14 +120,14 @@ const NavDrawer = (props: NavDrawerProps) => {
                   <Fragment key={subitem.text.id}>
                     { listItemBtn(subitem as NavDrawerItems) }
                     { subitem.divider &&
-                      <Divider themeElement={themeCustomElements.dividers.headerDrawer.highlight} />
+                      <Divider themeElement={themeCustomElements.dividers?.headerDrawer?.highlight} />
                     }
                   </Fragment>
                 ))}
               </List>
             </Collapse>
           }
-          <Divider themeElement={themeCustomElements.dividers.headerDrawer.default} />
+          <Divider themeElement={themeCustomElements.dividers?.headerDrawer?.default} />
         </Fragment>
       ))}
     </>

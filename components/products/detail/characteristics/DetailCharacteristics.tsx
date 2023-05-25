@@ -29,7 +29,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
               <span style={{ fontWeight: 500 }}>
                 {chunks}
               </span>
-              <Divider themeElement={themeCustomElements.dividers.subdivider} />
+              <Divider themeElement={themeCustomElements.dividers?.subdivider} />
             </>
           ),
         },

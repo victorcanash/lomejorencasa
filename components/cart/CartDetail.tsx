@@ -42,7 +42,7 @@ const CartDetail = (props: CartDetailProps) => {
 
   const Subdivider = useCallback((props: { mt?: number, mb?: number }) => (
     <Divider
-      themeElement={themeCustomElements.dividers.subdivider}
+      themeElement={themeCustomElements.dividers?.subdivider}
       mt={props.mt || 1}
       mb={props.mb || 1}
     />

@@ -423,12 +423,12 @@ export const themeDefaultElements: {
 };
 
 export const themeCustomElements: {
-  dividers: {
-    subdivider: ThemeElement,
-    payment: ThemeElement,
-    headerDrawer: {
-      default: ThemeElement,
-      highlight: ThemeElement,
+  dividers?: {
+    subdivider?: ThemeElement,
+    payment?: ThemeElement,
+    headerDrawer?: {
+      default?: ThemeElement,
+      highlight?: ThemeElement,
     },
   },
   header: {

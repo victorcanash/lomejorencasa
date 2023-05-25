@@ -113,7 +113,7 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
               { paypal?.advancedCards &&
                 <>
                   <Divider
-                    themeElement={themeCustomElements.dividers.payment}
+                    themeElement={themeCustomElements.dividers?.payment}
                     mb={2}
                   >
                     <Typography variant="body2" textAlign="center">
