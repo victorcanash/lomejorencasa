@@ -159,7 +159,7 @@ const ProductBanner = () => {
                 source={{ 
                   src,
                   alt: getAltImg(index),
-                  priority: index > 0 && index < srcs.length - 1  ? false : true,
+                  priority: true,
                   width: '1920',
                   height: '1080', 
                 }}
