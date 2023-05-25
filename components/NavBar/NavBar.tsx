@@ -1,40 +1,32 @@
 import { useCallback, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
-import { FormattedMessage } from 'react-intl';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faTruck,
-} from '@fortawesome/free-solid-svg-icons';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import MenuIcon from '@mui/icons-material/Menu';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
-// import HideOnScroll from '@core/components/HideOnScroll';
+// import HideOnScroll from '@core/components/animations/HideOnScroll';
+import ShippingBar from '@core/components/NavBar/ShippingBar';
 
 import { keywords } from '@lib/config/next-seo.config';
-import typographies from '@lib/constants/themes/typographies';
 import { pages } from '@lib/constants/navigation';
 import { navbarLogoId } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useNavDrawer from '@lib/hooks/useNavDrawer';
+import CartIcon from '@components/NavBar/CartIcon';
 import NavDrawer from '@components/NavBar/NavDrawer';
 import CartDrawer from '@components/NavBar/CartDrawer';
 
 const NavBar = () => {
-  const { totalQuantity, handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
+  const { handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
 
   const router = useRouter();
   const xsBreakpoint = useMediaQuery('(max-width:318px)');
@@ -55,32 +47,6 @@ const NavBar = () => {
     handleCartDrawerOpen();
   }, [handleCartDrawerOpen]);
 
-  const CartIcon = useCallback(() => (
-    <Badge
-      badgeContent={
-        <Box
-          sx={{
-            ...typographies.secondContentHead,
-          }}
-        >
-          {totalQuantity > 9 ? '+9' : totalQuantity}
-        </Box>
-      }
-      invisible={totalQuantity < 1}
-    >
-      <ShoppingCartIcon sx={{ fontSize: smallBreakpoint ? 25: 30 }} />
-    </Badge>
-  ), [smallBreakpoint, totalQuantity]);
-
-  const shippingTruckMr = useMemo(() => {
-    if (superSmallBreakpoint) {
-      return '0px';
-    } else if (smallBreakpoint) {
-      return '2px';
-    }
-    return '5px';
-  }, [smallBreakpoint, superSmallBreakpoint]);
-
   const minDrawerHeight = useMemo(() => {
     if (xsBreakpoint) {
       return '87px';
@@ -100,37 +66,17 @@ const NavBar = () => {
           }} 
           onClick={handleAppBarOnClick}
         >
-          {/* Shipping Banner */}
-          <Box
-            sx={{
-              ...convertElementToSx(themeCustomElements.header.banners.shipping.content),
-              p: '5px',
-              px: superSmallBreakpoint ? '1px' : undefined,
-            }}
-          >
-            <Typography
-              variant={smallBreakpoint ? 'body2Head': 'body1Head'}
-              textAlign="center"
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              lineHeight="18px"
-            >
-              <FontAwesomeIcon 
-                size="lg" 
-                icon={faTruck}
-                style={{
-                  marginRight: shippingTruckMr,
-                }}
-              />
-              <FormattedMessage id="header.banners.shipping" />
-            </Typography>
-          </Box> 
+          {/* ShippingBar */}
+          <ShippingBar
+            themeElementContent={themeCustomElements.navBar?.shippingBar?.content}
+            themeElementIcon={themeCustomElements.navBar?.shippingBar?.icon}
+            text={{ id: 'header.banners.shipping' }}
+            superSmallBreakpoint={superSmallBreakpoint}
+            smallBreakpoint={smallBreakpoint}
+          />
           {/* NavBar */}
           <Toolbar
-            variant="dense" 
+            variant="dense"
             disableGutters
           >
             {/* NavDrawer Button */}
@@ -182,14 +128,18 @@ const NavBar = () => {
                 component={Link}
                 href={pages.cart.path}
               >
-                <CartIcon />
+                <CartIcon
+                  smallBreakpoint={smallBreakpoint}
+                />
               </IconButton>
               :
               <IconButton
                 size="large"
                 onClick={handleCartBtnOnClick}
               >
-                <CartIcon />
+                <CartIcon
+                  smallBreakpoint={smallBreakpoint}
+                />
               </IconButton>
             }
           </Toolbar>

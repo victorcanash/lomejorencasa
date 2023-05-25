@@ -431,18 +431,19 @@ export const themeCustomElements: {
       highlight?: ThemeElement,
     },
   },
-  header: {
-    banners: {
-      maintenance: {
-        content: ThemeElement,
-        icon: ThemeElement,
-      },
-      shipping: {
-        content: ThemeElement,
-        icon: ThemeElement,
-      },
+  banners?: {
+    maintenance?: {
+      content?: ThemeElement,
+      icon?: ThemeElement,
     },
+    
   },
+  navBar?: {
+    shippingBar?: {
+      content?: ThemeElement,
+      icon?: ThemeElement,
+    },
+  }
   footer: {
     content: ThemeElement,
     title: ThemeElement,
@@ -538,35 +539,30 @@ export const themeCustomElements: {
       },
     },
   },
-  header: {
-    banners: {
-      maintenance: {
-        content: {
-          backgroundColor: {
-            default: colors.background.action.primary.default,
-          },
-          text: {
-            color: {
-              default: colors.text.white,
-            },
-          },
+  banners: {
+    maintenance: {
+      content: {
+        backgroundColor: {
+          default: colors.background.action.primary.default,
         },
-        icon: {
-          fill: {
+        text: {
+          color: {
             default: colors.text.white,
           },
         },
       },
-      shipping: {
-        content: {
-          backgroundColor: {
-            default: colors.background.third,
-          },
+      icon: {
+        fill: {
+          default: colors.text.white,
         },
-        icon: {
-          fill: {
-            default: colors.text.black,
-          },
+      },
+    },
+  },
+  navBar: {
+    shippingBar: {
+      content: {
+        backgroundColor: {
+          default: colors.background.third,
         },
       },
     },
