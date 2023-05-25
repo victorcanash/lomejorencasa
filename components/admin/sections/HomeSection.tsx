@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 
 import { AdminSections } from '@core/constants/admin';
+import Divider from '@core/components/ui/Divider';
 
 import { pages } from '@lib/constants/navigation';
 import { useSearchContext } from '@lib/contexts/SearchContext';
@@ -59,7 +59,7 @@ const HomeSection = () => {
           </Button>
         </Box>
 
-        <Divider sx={{ my: 3 }} />
+        <Divider mt={3} mb={3} />
 
         <Box sx={{ m: 2 }}>
           <Typography variant="h1" component="h2" gutterBottom>
@@ -98,7 +98,7 @@ const HomeSection = () => {
           </Button>
         </Box>
 
-        <Divider sx={{ my: 3 }} />
+        <Divider mt={3} mb={3} />
 
         <Box sx={{ m: 2 }}>
           <Typography variant="h1" component="h2" gutterBottom>
@@ -117,7 +117,7 @@ const HomeSection = () => {
           </Button>
         </Box>
 
-        <Divider sx={{ my: 3 }} />
+        <Divider mt={3} mb={3} />
 
         <Box sx={{ m: 2 }}>
           <Typography variant="h1" component="h2" gutterBottom>

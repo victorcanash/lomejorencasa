@@ -6,10 +6,10 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 
 import type { Order } from '@core/types/orders';
 import { convertToDate } from '@core/utils/dates';
+import Divider from '@core/components/ui/Divider';
 
 import Pagination from '@components/ui/Pagination';
 
@@ -66,7 +66,7 @@ const OrderList = (props: OrderListProps) => {
                     </Button>
                   </Grid>
                 </Grid>
-                <Divider sx={{ mb: 3 }} />
+                <Divider mb={3} />
               </Grid>
             </Fragment>
           ))}

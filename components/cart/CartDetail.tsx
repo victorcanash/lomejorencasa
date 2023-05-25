@@ -5,23 +5,22 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 
 import { firstBuyDiscountPercent } from '@core/constants/payments';
 import type { Page } from '@core/types/navigation';
 import type { Order } from '@core/types/orders';
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
+import Divider from '@core/components/ui/Divider';
 
-import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/constants/navigation';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
 import CartItemDetail from '@components/cart/CartItemDetail';
-import { CartItem, GuestCartCheckItem } from '@core/types/cart';
 
 type CartDetailProps = {
   page?: Page,
@@ -43,11 +42,9 @@ const CartDetail = (props: CartDetailProps) => {
 
   const Subdivider = useCallback((props: { mt?: number, mb?: number }) => (
     <Divider
-      sx={{
-        border: `1px solid ${colors.border.divider}4f`,
-        mt: props.mt || 1,
-        mb: props.mb || 1,
-      }}
+      themeElement={themeCustomElements.dividers.subdivider}
+      mt={props.mt || 1}
+      mb={props.mb || 1}
     />
   ), []);
 
@@ -97,10 +94,8 @@ const CartDetail = (props: CartDetailProps) => {
                       priorityImg={index <= 4 ? true : false}
                     />
                     <Divider
-                      sx={{
-                        mt: 3,
-                        mb: 3,
-                      }} 
+                      mt={3}
+                      mb={3}
                     />
                   </>
                 }

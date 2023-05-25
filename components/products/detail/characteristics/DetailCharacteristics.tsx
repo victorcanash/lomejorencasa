@@ -2,12 +2,13 @@ import { ReactNode, useCallback } from 'react';
 
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 
 import type { FormatText } from '@core/types/texts';
 import type { LandingConfig } from '@core/types/products';
+import Divider from '@core/components/ui/Divider';
 
 import { pages } from '@lib/constants/navigation';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 import CharacteristicsGroup from '@components/products/detail/characteristics/CharacteristicsGroup';
 
 type DetailCharacteristicsProps = {
@@ -28,7 +29,7 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
               <span style={{ fontWeight: 500 }}>
                 {chunks}
               </span>
-              <Divider sx={{ borderWidth: '1px' }} />
+              <Divider themeElement={themeCustomElements.dividers.subdivider} />
             </>
           ),
         },

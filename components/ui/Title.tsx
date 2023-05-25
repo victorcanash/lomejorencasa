@@ -1,11 +1,11 @@
 import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 
 import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
+import Divider from '@core/components/ui/Divider';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 
@@ -45,7 +45,7 @@ const Title = (props: TitleProps) => {
           </Typography>
           
           { divider &&
-            <Divider sx={{ mt: 1, mb: 4 }} />
+            <Divider mt={1} mb={4} />
           }
         </>
       }

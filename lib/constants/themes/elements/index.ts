@@ -423,6 +423,14 @@ export const themeDefaultElements: {
 };
 
 export const themeCustomElements: {
+  dividers: {
+    subdivider: ThemeElement,
+    payment: ThemeElement,
+    headerDrawer: {
+      default: ThemeElement,
+      highlight: ThemeElement,
+    },
+  },
   header: {
     banners: {
       maintenance: {
@@ -432,12 +440,6 @@ export const themeCustomElements: {
       shipping: {
         content: ThemeElement,
         icon: ThemeElement,
-      },
-    },
-    drawer: {
-      divider: {
-        default: ThemeElement,
-        highlight: ThemeElement,
       },
     },
   },
@@ -504,6 +506,38 @@ export const themeCustomElements: {
     acceptCookies: ThemeElement,
   },
 } = {
+  dividers: {
+    subdivider: {
+      border: {
+        default: {
+          border: `1px solid ${colors.border.divider}99`,
+        },
+      },
+    },
+    payment: {
+      border: {
+        default: {
+          border: 'none',
+        },
+      },
+    },
+    headerDrawer: {
+      default: {
+        border: {
+          default: {
+            border: `1px solid ${colors.border.dividerDrawer}`,
+          },
+        },
+      },
+      highlight: {
+        border: {
+          default: {
+            border: `4px solid ${colors.border.dividerDrawer}`,
+          },
+        },
+      },
+    },
+  },
   header: {
     banners: {
       maintenance: {
@@ -532,24 +566,6 @@ export const themeCustomElements: {
         icon: {
           fill: {
             default: colors.text.black,
-          },
-        },
-      },
-    },
-    drawer: {
-      divider: {
-        default: {
-          border: {
-            default: {
-              border: `1px solid ${colors.border.dividerDrawer}`,
-            },
-          },
-        },
-        highlight: {
-          border: {
-            default: {
-              border: `4px solid ${colors.border.dividerDrawer}`,
-            },
           },
         },
       },

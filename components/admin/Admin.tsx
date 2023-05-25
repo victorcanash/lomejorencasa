@@ -2,9 +2,9 @@ import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
 
 import { AdminSections } from '@core/constants/admin';
+import Divider from '@core/components/ui/Divider';
 
 import useAdmin from '@lib/hooks/useAdmin';
 import BackBtn from '@components/ui/BackBtn';
@@ -81,7 +81,7 @@ const Admin = (props: AdminProps) => {
             :
             <BackBtn />
           }
-          <Divider sx={{ mt: 1, mb: 4 }} />
+          <Divider mt={1} mb={4} />
           { getCurrentSection() }
         </Container>
       }

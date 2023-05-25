@@ -12,15 +12,15 @@ import { PayPalButtons } from '@paypal/react-paypal-js';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import TextField from '@mui/material/TextField';
 
 import type { FormatText } from '@core/types/texts';
+import Divider from '@core/components/ui/Divider';
 
-import { paypalHostedFieldsSx } from '@lib/constants/themes/elements';
+import { paypalHostedFieldsSx, themeCustomElements } from '@lib/constants/themes/elements';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import BaseForm from '@components/forms/BaseForm';
 
@@ -113,10 +113,8 @@ const CheckoutPaymentForm = (props: CheckoutPaymentFormProps) => {
               { paypal?.advancedCards &&
                 <>
                   <Divider
-                    sx={{
-                      mb: 2,
-                      border: 'none',
-                    }}
+                    themeElement={themeCustomElements.dividers.payment}
+                    mb={2}
                   >
                     <Typography variant="body2" textAlign="center">
                       <FormattedMessage id="checkout.paymentMethod.or" />

@@ -5,7 +5,6 @@ import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,6 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
+import Divider from '@core/components/ui/Divider';
 
 import { pages } from '@lib/constants/navigation';
 import useProducts from '@lib/hooks/useProducts';
@@ -91,7 +91,7 @@ const CreateProductSection = () => {
             created={false}
           />
 
-          <Divider sx={{ my: 2 }} />
+          <Divider mt={2} mb={2} />
 
           <ManagePInventoryForm
             action={ManageActions.create}
@@ -120,7 +120,7 @@ const CreateProductSection = () => {
                 }}
               />
 
-              <Divider sx={{ my: 2 }} />
+              <Divider mt={2} mb={2} />
 
               <ManagePDiscountForm
                 action={ManageActions.create}
@@ -149,7 +149,7 @@ const CreateProductSection = () => {
                 />
               }
 
-              <Divider sx={{ my: 2 }} />
+              <Divider mt={2} mb={2} />
 
               <Button
                 variant="contained"

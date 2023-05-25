@@ -9,16 +9,15 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Toolbar from '@mui/material/Toolbar';
-import Divider from '@mui/material/Divider';
 import Typography from '@mui/material/Typography';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 
 import type { NavDrawerItems } from '@core/types/navigation';
-import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
+import Divider from '@core/components/ui/Divider';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import useAuth from '@lib/hooks/useAuth';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 
 type NavDrawerProps = {
   anchor: 'top' | 'left' | 'bottom' | 'right',
@@ -121,14 +120,14 @@ const NavDrawer = (props: NavDrawerProps) => {
                   <Fragment key={subitem.text.id}>
                     { listItemBtn(subitem as NavDrawerItems) }
                     { subitem.divider &&
-                      <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider.highlight)} />
+                      <Divider themeElement={themeCustomElements.dividers.headerDrawer.highlight} />
                     }
                   </Fragment>
                 ))}
               </List>
             </Collapse>
           }
-          <Divider sx={convertElementToSx(themeCustomElements.header.drawer.divider.default)} />
+          <Divider themeElement={themeCustomElements.dividers.headerDrawer.default} />
         </Fragment>
       ))}
     </>
