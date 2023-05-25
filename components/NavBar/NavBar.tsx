@@ -15,7 +15,7 @@ import CustomImage from '@core/components/CustomImage';
 // import HideOnScroll from '@core/components/animations/HideOnScroll';
 import ShippingBar from '@core/components/NavBar/ShippingBar';
 
-import { keywords } from '@lib/config/next-seo.config';
+import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/constants/navigation';
 import { navbarLogoId } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -106,15 +106,19 @@ const NavBar = () => {
               >
                 { pages.home.filepath === router.pathname &&
                   <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
-                    { keywords.vacuumMachine.main }
+                    { seoConfig.home.h1 }
                   </Typography>
                 }
                 <CustomImage
                   src={navbarLogoId}
-                  alt={keywords.vacuumMachine.main}
+                  alt={seoConfig.home.h1}
                   height={smallBreakpoint ? '49px' :'60px'}
-                  width={smallBreakpoint ? '126px' : '146px'}
-                  layout="fixed"
+                  width={
+                    smallBreakpoint ?
+                      themeCustomElements.navBar?.logo?.width?.small || '126px' :
+                      themeCustomElements.navBar?.logo?.width?.default || '146px'
+                  }
+                  layout="fixed" 
                   objectFit="contain"
                   priority
                 />
@@ -147,7 +151,6 @@ const NavBar = () => {
       {/*</HideOnScroll>*/}
 
       <NavDrawer
-        anchor="left"
         open={navDrawer.open}
         items={navDrawer.items}
         handleOpen={navDrawer.handleOpen}
@@ -156,7 +159,6 @@ const NavBar = () => {
       />
 
       <CartDrawer
-        anchor="right"
         minHeight={minDrawerHeight}
       />
     </>

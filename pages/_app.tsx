@@ -89,7 +89,7 @@ function MyApp(props: MyAppProps) {
   return (
     <>
       <DefaultSeo
-        { ...seoConfig }
+        { ...seoConfig.defaultSeoProps }
       />
 
       <Head>

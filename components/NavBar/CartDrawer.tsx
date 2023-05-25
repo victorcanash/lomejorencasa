@@ -6,13 +6,11 @@ import { useCartContext } from '@lib/contexts/CartContext';
 import CartDetail from '@components/cart/CartDetail';
 
 type CartDrawerProps = {
-  anchor: 'top' | 'left' | 'bottom' | 'right',
   minHeight: string,
 };
 
 const CartDrawer = (props: CartDrawerProps) => {
   const {
-    anchor,
     minHeight,
    } = props;
 
@@ -23,7 +21,7 @@ const CartDrawer = (props: CartDrawerProps) => {
 
   return (
     <Drawer
-      anchor={anchor}
+      anchor="right"
       open={drawerOpen}
       onClose={handleDrawerOpen}
       sx={{

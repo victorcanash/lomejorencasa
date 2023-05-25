@@ -20,7 +20,6 @@ import { convertToDate } from '@core/utils/dates';
 import { getPackGeneralName } from '@core/utils/products';
 import CustomImage from '@core/components/CustomImage';
 
-import { keywords } from '@lib/config/next-seo.config';
 import { allLandingConfigs } from '@lib/constants/products';
 import colors from '@lib/constants/themes/colors';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -166,7 +165,6 @@ const ProductReviews = () => {
                               >
                                 <CustomImage
                                   src={item.imageUrl}
-                                  alt={keywords.vacuumMachine.main}
                                   layout="fill"
                                   objectFit="cover"
                                 />

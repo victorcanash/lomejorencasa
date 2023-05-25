@@ -436,9 +436,14 @@ export const themeCustomElements: {
       content?: ThemeElement,
       icon?: ThemeElement,
     },
-    
   },
   navBar?: {
+    logo?: {
+      width?: {
+        small?: string,
+        default?: string,
+      },
+    },
     shippingBar?: {
       content?: ThemeElement,
       icon?: ThemeElement,
@@ -559,6 +564,12 @@ export const themeCustomElements: {
     },
   },
   navBar: {
+    logo: {
+      width: {
+        small: '126px',
+        default: '146px',
+      },
+    },
     shippingBar: {
       content: {
         backgroundColor: {
