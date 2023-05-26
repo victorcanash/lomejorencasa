@@ -18,12 +18,12 @@ import ShippingBar from '@core/components/NavBar/ShippingBar';
 import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/constants/navigation';
 import { navbarLogoId } from '@lib/constants/multimedia';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useNavDrawer from '@lib/hooks/useNavDrawer';
-import CartIcon from '@components/NavBar/CartIcon';
-import NavDrawer from '@components/NavBar/NavDrawer';
-import CartDrawer from '@components/NavBar/CartDrawer';
+import CartIcon from '@core/components/NavBar/CartIcon';
+import NavDrawer from '@core/components/NavBar/NavDrawer';
+import CartDrawer from '@core/components/NavBar/CartDrawer';
+import { themeCustomElements } from '@lib/constants/themes/elements';
 
 const NavBar = () => {
   const { handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
@@ -68,9 +68,6 @@ const NavBar = () => {
         >
           {/* ShippingBar */}
           <ShippingBar
-            themeElementContent={themeCustomElements.navBar?.shippingBar?.content}
-            themeElementIcon={themeCustomElements.navBar?.shippingBar?.icon}
-            text={{ id: 'header.banners.shipping' }}
             superSmallBreakpoint={superSmallBreakpoint}
             smallBreakpoint={smallBreakpoint}
           />
@@ -104,7 +101,7 @@ const NavBar = () => {
                   borderRadius: '10px',
                 }}
               >
-                { pages.home.filepath === router.pathname &&
+                { pages.home.path === router.pathname &&
                   <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
                     { seoConfig.home.h1 }
                   </Typography>
@@ -115,8 +112,7 @@ const NavBar = () => {
                   height={smallBreakpoint ? '49px' :'60px'}
                   width={
                     smallBreakpoint ?
-                      themeCustomElements.navBar?.logo?.width?.small || '126px' :
-                      themeCustomElements.navBar?.logo?.width?.default || '146px'
+                      themeCustomElements.navBar.logo.width.small : themeCustomElements.navBar.logo.width.default
                   }
                   layout="fixed" 
                   objectFit="contain"

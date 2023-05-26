@@ -9,23 +9,17 @@ import {
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import type { ThemeElement } from '@core/types/themes';
-import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
 
+import { themeCustomElements } from '@lib/constants/themes/elements';
+
 type ShippingBarProps = {
-  themeElementContent?: ThemeElement,
-  themeElementIcon?: ThemeElement,
-  text: FormatText,
   superSmallBreakpoint: boolean,
   smallBreakpoint: boolean,
 };
 
 const ShippingBar = (props: ShippingBarProps) => {
   const {
-    themeElementContent,
-    themeElementIcon,
-    text,
     superSmallBreakpoint,
     smallBreakpoint,
   } = props;
@@ -42,7 +36,8 @@ const ShippingBar = (props: ShippingBarProps) => {
   return (
     <Box
       sx={{
-        ...themeElementContent ? convertElementToSx(themeElementContent) : undefined,
+        ...themeCustomElements.navBar?.shippingBar?.content ?
+          convertElementToSx(themeCustomElements.navBar?.shippingBar?.content) : undefined,
         p: '5px',
         px: superSmallBreakpoint ? '1px' : undefined,
       }}
@@ -54,7 +49,6 @@ const ShippingBar = (props: ShippingBarProps) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          textAlign: text.textAlign,
         }}
         lineHeight="18px"
       >
@@ -63,12 +57,11 @@ const ShippingBar = (props: ShippingBarProps) => {
           icon={faTruck}
           style={{
             marginRight: shippingTruckMr,
-            ...themeElementIcon ? convertElementToSx(themeElementIcon) : undefined,
+            ...themeCustomElements.navBar?.shippingBar?.icon ?
+              convertElementToSx(themeCustomElements.navBar?.shippingBar?.icon) : undefined,
           }}
         />
-        { text.id &&
-          <FormattedMessage id={text.id} values={text.values} />
-        }
+        <FormattedMessage id="header.banners.shipping" />
       </Typography>
     </Box>
   );

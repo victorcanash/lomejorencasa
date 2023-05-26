@@ -7,7 +7,7 @@ import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
 import { useAppContext } from '@lib/contexts/AppContext';
 import MainComponent from '@components/layouts/MainComponent';
-import NavBar from '@components/NavBar';
+import NavBar from '@core/components/NavBar';
 import Footer from '@components/Footer';
 import Banners from '@components/banners';
 

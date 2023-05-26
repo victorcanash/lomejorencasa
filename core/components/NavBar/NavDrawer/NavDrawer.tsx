@@ -11,7 +11,7 @@ import Divider from '@core/components/ui/Divider';
 
 import useAuth from '@lib/hooks/useAuth';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import NavDrawerBtn from '@components/NavBar/NavDrawer/NavDrawerBtn';
+import NavDrawerBtn from '@core/components/NavBar/NavDrawer/NavDrawerBtn';
 
 type NavDrawerProps = {
   open: boolean,

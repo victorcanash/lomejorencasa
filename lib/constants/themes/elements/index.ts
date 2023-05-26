@@ -437,11 +437,11 @@ export const themeCustomElements: {
       icon?: ThemeElement,
     },
   },
-  navBar?: {
-    logo?: {
-      width?: {
-        small?: string,
-        default?: string,
+  navBar: {
+    logo: {
+      width: {
+        small: string,
+        default: string,
       },
     },
     shippingBar?: {

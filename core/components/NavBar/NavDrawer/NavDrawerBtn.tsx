@@ -3,7 +3,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import type { NavDrawerItems } from '@core/types/navigation';
 import Link from '@core/components/Link';
 
-import NavDrawerBtnContent from '@components/NavBar/NavDrawer/NavDrawerBtnContent';
+import NavDrawerBtnContent from '@core/components/NavBar/NavDrawer/NavDrawerBtnContent';
 
 type NavDrawerBtnProps = {
   item: NavDrawerItems,
