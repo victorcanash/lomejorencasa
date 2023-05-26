@@ -19,6 +19,7 @@ const convertElementToEventSx = (
   themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'firstChild' | 'lastChild',
 ) => {
   return ({
+    background: themeElement.background?.[themeElementType],
     backgroundColor: themeElement.backgroundColor?.[themeElementType],
     color: themeElement.text?.color?.[themeElementType],
     fontSize: themeElement.text?.font?.[themeElementType]?.fontSize,

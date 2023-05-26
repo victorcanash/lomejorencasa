@@ -16,6 +16,7 @@ import { pages } from '@lib/constants/navigation';
 import { homeCharacteristicsBgImgIds, homeCharacteristicsIconsIds, homeAdvantagesIconsIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title'; 
+import colors from '@lib/constants/themes/colors';
 
 type CharacteristicsProps = {
   type: 'characteristics' | 'advantages',
@@ -33,7 +34,8 @@ const Characteristics = (props: CharacteristicsProps) => {
     return (
       <Box
         sx={{
-          ...convertElementToSx(themeCustomElements.home.characteristics.icons),
+          backgroundColor: colors.background.third,
+          borderRadius: '100%',
           position: 'relative', 
           width: '150px',
           maxWidth: '100%',
@@ -129,7 +131,8 @@ const Characteristics = (props: CharacteristicsProps) => {
 
       <Box
         sx={{
-          ...convertElementToSx(themeCustomElements.home.characteristics.content),
+          backgroundColor: colors.background.homeSection,
+          color: colors.text.white,
           position: 'relative',
           mt: 4,
           zIndex: '0',

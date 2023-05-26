@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { FormattedMessage } from 'react-intl';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import { 
   faInstagram, 
   faFacebook, 
@@ -9,7 +9,6 @@ import {
   faCcVisa,
   faCcMastercard,
   faCcPaypal,
-  IconDefinition,
 } from '@fortawesome/free-brands-svg-icons';
 
 import Grid from '@mui/material/Grid';
@@ -21,36 +20,18 @@ import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 
 import { pages, tiktokHref, instagramHref, facebookHref } from '@lib/constants/navigation';
-import { themeCustomElements, themeDefaultElements } from '@lib/constants/themes/elements';
-import colors from '@lib/constants/themes/colors';
+import { themeCustomElements } from '@lib/constants/themes/elements';
+import FooterIcon from '@core/components/Footer/FooterIcon';
 
-const Footer = () => {  
-  const getDefaultBgColor = () => {
-    return themeDefaultElements.default.palette.backgroundColor.primary;
-  };
-  const getFooterContentBgColor = () => {
-    return themeCustomElements.footer.content.backgroundColor?.default || getDefaultBgColor();
-  };
-  const getFooterGradientBgColor = () => {
-    return colors.background.footerGradient;
-  };
-
-  const socialMediaIcon = (icon: IconDefinition) => {
-    return (
-      <FontAwesomeIcon 
-        size="2xl" 
-        icon={icon}
-        style={{ color: "#ffffff" }}
-      />
-    );
-  };
+const Footer = () => {
 
   return (
     <Box component="footer">
       <Box
         sx={{ 
-          background: `linear-gradient(0deg, ${getFooterContentBgColor()} 7%, ${getFooterGradientBgColor()} 53%, ${getDefaultBgColor()} 98%)`,
           height: '300px',
+          ...themeCustomElements.footer?.transition ?
+            convertElementToSx(themeCustomElements.footer.transition) : undefined,
         }}
       />
 
@@ -58,10 +39,21 @@ const Footer = () => {
         container
         px={4}
         pb={3}
-        sx={convertElementToSx(themeCustomElements.footer.content)}
+        sx={{
+          ...themeCustomElements.footer?.content ?
+            convertElementToSx(themeCustomElements.footer.content) : undefined,
+        }}
       >
         <Grid item xs={12} sm={6} p={2}>
-          <Typography component="div" variant="h3" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
+          <Typography
+            component="div"
+            variant="h3"
+            mb={2}
+            sx={{
+              ...themeCustomElements.footer?.title ?
+                convertElementToSx(themeCustomElements.footer.title) : undefined,
+            }}
+          >
             <FormattedMessage
               id="footer.contact.title" 
             />
@@ -85,7 +77,9 @@ const Footer = () => {
                 href={tiktokHref}
                 target="_blank"
               >
-                { socialMediaIcon(faTiktok) }
+                <FooterIcon
+                  icon={faTiktok}
+                />
               </IconButton>
             </Grid>
             <Grid item>
@@ -94,7 +88,9 @@ const Footer = () => {
                 href={instagramHref}
                 target="_blank"
               >
-                { socialMediaIcon(faInstagram) }
+                <FooterIcon
+                  icon={faInstagram}
+                />
               </IconButton>
             </Grid>
             <Grid item>
@@ -103,14 +99,24 @@ const Footer = () => {
                 href={facebookHref}
                 target="_blank"
               >
-                { socialMediaIcon(faFacebook) }
+                <FooterIcon
+                  icon={faFacebook}
+                />
               </IconButton>
             </Grid>
           </Grid>
         </Grid>
 
         <Grid item xs={12} sm={6} p={2}>
-          <Typography component="div" variant="h3" mb={2} sx={convertElementToSx(themeCustomElements.footer.title)}>
+          <Typography
+            component="div"
+            variant="h3"
+            mb={2}
+            sx={{
+              ...themeCustomElements.footer?.title ?
+                convertElementToSx(themeCustomElements.footer.title) : undefined,
+            }}
+          >
             <FormattedMessage 
               id="footer.utility.title" 
             />
@@ -152,13 +158,19 @@ const Footer = () => {
           </Box>
           <Grid container mt={2} columnSpacing={2}>
             <Grid item>
-              { socialMediaIcon(faCcVisa) }
+              <FooterIcon
+                icon={faCcVisa}
+              />
             </Grid>
             <Grid item>
-              { socialMediaIcon(faCcMastercard) }
+              <FooterIcon
+                icon={faCcMastercard}
+              />
             </Grid>
             <Grid item>
-              { socialMediaIcon(faCcPaypal) }
+              <FooterIcon
+                icon={faCcPaypal}
+              />
             </Grid>
           </Grid>
         </Grid>

@@ -1,4 +1,5 @@
 export type ThemeElement = {
+  background?: ThemeColorElement,
   backgroundColor?: ThemeColorElement,
   text?: {
     color?: ThemeColorElement,

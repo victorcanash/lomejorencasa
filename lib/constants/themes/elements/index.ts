@@ -449,32 +449,16 @@ export const themeCustomElements: {
       icon?: ThemeElement,
     },
   }
-  footer: {
-    content: ThemeElement,
-    title: ThemeElement,
+  footer?: {
+    transition?: ThemeElement,
+    content?: ThemeElement,
+    title?: ThemeElement,
+    icons?: ThemeElement,
   },
   home: {
     banner: {
       default: ThemeElement,
       small: ThemeElement,
-    },
-    packingMachine: {
-      card: {
-        default: ThemeElement,
-        first: ThemeElement,
-        second: ThemeElement,
-        third: ThemeElement,
-      },
-    },
-    whyVacuumPacked: {
-      description: {
-        first: ThemeElement,
-        second: ThemeElement,
-      },
-    },
-    characteristics: {
-      content: ThemeElement,
-      icons: ThemeElement,
     },
   },
   landing: {
@@ -575,10 +559,15 @@ export const themeCustomElements: {
     },
   },
   footer: {
+    transition: {
+      background: {
+        default: `linear-gradient(0deg, ${colors.background.footerContent} 7%, ${colors.background.footerGradient} 53%, ${colors.background.primary} 98%)`,
+      },
+    },
     content: {
       backgroundColor: {
         default: colors.background.footerContent,
-      },
+      }, 
       text: {
         color: {
           default: colors.text.footer,
@@ -589,6 +578,13 @@ export const themeCustomElements: {
       text: {
         color: {
           default: colors.text.footer,
+        },
+      },
+    },
+    icons: {
+      text: {
+        color: {
+          default: colors.text.white,
         },
       },
     },
@@ -614,88 +610,6 @@ export const themeCustomElements: {
             default: typographies.homeBanner.small,
           },
         }, 
-      },
-    },
-    packingMachine: {
-      card: {
-        default: {
-          border: {
-            default: {
-              radius: { all: '8px' },
-            },
-          },
-        },
-        first: {
-          backgroundColor: {
-            default: colors.background.third,
-          },
-        },
-        second: {
-          backgroundColor: {
-            default: colors.background.secondary,
-          },
-        },
-        third: {
-          backgroundColor: {
-            default: colors.background.tableHead,
-          },
-        },
-      },
-    },
-    whyVacuumPacked: {
-      description: {
-        first: {
-          backgroundColor: {
-            default: colors.background.secondary,
-          },
-          border: {
-            default: {
-              radius: {
-                topRight: '45px',
-                topLeft: '0px',
-                bottomRight: '45px',
-                bottomLeft: '0px',
-              },
-            },
-          },
-        },
-        second: {
-          backgroundColor: {
-            default: colors.background.third,
-          },
-          border: {
-            default: {
-              radius: {
-                topRight: '0px',
-                topLeft: '45px',
-                bottomRight: '0px',
-                bottomLeft: '45px',
-              },
-            },
-          },
-        },
-      },
-    },
-    characteristics: {
-      content: {
-        backgroundColor: {
-          default: colors.background.homeSection,
-        },
-        text: {
-          color: {
-            default: colors.text.white,
-          },
-        },
-      },
-      icons: {
-        backgroundColor: {
-          default: colors.background.third,
-        },
-        border: {
-          default: {
-            radius: { all: '100%' },
-          },
-        },
       },
     },
   },

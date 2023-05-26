@@ -10,22 +10,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-import { convertElementToSx } from '@core/utils/themes';
-
 import { keywords } from '@lib/config/next-seo.config';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import { homePackingMachineImgIds } from '@lib/constants/multimedia';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
+import colors from '@lib/constants/themes/colors';
 
 const PackingMachine = () => {
-  const getCardSx = useCallback((index: number) => {
+  const getBackgroundColor = useCallback((index: number) => {
     if (index == 0) {
-      return convertElementToSx(themeCustomElements.home.packingMachine.card.first);
+      return colors.background.third;
     } else if (index == 1) {
-      return convertElementToSx(themeCustomElements.home.packingMachine.card.second);
+      return colors.background.secondary;
     }
-    return convertElementToSx(themeCustomElements.home.packingMachine.card.third);
+    return colors.background.tableHead;
   }, []);
 
   return (
@@ -75,8 +73,8 @@ const PackingMachine = () => {
               <SwiperSlide key={index}>
                 <Card
                   sx={{
-                    ...convertElementToSx(themeCustomElements.home.packingMachine.card.default),
-                    ...getCardSx(index),
+                    borderRadius: '8px',
+                    backgroundColor: getBackgroundColor(index),
                     minHeight: '256px',
                   }}
                 >

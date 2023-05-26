@@ -5,11 +5,10 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { convertElementToSx } from '@core/utils/themes';
 import CustomImage from '@core/components/CustomImage';
 
 import { homeWhyVacuumPackedImgIds } from '@lib/constants/multimedia';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import colors from '@lib/constants/themes/colors';
 import Title from '@core/components/ui/Title';
 
 const WhyVacuumPacked = () => {
@@ -50,7 +49,8 @@ const WhyVacuumPacked = () => {
         <Grid item xs={7} xs_sm={7}>
           <Box 
             sx={{
-              ...convertElementToSx(themeCustomElements.home.whyVacuumPacked.description.first),
+              backgroundColor: colors.background.secondary,
+              borderRadius: '0px 45px 45px 0px',
               width: '268px',
               mr: 'auto',
               py: 3,
@@ -100,7 +100,8 @@ const WhyVacuumPacked = () => {
         <Grid item xs={8} xs_sm={8}>
           <Box 
             sx={{
-              ...convertElementToSx(themeCustomElements.home.whyVacuumPacked.description.second),
+              backgroundColor: colors.background.third,
+              borderRadius: '45px 0px 0px 45px',
               width: '268px',
               ml: 'auto',
               py: 3,
