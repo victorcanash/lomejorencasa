@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 
-import ProductBanner from '@components/products/banners';
+import ProductBanner from '@core/components/banners/ProductBanner';
 import LandingList from '@components/products/collection/LandingList';
 import BlogsList from '@core/components/BlogsList';
 import ProductReviews from '@components/products/reviews';

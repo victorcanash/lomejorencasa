@@ -23,6 +23,7 @@ const seoConfig: {
   home: {
     h1: string,
   },
+  productBannerAlts: string[],
 } = {
   defaultSeoProps: {
     defaultTitle: keywords.vacuumMachine.main,
@@ -49,6 +50,12 @@ const seoConfig: {
   home: {
     h1: keywords.vacuumMachine.main,
   },
+  productBannerAlts: [
+    keywords.vacuumMachine.others[0],
+    keywords.vacuumMachine.others[1],
+    keywords.vacuumMachine.others[0],
+    keywords.vacuumMachine.others[1],
+  ],
 };
 
 export default seoConfig;

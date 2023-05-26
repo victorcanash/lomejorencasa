@@ -436,6 +436,10 @@ export const themeCustomElements: {
       content?: ThemeElement,
       icon?: ThemeElement,
     },
+    product?: {
+      default?: ThemeElement,
+      small?: ThemeElement,
+    },
   },
   navBar: {
     logo: {
@@ -454,12 +458,6 @@ export const themeCustomElements: {
     content?: ThemeElement,
     title?: ThemeElement,
     icons?: ThemeElement,
-  },
-  home: {
-    banner: {
-      default: ThemeElement,
-      small: ThemeElement,
-    },
   },
   landing: {
     selectLabel: ThemeElement,
@@ -542,6 +540,28 @@ export const themeCustomElements: {
         },
       },
     },
+    product: {
+      default: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+          font: {
+            default: typographies.homeBanner.default,
+          },
+        },
+      },
+      small: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+          font: {
+            default: typographies.homeBanner.small,
+          },
+        }, 
+      },
+    },
   },
   navBar: {
     logo: {
@@ -586,30 +606,6 @@ export const themeCustomElements: {
         color: {
           default: colors.text.white,
         },
-      },
-    },
-  },
-  home: {
-    banner: {
-      default: {
-        text: {
-          color: {
-            default: colors.text.white,
-          },
-          font: {
-            default: typographies.homeBanner.default,
-          },
-        }, 
-      },
-      small: {
-        text: {
-          color: {
-            default: colors.text.white,
-          },
-          font: {
-            default: typographies.homeBanner.small,
-          },
-        }, 
       },
     },
   },

@@ -13,7 +13,7 @@ import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
-import { keywords } from '@lib/config/next-seo.config';
+import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/constants/navigation';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -32,9 +32,11 @@ const ProductBanner = () => {
 
   const getSxContent = useCallback(() => {
     if (smallBreakpoint) {
-      return convertElementToSx(themeCustomElements.home.banner.small);
+      return themeCustomElements.banners?.product?.small ?
+        convertElementToSx(themeCustomElements.banners.product.small) : undefined;
     }
-    return convertElementToSx(themeCustomElements.home.banner.default);
+    return themeCustomElements.banners?.product?.default ?
+      convertElementToSx(themeCustomElements.banners.product.default) : undefined;
   }, [smallBreakpoint]);
 
   const getContent = useCallback((index: number) => {
@@ -49,7 +51,7 @@ const ProductBanner = () => {
       text.id = 'home.banner.4';
     }
     return (
-      <Grid 
+      <Grid
         container
         direction="column"
         wrap="nowrap"
@@ -92,18 +94,12 @@ const ProductBanner = () => {
   }, [getSxContent, styleXs.containerLeft, styleXs.imgSeparatorWidth]);
 
   const getAltImg = useCallback((index: number) => {
-    switch (index) {
-      case 0:
-        return keywords.vacuumMachine.others[0];
-      case 1:
-        return keywords.vacuumMachine.others[1];
-      case 2:
-        return keywords.vacuumMachine.others[0];
-      case 3:
-        return keywords.vacuumMachine.others[1];
-      default:
-        return keywords.vacuumMachine.others[0];
+    if (seoConfig.productBannerAlts.length >= index + 1) {
+      return seoConfig.productBannerAlts[index];
+    } else if (seoConfig.productBannerAlts.length >= 1) {
+      return seoConfig.productBannerAlts[0];
     }
+    return '';
   }, []);
 
   return (
