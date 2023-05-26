@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
-import PageHeader from '@components/ui/PageHeader';
+import PageHeader from '@core/components/pages/PageHeader';
 import ErrorView from '@components/exceptions/ErrorView';
 
 const NotFoundPage: NextPage = () => {

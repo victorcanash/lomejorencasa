@@ -6,20 +6,49 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 import CustomImage from '@core/components/CustomImage';
+import Title from '@core/components/ui/Title';
 
 import { keywords } from '@lib/config/next-seo.config';
 import { pages } from '@lib/constants/navigation';
+import colors from '@lib/constants/themes/colors';
 import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import Title from '@components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const Use = () => {
-  const getPackingMachineStep = useCallback((index: number, source: Source) => {
+  const Subtitle = useCallback((props: { type: 'h3' | 'h4', text: FormatText }) => {
+    const { type, text } = props;
+    return (
+      <Box
+        sx={{
+          width: 'fit-content',
+          backgroundColor: type === 'h3' ? colors.background.third : colors.background.secondary,
+          borderRadius: '0px 15px 15px 0px',
+          my: 4,
+          ml: -3,
+          p: 3,
+        }}
+      >
+        { text.id &&
+          <Typography 
+            component={type} 
+            variant={type} 
+            align={text.textAlign}
+          >
+            <FormattedMessage id={text.id} values={text.values} />
+          </Typography>
+        }
+      </Box>
+    );
+  }, []);
+
+  const GetPackingMachineStep = useCallback((props: { index: number, source: Source }) => {
+    const { index, source } = props;
     return (
       <>
         <Container>
@@ -27,17 +56,14 @@ const Use = () => {
             maxWidth="sm"
             m="auto"
           >
-            <Title
-              type="h4Home"
-              texts={{
-                title: {
-                  id: 'home.use.packingMachine.steps.title',
-                  values: {
-                    step: index + 1,
-                  },
+            <Subtitle
+              type="h4"
+              text={{
+                id: 'home.use.packingMachine.steps.title',
+                values: {
+                  step: index + 1,
                 },
               }}
-              divider={false}
             />
             <Typography component="div" variant="body1">
               <FormattedMessage id={`home.use.packingMachine.steps.${index + 1}`} />
@@ -50,7 +76,7 @@ const Use = () => {
         />
       </>
     );
-  }, []);
+  }, [Subtitle]);
 
   return (
     <>
@@ -78,14 +104,11 @@ const Use = () => {
           m="auto"
           mb={1}
         >
-          <Title
-            type="h3Home"
-            texts={{
-              title: {
-                id: 'home.use.foodPreparation.title',
-              },
+          <Subtitle
+            type="h3"
+            text={{
+              id: 'home.use.foodPreparation.title',
             }}
-            divider={false}
           />
           <Typography component="div" variant="body1">
             <FormattedMessage id="home.use.foodPreparation.description" />
@@ -132,14 +155,11 @@ const Use = () => {
           maxWidth="sm"
           m="auto"
         >
-          <Title
-            type="h3Home"
-            texts={{
-              title: {
-                id: 'home.use.bagSelection.title',
-              },
+          <Subtitle
+            type="h3"
+            text={{
+              id: 'home.use.bagSelection.title',
             }}
-            divider={false}
           />
           <Typography component="div" variant="body1">
             <FormattedMessage id="home.use.bagSelection.description" />
@@ -160,14 +180,11 @@ const Use = () => {
           maxWidth="sm"
           m="auto"
         >
-          <Title
-            type="h4Home"
-            texts={{
-              title: {
-                id: 'home.use.bagSelection.sizes.title',
-              },
+          <Subtitle
+            type="h4"
+            text={{
+              id: 'home.use.bagSelection.sizes.title',
             }}
-            divider={false}
           />
           <MultimediaContainer
             mt={-4}
@@ -200,14 +217,11 @@ const Use = () => {
           maxWidth="sm"
           m="auto"
         >
-          <Title
-            type="h3Home"
-            texts={{
-              title: {
-                id: 'home.use.packingMachine.title',
-              },
+          <Subtitle
+            type="h3"
+            text={{
+              id: 'home.use.packingMachine.title',
             }}
-            divider={false}
           />
           <Typography component="div" variant="body1">
             <FormattedMessage id="home.use.packingMachine.description" />
@@ -236,9 +250,12 @@ const Use = () => {
             src: homeVideoIds[2],
             alt: keywords.vacuumMachine.others[0],
           }
-        ] as Source[]).map((item, index) => (
+        ] as Source[]).map((source, index) => (
           <Fragment key={index}>
-            { getPackingMachineStep(index, item) }
+            <GetPackingMachineStep
+              index={index}
+              source={source}
+            />
           </Fragment>
         ))
       }

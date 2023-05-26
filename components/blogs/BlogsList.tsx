@@ -8,7 +8,7 @@ import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
 import blogs from '@lib/constants/blogs';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 
 const BlogsList = () => {
 

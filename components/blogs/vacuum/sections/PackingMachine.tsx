@@ -15,7 +15,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import { keywords } from '@lib/config/next-seo.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { homePackingMachineImgIds } from '@lib/constants/multimedia';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const PackingMachine = () => {

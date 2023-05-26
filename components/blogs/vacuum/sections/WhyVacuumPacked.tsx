@@ -10,7 +10,7 @@ import CustomImage from '@core/components/CustomImage';
 
 import { homeWhyVacuumPackedImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 
 const WhyVacuumPacked = () => {
 

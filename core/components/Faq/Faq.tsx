@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 import faqConfig from '@lib/config/faq.config';
-import FaqAccordion from '@components/faq/FaqAccordion';
+import FaqAccordion from '@core/components/Faq/FaqAccordion';
 
 const Faq = () => {
 

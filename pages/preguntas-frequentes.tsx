@@ -3,8 +3,8 @@ import type { NextPage } from 'next';
 import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
-import PageHeader from '@components/ui/PageHeader';
-import Faq from '@components/faq';
+import PageHeader from '@core/components/pages/PageHeader';
+import Faq from '@core/components/Faq';
 
 const FaqPage: NextPage = () => {
   const page = usePage();

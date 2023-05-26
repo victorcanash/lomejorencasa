@@ -9,7 +9,7 @@ import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/constants/navigation';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 
 const WhatIsVacuumPacked = () => {
 

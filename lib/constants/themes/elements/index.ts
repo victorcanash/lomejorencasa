@@ -454,10 +454,6 @@ export const themeCustomElements: {
     title: ThemeElement,
   },
   home: {
-    title: {
-      h3: ThemeElement,
-      h4: ThemeElement,
-    },
     banner: {
       default: ThemeElement,
       small: ThemeElement,
@@ -598,38 +594,6 @@ export const themeCustomElements: {
     },
   },
   home: {
-    title: {
-      h3: {
-        backgroundColor: {
-          default: colors.background.third,
-        },
-        border: {
-          default: {
-            radius: {
-              topRight: '15px',
-              topLeft: '0px',
-              bottomRight: '15px',
-              bottomLeft: '0px',
-            },
-          },
-        },
-      },
-      h4: {
-        backgroundColor: {
-          default: colors.background.secondary,
-        },
-        border: {
-          default: {
-            radius: {
-              topRight: '15px',
-              topLeft: '0px',
-              bottomRight: '15px',
-              bottomLeft: '0px',
-            },
-          },
-        },
-      },
-    },
     banner: {
       default: {
         text: {

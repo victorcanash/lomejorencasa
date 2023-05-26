@@ -11,7 +11,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 type ProductTutorialProps = {

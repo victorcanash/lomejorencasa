@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import { homeFoodStorageImgIds } from '@lib/constants/multimedia';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const FoodStorage = () => {

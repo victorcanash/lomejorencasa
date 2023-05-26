@@ -24,7 +24,7 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { allLandingConfigs } from '@lib/constants/products';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 // import Pagination from '@components/ui/Pagination';
 
 const LandingList = () => {

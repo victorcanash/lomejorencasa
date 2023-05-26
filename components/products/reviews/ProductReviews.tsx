@@ -24,7 +24,7 @@ import { allLandingConfigs } from '@lib/constants/products';
 import colors from '@lib/constants/themes/colors';
 import { useAppContext } from '@lib/contexts/AppContext';
 import useReviews from '@lib/hooks/useReviews';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 import Pagination from '@components/ui/Pagination';
 import ProductReviewForm from '@components/forms/products/ProductReviewForm';
 

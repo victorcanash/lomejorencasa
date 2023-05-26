@@ -12,7 +12,7 @@ import envConfig from '@core/config/env.config';
 import { PageTypes } from '@core/constants/navigation';
 import type { FormatText } from '@core/types/texts';
 
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 
 type PageHeaderProps = {
   pageType: PageTypes,

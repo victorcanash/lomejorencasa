@@ -15,7 +15,7 @@ import Paper from '@mui/material/Paper';
 
 import { keywords } from '@lib/config/next-seo.config';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
-import Title from '@components/ui/Title';
+import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
 const Conservation = () => {

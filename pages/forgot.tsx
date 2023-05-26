@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
-import PageHeader from '@components/ui/PageHeader';
+import PageHeader from '@core/components/pages/PageHeader';
 import ForgotPswForm from '@components/forms/auth/ForgotPswForm';
 
 const ForgotPage: NextPage = () => { 

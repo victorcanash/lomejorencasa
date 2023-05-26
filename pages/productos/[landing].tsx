@@ -9,7 +9,7 @@ import { allLandingConfigs } from '@lib/constants/products';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import useFacebook from '@lib/hooks/useFacebook';
-import PageHeader from '@components/ui/PageHeader';
+import PageHeader from '@core/components/pages/PageHeader';
 import LandingDetail from '@components/products/detail';
 
 type LandingPageProps = {

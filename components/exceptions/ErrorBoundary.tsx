@@ -4,7 +4,7 @@ import { injectIntl, IntlShape } from 'react-intl';
 
 import { PageTypes } from '@core/constants/navigation';
 
-import PageHeader from '@components/ui/PageHeader';
+import PageHeader from '@core/components/pages/PageHeader';
 import ErrorView from '@components/exceptions/ErrorView';
 
 type ErrorBoundaryProps = {
