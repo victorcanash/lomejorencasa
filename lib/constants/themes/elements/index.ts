@@ -495,11 +495,11 @@ export const themeCustomElements: {
       //content: ThemeElement,
     },
   },
-  faq: {
-    accordeon: {
-      head: {
-        content: ThemeElement,
-        title: ThemeElement,
+  faq?: {
+    accordeon?: {
+      head?: {
+        content?: ThemeElement,
+        title?: ThemeElement,
       },
     },
   },

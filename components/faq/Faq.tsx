@@ -1,8 +1,8 @@
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
-import { questions } from '@lib/constants/faq';
-import FaqGroup from '@components/faq/FaqGroup';
+import faqConfig from '@lib/constants/faq';
+import FaqAccordion from '@components/faq/FaqAccordion';
 
 const Faq = () => {
 
@@ -12,18 +12,13 @@ const Faq = () => {
         maxWidth="md"
         m="auto"
       >
-        <FaqGroup
-          textBaseId="packing"
-          questions={questions.packing}
-        />
-        <FaqGroup
-          textBaseId="conservation"
-          questions={questions.conservation}
-        />
-        <FaqGroup
-          textBaseId="shipping"
-          questions={questions.shipping}
-        />
+        { faqConfig.map((faqGroup, index) => (
+          <FaqAccordion
+            key={index}
+            item={faqGroup}
+            defaultExpanded={index === 0 ? true : false}
+          />
+        ))}
       </Box>
     </Container>
   );
