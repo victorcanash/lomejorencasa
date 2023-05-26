@@ -16,7 +16,7 @@ import LinkButton from '@core/components/LinkButton';
 import Divider from '@core/components/ui/Divider';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';

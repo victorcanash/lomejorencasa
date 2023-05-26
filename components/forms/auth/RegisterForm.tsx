@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthRegister } from '@core/types/auth';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 // import { useAppContext } from '@lib/contexts/AppContext';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';

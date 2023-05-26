@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@core/components/Link';
 import Title from '@core/components/ui/Title';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import blogsConfig from '@lib/config/blogs.config';
 
 const BlogsList = () => {

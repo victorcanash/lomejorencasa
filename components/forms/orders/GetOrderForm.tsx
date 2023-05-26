@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Order, OrderContact } from '@core/types/orders';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import useForms from '@lib/hooks/useForms';
 import BaseForm from '@components/forms/BaseForm';
 

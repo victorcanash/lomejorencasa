@@ -1,4 +1,4 @@
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { everfreshVideoIds } from '@lib/constants/multimedia';
 import ProductTutorial from '@components/products/detail/ProductTutorial';
 

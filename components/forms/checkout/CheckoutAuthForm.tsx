@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthLogin } from '@core/types/auth';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
 import useForms from '@lib/hooks/useForms';
 import useAuth from '@lib/hooks/useAuth';

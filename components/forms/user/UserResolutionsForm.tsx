@@ -6,7 +6,7 @@ import type { User, UserContact } from '@core/types/user';
 import { getContactTypeName } from '@core/utils/contact';
 import Link from '@core/components/Link';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useUser from '@lib/hooks/useUser';

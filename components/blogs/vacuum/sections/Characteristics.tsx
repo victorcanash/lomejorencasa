@@ -12,7 +12,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 import CustomImage from '@core/components/CustomImage';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { homeCharacteristicsBgImgIds, homeCharacteristicsIconsIds, homeAdvantagesIconsIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title'; 

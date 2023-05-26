@@ -11,7 +11,7 @@ import { AdminSections } from '@core/constants/admin';
 import { allProductsName } from '@core/constants/products';
 import type { ProductCategory } from '@core/types/products';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 
 type SearchContext = {
   productCategories: ProductCategory[],

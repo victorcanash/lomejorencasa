@@ -14,7 +14,7 @@ import CustomImage from '@core/components/CustomImage';
 import Title from '@core/components/ui/Title';
 
 import { keywords } from '@lib/config/next-seo.config';
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
 import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';

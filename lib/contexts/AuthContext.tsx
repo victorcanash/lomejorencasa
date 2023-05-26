@@ -20,7 +20,7 @@ import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
 import { reinitFBEvents } from '@core/utils/facebook';
 
-import { pages, originRedirects } from '@lib/constants/navigation';
+import { pages, originRedirects } from '@lib/config/navigation.config';
 
 type ContextType = {
   token: string,

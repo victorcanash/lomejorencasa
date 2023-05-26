@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import Link from '@core/components/Link';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import useAuth from '@lib/hooks/useAuth';
 import useCountdown from '@lib/hooks/useCountdown';
 import BaseForm from '@components/forms/BaseForm';

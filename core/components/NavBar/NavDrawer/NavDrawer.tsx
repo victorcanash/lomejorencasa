@@ -6,7 +6,7 @@ import List from '@mui/material/List';
 import Collapse from '@mui/material/Collapse';
 import Toolbar from '@mui/material/Toolbar';
 
-import type { NavDrawerItems } from '@core/types/navigation';
+import type { NavDrawerItem } from '@core/types/navigation';
 import Divider from '@core/components/ui/Divider';
 
 import useAuth from '@lib/hooks/useAuth';
@@ -15,9 +15,9 @@ import NavDrawerBtn from '@core/components/NavBar/NavDrawer/NavDrawerBtn';
 
 type NavDrawerProps = {
   open: boolean,
-  items: NavDrawerItems[],
+  items: NavDrawerItem[],
   handleOpen: () => void,
-  handleCollapse: (item: NavDrawerItems) => void,
+  handleCollapse: (item: NavDrawerItem) => void,
   minHeight: string,
 };
 
@@ -73,7 +73,7 @@ const NavDrawer = (props: NavDrawerProps) => {
                     { item.items.map((subitem) => (
                       <Fragment key={subitem.text.id}>
                         <NavDrawerBtn
-                          item={subitem as NavDrawerItems}
+                          item={subitem as NavDrawerItem}
                           handleOpen={handleOpen}
                           handleCollapse={handleCollapse}
                           logout={logout}

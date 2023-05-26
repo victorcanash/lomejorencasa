@@ -1,6 +1,6 @@
 import type { NavItem } from '@core/types/navigation';
 
-import { pages } from 'lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 
 const blogsConfig: NavItem[] = [
   {

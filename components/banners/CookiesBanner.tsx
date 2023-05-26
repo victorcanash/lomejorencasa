@@ -29,7 +29,7 @@ import { subtractYears } from '@core/utils/dates';
 import Link from '@core/components/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 
 type CookiesBannerProps = {

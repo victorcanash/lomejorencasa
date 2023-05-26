@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import ManagePPackForm from '@components/forms/admin/ManagePPackForm';
 
 const CreatePackSection = () => {

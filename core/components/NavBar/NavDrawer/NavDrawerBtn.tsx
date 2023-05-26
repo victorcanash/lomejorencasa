@@ -1,14 +1,14 @@
 import ListItemButton from '@mui/material/ListItemButton';
 
-import type { NavDrawerItems } from '@core/types/navigation';
+import type { NavDrawerItem } from '@core/types/navigation';
 import Link from '@core/components/Link';
 
 import NavDrawerBtnContent from '@core/components/NavBar/NavDrawer/NavDrawerBtnContent';
 
 type NavDrawerBtnProps = {
-  item: NavDrawerItems,
+  item: NavDrawerItem,
   handleOpen: () => void,
-  handleCollapse: (item: NavDrawerItems) => void,
+  handleCollapse: (item: NavDrawerItem) => void,
   logout: () => Promise<void>,
 };
 
@@ -20,7 +20,7 @@ const NavDrawerBtn = (props: NavDrawerBtnProps) => {
     logout,
   } = props;
 
-  const handleItemBtn = (item: NavDrawerItems) => {
+  const handleItemBtn = (item: NavDrawerItem) => {
     if (item.items && item.items.length > 0) {
       handleCollapse(item);
     } else {

@@ -21,7 +21,7 @@ import {
   getLandingPathByConfig,
 } from '@core/utils/products';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { placeholderImgId } from '@lib/constants/multimedia';
 
 type ProductsContext = {

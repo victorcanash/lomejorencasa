@@ -18,7 +18,7 @@ import { getFirstLandingItem, getLandingConfigById, getLandingPathByConfig, getP
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { allLandingConfigs } from '@lib/config/inventory.config';

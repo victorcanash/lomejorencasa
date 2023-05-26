@@ -20,7 +20,7 @@ export type NavItem = {
   text: FormatText,
 };
 
-export type NavDrawerItems = NavItem & {
+export type NavDrawerItem = NavItem & {
   items: (NavItem & {
     divider?: boolean,
   })[],

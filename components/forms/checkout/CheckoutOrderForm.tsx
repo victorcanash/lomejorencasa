@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import BaseForm from '@components/forms/BaseForm';
 import CartDetail from '@components/cart/CartDetail';
 

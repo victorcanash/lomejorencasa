@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 
 import { init, isAdminUser } from '@core/utils/auth';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';

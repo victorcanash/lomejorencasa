@@ -7,7 +7,7 @@ import type { FormatText } from '@core/types/texts';
 import type { LandingConfig } from '@core/types/products';
 import Divider from '@core/components/ui/Divider';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import CharacteristicsGroup from '@components/products/detail/characteristics/CharacteristicsGroup';
 

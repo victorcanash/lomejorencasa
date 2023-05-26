@@ -15,7 +15,7 @@ import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';

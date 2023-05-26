@@ -1,11 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/router';
 
-import useMediaQuery from '@mui/material/useMediaQuery';
-
 import { PageTypes } from '@core/constants/navigation';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import WebLayout from '@components/layouts/WebLayout';
 import LinkLayout from '@components/layouts/LinkLayout';
 import AdminLayout from '@components/layouts/AdminLayout';

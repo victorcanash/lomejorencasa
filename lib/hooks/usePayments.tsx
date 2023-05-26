@@ -24,7 +24,7 @@ import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { getCountryCode } from '@core/utils/addresses';
 import { reinitFBEvents } from '@core/utils/facebook';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { paypalHostedFieldsStyle } from '@lib/constants/themes/elements';
 import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';

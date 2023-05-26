@@ -14,7 +14,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
 
 import seoConfig from '@lib/config/next-seo.config';
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';

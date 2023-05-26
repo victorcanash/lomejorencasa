@@ -6,7 +6,7 @@ import Container from '@mui/material/Container';
 
 import type { CartItem } from '@core/types/cart';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';

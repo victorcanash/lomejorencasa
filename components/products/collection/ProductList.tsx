@@ -18,7 +18,7 @@ import { capitalizeFirstLetter } from '@core/utils/strings';
 import Link from '@core/components/Link';
 import CustomImage from '@core/components/CustomImage';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';

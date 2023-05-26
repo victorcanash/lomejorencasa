@@ -14,7 +14,7 @@ import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
 import Divider from '@core/components/ui/Divider';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import useProducts from '@lib/hooks/useProducts';
 import ManageProductForm from '@components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@components/forms/admin/ManagePInventoryForm';

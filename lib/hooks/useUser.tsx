@@ -12,7 +12,7 @@ import {
   sendUserContactEmail as sendUserContactEmailMW,
 } from '@core/utils/user';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';

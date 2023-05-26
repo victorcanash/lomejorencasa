@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import { AdminSections } from '@core/constants/admin';
 import Divider from '@core/components/ui/Divider';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 
 const HomeSection = () => {

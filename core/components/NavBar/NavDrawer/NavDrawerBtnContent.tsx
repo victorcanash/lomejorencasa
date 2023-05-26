@@ -5,10 +5,10 @@ import Typography from '@mui/material/Typography';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import type { NavDrawerItems } from '@core/types/navigation';
+import type { NavDrawerItem } from '@core/types/navigation';
 
 type NavDrawerBtnContentProps = {
-  item: NavDrawerItems,
+  item: NavDrawerItem,
 };
 
 const NavDrawerBtnContent = (props: NavDrawerBtnContentProps) => {

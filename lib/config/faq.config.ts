@@ -1,6 +1,6 @@
 import { FaqGroup } from '@core/types/faq';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 
 const faqConfig: FaqGroup[] = [
   {

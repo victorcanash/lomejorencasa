@@ -19,7 +19,7 @@ import IconButton from '@mui/material/IconButton';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
 
-import { pages, tiktokHref, instagramHref, facebookHref } from '@lib/constants/navigation';
+import { pages, socialPaths } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import FooterIcon from '@core/components/Footer/FooterIcon';
 
@@ -74,7 +74,7 @@ const Footer = () => {
             <Grid item>
               <IconButton
                 size="small"
-                href={tiktokHref}
+                href={socialPaths.tiktok}
                 target="_blank"
               >
                 <FooterIcon
@@ -85,7 +85,7 @@ const Footer = () => {
             <Grid item>
               <IconButton
                 size="small"
-                href={instagramHref}
+                href={socialPaths.instagram}
                 target="_blank"
               >
                 <FooterIcon
@@ -96,7 +96,7 @@ const Footer = () => {
             <Grid item>
               <IconButton
                 size="small"
-                href={facebookHref}
+                href={socialPaths.facebook}
                 target="_blank"
               >
                 <FooterIcon

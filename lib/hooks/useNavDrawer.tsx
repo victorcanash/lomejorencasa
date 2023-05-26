@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 
-import type { NavDrawerItems } from '@core/types/navigation';
+import type { NavDrawerItem } from '@core/types/navigation';
 
-import { 
-  mainNavDrawerItems, 
-  loggedNavDrawerItems, 
-  unloggedNavDrawerItems,
-} from '@lib/constants/navigation';
+import navDrawerConfig from '@lib/config/navDrawer.config';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 
@@ -14,7 +10,7 @@ const useNavDrawer = () => {
   const { isLogged } = useAuthContext();
   const { closeDrawer: closeCartDrawer } = useCartContext();
 
-  const [items, setItems] = useState<NavDrawerItems[]>([]);
+  const [items, setItems] = useState<NavDrawerItem[]>([]);
   const [open, setOpen] = useState(false);
 
   const closeCollapses = () => {
@@ -42,7 +38,7 @@ const useNavDrawer = () => {
     }
   };
 
-  const handleCollapse = (item: NavDrawerItems) => {
+  const handleCollapse = (item: NavDrawerItem) => {
     setItems(
       items.map((current) => {
         if (current.text == item.text) {
@@ -59,9 +55,9 @@ const useNavDrawer = () => {
 
   useEffect(() => {
     if (isLogged()) {
-      setItems(mainNavDrawerItems.concat(loggedNavDrawerItems));
+      setItems(navDrawerConfig.main.concat(navDrawerConfig.logged));
     } else {
-      setItems(mainNavDrawerItems.concat(unloggedNavDrawerItems));
+      setItems(navDrawerConfig.main.concat(navDrawerConfig.unlogged));
     }
   }, [isLogged]);
 

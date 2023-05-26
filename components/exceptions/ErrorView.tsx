@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import LinkButton from '@core/components/LinkButton';
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 
 type ErrorViewProps = {
   title: string,

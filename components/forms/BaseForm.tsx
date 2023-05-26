@@ -33,7 +33,7 @@ import type {
 } from '@core/types/forms';
 import Link from '@core/components/Link';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';
 
 const BaseForm = (props: FormBase) => {

@@ -16,7 +16,7 @@ import CustomImage from '@core/components/CustomImage';
 import ShippingBar from '@core/components/NavBar/ShippingBar';
 
 import seoConfig from '@lib/config/next-seo.config';
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import { navbarLogoId } from '@lib/constants/multimedia';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useNavDrawer from '@lib/hooks/useNavDrawer';

@@ -34,7 +34,7 @@ import { scrollToSection } from '@core/utils/navigation';
 import { getFirstLandingItem, getLandingItems, getLandingPathByConfig, getProductPriceData } from '@core/utils/products';
 import Link from '@core/components/Link';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 import inventoryConfig from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';

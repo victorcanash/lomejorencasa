@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import envConfig from '@core/config/env.config';
 import Link from '@core/components/Link';
 
-import { pages } from '@lib/constants/navigation';
+import { pages } from '@lib/config/navigation.config';
 
 const Conditions = () => {
 
