@@ -35,7 +35,7 @@ import { getFirstLandingItem, getLandingItems, getLandingPathByConfig, getProduc
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/constants/navigation';
-import inventoryConfig from '@lib/constants/products';
+import inventoryConfig from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';

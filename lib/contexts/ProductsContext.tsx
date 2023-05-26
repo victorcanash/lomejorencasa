@@ -5,7 +5,7 @@ import {
   useCallback,
 } from 'react';
 
-import { allLandingConfigs } from '@lib/constants/products';
+import { allLandingConfigs } from '@lib/config/inventory.config';
 import type {
   Landing,
   Product,

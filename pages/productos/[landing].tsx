@@ -5,7 +5,7 @@ import { ParsedUrlQuery } from 'querystring';
 import { PageTypes } from '@core/constants/navigation';
 import { getLandingConfigByPath } from '@core/utils/products';
 
-import { allLandingConfigs } from '@lib/constants/products';
+import { allLandingConfigs } from '@lib/config/inventory.config';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import useFacebook from '@lib/hooks/useFacebook';

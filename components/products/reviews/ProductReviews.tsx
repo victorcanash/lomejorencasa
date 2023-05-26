@@ -20,7 +20,7 @@ import { convertToDate } from '@core/utils/dates';
 import { getPackGeneralName } from '@core/utils/products';
 import CustomImage from '@core/components/CustomImage';
 
-import { allLandingConfigs } from '@lib/constants/products';
+import { allLandingConfigs } from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { useAppContext } from '@lib/contexts/AppContext';
 import useReviews from '@lib/hooks/useReviews';

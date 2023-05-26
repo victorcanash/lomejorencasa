@@ -4,7 +4,7 @@ import type { Page } from '@core/types/navigation';
 import type { NavDrawerItems } from '@core/types/navigation';
 import { getLandingPathByConfig } from '@core/utils/products';
 
-import inventoryConfig from '@lib/constants/products';
+import inventoryConfig from '@lib/config/inventory.config';
 
 export const pages: {
   home: Page,

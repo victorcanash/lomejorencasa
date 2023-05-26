@@ -21,7 +21,7 @@ import CustomImage from '@core/components/CustomImage';
 import { pages } from '@lib/constants/navigation';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { allLandingConfigs } from '@lib/constants/products';
+import { allLandingConfigs } from '@lib/config/inventory.config';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import Title from '@core/components/ui/Title';

@@ -16,7 +16,7 @@ import type { CreateProductReview, ProductPack } from '@core/types/products';
 import { getUserFullName } from '@core/utils/user';
 import { getPackGeneralName } from '@core/utils/products';
 
-import { allLandingConfigs } from '@lib/constants/products';
+import { allLandingConfigs } from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
