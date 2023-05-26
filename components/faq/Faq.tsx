@@ -15,7 +15,7 @@ const Faq = () => {
         { faqConfig.map((faqGroup, index) => (
           <FaqAccordion
             key={index}
-            item={faqGroup}
+            faqGroup={faqGroup}
             defaultExpanded={index === 0 ? true : false}
           />
         ))}

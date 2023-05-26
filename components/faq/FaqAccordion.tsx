@@ -14,13 +14,13 @@ import Link from '@core/components/Link';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 
 type FaqAccordionProps = {
-  item: FaqGroup,
+  faqGroup: FaqGroup,
   defaultExpanded?: boolean,
 };
 
 const FaqAccordion = (props: FaqAccordionProps) => {
   const {
-    item,
+    faqGroup,
     defaultExpanded,
   } = props;
 
@@ -41,7 +41,7 @@ const FaqAccordion = (props: FaqAccordionProps) => {
             ...themeCustomElements.faq?.accordeon?.head?.title ? convertElementToSx(themeCustomElements.faq.accordeon.head.title) : undefined,
           }}
         >
-          <FormattedMessage id={`faq.${item.title.id}.title`} values={item.title.values} />
+          <FormattedMessage id={`faq.${faqGroup.title.id}.title`} values={faqGroup.title.values} />
         </Typography>
       </AccordionSummary>
       <AccordionDetails
@@ -49,18 +49,18 @@ const FaqAccordion = (props: FaqAccordionProps) => {
           ...themeCustomElements.faq?.accordeon?.head?.content ? convertElementToSx(themeCustomElements.faq.accordeon.head.content) : undefined,
         }}
       >
-        { item.questions.map((question, index) => (
+        { faqGroup.questions.map((question, index) => (
           <Accordion key={index}>
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
             >
               <Typography component="div" variant="body1Head">
-                <FormattedMessage id={`faq.${item.title.id}.q.${question.text.id}`} values={question.text.values} />
+                <FormattedMessage id={`faq.${faqGroup.title.id}.q.${question.text.id}`} values={question.text.values} />
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography component="div" variant="body1">
-                <FormattedMessage id={`faq.${item.title.id}.r.${question.text.id}`} values={question.text.values} />
+                <FormattedMessage id={`faq.${faqGroup.title.id}.r.${question.text.id}`} values={question.text.values} />
               </Typography>
               { question.path &&
                 <Box sx={{ mt: 2 }}>
