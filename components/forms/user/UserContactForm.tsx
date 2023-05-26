@@ -56,9 +56,9 @@ const UserContactForm = () => {
           descriptionTxt: {
             id: 'contact.description',
             values: {
-              email: envConfig.NEXT_PUBLIC_EMAIL,
+              email: envConfig.EMAIL,
               'linkEmail': (...chunks: ReactNode[]) => (
-                <Link href={`mailto:${envConfig.NEXT_PUBLIC_EMAIL}`} target="_blank">
+                <Link href={`mailto:${envConfig.EMAIL}`} target="_blank">
                   {chunks}
                 </Link>
               ),

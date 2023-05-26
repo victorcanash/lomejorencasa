@@ -277,9 +277,9 @@ export const sendUserActivationEmail = async (currentLocale: string, email: stri
     const options: AxiosRequestConfig = {
       headers: getLanguageHeaders(currentLocale),
       params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-        url: `${envConfig.NEXT_PUBLIC_APP_URL}${urlPage.path}`,
+        appName: envConfig.APP_NAME,
+        appDomain: envConfig.APP_URL,
+        url: `${envConfig.APP_URL}${urlPage.path}`,
       }
     };
     axios.post('auth/send-email/activation', { email }, options)
@@ -302,9 +302,9 @@ export const sendUserResetPswEmail = async (currentLocale: string, email: string
     const options: AxiosRequestConfig = {
       headers: getLanguageHeaders(currentLocale),
       params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-        url: `${envConfig.NEXT_PUBLIC_APP_URL}${urlPage.path}`,
+        appName: envConfig.APP_NAME,
+        appDomain: envConfig.APP_URL,
+        url: `${envConfig.APP_URL}${urlPage.path}`,
       }
     };
     axios.post('auth/send-email/reset', { email }, options)
@@ -330,9 +330,9 @@ export const sendUserUpdateEmail = async (token: string, currentLocale: string, 
         ...getLanguageHeaders(currentLocale),
       },
       params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
-        url: `${envConfig.NEXT_PUBLIC_APP_URL}${urlPage.path}`,
+        appName: envConfig.APP_NAME,
+        appDomain: envConfig.APP_URL,
+        url: `${envConfig.APP_URL}${urlPage.path}`,
         revertEmail,
       }
     };

@@ -26,7 +26,7 @@ const MaintenanceBanner = (props: MaintenanceBannerProps) => {
 
   return (
     <>
-      { envConfig.NEXT_PUBLIC_APP_ENV === Environments.development &&
+      { envConfig.APP_ENV === Environments.development &&
         <HideOnScroll direction="up">
           <Grid     
             container

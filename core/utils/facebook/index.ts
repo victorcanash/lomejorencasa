@@ -34,7 +34,7 @@ export const reinitFBEvents = (user?: User | GuestUser | CheckoutData, locale?: 
     zp: (user as User)?.shipping?.postalCode || (user as CheckoutData)?.shipping?.postalCode,
     country: country,
   };
-  window.fbq('init', envConfig.NEXT_PUBLIC_FB_PIXEL_ID, data);
+  window.fbq('init', envConfig.FB_PIXEL_ID, data);
 };
 
 export const consentFBEvents = (consent: boolean) => {

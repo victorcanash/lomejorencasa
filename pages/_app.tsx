@@ -112,7 +112,7 @@ function MyApp(props: MyAppProps) {
             s.parentNode.insertBefore(t,s)}(window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('consent', 'revoke');
-            fbq('init', ${envConfig.NEXT_PUBLIC_FB_PIXEL_ID});
+            fbq('init', ${envConfig.FB_PIXEL_ID});
           `,
         }}
         onReady={() => {
@@ -143,7 +143,7 @@ function MyApp(props: MyAppProps) {
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer', '${envConfig.NEXT_PUBLIC_GTM_ID}');
+            })(window,document,'script','dataLayer', '${envConfig.GTM_ID}');
           `,
         }}
         onReady={() => {

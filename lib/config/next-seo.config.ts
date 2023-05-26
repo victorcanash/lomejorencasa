@@ -42,7 +42,7 @@ const seoConfig: {
       type: 'website',
       locale: 'es_ES',
       title: keywords.vacuumMachine.main,
-      url: envConfig.NEXT_PUBLIC_APP_URL,
+      url: envConfig.APP_URL,
       siteName: keywords.vacuumMachine.main,
     },
   },

@@ -30,14 +30,14 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
     <>
       { (pageType !== PageTypes.link) ?
         <GoogleOAuthProvider 
-          clientId={envConfig.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID}
+          clientId={envConfig.GOOGLE_OAUTH_CLIENT_ID}
         >
           { paypal ?
             <PayPalScriptProvider
               options={{
                 'locale': 'es_ES',
-                'merchant-id': envConfig.NEXT_PUBLIC_PAYPAL_MERCHANT_ID,
-                'client-id': envConfig.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
+                'merchant-id': envConfig.PAYPAL_MERCHANT_ID,
+                'client-id': envConfig.PAYPAL_CLIENT_ID,
                 'data-client-token': paypal.token,
                 'currency': currency,
                 'intent': 'capture',

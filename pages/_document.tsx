@@ -38,7 +38,7 @@ export default class MyDocument extends Document {
               height="1"
               width="1"
               style={{ display: 'none' }}
-              src={`https://www.facebook.com/tr?id=${envConfig.NEXT_PUBLIC_FB_PIXEL_ID}&ev=PageView&noscript=1`}
+              src={`https://www.facebook.com/tr?id=${envConfig.FB_PIXEL_ID}&ev=PageView&noscript=1`}
             />
           </noscript>
           {/* Google Tag Manager */}
@@ -47,7 +47,7 @@ export default class MyDocument extends Document {
               height="0"
               width="0"
               style={{ display: 'none', visibility: 'hidden' }}
-              src={`https://www.googletagmanager.com/ns.html?id=${envConfig.NEXT_PUBLIC_GTM_ID}`}
+              src={`https://www.googletagmanager.com/ns.html?id=${envConfig.GTM_ID}`}
             />
           </noscript>
           {(this.props as any).emotionStyleTags}

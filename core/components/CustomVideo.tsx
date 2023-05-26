@@ -10,7 +10,7 @@ const cloudinaryLoader = (src: string, quality?: number) => {
     'c_scale',
     'q_' + (quality || 'auto:best')
   ];
-  return `https://res.cloudinary.com/${envConfig.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/${params.join(',')}/${normalizeSrc(src)}`;
+  return `https://res.cloudinary.com/${envConfig.CLOUDINARY_CLOUD_NAME}/video/upload/${params.join(',')}/${normalizeSrc(src)}`;
 };
 
 const CustomVideo = (props: {

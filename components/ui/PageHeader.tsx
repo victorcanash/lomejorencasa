@@ -76,7 +76,7 @@ const PageHeader = (props: PageHeaderProps) => {
           locale: 'es_ES',
           title: getTitle(),
           description: getDescription(),
-          url: `${envConfig.NEXT_PUBLIC_APP_URL}${router.asPath}`,
+          url: `${envConfig.APP_URL}${router.asPath}`,
           /*images: [
             {
               url: `https://${envConfig.NEXT_PUBLIC_APP_URL}/logo_lg.png`,

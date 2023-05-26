@@ -91,7 +91,7 @@ const Conditions = () => {
         <FormattedMessage id="conditions.refunds.withdrawalRight.description" />
       </Typography>
       <Link href={pages.resolutions.path}>
-        {`${envConfig.NEXT_PUBLIC_APP_URL}${pages.resolutions.path}`}
+        {`${envConfig.APP_URL}${pages.resolutions.path}`}
       </Link>
       <Typography variant="h3" mt={3} mb={2}>
         <FormattedMessage id="conditions.refunds.errors.title" />

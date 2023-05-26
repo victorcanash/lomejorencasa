@@ -42,7 +42,7 @@ const CustomImage = (props: ImageProps & CustomImageProps) => {
     if (flipParam !== '') {
       params.push(getFlipParam())
     }
-    return `https://res.cloudinary.com/${envConfig.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/${params.join(',')}/${normalizeSrc(src)}`;
+    return `https://res.cloudinary.com/${envConfig.CLOUDINARY_CLOUD_NAME}/image/upload/${params.join(',')}/${normalizeSrc(src)}`;
   }, [getFlipParam]);
 
   return (

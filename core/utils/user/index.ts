@@ -75,8 +75,8 @@ export const sendUserContactEmail = (token: string, currentLocale: string, userC
         ...getLanguageHeaders(currentLocale),
       },
       params: {
-        appName: envConfig.NEXT_PUBLIC_APP_NAME,
-        appDomain: envConfig.NEXT_PUBLIC_APP_URL,
+        appName: envConfig.APP_NAME,
+        appDomain: envConfig.APP_URL,
       },
     };
     axios.post('users/send-email/contact', {
