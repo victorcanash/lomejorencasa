@@ -5,10 +5,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 import Link from '@core/components/Link';
+import Title from '@core/components/ui/Title';
 
 import { pages } from '@lib/constants/navigation';
-import blogs from '@lib/constants/blogs';
-import Title from '@core/components/ui/Title';
+import blogsConfig from '@lib/config/blogs.config';
 
 const BlogsList = () => {
 
@@ -28,7 +28,7 @@ const BlogsList = () => {
           divider={true}
         />
 
-        { blogs.map((blog, index) => (
+        { blogsConfig.map((blog, index) => (
           <Typography key={index} component="h3" variant="h3" mb={2}>
             <Link href={blog.path || pages.home.path}>
               <FormattedMessage id={blog.text.id} values={blog.text.values} />

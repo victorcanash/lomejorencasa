@@ -2,7 +2,7 @@ import type { NavItem } from '@core/types/navigation';
 
 import { pages } from 'lib/constants/navigation';
 
-const blogs: NavItem[] = [
+const blogsConfig: NavItem[] = [
   {
     text: { 
       id: 'home.intro.title',
@@ -17,4 +17,4 @@ const blogs: NavItem[] = [
   },
 ];
 
-export default blogs;
+export default blogsConfig;
