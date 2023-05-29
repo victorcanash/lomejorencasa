@@ -1,7 +1,7 @@
 import { pages } from '@lib/config/navigation.config';
 import LandingTutorial from '@core/components/LandingDetail/LandingTutorial';
 
-const BagsDetail = () => {
+const LandingBags = () => {
 
   return (
     <>
@@ -68,4 +68,4 @@ const BagsDetail = () => {
   );
 };
 
-export default BagsDetail;
+export default LandingBags;

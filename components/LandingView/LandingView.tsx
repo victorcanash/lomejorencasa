@@ -1,11 +1,11 @@
-import type { Landing as LandingView, LandingConfig } from '@core/types/products';
+import type { Landing, LandingConfig } from '@core/types/products';
 import LandingDetail from '@core/components/LandingDetail';
 
-import EverfreshDetail from '@components/LandingView/EverfreshDetail';
-import BagsDetail from '@components/LandingView/BagsDetail';
+import LandingEverfresh from '@components/LandingView/LandingEverfresh';
+import LandingBags from '@components/LandingView/LandingBags';
 
 type LandingViewProps = {
-  landingModel: LandingView,
+  landingModel: Landing,
   landingConfig: LandingConfig,
 };
 
@@ -19,10 +19,10 @@ const LandingView = (props: LandingViewProps) => {
     >
       <>
         { (landingConfig.id === 1 || landingConfig.id === 3) &&
-          <EverfreshDetail />
+          <LandingEverfresh />
         }
         { (landingConfig.id === 2 || landingConfig.id === 4) &&
-          <BagsDetail />
+          <LandingBags />
         }
       </>
     </LandingDetail>
