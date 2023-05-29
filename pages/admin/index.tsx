@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Admin from '@components/admin';
+import Admin from '@core/components/Admin';
 
 const AdminPage: NextPage = () => {
   const page = usePage();

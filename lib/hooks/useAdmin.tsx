@@ -11,8 +11,8 @@ import { getAllProducts, getAllPacks, getProduct } from '@core/utils/products';
 import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/search';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import { CheckProductsSectionProps } from '@components/admin/sections/CheckProductsSection';
-import { CheckPacksSectionProps } from '@components/admin/sections/CheckPacksSection';
+import { CheckProductsSectionProps } from '@core/components/Admin/sections/CheckProductsSection';
+import { CheckPacksSectionProps } from '@core/components/Admin/sections/CheckPacksSection';
 
 const useAdmin = (checkedPage: boolean) => {
   const { setLoading } = useAppContext();

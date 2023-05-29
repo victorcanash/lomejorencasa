@@ -8,16 +8,16 @@ import Divider from '@core/components/ui/Divider';
 
 import useAdmin from '@lib/hooks/useAdmin';
 import BackBtn from '@core/components/ui/BackBtn';
-import HomeSection from '@components/admin/sections/HomeSection';
-import CheckCategoriesSection from '@components/admin/sections/CheckCategoriesSection';
-import CheckProductsSection from '@components/admin/sections/CheckProductsSection';
-import CheckPacksSection from '@components/admin/sections/CheckPacksSection';
-import CreateCategorySection from '@components/admin/sections/CreateCategorySection';
-import CreateProductSection from '@components/admin/sections/CreateProductSection';
-import CreatePackSection from '@components/admin/sections/CreatePackSection';
-import CreateFailedOrderSection from '@components/admin/sections/CreateFailedOrderSection';
-import SendFailedOrderEmailSection from '@components/admin/sections/SendFailedOrderEmailSection';
-import SendOrderEmailSection from '@components/admin/sections/SendOrderEmailSection';
+import HomeSection from '@core/components/Admin/sections/HomeSection';
+import CheckCategoriesSection from '@core/components/Admin/sections/CheckCategoriesSection';
+import CheckProductsSection from '@core/components/Admin/sections/CheckProductsSection';
+import CheckPacksSection from '@core/components/Admin/sections/CheckPacksSection';
+import CreateCategorySection from '@core/components/Admin/sections/CreateCategorySection';
+import CreateProductSection from '@core/components/Admin/sections/CreateProductSection';
+import CreatePackSection from '@core/components/Admin/sections/CreatePackSection';
+import CreateFailedOrderSection from '@core/components/Admin/sections/CreateFailedOrderSection';
+import SendFailedOrderEmailSection from '@core/components/Admin/sections/SendFailedOrderEmailSection';
+import SendOrderEmailSection from '@core/components/Admin/sections/SendOrderEmailSection';
 
 type AdminProps = {
   pageChecked: boolean,

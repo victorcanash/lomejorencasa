@@ -19,9 +19,9 @@ import useProducts from '@lib/hooks/useProducts';
 import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';
 import ManagePDiscountForm from '@core/components/forms/admin/ManagePDiscountForm';
-import ProductDetail from '@components/admin/details/ProductDetail';
-import InventoriesDetail from '@components/admin/details/InventoriesDetail';
-import DiscountsDetail from '@components/admin/details/DiscountsDetail';
+import ProductDetail from '@core/components/Admin/details/ProductDetail';
+import InventoriesDetail from '@core/components/Admin/details/InventoriesDetail';
+import DiscountsDetail from '@core/components/Admin/details/DiscountsDetail';
 
 const CreateProductSection = () => {
   const router = useRouter();

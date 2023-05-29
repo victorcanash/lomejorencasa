@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -9,41 +8,22 @@ import Typography from '@mui/material/Typography';
 import UpdateIcon from '@mui/icons-material/Update';
 
 import { ManageActions } from '@core/constants/app';
-import type { ProductPack } from '@core/types/products';
+import type { ProductCategory } from '@core/types/products';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import Pagination from '@core/components/ui/Pagination';
-import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
-import PackDetail from '@components/admin/details/PackDetail';
+import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
+import CategoryDetail from '@core/components/Admin/details/CategoryDetail';
 
-export type CheckPacksSectionProps = {
-  packs: ProductPack[],
-  totalPages: number,
-  currentPage: number,
-};
+const CheckCategoriesSection = () => {
+  const { productCategories } = useSearchContext();
 
-const CheckPacksSection = (props: CheckPacksSectionProps) => {
-  const { 
-    packs, 
-    totalPages, 
-    currentPage, 
-  } = props;
+  const [selected, setSelected] = useState<ProductCategory | undefined>(undefined);
 
-  const { getPacksHref } = useSearchContext();
-
-  const router = useRouter();
-
-  const [selected, setSelected] = useState<ProductPack | undefined>(undefined);
-
-  const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getPacksHref(page));
-  };
-
-  const onClickUpdateBtn = (pack: ProductPack) => {
-    setSelected(pack);
+  const onClickUpdateBtn = (category: ProductCategory) => {
+    setSelected(category);
   }
 
-  const onSuccessUpdate = (_pack: ProductPack) => {
+  const onSuccessUpdate = (_category: ProductCategory) => {
     setSelected(undefined);
   }
 
@@ -61,15 +41,14 @@ const CheckPacksSection = (props: CheckPacksSectionProps) => {
         <>
           <Typography component="h1" variant="h1">
             <FormattedMessage
-              id="admin.productPacks"
+              id="admin.productCategories"
             />
           </Typography>
-          
           <Grid container spacing={4} py={3}>
-            {packs?.map((item, index) => (
+            {productCategories?.map((item, index) => (
               <Grid item xs={6} key={index}>
-                <PackDetail
-                  pack={item}
+                <CategoryDetail 
+                  category={item}
                   created={true}
                 />
                 <Button 
@@ -78,23 +57,17 @@ const CheckPacksSection = (props: CheckPacksSectionProps) => {
                   onClick={() => onClickUpdateBtn(item)}
                 >
                   <FormattedMessage
-                    id="admin.updatePackBtn"
+                    id="admin.updateCategoryBtn"
                   />
                 </Button>
               </Grid>
             ))}
           </Grid>
-
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onChangePage={handleChangePage}
-          />
         </>
         :
-        <ManagePPackForm
+        <ManagePCategoryForm
           action={ManageActions.update}
-          productPack={selected}
+          productCategory={selected}
           onSubmitSuccess={onSuccessUpdate}
           onDeleteSuccess={onSuccessDelete}
           onCancel={onCancel}
@@ -104,4 +77,4 @@ const CheckPacksSection = (props: CheckPacksSectionProps) => {
   );
 };
 
-export default CheckPacksSection;
+export default CheckCategoriesSection;
