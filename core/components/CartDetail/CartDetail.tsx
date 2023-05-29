@@ -19,7 +19,7 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/config/navigation.config';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useCart from '@lib/hooks/useCart';
+import useCart from '@core/hooks/useCart';
 import CartItemDetail from '@core/components/CartDetail/CartItemDetail';
 
 type CartDetailProps = {

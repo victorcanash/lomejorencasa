@@ -4,7 +4,7 @@ import { FormFieldTypes } from '@core/constants/forms';
 import type { Order, OrderContact } from '@core/types/orders';
 
 import { pages } from '@lib/config/navigation.config';
-import useForms from '@lib/hooks/useForms';
+import useForms from '@core/hooks/useForms';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type GetOrderFormProps = {

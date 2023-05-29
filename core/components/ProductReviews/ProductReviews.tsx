@@ -23,7 +23,7 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 import { landingConfigs } from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { useAppContext } from '@lib/contexts/AppContext';
-import useReviews from '@lib/hooks/useReviews';
+import useReviews from '@core/hooks/useReviews';
 import Title from '@core/components/ui/Title';
 import Pagination from '@core/components/ui/Pagination';
 import ProductReviewForm from '@core/components/forms/products/ProductReviewForm';

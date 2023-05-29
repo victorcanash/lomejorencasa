@@ -40,7 +40,7 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useCart from '@lib/hooks/useCart';
+import useCart from '@core/hooks/useCart';
 import LoadingBtn from '@core/components/ui/LoadingBtn';
 import LoadingRating from '@core/components/ui/LoadingRating';
 import LandingCarousel from '@core/components/LandingDetail/LandingCarousel';

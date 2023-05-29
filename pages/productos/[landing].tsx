@@ -8,8 +8,8 @@ import {
 import { PageTypes } from '@core/constants/navigation';
 import PageHeader from '@core/components/pages/PageHeader';
 
-import usePage from '@lib/hooks/usePage';
-import useLandingPage from '@lib/hooks/useLandingPage';
+import usePage from '@core/hooks/usePage';
+import useLandingPage from '@core/hooks/useLandingPage';
 import Landing from '@components/Landing';
 
 const LandingPage: NextPage<LandingPageProps> = (props) => {

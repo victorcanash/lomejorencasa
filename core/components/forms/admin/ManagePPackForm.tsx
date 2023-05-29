@@ -11,8 +11,8 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { ProductPack } from '@core/types/products';
 
-import useForms from '@lib/hooks/useForms';
-import useProducts from '@lib/hooks/useProducts';
+import useForms from '@core/hooks/useForms';
+import useProducts from '@core/hooks/useProducts';
 import BaseForm from '@core/components/forms/BaseForm';
 import ManagePPackInventoryForm from '@core/components/forms/admin/ManagePPackInventoryForm';
 

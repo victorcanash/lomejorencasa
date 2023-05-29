@@ -17,7 +17,7 @@ import snackbarConfig from '@lib/constants/snackbar';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useFacebook from '@lib/hooks/useFacebook';
+import useFacebook from '@core/hooks/useFacebook';
 
 const useUser = () => {
   const { setLoading } = useAppContext();

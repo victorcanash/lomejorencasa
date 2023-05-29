@@ -8,7 +8,7 @@ import type { CheckoutContact } from '@core/types/checkout';
 import type { User } from '@core/types/user';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useForms from '@lib/hooks/useForms';
+import useForms from '@core/hooks/useForms';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type CheckoutContactFormProps = {

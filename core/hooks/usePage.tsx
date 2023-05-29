@@ -11,7 +11,7 @@ import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useForms from '@lib/hooks/useForms';
+import useForms from '@core/hooks/useForms';
 
 const usePage = (setLoaded = true) => {
   const { initialized, setInitialized, setLoading } = useAppContext();

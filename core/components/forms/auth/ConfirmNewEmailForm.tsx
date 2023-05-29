@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import useAuth from '@lib/hooks/useAuth';
+import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';
 
 const ConfirmNewEmailForm = () => {

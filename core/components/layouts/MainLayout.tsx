@@ -10,7 +10,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useLayout from '@lib/hooks/useLayout';
+import useLayout from '@core/hooks/useLayout';
 import Loading from '@core/components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {

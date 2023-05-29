@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 import { AdminSections } from '@core/constants/admin';
 import Divider from '@core/components/ui/Divider';
 
-import useAdmin from '@lib/hooks/useAdmin';
+import useAdmin from '@core/hooks/useAdmin';
 import BackBtn from '@core/components/ui/BackBtn';
 import HomeSection from '@core/components/Admin/sections/HomeSection';
 import CheckCategoriesSection from '@core/components/Admin/sections/CheckCategoriesSection';

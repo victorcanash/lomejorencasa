@@ -3,8 +3,8 @@
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Order, OrderFailedSendEmail } from '@core/types/orders';
 
-import useForms from '@lib/hooks/useForms';
-import useOrders from '@lib/hooks/useOrders';
+import useForms from '@core/hooks/useForms';
+import useOrders from '@core/hooks/useOrders';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type SendFailedOrderEmailFormProps = {

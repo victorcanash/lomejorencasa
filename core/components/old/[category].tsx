@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 
 import { CollectionProps, getCollectionProps } from '@lib/server/collection';
-import usePage from '@lib/hooks/usePage';
+import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 //import ProductList from '@components/products/collection';
 

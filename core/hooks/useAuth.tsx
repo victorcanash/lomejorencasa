@@ -27,7 +27,7 @@ import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useFacebook from '@lib/hooks/useFacebook';
+import useFacebook from '@core/hooks/useFacebook';
 
 const useAuth = () => {
   const { setLoading } = useAppContext();

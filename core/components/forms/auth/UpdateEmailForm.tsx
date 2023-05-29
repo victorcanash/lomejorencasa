@@ -1,8 +1,8 @@
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthUpdateEmail } from '@core/types/auth';
 
-import useForms from '@lib/hooks/useForms';
-import useAuth from '@lib/hooks/useAuth';
+import useForms from '@core/hooks/useForms';
+import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';
 
 const UpdateEmailForm = () => {

@@ -3,8 +3,8 @@ import { FormFieldTypes } from '@core/constants/forms';
 import type { User } from '@core/types/user';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useForms from '@lib/hooks/useForms';
-import useUser from '@lib/hooks/useUser';
+import useForms from '@core/hooks/useForms';
+import useUser from '@core/hooks/useUser';
 import BaseForm from '@core/components/forms/BaseForm';
 
 const UserUpdateForm = () => {

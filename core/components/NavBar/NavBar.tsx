@@ -19,7 +19,7 @@ import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
 import { navbarLogoId } from '@lib/constants/multimedia';
 import { useCartContext } from '@lib/contexts/CartContext';
-import useNavDrawer from '@lib/hooks/useNavDrawer';
+import useNavDrawer from '@core/hooks/useNavDrawer';
 import CartIcon from '@core/components/NavBar/CartIcon';
 import NavDrawer from '@core/components/NavBar/NavDrawer';
 import CartDrawer from '@core/components/NavBar/CartDrawer';

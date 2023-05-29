@@ -5,7 +5,7 @@ import Container from '@mui/material/Container';
 import { PageTypes } from '@core/constants/navigation';
 
 import { ActivationProps, getActivationProps } from '@lib/server/activation';
-import usePage from '@lib/hooks/usePage';
+import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 import ActivationForm from '@core/components/forms/auth/ActivationForm';
 

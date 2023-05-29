@@ -5,8 +5,8 @@ import { useIntl } from 'react-intl';
 import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
-import useAuth from '@lib/hooks/useAuth';
-import useCountdown from '@lib/hooks/useCountdown';
+import useAuth from '@core/hooks/useAuth';
+import useCountdown from '@core/hooks/useCountdown';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ResendActivationFormProps = {

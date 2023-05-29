@@ -20,8 +20,8 @@ import { landingConfigs } from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useForms from '@lib/hooks/useForms';
-import useMultimedia from '@lib/hooks/useMultimedia';
+import useForms from '@core/hooks/useForms';
+import useMultimedia from '@core/hooks/useMultimedia';
 import BaseForm from '@core/components/forms/BaseForm';
 import UploadInput from '@core/components/inputs/UploadInput';
 

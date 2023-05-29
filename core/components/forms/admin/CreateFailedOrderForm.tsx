@@ -13,8 +13,8 @@ import { AddressTypes } from '@core/constants/addresses';
 import type { Order, OrderFailedCreate } from '@core/types/orders';
 import type { GuestCartItem } from '@core/types/cart';
 
-import useForms from '@lib/hooks/useForms';
-import useOrders from '@lib/hooks/useOrders';
+import useForms from '@core/hooks/useForms';
+import useOrders from '@core/hooks/useOrders';
 import BaseForm from '@core/components/forms/BaseForm';
 import CreateFailedOrderProductForm from '@core/components/forms/admin/CreateFailedOrderProductForm';
 

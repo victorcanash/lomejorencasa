@@ -3,7 +3,7 @@ import type { NextPage } from 'next';
 import { PageTypes } from '@core/constants/navigation';
 
 import { ProductProps, getProductProps } from '@lib/server/product';
-import usePage from '@lib/hooks/usePage';
+import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 // import LandingDetail from '@components/products/detail';
 

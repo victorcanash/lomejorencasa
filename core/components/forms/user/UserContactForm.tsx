@@ -8,8 +8,8 @@ import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useForms from '@lib/hooks/useForms';
-import useUser from '@lib/hooks/useUser';
+import useForms from '@core/hooks/useForms';
+import useUser from '@core/hooks/useUser';
 import BaseForm from '@core/components/forms/BaseForm';
 
 const UserContactForm = () => {

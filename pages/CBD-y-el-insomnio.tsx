@@ -1,6 +1,6 @@
 import { PageTypes } from '@core/constants/navigation';
 
-import usePage from '@lib/hooks/usePage';
+import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 import CbdBlog from '@components/blogs/cbd';
 

@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 
 import { PageTypes } from '@core/constants/navigation';
 
-import usePage from '@lib/hooks/usePage';
+import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 import RegisterForm from '@core/components/forms/auth/RegisterForm';
 

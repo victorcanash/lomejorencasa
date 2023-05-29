@@ -1,7 +1,7 @@
 import { FormFieldTypes } from '@core/constants/forms';
 import type { GuestCartItem } from '@core/types/cart';
 
-import useForms from '@lib/hooks/useForms';
+import useForms from '@core/hooks/useForms';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type CreateFailedOrderProductFormProps = {

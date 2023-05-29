@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 
 import { PageTypes } from '@core/constants/navigation';
 
-import usePage from '@lib/hooks/usePage';
+import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 import ErrorView from '@core/components/exceptions/ErrorView';
 

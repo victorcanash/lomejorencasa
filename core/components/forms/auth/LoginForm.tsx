@@ -10,8 +10,8 @@ import type { AuthLogin } from '@core/types/auth';
 
 import { pages } from '@lib/config/navigation.config';
 // import { useAppContext } from '@lib/contexts/AppContext';
-import useForms from '@lib/hooks/useForms';
-import useAuth from '@lib/hooks/useAuth';
+import useForms from '@core/hooks/useForms';
+import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';
 // import GoogleLogin from '@components/google/GoogleLogin';
 

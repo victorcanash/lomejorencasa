@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import usePayments from '@lib/hooks/usePayments';
+import usePayments from '@core/hooks/usePayments';
 import CheckoutAuthForm from '@core/components/forms/checkout/CheckoutAuthForm';
 import CheckoutCouponForm from '@core/components/forms/checkout/CheckoutCouponForm';
 import CheckoutContactForm from '@core/components/forms/checkout/CheckoutContactForm';

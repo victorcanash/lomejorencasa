@@ -8,7 +8,7 @@ import type { Order } from '@core/types/orders';
 import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import useOrders from '@lib/hooks/useOrders';
+import useOrders from '@core/hooks/useOrders';
 import OrderDetail from '@core/components/Orders/OrderDetail';
 import OrderList from '@core/components/Orders/OrderList';
 import GetOrderForm from '@core/components/forms/orders/GetOrderForm';

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { getLandingConfigByPath } from '@core/utils/products';
 import { landingConfigs } from '@lib/config/inventory.config';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
-import useFacebook from '@lib/hooks/useFacebook';
+import useFacebook from '@core/hooks/useFacebook';
 
 const useLandingPage = (path: string) => {
   const { getLandingByPath } = useProductsContext();
