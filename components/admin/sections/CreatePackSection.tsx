@@ -4,7 +4,7 @@ import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
 
 import { pages } from '@lib/config/navigation.config';
-import ManagePPackForm from '@components/forms/admin/ManagePPackForm';
+import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
 
 const CreatePackSection = () => {
   const router = useRouter();

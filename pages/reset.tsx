@@ -6,7 +6,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import ResetPswForm from '@components/forms/auth/ResetPswForm';
+import ResetPswForm from '@core/components/forms/auth/ResetPswForm';
 
 const ResetPage: NextPage = () => {
   const page = usePage();

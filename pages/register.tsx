@@ -6,7 +6,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import RegisterForm from '@components/forms/auth/RegisterForm';
+import RegisterForm from '@core/components/forms/auth/RegisterForm';
 
 const RegisterPage: NextPage = () => { 
   const page = usePage();

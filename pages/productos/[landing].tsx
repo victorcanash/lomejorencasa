@@ -11,8 +11,8 @@ import usePage from '@lib/hooks/usePage';
 import useFacebook from '@lib/hooks/useFacebook';
 import PageHeader from '@core/components/pages/PageHeader';
 import LandingDetail from '@core/components/LandingDetail';
-import EverfreshDetail from '@components/products/detail/EverfreshDetail';
-import BagsDetail from '@components/products/detail/BagsDetail';
+import EverfreshDetail from '@components/landings/detail/EverfreshDetail';
+import BagsDetail from '@components/landings/detail/BagsDetail';
 
 type LandingPageProps = {
   path: string,

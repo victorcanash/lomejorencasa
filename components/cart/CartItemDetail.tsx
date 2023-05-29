@@ -20,7 +20,7 @@ import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
-import ProductCouponForm from '@components/forms/products/ProductCouponForm';
+import ProductCouponForm from '@core/components/forms/products/ProductCouponForm';
 
 type CartItemDetailProps = {
   item: CartItem | GuestCartCheckItem,

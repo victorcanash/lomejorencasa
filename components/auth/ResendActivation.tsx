@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 
 import Container from '@mui/material/Container';
 
-import ResendActivationForm from '@components/forms/auth/ResendActivationForm';
+import ResendActivationForm from '@core/components/forms/auth/ResendActivationForm';
 
 const ResendActivation = () => {
   const router = useRouter();

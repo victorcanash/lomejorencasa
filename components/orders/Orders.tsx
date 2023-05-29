@@ -11,7 +11,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import useOrders from '@lib/hooks/useOrders';
 import OrderDetail from '@components/orders/OrderDetail';
 import OrderList from '@components/orders/OrderList';
-import GetOrderForm from '@components/forms/orders/GetOrderForm';
+import GetOrderForm from '@core/components/forms/orders/GetOrderForm';
 
 type OrdersProps = {
   pageChecked: boolean,

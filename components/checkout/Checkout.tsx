@@ -8,7 +8,7 @@ import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import CheckoutForms from '@components/forms/checkout';
+import CheckoutForms from '@core/components/forms/checkout';
 
 type CheckoutProps = {
   pageChecked: boolean,

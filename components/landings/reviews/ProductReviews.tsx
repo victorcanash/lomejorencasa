@@ -26,7 +26,7 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import useReviews from '@lib/hooks/useReviews';
 import Title from '@core/components/ui/Title';
 import Pagination from '@components/ui/Pagination';
-import ProductReviewForm from '@components/forms/products/ProductReviewForm';
+import ProductReviewForm from '@core/components/forms/products/ProductReviewForm';
 
 const ProductReviews = () => {
   const { initialized } = useAppContext();

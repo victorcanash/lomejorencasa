@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 
 import type { Order } from '@core/types/orders';
 
-import SendOrderEmailForm from '@components/forms/admin/SendOrderEmailForm';
+import SendOrderEmailForm from '@core/components/forms/admin/SendOrderEmailForm';
 import OrderDetail from '@components/orders/OrderDetail';
 
 const SendOrderEmailSection = () => {

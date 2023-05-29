@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import ProductBanner from '@core/components/banners/ProductBanner';
 import LandingList from '@core/components/LandingList/LandingList';
 import BlogsList from '@core/components/BlogsList';
-import ProductReviews from '@components/products/reviews';
+import ProductReviews from '@components/landings/reviews';
 
 const Home = () => {
 

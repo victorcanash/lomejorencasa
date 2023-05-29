@@ -6,7 +6,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import UserResolutionsForm from '@components/forms/user/UserResolutionsForm';
+import UserResolutionsForm from '@core/components/forms/user/UserResolutionsForm';
 
 const ResolutionsPage: NextPage = () => {
   const page = usePage();

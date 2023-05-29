@@ -6,7 +6,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import ConfirmNewEmailForm from '@components/forms/auth/ConfirmNewEmailForm';
+import ConfirmNewEmailForm from '@core/components/forms/auth/ConfirmNewEmailForm';
 
 const NewEmailPage: NextPage = () => {
   const page = usePage();

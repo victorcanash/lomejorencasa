@@ -4,7 +4,7 @@ import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
 
 import { pages } from '@lib/config/navigation.config';
-import ManagePCategoryForm from '@components/forms/admin/ManagePCategoryForm';
+import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
 
 const CreateCategorySection = () => {
   const router = useRouter();
