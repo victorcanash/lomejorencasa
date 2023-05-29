@@ -2,7 +2,7 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { User } from '@core/types/user';
 
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 import useUser from '@core/hooks/useUser';
 import BaseForm from '@core/components/forms/BaseForm';

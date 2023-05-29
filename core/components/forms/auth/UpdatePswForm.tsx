@@ -1,6 +1,6 @@
 import { FormFieldTypes } from '@core/constants/forms';
 
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';

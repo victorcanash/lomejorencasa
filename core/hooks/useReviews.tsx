@@ -16,9 +16,9 @@ import {
 
 import { uploadImgMaxSize } from '@lib/constants/multimedia';
 import snackbarConfig from '@lib/constants/snackbar';
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 
 const useReviews = () => {
   const { initialized, setLoading } = useAppContext();

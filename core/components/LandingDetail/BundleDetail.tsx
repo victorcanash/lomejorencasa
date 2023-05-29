@@ -19,9 +19,9 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import LoadingBtn from '@core/components/ui/LoadingBtn';
 
 type BundleDetailProps = {

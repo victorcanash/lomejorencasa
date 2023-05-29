@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 
 import { PageTypes } from '@core/constants/navigation';
 
-import { useAppContext } from '@lib/contexts/AppContext';
+import { useAppContext } from '@core/contexts/AppContext';
 import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 import Settings from '@core/components/Settings';

@@ -11,7 +11,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import { ManageActions } from '@core/constants/app';
 import type { ProductPack } from '@core/types/products';
 
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 import Pagination from '@core/components/ui/Pagination';
 import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
 import PackDetail from '@core/components/Admin/details/PackDetail';

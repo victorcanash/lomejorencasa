@@ -2,7 +2,7 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Product } from '@core/types/products';
 
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 import useForms from '@core/hooks/useForms';
 import useProducts from '@core/hooks/useProducts';
 import BaseForm from '@core/components/forms/BaseForm';

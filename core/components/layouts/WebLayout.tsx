@@ -5,7 +5,7 @@ import { scrollToSection } from '@core/utils/navigation';
 import { sendPageViewFBEvent } from '@core/utils/facebook';
 import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
-import { useAppContext } from '@lib/contexts/AppContext';
+import { useAppContext } from '@core/contexts/AppContext';
 import MainComponent from '@core/components/layouts/MainComponent';
 import NavBar from '@core/components/NavBar';
 import Footer from '@core/components/Footer';

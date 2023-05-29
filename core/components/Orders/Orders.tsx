@@ -6,8 +6,8 @@ import Container from '@mui/material/Container';
 import type { Order } from '@core/types/orders';
 
 import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useOrders from '@core/hooks/useOrders';
 import OrderDetail from '@core/components/Orders/OrderDetail';
 import OrderList from '@core/components/Orders/OrderList';

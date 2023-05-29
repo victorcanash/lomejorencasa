@@ -7,7 +7,7 @@ import { getContactTypeName } from '@core/utils/contact';
 import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 import useUser from '@core/hooks/useUser';
 import BaseForm from '@core/components/forms/BaseForm';

@@ -18,8 +18,8 @@ import { getPackGeneralName } from '@core/utils/products';
 
 import { landingConfigs } from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 import useMultimedia from '@core/hooks/useMultimedia';
 import BaseForm from '@core/components/forms/BaseForm';

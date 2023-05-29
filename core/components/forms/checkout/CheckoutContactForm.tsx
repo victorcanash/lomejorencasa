@@ -7,7 +7,7 @@ import { AddressTypes } from '@core/constants/addresses';
 import type { CheckoutContact } from '@core/types/checkout';
 import type { User } from '@core/types/user';
 
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 import BaseForm from '@core/components/forms/BaseForm';
 

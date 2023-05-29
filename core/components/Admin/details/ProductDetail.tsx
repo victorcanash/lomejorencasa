@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import type { Product } from '@core/types/products';
 // import CustomImage from '@core/components/CustomImage';
 
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 // import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 type ProductDetailProps = {

@@ -16,7 +16,7 @@ import { allProductsName } from "@core/constants/products";
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';
 
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 import Pagination from '@core/components/ui/Pagination';
 import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';

@@ -18,9 +18,9 @@ import {
   manageProductPack as manageProductPackMW,
 } from '@core/utils/products';
 
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 
 const useProducts = () => {
   const { setLoading } = useAppContext();

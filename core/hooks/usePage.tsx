@@ -6,11 +6,11 @@ import { useIntl } from 'react-intl';
 import { init, isAdminUser } from '@core/utils/auth';
 
 import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useSearchContext } from '@lib/contexts/SearchContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
-import { useCartContext } from '@lib/contexts/CartContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useCartContext } from '@core/contexts/CartContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 
 const usePage = (setLoaded = true) => {

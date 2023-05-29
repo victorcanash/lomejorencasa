@@ -22,8 +22,8 @@ import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { landingConfigs } from '@lib/config/inventory.config';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import Title from '@core/components/ui/Title';
 // import Pagination from '@components/ui/Pagination';
 

@@ -20,8 +20,8 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { useSearchContext } from '@lib/contexts/SearchContext';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import Pagination from '@core/components/ui/Pagination';
 
 type ProductListProps = {

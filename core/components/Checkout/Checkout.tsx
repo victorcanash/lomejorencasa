@@ -5,9 +5,9 @@ import { useRouter } from 'next/router';
 import { isAdminUser } from '@core/utils/auth';
 
 import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useCartContext } from '@lib/contexts/CartContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useCartContext } from '@core/contexts/CartContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import CheckoutForms from '@core/components/forms/checkout';
 
 type CheckoutProps = {

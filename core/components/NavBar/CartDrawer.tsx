@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 
-import { useCartContext } from '@lib/contexts/CartContext';
+import { useCartContext } from '@core/contexts/CartContext';
 import CartDetail from '@core/components/CartDetail';
 
 type CartDrawerProps = {

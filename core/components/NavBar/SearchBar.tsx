@@ -9,7 +9,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { allProductsName } from '@core/constants/products';
 
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

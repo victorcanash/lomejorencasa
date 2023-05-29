@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 
 import type { User } from '@core/types/user';
 
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import Divider from '@core/components/ui/Divider';
 import UserUpdateForm from '@core/components/forms/user/UserUpdateForm';
 import UpdateEmailForm from '@core/components/forms/auth/UpdateEmailForm';

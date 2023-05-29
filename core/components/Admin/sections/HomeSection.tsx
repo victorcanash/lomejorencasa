@@ -10,7 +10,7 @@ import { AdminSections } from '@core/constants/admin';
 import Divider from '@core/components/ui/Divider';
 
 import { pages } from '@lib/config/navigation.config';
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 
 const HomeSection = () => {
   const router = useRouter();

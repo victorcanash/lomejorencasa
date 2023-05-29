@@ -16,9 +16,9 @@ import {
 } from '@core/utils/cart';
 
 import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
-import { useCartContext } from '@lib/contexts/CartContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
+import { useCartContext } from '@core/contexts/CartContext';
 import useFacebook from '@core/hooks/useFacebook';
 
 const useCart = (checkTotalAmount = true) => {

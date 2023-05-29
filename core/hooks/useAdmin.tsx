@@ -9,8 +9,8 @@ import type { Product, ProductCategory, ProductPack } from '@core/types/products
 import { getAllProducts, getAllPacks, getProduct } from '@core/utils/products';
 
 import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/search';
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import { CheckProductsSectionProps } from '@core/components/Admin/sections/CheckProductsSection';
 import { CheckPacksSectionProps } from '@core/components/Admin/sections/CheckPacksSection';
 

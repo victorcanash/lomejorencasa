@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import type { NavDrawerItem } from '@core/types/navigation';
 
 import navDrawerConfig from '@lib/config/navDrawer.config';
-import { useAuthContext } from '@lib/contexts/AuthContext';
-import { useCartContext } from '@lib/contexts/CartContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
+import { useCartContext } from '@core/contexts/CartContext';
 
 const useNavDrawer = () => {
   const { isLogged } = useAuthContext();

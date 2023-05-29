@@ -14,8 +14,8 @@ import {
   sendFailedOrderEmail as sendFailedOrderEmailMW,
 } from '@core/utils/orders';
 
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 
 const useOrders = () => {
   const { setLoading } = useAppContext();

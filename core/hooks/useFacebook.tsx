@@ -5,8 +5,8 @@ import type { Landing, ProductInventory, ProductPack } from '@core/types/product
 import { sendFBEvent } from '@core/utils/facebook';
 import { getFirstLandingItem, getProductPriceData } from '@core/utils/products';
 
-import { useAuthContext } from '@lib/contexts/AuthContext';
-import { useCartContext } from '@lib/contexts/CartContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
+import { useCartContext } from '@core/contexts/CartContext';
 
 const contentCategory = 'Camping Cookware';
 const contentType = 'product';

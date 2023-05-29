@@ -30,7 +30,7 @@ import Link from '@core/components/navigation/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@lib/contexts/AppContext';
+import { useAppContext } from '@core/contexts/AppContext';
 
 type CookiesBannerProps = {
   onConsentCookies: () => void,

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import MaintenanceBanner from '@core/components/banners/MaintenanceBanner';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import CookiesBanner from '@core/components/banners/CookiesBanner';
 import RegisterBanner from '@core/components/banners/RegisterBanner';
 

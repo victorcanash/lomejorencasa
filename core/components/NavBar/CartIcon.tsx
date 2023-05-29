@@ -2,7 +2,7 @@ import Badge from '@mui/material/Badge';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
-import { useCartContext } from '@lib/contexts/CartContext';
+import { useCartContext } from '@core/contexts/CartContext';
 
 type CartIconProps = {
   smallBreakpoint: boolean,

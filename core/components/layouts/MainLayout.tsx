@@ -8,8 +8,8 @@ import Box from '@mui/material/Box';
 import envConfig from '@core/config/env.config';
 import { PageTypes } from '@core/constants/navigation';
 
-import { useAppContext } from '@lib/contexts/AppContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useLayout from '@core/hooks/useLayout';
 import Loading from '@core/components/ui/Loading';
 

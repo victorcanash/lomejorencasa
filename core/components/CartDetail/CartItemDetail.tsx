@@ -16,9 +16,9 @@ import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
-import { useProductsContext } from '@lib/contexts/ProductsContext';
-import { useCartContext } from '@lib/contexts/CartContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useCartContext } from '@core/contexts/CartContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
 import ProductCouponForm from '@core/components/forms/products/ProductCouponForm';
 

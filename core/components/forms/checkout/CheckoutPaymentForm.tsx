@@ -21,7 +21,7 @@ import type { FormatText } from '@core/types/texts';
 import Divider from '@core/components/ui/Divider';
 
 import { paypalHostedFieldsSx, themeCustomElements } from '@lib/constants/themes/elements';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type CheckoutPaymentFormProps = {

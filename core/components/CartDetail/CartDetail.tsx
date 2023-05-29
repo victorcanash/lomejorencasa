@@ -17,8 +17,8 @@ import Divider from '@core/components/ui/Divider';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/config/navigation.config';
-import { useCartContext } from '@lib/contexts/CartContext';
-import { useAuthContext } from '@lib/contexts/AuthContext';
+import { useCartContext } from '@core/contexts/CartContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import useCart from '@core/hooks/useCart';
 import CartItemDetail from '@core/components/CartDetail/CartItemDetail';
 

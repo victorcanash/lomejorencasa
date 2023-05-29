@@ -10,7 +10,7 @@ import UpdateIcon from '@mui/icons-material/Update';
 import { ManageActions } from '@core/constants/app';
 import type { ProductCategory } from '@core/types/products';
 
-import { useSearchContext } from '@lib/contexts/SearchContext';
+import { useSearchContext } from '@core/contexts/SearchContext';
 import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
 import CategoryDetail from '@core/components/Admin/details/CategoryDetail';
 

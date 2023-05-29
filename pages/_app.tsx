@@ -33,11 +33,11 @@ import seoConfig from '@lib/config/next-seo.config';
 import { messages } from '@lib/constants/lang';
 import theme from '@lib/constants/themes';
 import snackbarConfig from '@lib/constants/snackbar';
-import { AppProvider } from '@lib/contexts/AppContext';
-import { SearchProvider } from '@lib/contexts/SearchContext';
-import { ProductsProvider } from '@lib/contexts/ProductsContext';
-import { CartProvider } from '@lib/contexts/CartContext';
-import { AuthProvider } from '@lib/contexts/AuthContext';
+import { AppProvider } from '@core/contexts/AppContext';
+import { SearchProvider } from '@core/contexts/SearchContext';
+import { ProductsProvider } from '@core/contexts/ProductsContext';
+import { CartProvider } from '@core/contexts/CartContext';
+import { AuthProvider } from '@core/contexts/AuthContext';
 import ErrorBoundary from '@core/components/exceptions/ErrorBoundary';
 import MainLayout from '@core/components/layouts/MainLayout';
 
