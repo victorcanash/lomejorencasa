@@ -34,7 +34,7 @@ import type {
 import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
-import ConfirmDialog from '@components/dialogs/ConfirmDialog';
+import ConfirmDialog from '@core/components/dialogs/ConfirmDialog';
 
 const BaseForm = (props: FormBase) => {
   const {

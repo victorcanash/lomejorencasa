@@ -27,9 +27,7 @@ const CartPage: NextPage = () => {
         }}
       />
 
-      <Cart
-        pageChecked={page.checked}
-      />
+      <Cart />
     </>
   );
 };
