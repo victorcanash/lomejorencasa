@@ -10,7 +10,7 @@ import PageHeader from '@core/components/pages/PageHeader';
 
 import usePage from '@core/hooks/usePage';
 import useLandingPage from '@core/hooks/useLandingPage';
-import Landing from '@components/Landing';
+import LandingView from '@components/LandingView';
 
 const LandingPage: NextPage<LandingPageProps> = (props) => {
   const { path } = props;
@@ -30,7 +30,7 @@ const LandingPage: NextPage<LandingPageProps> = (props) => {
       />
 
       { (landingModel && landingConfig) &&
-        <Landing 
+        <LandingView 
           landingModel={landingModel}
           landingConfig={landingConfig}
         />

@@ -9,7 +9,7 @@ import LinkButton from '@core/components/navigation/LinkButton';
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 
-const About = () => {
+const AboutView = () => {
 
   return (
     <Container>
@@ -29,4 +29,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutView;

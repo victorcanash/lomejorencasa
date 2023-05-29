@@ -5,7 +5,7 @@ import LandingList from '@core/components/LandingList/LandingList';
 import BlogsList from '@core/components/BlogsList';
 import ProductReviews from '@core/components/ProductReviews';
 
-const Home = () => {
+const HomeView = () => {
 
   return (
     <Box 
@@ -21,4 +21,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeView;

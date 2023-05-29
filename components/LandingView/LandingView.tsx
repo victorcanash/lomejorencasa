@@ -1,15 +1,15 @@
-import type { Landing, LandingConfig } from '@core/types/products';
+import type { Landing as LandingView, LandingConfig } from '@core/types/products';
 import LandingDetail from '@core/components/LandingDetail';
 
-import EverfreshDetail from '@components/Landing/EverfreshDetail';
-import BagsDetail from '@components/Landing/BagsDetail';
+import EverfreshDetail from '@components/LandingView/EverfreshDetail';
+import BagsDetail from '@components/LandingView/BagsDetail';
 
-type LandingDetailProps = {
-  landingModel: Landing,
+type LandingViewProps = {
+  landingModel: LandingView,
   landingConfig: LandingConfig,
 };
 
-const Landing = (props: LandingDetailProps) => {
+const LandingView = (props: LandingViewProps) => {
   const { landingModel, landingConfig } = props;
 
   return (
@@ -29,4 +29,4 @@ const Landing = (props: LandingDetailProps) => {
   );
 };
 
-export default Landing;
+export default LandingView;

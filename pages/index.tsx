@@ -5,7 +5,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { keywords } from '@lib/config/next-seo.config';
 import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Home from '@components/home';
+import HomeView from '@components/HomeView';
 
 const HomePage: NextPage = () => {
   const page = usePage();
@@ -20,7 +20,7 @@ const HomePage: NextPage = () => {
         }}
       />
 
-      <Home />
+      <HomeView />
     </>
   );
 };

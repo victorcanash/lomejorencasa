@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Cart from '@components/cart';
+import CartView from '@components/CartView';
 
 const CartPage: NextPage = () => {
   const page = usePage();
@@ -27,7 +27,7 @@ const CartPage: NextPage = () => {
         }}
       />
 
-      <Cart />
+      <CartView />
     </>
   );
 };

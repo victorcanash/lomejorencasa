@@ -3,7 +3,7 @@ import Container from '@mui/material/Container';
 import { pages } from '@lib/config/navigation.config';
 import CartDetail from '@core/components/CartDetail';
 
-const Cart = () => {
+const CartView = () => {
 
   return (
     <Container maxWidth="md">
@@ -14,4 +14,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default CartView;

@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import About from '@components/about';
+import AboutView from '@components/AboutView';
 
 const AboutPage: NextPage = () => {
   const page = usePage();
@@ -27,7 +27,7 @@ const AboutPage: NextPage = () => {
         }}
       />
       
-      <About />
+      <AboutView />
     </>
   );
 };
