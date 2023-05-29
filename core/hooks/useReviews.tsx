@@ -14,7 +14,7 @@ import {
   getAllProductReviews as getAllProductReviewsMW,
 } from '@core/utils/products';
 
-import { uploadImgMaxSize } from '@lib/constants/multimedia';
+import { uploadConfig } from '@lib/config/multimedia.config';
 import snackbarConfig from '@lib/config/snackbar.config';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
@@ -85,7 +85,7 @@ const useReviews = () => {
     }).catch((error: Error) => {
       let errorMsg = error.message;
       if (errorMsg.includes('File size')) {
-        errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.fileSize' }, { maxSize: uploadImgMaxSize });
+        errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.fileSize' }, { maxSize: uploadConfig.maxSize });
       } else if (errorMsg.includes('You have to be logged to use this email')) {
         errorMsg = intl.formatMessage({ id: 'forms.productReview.errors.unlogged' });
       } else if (errorMsg.includes('You have not bought the related product') || errorMsg.includes('getting guest user')) {

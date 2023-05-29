@@ -4,7 +4,6 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { homeFoodStorageImgIds } from '@lib/constants/multimedia';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
@@ -31,7 +30,7 @@ const FoodStorage = () => {
         <MultimediaContainer
           type="default"
           source={{ 
-            src: homeFoodStorageImgIds[0],
+            src: 'v1680692948/laenvasadora/HOME%20PAGE/ILUSTRACIONES/cooking-ingredients-32089_hc3pld.png',
             width: '1920',
             height: '960',
           }}

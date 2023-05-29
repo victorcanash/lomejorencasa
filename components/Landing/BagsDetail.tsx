@@ -1,5 +1,4 @@
 import { pages } from '@lib/config/navigation.config';
-import { everfreshVideoIds } from '@lib/constants/multimedia';
 import LandingTutorial from '@core/components/LandingDetail/LandingTutorial';
 
 const BagsDetail = () => {
@@ -21,7 +20,7 @@ const BagsDetail = () => {
         }}
         source={{ 
           type: 'video',
-          src: everfreshVideoIds[0],
+          src: 'v1680692696/laenvasadora/LANDING%20PAGE/VIDEO_SUCCION_RESUBIDO_shudab.mp4',
           alt: "Packing machine tutorial 1",
         }} 
       />
@@ -41,7 +40,7 @@ const BagsDetail = () => {
         }}
         source={{ 
           type: 'video',
-          src: everfreshVideoIds[1],
+          src: 'v1680692687/laenvasadora/LANDING%20PAGE/Video_cajon_landing_con_mas_luz_g2tu5o.mp4',
           alt: "Packing machine tutorial 2",
         }} 
       />
@@ -61,7 +60,7 @@ const BagsDetail = () => {
         }}
         source={{ 
           type: 'video',
-          src: everfreshVideoIds[2],
+          src: 'v1680692634/laenvasadora/LANDING%20PAGE/Maleta_landing_con_mas_luz_bosliw.mp4',
           alt: "Packing machine tutorial 3",
         }} 
       />

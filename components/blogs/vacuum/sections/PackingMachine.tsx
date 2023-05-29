@@ -11,7 +11,6 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
 import { keywords } from '@lib/config/next-seo.config';
-import { homePackingMachineImgIds } from '@lib/constants/multimedia';
 import Title from '@core/components/ui/Title';
 import colors from '@lib/constants/themes/colors';
 import CustomImage from '@core/components/multimedia/CustomImage';
@@ -117,7 +116,7 @@ const PackingMachine = () => {
             }}
           >
             <CustomImage
-              src={homePackingMachineImgIds[0]} 
+              src="v1680692829/laenvasadora/HOME%20PAGE/PNG%20IMPLEMENTATION/FOTO_RECURSO_MASK_CROP_PARA_QUE_ES_UNA_ENVASADORA_cxham7.png"
               alt={keywords.vacuumMachine.main}
               width="8000"
               height="4500"

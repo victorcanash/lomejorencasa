@@ -16,7 +16,6 @@ import Title from '@core/components/ui/Title';
 import { keywords } from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
-import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
@@ -133,7 +132,7 @@ const Use = () => {
         }}
       >
         <CustomImage
-          src={homeUseImgIds[0]}
+          src="v1681039776/laenvasadora/HOME%20PAGE/PNG%20IMPLEMENTATION/ENVASADORA_DETALLE_RECORTADA_PNG_akl9k9.png"
           alt={keywords.vacuumMachine.others[0]}
           width="628"
           height="628"
@@ -144,7 +143,7 @@ const Use = () => {
       <MultimediaContainer
         type="default"
         source={{
-          src: homeUseImgIds[1],
+          src: 'v1680692841/laenvasadora/HOME%20PAGE/IMAGENES/food-2203697_1920_wmfmge.jpg',
         }}
         mt={10}
       />
@@ -169,7 +168,7 @@ const Use = () => {
       <MultimediaContainer
         type="default"
         source={{ 
-          src: homeUseImgIds[2],
+          src: 'v1680692912/laenvasadora/HOME%20PAGE/PNG%20IMPLEMENTATION/bolsas_recortada_png_oojva7.png',
           alt: keywords.vacuumBags.others[0],
           width: '8001',
           height: '2800',
@@ -190,7 +189,7 @@ const Use = () => {
             mt={-4}
             type="default"
             source={{ 
-              src: homeUseImgIds[3],
+              src: 'laenvasadora/LANDING%20PAGE/Grafico-bolsas-letras-grandes_d8pl7r.jpg',
               alt: keywords.vacuumBags.others[0],
               width: '1080',
               height: '1080',
@@ -232,22 +231,22 @@ const Use = () => {
         ([
           {
             type: 'video',
-            src: homeVideoIds[0],
+            src: 'v1680692801/laenvasadora/HOME%20PAGE/VIDEOS/GIF_FINAL_HOME_PAGE_rkoiwb.mp4',
             alt: keywords.vacuumMachine.others[1],
           },
           {
             type: 'image',
-            src: homeUseImgIds[4],
+            src: 'v1680692930/laenvasadora/HOME%20PAGE/IMAGENES/Foto_valvula_m%C3%A1s_resultona_kzvwfm.jpg',
             alt: keywords.vacuumBags.main,
           },
           {
             type: 'video',
-            src: homeVideoIds[1],
+            src: 'v1680692799/laenvasadora/HOME%20PAGE/VIDEOS/PASO_3_GUIA_DE_USO_utlcnx.mp4',
             alt: keywords.vacuumMachine.others[0],
           },
           {
             type: 'video',
-            src: homeVideoIds[2],
+            src: 'v1680692696/laenvasadora/LANDING%20PAGE/VIDEO_SUCCION_RESUBIDO_shudab.mp4',
             alt: keywords.vacuumMachine.others[0],
           }
         ] as Source[]).map((source, index) => (

@@ -22,7 +22,7 @@ import {
 } from '@core/utils/products';
 
 import { pages } from '@lib/config/navigation.config';
-import { placeholderImgId } from '@lib/constants/multimedia';
+import { imgIds } from '@lib/config/multimedia.config';
 
 type ProductsContext = {
   getAllLandings: () => Landing[],
@@ -129,7 +129,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, []);
   
   const getItemImgUrl = useCallback((item: Landing | CartItem | GuestCartCheckItem) => {
-    let imgUrl = placeholderImgId;
+    let imgUrl = imgIds.placeholder;
     if ((item as Landing)?.products) {
       imgUrl = (item as Landing).images[0];
     } else {
@@ -152,7 +152,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         return image;
       });
     }
-    return [placeholderImgId];
+    return [];
   }, []);
 
   const setProductRating = useCallback((product: Product, rating: string, reviewsCount: number) => {

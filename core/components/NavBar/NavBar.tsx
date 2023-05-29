@@ -17,7 +17,7 @@ import ShippingBar from '@core/components/NavBar/ShippingBar';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
-import { navbarLogoId } from '@lib/constants/multimedia';
+import { imgIds } from '@lib/config/multimedia.config';
 import { useCartContext } from '@core/contexts/CartContext';
 import useNavDrawer from '@core/hooks/useNavDrawer';
 import CartIcon from '@core/components/NavBar/CartIcon';
@@ -107,7 +107,7 @@ const NavBar = () => {
                   </Typography>
                 }
                 <CustomImage
-                  src={navbarLogoId}
+                  src={imgIds.navbarLogo}
                   alt={seoConfig.home.h1}
                   height={smallBreakpoint ? '49px' :'60px'}
                   width={

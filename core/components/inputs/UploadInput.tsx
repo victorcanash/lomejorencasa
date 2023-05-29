@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 import type { UploadFile } from '@core/types/multimedia';
 import type { FormatText } from '@core/types/texts';
 
-import { uploadImgExtensions } from '@lib/constants/multimedia';
+import { uploadConfig } from '@lib/config/multimedia.config';
 
 type UploadInputProps = {
   uploadInputRef: MutableRefObject<HTMLInputElement | null>,
@@ -124,7 +124,7 @@ const UploadInput = (props: UploadInputProps) => {
           <input 
             ref={uploadInputRef}
             hidden
-            accept={uploadImgExtensions.join(',')}
+            accept={uploadConfig.extensions.join(',')}
             multiple={maxFiles > 1 ? true : false}
             type="file"
             onChange={(e) => {

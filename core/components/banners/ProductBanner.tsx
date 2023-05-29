@@ -15,7 +15,7 @@ import LinkButton from '@core/components/navigation/LinkButton';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
-import { homeBannerImgIds } from '@lib/constants/multimedia';
+import { imgIds } from '@lib/config/multimedia.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
@@ -148,7 +148,7 @@ const ProductBanner = () => {
             disableOnInteraction: false,
           }}
         >
-          { homeBannerImgIds.map((src, index, srcs) => (
+          { imgIds.productBanner.map((src, index) => (
             <SwiperSlide key={index}>
               <MultimediaContainer
                 type="banner"

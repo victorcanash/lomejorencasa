@@ -6,8 +6,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import CustomImage from '@core/components/multimedia/CustomImage';
-
-import { homeWhyVacuumPackedImgIds } from '@lib/constants/multimedia';
 import colors from '@lib/constants/themes/colors';
 import Title from '@core/components/ui/Title';
 
@@ -72,7 +70,7 @@ const WhyVacuumPacked = () => {
             }}
           >
             <CustomImage
-              src={homeWhyVacuumPackedImgIds[0]}
+              src="v1680692951/laenvasadora/HOME%20PAGE/ILUSTRACIONES/microscope-2223268_cg117w.png"
               width="5000"
               height="5000"
               layout="responsive"
@@ -89,7 +87,7 @@ const WhyVacuumPacked = () => {
             }}
           >
             <CustomImage
-              src={homeWhyVacuumPackedImgIds[1]}
+              src="v1680692948/laenvasadora/HOME%20PAGE/ILUSTRACIONES/cabbage-37897_w951pv.png"
               width="1920"
               height="1771"
               layout="responsive"

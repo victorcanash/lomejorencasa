@@ -13,7 +13,6 @@ import LinkButton from '@core/components/navigation/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
-import { homeCharacteristicsBgImgIds, homeCharacteristicsIconsIds, homeAdvantagesIconsIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title'; 
 import colors from '@lib/constants/themes/colors';
@@ -160,7 +159,7 @@ const Characteristics = (props: CharacteristicsProps) => {
             }}
           >
             <CustomImage 
-              src={homeCharacteristicsBgImgIds[0]}
+              src="v1680692903/laenvasadora/HOME%20PAGE/BARRAS%20LATERALES/Sanefa_final_para_caracteristicas_reflect_h3nsrg.png"
               width="597"
               height="9125"
               layout="responsive" 
@@ -186,20 +185,20 @@ const Characteristics = (props: CharacteristicsProps) => {
         >
           { type == 'characteristics' ?
             <>
-              { characteristic('home.characteristics.description.1', { src: homeCharacteristicsIconsIds[0] } as Source, '') }
-              { characteristic('home.characteristics.description.2', { src: homeCharacteristicsIconsIds[1] } as Source, '') }
-              { characteristic('home.characteristics.description.3', { src: homeCharacteristicsIconsIds[2] } as Source, '') }
-              { characteristic('home.characteristics.description.4', { src: homeCharacteristicsIconsIds[3] } as Source, '') }
-              { characteristic('home.characteristics.description.5', { src: homeCharacteristicsIconsIds[4] } as Source, '') }
-              { characteristic('home.characteristics.description.6', {src: homeCharacteristicsIconsIds[5] } as Source, '') }
+              { characteristic('home.characteristics.description.1', { src: 'v1680693021/laenvasadora/HOME%20PAGE/ICONS/18159369621571183082-128_cuy5ir.png' } as Source, '') }
+              { characteristic('home.characteristics.description.2', { src: 'v1680693021/laenvasadora/HOME%20PAGE/ICONS/1809346091571183078-128_lzebra.png' } as Source, '') }
+              { characteristic('home.characteristics.description.3', { src: 'v1680693022/laenvasadora/HOME%20PAGE/ICONS/11060696791558965392-128_xjkwsx.png' } as Source, '') }
+              { characteristic('home.characteristics.description.4', { src: 'v1680693021/laenvasadora/HOME%20PAGE/ICONS/16709206561548330555-128_e8xcyh.png' } as Source, '') }
+              { characteristic('home.characteristics.description.5', { src: 'v1680693006/laenvasadora/HOME%20PAGE/ICONS/751078_refrigerator_cold_freezer_fridge_kitchen_icon_phafyq.png' } as Source, '') }
+              { characteristic('home.characteristics.description.6', {src: 'v1680692992/laenvasadora/HOME%20PAGE/ICONS/8679879_shield_check_line_icon_gqtqcv.png' } as Source, '') }
             </>
             :
             <>
-              { characteristic('home.advantages.description.1', { src: homeAdvantagesIconsIds[0] } as Source, '') }
-              { characteristic('home.advantages.description.2', { src: homeAdvantagesIconsIds[1] } as Source, '', '81px') }
-              { characteristic('home.advantages.description.3', { src: homeAdvantagesIconsIds[2] } as Source, '') }
-              { characteristic('home.advantages.description.4', { src: homeAdvantagesIconsIds[3] } as Source, '') }
-              { characteristic('home.advantages.description.5', { src: homeAdvantagesIconsIds[4] } as Source, '', '76px') }
+              { characteristic('home.advantages.description.1', { src: 'v1680692992/laenvasadora/HOME%20PAGE/ICONS/5875889_bacteria_cell_dish_lab_microorganism_icon_wknl4r.png' } as Source, '') }
+              { characteristic('home.advantages.description.2', { src: 'v1680693021/laenvasadora/HOME%20PAGE/ICONS/18728019991544610488-128_zkcqbo.png' } as Source, '', '81px') }
+              { characteristic('home.advantages.description.3', { src: 'v1680692992/laenvasadora/HOME%20PAGE/ICONS/4394725_avocado_diet_food_healthy_organic_icon_mueb2f.png' } as Source, '') }
+              { characteristic('home.advantages.description.4', { src: 'v1680693006/laenvasadora/HOME%20PAGE/ICONS/751078_refrigerator_cold_freezer_fridge_kitchen_icon_phafyq.png' } as Source, '') }
+              { characteristic('home.advantages.description.5', { src: 'v1680692992/laenvasadora/HOME%20PAGE/ICONS/6351925_appointment_clock_hour_hourglass_schedule_icon_mko2ak.png' } as Source, '', '76px') }
             </>
           }
           <Grid 

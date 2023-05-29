@@ -14,7 +14,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { keywords } from '@lib/config/next-seo.config';
-import { homeBannerImgIds } from '@lib/constants/multimedia';
+import { imgIds } from '@lib/config/multimedia.config';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
@@ -165,7 +165,7 @@ const Conservation = () => {
       <MultimediaContainer
         type="default"
         source={{
-          src: homeBannerImgIds[2],
+          src: imgIds.productBanner[2],
           alt: keywords.vacuumMachine.main,
         }}
       />

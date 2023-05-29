@@ -8,8 +8,6 @@ import Grid from '@mui/material/Grid';
 import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
-import { cbdBlogImgIds } from '@lib/constants/multimedia';
-
 const CbdBlog = () => {
 
   return (
@@ -29,7 +27,7 @@ const CbdBlog = () => {
         }} 
       >
         <CustomImage
-          src={cbdBlogImgIds[0]}
+          src="v1684694599/laenvasadora/CBD/insomnia_qnvyro.jpg"
           alt="cbd"
           width="5737"
           height="3825"
@@ -70,7 +68,7 @@ const CbdBlog = () => {
           >
             <Link href="https://www.sensitivecbd.com/" target="_blank">
               <CustomImage
-                src={cbdBlogImgIds[1]}
+                src="v1684693912/laenvasadora/CBD/cbd_mhfqbf.webp"
                 alt="cbd"
                 width="300"
                 height="300"
@@ -113,7 +111,7 @@ const CbdBlog = () => {
           >
             <Link href="https://www.sensitivecbd.com/" target="_blank">
               <CustomImage
-                src={cbdBlogImgIds[2]}
+                src="v1684696237/laenvasadora/CBD/productos_cbd_ghahxt.webp"
                 alt="cbd"
                 width="693"
                 height="520"
