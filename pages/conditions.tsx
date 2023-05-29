@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Conditions from '@components/legalTexts/Conditions';
+import Conditions from '@core/components/legalTexts/Conditions';
 
 const ConditionsPage: NextPage = () => {
   const page = usePage();

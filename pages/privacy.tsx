@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Privacy from '@components/legalTexts/Privacy';
+import Privacy from '@core/components/legalTexts/Privacy';
 
 const PrivacyPage: NextPage = () => {
   const page = usePage();

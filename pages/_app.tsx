@@ -38,7 +38,7 @@ import { SearchProvider } from '@lib/contexts/SearchContext';
 import { ProductsProvider } from '@lib/contexts/ProductsContext';
 import { CartProvider } from '@lib/contexts/CartContext';
 import { AuthProvider } from '@lib/contexts/AuthContext';
-import ErrorBoundary from '@components/exceptions/ErrorBoundary';
+import ErrorBoundary from '@core/components/exceptions/ErrorBoundary';
 import MainLayout from '@components/layouts/MainLayout';
 
 // Tell Font Awesome to skip adding the CSS automatically 

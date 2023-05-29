@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Cookies from '@components/legalTexts/Cookies';
+import Cookies from '@core/components/legalTexts/Cookies';
 
 const CookiesPage: NextPage = () => {
   const page = usePage();

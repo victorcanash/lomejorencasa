@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Legal from '@components/legalTexts/Legal';
+import Legal from '@core/components/legalTexts/Legal';
 
 const LegalPage: NextPage = () => {
   const page = usePage();

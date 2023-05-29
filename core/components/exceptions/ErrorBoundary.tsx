@@ -5,7 +5,7 @@ import { injectIntl, IntlShape } from 'react-intl';
 import { PageTypes } from '@core/constants/navigation';
 
 import PageHeader from '@core/components/pages/PageHeader';
-import ErrorView from '@components/exceptions/ErrorView';
+import ErrorView from '@core/components/exceptions/ErrorView';
 
 type ErrorBoundaryProps = {
   children: React.ReactNode,

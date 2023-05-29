@@ -6,7 +6,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import ErrorView from '@components/exceptions/ErrorView';
+import ErrorView from '@core/components/exceptions/ErrorView';
 
 const ErrorPage: NextPage = () => {
   const intl = useIntl();
