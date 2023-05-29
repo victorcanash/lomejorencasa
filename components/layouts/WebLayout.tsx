@@ -9,7 +9,7 @@ import { useAppContext } from '@lib/contexts/AppContext';
 import MainComponent from '@components/layouts/MainComponent';
 import NavBar from '@core/components/NavBar';
 import Footer from '@core/components/Footer';
-import Banners from '@components/banners';
+import Banners from '@core/components/banners';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { initialized } = useAppContext();

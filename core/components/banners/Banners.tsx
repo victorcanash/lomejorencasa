@@ -4,8 +4,8 @@ import MaintenanceBanner from '@core/components/banners/MaintenanceBanner';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import CookiesBanner from '@components/banners/CookiesBanner';
-import RegisterBanner from '@components/banners/RegisterBanner';
+import CookiesBanner from '@core/components/banners/CookiesBanner';
+import RegisterBanner from '@core/components/banners/RegisterBanner';
 
 const Banners = () => {
   const { enabledRegisterBanner } = useAuthContext();
