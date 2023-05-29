@@ -32,7 +32,7 @@ import { consentGTMEvents } from '@core/utils/gtm';
 import seoConfig from '@lib/config/next-seo.config';
 import { messages } from '@lib/constants/lang';
 import theme from '@lib/constants/themes';
-import snackbarConfig from '@lib/constants/snackbar';
+import snackbarConfig from '@lib/config/snackbar.config';
 import { AppProvider } from '@core/contexts/AppContext';
 import { SearchProvider } from '@core/contexts/SearchContext';
 import { ProductsProvider } from '@core/contexts/ProductsContext';

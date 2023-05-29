@@ -26,7 +26,7 @@ import { reinitFBEvents } from '@core/utils/facebook';
 
 import { pages } from '@lib/config/navigation.config';
 import { paypalHostedFieldsStyle } from '@lib/constants/themes/elements';
-import snackbarConfig from '@lib/constants/snackbar';
+import snackbarConfig from '@lib/config/snackbar.config';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import { useCartContext } from '@core/contexts/CartContext';

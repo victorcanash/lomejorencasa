@@ -15,7 +15,7 @@ import {
 } from '@core/utils/products';
 
 import { uploadImgMaxSize } from '@lib/constants/multimedia';
-import snackbarConfig from '@lib/constants/snackbar';
+import snackbarConfig from '@lib/config/snackbar.config';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';

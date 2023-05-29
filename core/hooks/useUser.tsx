@@ -13,7 +13,7 @@ import {
 } from '@core/utils/user';
 
 import { pages } from '@lib/config/navigation.config';
-import snackbarConfig from '@lib/constants/snackbar';
+import snackbarConfig from '@lib/config/snackbar.config';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import { useCartContext } from '@core/contexts/CartContext';
