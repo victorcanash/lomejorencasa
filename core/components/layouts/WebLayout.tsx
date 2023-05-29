@@ -6,7 +6,7 @@ import { sendPageViewFBEvent } from '@core/utils/facebook';
 import { sendPageViewGTMEvent } from '@core/utils/gtm';
 
 import { useAppContext } from '@lib/contexts/AppContext';
-import MainComponent from '@components/layouts/MainComponent';
+import MainComponent from '@core/components/layouts/MainComponent';
 import NavBar from '@core/components/NavBar';
 import Footer from '@core/components/Footer';
 import Banners from '@core/components/banners';

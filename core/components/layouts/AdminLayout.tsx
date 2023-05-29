@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import MainComponent from '@components/layouts/MainComponent';
+import MainComponent from '@core/components/layouts/MainComponent';
 import NavBar from '@core/components/NavBar';
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {

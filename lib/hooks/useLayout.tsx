@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { PageTypes } from '@core/constants/navigation';
 
 import { pages } from '@lib/config/navigation.config';
-import WebLayout from '@components/layouts/WebLayout';
-import LinkLayout from '@components/layouts/LinkLayout';
-import AdminLayout from '@components/layouts/AdminLayout';
+import WebLayout from '@core/components/layouts/WebLayout';
+import LinkLayout from '@core/components/layouts/LinkLayout';
+import AdminLayout from '@core/components/layouts/AdminLayout';
 
 const useLayout = (children: React.ReactNode) => {
   const router = useRouter();
