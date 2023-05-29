@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import Link from '@core/components/Link';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 // import HideOnScroll from '@core/components/animations/HideOnScroll';
 import ShippingBar from '@core/components/NavBar/ShippingBar';
 

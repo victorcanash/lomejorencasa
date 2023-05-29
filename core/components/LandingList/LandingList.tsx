@@ -16,7 +16,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { getFirstLandingItem, getLandingConfigById, getLandingPathByConfig, getProductPriceData } from '@core/utils/products';
 import Link from '@core/components/Link';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';

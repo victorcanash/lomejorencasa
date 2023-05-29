@@ -6,7 +6,7 @@ import Typography from '@mui/material/Typography';
 
 import { homeFoodStorageImgIds } from '@lib/constants/multimedia';
 import Title from '@core/components/ui/Title';
-import MultimediaContainer from '@components/multimedia/MultimediaContainer';
+import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
 const FoodStorage = () => {
 

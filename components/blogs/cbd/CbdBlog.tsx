@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 import Link from '@core/components/Link';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { cbdBlogImgIds } from '@lib/constants/multimedia';
 

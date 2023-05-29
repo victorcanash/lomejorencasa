@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import Box from '@mui/material/Box';
 
 import type { Source } from '@core/types/multimedia';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 type LandingCarouselProps = {
   sources: Source[],

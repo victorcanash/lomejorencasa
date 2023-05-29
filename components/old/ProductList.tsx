@@ -16,7 +16,7 @@ import type { Product, ProductCategory } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import Link from '@core/components/Link';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';

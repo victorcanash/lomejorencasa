@@ -23,7 +23,7 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import useForms from '@lib/hooks/useForms';
 import useMultimedia from '@lib/hooks/useMultimedia';
 import BaseForm from '@core/components/forms/BaseForm';
-import UploadInput from '@components/multimedia/UploadInput';
+import UploadInput from '@core/components/inputs/UploadInput';
 
 type ProductReviewFormProps = {
   errorMsg: string,

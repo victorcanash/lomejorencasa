@@ -15,7 +15,7 @@ import Button from '@mui/material/Button';
 import type { BundleConfig, ProductInventory, ProductPack } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';

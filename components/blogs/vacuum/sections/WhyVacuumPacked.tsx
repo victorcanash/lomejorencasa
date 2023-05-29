@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { homeWhyVacuumPackedImgIds } from '@lib/constants/multimedia';
 import colors from '@lib/constants/themes/colors';

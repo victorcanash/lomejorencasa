@@ -17,7 +17,7 @@ import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
 import { homeBannerImgIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import MultimediaContainer from '@components/multimedia/MultimediaContainer';
+import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
 const ProductBanner = () => {
   const smallBreakpoint = useMediaQuery('(max-width:600px)');

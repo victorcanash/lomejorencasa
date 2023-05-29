@@ -10,7 +10,7 @@ import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 import Title from '@core/components/ui/Title';
 
 import { keywords } from '@lib/config/next-seo.config';
@@ -18,7 +18,7 @@ import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
 import { homeUseImgIds, homeVideoIds } from '@lib/constants/multimedia';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import MultimediaContainer from '@components/multimedia/MultimediaContainer';
+import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
 const Use = () => {
   const Subtitle = useCallback((props: { type: 'h3' | 'h4', text: FormatText }) => {

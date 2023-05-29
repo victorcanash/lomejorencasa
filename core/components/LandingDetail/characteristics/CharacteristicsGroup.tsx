@@ -15,7 +15,7 @@ import type { NavItem } from '@core/types/navigation';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/Link';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 

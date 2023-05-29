@@ -3,11 +3,11 @@ import { useCallback } from 'react';
 import Box from '@mui/material/Box';
 
 import type { Source } from '@core/types/multimedia';
-import CustomImage from '@core/components/CustomImage';
-import CustomVideo from '@core/components/CustomVideo';
+import CustomImage from '@core/components/multimedia/CustomImage';
+import CustomVideo from '@core/components/multimedia/CustomVideo';
 
 type MultimediaContainerProps = {
-  type: 'default' | 'banner' | 'homePackingMachine',
+  type: 'default' | 'banner',
   source: Source,
   maxWidth?: string,
   width?: string,
@@ -33,25 +33,9 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       return 'sm';
     } else if (type == 'banner') {
       return 'md_lg';
-    } else if (type == 'homePackingMachine') {
-      return 'md_lg';
     }
     return maxWidth;
   }, [maxWidth, type]);
-
-  const getWidth = useCallback(() => {
-    if (width) {
-      return width;
-    }
-    if (type == 'homePackingMachine') {
-      return {
-        xs: '765px',
-        sm_md: '900px',
-        md: '1085px',
-      };
-    }
-    return width;
-  }, [type, width]);
 
   const getMt = useCallback(() => {
     if (mt !== undefined) {
@@ -61,12 +45,6 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       return 4;
     } else if (type == 'banner') {
       return 0;
-    } else if (type == 'homePackingMachine') {
-      return {
-        xs: 17,
-        sm_md: 14,
-        md: 10,
-      };
     }
     return mt;
   }, [mt, type]);
@@ -89,7 +67,7 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
   return (
     <Box
       maxWidth={getMaxWidth()}
-      width={getWidth()}
+      width={width}
       m="auto"
       mt={getMt()}
     >
@@ -114,15 +92,15 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
           }}
         >
           <CustomImage
-            src={source.src} 
+            src={source.src}
             alt={source.alt}
             width={source.width || '1920'}
             height={source.height || '1080'}
             layout="responsive"
             objectFit="cover"
             priority={source.priority}
-            style={{ 
-              borderRadius: getBorderRadius(), 
+            style={{
+              borderRadius: getBorderRadius(),
             }}
           />
         </Box>

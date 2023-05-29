@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/LinkButton';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
 import { homeCharacteristicsBgImgIds, homeCharacteristicsIconsIds, homeAdvantagesIconsIds } from '@lib/constants/multimedia';

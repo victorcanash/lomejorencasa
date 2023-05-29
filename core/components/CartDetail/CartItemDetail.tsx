@@ -13,7 +13,7 @@ import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
 import Link from '@core/components/Link';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
 import { useProductsContext } from '@lib/contexts/ProductsContext';

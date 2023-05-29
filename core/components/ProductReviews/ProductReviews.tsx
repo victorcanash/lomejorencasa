@@ -18,7 +18,7 @@ import Masonry from '@mui/lab/Masonry';
 
 import { convertToDate } from '@core/utils/dates';
 import { getPackGeneralName } from '@core/utils/products';
-import CustomImage from '@core/components/CustomImage';
+import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { landingConfigs } from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
