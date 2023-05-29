@@ -1,12 +1,12 @@
 import { pages } from '@lib/config/navigation.config';
 import { everfreshVideoIds } from '@lib/constants/multimedia';
-import ProductTutorial from '@components/products/detail/ProductTutorial';
+import LandingTutorial from '@core/components/LandingDetail/LandingTutorial';
 
 const EverfreshDetail = () => {
 
   return (
     <>
-      <ProductTutorial
+      <LandingTutorial
         title={{
           id: 'everfresh.videoComment.1.title',
         }}
@@ -26,7 +26,7 @@ const EverfreshDetail = () => {
         }} 
       />
 
-      <ProductTutorial
+      <LandingTutorial
         title={{
           id: 'everfresh.videoComment.2.title',
         }}
@@ -46,7 +46,7 @@ const EverfreshDetail = () => {
         }} 
       />
 
-      <ProductTutorial
+      <LandingTutorial
         title={{
           id: 'everfresh.videoComment.3.title',
         }}

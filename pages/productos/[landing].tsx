@@ -10,7 +10,7 @@ import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import useFacebook from '@lib/hooks/useFacebook';
 import PageHeader from '@core/components/pages/PageHeader';
-import LandingDetail from '@components/products/detail';
+import LandingDetail from '@core/components/LandingDetail';
 import EverfreshDetail from '@components/products/detail/EverfreshDetail';
 import BagsDetail from '@components/products/detail/BagsDetail';
 

@@ -43,11 +43,11 @@ import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
 import LoadingBtn from '@components/ui/LoadingBtn';
 import LoadingRating from '@components/ui/LoadingRating';
-import ProductCarousel from '@components/products/detail/ProductCarousel';
+import LandingCarousel from '@core/components/LandingDetail/LandingCarousel';
 import SelectItem from '@components/products/inputs/SelectItem'
 import SelectItemQuantity from '@components/products/inputs/SelectItemQuantity'
-import BundleDetail from '@components/products/detail/BundleDetail';
-import DetailCharacteristics from '@components/products/detail/characteristics';
+import BundleDetail from '@core/components/LandingDetail/BundleDetail';
+import DetailCharacteristics from '@core/components/LandingDetail/characteristics';
 import ProductReviews from '@components/products/reviews';
 
 type LandingDetailProps = {
@@ -356,7 +356,7 @@ const LandingDetail = (props: LandingDetailProps) => {
                 m: 'auto',
               }}
             >
-              <ProductCarousel
+              <LandingCarousel
                 sources={
                   getLandingImgsUrl(landingModel, selectedItem).map((item, index, items) => {
                     return {

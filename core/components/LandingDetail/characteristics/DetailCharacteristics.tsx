@@ -9,7 +9,7 @@ import Divider from '@core/components/ui/Divider';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import CharacteristicsGroup from '@components/products/detail/characteristics/CharacteristicsGroup';
+import CharacteristicsGroup from '@core/components/LandingDetail/characteristics/CharacteristicsGroup';
 
 type DetailCharacteristicsProps = {
   landingConfig: LandingConfig,

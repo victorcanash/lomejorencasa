@@ -8,12 +8,12 @@ import Box from '@mui/material/Box';
 import type { Source } from '@core/types/multimedia';
 import CustomImage from '@core/components/CustomImage';
 
-type ProductCarouselProps = {
+type LandingCarouselProps = {
   sources: Source[],
   swiperRef: MutableRefObject<SwiperRef | undefined>,
 };
 
-const ProductCarousel = (props: ProductCarouselProps) => {
+const LandingCarousel = (props: LandingCarouselProps) => {
   const { sources, swiperRef } = props;
 
   return (
@@ -51,4 +51,4 @@ const ProductCarousel = (props: ProductCarouselProps) => {
   );
 };
 
-export default ProductCarousel;
+export default LandingCarousel;

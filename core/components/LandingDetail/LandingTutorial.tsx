@@ -14,14 +14,14 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@components/multimedia/MultimediaContainer';
 
-type ProductTutorialProps = {
+type LandingTutorialProps = {
   title?: FormatText,
   content: FormatText,
   button?: NavItem,
   source: Source,
 };
 
-const ProductTutorial = (props: ProductTutorialProps) => {
+const LandingTutorial = (props: LandingTutorialProps) => {
   const { title, content, button, source } = props;
 
   return (
@@ -80,4 +80,4 @@ const ProductTutorial = (props: ProductTutorialProps) => {
   );
 };
 
-export default ProductTutorial;
+export default LandingTutorial;
