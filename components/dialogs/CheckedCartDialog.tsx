@@ -9,7 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 
 import type { CartItem } from '@core/types/cart';
 
-import Transition from '@components/animations/Transition';
+import Transition from '@core/components/animations/Transition';
 
 type CheckedCartDialogProps = {
   open: boolean,

@@ -10,7 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import Transition from '@components/animations/Transition';
+import Transition from '@core/components/animations/Transition';
 
 type ConfirmDialogProps = {
   open: boolean,
