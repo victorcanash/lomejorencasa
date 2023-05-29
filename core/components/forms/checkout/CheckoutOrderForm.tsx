@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 
 import { pages } from '@lib/config/navigation.config';
 import BaseForm from '@core/components/forms/BaseForm';
-import CartDetail from '@components/cart/CartDetail';
+import CartDetail from '@core/components/CartDetail';
 
 const CheckoutOrderForm = () => {
 

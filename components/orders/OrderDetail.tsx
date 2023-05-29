@@ -16,7 +16,7 @@ import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import BackBtn from '@components/ui/BackBtn';
 import AddressDetail from '@components/addresses/AddressDetail';
-import CartDetail from '@components/cart/CartDetail';
+import CartDetail from '@core/components/CartDetail';
 
 type OrderDetailProps = {
   order: Order,

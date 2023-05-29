@@ -10,7 +10,7 @@ import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useCartContext } from '@lib/contexts/CartContext';
 import useCart from '@lib/hooks/useCart';
-import CartDetail from '@components/cart/CartDetail';
+import CartDetail from '@core/components/CartDetail';
 import CheckedCartDialog from '@components/dialogs/CheckedCartDialog';
 
 type CartProps = {

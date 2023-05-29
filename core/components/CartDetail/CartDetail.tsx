@@ -20,7 +20,7 @@ import { pages } from '@lib/config/navigation.config';
 import { useCartContext } from '@lib/contexts/CartContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useCart from '@lib/hooks/useCart';
-import CartItemDetail from '@components/cart/CartItemDetail';
+import CartItemDetail from '@core/components/CartDetail/CartItemDetail';
 
 type CartDetailProps = {
   page?: Page,

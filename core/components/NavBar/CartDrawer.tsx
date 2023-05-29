@@ -3,7 +3,7 @@ import Drawer from '@mui/material/Drawer';
 import Toolbar from '@mui/material/Toolbar';
 
 import { useCartContext } from '@lib/contexts/CartContext';
-import CartDetail from '@components/cart/CartDetail';
+import CartDetail from '@core/components/CartDetail';
 
 type CartDrawerProps = {
   minHeight: string,
