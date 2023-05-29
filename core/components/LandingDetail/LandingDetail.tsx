@@ -48,7 +48,7 @@ import SelectItem from '@core/components/inputs/SelectItem';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
 import BundleDetail from '@core/components/LandingDetail/BundleDetail';
 import DetailCharacteristics from '@core/components/LandingDetail/characteristics';
-import ProductReviews from '@components/landings/reviews';
+import ProductReviews from '@core/components/ProductReviews';
 
 type LandingDetailProps = {
   children?: ReactElement,
