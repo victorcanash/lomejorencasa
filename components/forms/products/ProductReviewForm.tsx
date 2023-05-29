@@ -16,7 +16,7 @@ import type { CreateProductReview, ProductPack } from '@core/types/products';
 import { getUserFullName } from '@core/utils/user';
 import { getPackGeneralName } from '@core/utils/products';
 
-import { allLandingConfigs } from '@lib/config/inventory.config';
+import { landingConfigs } from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
@@ -112,7 +112,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
                   required: true,
                   menuItems: getAllLandingsProducts().map((item) => {
                     const name = (item as ProductPack)?.originalPrice ?
-                      getPackGeneralName(item as ProductPack, allLandingConfigs) : item.name?.current;
+                      getPackGeneralName(item as ProductPack, landingConfigs) : item.name?.current;
                     const value = (item as ProductPack)?.originalPrice ?
                       `${item.id}.pack` : `${item.id}.product`;
                     return {

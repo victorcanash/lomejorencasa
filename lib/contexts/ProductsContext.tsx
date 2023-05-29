@@ -5,7 +5,7 @@ import {
   useCallback,
 } from 'react';
 
-import { allLandingConfigs } from '@lib/config/inventory.config';
+import { landingConfigs } from '@lib/config/inventory.config';
 import type {
   Landing,
   Product,
@@ -65,7 +65,7 @@ export const useProductsContext = () => {
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
-  const landings = useRef<Landing[]>(generateLandings(allLandingConfigs));
+  const landings = useRef<Landing[]>(generateLandings(landingConfigs));
 
   const getAllLandings = useCallback(() => {
     return landings.current;
@@ -77,7 +77,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
 
   const getLandingByPath = useCallback((path: string) => {
     let foundLanding: Landing | undefined = undefined;
-    const foundLandingConfig = getLandingConfigByPath(path, allLandingConfigs);
+    const foundLandingConfig = getLandingConfigByPath(path, landingConfigs);
     if (foundLandingConfig) {
       foundLanding = landings.current.find((landing) => {
         if (landing.id === foundLandingConfig.id) {
@@ -117,13 +117,13 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, [getAllPacks, getAllProducts]);
 
   const getPageUrlByCartItem = useCallback((item: CartItem | GuestCartCheckItem) => {
-    const foundLandingConfig = getLandingConfigByCartItem(item, allLandingConfigs);
+    const foundLandingConfig = getLandingConfigByCartItem(item, landingConfigs);
     return foundLandingConfig ?
       getLandingPathByConfig(foundLandingConfig) : pages.productList.path;
   }, []);
 
   const getPageUrlByLandingId = useCallback((landingId: number) => {
-    const foundLandingConfig = getLandingConfigById(landingId, allLandingConfigs);
+    const foundLandingConfig = getLandingConfigById(landingId, landingConfigs);
     return foundLandingConfig ?
       getLandingPathByConfig(foundLandingConfig) : pages.productList.path;
   }, []);

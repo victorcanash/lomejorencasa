@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { ReactElement, useState, useMemo, useCallback, useRef, useEffect } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { useInView } from 'react-intersection-observer';
@@ -35,7 +35,6 @@ import { getFirstLandingItem, getLandingItems, getLandingPathByConfig, getProduc
 import Link from '@core/components/Link';
 
 import { pages } from '@lib/config/navigation.config';
-import inventoryConfig from '@lib/config/inventory.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
@@ -49,17 +48,16 @@ import SelectItem from '@components/products/inputs/SelectItem'
 import SelectItemQuantity from '@components/products/inputs/SelectItemQuantity'
 import BundleDetail from '@components/products/detail/BundleDetail';
 import DetailCharacteristics from '@components/products/detail/characteristics';
-import EverfreshDetail from '@components/products/detail/EverfreshDetail';
-import BagsDetail from '@components/products/detail/BagsDetail';
 import ProductReviews from '@components/products/reviews';
 
-type ProductDetailProps = {
+type LandingDetailProps = {
+  children?: ReactElement,
   landingModel: Landing,
   landingConfig: LandingConfig,
 };
 
-const LandingDetail = (props: ProductDetailProps) => {
-  const { landingModel, landingConfig } = props;
+const LandingDetail = (props: LandingDetailProps) => {
+  const { children, landingModel, landingConfig } = props;
 
   const { initialized } = useAppContext();
   const {
@@ -465,12 +463,7 @@ const LandingDetail = (props: ProductDetailProps) => {
         <DetailCharacteristics
           landingConfig={landingConfig}
         />
-        { (landingConfig.id === inventoryConfig.vacuumMachine.id || landingConfig.id === inventoryConfig.vacuumPack.id) &&
-          <EverfreshDetail />
-        }
-        { (landingConfig.id === inventoryConfig.vacuumBags.id || landingConfig.id === inventoryConfig.vacuumBagsPack.id) &&
-          <BagsDetail />
-        }
+        { children }
         <ProductReviews />
       </Box>
     </Box>

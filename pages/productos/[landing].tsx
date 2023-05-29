@@ -5,12 +5,14 @@ import { ParsedUrlQuery } from 'querystring';
 import { PageTypes } from '@core/constants/navigation';
 import { getLandingConfigByPath } from '@core/utils/products';
 
-import { allLandingConfigs } from '@lib/config/inventory.config';
+import { landingConfigs } from '@lib/config/inventory.config';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import usePage from '@lib/hooks/usePage';
 import useFacebook from '@lib/hooks/useFacebook';
 import PageHeader from '@core/components/pages/PageHeader';
 import LandingDetail from '@components/products/detail';
+import EverfreshDetail from '@components/products/detail/EverfreshDetail';
+import BagsDetail from '@components/products/detail/BagsDetail';
 
 type LandingPageProps = {
   path: string,
@@ -27,7 +29,7 @@ const LandingPage: NextPage<LandingPageProps> = (props) => {
 
   const data = useMemo(() => {
     const landingModel = getLandingByPath(path);
-    const landingConfig = getLandingConfigByPath(path, allLandingConfigs);
+    const landingConfig = getLandingConfigByPath(path, landingConfigs);
     if (landingModel?.name) {
       sendViewContentEvent(landingModel);
     }
@@ -52,7 +54,16 @@ const LandingPage: NextPage<LandingPageProps> = (props) => {
         <LandingDetail 
           landingModel={data.landingModel}
           landingConfig={data.landingConfig}
-        />
+        >
+          <>
+            { (data.landingConfig.id === 1 || data.landingConfig.id === 3) &&
+              <EverfreshDetail />
+            }
+            { (data.landingConfig.id === 2 || data.landingConfig.id === 4) &&
+              <BagsDetail />
+            }
+          </>
+        </LandingDetail>
       }
     </>
   );
@@ -65,7 +76,7 @@ interface ILandingPageParams extends ParsedUrlQuery {
 };
 
 export const getStaticPaths: GetStaticPaths = () => {
-  const paths = allLandingConfigs.map((landingConfig) => {
+  const paths = landingConfigs.map((landingConfig) => {
     return {
       params: {
         landing: landingConfig.path,

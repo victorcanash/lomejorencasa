@@ -21,7 +21,7 @@ import CustomImage from '@core/components/CustomImage';
 import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import { allLandingConfigs } from '@lib/config/inventory.config';
+import { landingConfigs } from '@lib/config/inventory.config';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import Title from '@core/components/ui/Title';
@@ -41,7 +41,7 @@ const LandingList = () => {
   };*/
 
   const getLandingPath = (id: number) => {
-    const landingConfig = getLandingConfigById(id, allLandingConfigs);
+    const landingConfig = getLandingConfigById(id, landingConfigs);
     if (landingConfig) {
       return getLandingPathByConfig(landingConfig);
     }
@@ -51,7 +51,7 @@ const LandingList = () => {
   const landingName = (landing: Landing) => {
     let name = landing.name?.current || '';
     if (!name) {
-      const landingConfig = getLandingConfigById(landing.id, allLandingConfigs);
+      const landingConfig = getLandingConfigById(landing.id, landingConfigs);
       if (landingConfig) {
         name = landingConfig.product?.name?.current ? landingConfig.product.name.current : landingConfig.pack?.name?.current || '';
       }
