@@ -14,7 +14,7 @@ import LinkButton from '@core/components/LinkButton';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import BackBtn from '@components/ui/BackBtn';
+import BackBtn from '@core/components/ui/BackBtn';
 import AddressDetail from '@components/addresses/AddressDetail';
 import CartDetail from '@core/components/CartDetail';
 

@@ -11,7 +11,7 @@ import type { Order } from '@core/types/orders';
 import { convertToDate } from '@core/utils/dates';
 import Divider from '@core/components/ui/Divider';
 
-import Pagination from '@components/ui/Pagination';
+import Pagination from '@core/components/ui/Pagination';
 
 type OrderListProps = {
   orders: Order[],

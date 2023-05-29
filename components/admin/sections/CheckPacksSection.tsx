@@ -12,7 +12,7 @@ import { ManageActions } from '@core/constants/app';
 import type { ProductPack } from '@core/types/products';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import Pagination from '@components/ui/Pagination';
+import Pagination from '@core/components/ui/Pagination';
 import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
 import PackDetail from '@components/admin/details/PackDetail';
 

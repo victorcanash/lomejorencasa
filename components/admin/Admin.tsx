@@ -7,7 +7,7 @@ import { AdminSections } from '@core/constants/admin';
 import Divider from '@core/components/ui/Divider';
 
 import useAdmin from '@lib/hooks/useAdmin';
-import BackBtn from '@components/ui/BackBtn';
+import BackBtn from '@core/components/ui/BackBtn';
 import HomeSection from '@components/admin/sections/HomeSection';
 import CheckCategoriesSection from '@components/admin/sections/CheckCategoriesSection';
 import CheckProductsSection from '@components/admin/sections/CheckProductsSection';

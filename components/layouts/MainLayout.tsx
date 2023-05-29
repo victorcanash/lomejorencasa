@@ -11,7 +11,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
 import useLayout from '@lib/hooks/useLayout';
-import Loading from '@components/ui/Loading';
+import Loading from '@core/components/ui/Loading';
 
 const MainLayout = ({ children }: { children: ReactNode }) => {
   const { loading } = useAppContext();

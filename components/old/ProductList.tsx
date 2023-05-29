@@ -22,7 +22,7 @@ import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useSearchContext } from '@lib/contexts/SearchContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
-import Pagination from '@components/ui/Pagination';
+import Pagination from '@core/components/ui/Pagination';
 
 type ProductListProps = {
   category: ProductCategory | null,

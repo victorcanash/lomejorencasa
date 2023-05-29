@@ -22,7 +22,7 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@lib/contexts/AppContext';
 import { useProductsContext } from '@lib/contexts/ProductsContext';
 import { useAuthContext } from '@lib/contexts/AuthContext';
-import LoadingBtn from '@components/ui/LoadingBtn';
+import LoadingBtn from '@core/components/ui/LoadingBtn';
 
 type BundleDetailProps = {
   bundleConfig: BundleConfig,

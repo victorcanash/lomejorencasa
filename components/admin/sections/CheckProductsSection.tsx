@@ -17,7 +17,7 @@ import type { Product, ProductCategory, ProductInventory, ProductDiscount } from
 import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';
 
 import { useSearchContext } from '@lib/contexts/SearchContext';
-import Pagination from '@components/ui/Pagination';
+import Pagination from '@core/components/ui/Pagination';
 import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';
 import ManagePDiscountForm from '@core/components/forms/admin/ManagePDiscountForm';
