@@ -12,7 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import type { Page } from '@core/types/navigation';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';

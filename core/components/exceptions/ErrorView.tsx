@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import LinkButton from '@core/components/LinkButton';
+import LinkButton from '@core/components/navigation/LinkButton';
 import { pages } from '@lib/config/navigation.config';
 
 type ErrorViewProps = {

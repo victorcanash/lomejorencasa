@@ -26,7 +26,7 @@ import { consentFBEvents } from '@core/utils/facebook';
 import { consentGTMEvents } from '@core/utils/gtm';
 import { convertElementToSx } from '@core/utils/themes';
 import { subtractYears } from '@core/utils/dates';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/config/navigation.config';

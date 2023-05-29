@@ -1,6 +1,6 @@
 import Button, { ButtonProps } from '@mui/material/Button';
 
-import Link, { LinkProps } from '@core/components/Link';
+import Link, { LinkProps } from '@core/components/navigation/Link';
 
 const LinkButton = (props: ButtonProps & LinkProps) => {
 

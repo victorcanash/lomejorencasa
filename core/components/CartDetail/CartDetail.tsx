@@ -12,7 +12,7 @@ import type { Page } from '@core/types/navigation';
 import type { Order } from '@core/types/orders';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/LinkButton';
+import LinkButton from '@core/components/navigation/LinkButton';
 import Divider from '@core/components/ui/Divider';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';

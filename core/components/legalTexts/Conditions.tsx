@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import envConfig from '@core/config/env.config';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
 

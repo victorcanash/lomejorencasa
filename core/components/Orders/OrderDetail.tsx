@@ -10,7 +10,7 @@ import type { Order } from '@core/types/orders';
 import type { UserAddress } from '@core/types/user';
 import { convertToDate } from '@core/utils/dates';
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/LinkButton';
+import LinkButton from '@core/components/navigation/LinkButton';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';

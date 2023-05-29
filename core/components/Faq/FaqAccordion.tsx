@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import { FaqGroup  } from '@core/types/faq';
 import { convertElementToSx } from '@core/utils/themes';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 

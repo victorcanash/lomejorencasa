@@ -14,7 +14,7 @@ import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';

@@ -15,7 +15,7 @@ import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import { capitalizeFirstLetter } from '@core/utils/strings';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';

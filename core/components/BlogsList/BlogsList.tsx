@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 import Title from '@core/components/ui/Title';
 
 import { pages } from '@lib/config/navigation.config';

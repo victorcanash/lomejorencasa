@@ -32,7 +32,7 @@ import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
 import { scrollToSection } from '@core/utils/navigation';
 import { getFirstLandingItem, getLandingItems, getLandingPathByConfig, getProductPriceData } from '@core/utils/products';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';

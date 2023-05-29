@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/LinkButton';
+import LinkButton from '@core/components/navigation/LinkButton';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';

@@ -4,7 +4,7 @@ import envConfig from '@core/config/env.config';
 import { FormFieldTypes } from '@core/constants/forms';
 import { ContactTypes } from '@core/constants/contact';
 import type { User, UserContact } from '@core/types/user';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
 import { useAuthContext } from '@lib/contexts/AuthContext';

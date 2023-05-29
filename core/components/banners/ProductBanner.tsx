@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/LinkButton';
+import LinkButton from '@core/components/navigation/LinkButton';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';

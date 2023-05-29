@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { useIntl } from 'react-intl';
 
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
 import useAuth from '@lib/hooks/useAuth';

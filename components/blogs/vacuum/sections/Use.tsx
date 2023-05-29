@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/LinkButton';
+import LinkButton from '@core/components/navigation/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
 import Title from '@core/components/ui/Title';
 

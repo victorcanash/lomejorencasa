@@ -8,7 +8,7 @@ import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/LinkButton';
+import LinkButton from '@core/components/navigation/LinkButton';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title';

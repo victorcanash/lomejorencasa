@@ -31,7 +31,7 @@ import type {
   FormField,
   FormBase,
 } from '@core/types/forms';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { pages } from '@lib/config/navigation.config';
 import ConfirmDialog from '@components/dialogs/ConfirmDialog';

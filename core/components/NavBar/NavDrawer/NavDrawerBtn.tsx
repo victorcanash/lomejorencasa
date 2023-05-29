@@ -1,7 +1,7 @@
 import ListItemButton from '@mui/material/ListItemButton';
 
 import type { NavDrawerItem } from '@core/types/navigation';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import NavDrawerBtnContent from '@core/components/NavBar/NavDrawer/NavDrawerBtnContent';
 

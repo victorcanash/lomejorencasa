@@ -17,7 +17,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 
 import { convertElementToSx } from '@core/utils/themes';
-import Link from '@core/components/Link';
+import Link from '@core/components/navigation/Link';
 
 import { pages, socialPaths } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
