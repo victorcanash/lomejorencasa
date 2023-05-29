@@ -8,7 +8,7 @@ import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory, ProductPack } from '@core/types/products';
 import { getAllProducts, getAllPacks, getProduct } from '@core/utils/products';
 
-import { limitByPageSearch, orderRemainsSearch } from '@lib/constants/search';
+import searchConfig from '@lib/config/search.config';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import { CheckProductsSectionProps } from '@core/components/Admin/sections/CheckProductsSection';
@@ -44,7 +44,7 @@ const useAdmin = (checkedPage: boolean) => {
     const orderSearch = typeof order == 'string' ? order : 'asc';
     const keywordsSearch = typeof keywords == 'string' ? keywords : '';
 
-    await getAllProducts(token, intl.locale, pageSearch, limitByPageSearch, sortBySearch, orderSearch, keywordsSearch, categorySearch, orderRemainsSearch, true)
+    await getAllProducts(token, intl.locale, pageSearch, searchConfig.limitByPage, sortBySearch, orderSearch, keywordsSearch, categorySearch, searchConfig.orderRemains, true)
       .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
         setCheckProductsProps({
           category: response.productCategory,
@@ -66,7 +66,7 @@ const useAdmin = (checkedPage: boolean) => {
     const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
     const orderSearch = typeof order == 'string' ? order : 'asc';
 
-    await getAllPacks(token, intl.locale, pageSearch, limitByPageSearch, sortBySearch, orderSearch)
+    await getAllPacks(token, intl.locale, pageSearch, searchConfig.limitByPage, sortBySearch, orderSearch)
       .then((response: { packs: ProductPack[], totalPages: number, currentPage: number }) => {
         setCheckPacksProps({
           packs: response.packs,
