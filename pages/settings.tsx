@@ -5,7 +5,7 @@ import { PageTypes } from '@core/constants/navigation';
 import { useAppContext } from '@lib/contexts/AppContext';
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Settings from '@components/settings';
+import Settings from '@core/components/Settings';
 
 const SettingsPage: NextPage = () => { 
   const { initialized } = useAppContext();
