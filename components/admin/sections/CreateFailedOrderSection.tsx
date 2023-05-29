@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import type { Order } from '@core/types/orders';
 
 import CreateFailedOrderForm from '@core/components/forms/admin/CreateFailedOrderForm';
-import OrderDetail from '@components/orders/OrderDetail';
+import OrderDetail from '@core/components/Orders/OrderDetail';
 
 const CreateFailedOrderSection = () => {
   const [order, setOrder] = useState<undefined | Order>(undefined)

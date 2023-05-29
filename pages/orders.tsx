@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import Orders from '@components/orders';
+import Orders from '@core/components/Orders';
 
 const OrdersPage: NextPage = () => {
   const page = usePage(false);

@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import type { Order } from '@core/types/orders';
 
 import SendOrderEmailForm from '@core/components/forms/admin/SendOrderEmailForm';
-import OrderDetail from '@components/orders/OrderDetail';
+import OrderDetail from '@core/components/Orders/OrderDetail';
 
 const SendOrderEmailSection = () => {
   const [order, setOrder] = useState<undefined | Order>(undefined)
