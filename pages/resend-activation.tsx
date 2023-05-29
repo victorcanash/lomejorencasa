@@ -4,7 +4,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@lib/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
-import ResendActivation from '@components/auth/ResendActivation';
+import ResendActivation from '@core/components/auth/ResendActivation';
 
 const ResendActivationPage: NextPage = () => {
   const page = usePage();
