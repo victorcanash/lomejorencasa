@@ -10,6 +10,7 @@ import { PageTypes } from '@core/constants/navigation';
 
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
+import useApp from '@core/hooks/useApp';
 import useLayout from '@core/hooks/useLayout';
 import Loading from '@core/components/ui/Loading';
 
@@ -17,6 +18,7 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   const { loading } = useAppContext();
   const { paypal, currency } = useAuthContext();
 
+  const app = useApp();
   const { layout, pageType } = useLayout(children);
 
   const content = (

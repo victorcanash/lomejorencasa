@@ -11,7 +11,6 @@ import { useSearchContext } from '@core/contexts/SearchContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useCartContext } from '@core/contexts/CartContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
-import useForms from '@core/hooks/useForms';
 
 const usePage = (setLoaded = true) => {
   const { initialized, setInitialized, setLoading } = useAppContext();
@@ -32,31 +31,28 @@ const usePage = (setLoaded = true) => {
   const router = useRouter();
   const intl = useIntl();
 
-  const { initForms } = useForms();
-
   const firstRenderRef = useRef(false);
   const [checked, setChecked] = useState(false);
 
   const initData = useCallback(async () => {
-    initForms();
-      await init(
-        intl.locale,
-        [],
-        undefined,
-      ).then(async (response) => {
-        setProductCategories(response.productCategories);
-        initLandings(response.landings);
-        initCart(response.cart);
-        if (response.token && response.user) {
-          setToken(response.token);
-          setUser(response.user);
-        }
-        setPaypal(response.paypal);
-        setInitialized(true);
-      }).catch(async (_error: Error) => { 
-        // throw error;
-      });
-  }, [initCart, initForms, initLandings, intl.locale, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
+    await init(
+      intl.locale,
+      [],
+      undefined,
+    ).then(async (response) => {
+      setProductCategories(response.productCategories);
+      initLandings(response.landings);
+      initCart(response.cart);
+      if (response.token && response.user) {
+        setToken(response.token);
+        setUser(response.user);
+      }
+      setPaypal(response.paypal);
+      setInitialized(true);
+    }).catch(async (_error: Error) => { 
+      // throw error;
+    });
+  }, [initCart, initLandings, intl.locale, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
 
   const onCheckSuccess = useCallback(() => {
     if (setLoaded) {
