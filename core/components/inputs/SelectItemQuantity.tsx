@@ -143,7 +143,9 @@ const SelectItemQuantity = (props: SelectItemQuantityProps) => {
         <Typography
           component="div"
           variant="h3"
-          sx={convertElementToSx(themeCustomElements.landing.selectLabel)}
+          sx={{
+            ...themeCustomElements.landing?.selectLabel ? convertElementToSx(themeCustomElements.landing.selectLabel) : undefined,
+          }}
           mb={1}
         >
           <FormattedMessage id="forms.quantity" />

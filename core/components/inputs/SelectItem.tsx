@@ -79,7 +79,9 @@ const SelectItem = (props: SelectItemProps) => {
             <Typography
               component="div"
               variant="h3"
-              sx={convertElementToSx(themeCustomElements.landing.selectLabel)}
+              sx={{
+                ...themeCustomElements.landing?.selectLabel ? convertElementToSx(themeCustomElements.landing.selectLabel) : undefined,
+              }}
               mb={1}
             >
               <FormattedMessage id={selectInputLabel.id} values={selectInputLabel.values} />

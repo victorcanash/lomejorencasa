@@ -165,7 +165,12 @@ const LandingDetail = (props: LandingDetailProps) => {
     return (
       <Grid container columnSpacing={2} rowSpacing={0.5}>
         <Grid item>
-          <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+          <Typography
+            component="h2"
+            variant="h2"
+            sx={{
+              ...themeCustomElements.landing?.priceContent?.priceText ? convertElementToSx(themeCustomElements.landing.priceContent.priceText) : undefined,
+            }}>
             { priceData.price !== priceData.originPrice ?
               <>
                 <span

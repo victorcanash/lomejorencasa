@@ -459,18 +459,17 @@ export const themeCustomElements: {
     title?: ThemeElement,
     icons?: ThemeElement,
   },
-  landing: {
-    selectLabel: ThemeElement,
-    priceContent: {
-      priceText: ThemeElement,
-      //originalText: ThemeElement,
-      discountText: ThemeElement,
-      percentText: ThemeElement,
+  landing?: {
+    selectLabel?: ThemeElement,
+    priceContent?: {
+      priceText?: ThemeElement,
+      discountText?: ThemeElement,
+      percentText?: ThemeElement,
     },
-    accordion: {
-      default: ThemeElement,
-      head: ThemeElement,
-      //content: ThemeElement,
+    bundleTitle?: ThemeElement,
+    accordion?: { 
+      default?: ThemeElement,
+      head?: ThemeElement,
     },
   },
   faq?: {
@@ -665,6 +664,18 @@ export const themeCustomElements: {
           },
         },
       },
+    },
+    bundleTitle: {
+      text: {
+        color: {
+          default: colors.text.black,
+        },
+        font: {
+          default: {
+            fontSize: '20px',
+          },
+        },
+      }
     },
     accordion: {
       default: {

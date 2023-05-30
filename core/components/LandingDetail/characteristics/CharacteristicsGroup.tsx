@@ -71,10 +71,16 @@ const CharacteristicsGroup = (props: CharacteristicsGroupProps) => {
       xs={12}
       sm={6}
     >
-      <Accordion sx={convertElementToSx(themeCustomElements.landing.accordion.default)}>
+      <Accordion
+        sx={{
+          ...themeCustomElements.landing?.accordion?.default ? convertElementToSx(themeCustomElements.landing.accordion.default) : undefined,
+        }}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          sx={convertElementToSx(themeCustomElements.landing.accordion.head)}
+          sx={{
+            ...themeCustomElements.landing?.accordion?.head ? convertElementToSx(themeCustomElements.landing.accordion.head) : undefined,
+          }}
         >
           <Typography component="div" variant="body1Head" align={title.textAlign}>
             <FormattedMessage id={title.id} values={title.values} defaultMessage={title.id} />

@@ -88,7 +88,13 @@ const BundleDetail = (props: BundleDetailProps) => {
         </Grid>
         <Grid container columnSpacing={1} rowSpacing={1}>
           <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography component="h2" variant="h2" sx={convertElementToSx(themeCustomElements.landing.priceContent.priceText)}>
+            <Typography
+              component="h2"
+              variant="h2"
+              sx={{
+                ...themeCustomElements.landing?.priceContent?.priceText ? convertElementToSx(themeCustomElements.landing.priceContent.priceText) : undefined,
+              }}
+            >
               <span
                 style={{ color: colors.text.black }}
               >
@@ -106,7 +112,13 @@ const BundleDetail = (props: BundleDetailProps) => {
           </Grid>
           { percent &&
             <Grid item>
-              <Typography component="div" variant="body1Head" sx={convertElementToSx(themeCustomElements.landing.priceContent.percentText)}>
+              <Typography
+                component="div"
+                variant="body1Head"
+                sx={{
+                  ...themeCustomElements.landing?.priceContent?.percentText ? convertElementToSx(themeCustomElements.landing.priceContent.percentText) : undefined,
+                }}
+              >
                 <FormattedMessage id="productDetail.pack.percent" values={{ value: percent }} />
               </Typography>
             </Grid>
@@ -118,7 +130,14 @@ const BundleDetail = (props: BundleDetailProps) => {
 
   return (
     <>
-      <Typography variant="h3" color="text.primary" sx={{...convertElementToSx(themeCustomElements.landing.selectLabel), textAlign: 'center'}}>
+      <Typography
+        variant="h3"
+        color="text.primary"
+        sx={{
+          ...themeCustomElements.landing?.bundleTitle ? convertElementToSx(themeCustomElements.landing.bundleTitle) : undefined,
+          textAlign: 'center',
+        }}
+      >
         <FormattedMessage id="productDetail.pack.title" />
       </Typography>
       <Grid container mt={2} justifyContent="center" alignItems="center" columnSpacing={bundleConfig.secondItem ? 1 : 2}>
