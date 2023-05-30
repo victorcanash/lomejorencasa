@@ -25,7 +25,7 @@ const LandingCarousel = (props: LandingCarouselProps) => {
         modules={[Pagination]}
         loop
         pagination={{
-          clickable: true
+          clickable: true,
         }}
       >
         { sources.map((source, sourceIndex) => (

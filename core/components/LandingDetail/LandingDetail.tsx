@@ -362,7 +362,7 @@ const LandingDetail = (props: LandingDetailProps) => {
                     return {
                       src: item,
                       alt: landingConfig.metas.imgsAlt,
-                      priority: index > 1 && index < items.length -1 && items.length > 3 ? false : true,
+                      priority: true,
                     } as Source;
                   })
                 }
