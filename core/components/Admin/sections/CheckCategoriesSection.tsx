@@ -2,13 +2,13 @@ import { useState } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import UpdateIcon from '@mui/icons-material/Update';
 
 import { ManageActions } from '@core/constants/app';
 import type { ProductCategory } from '@core/types/products';
+import Button from '@core/components/inputs/Button';
 
 import { useSearchContext } from '@core/contexts/SearchContext';
 import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
@@ -51,9 +51,8 @@ const CheckCategoriesSection = () => {
                   category={item}
                   created={true}
                 />
-                <Button 
-                  variant="contained"  
-                  startIcon={<UpdateIcon />}                    
+                <Button
+                  startIcon={<UpdateIcon />}       
                   onClick={() => onClickUpdateBtn(item)}
                 >
                   <FormattedMessage

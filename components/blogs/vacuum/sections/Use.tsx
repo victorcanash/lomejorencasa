@@ -8,15 +8,13 @@ import Typography from '@mui/material/Typography';
 
 import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
-import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/navigation/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
 import Title from '@core/components/ui/Title';
 
 import { keywords } from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
 const Use = () => {
@@ -200,8 +198,8 @@ const Use = () => {
           <LinkButton
             href={pages.bags.path}
             id="advantages"
+            customtype="actionPrimary"
             sx={{
-              ...convertElementToSx(themeCustomElements.button.action.primary),
               mt: 4,
             }}
           >

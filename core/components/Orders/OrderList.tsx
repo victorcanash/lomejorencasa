@@ -5,11 +5,11 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 
 import type { Order } from '@core/types/orders';
 import { convertToDate } from '@core/utils/dates';
 import Divider from '@core/components/ui/Divider';
+import Button from '@core/components/inputs/Button';
 
 import Pagination from '@core/components/ui/Pagination';
 
@@ -59,7 +59,6 @@ const OrderList = (props: OrderListProps) => {
                   </Grid>
                   <Grid item xs={6}>
                     <Button
-                      variant="contained"
                       onClick={() => handleClickShowBtn(order)}
                     >
                       <FormattedMessage id="orders.detail.showBtn" />

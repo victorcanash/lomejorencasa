@@ -3,18 +3,16 @@ import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
 
-import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 import { firstBuyDiscountPercent } from '@core/constants/payments';
-import { convertElementToSx } from '@core/utils/themes';
+import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 
@@ -134,10 +132,9 @@ const RegisterBanner = (props: RegisterBannerProps) => {
           spacing={2}
         >
           <Grid item xs={12}>
-            <Button 
+            <Button
+              customtype="actionPrimary"
               onClick={handleClickRegisterBtn}
-              variant="contained"
-              sx={convertElementToSx(themeCustomElements.button.action.primary)}
             >
               <FormattedMessage id="banners.register.registerBtn" />
             </Button>
@@ -145,7 +142,6 @@ const RegisterBanner = (props: RegisterBannerProps) => {
           <Grid item xs={12}>
             <Button 
               onClick={handleClickLaterBtn}
-              variant="contained"
             >
               <FormattedMessage id="banners.register.laterBtn" />
             </Button>

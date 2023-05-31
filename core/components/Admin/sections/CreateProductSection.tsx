@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Alert from '@mui/material/Alert';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,6 +12,7 @@ import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
 import type { Product, ProductInventory, ProductDiscount } from '@core/types/products';
 import Divider from '@core/components/ui/Divider';
+import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
 import useProducts from '@core/hooks/useProducts';
@@ -108,7 +108,6 @@ const CreateProductSection = () => {
                 getInventoryActionComponent={(inventoryIndex: number) => {
                   return (
                     <Button 
-                      variant="contained"  
                       startIcon={<DeleteIcon />}                    
                       onClick={() => onClickDeleteInventoryBtn(inventoryIndex)}
                     >
@@ -136,7 +135,6 @@ const CreateProductSection = () => {
                   getDiscountActionComponent={(discountIndex: number) => {
                     return (
                       <Button 
-                        variant="contained"  
                         startIcon={<DeleteIcon />}                    
                         onClick={() => onClickDeleteDiscountBtn(discountIndex)}
                       >
@@ -152,7 +150,6 @@ const CreateProductSection = () => {
               <Divider mt={2} mb={2} />
 
               <Button
-                variant="contained"
                 onClick={onClickConfirmBtn}
                 sx={{  mb: 2 }}
               >

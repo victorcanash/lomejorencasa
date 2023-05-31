@@ -5,11 +5,11 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 
 import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { ProductPack } from '@core/types/products';
+import Button from '@core/components/inputs/Button';
 
 import useForms from '@core/hooks/useForms';
 import useProducts from '@core/hooks/useProducts';
@@ -182,12 +182,11 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
                 <Typography component="div" variant="body1">
                   {`${intl.formatMessage({ id: "forms.inventoryId" })}: ${item}`}
                 </Typography>
-                <Button 
-                  variant="contained"
+                <Button
                   onClick={() => onClickDeletePackInventoryBtn(index)}
                 >
                   <FormattedMessage 
-                    id="app.deleteBtn" 
+                    id="app.deleteBtn"
                   />
                 </Button> 
               </Grid>

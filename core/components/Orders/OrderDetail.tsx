@@ -9,12 +9,10 @@ import { AddressTypes } from '@core/constants/addresses'
 import type { Order } from '@core/types/orders';
 import type { UserAddress } from '@core/types/user';
 import { convertToDate } from '@core/utils/dates';
-import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/navigation/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton';
+import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
-import { themeCustomElements } from '@lib/constants/themes/elements';
-import BackBtn from '@core/components/ui/BackBtn';
 import AddressDetail from '@core/components/AddressDetail';
 import CartDetail from '@core/components/CartDetail';
 
@@ -45,10 +43,10 @@ const OrderDetail = (props: OrderDetailProps) => {
       {/* Order Tracking */}
       { order.bigbuy.tracking?.trackingNumber ?
         <LinkButton
+          customtype="actionPrimary"
           href={`https://s.correosexpress.com/c?n=${order.bigbuy.tracking.trackingNumber}`}
           target="_blank"
           sx={{
-            ...convertElementToSx(themeCustomElements.button.action.primary),
             py: 1,
             mb: 2,
           }}
@@ -138,7 +136,7 @@ const OrderDetail = (props: OrderDetailProps) => {
           mt={6}
         >
           <Grid item>
-            <BackBtn onClick={onClickBack} />
+            <Button customtype="back" onClick={onClickBack} />
           </Grid>
         </Grid>
       }

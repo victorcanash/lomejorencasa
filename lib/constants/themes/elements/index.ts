@@ -480,13 +480,13 @@ export const themeCustomElements: {
       },
     },
   },
-  button: {
-    action: {
-      primary: ThemeElement,
-      secondary: ThemeElement,
+  button?: {
+    action?: {
+      primary?: ThemeElement,
+      secondary?: ThemeElement,
     },
-    buyNow: ThemeElement,
-    acceptCookies: ThemeElement,
+    payNow?: ThemeElement,
+    acceptCookies?: ThemeElement,
   },
 } = {
   dividers: {
@@ -793,7 +793,7 @@ export const themeCustomElements: {
         },
       },
     },
-    buyNow: {
+    payNow: {
       backgroundColor: {
         default: colors.background.buyNow.default,
         hover: colors.background.buyNow.hover,

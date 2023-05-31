@@ -3,13 +3,13 @@ import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
 
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import UpdateIcon from '@mui/icons-material/Update';
 
 import { ManageActions } from '@core/constants/app';
 import type { ProductPack } from '@core/types/products';
+import Button from '@core/components/inputs/Button';
 
 import { useSearchContext } from '@core/contexts/SearchContext';
 import Pagination from '@core/components/ui/Pagination';
@@ -72,8 +72,7 @@ const CheckPacksSection = (props: CheckPacksSectionProps) => {
                   pack={item}
                   created={true}
                 />
-                <Button 
-                  variant="contained"  
+                <Button
                   startIcon={<UpdateIcon />}                    
                   onClick={() => onClickUpdateBtn(item)}
                 >

@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
 
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,6 +14,7 @@ import { ManageActions } from '@core/constants/app';
 import { allProductsName } from "@core/constants/products";
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';
+import Button from '@core/components/inputs/Button';
 
 import { useSearchContext } from '@core/contexts/SearchContext';
 import Pagination from '@core/components/ui/Pagination';
@@ -286,7 +286,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                 
                 <div>
                   <Button 
-                    variant="contained"  
                     startIcon={<UpdateIcon />}                    
                     onClick={() => onClickUpdateProductBtn(item.product)}
                   >
@@ -297,7 +296,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                 </div>
                 <div>
                   <Button 
-                    variant="contained"  
                     startIcon={<AddIcon />}                    
                     onClick={() => onClickCreateDiscountBtn(item.product)}
                   >
@@ -308,7 +306,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                 </div>
                 <div>  
                   <Button
-                    variant="contained"
                     onClick={() => onClickCheckDiscountsBtn(item.product)}
                     startIcon={ !item.checkDiscounts ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
                   >
@@ -325,7 +322,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     getDiscountActionComponent={(discountIndex: number) => {
                       return (
                         <Button 
-                            variant="contained"  
                             startIcon={<UpdateIcon />}                    
                             onClick={() => onClickUpdateDiscountBtn(item.product, discountIndex)}
                           >
@@ -338,8 +334,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                   />
                 }
                 <div>
-                  <Button 
-                    variant="contained"  
+                  <Button
                     startIcon={<AddIcon />}                    
                     onClick={() => onClickCreateInventoryBtn(item.product)}
                   >
@@ -349,8 +344,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                   </Button>  
                 </div>
                 <div>
-                  <Button 
-                    variant="contained"                    
+                  <Button                  
                     onClick={() => handleClickRefreshBigbuyBtn(item.product)}
                   >
                     <FormattedMessage
@@ -360,7 +354,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                 </div>
                 <div>
                   <Button
-                    variant="contained"
                     onClick={() => onClickCheckInventoriesBtn(item.product)}
                     startIcon={ !item.checkInventories ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
                   >
@@ -375,15 +368,14 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
                     created={true}
                     getInventoryActionComponent={(inventoryIndex: number) => {
                       return (
-                        <Button 
-                            variant="contained"  
-                            startIcon={<UpdateIcon />}                    
-                            onClick={() => onClickUpdateInventoryBtn(item.product, inventoryIndex)}
-                          >
+                        <Button
+                          startIcon={<UpdateIcon />}                    
+                          onClick={() => onClickUpdateInventoryBtn(item.product, inventoryIndex)}
+                        >
                           <FormattedMessage
                             id="admin.updateInventoryBtn"
                           />
-                        </Button> 
+                        </Button>
                       );
                     }}
                   />

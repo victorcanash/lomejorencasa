@@ -7,10 +7,8 @@ import Box from '@mui/material/Box';
 import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
 import type { Source } from '@core/types/multimedia';
-import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/navigation/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
@@ -62,8 +60,8 @@ const LandingTutorial = (props: LandingTutorialProps) => {
             <LinkButton
               href={button.path}
               align={button.text.textAlign}
+              customtype="actionPrimary"
               sx={{
-                ...convertElementToSx(themeCustomElements.button.action.primary),
                 mt: 3,
               }}
             >

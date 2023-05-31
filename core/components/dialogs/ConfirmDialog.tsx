@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
-import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -11,6 +10,7 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import Transition from '@core/components/animations/Transition';
+import Button from '@core/components/inputs/Button';
 
 type ConfirmDialogProps = {
   open: boolean,
@@ -79,13 +79,11 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       <DialogActions>
         <Button 
           onClick={handleClickCancelBtn}
-          variant="contained"
         >
           <FormattedMessage id="dialogs.confirm.cancelBtn" />
         </Button>
         <Button 
           onClick={handleClickConfirmBtn}
-          variant="contained"
           disabled={confirmFieldError}
         >
           <FormattedMessage id="dialogs.confirm.confirmBtn" />

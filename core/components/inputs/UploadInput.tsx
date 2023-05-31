@@ -5,11 +5,12 @@ import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+import MuiButton from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import type { UploadFile } from '@core/types/multimedia';
 import type { FormatText } from '@core/types/texts';
+import Button from '@core/components/inputs/Button';
 
 import { uploadConfig } from '@lib/config/multimedia.config';
 
@@ -35,8 +36,7 @@ const UploadInput = (props: UploadInputProps) => {
   } = props;
 
   const RemoveBtn = (props: { index: number }) => (
-    <Button 
-      variant="contained" 
+    <Button
       onClick={()=>handleClickDeleteUploadBtn(props.index)}
       sx={{ float: 'right' }}
     >
@@ -111,7 +111,7 @@ const UploadInput = (props: UploadInputProps) => {
             />
           </Typography>
         }
-        <Button 
+        <MuiButton 
           variant="contained" 
           fullWidth
           disabled={uploadImgs.length >= maxFiles}
@@ -131,7 +131,7 @@ const UploadInput = (props: UploadInputProps) => {
               handleChangeUploadInput(e, maxFiles);
             }}
           />
-        </Button>
+        </MuiButton>
       </Box>
     </>
   );

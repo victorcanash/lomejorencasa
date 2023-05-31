@@ -47,7 +47,8 @@ const ProductCouponForm = (props: ProductCouponFormProps) => {
           },
           disabled: disabled,
           onSubmit: handleCouponSubmit,
-          sx: convertElementToSx(themeCustomElements.button.action.secondary),
+          sx: themeCustomElements.button?.action?.secondary ?
+            convertElementToSx(themeCustomElements.button.action.secondary) : undefined,
         },
       }}
       errorMsg={errorMsg}

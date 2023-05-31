@@ -19,7 +19,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
@@ -41,7 +40,7 @@ import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import useCart from '@core/hooks/useCart';
-import LoadingBtn from '@core/components/ui/LoadingBtn';
+import Button from '@core/components/inputs/Button';
 import LoadingRating from '@core/components/ui/LoadingRating';
 import LandingCarousel from '@core/components/LandingDetail/LandingCarousel';
 import SelectItem from '@core/components/inputs/SelectItem';
@@ -254,87 +253,65 @@ const LandingDetail = (props: LandingDetailProps) => {
   }, [landingConfig.comment.id, landingConfig.comment.values]);
 
   const addCartBtn = useMemo(() => {
-    if (initialized && selectedItem) {
-      return (
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={onClickAddCartBtn}
-          disabled={selectedItem.quantity == 0}
-          sx={{
-            ...convertElementToSx(themeCustomElements.button.action.primary),
-            mb: 3,
-          }}
-        >
-          <FormattedMessage id="productDetail.addCartBtn" />
-        </Button>
-      );
-    }
     return (
-      <LoadingBtn
+      <Button
+        customtype="actionPrimary"
+        loading={initialized && selectedItem ? undefined : 'true'}
         fullWidth
-        variant="contained"
+        onClick={onClickAddCartBtn}
+        disabled={selectedItem && selectedItem.quantity === 0}
         sx={{
-          ...convertElementToSx(themeCustomElements.button.action.primary),
           mb: 3,
         }}
       >
         <FormattedMessage id="productDetail.addCartBtn" />
-      </LoadingBtn>
+      </Button>
     );
   }, [initialized, onClickAddCartBtn, selectedItem]);
 
   const payNowBtn = useMemo(() => {
-    if (initialized && selectedItem) {
-      return (
+    return (
+      <Box
+        sx={{
+          mb: 3,
+        }}
+        ref={payNowBtnRef}
+      >
         <Button
+          customtype="payNow"
+          loading={initialized && selectedItem ? undefined : 'true'}
           fullWidth
-          variant="contained"
           onClick={onClickPayNowBtn}
-          disabled={selectedItem.quantity == 0}
-          ref={payNowBtnRef}
-          sx={{
-            ...convertElementToSx(themeCustomElements.button.buyNow),
-            mb: 3,
-          }}
+          disabled={selectedItem && selectedItem.quantity === 0}
         >
           <FormattedMessage id="productDetail.payNowBtn" />
         </Button>
-      );
-    }
-    return (
-      <LoadingBtn
-        fullWidth
-        variant="contained"
-        sx={{
-          ...convertElementToSx(themeCustomElements.button.buyNow),
-          mb: 3,
-        }}
-      >
-        <FormattedMessage id="productDetail.payNowBtn" />
-      </LoadingBtn>
+      </Box>
     );
   }, [initialized, onClickPayNowBtn, payNowBtnRef, selectedItem]);
 
   const payNowBtnStatic = useMemo(() => {
     return (
       <Slide appear={true} in={initialized && selectedItem && !payNowInView} direction="up">
-        <Button
-          fullWidth
-          variant="contained"
-          onClick={onClickPayNowBtn}
-          disabled={selectedItem && selectedItem.quantity == 0}
+        <Box
           sx={{
-            ...convertElementToSx(themeCustomElements.button.buyNow),
             position: 'fixed',
             bottom: '0px',
             left: '0px',
             zIndex: 10,
-            borderRadius: '0px',
+            width: '100%',
           }}
         >
-          <FormattedMessage id="productDetail.payNowBtn" />
-        </Button>
+          <Button
+            customtype="payNow"
+            fullWidth
+            onClick={onClickPayNowBtn}
+            disabled={selectedItem && selectedItem.quantity == 0}
+            sx={{ borderRadius: '0px' }}
+          >
+            <FormattedMessage id="productDetail.payNowBtn" />
+          </Button>
+        </Box>
       </Slide>
     );
   }, [initialized, onClickPayNowBtn, payNowInView, selectedItem]);

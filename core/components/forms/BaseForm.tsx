@@ -23,7 +23,6 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import Rating from '@mui/material/Rating';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 
 import { FormFieldTypes } from '@core/constants/forms';
@@ -32,6 +31,7 @@ import type {
   FormBase,
 } from '@core/types/forms';
 import Link from '@core/components/navigation/Link';
+import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
 import ConfirmDialog from '@core/components/dialogs/ConfirmDialog';
@@ -398,7 +398,6 @@ const BaseForm = (props: FormBase) => {
                       <Button
                         type="submit"
                         fullWidth
-                        variant="contained"
                         sx={{
                           ...formButtons.submit.sx,
                           mb: 2,
@@ -416,7 +415,6 @@ const BaseForm = (props: FormBase) => {
                     <Grid item xs={12}>
                       <Button
                         fullWidth
-                        variant="contained"
                         sx={{
                           ...formButtons.delete.sx,
                           mb: 2,
@@ -435,7 +433,6 @@ const BaseForm = (props: FormBase) => {
                     <Grid item xs={12}>
                       <Button
                         fullWidth
-                        variant="contained"
                         sx={{
                           ...formButtons.cancel.sx,
                           mb: 2,

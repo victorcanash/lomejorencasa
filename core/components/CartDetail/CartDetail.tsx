@@ -11,8 +11,7 @@ import { firstBuyDiscountPercent } from '@core/constants/payments';
 import type { Page } from '@core/types/navigation';
 import type { Order } from '@core/types/orders';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/navigation/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton';
 import Divider from '@core/components/ui/Divider';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -216,8 +215,8 @@ const CartDetail = (props: CartDetailProps) => {
                 href={pages.checkout.path}
                 disabled={disabledCheckoutPage()}
                 fullWidth
+                customtype="actionPrimary"
                 sx={{
-                  ...convertElementToSx(themeCustomElements.button.action.primary),
                   mt: 3,
                 }}
               >

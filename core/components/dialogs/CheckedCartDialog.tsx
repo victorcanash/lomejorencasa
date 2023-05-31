@@ -1,6 +1,5 @@
 import { FormattedMessage } from 'react-intl';
 
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -8,8 +7,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 import type { CartItem } from '@core/types/cart';
-
 import Transition from '@core/components/animations/Transition';
+import Button from '@core/components/inputs/Button';
 
 type CheckedCartDialogProps = {
   open: boolean,
@@ -80,7 +79,6 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
       <DialogActions>
         <Button 
           onClick={handleClickAcceptBtn}
-          variant="contained"
         >
           <FormattedMessage id="dialogs.checkedCart.acceptBtn" />
         </Button>

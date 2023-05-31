@@ -4,10 +4,10 @@ import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
 import { AdminSections } from '@core/constants/admin';
 import Divider from '@core/components/ui/Divider';
+import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
 import { useSearchContext } from '@core/contexts/SearchContext';
@@ -31,7 +31,6 @@ const HomeSection = () => {
             />
           </Typography>
           <Button
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.checkProductCategories)}
           >
@@ -40,7 +39,6 @@ const HomeSection = () => {
             />
           </Button>
           <Button 
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.checkProducts)}
           >
@@ -48,8 +46,7 @@ const HomeSection = () => {
               id="admin.checkProductsBtn"
             />
           </Button>
-          <Button 
-            variant="contained"
+          <Button
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.checkProductPacks)}
           >
@@ -68,7 +65,6 @@ const HomeSection = () => {
             />
           </Typography>
           <Button
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createProductCategory)}
           >
@@ -77,7 +73,6 @@ const HomeSection = () => {
             />
           </Button>
           <Button
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createProduct)}
             disabled={productCategories.length <= 0}
@@ -87,7 +82,6 @@ const HomeSection = () => {
             />
           </Button>
           <Button
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createProductPack)}
             disabled={productCategories.length <= 0}
@@ -107,7 +101,6 @@ const HomeSection = () => {
             />
           </Typography>
           <Button
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.sendOrderEmail)}
           >
@@ -126,7 +119,6 @@ const HomeSection = () => {
             />
           </Typography>
           <Button
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createFailedOrder)}
           >
@@ -135,7 +127,6 @@ const HomeSection = () => {
             />
           </Button>
           <Button
-            variant="contained"
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.sendFailedOrderEmail)}
           >

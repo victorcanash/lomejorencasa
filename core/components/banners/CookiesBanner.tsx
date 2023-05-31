@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { setCookie, getCookie } from 'cookies-next';
 import { OptionsType } from 'cookies-next/lib/types';
 
-import Button from '@mui/material/Button';
 import Backdrop from '@mui/material/Backdrop';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -24,11 +23,10 @@ import {
 import type { Consents } from '@core/types/cookies';
 import { consentFBEvents } from '@core/utils/facebook';
 import { consentGTMEvents } from '@core/utils/gtm';
-import { convertElementToSx } from '@core/utils/themes';
 import { subtractYears } from '@core/utils/dates';
 import Link from '@core/components/navigation/Link';
+import Button from '@core/components/inputs/Button';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@core/contexts/AppContext';
 
@@ -223,10 +221,9 @@ const CookiesBanner = (props: CookiesBannerProps) => {
           >
             <Grid item xs={12}>
               <Button
+                customtype="acceptCookies"
                 onClick={handleClickAcceptBtn}
-                variant="contained"
                 fullWidth
-                sx={convertElementToSx(themeCustomElements.button.acceptCookies)}
               >
                 <Typography component='div' variant='body1Head'>
                   <FormattedMessage id="banners.cookies.acceptBtn" />
@@ -236,7 +233,6 @@ const CookiesBanner = (props: CookiesBannerProps) => {
             <Grid item xs={12}>
               <Button 
                 onClick={handleClickCustomBtn}
-                variant="contained"
                 fullWidth
               >
                 <Typography component='div' variant='body1Head'>
@@ -257,7 +253,6 @@ const CookiesBanner = (props: CookiesBannerProps) => {
           {/* Description */}
           <Button 
             onClick={handleClickBackBtn}
-            variant="contained"
           >
             <Typography component='div' variant='body2Head'>
               <FormattedMessage id="banners.cookies.backBtn" />
@@ -314,11 +309,10 @@ const CookiesBanner = (props: CookiesBannerProps) => {
             mt={0.5}
           >
             <Grid item xs={12}>
-              <Button 
+              <Button
+                customtype="acceptCookies"
                 onClick={handleClickAcceptBtn}
-                variant="contained"
                 fullWidth
-                sx={convertElementToSx(themeCustomElements.button.acceptCookies)}
               >
                 <Typography component='div' variant='body1Head'>
                   <FormattedMessage id="banners.cookies.acceptBtn" />
@@ -328,7 +322,6 @@ const CookiesBanner = (props: CookiesBannerProps) => {
             <Grid item xs={12}>
               <Button 
                 onClick={handleClickSaveBtn}
-                variant="contained"
                 fullWidth
               >
                 <Typography component='div' variant='body1Head'>

@@ -11,7 +11,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 
 import type { FormatText } from '@core/types/texts';
 import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/navigation/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton';
 
 import seoConfig from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
@@ -84,7 +84,7 @@ const ProductBanner = () => {
         <Grid item>
           <LinkButton
             href={pages.everfresh.path}
-            sx={convertElementToSx(themeCustomElements.button.action.primary)}
+            customtype="actionPrimary"
           >
             <FormattedMessage id="home.banner.buyBtn" />
           </LinkButton>

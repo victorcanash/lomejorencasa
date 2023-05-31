@@ -4,11 +4,9 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/navigation/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton';
 
 import { pages } from '@lib/config/navigation.config';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title';
 
 const WhatIsVacuumPacked = () => {
@@ -37,7 +35,7 @@ const WhatIsVacuumPacked = () => {
 
         <LinkButton
           href={pages.faq.path}
-          sx={convertElementToSx(themeCustomElements.button.action.primary)}
+          customtype="actionPrimary"
         >
           <FormattedMessage
             id="home.whatIsVacuumPacked.faqBtn"

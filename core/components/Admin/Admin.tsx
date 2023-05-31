@@ -7,7 +7,7 @@ import { AdminSections } from '@core/constants/admin';
 import Divider from '@core/components/ui/Divider';
 
 import useAdmin from '@core/hooks/useAdmin';
-import BackBtn from '@core/components/ui/BackBtn';
+import Button from '@core/components/inputs/Button';
 import HomeSection from '@core/components/Admin/sections/HomeSection';
 import CheckCategoriesSection from '@core/components/Admin/sections/CheckCategoriesSection';
 import CheckProductsSection from '@core/components/Admin/sections/CheckProductsSection';
@@ -79,7 +79,7 @@ const Admin = (props: AdminProps) => {
               <FormattedMessage id="admin.h1" />
             </Typography>
             :
-            <BackBtn />
+            <Button customtype="back" />
           }
           <Divider mt={1} mb={4} />
           { getCurrentSection() }

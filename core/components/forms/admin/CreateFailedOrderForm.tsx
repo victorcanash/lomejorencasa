@@ -5,13 +5,13 @@ import { useIntl, FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import { FormFieldTypes } from '@core/constants/forms';
 import { AddressTypes } from '@core/constants/addresses';
 import type { Order, OrderFailedCreate } from '@core/types/orders';
 import type { GuestCartItem } from '@core/types/cart';
+import Button from '@core/components/inputs/Button';
 
 import useForms from '@core/hooks/useForms';
 import useOrders from '@core/hooks/useOrders';
@@ -184,8 +184,7 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
                 <Typography component="div" variant="body1">
                   {`${intl.formatMessage({ id: "forms.packId" })}: ${product.packId}`}
                 </Typography>
-                <Button 
-                  variant="contained"                    
+                <Button                   
                   onClick={() => onClickDeleteOrderProductBtn(productIndex)}
                 >
                   <FormattedMessage 

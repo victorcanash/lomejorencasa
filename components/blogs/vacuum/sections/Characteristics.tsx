@@ -8,12 +8,10 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import type { Source } from '@core/types/multimedia';
-import { convertElementToSx } from '@core/utils/themes';
-import LinkButton from '@core/components/navigation/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import Title from '@core/components/ui/Title'; 
 import colors from '@lib/constants/themes/colors';
 
@@ -211,7 +209,7 @@ const Characteristics = (props: CharacteristicsProps) => {
               <LinkButton
                 href={pages.everfresh.path}
                 id="advantages"
-                sx={convertElementToSx(themeCustomElements.button.action.primary)}
+                customtype="actionPrimary"
               >
                 <FormattedMessage id={type == 'characteristics' ? 'home.characteristics.buyBtn' : 'home.advantages.buyBtn'} />
               </LinkButton>

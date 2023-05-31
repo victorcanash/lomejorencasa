@@ -10,11 +10,11 @@ import {
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
 import type { BundleConfig, ProductInventory, ProductPack } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/navigation/Link';
+import Button from '@core/components/inputs/Button';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import colors from '@lib/constants/themes/colors';
@@ -22,7 +22,6 @@ import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
-import LoadingBtn from '@core/components/ui/LoadingBtn';
 
 type BundleDetailProps = {
   bundleConfig: BundleConfig,
@@ -206,30 +205,17 @@ const BundleDetail = (props: BundleDetailProps) => {
           <ProductPackTxt />
         </Grid>
         <Grid item xs={12} mt={2}>
-          { initialized ?
-            <Button
-              variant="contained"
-              onClick={onClickAddCartBtn}
-              sx={{
-                ...convertElementToSx(themeCustomElements.button.action.primary),
-                py: 1,
-                mb: 3,
-              }}
-            >
-              <FormattedMessage id="productDetail.addCartPackBtn" />
-            </Button>
-          :
-            <LoadingBtn
-              variant="contained"
-              sx={{
-                ...convertElementToSx(themeCustomElements.button.action.primary),
-                py: 1,
-                mb: 3,
-              }}
-            >
-              <FormattedMessage id="productDetail.addCartPackBtn" />
-            </LoadingBtn>
-          }
+          <Button
+            customtype="actionPrimary"
+            loading={initialized ? undefined : 'true'}
+            onClick={onClickAddCartBtn}
+            sx={{
+              py: 1, 
+              mb: 3,
+            }}
+          >
+            <FormattedMessage id="productDetail.addCartPackBtn" />
+          </Button>
         </Grid>
       </Grid>
     </>
