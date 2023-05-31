@@ -9,7 +9,7 @@ import { useAppContext } from '@core/contexts/AppContext';
 import MainComponent from '@core/components/layouts/MainComponent';
 import NavBar from '@core/components/NavBar';
 import Footer from '@core/components/Footer';
-import Banners from '@core/components/banners';
+import AppBanners from '@core/components/banners/AppBanners';
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
   const { initialized } = useAppContext();
@@ -47,7 +47,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <NavBar />
-      <Banners />
+      <AppBanners />
       <MainComponent>
         {children}
       </MainComponent>

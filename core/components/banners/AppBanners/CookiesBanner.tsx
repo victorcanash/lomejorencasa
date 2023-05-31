@@ -252,10 +252,11 @@ const CookiesBanner = (props: CookiesBannerProps) => {
         >
           {/* Description */}
           <Button 
+            customtype='back'
             onClick={handleClickBackBtn}
           >
             <Typography component='div' variant='body2Head'>
-              <FormattedMessage id="banners.cookies.backBtn" />
+              <FormattedMessage id="app.backBtn" />
             </Typography>
           </Button>
           <Typography component='div' variant='body1Head' sx={{ mt: 2, mb: 1 }}>

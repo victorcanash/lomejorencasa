@@ -1,13 +1,13 @@
 import { useState } from 'react';
 
-import MaintenanceBanner from '@core/components/banners/MaintenanceBanner';
+import MaintenanceBanner from '@core/components/banners/AppBanners/MaintenanceBanner';
 
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAuthContext } from '@core/contexts/AuthContext';
-import CookiesBanner from '@core/components/banners/CookiesBanner';
-import RegisterBanner from '@core/components/banners/RegisterBanner';
+import CookiesBanner from '@core/components/banners/AppBanners/CookiesBanner';
+import RegisterBanner from '@core/components/banners/AppBanners/RegisterBanner';
 
-const Banners = () => {
+const AppBanners = () => {
   const { enabledRegisterBanner } = useAuthContext();
 
   const [openRegisterBanner, setOpenRegisterBanner] = useState(false);
@@ -42,4 +42,4 @@ const Banners = () => {
   );
 };
 
-export default Banners;
+export default AppBanners;
