@@ -38,7 +38,7 @@ const usePage = (setLoaded = true) => {
     await init(
       intl.locale,
       [],
-      undefined,
+      [],
     ).then(async (response) => {
       setProductCategories(response.productCategories);
       initLandings(response.landings);
