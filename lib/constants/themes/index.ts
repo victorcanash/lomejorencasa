@@ -1,4 +1,5 @@
 import { createTheme, ThemeOptions } from '@mui/material/styles';
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 import { convertElementToSx } from '@core/utils/themes';
 
@@ -52,167 +53,162 @@ const themeOptions: ThemeOptions = {
   palette: {
     mode: 'light',
     primary: {
-      main: themeDefaultElements.default.palette.backgroundColor.primary,
+      main: themeDefaultElements.palette.backgroundColor.primary,
     },
     secondary: {
-      main: themeDefaultElements.default.palette.backgroundColor.secondary,
+      main: themeDefaultElements.palette.backgroundColor.secondary,
     },
     background: {
-      default: themeDefaultElements.default.palette.backgroundColor.primary,
-      paper: themeDefaultElements.paper.backgroundColor?.default || themeDefaultElements.default.palette.backgroundColor.secondary,
+      default: themeDefaultElements.palette.backgroundColor.primary,
+      paper: themeDefaultElements.paper?.backgroundColor?.default || themeDefaultElements.palette.backgroundColor.secondary,
     },
     text: {
-      primary: themeDefaultElements.default.palette.textColor.primary,
-      secondary: themeDefaultElements.default.palette.textColor.secondary,
-      disabled: themeDefaultElements.default.palette.textColor.disabled,
+      primary: themeDefaultElements.palette.textColor.primary,
+      secondary: themeDefaultElements.palette.textColor.secondary,
+      disabled: themeDefaultElements.palette.textColor.disabled,
     },
   },
   typography: {
-    fontFamily: themeDefaultElements.default.typography.fontFamily.join(','),
-    h1: convertElementToSx(themeDefaultElements.default.typography.h1),
-    h2: convertElementToSx(themeDefaultElements.default.typography.h2),
-    h3: convertElementToSx(themeDefaultElements.default.typography.h3),
-    h4: convertElementToSx(themeDefaultElements.default.typography.h4),
-    body1: convertElementToSx(themeDefaultElements.default.typography.body1),
-    body2: convertElementToSx(themeDefaultElements.default.typography.body2),
-    body1Head: convertElementToSx(themeDefaultElements.default.typography.body1Head),
-    body2Head: convertElementToSx(themeDefaultElements.default.typography.body2Head),
+    fontFamily: themeDefaultElements.typography.fontFamily.join(','),
+    h1: convertElementToSx(themeDefaultElements.typography.h1),
+    h2: convertElementToSx(themeDefaultElements.typography.h2),
+    h3: convertElementToSx(themeDefaultElements.typography.h3),
+    h4: convertElementToSx(themeDefaultElements.typography.h4),
+    body1: convertElementToSx(themeDefaultElements.typography.body1),
+    body2: convertElementToSx(themeDefaultElements.typography.body2),
+    body1Head: convertElementToSx(themeDefaultElements.typography.body1Head),
+    body2Head: convertElementToSx(themeDefaultElements.typography.body2Head),
   },
   components: {
     MuiLink: {
       styleOverrides: {
         root: {
           textDecoration: 'underline',
-          ...convertElementToSx(themeDefaultElements.link),
+          ...themeDefaultElements.link ? convertElementToSx(themeDefaultElements.link) : undefined,
         },
       },
     },
     MuiAppBar: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.appBar),
+        root: themeDefaultElements.appBar ? convertElementToSx(themeDefaultElements.appBar) : undefined,
       },
     },
     MuiDialog: {
       styleOverrides: {
-        paper: convertElementToSx(themeDefaultElements.dialog),
+        paper: themeDefaultElements.dialog ? convertElementToSx(themeDefaultElements.dialog) : undefined,
       },
     },
     MuiDialogTitle: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.dialogTitle),
+        root: themeDefaultElements.dialogTitle ? convertElementToSx(themeDefaultElements.dialogTitle) : undefined,
       },
     },
     MuiDialogContentText: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.dialogContentText),
+        root: themeDefaultElements.dialogContentText ? convertElementToSx(themeDefaultElements.dialogContentText) : undefined,
       },
     },
     MuiAccordion: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.accordion),
+        root: themeDefaultElements.accordion ? convertElementToSx(themeDefaultElements.accordion) : undefined,
       },
     },
     MuiDivider: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.divider),
+        root: themeDefaultElements.divider ? convertElementToSx(themeDefaultElements.divider) : undefined,
       },
     },
     MuiTableRow: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.tableRow.default),
-        head: convertElementToSx(themeDefaultElements.tableRow.head),
+        root: themeDefaultElements.tableRow?.default ? convertElementToSx(themeDefaultElements.tableRow.default) : undefined,
+        head: themeDefaultElements.tableRow?.head ? convertElementToSx(themeDefaultElements.tableRow.head) : undefined,
       },
     },
     MuiBackdrop: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.backdrop),
+        root: themeDefaultElements.backdrop ? convertElementToSx(themeDefaultElements.backdrop) : undefined,
       },
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.inputLabel),
+        root: themeDefaultElements.inputLabel ? convertElementToSx(themeDefaultElements.inputLabel) : undefined,
       },
     },
     MuiInputBase: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.inputBase),
+        root: themeDefaultElements.inputBase ? convertElementToSx(themeDefaultElements.inputBase) : undefined,
       },
     },
     MuiButton: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.button),
+        root: themeDefaultElements.button ? convertElementToSx(themeDefaultElements.button) : undefined,
       },
     },
     MuiCheckbox: {
       styleOverrides: {
         root: {
-          ...convertElementToSx(themeDefaultElements.checkbox),
-          '&.Mui-checked': convertElementToSx(themeDefaultElements.checkbox),
+          ...themeDefaultElements.checkbox ? convertElementToSx(themeDefaultElements.checkbox) : undefined,
+          '&.Mui-checked': themeDefaultElements.checkbox ? convertElementToSx(themeDefaultElements.checkbox) : undefined,
         },
       },
     },
-    /*MuiSwitch: {
-      styleOverrides: {
-        thumb: {
-          '&.MuiSwitch-thumb': convertElementToSx(themeDefaultElements.switch.thumb),
-        },
-        root: {
-          '& .MuiSwitch-switchBase.Mui-checked  + .MuiSwitch-track': convertElementToSx(themeDefaultElements.switch.base),
-        },
-      },
-    },*/
     MuiListItemText: {
       styleOverrides: {
-        primary: convertElementToSx(themeDefaultElements.listItem),
+        primary: themeDefaultElements.listItem ? convertElementToSx(themeDefaultElements.listItem) : undefined,
       },
     },
     MuiPaginationItem: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.paginationItem),
+        root: themeDefaultElements.paginationItem ? convertElementToSx(themeDefaultElements.paginationItem) : undefined,
       },
     },
     MuiCircularProgress: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.circularProgress),
+        root: themeDefaultElements.circularProgress ? convertElementToSx(themeDefaultElements.circularProgress) : undefined,
       },
     },
     MuiAvatar: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.avatar),
+        root: themeDefaultElements.avatar ? convertElementToSx(themeDefaultElements.avatar) : undefined,
       },
     },
     MuiIconButton: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.iconButton),
+        root: themeDefaultElements.iconButton ? convertElementToSx(themeDefaultElements.iconButton) : undefined,
       },
     },
     MuiRating: {
       styleOverrides: {
-        icon: convertElementToSx(themeDefaultElements.rating.icon),
+        icon: themeDefaultElements.rating?.icon ? convertElementToSx(themeDefaultElements.rating.icon) : undefined,
       },
     },
     MuiStepIcon: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.stepIcon.default),
-        text: convertElementToSx(themeDefaultElements.stepIcon.text),
+        root: themeDefaultElements.stepIcon?.default ? convertElementToSx(themeDefaultElements.stepIcon.default) : undefined,
+        text: themeDefaultElements.stepIcon?.text ? convertElementToSx(themeDefaultElements.stepIcon.text) : undefined,
       },
     },
     MuiStepLabel: {
       styleOverrides: {
-        labelContainer: convertElementToSx(themeDefaultElements.stepLabel.labelContainer),
+        labelContainer: themeDefaultElements.stepLabel?.labelContainer ? convertElementToSx(themeDefaultElements.stepLabel.labelContainer) : undefined,
       },
     },
     MuiBadge: {
       styleOverrides: {
-        badge: convertElementToSx(themeDefaultElements.badge),
+        badge: themeDefaultElements.badge ? convertElementToSx(themeDefaultElements.badge) : undefined,
       },
     },
     MuiAlert: {
       styleOverrides: {
-        root: convertElementToSx(themeDefaultElements.alert.default),
-        standardSuccess: convertElementToSx(themeDefaultElements.alert.success),
-        standardError: convertElementToSx(themeDefaultElements.alert.error),
-        icon: convertElementToSx(themeDefaultElements.alert.icon),
+        root: themeDefaultElements.alert?.default ? convertElementToSx(themeDefaultElements.alert.default) : undefined,
+        standardSuccess: themeDefaultElements.alert?.success ? convertElementToSx(themeDefaultElements.alert.success) : undefined,
+        standardError: themeDefaultElements.alert?.error ? convertElementToSx(themeDefaultElements.alert.error) : undefined,
+        icon: themeDefaultElements.alert?.icon ? convertElementToSx(themeDefaultElements.alert.icon) : undefined,
+      },
+    },
+    MuiDayPicker: {
+      styleOverrides: {
+        weekDayLabel: themeDefaultElements.datePicker?.dayPicker?.weekDayLabel ? convertElementToSx(themeDefaultElements.datePicker.dayPicker.weekDayLabel) : undefined,
       },
     },
   },

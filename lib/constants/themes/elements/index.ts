@@ -4,160 +4,158 @@ import colors from '@lib/constants/themes/colors';
 import typographies from '@lib/constants/themes/typographies';
 
 export const themeDefaultElements: {
-  default: {
-    palette: {
-      backgroundColor: {
-        primary: string,
-        secondary: string,
-      },
-      textColor: {
-        primary: string,
-        secondary: string,
-        disabled: string,
-      },
+  palette: {
+    backgroundColor: {
+      primary: string,
+      secondary: string,
     },
-    typography: {
-      fontFamily: string[],
-      h1: ThemeElement,
-      h2: ThemeElement,
-      h3: ThemeElement,
-      h4: ThemeElement,
-      body1Head: ThemeElement,
-      body2Head: ThemeElement,
-      body1: ThemeElement,
-      body2: ThemeElement,
+    textColor: {
+      primary: string,
+      secondary: string,
+      disabled: string,
     },
   },
-  link: ThemeElement,
-  paper: ThemeElement,
-  appBar: ThemeElement,
-  dialog: ThemeElement,
-  dialogTitle: ThemeElement,
-  dialogContentText: ThemeElement,
-  accordion: ThemeElement,
-  divider: ThemeElement,
-  tableRow: {
-    default: ThemeElement,
-    head: ThemeElement,
+  typography: {
+    fontFamily: string[],
+    h1: ThemeElement,
+    h2: ThemeElement,
+    h3: ThemeElement,
+    h4: ThemeElement,
+    body1Head: ThemeElement,
+    body2Head: ThemeElement,
+    body1: ThemeElement,
+    body2: ThemeElement,
   },
-  backdrop: ThemeElement,
-  inputLabel: ThemeElement,
-  inputBase: ThemeElement,
-  button: ThemeElement,
-  checkbox: ThemeElement,
-  switch: {
-    base: ThemeElement,
-    thumb: ThemeElement,
+  link?: ThemeElement,
+  paper?: ThemeElement,
+  appBar?: ThemeElement,
+  dialog?: ThemeElement,
+  dialogTitle?: ThemeElement,
+  dialogContentText?: ThemeElement,
+  accordion?: ThemeElement,
+  divider?: ThemeElement,
+  tableRow?: {
+    default?: ThemeElement,
+    head?: ThemeElement,
   },
-  listItem: ThemeElement,
-  paginationItem: ThemeElement,
-  circularProgress: ThemeElement,
-  avatar: ThemeElement,
-  iconButton: ThemeElement,
-  rating: {
-    icon: ThemeElement,
-  }
-  stepIcon: {
-    default: ThemeElement,
-    text: ThemeElement,
+  backdrop?: ThemeElement,
+  inputLabel?: ThemeElement,
+  inputBase?: ThemeElement,
+  button?: ThemeElement,
+  checkbox?: ThemeElement,
+  listItem?: ThemeElement,
+  paginationItem?: ThemeElement,
+  circularProgress?: ThemeElement,
+  avatar?: ThemeElement,
+  iconButton?: ThemeElement,
+  rating?: {
+    icon?: ThemeElement,
   },
-  stepLabel: {
-    labelContainer: ThemeElement,
+  stepIcon?: {
+    default?: ThemeElement,
+    text?: ThemeElement,
   },
-  badge: ThemeElement,
-  alert: { 
-    default: ThemeElement,
-    success: ThemeElement,
-    error: ThemeElement,
-    icon: ThemeElement,
+  stepLabel?: {
+    labelContainer?: ThemeElement,
+  },
+  badge?: ThemeElement,
+  alert?: { 
+    default?: ThemeElement,
+    success?: ThemeElement,
+    error?: ThemeElement,
+    icon?: ThemeElement,
+  },
+  datePicker?: {
+    default?: ThemeElement,
+    dayPicker?: {
+      weekDayLabel?: ThemeElement,
+    },
   },
 } = {
-  default: {
-    palette: {
-      backgroundColor: {
-        primary: colors.background.primary,
-        secondary: colors.background.secondary,
-      },
-      textColor: {
-        primary: colors.text.black,
-        secondary: colors.text.white,
-        disabled: colors.text.disabled,
+  palette: {
+    backgroundColor: {
+      primary: colors.background.primary,
+      secondary: colors.background.secondary,
+    },
+    textColor: {
+      primary: colors.text.black,
+      secondary: colors.text.white,
+      disabled: colors.text.disabled,
+    },
+  },
+  typography: {
+    fontFamily: [
+      'Poppins',
+      '-apple-system', 
+      'BlinkMacSystemFont', 
+      'Segoe UI', 
+      'Oxygen',
+      'Ubuntu', 
+      'Cantarell', 
+      'Fira Sans', 
+      'Droid Sans', 
+      'Helvetica Neue',
+      'sans-serif',
+    ],
+    h1: {
+      text: {
+        font: { 
+          default: typographies.title,
+        },
+        color: {
+          default: colors.text.title,
+        },
       },
     },
-    typography: {
-      fontFamily: [
-        'Poppins',
-        '-apple-system', 
-        'BlinkMacSystemFont', 
-        'Segoe UI', 
-        'Oxygen',
-        'Ubuntu', 
-        'Cantarell', 
-        'Fira Sans', 
-        'Droid Sans', 
-        'Helvetica Neue',
-        'sans-serif',
-      ],
-      h1: {
-        text: {
-          font: { 
-            default: typographies.title,
-          },
-          color: {
-            default: colors.text.title,
-          },
+    h2: {
+      text: {
+        font: { 
+          default: typographies.title,
+        },
+        color: {
+          default: colors.text.title,
         },
       },
-      h2: {
-        text: {
-          font: { 
-            default: typographies.title,
-          },
-          color: {
-            default: colors.text.title,
-          },
+    },
+    h3: {
+      text: {
+        font: { 
+          default: typographies.secondTitle,
         },
       },
-      h3: {
-        text: {
-          font: { 
-            default: typographies.secondTitle,
-          },
+    },
+    h4: {
+      text: {
+        font: { 
+          default: typographies.secondTitle,
         },
       },
-      h4: {
-        text: {
-          font: { 
-            default: typographies.secondTitle,
-          },
+    },
+    body1Head: {
+      text: {
+        font: { 
+          default: typographies.contentHead,
         },
       },
-      body1Head: {
-        text: {
-          font: { 
-            default: typographies.contentHead,
-          },
+    },
+    body1: {
+      text: {
+        font: { 
+          default: typographies.content,
         },
       },
-      body1: {
-        text: {
-          font: { 
-            default: typographies.content,
-          },
+    },
+    body2Head: {
+      text: {
+        font: { 
+          default: typographies.secondContentHead,
         },
       },
-      body2Head: {
-        text: {
-          font: { 
-            default: typographies.secondContentHead,
-          },
-        },
-      },
-      body2: {
-        text: {
-          font: { 
-            default: typographies.secondContent,
-          },
+    },
+    body2: {
+      text: {
+        font: { 
+          default: typographies.secondContent,
         },
       },
     },
@@ -291,28 +289,6 @@ export const themeDefaultElements: {
       },
     },
   },
-  switch: {
-    base: {
-      text: {
-        color: {
-          default: colors.text.black,
-        },
-      },
-      backgroundColor: {
-        default: colors.text.black,
-      },
-    },
-    thumb: {
-      text: {
-        color: {
-          default: colors.background.third,
-        },
-      },
-      backgroundColor: {
-        default: colors.background.third,
-      },
-    },
-  },
   listItem: {
     text: {
       font: {
@@ -415,6 +391,20 @@ export const themeDefaultElements: {
         default: {
           padding: {
             top: '10px',
+          },
+        },
+      },
+    },
+  },
+  datePicker: {
+    dayPicker: {
+      weekDayLabel: {
+        text: {
+          color: {
+            default: colors.text.black,
+          },
+          font: {
+            default: typographies.contentHead,
           },
         },
       },
@@ -634,7 +624,6 @@ export const themeCustomElements: {
           },
         },
       },
-      // originalTxt: undefined,
       discountText: {
         text: {
           color: {
@@ -721,7 +710,6 @@ export const themeCustomElements: {
           },
         },
       },
-      // content: undefined,
     }
   },
   faq: {
@@ -855,7 +843,7 @@ export const paypalHostedFieldsStyle = {
     'line-height': typographies.content.lineHeight,
     'text-align': typographies.default.textAlign,
     'letter-spacing': typographies.default.letterSpacing,
-    'font-family': themeDefaultElements.default.typography.fontFamily.join(','),
+    'font-family': themeDefaultElements.typography.fontFamily.join(','),
     'color': colors.text.black,
     'padding': '16.5px 14px',
   },
