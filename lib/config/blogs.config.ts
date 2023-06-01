@@ -1,8 +1,8 @@
-import type { NavItem } from '@core/types/navigation';
+import type { BlogsConfig } from '@core/types/blogs';
 
 import { pages } from '@lib/config/navigation.config';
 
-const blogsConfig: NavItem[] = [
+const blogsConfig: BlogsConfig = [
   {
     text: { 
       id: 'home.intro.title',

@@ -1,5 +1,17 @@
 import { StaticImageData } from 'next/image';
 
+export type MultimediaConfig = {
+  imgIds: {
+    navbarLogo: string,
+    placeholder: string,
+    productBanner: string[],
+  },
+  upload: {
+    extensions: string[],
+    maxSize: string,
+  },
+};
+
 export type UploadFile = {
   url: string,
   file: File,

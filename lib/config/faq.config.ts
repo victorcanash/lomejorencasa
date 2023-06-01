@@ -1,8 +1,8 @@
-import { FaqGroup } from '@core/types/faq';
+import type { FaqConfig } from '@core/types/faq';
 
 import { pages } from '@lib/config/navigation.config';
 
-const faqConfig: FaqGroup[] = [
+const faqConfig: FaqConfig = [
   {
     title: {
       id: 'packing',

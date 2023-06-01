@@ -1,4 +1,6 @@
-const snackbarConfig = {
+import { SnackbarConfig } from '@core/types/snackbar';
+
+const snackbarConfig: SnackbarConfig = {
   maxSnack: 3,
   durations: {
     default: 5000,

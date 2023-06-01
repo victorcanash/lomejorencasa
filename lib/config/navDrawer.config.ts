@@ -1,11 +1,7 @@
-import type { NavDrawerItem } from '@core/types/navigation';
+import type { NavDrawerConfig } from '@core/types/navigation';
 import { pages } from '@lib/config/navigation.config';
 
-const navDrawerConfig: {
-  main: NavDrawerItem[],
-  logged: NavDrawerItem[],
-  unlogged: NavDrawerItem[],
-} = {
+const navDrawerConfig: NavDrawerConfig = {
   main: [
     {
       text: {

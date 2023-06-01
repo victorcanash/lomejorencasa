@@ -2,6 +2,10 @@ import type { FormatText, LocalizedText } from '@core/types/texts';
 import { NavItem } from '@core/types/navigation';
 import { Source } from '@core/types/multimedia';
 
+export type InventoryConfig = {
+  landings: LandingConfig[],
+};
+
 export type LandingConfig = {
   id: number,
   path: string,

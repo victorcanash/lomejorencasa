@@ -2,6 +2,12 @@ import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
 import type { FormatText } from '@core/types/texts';
 
+export type NavDrawerConfig = {
+  main: NavDrawerItem[],
+  logged: NavDrawerItem[],
+  unlogged: NavDrawerItem[],
+};
+
 export type Page = {
   path: string,
   filepath: string,

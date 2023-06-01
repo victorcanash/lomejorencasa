@@ -1,14 +1,6 @@
-const multimediaConfig: {
-  imgIds: {
-    navbarLogo: string,
-    placeholder: string,
-    productBanner: string[],
-  },
-  upload: {
-    extensions: string[],
-    maxSize: string,
-  },
-} = {
+import type { MultimediaConfig } from '@core/types/multimedia';
+
+const multimediaConfig: MultimediaConfig = {
   imgIds: {
     navbarLogo: 'v1683277258/laenvasadora/LOGOS/LOGO-NUEVO-NAVBAR-SPACE-GREY_rjnkl7.png',
     placeholder: 'v1681059169/laenvasadora/LANDING%20PAGE/placeholder_tl7jks.jpg',

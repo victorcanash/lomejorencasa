@@ -1,6 +1,5 @@
-import { DefaultSeoProps } from 'next-seo';
-
 import envConfig from '@core/config/env.config';
+import type { SeoConfig } from '@core/types/seo';
 
 export const keywords = {
   vacuumMachine: {
@@ -18,13 +17,7 @@ export const keywords = {
   },
 };
 
-const seoConfig: {
-  defaultSeoProps: DefaultSeoProps,
-  home: {
-    h1: string,
-  },
-  productBannerAlts: string[],
-} = {
+const seoConfig: SeoConfig = {
   defaultSeoProps: {
     defaultTitle: keywords.vacuumMachine.main,
     additionalMetaTags: [{

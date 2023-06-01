@@ -1,4 +1,4 @@
-import type { BundleConfig, LandingConfig } from '@core/types/products';
+import type { BundleConfig, InventoryConfig } from '@core/types/products';
 
 import { keywords } from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
@@ -30,9 +30,7 @@ const bundlesConfig: {
   },
 };
 
-const inventoryConfig: {
-  landings: LandingConfig[],
-} = {
+const inventoryConfig: InventoryConfig = {
   landings: [
     {
       id: 1,
