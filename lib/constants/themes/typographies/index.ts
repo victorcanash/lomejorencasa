@@ -61,6 +61,19 @@ const typographies = {
       letterSpacing: '0.17px',
     } as ThemeFontPropertyElement,
   },
+  price: {
+    origin: {
+      fontSize: '20px',
+      fontWeight: '500',
+      lineHeight: '30px',
+      textDecoration: 'line-through',
+    } as ThemeFontPropertyElement,
+    current: {
+      fontSize: '20px',
+      fontWeight: '600',
+      lineHeight: '30px',
+    } as ThemeFontPropertyElement,
+  },
 };
 
 export default typographies;

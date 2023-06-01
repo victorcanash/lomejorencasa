@@ -13,11 +13,8 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
-import { convertElementToSx } from '@core/utils/themes';
 import { getFirstLandingItem, getProductPriceData } from '@core/utils/products';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import colors from '@lib/constants/themes/colors';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import ProductPrice from '@core/components/ProductPrice';
 
 type LandingPriceProps = {
   landingModel: Landing,
@@ -29,8 +26,6 @@ const LandingPrice = (props: LandingPriceProps) => {
     landingModel,
     selectedItem,
   } = props;
-
-  const { convertPriceToString } = useAuthContext();
 
   const data = useMemo(() => {
     let priceData = { price: 0, originPrice: 0 };
@@ -48,30 +43,10 @@ const LandingPrice = (props: LandingPriceProps) => {
   return (
     <Grid container columnSpacing={2} rowSpacing={0.5}>
       <Grid item>
-        <Typography
-          component="h2"
-          variant="h2"
-          sx={{
-            ...themeCustomElements.landing?.priceContent?.priceText ?
-              convertElementToSx(themeCustomElements.landing.priceContent.priceText) : undefined,
-          }}>
-          { data.price !== data.originPrice ?
-            <>
-              <span
-                style={{ fontWeight: 500, textDecoration: 'line-through' }}
-              >
-                <span style={{ color: colors.text.disabled }}>
-                  {`${convertPriceToString(data.originPrice)}`}
-                </span>
-              </span>
-              {` ${convertPriceToString(data.price)}`}
-            </>
-            :
-            <>
-              {`${convertPriceToString(data.price)}`}
-            </>
-          }
-        </Typography>
+        <ProductPrice
+          price={data.price}
+          originPrice={data.originPrice}
+        />
       </Grid>
       <Grid item sx={{ mt: '3px' }}>
         <Typography variant="body2">

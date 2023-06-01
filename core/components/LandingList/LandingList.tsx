@@ -12,20 +12,18 @@ import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 
 import type { Landing } from '@core/types/products';
-import { convertElementToSx } from '@core/utils/themes';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { getFirstLandingItem, getLandingConfigById, getLandingPathByConfig, getProductPriceData } from '@core/utils/products';
 import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/constants/themes/colors';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import { landingConfigs } from '@lib/config/inventory.config';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import Title from '@core/components/ui/Title';
 // import Pagination from '@components/ui/Pagination';
+import ProductPrice from '@core/components/ProductPrice';
 
 const LandingList = () => {
   const {
@@ -76,30 +74,10 @@ const LandingList = () => {
       priceData = getProductPriceData(firstItem);
     }
     return (
-      <Typography
-        component="h2"
-        variant="h2"
-        sx={{
-          ...themeCustomElements.landing?.priceContent?.priceText ? convertElementToSx(themeCustomElements.landing.priceContent?.priceText) : undefined,
-        }}
-      >
-        { priceData.price !== priceData.originPrice ?
-          <>
-            <span
-              style={{ fontWeight: 500, textDecoration: 'line-through' }}
-            >
-              <span style={{ color: colors.text.disabled }}>
-                {`${convertPriceToString(priceData.originPrice)}`}
-              </span>
-            </span>
-            {` ${convertPriceToString(priceData.price)}`}
-          </>
-          :
-          <>
-            {`${convertPriceToString(priceData.price)}`}
-          </>
-        }
-      </Typography>
+      <ProductPrice
+        price={priceData.price}
+        originPrice={priceData.originPrice}
+      />
     );
   };
 

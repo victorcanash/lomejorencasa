@@ -82,4 +82,5 @@ export type ThemeFontPropertyElement = {
   lineHeight?: string,
   letterSpacing?: string,
   textTransform?: string,
+  textDecoration?: string,
 };

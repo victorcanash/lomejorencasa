@@ -451,9 +451,9 @@ export const themeCustomElements: {
   },
   landing?: {
     selectLabel?: ThemeElement,
-    priceContent?: {
-      priceText?: ThemeElement,
-      discountText?: ThemeElement,
+    price?: {
+      originText?: ThemeElement,
+      currentText?: ThemeElement,
       percentText?: ThemeElement,
     },
     bundleTitle?: ThemeElement,
@@ -611,23 +611,24 @@ export const themeCustomElements: {
         },
       }
     },
-    priceContent: {
-      priceText: {
+    price: {
+      originText: {
+        text: {
+          color: {
+            default: colors.text.disabled,
+          },
+          font: {
+            default: typographies.price.origin,
+          },
+        },
+      },
+      currentText: {
         text: {
           color: {
             default: colors.text.action,
           },
           font: {
-            default: {
-              fontSize: '20px',
-            },
-          },
-        },
-      },
-      discountText: {
-        text: {
-          color: {
-            default: colors.text.action,
+            default: typographies.price.current,
           },
         },
       },

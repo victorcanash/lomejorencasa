@@ -17,11 +17,11 @@ import Link from '@core/components/navigation/Link';
 import Button from '@core/components/inputs/Button';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
-import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
+import ProductPrice from '@core/components/ProductPrice';
 
 type BundleDetailProps = {
   bundleConfig: BundleConfig,
@@ -87,27 +87,10 @@ const BundleDetail = (props: BundleDetailProps) => {
         </Grid>
         <Grid container columnSpacing={1} rowSpacing={1}>
           <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
-            <Typography
-              component="h2"
-              variant="h2"
-              sx={{
-                ...themeCustomElements.landing?.priceContent?.priceText ? convertElementToSx(themeCustomElements.landing.priceContent.priceText) : undefined,
-              }}
-            >
-              <span
-                style={{ color: colors.text.black }}
-              >
-                {`${intl.formatMessage({ id: 'productDetail.pack.price' })}: `}
-              </span>
-              <span
-                style={{ fontWeight: 500, textDecoration: 'line-through' }}
-              >
-                <span style={{ color: colors.text.disabled }}>
-                  {`${convertPriceToString(originPrice)}`}
-                </span>
-              </span>
-              {` ${convertPriceToString(price)}`}
-            </Typography>
+            <ProductPrice
+              price={price}
+              originPrice={originPrice}
+            />
           </Grid>
           { percent &&
             <Grid item>
@@ -115,7 +98,8 @@ const BundleDetail = (props: BundleDetailProps) => {
                 component="div"
                 variant="body1Head"
                 sx={{
-                  ...themeCustomElements.landing?.priceContent?.percentText ? convertElementToSx(themeCustomElements.landing.priceContent.percentText) : undefined,
+                  ...themeCustomElements.landing?.price?.percentText ?
+                    convertElementToSx(themeCustomElements.landing.price.percentText) : undefined,
                 }}
               >
                 <FormattedMessage id="productDetail.pack.percent" values={{ value: percent }} />
@@ -125,7 +109,7 @@ const BundleDetail = (props: BundleDetailProps) => {
         </Grid>
       </>
     );
-  }, [bundleConfig.firstItem.name?.id, bundleConfig.firstItem.name?.values, bundleConfig.landingId, bundleConfig.secondItem?.name?.id, bundleConfig.secondItem?.name?.values, convertPriceToString, getPageUrlByLandingId, intl, productPack]);
+  }, [bundleConfig.firstItem.name?.id, bundleConfig.firstItem.name?.values, bundleConfig.landingId, bundleConfig.secondItem?.name?.id, bundleConfig.secondItem?.name?.values, getPageUrlByLandingId, intl, productPack]);
 
   return (
     <>
