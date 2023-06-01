@@ -7,9 +7,6 @@ import { type Swiper as SwiperRef } from 'swiper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   IconDefinition,
-  faCcVisa,
-  faCcMastercard,
-  faCcPaypal,
 } from '@fortawesome/free-brands-svg-icons';
 import {
   faTruck,
@@ -27,19 +24,16 @@ import Masonry from '@mui/lab/Masonry';
 import type { Landing, LandingConfig, ProductInventory, ProductPack } from '@core/types/products';
 import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
-import { convertElementToSx } from '@core/utils/themes';
-import { getFirstLandingItem, getLandingItems, getProductPriceData } from '@core/utils/products';
+import { getFirstLandingItem, getLandingItems } from '@core/utils/products';
 import Link from '@core/components/navigation/Link';
 import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/constants/themes/colors';
-import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
 import useCart from '@core/hooks/useCart';
 import Button from '@core/components/inputs/Button';
 import LandingCarousel from '@core/components/LandingDetail/LandingCarousel';
 import LandingRating from '@core/components/LandingDetail/LandingRating';
+import LandingPrice from '@core/components/LandingDetail/LandingPrice';
 import SelectItem from '@core/components/inputs/SelectItem';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
 import BundleDetail from '@core/components/LandingDetail/BundleDetail';
@@ -59,7 +53,6 @@ const LandingDetail = (props: LandingDetailProps) => {
   const {
     getLandingImgsUrl,
   } = useProductsContext();
-  const { convertPriceToString } = useAuthContext();
 
   const { addCartItem } = useCart(false);
   const { ref: payNowBtnRef, inView: payNowInView } = useInView({
@@ -88,83 +81,13 @@ const LandingDetail = (props: LandingDetailProps) => {
     }
   }, [addCartItem, selectedItem, selectedQuantity])
 
-  const productTitle = useMemo(() => {
+  const title = useMemo(() => {
     let text = getFirstLandingItem(landingModel)?.name.current || '';
     if (selectedItem) {
       text = selectedItem.name.current;
     }
-    return (
-      <Typography component="h2" variant="h1" color="text.primary">
-        { text }
-      </Typography>
-    );
+    return text;
   }, [landingModel, selectedItem]);
-
-  const productPrice = useMemo(() => {
-    let priceData = { price: 0, originPrice: 0 };
-    if (selectedItem) {
-      priceData = getProductPriceData(selectedItem);
-    } else {
-      const firstItem = getFirstLandingItem(landingModel);
-      if (firstItem) {
-        priceData = getProductPriceData(firstItem);
-      }
-    }
-    return (
-      <Grid container columnSpacing={2} rowSpacing={0.5}>
-        <Grid item>
-          <Typography
-            component="h2"
-            variant="h2"
-            sx={{
-              ...themeCustomElements.landing?.priceContent?.priceText ? convertElementToSx(themeCustomElements.landing.priceContent.priceText) : undefined,
-            }}>
-            { priceData.price !== priceData.originPrice ?
-              <>
-                <span
-                  style={{ fontWeight: 500, textDecoration: 'line-through' }}
-                >
-                  <span style={{ color: colors.text.disabled }}>
-                    {`${convertPriceToString(priceData.originPrice)}`}
-                  </span>
-                </span>
-                {` ${convertPriceToString(priceData.price)}`}
-              </>
-              :
-              <>
-                {`${convertPriceToString(priceData.price)}`}
-              </>
-            }
-          </Typography>
-        </Grid>
-        <Grid item sx={{ mt: '3px' }}>
-          <Typography variant="body2">
-            <FormattedMessage id="productDetail.price.iva" />
-          </Typography>
-        </Grid>
-        <Grid item sx={{ display: 'flex', mb: 0.5 }}>
-          <Box>
-            <FontAwesomeIcon 
-              size="2xl" 
-              icon={faCcVisa}
-            />
-          </Box>
-          <Box ml={1}>
-            <FontAwesomeIcon 
-              size="2xl" 
-              icon={faCcMastercard}
-            />
-          </Box>
-          <Box ml={1}>
-            <FontAwesomeIcon 
-              size="2xl" 
-              icon={faCcPaypal}
-            />
-          </Box>
-        </Grid>
-      </Grid>
-    );
-  }, [convertPriceToString, landingModel, selectedItem]);
 
   const landingIcon = useCallback((icon: IconDefinition, text: FormatText, columnSpacing: number) => {
     return (
@@ -281,7 +204,7 @@ const LandingDetail = (props: LandingDetailProps) => {
       <Container>
         <Masonry columns={{ xs: 1, md: 2 }} spacing={0}>
 
-          {/* Images */}
+          {/* Carousel */}
           <Box>
             <Box
               sx={{
@@ -324,18 +247,30 @@ const LandingDetail = (props: LandingDetailProps) => {
                 }
               }}  
             >
+
+              {/* Rating */}
               <Box>
                 <LandingRating
                   landingModel={landingModel}
                   landingConfig={landingConfig}
                 />
               </Box>
+
+              {/* Title */}
               <Box sx={{ mb: 2 }}>
-                { productTitle }
+                <Typography component="h2" variant="h1" color="text.primary">
+                  { title }
+                </Typography>
               </Box>
+
+              {/* Price */}
               <Box sx={{ mb: 2 }}>
-                { productPrice }
+                <LandingPrice
+                  landingModel={landingModel}
+                  selectedItem={selectedItem}
+                />
               </Box>
+
               {/* Icons */}
               <Grid container spacing={2} mb={3}>
                 { landingIcon(faTruck, { id: 'productDetail.icons.shipping' }, 2) }
