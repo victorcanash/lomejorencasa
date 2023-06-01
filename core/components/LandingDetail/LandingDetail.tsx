@@ -4,10 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { useInView } from 'react-intersection-observer';
 import { type Swiper as SwiperRef } from 'swiper';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  IconDefinition,
-} from '@fortawesome/free-brands-svg-icons';
 import {
   faTruck,
   faLock,
@@ -22,7 +18,6 @@ import Slide from '@mui/material/Slide';
 import Masonry from '@mui/lab/Masonry';
 
 import type { Landing, LandingConfig, ProductInventory, ProductPack } from '@core/types/products';
-import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
 import { getFirstLandingItem, getLandingItems } from '@core/utils/products';
 import Link from '@core/components/navigation/Link';
@@ -34,6 +29,7 @@ import Button from '@core/components/inputs/Button';
 import LandingCarousel from '@core/components/LandingDetail/LandingCarousel';
 import LandingRating from '@core/components/LandingDetail/LandingRating';
 import LandingPrice from '@core/components/LandingDetail/LandingPrice';
+import LandingAdvantage from '@core/components/LandingDetail/LandingAdvantage';
 import SelectItem from '@core/components/inputs/SelectItem';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
 import BundleDetail from '@core/components/LandingDetail/BundleDetail';
@@ -88,24 +84,6 @@ const LandingDetail = (props: LandingDetailProps) => {
     }
     return text;
   }, [landingModel, selectedItem]);
-
-  const landingIcon = useCallback((icon: IconDefinition, text: FormatText, columnSpacing: number) => {
-    return (
-      <Grid item xs={12} container columnSpacing={columnSpacing}>
-        <Grid item>
-          <FontAwesomeIcon 
-            size="2xl" 
-            icon={icon}
-          />
-        </Grid>
-        <Grid item>
-          <Typography variant="body1Head">
-            <FormattedMessage id={text.id} defaultMessage={text.id} values={text.values} />
-          </Typography>
-        </Grid>
-      </Grid>
-    );
-  }, []);
 
   const productComments = useMemo(() => {
     return (
@@ -273,10 +251,34 @@ const LandingDetail = (props: LandingDetailProps) => {
 
               {/* Icons */}
               <Grid container spacing={2} mb={3}>
-                { landingIcon(faTruck, { id: 'productDetail.icons.shipping' }, 2) }
-                { landingIcon(faLock, { id: 'productDetail.icons.payment' }, 3) }
-                { landingIcon(faPhoneVolume, { id: 'productDetail.icons.support' }, 2.5) }
-                { landingIcon(faArrowRightArrowLeft, { id: 'productDetail.icons.guarantee' }, 3) }
+                <LandingAdvantage
+                  icon={faTruck}
+                  text={{
+                    id: 'productDetail.icons.shipping',
+                  }}
+                  columnSpacing={2}
+                />
+                <LandingAdvantage
+                  icon={faLock}
+                  text={{
+                    id: 'productDetail.icons.payment',
+                  }}
+                  columnSpacing={3}
+                />
+                <LandingAdvantage
+                  icon={faPhoneVolume}
+                  text={{
+                    id: 'productDetail.icons.support',
+                  }}
+                  columnSpacing={2.5}
+                />
+                <LandingAdvantage
+                  icon={faArrowRightArrowLeft}
+                  text={{
+                    id: 'productDetail.icons.guarantee',
+                  }}
+                  columnSpacing={3}
+                />
               </Grid>
               {/* Cart inputs */}
               <Grid container columnSpacing={2} rowSpacing={1}>
