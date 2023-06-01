@@ -5,5 +5,4 @@ export type SeoConfig = {
   home: {
     h1: string,
   },
-  productBannerAlts: string[],
 };

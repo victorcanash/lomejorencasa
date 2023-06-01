@@ -165,7 +165,7 @@ const Conservation = () => {
       <MultimediaContainer
         type="default"
         source={{
-          src: imgIds.productBanner[2],
+          src: 'v1680888620/laenvasadora/HOME%20PAGE/BANNER/FOTO_PRODUCTO_QUESO_eihinu.jpg',
           alt: keywords.vacuumMachine.main,
         }}
       />

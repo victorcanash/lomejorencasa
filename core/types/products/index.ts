@@ -2,6 +2,14 @@ import type { FormatText, LocalizedText } from '@core/types/texts';
 import { NavItem } from '@core/types/navigation';
 import { Source } from '@core/types/multimedia';
 
+export type ProductBannerConfig = {
+  items: {
+    contentText: FormatText,
+    source: Source,
+    button: NavItem,
+  }[],
+};
+
 export type InventoryConfig = {
   landings: LandingConfig[],
 };

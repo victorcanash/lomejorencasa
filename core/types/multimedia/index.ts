@@ -4,7 +4,6 @@ export type MultimediaConfig = {
   imgIds: {
     navbarLogo: string,
     placeholder: string,
-    productBanner: string[],
   },
   upload: {
     extensions: string[],
