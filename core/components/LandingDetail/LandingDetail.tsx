@@ -21,7 +21,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Rating from '@mui/material/Rating';
 import Slide from '@mui/material/Slide';
 import Masonry from '@mui/lab/Masonry';
 
@@ -29,10 +28,8 @@ import type { Landing, LandingConfig, ProductInventory, ProductPack } from '@cor
 import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
 import { convertElementToSx } from '@core/utils/themes';
-import { scrollToSection } from '@core/utils/navigation';
-import { getFirstLandingItem, getLandingItems, getLandingPathByConfig, getProductPriceData } from '@core/utils/products';
+import { getFirstLandingItem, getLandingItems, getProductPriceData } from '@core/utils/products';
 import Link from '@core/components/navigation/Link';
-
 import { pages } from '@lib/config/navigation.config';
 import colors from '@lib/constants/themes/colors';
 import { themeCustomElements } from '@lib/constants/themes/elements';
@@ -41,8 +38,8 @@ import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import useCart from '@core/hooks/useCart';
 import Button from '@core/components/inputs/Button';
-import LoadingRating from '@core/components/ui/LoadingRating';
 import LandingCarousel from '@core/components/LandingDetail/LandingCarousel';
+import LandingRating from '@core/components/LandingDetail/LandingRating';
 import SelectItem from '@core/components/inputs/SelectItem';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
 import BundleDetail from '@core/components/LandingDetail/BundleDetail';
@@ -90,54 +87,6 @@ const LandingDetail = (props: LandingDetailProps) => {
       addCartItem(selectedItem, selectedQuantity, true);
     }
   }, [addCartItem, selectedItem, selectedQuantity])
-
-  const productH1 = useMemo(() => {
-    return (
-      <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
-        { landingConfig.metas.title }
-      </Typography>
-    );
-  }, [landingConfig.metas.title]);
-
-  const productRating = useMemo(() => {
-    if (!initialized) {
-      return (
-        <LoadingRating />
-      );
-    };
-    let rating = 0;
-    let reviewsCount = 0;
-    if (landingModel.products.length > 0) {
-      rating = parseFloat(landingModel.products[0].rating);
-      reviewsCount = landingModel.products[0].reviewsCount;
-    } else if (landingModel.packs.length > 0) {
-      rating = parseFloat(landingModel.packs[0].rating);
-      reviewsCount = landingModel.packs[0].reviewsCount;
-    }
-    return (
-      <Link
-        href={getLandingPathByConfig(landingConfig)}
-        onClick={() => scrollToSection('reviews')}
-        scroll={false}
-        sx={{ textDecoration: 'none' }}
-      >
-        <Grid container>
-          <Grid item>
-            <Rating
-              value={rating}
-              precision={0.5}
-              readOnly
-            />
-          </Grid>
-          <Grid item sx={{ ml: '6px' }}>
-            <Typography component="span" variant="body1">
-              {`(${reviewsCount})`}
-            </Typography>
-          </Grid>
-        </Grid>
-      </Link>
-    );
-  }, [initialized, landingConfig, landingModel.packs, landingModel.products]);
 
   const productTitle = useMemo(() => {
     let text = getFirstLandingItem(landingModel)?.name.current || '';
@@ -322,9 +271,14 @@ const LandingDetail = (props: LandingDetailProps) => {
 
   return (
     <Box sx={{ overflow: 'hidden' }}>
-      { productH1 }
+
+      {/* H1 */}
+      <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
+        { landingConfig.metas.title }
+      </Typography>
+
+      {/* General Product Section */}
       <Container>
-        {/* General Product Section */}
         <Masonry columns={{ xs: 1, md: 2 }} spacing={0}>
 
           {/* Images */}
@@ -371,7 +325,10 @@ const LandingDetail = (props: LandingDetailProps) => {
               }}  
             >
               <Box>
-                { productRating }
+                <LandingRating
+                  landingModel={landingModel}
+                  landingConfig={landingConfig}
+                />
               </Box>
               <Box sx={{ mb: 2 }}>
                 { productTitle }
