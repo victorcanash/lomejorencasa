@@ -2,6 +2,18 @@ import { PageTypes } from '@core/constants/navigation';
 import { Protections } from '@core/constants/auth';
 import type { FormatText } from '@core/types/texts';
 
+export type NavBarConfig = {
+  homeH1: string,
+  logo: {
+    src: string,
+    alt?: string,
+    width: {
+      default: string,
+      small: string,
+    },
+  },
+};
+
 export type NavDrawerConfig = {
   main: NavDrawerItem[],
   logged: NavDrawerItem[],

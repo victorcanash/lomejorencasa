@@ -22,7 +22,7 @@ import {
 } from '@core/utils/products';
 
 import { pages } from '@lib/config/navigation.config';
-import { imgIds } from '@lib/config/multimedia.config';
+import { placeholderSrc } from '@lib/config/multimedia.config';
 
 type ProductsContext = {
   getAllLandings: () => Landing[],
@@ -129,7 +129,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, []);
   
   const getItemImgUrl = useCallback((item: Landing | CartItem | GuestCartCheckItem) => {
-    let imgUrl = imgIds.placeholder;
+    let imgUrl = placeholderSrc;
     if ((item as Landing)?.products) {
       imgUrl = (item as Landing).images[0];
     } else {

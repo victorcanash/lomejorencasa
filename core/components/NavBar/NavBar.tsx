@@ -11,19 +11,16 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import MenuIcon from '@mui/icons-material/Menu';
 
 import Link from '@core/components/navigation/Link';
+import { useCartContext } from '@core/contexts/CartContext';
+import useNavDrawer from '@core/hooks/useNavDrawer';
 import CustomImage from '@core/components/multimedia/CustomImage';
 // import HideOnScroll from '@core/components/animations/HideOnScroll';
 import ShippingBar from '@core/components/NavBar/ShippingBar';
-
-import seoConfig from '@lib/config/next-seo.config';
-import { pages } from '@lib/config/navigation.config';
-import { imgIds } from '@lib/config/multimedia.config';
-import { useCartContext } from '@core/contexts/CartContext';
-import useNavDrawer from '@core/hooks/useNavDrawer';
 import CartIcon from '@core/components/NavBar/CartIcon';
 import NavDrawer from '@core/components/NavBar/NavDrawer';
 import CartDrawer from '@core/components/NavBar/CartDrawer';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import navBarConfig from '@lib/config/navBar.config';
+import { pages } from '@lib/config/navigation.config';
 
 const NavBar = () => {
   const { handleDrawerOpen: handleCartDrawerOpen } = useCartContext();
@@ -103,16 +100,16 @@ const NavBar = () => {
               >
                 { pages.home.path === router.pathname &&
                   <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
-                    { seoConfig.home.h1 }
+                    { navBarConfig.homeH1 }
                   </Typography>
                 }
                 <CustomImage
-                  src={imgIds.navbarLogo}
-                  alt={seoConfig.home.h1}
+                  src={navBarConfig.logo.src}
+                  alt={navBarConfig.logo.alt || navBarConfig.homeH1}
                   height={smallBreakpoint ? '49px' :'60px'}
                   width={
                     smallBreakpoint ?
-                      themeCustomElements.navBar.logo.width.small : themeCustomElements.navBar.logo.width.default
+                    navBarConfig.logo.width.small : navBarConfig.logo.width.default
                   }
                   layout="fixed" 
                   objectFit="contain"

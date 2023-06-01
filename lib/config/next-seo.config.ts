@@ -40,9 +40,6 @@ const seoConfig: SeoConfig = {
       siteName: keywords.vacuumMachine.main,
     },
   },
-  home: {
-    h1: keywords.vacuumMachine.main,
-  },
 };
 
 export default seoConfig;
