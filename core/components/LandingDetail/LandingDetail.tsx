@@ -85,87 +85,6 @@ const LandingDetail = (props: LandingDetailProps) => {
     return text;
   }, [landingModel, selectedItem]);
 
-  const productComments = useMemo(() => {
-    return (
-      <>
-        { landingConfig.comment.id &&
-          <Typography component="div" variant="body1">
-            <FormattedMessage id={landingConfig.comment.id} values={landingConfig.comment.values} />
-          </Typography>
-        }
-        <Box mt={1}>
-          <Link href={pages.orders.path} variant="body1">
-            <FormattedMessage id="productDetail.trackingLink" />
-          </Link>
-        </Box>
-      </>
-    );
-  }, [landingConfig.comment.id, landingConfig.comment.values]);
-
-  const addCartBtn = useMemo(() => {
-    return (
-      <Button
-        customtype="actionPrimary"
-        loading={initialized && selectedItem ? undefined : 'true'}
-        fullWidth
-        onClick={onClickAddCartBtn}
-        disabled={selectedItem && selectedItem.quantity === 0}
-        sx={{
-          mb: 3,
-        }}
-      >
-        <FormattedMessage id="productDetail.addCartBtn" />
-      </Button>
-    );
-  }, [initialized, onClickAddCartBtn, selectedItem]);
-
-  const payNowBtn = useMemo(() => {
-    return (
-      <Box
-        sx={{
-          mb: 3,
-        }}
-        ref={payNowBtnRef}
-      >
-        <Button
-          customtype="payNow"
-          loading={initialized && selectedItem ? undefined : 'true'}
-          fullWidth
-          onClick={onClickPayNowBtn}
-          disabled={selectedItem && selectedItem.quantity === 0}
-        >
-          <FormattedMessage id="productDetail.payNowBtn" />
-        </Button>
-      </Box>
-    );
-  }, [initialized, onClickPayNowBtn, payNowBtnRef, selectedItem]);
-
-  const payNowBtnStatic = useMemo(() => {
-    return (
-      <Slide appear={true} in={initialized && selectedItem && !payNowInView} direction="up">
-        <Box
-          sx={{
-            position: 'fixed',
-            bottom: '0px',
-            left: '0px',
-            zIndex: 10,
-            width: '100%',
-          }}
-        >
-          <Button
-            customtype="payNow"
-            fullWidth
-            onClick={onClickPayNowBtn}
-            disabled={selectedItem && selectedItem.quantity == 0}
-            sx={{ borderRadius: '0px' }}
-          >
-            <FormattedMessage id="productDetail.payNowBtn" />
-          </Button>
-        </Box>
-      </Slide>
-    );
-  }, [initialized, onClickPayNowBtn, payNowInView, selectedItem]);
-
   useEffect(() => {
     swiperRef.current?.slideTo(1, undefined, false);
   }, [landingModel]);
@@ -280,6 +199,7 @@ const LandingDetail = (props: LandingDetailProps) => {
                   columnSpacing={3}
                 />
               </Grid>
+
               {/* Cart inputs */}
               <Grid container columnSpacing={2} rowSpacing={1}>
                 <Grid item>
@@ -301,11 +221,74 @@ const LandingDetail = (props: LandingDetailProps) => {
                   />
                 </Grid>
               </Grid>
-              { addCartBtn }
-              { payNowBtn }
-              { payNowBtnStatic }
+
+              {/* Add cart button */}
+              <Button
+                customtype="actionPrimary"
+                loading={initialized && selectedItem ? undefined : 'true'}
+                fullWidth
+                onClick={onClickAddCartBtn}
+                disabled={selectedItem && selectedItem.quantity === 0}
+                sx={{
+                  mb: 3,
+                }}
+              >
+                <FormattedMessage id="productDetail.addCartBtn" />
+              </Button>
+
+              {/* Pay now button */}
+              <Box
+                sx={{
+                  mb: 3,
+                }}
+                ref={payNowBtnRef}
+              >
+                <Button
+                  customtype="payNow"
+                  loading={initialized && selectedItem ? undefined : 'true'}
+                  fullWidth
+                  onClick={onClickPayNowBtn}
+                  disabled={selectedItem && selectedItem.quantity === 0}
+                >
+                  <FormattedMessage id="productDetail.payNowBtn" />
+                </Button>
+              </Box>
+              <Slide appear={true} in={initialized && selectedItem && !payNowInView} direction="up">
+                <Box
+                  sx={{
+                    position: 'fixed',
+                    bottom: '0px',
+                    left: '0px',
+                    zIndex: 10,
+                    width: '100%',
+                  }}
+                >
+                  <Button
+                    customtype="payNow"
+                    fullWidth
+                    onClick={onClickPayNowBtn}
+                    disabled={selectedItem && selectedItem.quantity == 0}
+                    sx={{ borderRadius: '0px' }}
+                  >
+                    <FormattedMessage id="productDetail.payNowBtn" />
+                  </Button>
+                </Box>
+              </Slide>
+
+              {/* Comments */}
               <Box>
-                { productComments }
+                <>
+                  { landingConfig.comment.id &&
+                    <Typography component="div" variant="body1">
+                      <FormattedMessage id={landingConfig.comment.id} values={landingConfig.comment.values} />
+                    </Typography>
+                  }
+                  <Box mt={1}>
+                    <Link href={pages.orders.path} variant="body1">
+                      <FormattedMessage id="productDetail.trackingLink" />
+                    </Link>
+                  </Box>
+                </>
               </Box>
             </Box>
           </Box>
