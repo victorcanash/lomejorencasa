@@ -20,7 +20,6 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 import { pages } from '@lib/config/navigation.config';
 import { landingConfigs } from '@lib/config/inventory.config';
 import { useProductsContext } from '@core/contexts/ProductsContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
 import Title from '@core/components/ui/Title';
 // import Pagination from '@components/ui/Pagination';
 import ProductPrice from '@core/components/ProductPrice';
@@ -30,7 +29,6 @@ const LandingList = () => {
     getAllLandings,
     getItemImgUrl,
   } = useProductsContext();
-  const { convertPriceToString } = useAuthContext();
 
   /*const router = useRouter();
 

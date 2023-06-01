@@ -20,7 +20,6 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 import { themeCustomElements } from '@lib/constants/themes/elements';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
 import ProductPrice from '@core/components/ProductPrice';
 
 type BundleDetailProps = {
@@ -36,7 +35,6 @@ const BundleDetail = (props: BundleDetailProps) => {
 
   const { initialized } = useAppContext();
   const { getLandingById, getPageUrlByLandingId } = useProductsContext();
-  const { convertPriceToString } = useAuthContext();
 
   const intl = useIntl();
 
