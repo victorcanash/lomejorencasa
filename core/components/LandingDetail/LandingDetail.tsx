@@ -34,6 +34,7 @@ import SelectItem from '@core/components/inputs/SelectItem';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
 import BundleDetail from '@core/components/LandingDetail/BundleDetail';
 import LandingCharacteristics from '@core/components/LandingDetail/LandingCharacteristics';
+import LandingTutorial from '@core/components/LandingDetail/LandingTutorial';
 import ProductReviews from '@core/components/ProductReviews';
 
 type LandingDetailProps = {
@@ -322,10 +323,13 @@ const LandingDetail = (props: LandingDetailProps) => {
         landingConfig={landingConfig}
       />
 
-      {/* Type Product Section */}
-      <Box>
-        { children }
-      </Box>
+      {/* Tutorials */}
+      { landingConfig.tutorials?.map((item, index) => (
+        <LandingTutorial
+          key={index}
+          tutorialConfig={item}
+        />
+      ))}
 
       {/* Reviews */}
       <ProductReviews />

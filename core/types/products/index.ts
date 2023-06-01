@@ -1,15 +1,6 @@
 import type { FormatText, LocalizedText } from '@core/types/texts';
-
-export type LandingItemConfig = {
-  name: {
-    en: string,
-    es: string,
-    current: string,
-  },
-  price: number,
-  realPrice: number,
-  image: string,
-};
+import { NavItem } from '@core/types/navigation';
+import { Source } from '@core/types/multimedia';
 
 export type LandingConfig = {
   id: number,
@@ -52,6 +43,25 @@ export type LandingConfig = {
     variations: LandingItemConfig[],
   },
   bundle?: BundleConfig,
+  tutorials?: LandingTutorialConfig[],
+};
+
+export type LandingItemConfig = {
+  name: {
+    en: string,
+    es: string,
+    current: string,
+  },
+  price: number,
+  realPrice: number,
+  image: string,
+};
+
+export type LandingTutorialConfig = {
+  title?: FormatText,
+  content: FormatText,
+  button?: NavItem,
+  source: Source,
 };
 
 export type BundleConfig = {

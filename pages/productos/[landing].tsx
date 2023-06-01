@@ -6,11 +6,10 @@ import {
   getLandingStaticProps,
 } from '@core/staticPages/landing';
 import { PageTypes } from '@core/constants/navigation';
-import PageHeader from '@core/components/pages/PageHeader';
-
 import usePage from '@core/hooks/usePage';
 import useLandingPage from '@core/hooks/useLandingPage';
-import LandingView from '@components/LandingView';
+import PageHeader from '@core/components/pages/PageHeader';
+import LandingDetail from '@core/components/LandingDetail';
 
 const LandingPage: NextPage<LandingPageProps> = (props) => {
   const { path } = props;
@@ -30,7 +29,7 @@ const LandingPage: NextPage<LandingPageProps> = (props) => {
       />
 
       { (landingModel && landingConfig) &&
-        <LandingView 
+        <LandingDetail
           landingModel={landingModel}
           landingConfig={landingConfig}
         />
