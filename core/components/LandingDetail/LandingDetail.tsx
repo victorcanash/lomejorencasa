@@ -33,7 +33,7 @@ import LandingAdvantage from '@core/components/LandingDetail/LandingAdvantage';
 import SelectItem from '@core/components/inputs/SelectItem';
 import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
 import BundleDetail from '@core/components/LandingDetail/BundleDetail';
-import DetailCharacteristics from '@core/components/LandingDetail/characteristics';
+import LandingCharacteristics from '@core/components/LandingDetail/LandingCharacteristics';
 import ProductReviews from '@core/components/ProductReviews';
 
 type LandingDetailProps = {
@@ -97,7 +97,7 @@ const LandingDetail = (props: LandingDetailProps) => {
         { landingConfig.metas.title }
       </Typography>
 
-      {/* General Product Section */}
+      {/* General Section */}
       <Container>
         <Masonry columns={{ xs: 1, md: 2 }} spacing={0}>
 
@@ -317,14 +317,18 @@ const LandingDetail = (props: LandingDetailProps) => {
         </Masonry>
       </Container>
 
+      {/* Characteristics */}
+      <LandingCharacteristics
+        landingConfig={landingConfig}
+      />
+
       {/* Type Product Section */}
       <Box>
-        <DetailCharacteristics
-          landingConfig={landingConfig}
-        />
         { children }
-        <ProductReviews />
       </Box>
+
+      {/* Reviews */}
+      <ProductReviews />
     </Box>
   );
 };

@@ -9,13 +9,13 @@ import Divider from '@core/components/ui/Divider';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/constants/themes/elements';
-import CharacteristicsGroup from '@core/components/LandingDetail/characteristics/CharacteristicsGroup';
+import CharacteristicsGroup from '@core/components/LandingDetail/LandingCharacteristics/CharacteristicsGroup';
 
-type DetailCharacteristicsProps = {
+type LandingCharacteristicsProps = {
   landingConfig: LandingConfig,
 };
 
-const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
+const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
   const { landingConfig } = props;
 
   const getElements = useCallback((text: FormatText, count: number) => {
@@ -116,4 +116,4 @@ const DetailCharacteristics = (props: DetailCharacteristicsProps) => {
   );
 };
 
-export default DetailCharacteristics;
+export default LandingCharacteristics;
