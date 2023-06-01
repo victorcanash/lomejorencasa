@@ -14,7 +14,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 import { keywords } from '@lib/config/next-seo.config';
-import { imgIds } from '@lib/config/multimedia.config';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
