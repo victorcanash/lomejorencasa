@@ -15,7 +15,7 @@ import { getCookie } from 'cookies-next';
 
 import { ConsentKey, ConsentValues } from '@core/constants/cookies';
 import { Protections } from '@core/constants/auth';
-import type { PaypalCredentials } from '@core/types/paypal';
+import type { PaypalCredentials } from '@core/types/payment';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
 import { reinitFBEvents } from '@core/utils/facebook';

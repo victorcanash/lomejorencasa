@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import { firstBuyDiscountPercent } from '@core/constants/payments';
+import { firstBuyDiscountPercent } from '@lib/config/payment.config';
 import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';

@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
-import { firstBuyDiscountPercent } from '@core/constants/payments';
+import { firstBuyDiscountPercent } from '@lib/config/payment.config';
 import type { Page } from '@core/types/navigation';
 import type { Order } from '@core/types/orders';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';

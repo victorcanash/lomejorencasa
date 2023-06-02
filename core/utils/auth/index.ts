@@ -7,7 +7,7 @@ import { Storages } from '@core/constants/storage';
 import { JWTTokenKey } from '@core/constants/auth';
 import { GuestCartKey } from '@core/constants/cart';
 import type { Page } from '@core/types/navigation';
-import type { PaypalCredentials } from '@core/types/paypal';
+import type { PaypalCredentials } from '@core/types/payment';
 import type { User } from '@core/types/user';
 import type { 
   AuthLogin, 
