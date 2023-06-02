@@ -10,12 +10,13 @@ import Typography from '@mui/material/Typography';
 
 import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthLogin } from '@core/types/auth';
-
-import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/config/theme/colors';
+import { convertElementToSx } from '@core/utils/themes';
 import useForms from '@core/hooks/useForms';
 import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';
+
+import { themeCustomElements } from '@lib/config/theme/elements';
+import { pages } from '@lib/config/navigation.config';
 
 const CheckoutAuthForm: NextPage = () => {
   const { loginFormValidation, userFieldsInitValues } = useForms();
@@ -29,15 +30,29 @@ const CheckoutAuthForm: NextPage = () => {
 
   return (
     <>
-      <Accordion>
+      <Accordion
+        sx={{
+          ...themeCustomElements.forms?.accordion?.default ?
+            convertElementToSx(themeCustomElements.forms.accordion.default) : undefined,
+        }}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
+          sx={{
+            ...themeCustomElements.forms?.accordion?.summary ?
+              convertElementToSx(themeCustomElements.forms.accordion.summary) : undefined,
+          }}
         >
           <Typography component="div" variant="body1Head">
             <FormattedMessage id="checkout.auth.title" />
           </Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: colors.background.primary }}>
+        <AccordionDetails
+          sx={{
+            ...themeCustomElements.forms?.accordion?.details ?
+              convertElementToSx(themeCustomElements.forms.accordion.details) : undefined,
+          }}
+        >
           <BaseForm
             maxWidth={maxWidth}
             initialValues={{

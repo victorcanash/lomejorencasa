@@ -9,11 +9,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 
 import { FormFieldTypes } from '@core/constants/forms';
-
-import colors from '@lib/config/theme/colors';
+import { convertElementToSx } from '@core/utils/themes';
 import useForms from '@core/hooks/useForms';
 import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';
+
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 const CheckoutCouponForm: NextPage = () => {
   const { couponFormValidation, couponFieldsInitValues } = useForms();
@@ -27,15 +28,29 @@ const CheckoutCouponForm: NextPage = () => {
 
   return (
     <>
-      <Accordion>
+      <Accordion
+        sx={{
+          ...themeCustomElements.forms?.accordion?.default ?
+            convertElementToSx(themeCustomElements.forms.accordion.default) : undefined,
+        }}
+      >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
+          sx={{
+            ...themeCustomElements.forms?.accordion?.summary ?
+              convertElementToSx(themeCustomElements.forms.accordion.summary) : undefined,
+          }}
         >
           <Typography component="div" variant="body1Head">
             <FormattedMessage id="checkout.coupon.title" />
           </Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ backgroundColor: colors.background.primary }}>
+        <AccordionDetails
+          sx={{
+            ...themeCustomElements.forms?.accordion?.details ?
+              convertElementToSx(themeCustomElements.forms.accordion.details) : undefined,
+          }}
+        >
           <BaseForm
             maxWidth={maxWidth}
             initialValues={couponFieldsInitValues}

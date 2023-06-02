@@ -521,6 +521,13 @@ export const themeCustomElements: {
     payNow?: ThemeElement,
     acceptCookies?: ThemeElement,
   },
+  forms?: {
+    accordion?: {
+      default?: ThemeElement,
+      summary?: ThemeElement,
+      details?: ThemeElement,
+    },
+  },
 } = {
   dividers: {
     subdivider: {
@@ -709,7 +716,7 @@ export const themeCustomElements: {
     accordionGroup: {
       details: {
         backgroundColor: {
-          default: colors.background.faqAccordeonHeadContent,
+          default: colors.background.accordionFormContent,
         },
       },
     },
@@ -815,7 +822,21 @@ export const themeCustomElements: {
           },
         },
       },
-    }
+    },
+  },
+  forms: {
+    accordion: {
+      summary: {
+        backgroundColor: {
+          default: colors.background.secondary,
+        },
+      },
+      details: {
+        backgroundColor: {
+          default: colors.background.accordionFormContent,
+        },
+      },
+    },
   },
 };
 

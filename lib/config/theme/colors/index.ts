@@ -6,7 +6,7 @@ const colors = {
     footerContent: '#30343C',
     footerGradient: '#748576',
     homeSection: '#586453',
-    faqAccordeonHeadContent: '#E4E7DF',
+    accordionFormContent: '#F7F7F7',
     tableHead: '#A7AC93',
     tableRowEven: '#ECF7DC',
     input: '#FFFFFF',

@@ -15,15 +15,16 @@ import type { User } from '@core/types/user';
 import type { CreateProductReview, ProductPack } from '@core/types/products';
 import { getUserFullName } from '@core/utils/user';
 import { getPackGeneralName } from '@core/utils/products';
-
-import { landingConfigs } from '@lib/config/inventory.config';
-import colors from '@lib/config/theme/colors';
+import { convertElementToSx } from '@core/utils/themes';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 import useMultimedia from '@core/hooks/useMultimedia';
 import BaseForm from '@core/components/forms/BaseForm';
 import UploadInput from '@core/components/inputs/UploadInput';
+
+import { landingConfigs } from '@lib/config/inventory.config';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ProductReviewFormProps = {
   errorMsg: string,
@@ -77,15 +78,32 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
   };
 
   return (
-    <Accordion defaultExpanded={false} expanded={expanded} onChange={handleChange}>
+    <Accordion
+      defaultExpanded={false}
+      expanded={expanded}
+      onChange={handleChange}
+      sx={{
+        ...themeCustomElements.forms?.accordion?.default ?
+          convertElementToSx(themeCustomElements.forms.accordion.default) : undefined,
+      }}
+    >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
+        sx={{
+          ...themeCustomElements.forms?.accordion?.summary ?
+            convertElementToSx(themeCustomElements.forms.accordion.summary) : undefined,
+        }}
       >
         <Typography component="div" variant="body1Head">
           <FormattedMessage id="forms.productReview.title" />
         </Typography>
       </AccordionSummary>
-      <AccordionDetails sx={{ backgroundColor: colors.background.primary }}>
+      <AccordionDetails
+        sx={{
+          ...themeCustomElements.forms?.accordion?.details ?
+            convertElementToSx(themeCustomElements.forms.accordion.details) : undefined,
+        }}
+      >
         <BaseForm
           formikRef={formRef}
           maxWidth={maxWidth}
