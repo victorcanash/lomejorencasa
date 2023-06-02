@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useIntl } from 'react-intl';
 
 import { AdminSections } from '@core/constants/admin';
-import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory, ProductPack } from '@core/types/products';
 import { getAllProducts, getAllPacks, getProduct } from '@core/utils/products';
 
@@ -38,7 +37,7 @@ const useAdmin = (checkedPage: boolean) => {
 
   const getCheckProductsProps = useCallback(async (sectionSearch: AdminSections) => {
     const { category, page, sortBy, order, keywords } = router.query;
-    const categorySearch = typeof category == 'string' ? category : allProductsName;
+    const categorySearch = typeof category == 'string' ? category : searchConfig.allProductsName;
     const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
     const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
     const orderSearch = typeof order == 'string' ? order : 'asc';

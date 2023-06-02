@@ -11,7 +11,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Box from '@mui/material/Box';
 
-import { allProductsName } from '@core/constants/products';
+import searchConfig from '@lib/config/search.config';
 import type { Product, ProductCategory } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 import { capitalizeFirstLetter } from '@core/utils/strings';
@@ -41,7 +41,7 @@ const ProductList = (props: ProductListProps) => {
   const router = useRouter();
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getHref(category?.name.current || allProductsName, page, keywords));
+    router.push(getHref(category?.name.current || searchConfig.allProductsName, page, keywords));
   };
 
   return (

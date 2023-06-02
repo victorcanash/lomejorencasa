@@ -1,9 +1,7 @@
 import type { GetServerSideProps } from 'next';
 
-import { allProductsName } from '@core/constants/products';
 import type { Product, ProductCategory } from '@core/types/products';
 import { getAllProducts } from '@core/utils/products';
-
 import searchConfig from '@lib/config/search.config';
 
 export type CollectionProps = {
@@ -17,7 +15,7 @@ export type CollectionProps = {
 export const getCollectionProps: GetServerSideProps = async (context) => {
   const categoryParam = context.params?.category;
   const { page, sortBy, order, keywords } = context.query;
-  const categorySearch = typeof categoryParam == 'string' ? categoryParam : allProductsName;
+  const categorySearch = typeof categoryParam == 'string' ? categoryParam : searchConfig.allProductsName;
   const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
   const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
   const orderSearch = typeof order == 'string' ? order : 'asc';

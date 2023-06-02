@@ -11,7 +11,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
 import { ManageActions } from '@core/constants/app';
-import { allProductsName } from "@core/constants/products";
+import searchConfig from '@lib/config/search.config';
 import type { Product, ProductCategory, ProductInventory, ProductDiscount } from '@core/types/products';
 import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';
 import Button from '@core/components/inputs/Button';
@@ -81,7 +81,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
   };
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getHref(category?.name.current || allProductsName, page, keywords));
+    router.push(getHref(category?.name.current || searchConfig.allProductsName, page, keywords));
   };
 
   const refreshProduct = (productId: number, bigbuyData = false) => {

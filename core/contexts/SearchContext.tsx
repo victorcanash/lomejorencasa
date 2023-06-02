@@ -8,7 +8,7 @@ import {
 } from 'react';
 
 import { AdminSections } from '@core/constants/admin';
-import { allProductsName } from '@core/constants/products';
+import searchConfig from '@lib/config/search.config';
 import type { ProductCategory } from '@core/types/products';
 
 import { pages } from '@lib/config/navigation.config';
@@ -49,7 +49,11 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
   const [sortBy, setSortBy] = useState('id');
   const [order, setOrder] = useState('asc');
 
-  const getHref = useCallback((categoryName = allProductsName, page = 1, keywords = '', admin = false) => {
+  const getHref = useCallback((
+    categoryName = searchConfig.allProductsName,
+    page = 1, keywords = '',
+    admin = false
+  ) => {
     const pagePath = !admin ? `${pages.productList.path}/${categoryName}` : pages.admin.path;
     let queries = `?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
     if (admin) {
