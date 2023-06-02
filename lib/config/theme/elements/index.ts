@@ -479,6 +479,9 @@ export const themeCustomElements: {
       default?: ThemeElement,
       small?: ThemeElement,
     },
+    register?: {
+      discountPercentText?: ThemeElement,
+    },
   },
   navBar?: {
     shippingBar?: {
@@ -599,6 +602,22 @@ export const themeCustomElements: {
             default: typographies.homeBanner.small,
           },
         }, 
+      },
+    },
+    register: {
+      discountPercentText: {
+        text: {
+          color: {
+            default: colors.text.action,
+          },
+          font: {
+            default: {
+              fontWeight: '700',
+              fontSize: '60px',
+              textTransform: 'uppercase',
+            },
+          },
+        },
       },
     },
   },

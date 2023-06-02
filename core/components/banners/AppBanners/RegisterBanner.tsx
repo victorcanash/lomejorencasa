@@ -8,13 +8,14 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import { firstBuyDiscountPercent } from '@lib/config/payment.config';
+import { convertElementToSx } from '@core/utils/themes';
+import { useAppContext } from '@core/contexts/AppContext';
+import { useAuthContext } from '@core/contexts/AuthContext';
 import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/config/theme/colors';
-import { useAppContext } from '@core/contexts/AppContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
+import { themeCustomElements } from '@lib/config/theme/elements';
+import { firstBuyDiscountPercent } from '@lib/config/payment.config';
 
 type RegisterBannerProps = {
   open: boolean,
@@ -96,14 +97,12 @@ const RegisterBanner = (props: RegisterBannerProps) => {
                 />
               </Typography>
               <Typography
-                component='div'
-                variant='h3'
+                component="div"
+                variant="h3"
                 textAlign="center"
                 sx={{
-                  textTransform: 'uppercase',
-                  color: colors.text.action,
-                  fontWeight: 700,
-                  fontSize: '60px',
+                  ...themeCustomElements.banners?.register?.discountPercentText ?
+                    convertElementToSx(themeCustomElements.banners.register.discountPercentText) : undefined,
                   mb: 2,
                 }}
               >
