@@ -30,7 +30,7 @@ import { consentFBEvents } from '@core/utils/facebook';
 import { consentGTMEvents } from '@core/utils/gtm';
 
 import seoConfig from '@lib/config/next-seo.config';
-import { messages } from '@lib/constants/lang';
+import { messages } from '@lib/config/lang';
 import theme from '@lib/config/theme';
 import snackbarConfig from '@lib/config/snackbar.config';
 import { AppProvider } from '@core/contexts/AppContext';
