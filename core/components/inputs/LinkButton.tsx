@@ -30,7 +30,6 @@ const LinkButton = (props: MuiButtonProps & LinkProps & ButtonProps) => {
   return (  
     <MuiButton
       variant="contained"
-      noLinkStyle
       {...props}
       component={Link}
       sx={{

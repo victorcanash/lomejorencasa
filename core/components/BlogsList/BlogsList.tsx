@@ -30,7 +30,7 @@ const BlogsList = () => {
 
         { blogsConfig.map((blog, index) => (
           <Typography key={index} component="h3" variant="h3" mb={2}>
-            <Link href={blog.path || pages.home.path} noLinkStyle>
+            <Link href={blog.path || pages.home.path}>
               <FormattedMessage id={blog.text.id} values={blog.text.values} />
             </Link>
           </Typography>

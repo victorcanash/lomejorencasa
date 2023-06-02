@@ -37,8 +37,7 @@ const NavDrawerBtn = (props: NavDrawerBtnProps) => {
         <ListItemButton 
           sx={{ pl: !item.items ? 4 : undefined }}
           onClick={() => handleItemBtn(item)}
-          component={Link} 
-          noLinkStyle 
+          component={Link}
           href={item.path}
         >
           <NavDrawerBtnContent

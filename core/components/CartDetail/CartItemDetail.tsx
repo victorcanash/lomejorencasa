@@ -115,7 +115,6 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               <Link
                 onClick={closeDrawer}
                 href={getPageUrlByCartItem(item)}
-                noLinkStyle
               >
                 <Box
                   sx={{

@@ -84,6 +84,7 @@ const themeOptions: ThemeOptions = {
       styleOverrides: {
         root: {
           textDecoration: 'underline',
+          textDecorationColor: themeDefaultElements.link ? convertElementToSx(themeDefaultElements.link).color : undefined,
           ...themeDefaultElements.link ? convertElementToSx(themeDefaultElements.link) : undefined,
         },
       },

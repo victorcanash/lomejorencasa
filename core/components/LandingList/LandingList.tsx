@@ -102,7 +102,7 @@ const LandingList = () => {
                 key={index}
               >
                 <Card>
-                  <CardActionArea component={Link} href={getLandingPath(item.id)} noLinkStyle>
+                  <CardActionArea component={Link} href={getLandingPath(item.id)}>
                     <CardMedia>
                       <Box>
                         <CustomImage

@@ -76,7 +76,6 @@ const BundleDetail = (props: BundleDetailProps) => {
             >
               <Link
                 href={getPageUrlByLandingId(bundleConfig.landingId)}
-                noLinkStyle
               >
                 { packText }
               </Link>
@@ -125,7 +124,6 @@ const BundleDetail = (props: BundleDetailProps) => {
         <Grid item xs={5.5}>
           <Link
             href={getPageUrlByLandingId(bundleConfig.secondItem ? bundleConfig.firstItem.landingId : bundleConfig.landingId)}
-            noLinkStyle
           >
             <CustomImage
               src={bundleConfig.firstItem.image}
@@ -153,7 +151,6 @@ const BundleDetail = (props: BundleDetailProps) => {
             <Grid item xs={5.5}>
               <Link
                 href={getPageUrlByLandingId(bundleConfig.secondItem.landingId)}
-                noLinkStyle
               >
                 <CustomImage
                   src={bundleConfig.secondItem.image}
