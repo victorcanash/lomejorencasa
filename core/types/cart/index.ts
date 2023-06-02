@@ -1,5 +1,10 @@
 import type { ProductInventory, ProductPack } from '@core/types/products';
 
+export type CartConfig = {
+  maxQuantity: number,
+  rangeChangeItemQuantity: number,
+};
+
 export type Cart = {
   id: number,
   userId: number,
