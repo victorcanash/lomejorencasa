@@ -13,11 +13,13 @@ const Faq = () => {
         m="auto"
       >
         { faqConfig.map((faqGroup, index) => (
-          <FaqAccordion
-            key={index}
-            faqGroup={faqGroup}
-            defaultExpanded={index === 0 ? true : false}
-          />
+          <Box key={index} mt={index > 0 ? 1 : undefined}>
+            <FaqAccordion
+              key={index}
+              faqGroup={faqGroup}
+              defaultExpanded={index === 0 ? true : false}
+            />
+          </Box>
         ))}
       </Box>
     </Container>

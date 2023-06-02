@@ -204,6 +204,7 @@ export const themeDefaultElements: {
   accordion: {
     backgroundColor: {
       default: colors.background.secondary,
+      before: 'transparent',
     },
     border: {
       default: {
@@ -713,11 +714,6 @@ export const themeCustomElements: {
       },
     },
     accordion: {
-      default: {
-        backgroundColor: {
-          before: 'transparent',
-        }
-      },
       summary: {
         backgroundColor: {
           default: colors.background.secondary,

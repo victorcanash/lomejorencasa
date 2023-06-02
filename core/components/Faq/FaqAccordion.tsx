@@ -53,43 +53,43 @@ const FaqAccordion = (props: FaqAccordionProps) => {
         }}
       >
         { faqGroup.questions.map((question, index) => (
-          <Accordion
-            key={index}
-            sx={{
-              ...themeCustomElements.faq?.accordion?.default ?
-                convertElementToSx(themeCustomElements.faq.accordion.default) : undefined,
-              mt: 1,
-            }}
-          >
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+          <Box key={index} mt={index > 0 ? 1 : undefined}>
+            <Accordion
               sx={{
-                ...themeCustomElements.faq?.accordion?.summary ?
-                  convertElementToSx(themeCustomElements.faq.accordion.summary) : undefined,
+                ...themeCustomElements.faq?.accordion?.default ?
+                  convertElementToSx(themeCustomElements.faq.accordion.default) : undefined,
               }}
             >
-              <Typography component="div" variant="body1Head">
-                <FormattedMessage id={`faq.${faqGroup.title.id}.q.${question.text.id}`} values={question.text.values} />
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails
-              sx={{
-                ...themeCustomElements.faq?.accordion?.details ?
-                  convertElementToSx(themeCustomElements.faq.accordion.details) : undefined,
-              }}
-            >
-              <Typography component="div" variant="body1">
-                <FormattedMessage id={`faq.${faqGroup.title.id}.r.${question.text.id}`} values={question.text.values} />
-              </Typography>
-              { question.path &&
-                <Box sx={{ mt: 2 }}>
-                  <Link href={question.path} variant="body1">
-                    <FormattedMessage id="faq.link" />
-                  </Link>
-                </Box>
-              }           
-            </AccordionDetails>
-          </Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                sx={{
+                  ...themeCustomElements.faq?.accordion?.summary ?
+                    convertElementToSx(themeCustomElements.faq.accordion.summary) : undefined,
+                }}
+              >
+                <Typography component="div" variant="body1Head">
+                  <FormattedMessage id={`faq.${faqGroup.title.id}.q.${question.text.id}`} values={question.text.values} />
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails
+                sx={{
+                  ...themeCustomElements.faq?.accordion?.details ?
+                    convertElementToSx(themeCustomElements.faq.accordion.details) : undefined,
+                }}
+              >
+                <Typography component="div" variant="body1">
+                  <FormattedMessage id={`faq.${faqGroup.title.id}.r.${question.text.id}`} values={question.text.values} />
+                </Typography>
+                { question.path &&
+                  <Box sx={{ mt: 2 }}>
+                    <Link href={question.path} variant="body1">
+                      <FormattedMessage id="faq.link" />
+                    </Link>
+                  </Box>
+                }           
+              </AccordionDetails>
+            </Accordion>
+          </Box>
         ))}
       </AccordionDetails>
     </Accordion>
