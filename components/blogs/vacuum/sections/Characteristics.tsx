@@ -128,7 +128,7 @@ const Characteristics = (props: CharacteristicsProps) => {
 
       <Box
         sx={{
-          backgroundColor: colors.background.homeSection,
+          backgroundColor: '#586453',
           color: colors.text.white,
           position: 'relative',
           mt: 4,
