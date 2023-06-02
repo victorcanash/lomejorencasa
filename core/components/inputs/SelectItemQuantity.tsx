@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import MuiSelect, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
-import { rangeChangeItemQuantity } from '@lib/config/cart.config';
+import { rangeChangeItemQuantity } from '@core/config/cart.config';
 import type { ProductInventory, ProductPack } from '@core/types/products';
 import type { CartItem } from '@core/types/cart';
 import { convertElementToSx } from '@core/utils/themes';

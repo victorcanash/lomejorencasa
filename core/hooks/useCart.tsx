@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
-import { maxQuantity } from '@lib/config/cart.config';
+import { maxQuantity } from '@core/config/cart.config';
 import type { Cart, CartItem, TotalAmount } from '@core/types/cart';
 import type { ProductInventory, ProductPack } from '@core/types/products';
 import { 
