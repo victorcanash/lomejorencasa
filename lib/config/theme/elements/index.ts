@@ -504,6 +504,9 @@ export const themeCustomElements: {
     },
     bundleTitle?: ThemeElement,
   },
+  reviews?: {
+    verifiedText?: ThemeElement,
+  },
   faq?: {
     accordionGroup?: {
       default?: ThemeElement,
@@ -729,6 +732,15 @@ export const themeCustomElements: {
           },
         },
       }
+    },
+  },
+  reviews: {
+    verifiedText: {
+      text: {
+        color: {
+          default: colors.text.verified,
+        },
+      },
     },
   },
   faq: {

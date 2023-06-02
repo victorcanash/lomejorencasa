@@ -17,16 +17,17 @@ import Rating from '@mui/material/Rating';
 import Masonry from '@mui/lab/Masonry';
 
 import { convertToDate } from '@core/utils/dates';
+import { convertElementToSx } from '@core/utils/themes';
 import { getPackGeneralName } from '@core/utils/products';
-import CustomImage from '@core/components/multimedia/CustomImage';
-
-import { landingConfigs } from '@lib/config/inventory.config';
-import colors from '@lib/config/theme/colors';
 import { useAppContext } from '@core/contexts/AppContext';
 import useReviews from '@core/hooks/useReviews';
 import Title from '@core/components/ui/Title';
 import Pagination from '@core/components/ui/Pagination';
+import CustomImage from '@core/components/multimedia/CustomImage';
 import ProductReviewForm from '@core/components/forms/products/ProductReviewForm';
+
+import { themeCustomElements } from '@lib/config/theme/elements';
+import { landingConfigs } from '@lib/config/inventory.config';
 
 const ProductReviews = () => {
   const { initialized } = useAppContext();
@@ -142,7 +143,14 @@ const ProductReviews = () => {
                                 <Typography component="div" variant="body1" color="text.primary">
                                   {item.publicName}
                                 </Typography>
-                                <Typography component="div" variant="body2" sx={{ color: colors.text.verified }}>
+                                <Typography
+                                  component="div"
+                                  variant="body2"
+                                  sx={{
+                                    ...themeCustomElements.reviews?.verifiedText ?
+                                      convertElementToSx(themeCustomElements.reviews.verifiedText) : undefined,
+                                  }}
+                                >
                                   <FormattedMessage
                                     id="productDetail.reviews.verified"
                                   />
