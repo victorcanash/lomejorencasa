@@ -19,6 +19,7 @@ export type ThemeColorElement = {
   odd?: string,
   firstChild?: string,
   lastChild?: string,
+  before?: string,
 };
 
 export type ThemeBorderElement = {
@@ -30,6 +31,7 @@ export type ThemeBorderElement = {
   odd?: ThemeBorderPropertyElement,
   firstChild?: ThemeBorderPropertyElement,
   lastChild?: ThemeBorderPropertyElement,
+  before?: ThemeBorderPropertyElement,
 };
 
 export type ThemeSpacingElement = {
@@ -41,6 +43,7 @@ export type ThemeSpacingElement = {
   odd?: ThemeSpacingPropertyElement,
   firstChild?: ThemeSpacingPropertyElement,
   lastChild?: ThemeSpacingPropertyElement,
+  before?: ThemeSpacingPropertyElement,
 };
 
 export type ThemeFontElement = {
@@ -52,6 +55,7 @@ export type ThemeFontElement = {
   odd?: ThemeFontPropertyElement,
   firstChild?: ThemeFontPropertyElement,
   lastChild?: ThemeFontPropertyElement,
+  before?: ThemeFontPropertyElement,
 };
 
 export type ThemeBorderPropertyElement = {

@@ -11,12 +11,13 @@ export const convertElementToSx= (themeElement: ThemeElement) => {
     '&:first-of-type': convertElementToEventSx(themeElement, 'firstChild'),
     '&:last-child': convertElementToEventSx(themeElement, 'lastChild'),
     '&:last-of-type': convertElementToEventSx(themeElement, 'lastChild'),
+    '&:before': convertElementToEventSx(themeElement, 'before'),
   });
 };
 
 const convertElementToEventSx = (
   themeElement: ThemeElement,
-  themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'firstChild' | 'lastChild',
+  themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'firstChild' | 'lastChild' | 'before',
 ) => {
   return ({
     background: themeElement.background?.[themeElementType],

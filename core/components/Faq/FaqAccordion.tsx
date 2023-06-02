@@ -28,37 +28,56 @@ const FaqAccordion = (props: FaqAccordionProps) => {
     <Accordion
       defaultExpanded={defaultExpanded}
       sx={{
-        ...themeCustomElements.faq?.accordeon?.head?.title ? convertElementToSx(themeCustomElements.faq.accordeon.head.title) : undefined,
+        ...themeCustomElements.faq?.accordionGroup?.default ?
+          convertElementToSx(themeCustomElements.faq.accordionGroup.default) : undefined,
       }}
     >
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
+        sx={{
+          ...themeCustomElements.faq?.accordionGroup?.summary ?
+            convertElementToSx(themeCustomElements.faq.accordionGroup.summary) : undefined,
+        }}
       >
         <Typography 
-          component="h2" 
-          variant="h2"
-          sx={{
-            ...themeCustomElements.faq?.accordeon?.head?.title ? convertElementToSx(themeCustomElements.faq.accordeon.head.title) : undefined,
-          }}
+          component="h2"
+          variant="h3"
         >
           <FormattedMessage id={`faq.${faqGroup.title.id}.title`} values={faqGroup.title.values} />
         </Typography>
       </AccordionSummary>
       <AccordionDetails
         sx={{
-          ...themeCustomElements.faq?.accordeon?.head?.content ? convertElementToSx(themeCustomElements.faq.accordeon.head.content) : undefined,
+          ...themeCustomElements.faq?.accordionGroup?.details ?
+            convertElementToSx(themeCustomElements.faq.accordionGroup.details) : undefined,
         }}
       >
         { faqGroup.questions.map((question, index) => (
-          <Accordion key={index}>
+          <Accordion
+            key={index}
+            sx={{
+              ...themeCustomElements.faq?.accordion?.default ?
+                convertElementToSx(themeCustomElements.faq.accordion.default) : undefined,
+              mt: 1,
+            }}
+          >
             <AccordionSummary
               expandIcon={<ExpandMoreIcon />}
+              sx={{
+                ...themeCustomElements.faq?.accordion?.summary ?
+                  convertElementToSx(themeCustomElements.faq.accordion.summary) : undefined,
+              }}
             >
               <Typography component="div" variant="body1Head">
                 <FormattedMessage id={`faq.${faqGroup.title.id}.q.${question.text.id}`} values={question.text.values} />
               </Typography>
             </AccordionSummary>
-            <AccordionDetails>
+            <AccordionDetails
+              sx={{
+                ...themeCustomElements.faq?.accordion?.details ?
+                  convertElementToSx(themeCustomElements.faq.accordion.details) : undefined,
+              }}
+            >
               <Typography component="div" variant="body1">
                 <FormattedMessage id={`faq.${faqGroup.title.id}.r.${question.text.id}`} values={question.text.values} />
               </Typography>

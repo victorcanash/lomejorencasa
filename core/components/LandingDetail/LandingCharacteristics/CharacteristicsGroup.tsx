@@ -13,11 +13,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import type { FormatText } from '@core/types/texts';
 import type { NavItem } from '@core/types/navigation';
 import type { Source } from '@core/types/multimedia';
-import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
-
-import { themeCustomElements } from '@lib/config/theme/elements';
 
 type CharacteristicsGroupProps = {
   title: FormatText,
@@ -71,16 +68,9 @@ const CharacteristicsGroup = (props: CharacteristicsGroupProps) => {
       xs={12}
       sm={6}
     >
-      <Accordion
-        sx={{
-          ...themeCustomElements.landing?.accordion?.default ? convertElementToSx(themeCustomElements.landing.accordion.default) : undefined,
-        }}
-      >
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
-          sx={{
-            ...themeCustomElements.landing?.accordion?.head ? convertElementToSx(themeCustomElements.landing.accordion.head) : undefined,
-          }}
         >
           <Typography component="div" variant="body1Head" align={title.textAlign}>
             <FormattedMessage id={title.id} values={title.values} defaultMessage={title.id} />

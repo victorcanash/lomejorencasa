@@ -33,6 +33,8 @@ export const themeDefaultElements: {
   dialogTitle?: ThemeElement,
   dialogContentText?: ThemeElement,
   accordion?: ThemeElement,
+  accordionSummary?: ThemeElement,
+  accordionDetails?: ThemeElement,
   divider?: ThemeElement,
   tableRow?: {
     default?: ThemeElement,
@@ -200,6 +202,52 @@ export const themeDefaultElements: {
     },
   },
   accordion: {
+    backgroundColor: {
+      default: colors.background.secondary,
+    },
+    border: {
+      default: {
+        radius: {
+          topRight: '25px',
+          topLeft: '6px',
+          bottomRight: '6px',
+          bottomLeft: '6px',
+        },
+      },
+      firstChild: {
+        radius: {
+          topRight: '25px',
+          topLeft: '6px',
+          bottomRight: '6px',
+          bottomLeft: '6px',
+        },
+      },
+      lastChild: {
+        radius: {
+          topRight: '25px',
+          topLeft: '6px',
+          bottomRight: '6px',
+          bottomLeft: '6px',
+        },
+      },
+    },
+  },
+  accordionSummary: {
+    backgroundColor: {
+      default: colors.background.third,
+    },
+    border: {
+      default: {
+        radius: {
+          topRight: '25px',
+          topLeft: '6px',
+          bottomRight: '0px',
+          bottomLeft: '0px',
+        },
+      },
+    },
+  },
+  accordionDetails: {
     backgroundColor: {
       default: colors.background.secondary,
     },
@@ -451,17 +499,17 @@ export const themeCustomElements: {
       percentText?: ThemeElement,
     },
     bundleTitle?: ThemeElement,
-    accordion?: { 
-      default?: ThemeElement,
-      head?: ThemeElement,
-    },
   },
   faq?: {
-    accordeon?: {
-      head?: {
-        content?: ThemeElement,
-        title?: ThemeElement,
-      },
+    accordionGroup?: {
+      default?: ThemeElement,
+      summary?: ThemeElement,
+      details?: ThemeElement,
+    },
+    accordion?: {
+      default?: ThemeElement,
+      summary?: ThemeElement,
+      details?: ThemeElement,
     },
   },
   button?: {
@@ -655,72 +703,24 @@ export const themeCustomElements: {
         },
       }
     },
-    accordion: {
-      default: {
-        border: {
-          default: {
-            radius: {
-              topRight: '25px',
-              topLeft: '6px',
-              bottomRight: '6px',
-              bottomLeft: '6px',
-            },
-          },
-          firstChild: {
-            radius: {
-              topRight: '25px',
-              topLeft: '6px',
-              bottomRight: '6px',
-              bottomLeft: '6px',
-            },
-          },
-          lastChild: {
-            radius: {
-              topRight: '25px',
-              topLeft: '6px',
-              bottomRight: '6px',
-              bottomLeft: '6px',
-            },
-          },
-        },
-      },
-      head: {
-        backgroundColor: {
-          default: colors.background.third,
-        },
-        border: {
-          default: {
-            radius: {
-              topRight: '25px',
-              topLeft: '6px',
-              bottomRight: '0px',
-              bottomLeft: '0px',
-            },
-          },
-        },
-      },
-    }
   },
   faq: {
-    accordeon: {
-      head: {
-        content: {
-          backgroundColor: {
-            default: colors.background.faqAccordeonHeadContent,
-          },
+    accordionGroup: {
+      details: {
+        backgroundColor: {
+          default: colors.background.faqAccordeonHeadContent,
         },
-        title: {
-          backgroundColor: {
-            default: colors.background.third,
-          },
-          text: {
-            color: {
-              default: colors.text.black,
-            },
-            font: { 
-              default: typographies.secondTitle,
-            },
-          },
+      },
+    },
+    accordion: {
+      default: {
+        backgroundColor: {
+          before: 'transparent',
+        }
+      },
+      summary: {
+        backgroundColor: {
+          default: colors.background.secondary,
         },
       },
     },

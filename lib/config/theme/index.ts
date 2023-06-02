@@ -113,6 +113,16 @@ const themeOptions: ThemeOptions = {
         root: themeDefaultElements.accordion ? convertElementToSx(themeDefaultElements.accordion) : undefined,
       },
     },
+    MuiAccordionSummary: {
+      styleOverrides: {
+        root: themeDefaultElements.accordionSummary ? convertElementToSx(themeDefaultElements.accordionSummary) : undefined,
+      },
+    },
+    MuiAccordionDetails: {
+      styleOverrides: {
+        root: themeDefaultElements.accordionDetails ? convertElementToSx(themeDefaultElements.accordionDetails) : undefined,
+      },
+    },
     MuiDivider: {
       styleOverrides: {
         root: themeDefaultElements.divider ? convertElementToSx(themeDefaultElements.divider) : undefined,
