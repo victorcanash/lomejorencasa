@@ -14,7 +14,7 @@ import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import LinkButton from '@core/components/inputs/LinkButton';
 import Divider from '@core/components/ui/Divider';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import { pages } from '@lib/config/navigation.config';
 import { useCartContext } from '@core/contexts/CartContext';
 import { useAuthContext } from '@core/contexts/AuthContext';

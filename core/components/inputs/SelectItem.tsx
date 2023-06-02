@@ -11,7 +11,7 @@ import type { FormatText } from '@core/types/texts';
 import type { ProductInventory, ProductPack } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type SelectItemProps = {
   landingId: number,

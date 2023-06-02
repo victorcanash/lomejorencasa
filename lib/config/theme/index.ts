@@ -3,7 +3,7 @@ import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeDefaultElements } from '@lib/constants/themes/elements';
+import { themeDefaultElements } from '@lib/config/theme/elements';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {

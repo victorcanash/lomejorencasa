@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ShippingBarProps = {
   superSmallBreakpoint: boolean,

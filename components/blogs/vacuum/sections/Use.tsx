@@ -14,7 +14,7 @@ import Title from '@core/components/ui/Title';
 
 import { keywords } from '@lib/config/next-seo.config';
 import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/constants/themes/colors';
+import colors from '@lib/config/theme/colors';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
 const Use = () => {

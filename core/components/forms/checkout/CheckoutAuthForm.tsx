@@ -12,7 +12,7 @@ import { FormFieldTypes } from '@core/constants/forms';
 import type { AuthLogin } from '@core/types/auth';
 
 import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/constants/themes/colors';
+import colors from '@lib/config/theme/colors';
 import useForms from '@core/hooks/useForms';
 import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';

@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 
 import { keywords } from '@lib/config/next-seo.config';
 import Title from '@core/components/ui/Title';
-import colors from '@lib/constants/themes/colors';
+import colors from '@lib/config/theme/colors';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 const PackingMachine = () => {

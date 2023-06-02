@@ -14,7 +14,7 @@ import LinkButton from '@core/components/inputs/LinkButton';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 import productBannerConfig from '@lib/config/productBanner.config';
 import { pages } from '@lib/config/navigation.config';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 const ProductBanner = () => {
   const smallBreakpoint = useMediaQuery('(max-width:600px)');

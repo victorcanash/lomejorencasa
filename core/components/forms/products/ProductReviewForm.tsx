@@ -17,7 +17,7 @@ import { getUserFullName } from '@core/utils/user';
 import { getPackGeneralName } from '@core/utils/products';
 
 import { landingConfigs } from '@lib/config/inventory.config';
-import colors from '@lib/constants/themes/colors';
+import colors from '@lib/config/theme/colors';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';

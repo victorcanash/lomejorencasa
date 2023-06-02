@@ -1,7 +1,7 @@
 import type { ThemeElement } from '@core/types/themes';
 
-import colors from '@lib/constants/themes/colors';
-import typographies from '@lib/constants/themes/typographies';
+import colors from '@lib/config/theme/colors';
+import typographies from '@lib/config/theme/typographies';
 
 export const themeDefaultElements: {
   palette: {

@@ -13,7 +13,7 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
 import Title from '@core/components/ui/Title'; 
-import colors from '@lib/constants/themes/colors';
+import colors from '@lib/config/theme/colors';
 
 type CharacteristicsProps = {
   type: 'characteristics' | 'advantages',

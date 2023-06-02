@@ -2,7 +2,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { convertElementToSx } from '@core/utils/themes';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import { useAuthContext } from '@core/contexts/AuthContext';
 
 type ProductPriceProps = {

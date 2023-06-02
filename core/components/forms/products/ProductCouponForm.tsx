@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { FormFieldTypes } from '@core/constants/forms';
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import useForms from '@core/hooks/useForms';
 import useAuth from '@core/hooks/useAuth';
 import BaseForm from '@core/components/forms/BaseForm';

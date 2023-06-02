@@ -10,7 +10,7 @@ import SaveIcon from '@mui/icons-material/Save';
 
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ButtonProps = {
   customtype?: 'actionPrimary' | 'actionSecondary' | 'back' | 'payNow' | 'acceptCookies',

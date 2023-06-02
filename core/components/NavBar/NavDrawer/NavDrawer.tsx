@@ -10,7 +10,7 @@ import type { NavDrawerItem } from '@core/types/navigation';
 import Divider from '@core/components/ui/Divider';
 
 import useAuth from '@core/hooks/useAuth';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import NavDrawerBtn from '@core/components/NavBar/NavDrawer/NavDrawerBtn';
 
 type NavDrawerProps = {

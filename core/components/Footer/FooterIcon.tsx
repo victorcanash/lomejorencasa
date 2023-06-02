@@ -5,7 +5,7 @@ import {
 
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import Box from '@mui/material/Box';
 
 type FooterIconProps = {

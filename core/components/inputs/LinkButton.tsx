@@ -5,7 +5,7 @@ import MuiButton, { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 import { convertElementToSx } from '@core/utils/themes';
 import Link, { LinkProps } from '@core/components/navigation/Link';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ButtonProps = {
   customtype?: 'actionPrimary' | 'actionSecondary',

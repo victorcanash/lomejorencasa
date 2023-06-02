@@ -8,7 +8,7 @@ import type { LandingConfig } from '@core/types/products';
 import Divider from '@core/components/ui/Divider';
 
 import { pages } from '@lib/config/navigation.config';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import CharacteristicsGroup from '@core/components/LandingDetail/LandingCharacteristics/CharacteristicsGroup';
 
 type LandingCharacteristicsProps = {

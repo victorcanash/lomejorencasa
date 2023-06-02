@@ -21,7 +21,7 @@ import { getPackGeneralName } from '@core/utils/products';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { landingConfigs } from '@lib/config/inventory.config';
-import colors from '@lib/constants/themes/colors';
+import colors from '@lib/config/theme/colors';
 import { useAppContext } from '@core/contexts/AppContext';
 import useReviews from '@core/hooks/useReviews';
 import Title from '@core/components/ui/Title';

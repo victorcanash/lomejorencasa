@@ -8,7 +8,7 @@ import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '@core/cache/createEmotionCache';
 import envConfig from '@core/config/env.config';
 
-import theme from '@lib/constants/themes';
+import theme from '@lib/config/theme';
 
 export default class MyDocument extends Document {
   render() {

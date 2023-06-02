@@ -17,7 +17,7 @@ import Link from '@core/components/navigation/Link';
 import Button from '@core/components/inputs/Button';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import ProductPrice from '@core/components/ProductPrice';

@@ -12,7 +12,7 @@ import { firstBuyDiscountPercent } from '@lib/config/payment.config';
 import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/constants/themes/colors';
+import colors from '@lib/config/theme/colors';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 

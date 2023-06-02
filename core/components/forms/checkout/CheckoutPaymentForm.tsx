@@ -20,7 +20,7 @@ import TextField from '@mui/material/TextField';
 import type { FormatText } from '@core/types/texts';
 import Divider from '@core/components/ui/Divider';
 
-import { paypalHostedFieldsSx, themeCustomElements } from '@lib/constants/themes/elements';
+import { paypalHostedFieldsSx, themeCustomElements } from '@lib/config/theme/elements';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import BaseForm from '@core/components/forms/BaseForm';
 

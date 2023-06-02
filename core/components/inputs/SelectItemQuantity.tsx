@@ -12,7 +12,7 @@ import type { ProductInventory, ProductPack } from '@core/types/products';
 import type { CartItem } from '@core/types/cart';
 import { convertElementToSx } from '@core/utils/themes';
 
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type SelectItemQuantityProps = {
   item: ProductInventory | ProductPack | CartItem | undefined,

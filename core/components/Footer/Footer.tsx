@@ -20,7 +20,7 @@ import { convertElementToSx } from '@core/utils/themes';
 import Link from '@core/components/navigation/Link';
 
 import { pages, socialPaths } from '@lib/config/navigation.config';
-import { themeCustomElements } from '@lib/constants/themes/elements';
+import { themeCustomElements } from '@lib/config/theme/elements';
 import FooterIcon from '@core/components/Footer/FooterIcon';
 
 const Footer = () => {
