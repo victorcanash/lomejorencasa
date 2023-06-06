@@ -63,9 +63,9 @@ const Footer = () => {
               id="footer.contact.content"
               values={{
                 'link': (...chunks: ReactNode[]) => (
-                  <Link href={pages.contact.path} color="inherit">
+                  <Typography component={Link} href={pages.contact.path} variant="body1" color="inherit" noLinkStyle>
                     {chunks}
-                  </Link>
+                  </Typography>
                 ),
               }}
             />
@@ -122,35 +122,35 @@ const Footer = () => {
             />
           </Typography>
           <Box mb={2}>
-            <Typography component={Link} href={pages.faq.path} variant="body1" color="inherit">
+            <Typography component={Link} href={pages.faq.path} variant="body1" color="inherit" noLinkStyle>
               <FormattedMessage 
                 id="footer.utility.faq" 
               />
             </Typography>
           </Box>
           <Box mb={2}>
-            <Typography component={Link} href={pages.privacy.path} variant="body1" color="inherit">
+            <Typography component={Link} href={pages.privacy.path} variant="body1" color="inherit" noLinkStyle>
               <FormattedMessage 
                 id="footer.utility.privacy"
               />
             </Typography>
           </Box>
           <Box mb={2}>
-            <Typography component={Link} href={pages.cookies.path} variant="body1" color="inherit">
+            <Typography component={Link} href={pages.cookies.path} variant="body1" color="inherit" noLinkStyle>
               <FormattedMessage 
                 id="footer.utility.cookies" 
               />
             </Typography>
           </Box>
           <Box mb={2}>
-            <Typography component={Link} href={pages.legal.path} variant="body1" color="inherit">
+            <Typography component={Link} href={pages.legal.path} variant="body1" color="inherit" noLinkStyle>
               <FormattedMessage 
                 id="footer.utility.legal" 
               />
             </Typography>
           </Box>
           <Box>
-            <Typography component={Link} href={pages.conditions.path} variant="body1" color="inherit">
+            <Typography component={Link} href={pages.conditions.path} variant="body1" color="inherit" noLinkStyle>
               <FormattedMessage 
                 id="footer.utility.conditions" 
               />
