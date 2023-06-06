@@ -4,10 +4,10 @@ import { keywords } from '@lib/config/next-seo.config';
 const navBarConfig: NavBarConfig = {
   homeH1: keywords.vacuumMachine.main,
   logo: {
-    src: 'v1683277258/laenvasadora/LOGOS/LOGO-NUEVO-NAVBAR-SPACE-GREY_rjnkl7.png',
+    src: 'v1685641418/LO%20MEJOR%20EN%20CASA/IMAGOTIPO/IMAGOT%C3%8DPO-PNG_n8wvg8.png',
     width: {
-      default: '146px',
-      small: '126px',
+      default: '220px',
+      small: '165px',
     },
   },
 };
