@@ -117,6 +117,9 @@ const themeOptions: ThemeOptions = {
     MuiAccordionSummary: {
       styleOverrides: {
         root: themeDefaultElements.accordionSummary ? convertElementToSx(themeDefaultElements.accordionSummary) : undefined,
+        expandIconWrapper: {
+          color: themeDefaultElements.accordionSummary?.text?.color ? convertElementToSx(themeDefaultElements.accordionSummary).color : undefined,
+        }
       },
     },
     MuiAccordionDetails: {

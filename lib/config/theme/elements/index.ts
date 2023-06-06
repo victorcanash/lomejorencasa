@@ -105,7 +105,7 @@ export const themeDefaultElements: {
           default: typographies.title,
         },
         color: {
-          default: colors.text.title,
+          default: colors.text.black,
         },
       },
     },
@@ -115,7 +115,7 @@ export const themeDefaultElements: {
           default: typographies.title,
         },
         color: {
-          default: colors.text.title,
+          default: colors.text.black,
         },
       },
     },
@@ -203,7 +203,7 @@ export const themeDefaultElements: {
   },
   accordion: {
     backgroundColor: {
-      default: colors.background.secondary,
+      default: '#F7F7F7',
       before: 'transparent',
     },
     border: {
@@ -234,6 +234,11 @@ export const themeDefaultElements: {
     },
   },
   accordionSummary: {
+    text: {
+      color: {
+        default: colors.text.white,
+      },
+    },
     backgroundColor: {
       default: colors.background.third,
     },
@@ -250,7 +255,7 @@ export const themeDefaultElements: {
   },
   accordionDetails: {
     backgroundColor: {
-      default: colors.background.secondary,
+      default: '#F7F7F7',
     },
   },
   divider: {
@@ -361,7 +366,7 @@ export const themeDefaultElements: {
     },
     text: {
       color: {
-        default: colors.text.black,
+        default: colors.text.white,
       },
     },
   },
@@ -389,7 +394,7 @@ export const themeDefaultElements: {
         },
       },
       fill: {
-        default: colors.text.title,
+        default: colors.text.black,
       },
     },
     text: {
@@ -627,6 +632,11 @@ export const themeCustomElements: {
   navBar: {
     shippingBar: {
       content: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+        },
         backgroundColor: {
           default: colors.background.third,
         },
@@ -699,6 +709,11 @@ export const themeCustomElements: {
         },
       },
       percentText: {
+        text: {
+          color: {
+            default: colors.text.white,
+          },
+        },
         backgroundColor: {
           default: colors.background.third,
         },
@@ -851,20 +866,6 @@ export const themeCustomElements: {
             top: 1.5,
             bottom: 1.5,
           },
-        },
-      },
-    },
-  },
-  forms: {
-    accordion: {
-      summary: {
-        backgroundColor: {
-          default: colors.background.secondary,
-        },
-      },
-      details: {
-        backgroundColor: {
-          default: colors.background.accordionFormContent,
         },
       },
     },
