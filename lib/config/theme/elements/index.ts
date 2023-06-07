@@ -715,7 +715,7 @@ export const themeCustomElements: {
           },
         },
         backgroundColor: {
-          default: colors.background.third,
+          default: colors.background.action.secondary.default,
         },
         border: {
           default: {
