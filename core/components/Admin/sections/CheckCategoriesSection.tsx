@@ -10,12 +10,12 @@ import { ManageActions } from '@core/constants/app';
 import type { ProductCategory } from '@core/types/products';
 import Button from '@core/components/inputs/Button';
 
-import { useSearchContext } from '@core/contexts/SearchContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
 import CategoryDetail from '@core/components/Admin/details/CategoryDetail';
 
 const CheckCategoriesSection = () => {
-  const { productCategories } = useSearchContext();
+  const { getAllCategories } = useProductsContext();
 
   const [selected, setSelected] = useState<ProductCategory | undefined>(undefined);
 
@@ -45,7 +45,7 @@ const CheckCategoriesSection = () => {
             />
           </Typography>
           <Grid container spacing={4} py={3}>
-            {productCategories?.map((item, index) => (
+            {getAllCategories().map((item, index) => (
               <Grid item xs={6} key={index}>
                 <CategoryDetail 
                   category={item}

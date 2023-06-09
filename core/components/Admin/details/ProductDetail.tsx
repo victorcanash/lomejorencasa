@@ -6,10 +6,8 @@ import Typography from '@mui/material/Typography';
 // import Box from '@mui/material/Box';
 
 import type { Product } from '@core/types/products';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 // import CustomImage from '@core/components/CustomImage';
-
-import { useSearchContext } from '@core/contexts/SearchContext';
-// import { useProductsContext } from '@lib/contexts/ProductsContext';
 
 type ProductDetailProps = {
   product: Product,
@@ -19,8 +17,7 @@ type ProductDetailProps = {
 const ProductDetail = (props: ProductDetailProps) => {
   const { product, created } = props;
 
-  const { productCategories } = useSearchContext();
-  // const { getLandingImgsUrl } = useProductsContext();
+  const { getAllCategories } = useProductsContext();
 
   const intl = useIntl();
 
@@ -44,7 +41,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         {`${intl.formatMessage({ id: 'forms.description.es' })}: ${product.description.es}`}
       </Typography>
       <Typography component="div" variant="body1">
-        {`${intl.formatMessage({ id: 'forms.category' })}: ${productCategories.filter((item) => item.id == product.categoryId)[0]?.name.current}`}
+        {`${intl.formatMessage({ id: 'forms.category' })}: ${getAllCategories().filter((item) => item.id == product.categoryId)[0]?.name.current}`}
       </Typography>
      
       { created &&

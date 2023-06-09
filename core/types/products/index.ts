@@ -11,7 +11,14 @@ export type ProductBannerConfig = {
 };
 
 export type InventoryConfig = {
+  categories: CategoryConfig[],
   landings: LandingConfig[],
+};
+
+export type CategoryConfig = {
+  id: number,
+  name: LocalizedText,
+  image?: string,
 };
 
 export type LandingConfig = {
@@ -101,6 +108,7 @@ export type ProductCategory = {
   id: number,
   name: LocalizedText,
   description: LocalizedText,
+  image?: string,
 };
 
 export type Product = {

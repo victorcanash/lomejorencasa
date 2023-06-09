@@ -34,7 +34,6 @@ import { messages } from '@lib/config/lang';
 import theme from '@lib/config/theme';
 import snackbarConfig from '@lib/config/snackbar.config';
 import { AppProvider } from '@core/contexts/AppContext';
-import { SearchProvider } from '@core/contexts/SearchContext';
 import { ProductsProvider } from '@core/contexts/ProductsContext';
 import { CartProvider } from '@core/contexts/CartContext';
 import { AuthProvider } from '@core/contexts/AuthContext';
@@ -160,17 +159,15 @@ function MyApp(props: MyAppProps) {
                     
                   <ErrorBoundary>
                     <AppProvider>
-                      <SearchProvider>
-                        <ProductsProvider>
-                          <CartProvider>
-                            <AuthProvider>
-                              <MainLayout>
-                                <Component {...pageProps} />
-                              </MainLayout> 
-                            </AuthProvider>
-                          </CartProvider>
-                        </ProductsProvider>          
-                      </SearchProvider>
+                      <ProductsProvider>
+                        <CartProvider>
+                          <AuthProvider>
+                            <MainLayout>
+                              <Component {...pageProps} />
+                            </MainLayout> 
+                          </AuthProvider>
+                        </CartProvider>
+                      </ProductsProvider>
                     </AppProvider>
                   </ErrorBoundary>
 

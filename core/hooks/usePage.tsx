@@ -7,15 +7,13 @@ import { init, isAdminUser } from '@core/utils/auth';
 
 import { pages } from '@lib/config/navigation.config';
 import { useAppContext } from '@core/contexts/AppContext';
-import { useSearchContext } from '@core/contexts/SearchContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useCartContext } from '@core/contexts/CartContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 
 const usePage = (setLoaded = true) => {
   const { initialized, setInitialized, setLoading } = useAppContext();
-  const { setProductCategories } = useSearchContext();
-  const { initLandings } = useProductsContext();
+  const { initProducts } = useProductsContext();
   const { initCart } = useCartContext();
   const {
     token,
@@ -40,8 +38,7 @@ const usePage = (setLoaded = true) => {
       [],
       [],
     ).then(async (response) => {
-      setProductCategories(response.productCategories);
-      initLandings(response.landings);
+      initProducts(response.productCategories, response.landings);
       initCart(response.cart);
       if (response.token && response.user) {
         setToken(response.token);
@@ -52,7 +49,7 @@ const usePage = (setLoaded = true) => {
     }).catch(async (_error: Error) => { 
       // throw error;
     });
-  }, [initCart, initLandings, intl.locale, setInitialized, setPaypal, setProductCategories, setToken, setUser]);
+  }, [initCart, initProducts, intl.locale, setInitialized, setPaypal, setToken, setUser]);
 
   const onCheckSuccess = useCallback(() => {
     if (setLoaded) {

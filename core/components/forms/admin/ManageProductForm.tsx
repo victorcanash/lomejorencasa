@@ -2,7 +2,7 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Product } from '@core/types/products';
 
-import { useSearchContext } from '@core/contexts/SearchContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import useForms from '@core/hooks/useForms';
 import useProducts from '@core/hooks/useProducts';
 import BaseForm from '@core/components/forms/BaseForm';
@@ -24,7 +24,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
     onCancel,
   } = props;
 
-  const { productCategories } = useSearchContext();
+  const { getAllCategories } = useProductsContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
   const { updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
@@ -59,7 +59,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
         maxWidth={maxWidth} 
         initialValues={{
           id: product?.id || -1,
-          categoryId: product?.categoryId || productCategories[0].id,
+          categoryId: product?.categoryId || getAllCategories()[0].id,
           name: product?.name || productFieldsInitValues.name,
           description: product?.description || productFieldsInitValues.description,
           lowestPrice: product?.lowestPrice || 0,
@@ -79,7 +79,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 name: 'categoryId',
                 type: FormFieldTypes.select,
                 required: true,
-                menuItems: productCategories.map((category) => {
+                menuItems: getAllCategories().map((category) => {
                   return {
                     text: {
                       id: "forms.categoryName",

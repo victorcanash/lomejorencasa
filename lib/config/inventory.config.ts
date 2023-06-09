@@ -31,6 +31,9 @@ const bundlesConfig: {
 };
 
 const inventoryConfig: InventoryConfig = {
+  categories: [
+
+  ],
   landings: [
     {
       id: 1,
@@ -608,5 +611,7 @@ const inventoryConfig: InventoryConfig = {
 };
 
 export default inventoryConfig;
+
+export const categoryConfigs = inventoryConfig.categories;
 
 export const landingConfigs = inventoryConfig.landings;

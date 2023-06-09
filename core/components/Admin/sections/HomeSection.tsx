@@ -10,12 +10,12 @@ import Divider from '@core/components/ui/Divider';
 import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
-import { useSearchContext } from '@core/contexts/SearchContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 
 const HomeSection = () => {
   const router = useRouter();
 
-  const { productCategories } = useSearchContext();
+  const { getAllCategories } = useProductsContext();
 
   const onClickSectionBtn = (section: AdminSections) => {
     router.push(`${pages.admin.path}?section=${section}`);
@@ -75,7 +75,7 @@ const HomeSection = () => {
           <Button
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createProduct)}
-            disabled={productCategories.length <= 0}
+            disabled={getAllCategories().length <= 0}
           >
             <FormattedMessage
               id="admin.createProductBtn"
@@ -84,7 +84,7 @@ const HomeSection = () => {
           <Button
             sx={{ m: 2 }}
             onClick={() => onClickSectionBtn(AdminSections.createProductPack)}
-            disabled={productCategories.length <= 0}
+            disabled={getAllCategories().length <= 0}
           >
             <FormattedMessage
               id="admin.createPackBtn"

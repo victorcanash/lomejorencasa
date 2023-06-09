@@ -16,7 +16,6 @@ import type { Product, ProductCategory, ProductInventory, ProductDiscount } from
 import type { CheckProduct, SelectedCheckProduct } from '@core/types/admin';
 import Button from '@core/components/inputs/Button';
 
-import { useSearchContext } from '@core/contexts/SearchContext';
 import Pagination from '@core/components/ui/Pagination';
 import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';
@@ -43,8 +42,6 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
     keywords,
     getAdminProduct,
   } = props;
-
-  const { getHref } = useSearchContext();
 
   const router = useRouter();
 
@@ -81,7 +78,7 @@ const CheckProductsSection = (props: CheckProductsSectionProps) => {
   };
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getHref(category?.name.current || searchConfig.allProductsName, page, keywords));
+    //router.push(getHref(category?.name.current || searchConfig.allProductsName, page, keywords));
   };
 
   const refreshProduct = (productId: number, bigbuyData = false) => {

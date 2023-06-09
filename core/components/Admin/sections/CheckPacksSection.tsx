@@ -11,7 +11,6 @@ import { ManageActions } from '@core/constants/app';
 import type { ProductPack } from '@core/types/products';
 import Button from '@core/components/inputs/Button';
 
-import { useSearchContext } from '@core/contexts/SearchContext';
 import Pagination from '@core/components/ui/Pagination';
 import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
 import PackDetail from '@core/components/Admin/details/PackDetail';
@@ -29,14 +28,12 @@ const CheckPacksSection = (props: CheckPacksSectionProps) => {
     currentPage, 
   } = props;
 
-  const { getPacksHref } = useSearchContext();
-
   const router = useRouter();
 
   const [selected, setSelected] = useState<ProductPack | undefined>(undefined);
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getPacksHref(page));
+    //router.push(getPacksHref(page));
   };
 
   const onClickUpdateBtn = (pack: ProductPack) => {

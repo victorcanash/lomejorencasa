@@ -8,7 +8,6 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
 import searchConfig from '@lib/config/search.config';
-import { useSearchContext } from '@core/contexts/SearchContext';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -52,8 +51,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchBar = () => {
-  const { getHref } = useSearchContext();
-
   const router = useRouter();
   const intl = useIntl();
 
@@ -72,7 +69,7 @@ const SearchBar = () => {
     inputRef.current?.blur();
     const categoryName = typeof router.query.category == 'string' ?
       router.query.category : searchConfig.allProductsName;
-    router.push(getHref(categoryName, 1, inputRef.current?.value || ''));
+    //router.push(getHref(categoryName, 1, inputRef.current?.value || ''));
   };
 
   return (

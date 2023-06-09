@@ -20,7 +20,6 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/config/theme/elements';
-import { useSearchContext } from '@core/contexts/SearchContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import Pagination from '@core/components/ui/Pagination';
 
@@ -35,13 +34,12 @@ type ProductListProps = {
 const ProductList = (props: ProductListProps) => {
   /*const { category, products, totalPages, currentPage, keywords } = props;
 
-  const { getHref } = useSearchContext();
   const { getProductImgUrl } = useProductsContext();
 
   const router = useRouter();
 
   const handleChangePage = (_event: React.ChangeEvent<unknown>, page: number) => {
-    router.push(getHref(category?.name.current || searchConfig.allProductsName, page, keywords));
+    // router.push(getHref(category?.name.current || searchConfig.allProductsName, page, keywords));
   };
 
   return (

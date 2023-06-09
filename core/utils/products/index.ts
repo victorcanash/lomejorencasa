@@ -4,6 +4,7 @@ import { StatusCodes } from 'http-status-codes';
 import axios, { getAuthHeaders, getLanguageHeaders } from '@core/config/axios.config';
 import { ManageActions } from '@core/constants/app';
 import type {
+  CategoryConfig,
   LandingConfig,
   Landing,
   Product,
@@ -16,6 +17,20 @@ import type {
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+
+export const generateCategories = (categoryConfigs: CategoryConfig[]) => {
+  const categories: ProductCategory[] = [];
+  categoryConfigs.forEach((categoryConfig) => {
+    const category: ProductCategory = {
+      ...{} as ProductCategory,
+      id: categoryConfig.id,
+      name: categoryConfig.name,
+      image: categoryConfig.image,
+    }
+    categories.push(category);
+  });
+  return categories;
+};
 
 export const generateLandings = (landingConfigs: LandingConfig[]) => {
   const landings: Landing[] = [];

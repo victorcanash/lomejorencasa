@@ -5,15 +5,20 @@ import {
   useCallback,
 } from 'react';
 
-import { landingConfigs } from '@lib/config/inventory.config';
+import {
+  categoryConfigs,
+  landingConfigs,
+} from '@lib/config/inventory.config';
 import type {
   Landing,
   Product,
   ProductPack,
   ProductInventory,
+  ProductCategory,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import {
+  generateCategories,
   generateLandings,
   getLandingConfigByCartItem,
   getLandingConfigById,
@@ -25,8 +30,9 @@ import { pages } from '@lib/config/navigation.config';
 import { placeholderSrc } from '@lib/config/multimedia.config';
 
 type ProductsContext = {
+  getAllCategories: () => ProductCategory[],
   getAllLandings: () => Landing[],
-  initLandings: (newLandings: Landing[]) => void,
+  initProducts: (newCategories?: ProductCategory[], newLandings?: Landing[]) => void,
   getLandingByPath: (path: string) => Landing | undefined,
   getLandingById: (id: number) => Landing | undefined,
   getAllProducts: () => Product[],
@@ -41,8 +47,9 @@ type ProductsContext = {
 };
 
 const ProductsContext = createContext<ProductsContext>({
+  getAllCategories: () => [],
   getAllLandings: () => [],
-  initLandings: () => {},
+  initProducts: () => {},
   getLandingByPath: () => undefined,
   getLandingById: () => undefined,
   getAllProducts: () => [],
@@ -65,14 +72,24 @@ export const useProductsContext = () => {
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
+  const categories = useRef<ProductCategory[]>(generateCategories(categoryConfigs));
   const landings = useRef<Landing[]>(generateLandings(landingConfigs));
+
+  const getAllCategories = useCallback(() => {
+    return categories.current;
+  }, []);
 
   const getAllLandings = useCallback(() => {
     return landings.current;
   }, []);
 
-  const initLandings = useCallback((newLandings: Landing[]) => {
-    landings.current = newLandings;
+  const initProducts = useCallback((newCategories?: ProductCategory[], newLandings?: Landing[]) => {
+    if (newCategories) {
+      categories.current = newCategories;
+    }
+    if (newLandings) {
+      landings.current = newLandings;
+    }
   }, []);
 
   const getLandingByPath = useCallback((path: string) => {
@@ -198,8 +215,9 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   return (
     <ProductsContext.Provider
       value={{
+        getAllCategories,
         getAllLandings,
-        initLandings,
+        initProducts,
         getLandingByPath,
         getLandingById,
         getAllProducts,

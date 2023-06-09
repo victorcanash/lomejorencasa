@@ -20,12 +20,12 @@ import {
 
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
-import { useSearchContext } from '@core/contexts/SearchContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 
 const useProducts = () => {
   const { setLoading } = useAppContext();
   const { token } = useAuthContext();
-  const { productCategories, setProductCategories } = useSearchContext();
+  const { getAllCategories, initProducts } = useProductsContext();
 
   const intl = useIntl();
 
@@ -143,11 +143,11 @@ const deleteProduct = async (
   const onManagePCategorySuccess = (action: ManageActions, productCategory: ProductCategory, onSuccess?: (productCategory: ProductCategory) => void) => {
     switch (action) {
       case ManageActions.create:
-        setProductCategories(current => [...current, productCategory]);
+        initProducts([...getAllCategories(), productCategory]);
         break;
       case ManageActions.update:
-        setProductCategories(
-          productCategories.map((item) => {
+        initProducts(
+          getAllCategories().map((item) => {
             if (item.id === productCategory.id) {
               return productCategory;
             } else {
@@ -157,8 +157,8 @@ const deleteProduct = async (
         );
         break;
       case ManageActions.delete:
-        setProductCategories(
-          productCategories.filter(item => item.id !== productCategory.id)
+        initProducts(
+          getAllCategories().filter(item => item.id !== productCategory.id)
         );
         break;
     }
