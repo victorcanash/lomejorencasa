@@ -36,10 +36,6 @@ export const themeDefaultElements: {
   accordionSummary?: ThemeElement,
   accordionDetails?: ThemeElement,
   divider?: ThemeElement,
-  tableRow?: {
-    default?: ThemeElement,
-    head?: ThemeElement,
-  },
   backdrop?: ThemeElement,
   inputLabel?: ThemeElement,
   inputBase?: ThemeElement,
@@ -263,18 +259,6 @@ export const themeDefaultElements: {
       default: {
         border: `2px solid ${colors.border.divider}99`,
         radius: { all: '12px' },
-      },
-    },
-  },
-  tableRow: {
-    default: {
-      backgroundColor: {
-        even: colors.background.tableRowEven,
-      },
-    },
-    head: {
-      backgroundColor: {
-        default: colors.background.tableHead,
       },
     },
   },
