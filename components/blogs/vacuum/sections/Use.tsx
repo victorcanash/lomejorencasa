@@ -24,7 +24,7 @@ const Use = () => {
       <Box
         sx={{
           width: 'fit-content',
-          backgroundColor: type === 'h3' ? colors.background.third : colors.background.secondary,
+          backgroundColor: type === 'h3' ? '#E9D9B1' : '#E5ECDC',
           borderRadius: '0px 15px 15px 0px',
           my: 4,
           ml: -3,

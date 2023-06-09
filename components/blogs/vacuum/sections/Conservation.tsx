@@ -2,6 +2,7 @@ import { useCallback, useMemo } from 'react';
 
 import { useIntl, FormattedMessage } from 'react-intl';
 
+import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -10,12 +11,22 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import TableRow, { tableRowClasses } from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import { keywords } from '@lib/config/next-seo.config';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
+
+import { keywords } from '@lib/config/next-seo.config';
+
+const StyledTableRow = styled(TableRow)(() => ({
+  [`&.${tableRowClasses.head}`]: {
+    backgroundColor: '#A7AC93',
+  },
+  ['&:nth-of-type(even)']: {
+    backgroundColor: '#ECF7DC',
+  },
+}));
 
 const Conservation = () => {
   const intl = useIntl();
@@ -117,7 +128,7 @@ const Conservation = () => {
           <TableContainer component={Paper}>
             <Table aria-label="time-conservation-table">
               <TableHead>
-                <TableRow>
+                <StyledTableRow>
                   <TableCell sx={tableCellSx}>
                     <FormattedMessage 
                       id={'home.conservation.table.head.food'} 
@@ -138,18 +149,18 @@ const Conservation = () => {
                       id={'home.conservation.table.head.vacuumFrozen'} 
                     />
                   </TableCell>
-                </TableRow>
+                </StyledTableRow>
               </TableHead>
               <TableBody>
                 {rows.map((row) => (
-                  <TableRow key={row.food}>
+                  <StyledTableRow key={row.food}>
                     <TableCell component="th" scope="row" sx={tableCellSx}>
                       {row.food}
                     </TableCell>
                     <TableCell sx={tableCellSx}>{row.noVacuum}</TableCell>
                     <TableCell sx={tableCellSx}>{row.vacuumFridge}</TableCell>
                     <TableCell sx={tableCellSx}>{row.vacuumFrozen}</TableCell>
-                  </TableRow>
+                  </StyledTableRow>
                 ))}
               </TableBody>
             </Table>

@@ -129,12 +129,6 @@ const themeOptions: ThemeOptions = {
         root: themeDefaultElements.divider ? convertElementToSx(themeDefaultElements.divider) : undefined,
       },
     },
-    MuiTableRow: {
-      styleOverrides: {
-        root: themeDefaultElements.tableRow?.default ? convertElementToSx(themeDefaultElements.tableRow.default) : undefined,
-        head: themeDefaultElements.tableRow?.head ? convertElementToSx(themeDefaultElements.tableRow.head) : undefined,
-      },
-    },
     MuiBackdrop: {
       styleOverrides: {
         root: themeDefaultElements.backdrop ? convertElementToSx(themeDefaultElements.backdrop) : undefined,

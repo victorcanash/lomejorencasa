@@ -47,7 +47,7 @@ const WhyVacuumPacked = () => {
         <Grid item xs={7} xs_sm={7}>
           <Box 
             sx={{
-              backgroundColor: colors.background.secondary,
+              backgroundColor: '#E5ECDC',
               borderRadius: '0px 45px 45px 0px',
               width: '268px',
               mr: 'auto',
@@ -98,7 +98,7 @@ const WhyVacuumPacked = () => {
         <Grid item xs={8} xs_sm={8}>
           <Box 
             sx={{
-              backgroundColor: colors.background.third,
+              backgroundColor: '#E9D9B1',
               borderRadius: '45px 0px 0px 45px',
               width: '268px',
               ml: 'auto',

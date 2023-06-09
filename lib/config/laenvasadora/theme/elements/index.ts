@@ -261,18 +261,6 @@ export const themeDefaultElements: {
       },
     },
   },
-  tableRow: {
-    default: {
-      backgroundColor: {
-        even: colors.background.tableRowEven,
-      },
-    },
-    head: {
-      backgroundColor: {
-        default: colors.background.tableHead,
-      },
-    },
-  },
   backdrop: {
     backgroundColor: {
       default: `${colors.text.black}bf`,

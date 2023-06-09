@@ -18,11 +18,11 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 const PackingMachine = () => {
   const getBackgroundColor = useCallback((index: number) => {
     if (index == 0) {
-      return colors.background.third;
+      return '#E9D9B1';
     } else if (index == 1) {
-      return colors.background.secondary;
+      return '#E5ECDC';
     }
-    return colors.background.tableHead;
+    return '#A7AC93';
   }, []);
 
   return (

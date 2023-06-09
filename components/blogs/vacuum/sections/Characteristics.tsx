@@ -31,7 +31,7 @@ const Characteristics = (props: CharacteristicsProps) => {
     return (
       <Box
         sx={{
-          backgroundColor: colors.background.third,
+          backgroundColor: '#E9D9B1',
           borderRadius: '100%',
           position: 'relative', 
           width: '150px',
