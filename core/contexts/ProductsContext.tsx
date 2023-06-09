@@ -40,7 +40,7 @@ type ProductsContext = {
   getAllLandingsProducts: () => (ProductPack | Product)[],
   getPageUrlByCartItem: (item: CartItem | GuestCartCheckItem) => string,
   getPageUrlByLandingId: (landingId: number) => string,
-  getItemImgUrl: (item: Landing | CartItem | GuestCartCheckItem) => string,
+  getItemImgUrl: (item: ProductCategory | Landing | CartItem | GuestCartCheckItem) => string,
   getLandingImgsUrl: (landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => string[],
   setProductRating: (product: Product, rating: string, reviewsCount: number) => void,
   setPackRating: (pack: ProductPack, rating: string, reviewsCount: number) => void,
@@ -145,7 +145,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       getLandingPathByConfig(foundLandingConfig) : pages.productList.path;
   }, []);
   
-  const getItemImgUrl = useCallback((item: Landing | CartItem | GuestCartCheckItem) => {
+  const getItemImgUrl = useCallback((item: ProductCategory | Landing | CartItem | GuestCartCheckItem) => {
     let imgUrl = placeholderSrc;
     if ((item as Landing)?.products) {
       imgUrl = (item as Landing).images[0];
@@ -155,6 +155,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         imgUrl = cartItem.inventory.image;
       } else if (cartItem.pack?.image) {
         imgUrl = cartItem.pack.image;
+      } else if ((item as ProductCategory).image) {
+        imgUrl = (item as ProductCategory).image || '';
       }
     }
     return imgUrl;
