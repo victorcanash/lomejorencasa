@@ -32,7 +32,24 @@ const bundlesConfig: {
 
 const inventoryConfig: InventoryConfig = {
   categories: [
-
+    {
+      id: 1,
+      name: {
+        en: 'Vacuum machines',
+        es: 'Envasadoras al vacío',
+        current: 'Envasadoras al vacío',
+      },
+      image: 'v1681059169/laenvasadora/LANDING%20PAGE/placeholder_tl7jks.jpg',
+    },
+    {
+      id: 2,
+      name: {
+        en: 'Vacuum bags',
+        es: 'Bolsas de vacío',
+        current: 'Bolsas de vacío',
+      },
+      image: 'v1681059169/laenvasadora/LANDING%20PAGE/placeholder_tl7jks.jpg',
+    },
   ],
   landings: [
     {
