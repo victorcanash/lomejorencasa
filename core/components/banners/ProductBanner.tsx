@@ -37,107 +37,109 @@ const ProductBanner = () => {
   }, [smallBreakpoint]);
 
   return (
-    <Box 
-      sx={{
-        position: 'relative',
-        width: {
-          xs: styleXs.containerWidth,
-          sm_md: '100%',
-        },
-        left: {
-          xs: `${styleXs.containerLeft}px`,
-          sm_md: '0px',
-        },
-      }}
-    >
-      <Box
+    <Box sx={{ overflow: 'hidden'}}>
+      <Box 
         sx={{
-          display: {
-            xs: 'inline-block',
-            sm_md: 'hidden',
-          },
+          position: 'relative',
           width: {
-            xs: styleXs.imgSeparatorWidth,
+            xs: styleXs.containerWidth,
+            sm_md: '100%',
+          },
+          left: {
+            xs: `${styleXs.containerLeft}px`,
             sm_md: '0px',
           },
         }}
-      />
-      <Box
-        sx={{
-          display: {
-            xs: 'inline-block',
-            sm_md: 'block',
-          },
-          width: '1010px',
-          m: 'auto',
-        }}
       >
-        <Swiper
-          modules={[Autoplay]}
-          speed={1000} 
-          loop
-          centeredSlides
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
+        <Box
+          sx={{
+            display: {
+              xs: 'inline-block',
+              sm_md: 'hidden',
+            },
+            width: {
+              xs: styleXs.imgSeparatorWidth,
+              sm_md: '0px',
+            },
+          }}
+        />
+        <Box
+          sx={{
+            display: {
+              xs: 'inline-block',
+              sm_md: 'block',
+            },
+            width: '1010px',
+            m: 'auto',
           }}
         >
-          { productBannerConfig.items.map((item, index) => (
-            <SwiperSlide key={index}>
-              <MultimediaContainer
-                type="banner"
-                source={item.source}
-              />
-              <Grid
-                container
-                direction="column"
-                wrap="nowrap"
-                justifyContent="center"
-                px="20px"
-                py="10px" 
-                sx={{
-                  position: 'absolute',
-                  height: '100%',
-                  width: '100vw',
-                  top: {
-                    xs: '40px',
-                    sm: '0px',
-                  },
-                  left: {
-                    xs: `calc(${-styleXs.containerLeft}px - ${styleXs.imgSeparatorWidth})`,
-                    sm_md: '0px',
-                  },
-                }}
-              >
-                <Grid item mb={2}>
-                  <Typography
-                    component="div"
-                    align={item.contentText.textAlign}
-                    sx={getSxContent()}
-                  >
-                    <FormattedMessage
-                      id={item.contentText.id}
-                      values={item.contentText.values}
-                      defaultMessage={item.contentText.id}
-                    />
-                  </Typography>
+          <Swiper
+            modules={[Autoplay]}
+            speed={1000} 
+            loop
+            centeredSlides
+            autoplay={{
+              delay: 5000,
+              disableOnInteraction: false,
+            }}
+          >
+            { productBannerConfig.items.map((item, index) => (
+              <SwiperSlide key={index}>
+                <MultimediaContainer
+                  type="banner"
+                  source={item.source}
+                />
+                <Grid
+                  container
+                  direction="column"
+                  wrap="nowrap"
+                  justifyContent="center"
+                  px="20px"
+                  py="10px" 
+                  sx={{
+                    position: 'absolute',
+                    height: '100%',
+                    width: '100vw',
+                    top: {
+                      xs: '40px',
+                      sm: '0px',
+                    },
+                    left: {
+                      xs: `calc(${-styleXs.containerLeft}px - ${styleXs.imgSeparatorWidth})`,
+                      sm_md: '0px',
+                    },
+                  }}
+                >
+                  <Grid item mb={2}>
+                    <Typography
+                      component="div"
+                      align={item.contentText.textAlign}
+                      sx={getSxContent()}
+                    >
+                      <FormattedMessage
+                        id={item.contentText.id}
+                        values={item.contentText.values}
+                        defaultMessage={item.contentText.id}
+                      />
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    <LinkButton
+                      href={item.button.path || pages.home.path}
+                      customtype="actionPrimary"
+                    >
+                      <FormattedMessage
+                        id={item.button.text.id}
+                        values={item.button.text.values}
+                        defaultMessage={item.button.text.id}
+                      />
+                    </LinkButton>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <LinkButton
-                    href={item.button.path || pages.home.path}
-                    customtype="actionPrimary"
-                  >
-                    <FormattedMessage
-                      id={item.button.text.id}
-                      values={item.button.text.values}
-                      defaultMessage={item.button.text.id}
-                    />
-                  </LinkButton>
-                </Grid>
-              </Grid>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </Box>
       </Box>
     </Box>
   );

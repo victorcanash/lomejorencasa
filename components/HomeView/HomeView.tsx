@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 
 import ProductBanner from '@core/components/banners/ProductBanner';
+import CategoryList from '@core/components/LandingList/CategoryList';
 import LandingList from '@core/components/LandingList/LandingList';
 import BlogsList from '@core/components/BlogsList';
 import ProductReviews from '@core/components/ProductReviews';
@@ -8,12 +9,9 @@ import ProductReviews from '@core/components/ProductReviews';
 const HomeView = () => {
 
   return (
-    <Box 
-      sx={{
-        overflow: 'hidden',
-      }}
-    >
+    <Box>
       <ProductBanner />
+      <CategoryList />
       <LandingList />
       <BlogsList />
       <ProductReviews />
