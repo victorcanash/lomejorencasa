@@ -38,13 +38,12 @@ import LandingTutorial from '@core/components/LandingDetail/LandingTutorial';
 import ProductReviews from '@core/components/ProductReviews';
 
 type LandingDetailProps = {
-  children?: ReactElement,
   landingModel: Landing,
   landingConfig: LandingConfig,
 };
 
 const LandingDetail = (props: LandingDetailProps) => {
-  const { children, landingModel, landingConfig } = props;
+  const { landingModel, landingConfig } = props;
 
   const { initialized } = useAppContext();
   const {

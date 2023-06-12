@@ -79,6 +79,7 @@ const ProductReviews = () => {
                 }}
                 divider={true}
               />
+
               {/* Create ProductReview Form */}
               <Box mb={4}>
                 <ProductReviewForm
@@ -97,6 +98,7 @@ const ProductReviews = () => {
               maxWidth="md"
               m="auto"
             >
+
               {/* ProductReview List */}
               { reviews.length > 0 ?
                 <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={0}>
@@ -209,6 +211,7 @@ const ProductReviews = () => {
                   />
                 </Typography>
               }
+
               {/* Pagination */}
               <Box mt={reviews.length > 0 ? 3 : 5} />
               <Pagination

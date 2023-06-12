@@ -85,7 +85,7 @@ const BundleDetail = (props: BundleDetailProps) => {
         <Grid container columnSpacing={1} rowSpacing={1}>
           <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
             <ProductPrice
-              type="landing"
+              type="landingDetail"
               price={price}
               originPrice={originPrice}
             />
