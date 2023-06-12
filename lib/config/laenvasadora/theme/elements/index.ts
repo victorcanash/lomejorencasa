@@ -483,7 +483,17 @@ export const themeCustomElements: {
     title?: ThemeElement,
     icons?: ThemeElement,
   },
-  landing?: {
+  categoryList?: {
+    nameText?: ThemeElement,
+  },
+  landingList?: {
+    nameText?: ThemeElement,
+    price?: {
+      originText?: ThemeElement,
+      currentText?: ThemeElement,
+    },
+  },
+  landingDetail?: {
     selectLabel?: ThemeElement,
     price?: {
       originText?: ThemeElement,
@@ -652,7 +662,7 @@ export const themeCustomElements: {
       },
     },
   },
-  landing: {
+  landingDetail: {
     selectLabel: {
       text: {
         color: {

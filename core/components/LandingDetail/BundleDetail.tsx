@@ -85,6 +85,7 @@ const BundleDetail = (props: BundleDetailProps) => {
         <Grid container columnSpacing={1} rowSpacing={1}>
           <Grid item sx={{ display: 'flex', alignItems: 'center' }}>
             <ProductPrice
+              type="landing"
               price={price}
               originPrice={originPrice}
             />
@@ -95,8 +96,8 @@ const BundleDetail = (props: BundleDetailProps) => {
                 component="div"
                 variant="body1Head"
                 sx={{
-                  ...themeCustomElements.landing?.price?.percentText ?
-                    convertElementToSx(themeCustomElements.landing.price.percentText) : undefined,
+                  ...themeCustomElements.landingDetail?.price?.percentText ?
+                    convertElementToSx(themeCustomElements.landingDetail.price.percentText) : undefined,
                 }}
               >
                 <FormattedMessage id="productDetail.pack.percent" values={{ value: percent }} />
@@ -114,7 +115,7 @@ const BundleDetail = (props: BundleDetailProps) => {
         variant="h3"
         color="text.primary"
         sx={{
-          ...themeCustomElements.landing?.bundleTitle ? convertElementToSx(themeCustomElements.landing.bundleTitle) : undefined,
+          ...themeCustomElements.landingDetail?.bundleTitle ? convertElementToSx(themeCustomElements.landingDetail.bundleTitle) : undefined,
           textAlign: 'center',
         }}
       >

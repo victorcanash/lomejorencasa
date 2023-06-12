@@ -44,6 +44,7 @@ const LandingPrice = (props: LandingPriceProps) => {
     <Grid container columnSpacing={2} rowSpacing={0.5}>
       <Grid item>
         <ProductPrice
+          type="landing"
           price={data.price}
           originPrice={data.originPrice}
         />

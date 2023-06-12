@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 // import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -13,7 +14,13 @@ import Masonry from '@mui/lab/Masonry';
 
 import type { Landing } from '@core/types/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
-import { getFirstLandingItem, getLandingConfigById, getLandingPathByConfig, getProductPriceData } from '@core/utils/products';
+import { convertElementToSx } from '@core/utils/themes';
+import {
+  getFirstLandingItem,
+  getLandingConfigById,
+  getLandingPathByConfig,
+  getProductPriceData,
+} from '@core/utils/products';
 import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
@@ -23,6 +30,7 @@ import { useProductsContext } from '@core/contexts/ProductsContext';
 import Title from '@core/components/ui/Title';
 // import Pagination from '@components/ui/Pagination';
 import ProductPrice from '@core/components/ProductPrice';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 const LandingList = () => {
   const {
@@ -36,20 +44,25 @@ const LandingList = () => {
     router.push()
   };*/
 
-  const getLandingPath = (id: number) => {
+  const allLandings = useCallback(() => {
+    return getAllLandings();
+  }, [getAllLandings]);
+
+  const getLandingPath = useCallback((id: number) => {
     const landingConfig = getLandingConfigById(id, landingConfigs);
     if (landingConfig) {
       return getLandingPathByConfig(landingConfig);
     }
     return pages.home.path;
-  };
+  }, []);
 
-  const landingName = (landing: Landing) => {
+  const landingName = useCallback((landing: Landing) => {
     let name = landing.name?.current || '';
     if (!name) {
       const landingConfig = getLandingConfigById(landing.id, landingConfigs);
       if (landingConfig) {
-        name = landingConfig.product?.name?.current ? landingConfig.product.name.current : landingConfig.pack?.name?.current || '';
+        name = landingConfig.product?.name?.current ?
+          landingConfig.product.name.current : landingConfig.pack?.name?.current || '';
       }
     }
     if (!name) {
@@ -58,26 +71,17 @@ const LandingList = () => {
         name = firstItem.name.current;
       }
     }
-    return (
-      <Typography component="div" variant="body1" mb={1}>
-        {capitalizeFirstLetter(name)}
-      </Typography>
-    );
-  };
+    return capitalizeFirstLetter(name);
+  }, []);
 
-  const landingPrice = (landing: Landing) => {
+  const landingPrice = useCallback((landing: Landing) => {
     let priceData = { price: 0, originPrice: 0 };
     const firstItem = getFirstLandingItem(landing);
     if (firstItem) {
       priceData = getProductPriceData(firstItem);
     }
-    return (
-      <ProductPrice
-        price={priceData.price}
-        originPrice={priceData.originPrice}
-      />
-    );
-  };
+    return priceData;
+  }, []);
 
   return (
     <Container>
@@ -95,35 +99,68 @@ const LandingList = () => {
           divider={true}
         />
 
-        { getAllLandings().length > 0 ?
-          <Masonry columns={{ xs: 1, xs_sm: 2, sm_md: 3 }} spacing={2}>
-            {getAllLandings().map((item, index) => (
+        { allLandings().length > 0 ?
+          <Masonry columns={{ xs: 2, sm_md: 3 }} spacing={0}>
+            {allLandings().map((landing, index) => (
               <Box
                 key={index}
               >
-                <Card>
-                  <CardActionArea component={Link} href={getLandingPath(item.id)}>
-                    <CardMedia>
-                      <Box>
-                        <CustomImage
-                          src={getItemImgUrl(item)}
-                          width="1080"
-                          height="1080"
-                          layout="responsive" 
-                          objectFit="cover"
-                          priority
-                        />
-                      </Box>
-                    </CardMedia>
-                    
-                    <CardContent>
-                      <Box>
-                        { landingName(item) }
-                        { landingPrice(item) }
-                      </Box>
-                    </CardContent>
-                  </CardActionArea>
-                </Card>
+                <Box
+                  sx={{
+                    m: 'auto',
+                    mb: {
+                      xs: 1,
+                      sm: 2,
+                    },
+                    px: {
+                      xs: 0.5,
+                      sm: 1,
+                    }
+                  }}
+                >
+                  <Card>
+                    <CardActionArea component={Link} href={getLandingPath(landing.id)}>
+                      <CardMedia>
+                        <Box>
+                          <CustomImage
+                            src={getItemImgUrl(landing)}
+                            width="1080"
+                            height="1080"
+                            layout="responsive" 
+                            objectFit="cover"
+                            priority
+                          />
+                        </Box>
+                      </CardMedia>
+                      
+                      <CardContent
+                        sx={{
+                          p: 1,
+                        }}
+                      >
+                        <Box>
+                          <Typography
+                            component="div"
+                            variant="body1"
+                            mb={1}
+                            sx={{
+                              ...themeCustomElements.landingList?.nameText?
+                                convertElementToSx(themeCustomElements.landingList.nameText) : undefined,
+                              wordWrap: 'break-word',
+                            }}
+                          >
+                            { landingName(landing) }
+                          </Typography>
+                          <ProductPrice
+                            type="landingList"
+                            price={landingPrice(landing).price}
+                            originPrice={landingPrice(landing).originPrice}
+                          />
+                        </Box>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Box>
               </Box>
             ))}
           </Masonry>

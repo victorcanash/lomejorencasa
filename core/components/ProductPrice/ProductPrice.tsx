@@ -1,47 +1,66 @@
+import { useMemo } from 'react';
+
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { convertElementToSx } from '@core/utils/themes';
-import { themeCustomElements } from '@lib/config/theme/elements';
 import { useAuthContext } from '@core/contexts/AuthContext';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ProductPriceProps = {
+  type: 'landingDetail' | 'landingList', 
   price: number,
   originPrice: number,
 };
 
 const ProductPrice = (props: ProductPriceProps) => {
   const {
+    type,
     price,
     originPrice,
   } = props;
 
   const { convertPriceToString } = useAuthContext();
 
+  const themeTexts = useMemo(() => {
+    let texts = {
+      currentPrice: themeCustomElements.landingDetail?.price?.currentText,
+      originPrice: themeCustomElements.landingDetail?.price?.originText,
+    };
+    if (type === 'landingList') {
+      texts = {
+        currentPrice: themeCustomElements.landingList?.price?.currentText,
+        originPrice: themeCustomElements.landingList?.price?.originText,
+      };
+    }
+    return texts;
+  }, [type]);
+
   return (
     <Typography
-      component="h2"
-      variant="h2"
+      component={type === 'landingDetail' ? 'h2' : 'div'}
+      variant={type === 'landingDetail' ? 'h2' : 'body1Head'}
       sx={{
-        ...themeCustomElements.landing?.price?.currentText ?
-          convertElementToSx(themeCustomElements.landing.price.currentText) : undefined,
-      }}>
+        ...themeTexts.currentPrice ?
+          convertElementToSx(themeTexts.currentPrice) : undefined,
+      }}
+    >
       { price !== originPrice ?
         <>
           <Box
             component="span"
             sx={{
-              ...themeCustomElements.landing?.price?.originText ?
-                convertElementToSx(themeCustomElements.landing.price.originText) : undefined,
-              color: themeCustomElements.landing?.price?.currentText ?
-                convertElementToSx(themeCustomElements.landing.price.currentText).color : undefined,
+              ...themeTexts.originPrice ?
+                convertElementToSx(themeTexts.originPrice) : undefined,
+              color: themeTexts.currentPrice ?
+                convertElementToSx(themeTexts.currentPrice).color : undefined,
             }}
           >
             <Box
               component="span"
               sx={{
-                color: themeCustomElements.landing?.price?.originText ?
-                  convertElementToSx(themeCustomElements.landing.price.originText).color : undefined,
+                color: themeTexts.originPrice ?
+                  convertElementToSx(themeTexts.originPrice).color : undefined,
               }}
             >
               {`${convertPriceToString(originPrice)}`}

@@ -484,7 +484,17 @@ export const themeCustomElements: {
     title?: ThemeElement,
     icons?: ThemeElement,
   },
-  landing?: {
+  categoryList?: {
+    nameText?: ThemeElement,
+  },
+  landingList?: {
+    nameText?: ThemeElement,
+    price?: {
+      originText?: ThemeElement,
+      currentText?: ThemeElement,
+    },
+  },
+  landingDetail?: {
     selectLabel?: ThemeElement,
     price?: {
       originText?: ThemeElement,
@@ -658,7 +668,47 @@ export const themeCustomElements: {
       },
     },
   },
-  landing: {
+  categoryList: {
+    nameText: {
+      text: {
+        font: {
+          default: typographies.categoryList.name,
+        },
+      },
+    },
+  },
+  landingList: {
+    nameText: {
+      text: {
+        font: {
+          default: typographies.landingList.name,
+        },
+      },
+    },
+    price: {
+      originText: {
+        text: {
+          color: {
+            default: colors.text.disabled,
+          },
+          font: {
+            default: typographies.landingList.price.origin,
+          },
+        },
+      },
+      currentText: {
+        text: {
+          color: {
+            default: colors.text.action,
+          },
+          font: {
+            default: typographies.landingList.price.current,
+          },
+        },
+      },
+    },
+  },
+  landingDetail: {
     selectLabel: {
       text: {
         color: {
@@ -678,7 +728,7 @@ export const themeCustomElements: {
             default: colors.text.disabled,
           },
           font: {
-            default: typographies.price.origin,
+            default: typographies.landingDetail.price.origin,
           },
         },
       },
@@ -688,7 +738,7 @@ export const themeCustomElements: {
             default: colors.text.action,
           },
           font: {
-            default: typographies.price.current,
+            default: typographies.landingDetail.price.current,
           },
         },
       },

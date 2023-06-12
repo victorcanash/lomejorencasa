@@ -61,18 +61,48 @@ const typographies = {
       letterSpacing: '0.17px',
     } as ThemeFontPropertyElement,
   },
-  price: {
-    origin: {
-      fontSize: '20px',
+  categoryList: {
+    name: {
+      textAlign: 'center',
+      fontSize: '14px',
       fontWeight: '500',
-      lineHeight: '30px',
-      textDecoration: 'line-through',
+      lineHeight: '24px',
     } as ThemeFontPropertyElement,
-    current: {
-      fontSize: '20px',
-      fontWeight: '600',
-      lineHeight: '30px',
+  },
+  landingList: {
+    name: {
+      fontSize: '14px',
+      fontWeight: '300',
+      lineHeight: '20.5px',
     } as ThemeFontPropertyElement,
+    price: {
+      origin: {
+        fontSize: '12px',
+        fontWeight: '500',
+        lineHeight: '30px',
+        textDecoration: 'line-through',
+      } as ThemeFontPropertyElement,
+      current: {
+        fontSize: '16px',
+        fontWeight: '600',
+        lineHeight: '30px',
+      } as ThemeFontPropertyElement,
+    },
+  },
+  landingDetail: {
+    price: {
+      origin: {
+        fontSize: '20px',
+        fontWeight: '500',
+        lineHeight: '30px',
+        textDecoration: 'line-through',
+      } as ThemeFontPropertyElement,
+      current: {
+        fontSize: '20px',
+        fontWeight: '600',
+        lineHeight: '30px',
+      } as ThemeFontPropertyElement,
+    },
   },
 };
 

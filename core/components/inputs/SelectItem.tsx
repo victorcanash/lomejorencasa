@@ -80,7 +80,7 @@ const SelectItem = (props: SelectItemProps) => {
               component="div"
               variant="h3"
               sx={{
-                ...themeCustomElements.landing?.selectLabel ? convertElementToSx(themeCustomElements.landing.selectLabel) : undefined,
+                ...themeCustomElements.landingDetail?.selectLabel ? convertElementToSx(themeCustomElements.landingDetail.selectLabel) : undefined,
               }}
               mb={1}
             >

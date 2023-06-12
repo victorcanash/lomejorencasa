@@ -4,8 +4,10 @@ import Stack from '@mui/material/Stack';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
+import { convertElementToSx } from '@core/utils/themes';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import CustomImage from '@core/components/multimedia/CustomImage';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 const CategoryList = () => {
   const {
@@ -61,21 +63,19 @@ const CategoryList = () => {
                 >
                   <CustomImage
                     alt={category.name.current}
-                    src={getItemImgUrl(category)}
-                    width="1080"
-                    height="1080"
+                    src={getItemImgUrl(category)}          
                     layout="fill" 
-                    objectFit="cover"
                   />
                 </Avatar>
               </Box>
               <Typography
                 component="div"
                 variant="body1Head"
-                textAlign="center"
                 m="auto"
                 mt={1}
                 sx={{
+                  ...themeCustomElements.categoryList?.nameText?
+                    convertElementToSx(themeCustomElements.categoryList.nameText) : undefined,
                   wordWrap: 'break-word',
                 }}
               >
