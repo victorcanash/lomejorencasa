@@ -12,7 +12,11 @@ const HomeView = () => {
     <Box>
       <ProductBanner />
       <CategoryList />
-      <LandingList />
+      <LandingList
+        type="featured"
+      />
+      <LandingList
+      />
       <BlogsList />
       <ProductReviews />
     </Box>
