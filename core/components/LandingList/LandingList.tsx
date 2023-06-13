@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
 
+import type { CategoryConfig, ProductCategory } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import Title from '@core/components/ui/Title';
@@ -16,11 +17,15 @@ import LandingItem from './LandingItem';
 
 type LandingListProps = {
   type?: 'featured',
+  categoryModel?: ProductCategory,
+  categoryConfig?: CategoryConfig,
 };
 
 const LandingList = (props: LandingListProps) => {
   const {
     type,
+    categoryModel,
+    categoryConfig,
   } = props;
 
   const {
@@ -66,7 +71,6 @@ const LandingList = (props: LandingListProps) => {
     <Container
       id="landings"
       sx={{
-        mt: isMasonryStyle ? 6 : undefined,
         overflowX: isStackStyle ? 'auto' : undefined,
       }}
     >
@@ -76,6 +80,19 @@ const LandingList = (props: LandingListProps) => {
       >
 
         {/* Title */}
+        { !type &&
+          <Title
+            type="h1"
+            noMarginTop
+            texts={{
+              title: !categoryModel ? {
+                id: 'productList.all.title',
+              } : undefined,
+              titleAdd: categoryModel ? categoryModel.name.current : undefined,
+            }}
+            divider={true}
+          />
+        }
         { type === 'featured' &&
           <Title
             type="h2"
