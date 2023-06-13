@@ -15,8 +15,6 @@ const HomeView = () => {
       <LandingList
         type="featured"
       />
-      <LandingList
-      />
       <BlogsList />
       <ProductReviews />
     </Box>
