@@ -213,6 +213,11 @@
   "resolutions.successes.default": "Correo enviado con éxito. Nos pondremos en contacto contigo lo antes posible.",
   "resolutions.contactLink": "¿Tienes alguna duda o no sabes cómo encontrar tu número de pedido?",
 
+  "collections.metas.title": "Catálogo",
+  "collections.metas.description": "Catálogo",
+  "collections.h1": "Catálogo",
+  "collections.noItems": "No existe ninguna categoría",
+
   "productList.all.title": "Todos nuestros productos",
   "productList.featured.title": "Productos destacados",
   "productList.noItems": "No existe ningún producto.",

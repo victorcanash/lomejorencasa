@@ -35,6 +35,7 @@ const navigationConfig: {
     admin: Page,
 
     collections: {
+      index: Page,
       all: Page,
       vacuumMachines: Page,
       vacuumBags: Page,
@@ -274,6 +275,15 @@ const navigationConfig: {
     },
 
     collections: {
+      index: {
+        path: '/colecciones',
+        filepath: '/colecciones/index',
+        protection: Protections.none,
+        type: PageTypes.main,
+        savePathOnLogin: {
+          enabled: true,
+        },
+      },
       all: {
         path: '/colecciones/todo',
         filepath: '/colecciones/[category]',
