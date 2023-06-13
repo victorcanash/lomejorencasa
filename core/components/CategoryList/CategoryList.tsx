@@ -22,70 +22,64 @@ const CategoryList = () => {
         overflowX: 'auto',
       }}
     >
-      <Box
-        sx={{
-          width: 'auto',
-        }}
+      <Stack
+        direction="row"
+        spacing={2}
       >
-        <Stack
-          direction="row"
-          spacing={2}
-        >
-          { getAllCategories().map((category) => (
+        { getAllCategories().map((category) => (
+          <Box
+            key={category.id}
+            sx={{
+              position: 'relative',
+              width: 'max-content',
+              minWidth: {
+                xs: '26%',
+                md: '20%',
+                md_lg: '200px',
+              },
+            }}
+          >
             <Box
-              key={category.id}
               sx={{
                 position: 'relative',
-                width: 'max-content',
-                minWidth: {
-                  xs: '26%',
-                  md: '20%',
-                  md_lg: '200px',
-                },
+                width: '100%',
+                paddingTop: '100%',
               }}
             >
-              <Box
+              <Avatar
                 sx={{
-                  position: 'relative',
+                  position: 'absolute',
                   width: '100%',
-                  paddingTop: '100%',
+                  height: '100%',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
                 }}
               >
-                <Avatar
-                  sx={{
-                    position: 'absolute',
-                    width: '100%',
-                    height: '100%',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                  }}
-                >
-                  <CustomImage
-                    alt={category.name.current}
-                    src={getItemImgUrl(category)}          
-                    layout="fill" 
-                  />
-                </Avatar>
-              </Box>
-              <Typography
-                component="div"
-                variant="body1Head"
-                m="auto"
-                mt={1}
-                sx={{
-                  ...themeCustomElements.categoryList?.nameText?
-                    convertElementToSx(themeCustomElements.categoryList.nameText) : undefined,
-                  wordWrap: 'break-word',
-                }}
-              >
-                { category.name.current }
-              </Typography>
+                <CustomImage
+                  alt={category.name.current}
+                  src={getItemImgUrl(category)}          
+                  layout="fill" 
+                />
+              </Avatar>
             </Box>
-          ))}
-          <Box sx={{ width: '250px' }} />
-        </Stack>
-      </Box>
+            <Typography
+              component="div"
+              variant="body1Head"
+              m="auto"
+              mt={1}
+              sx={{
+                ...themeCustomElements.categoryList?.nameText?
+                  convertElementToSx(themeCustomElements.categoryList.nameText) : undefined,
+                wordWrap: 'break-word',
+              }}
+            >
+              { category.name.current }
+            </Typography>
+          </Box>
+        ))}
+        <Box sx={{ width: '250px' }} />
+      </Stack>
     </Container>
   );
 };
