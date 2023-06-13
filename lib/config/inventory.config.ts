@@ -34,6 +34,11 @@ const inventoryConfig: InventoryConfig = {
   categories: [
     {
       id: 1,
+      path: 'envasadoras-al-vacio',
+      metas: {
+        title: keywords.vacuumMachine.main,
+        imgsAlt: keywords.vacuumMachine.main,
+      },
       name: {
         en: 'Vacuum machines',
         es: 'Envasadoras al vacío',
@@ -43,6 +48,11 @@ const inventoryConfig: InventoryConfig = {
     },
     {
       id: 2,
+      path: 'bolsas-para-envasadora-al-vacio',
+      metas: {
+        title: keywords.vacuumBags.main,
+        imgsAlt: keywords.vacuumBags.main,
+      },
       name: {
         en: 'Vacuum bags',
         es: 'Bolsas de vacío',
@@ -134,7 +144,7 @@ const inventoryConfig: InventoryConfig = {
             text: {
               id: 'everfresh.videoComment.2.bagsButton',
             },
-            path: pages.bags.path,
+            path: pages.detail.bags.path,
           },
           source: { 
             type: 'video',
@@ -308,7 +318,7 @@ const inventoryConfig: InventoryConfig = {
             text: {
               id: 'everfresh.videoComment.2.everfreshButton',
             },
-            path: pages.everfresh.path,
+            path: pages.detail.everfresh.path,
           },
           source: { 
             type: 'video',
@@ -421,7 +431,7 @@ const inventoryConfig: InventoryConfig = {
             text: {
               id: 'everfresh.videoComment.2.bagsButton',
             },
-            path: pages.bags.path,
+            path: pages.detail.bags.path,
           },
           source: { 
             type: 'video',
@@ -595,7 +605,7 @@ const inventoryConfig: InventoryConfig = {
             text: {
               id: 'everfresh.videoComment.2.everfreshButton',
             },
-            path: pages.everfresh.path,
+            path: pages.detail.everfresh.path,
           },
           source: { 
             type: 'video',

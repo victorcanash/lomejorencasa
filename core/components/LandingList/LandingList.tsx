@@ -34,7 +34,6 @@ const LandingList = (props: LandingListProps) => {
   }, []);
 
   const allLandings = useMemo(() => {
-    scrollToSection('landings', false);
     return getAllLandings().slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
   }, [currentPage, getAllLandings, limitByPage]);
 
@@ -58,6 +57,9 @@ const LandingList = (props: LandingListProps) => {
 
   const handleChangePage = useCallback((_event: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
+    setTimeout(() => {
+      scrollToSection('landings', false);
+    });
   }, []);
 
   return (

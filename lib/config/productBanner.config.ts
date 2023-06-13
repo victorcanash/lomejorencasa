@@ -16,7 +16,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.everfresh.path,
+        path: pages.detail.everfresh.path,
         text: {
           id: 'home.banner.buyBtn',
         },
@@ -34,7 +34,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.everfresh.path,
+        path: pages.detail.everfresh.path,
         text: {
           id: 'home.banner.buyBtn',
         },
@@ -52,7 +52,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.everfresh.path,
+        path: pages.detail.everfresh.path,
         text: {
           id: 'home.banner.buyBtn',
         },
@@ -70,7 +70,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.everfresh.path,
+        path: pages.detail.everfresh.path,
         text: {
           id: 'home.banner.buyBtn',
         },

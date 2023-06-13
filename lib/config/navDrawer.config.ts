@@ -19,25 +19,25 @@ const navDrawerConfig: NavDrawerConfig = {
           text: {
             id: 'bags',
           },
-          path: pages.bags.path,
+          path: pages.detail.bags.path,
         },
         {
           text: {
             id: 'everfresh',
           },
-          path: pages.everfresh.path,
+          path: pages.detail.everfresh.path,
         },
         {
           text: {
             id: 'bagsPack',
           },
-          path: pages.bagsPack.path,
+          path: pages.detail.bagsPack.path,
         },
         {
           text: {
             id: 'everfreshPack',
           },
-          path: pages.everfreshPack.path,
+          path: pages.detail.everfreshPack.path,
         },
       ],
     },

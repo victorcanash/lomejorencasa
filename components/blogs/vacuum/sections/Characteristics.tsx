@@ -207,7 +207,7 @@ const Characteristics = (props: CharacteristicsProps) => {
           >
             <Grid item>
               <LinkButton
-                href={pages.everfresh.path}
+                href={pages.detail.everfresh.path}
                 id="advantages"
                 customtype="actionPrimary"
               >

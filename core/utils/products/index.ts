@@ -76,10 +76,26 @@ export const generateLandings = (landingConfigs: LandingConfig[]) => {
   return landings;
 };
 
+export const getCategoryConfigByPath = (path: string, categoryConfigs: CategoryConfig[]) => {
+  return categoryConfigs.find((categoryConfig) => {
+    if (categoryConfig.path === path) {
+      return categoryConfig;
+    }
+  });
+};
+
 export const getLandingConfigByPath = (path: string, landingConfigs: LandingConfig[]) => {
   return landingConfigs.find((landingConfig) => {
     if (landingConfig.path === path) {
       return landingConfig;
+    }
+  });
+};
+
+export const getCategoryConfigById = (id: number, categoryConfigs: CategoryConfig[]) => {
+  return categoryConfigs.find((categoryConfig) => {
+    if (categoryConfig.id === id) {
+      return categoryConfig;
     }
   });
 };
@@ -100,6 +116,10 @@ export const getLandingConfigByCartItem = (item: CartItem | GuestCartCheckItem, 
       return landingConfig;
     }
   });
+};
+
+export const getCategoryPathByConfig = (categoryConfig: CategoryConfig) => {
+  return `/colecciones/${categoryConfig.path}`;
 };
 
 export const getLandingPathByConfig = (landingConfig: LandingConfig) => {

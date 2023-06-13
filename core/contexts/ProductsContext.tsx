@@ -22,6 +22,7 @@ import {
   generateLandings,
   getLandingConfigByCartItem,
   getLandingConfigById,
+  getCategoryConfigByPath,
   getLandingConfigByPath,
   getLandingPathByConfig,
 } from '@core/utils/products';
@@ -33,6 +34,7 @@ type ProductsContext = {
   getAllCategories: () => ProductCategory[],
   getAllLandings: () => Landing[],
   initProducts: (newCategories?: ProductCategory[], newLandings?: Landing[]) => void,
+  getCategoryByPath: (path: string) => ProductCategory | undefined,
   getLandingByPath: (path: string) => Landing | undefined,
   getLandingById: (id: number) => Landing | undefined,
   getAllProducts: () => Product[],
@@ -50,6 +52,7 @@ const ProductsContext = createContext<ProductsContext>({
   getAllCategories: () => [],
   getAllLandings: () => [],
   initProducts: () => {},
+  getCategoryByPath: () => undefined,
   getLandingByPath: () => undefined,
   getLandingById: () => undefined,
   getAllProducts: () => [],
@@ -91,6 +94,19 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       landings.current = newLandings;
     }
   }, []);
+
+  const getCategoryByPath = useCallback((path: string) => {
+    let foundCategory: ProductCategory | undefined = undefined;
+    const foundCategoryConfig = getCategoryConfigByPath(path, categoryConfigs);
+    if (foundCategoryConfig) {
+      foundCategory = categories.current.find((category) => {
+        if (category.id === foundCategoryConfig.id) {
+          return category;
+        }
+      });
+    }
+    return foundCategory;
+  }, [categories]);
 
   const getLandingByPath = useCallback((path: string) => {
     let foundLanding: Landing | undefined = undefined;
@@ -136,13 +152,13 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   const getPageUrlByCartItem = useCallback((item: CartItem | GuestCartCheckItem) => {
     const foundLandingConfig = getLandingConfigByCartItem(item, landingConfigs);
     return foundLandingConfig ?
-      getLandingPathByConfig(foundLandingConfig) : pages.productList.path;
+      getLandingPathByConfig(foundLandingConfig) : pages.home.path;
   }, []);
 
   const getPageUrlByLandingId = useCallback((landingId: number) => {
     const foundLandingConfig = getLandingConfigById(landingId, landingConfigs);
     return foundLandingConfig ?
-      getLandingPathByConfig(foundLandingConfig) : pages.productList.path;
+      getLandingPathByConfig(foundLandingConfig) : pages.home.path;
   }, []);
   
   const getItemImgUrl = useCallback((item: ProductCategory | Landing | CartItem | GuestCartCheckItem) => {
@@ -220,6 +236,7 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
         getAllCategories,
         getAllLandings,
         initProducts,
+        getCategoryByPath,
         getLandingByPath,
         getLandingById,
         getAllProducts,

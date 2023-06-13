@@ -17,6 +17,11 @@ export type InventoryConfig = {
 
 export type CategoryConfig = {
   id: number,
+  path: string,
+  metas: {
+    title: string,
+    imgsAlt: string,
+  },
   name: LocalizedText,
   image?: string,
 };

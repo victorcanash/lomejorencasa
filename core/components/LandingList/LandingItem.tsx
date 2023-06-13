@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useMemo, useCallback } from 'react';
 
 import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
@@ -44,22 +44,15 @@ const LandingItem = (props: LandingItemProps) => {
 
   const { addCartItem } = useCart(false);
 
-  const onClickAddCartBtn = useCallback((landing: Landing) => {
-    const firstItem = getFirstLandingItem(landing);
-    if (firstItem) {
-      addCartItem(firstItem, 1);
-    }
-  }, [addCartItem]);
-
-  const getLandingPath = useCallback((id: number) => {
-    const landingConfig = getLandingConfigById(id, landingConfigs);
+  const landingPath = useMemo(() => {
+    const landingConfig = getLandingConfigById(landing.id, landingConfigs);
     if (landingConfig) {
       return getLandingPathByConfig(landingConfig);
     }
     return pages.home.path;
-  }, []);
+  }, [landing.id]);
 
-  const getLandingName = useCallback((landing: Landing) => {
+  const landingName = useMemo(() => {
     let name = landing.name?.current || '';
     if (!name) {
       const landingConfig = getLandingConfigById(landing.id, landingConfigs);
@@ -75,16 +68,23 @@ const LandingItem = (props: LandingItemProps) => {
       }
     }
     return capitalizeFirstLetter(name);
-  }, []);
+  }, [landing]);
 
-  const getLandingPrice = useCallback((landing: Landing) => {
+  const landingPrice = useMemo(() => {
     let priceData = { price: 0, originPrice: 0 };
     const firstItem = getFirstLandingItem(landing);
     if (firstItem) {
       priceData = getProductPriceData(firstItem);
     }
     return priceData;
-  }, []);
+  }, [landing]);
+
+  const onClickAddCartBtn = useCallback(() => {
+    const firstItem = getFirstLandingItem(landing);
+    if (firstItem) {
+      addCartItem(firstItem, 1);
+    }
+  }, [addCartItem, landing]);
 
   return (
     <Card sx={{ overflow: 'visible' }}>
@@ -97,7 +97,7 @@ const LandingItem = (props: LandingItemProps) => {
         }}
         action={
           <IconButton
-            onClick={() => onClickAddCartBtn(landing)}
+            onClick={onClickAddCartBtn}
             sx={{
               ...themeCustomElements.button?.action?.primary ?
                 convertElementToSx(themeCustomElements.button.action.primary) : undefined,
@@ -111,7 +111,7 @@ const LandingItem = (props: LandingItemProps) => {
           </IconButton>
         }
       />
-      <CardActionArea component={Link} href={getLandingPath(landing.id)}>
+      <CardActionArea component={Link} href={landingPath}>
         <CardMedia>
           <Box>
             <CustomImage
@@ -141,12 +141,12 @@ const LandingItem = (props: LandingItemProps) => {
                 wordWrap: 'break-word',
               }}
             >
-              { getLandingName(landing) }
+              { landingName }
             </Typography>
             <ProductPrice
               type="landingList"
-              price={getLandingPrice(landing).price}
-              originPrice={getLandingPrice(landing).originPrice}
+              price={landingPrice.price}
+              originPrice={landingPrice.originPrice}
             />
           </Box>
         </CardContent>

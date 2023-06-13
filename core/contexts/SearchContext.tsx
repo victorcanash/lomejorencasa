@@ -54,7 +54,7 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     page = 1, keywords = '',
     admin = false
   ) => {
-    const pagePath = !admin ? `${pages.productList.path}/${categoryName}` : pages.admin.path;
+    const pagePath = !admin ? `${pages.home.path}/${categoryName}` : pages.admin.path;
     let queries = `?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
     if (admin) {
       queries += `&section=${AdminSections.checkProducts}`;
