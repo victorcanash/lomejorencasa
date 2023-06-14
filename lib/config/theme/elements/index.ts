@@ -1,78 +1,9 @@
-import type { ThemeElement } from '@core/types/themes';
+import type { ThemeDefaultConfig, ThemeCustomConfig } from '@core/types/themes';
 
-import colors from '@lib/config/theme/colors';
-import typographies from '@lib/config/theme/typographies';
+import colors from '../colors';
+import typographies from '../typographies';
 
-export const themeDefaultElements: {
-  palette: {
-    backgroundColor: {
-      primary: string,
-      secondary: string,
-    },
-    textColor: {
-      primary: string,
-      secondary: string,
-      disabled: string,
-    },
-  },
-  typography: {
-    fontFamily: string[],
-    h1: ThemeElement,
-    h2: ThemeElement,
-    h3: ThemeElement,
-    h4: ThemeElement,
-    body1Head: ThemeElement,
-    body2Head: ThemeElement,
-    body1: ThemeElement,
-    body2: ThemeElement,
-  },
-  link?: ThemeElement,
-  breadcrumbs?: {
-    separator?: ThemeElement,
-  },
-  paper?: ThemeElement,
-  appBar?: ThemeElement,
-  dialog?: ThemeElement,
-  dialogTitle?: ThemeElement,
-  dialogContentText?: ThemeElement,
-  accordion?: ThemeElement,
-  accordionSummary?: ThemeElement,
-  accordionDetails?: ThemeElement,
-  divider?: ThemeElement,
-  backdrop?: ThemeElement,
-  inputLabel?: ThemeElement,
-  inputBase?: ThemeElement,
-  button?: ThemeElement,
-  checkbox?: ThemeElement,
-  listItem?: ThemeElement,
-  paginationItem?: ThemeElement,
-  circularProgress?: ThemeElement,
-  avatar?: ThemeElement,
-  iconButton?: ThemeElement,
-  rating?: {
-    icon?: ThemeElement,
-  },
-  stepIcon?: {
-    default?: ThemeElement,
-    text?: ThemeElement,
-  },
-  stepLabel?: {
-    labelContainer?: ThemeElement,
-  },
-  badge?: ThemeElement,
-  alert?: { 
-    default?: ThemeElement,
-    success?: ThemeElement,
-    error?: ThemeElement,
-    icon?: ThemeElement,
-  },
-  datePicker?: {
-    default?: ThemeElement,
-    dayPicker?: {
-      weekDayLabel?: ThemeElement,
-    },
-  },
-} = {
+export const themeDefaultElements: ThemeDefaultConfig = {
   palette: {
     backgroundColor: {
       primary: colors.background.primary,
@@ -462,90 +393,7 @@ export const themeDefaultElements: {
   },
 };
 
-export const themeCustomElements: {
-  dividers?: {
-    subdivider?: ThemeElement,
-    payment?: ThemeElement,
-    headerDrawer?: {
-      default?: ThemeElement,
-      highlight?: ThemeElement,
-    },
-  },
-  banners?: {
-    maintenance?: {
-      content?: ThemeElement,
-      icon?: ThemeElement,
-    },
-    product?: {
-      default?: ThemeElement,
-      small?: ThemeElement,
-    },
-    register?: {
-      discountPercentText?: ThemeElement,
-    },
-  },
-  navBar?: {
-    shippingBar?: {
-      content?: ThemeElement,
-      icon?: ThemeElement,
-    },
-  }
-  footer?: {
-    transition?: ThemeElement,
-    content?: ThemeElement,
-    title?: ThemeElement,
-    icons?: ThemeElement,
-  },
-  categoryList?: {
-    nameText?: ThemeElement,
-  },
-  landingList?: {
-    nameText?: ThemeElement,
-    price?: {
-      originText?: ThemeElement,
-      currentText?: ThemeElement,
-    },
-  },
-  landingDetail?: {
-    selectLabel?: ThemeElement,
-    price?: {
-      originText?: ThemeElement,
-      currentText?: ThemeElement,
-      percentText?: ThemeElement,
-    },
-    bundleTitle?: ThemeElement,
-  },
-  reviews?: {
-    verifiedText?: ThemeElement,
-  },
-  faq?: {
-    accordionGroup?: {
-      default?: ThemeElement,
-      summary?: ThemeElement,
-      details?: ThemeElement,
-    },
-    accordion?: {
-      default?: ThemeElement,
-      summary?: ThemeElement,
-      details?: ThemeElement,
-    },
-  },
-  button?: {
-    action?: {
-      primary?: ThemeElement,
-      secondary?: ThemeElement,
-    },
-    payNow?: ThemeElement,
-    acceptCookies?: ThemeElement,
-  },
-  forms?: {
-    accordion?: {
-      default?: ThemeElement,
-      summary?: ThemeElement,
-      details?: ThemeElement,
-    },
-  },
-} = {
+export const themeCustomElements: ThemeCustomConfig = {
   dividers: {
     subdivider: {
       border: {
