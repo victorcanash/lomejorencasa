@@ -17,29 +17,12 @@ const navDrawerConfig: NavDrawerConfig = {
       items: [
         {
           text: {
-            id: 'bags',
+            id: 'all',
           },
-          path: pages.detail.bags.path,
-        },
-        {
-          text: {
-            id: 'everfresh',
-          },
-          path: pages.detail.everfresh.path,
-        },
-        {
-          text: {
-            id: 'bagsPack',
-          },
-          path: pages.detail.bagsPack.path,
-        },
-        {
-          text: {
-            id: 'everfreshPack',
-          },
-          path: pages.detail.everfreshPack.path,
+          path: pages.collections.all.path,
         },
       ],
+      categories: true,
     },
     {
       text: {
