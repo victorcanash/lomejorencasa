@@ -40,7 +40,7 @@ const CategoryItem = (props: CategoryItemProps) => {
   }, [category.id]);
 
   return (
-    <Link href={categoryPath} sx={{ textDecoration: 'none' }}>
+    <Link href={categoryPath} underline="none">
       <Box
         sx={{
           position: 'relative',

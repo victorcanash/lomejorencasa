@@ -27,6 +27,9 @@ export const themeDefaultElements: {
     body2: ThemeElement,
   },
   link?: ThemeElement,
+  breadcrumbs?: {
+    separator?: ThemeElement,
+  },
   paper?: ThemeElement,
   appBar?: ThemeElement,
   dialog?: ThemeElement,
@@ -162,6 +165,15 @@ export const themeDefaultElements: {
     text: {
       color: {
         default: colors.text.black,
+      },
+    },
+  },
+  breadcrumbs: {
+    separator: {
+      text: {
+        color: {
+          default: colors.text.black,
+        },
       },
     },
   },

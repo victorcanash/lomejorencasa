@@ -7,13 +7,18 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import type { CategoryConfig, ProductCategory } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
 import { useProductsContext } from '@core/contexts/ProductsContext';
+import Link from '@core/components/navigation/Link';
 import Title from '@core/components/ui/Title';
 import Pagination from '@core/components/ui/Pagination';
 import LandingItem from './LandingItem';
+
+import { pages } from '@lib/config/navigation.config';
 
 type LandingListProps = {
   type?: 'featured',
@@ -81,17 +86,41 @@ const LandingList = (props: LandingListProps) => {
 
         {/* Title */}
         { !type &&
-          <Title
-            type="h1"
-            noMarginTop
-            texts={{
-              title: !categoryModel ? {
-                id: 'productList.all.title',
-              } : undefined,
-              titleAdd: categoryModel ? categoryModel.name.current : undefined,
-            }}
-            divider={true}
-          />
+          <>
+            <Breadcrumbs
+              separator={<NavigateNextIcon fontSize="small" />}
+              sx={{ mb: 1 }}
+            >
+              <Link
+                underline="hover"
+                href={pages.home.path}
+              >
+                <FormattedMessage
+                  id="productList.home"
+                />
+              </Link>
+              <Link
+                underline="hover"
+                href={pages.collections.index.path}
+              >
+                <FormattedMessage
+                  id="productList.collections"
+                />
+              </Link>
+            </Breadcrumbs>
+
+            <Title
+              type="h1"
+              noMarginTop
+              texts={{
+                title: !categoryModel ? {
+                  id: 'productList.all.title',
+                } : undefined,
+                titleAdd: categoryModel ? categoryModel.name.current : undefined,
+              }}
+              divider={true}
+            />
+          </>
         }
         { type === 'featured' &&
           <Title

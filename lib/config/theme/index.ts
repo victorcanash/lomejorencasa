@@ -89,6 +89,11 @@ const themeOptions: ThemeOptions = {
         },
       },
     },
+    MuiBreadcrumbs: {
+      styleOverrides: {
+        separator: themeDefaultElements.breadcrumbs?.separator ? convertElementToSx(themeDefaultElements.breadcrumbs.separator) : undefined,
+      },
+    },
     MuiAppBar: {
       styleOverrides: {
         root: themeDefaultElements.appBar ? convertElementToSx(themeDefaultElements.appBar) : undefined,
