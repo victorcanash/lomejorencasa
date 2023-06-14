@@ -196,7 +196,7 @@ const Use = () => {
             maxWidth="xs_sm"
           />
           <LinkButton
-            href={pages.bags.path}
+            href={pages.detail.bags.path}
             id="advantages"
             customtype="actionPrimary"
             sx={{
