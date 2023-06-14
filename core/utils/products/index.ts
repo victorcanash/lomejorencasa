@@ -126,6 +126,16 @@ export const getLandingPathByConfig = (landingConfig: LandingConfig) => {
   return `/productos/${landingConfig.path}`;
 };
 
+export const getCategoryPathById = (id: number, categoryConfigs: CategoryConfig[]) => {
+  const categoryConfig = getCategoryConfigById(id, categoryConfigs);
+  return `/colecciones/${categoryConfig?.path}`;
+};
+
+export const getLandingPathById = (id: number, landingConfigs: LandingConfig[]) => {
+  const landingConfig = getLandingConfigById(id, landingConfigs);
+  return `/productos/${landingConfig?.path}`;
+};
+
 export const getLandingItems = (landing: Landing) => {
   let landingItems: (ProductInventory | ProductPack)[] = [];
   if (landing.products.length > 0) {

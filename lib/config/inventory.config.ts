@@ -140,12 +140,6 @@ const inventoryConfig: InventoryConfig = {
           content: {
             id: 'everfresh.videoComment.2.content',
           },
-          button: {
-            text: {
-              id: 'everfresh.videoComment.2.bagsButton',
-            },
-            path: pages.detail.bags.path,
-          },
           source: { 
             type: 'video',
             src: 'v1680692687/laenvasadora/LANDING%20PAGE/Video_cajon_landing_con_mas_luz_g2tu5o.mp4',
@@ -314,12 +308,6 @@ const inventoryConfig: InventoryConfig = {
           content: {
             id: 'everfresh.videoComment.2.content',
           },
-          button: {
-            text: {
-              id: 'everfresh.videoComment.2.everfreshButton',
-            },
-            path: pages.detail.everfresh.path,
-          },
           source: { 
             type: 'video',
             src: 'v1680692687/laenvasadora/LANDING%20PAGE/Video_cajon_landing_con_mas_luz_g2tu5o.mp4',
@@ -427,12 +415,6 @@ const inventoryConfig: InventoryConfig = {
           content: {
             id: 'everfresh.videoComment.2.content',
           },
-          button: {
-            text: {
-              id: 'everfresh.videoComment.2.bagsButton',
-            },
-            path: pages.detail.bags.path,
-          },
           source: { 
             type: 'video',
             src: 'v1680692687/laenvasadora/LANDING%20PAGE/Video_cajon_landing_con_mas_luz_g2tu5o.mp4',
@@ -445,12 +427,6 @@ const inventoryConfig: InventoryConfig = {
           },
           content: {
             id: 'everfresh.videoComment.3.content',
-          },
-          button: {
-            text: {
-              id: 'everfresh.videoComment.3.button',
-            },
-            path: pages.faq.path,
           },
           source: { 
             type: 'video',
@@ -601,12 +577,6 @@ const inventoryConfig: InventoryConfig = {
           content: {
             id: 'everfresh.videoComment.2.content',
           },
-          button: {
-            text: {
-              id: 'everfresh.videoComment.2.everfreshButton',
-            },
-            path: pages.detail.everfresh.path,
-          },
           source: { 
             type: 'video',
             src: 'v1680692687/laenvasadora/LANDING%20PAGE/Video_cajon_landing_con_mas_luz_g2tu5o.mp4',
@@ -619,12 +589,6 @@ const inventoryConfig: InventoryConfig = {
           },
           content: {
             id: 'everfresh.videoComment.3.content',
-          },
-          button: {
-            text: {
-              id: 'everfresh.videoComment.3.button',
-            },
-            path: pages.faq.path,
           },
           source: { 
             type: 'video',

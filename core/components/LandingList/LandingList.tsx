@@ -121,7 +121,7 @@ const LandingList = (props: LandingListProps) => {
               </Link>
               <Link
                 underline="hover"
-                href={pages.collections.index.path}
+                href={pages.collectionsIndex.path}
               >
                 <FormattedMessage
                   id="productList.collections"

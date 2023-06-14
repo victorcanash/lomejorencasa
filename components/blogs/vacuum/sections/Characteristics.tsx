@@ -11,9 +11,11 @@ import type { Source } from '@core/types/multimedia';
 import LinkButton from '@core/components/inputs/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
-import { pages } from '@lib/config/navigation.config';
 import Title from '@core/components/ui/Title'; 
 import colors from '@lib/config/theme/colors';
+import { getLandingPathById } from '@core/utils/products';
+
+import { landingConfigs } from '@lib/config/inventory.config';
 
 type CharacteristicsProps = {
   type: 'characteristics' | 'advantages',
@@ -207,7 +209,7 @@ const Characteristics = (props: CharacteristicsProps) => {
           >
             <Grid item>
               <LinkButton
-                href={pages.detail.everfresh.path}
+                href={getLandingPathById(1, landingConfigs)}
                 id="advantages"
                 customtype="actionPrimary"
               >

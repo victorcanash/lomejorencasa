@@ -1,6 +1,8 @@
 import type { ProductBannerConfig } from '@core/types/products';
+import { getLandingPathById } from '@core/utils/products';
+
 import { keywords } from '@lib/config/next-seo.config';
-import { pages } from '@lib/config/navigation.config';
+import { landingConfigs } from '@lib/config/inventory.config';
 
 const productBannerConfig: ProductBannerConfig = {
   items: [
@@ -16,7 +18,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.detail.everfresh.path,
+        path: getLandingPathById(1, landingConfigs),
         text: {
           id: 'home.banner.buyBtn',
         },
@@ -34,7 +36,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.detail.everfresh.path,
+        path: getLandingPathById(1, landingConfigs),
         text: {
           id: 'home.banner.buyBtn',
         },
@@ -52,7 +54,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.detail.everfresh.path,
+        path: getLandingPathById(1, landingConfigs),
         text: {
           id: 'home.banner.buyBtn',
         },
@@ -70,7 +72,7 @@ const productBannerConfig: ProductBannerConfig = {
         height: '1080', 
       },
       button: {
-        path: pages.detail.everfresh.path,
+        path: getLandingPathById(1, landingConfigs),
         text: {
           id: 'home.banner.buyBtn',
         },

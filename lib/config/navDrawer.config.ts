@@ -19,7 +19,7 @@ const navDrawerConfig: NavDrawerConfig = {
           text: {
             id: 'all',
           },
-          path: pages.collections.all.path,
+          path: pages.collectionsAll.path,
         },
       ],
       categories: true,

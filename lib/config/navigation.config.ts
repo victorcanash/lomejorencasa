@@ -5,6 +5,8 @@ import type { Page } from '@core/types/navigation';
 const navigationConfig: {
   pages: {
     home: Page,
+    collectionsIndex: Page,
+    collectionsAll: Page,
     about: Page,
     faq: Page,
     cart: Page,
@@ -33,19 +35,6 @@ const navigationConfig: {
     newemail: Page,
     
     admin: Page,
-
-    collections: {
-      index: Page,
-      all: Page,
-      vacuumMachines: Page,
-      vacuumBags: Page,
-    },
-    detail: {
-      everfresh: Page,
-      bags: Page,
-      everfreshPack: Page,
-      bagsPack: Page,
-    },
   },
   originRedirects: {
     from: string[],
@@ -61,6 +50,24 @@ const navigationConfig: {
     home: {
       path: '/',
       filepath: '/',
+      protection: Protections.none,
+      type: PageTypes.main,
+      savePathOnLogin: {
+        enabled: true,
+      },
+    },
+    collectionsIndex: {
+      path: '/colecciones',
+      filepath: '/colecciones/index',
+      protection: Protections.none,
+      type: PageTypes.main,
+      savePathOnLogin: {
+        enabled: true,
+      },
+    },
+    collectionsAll: {
+      path: '/colecciones/todo',
+      filepath: '/colecciones/[category]',
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
@@ -271,83 +278,6 @@ const navigationConfig: {
       type: PageTypes.admin,
       savePathOnLogin: {
         enabled: false,
-      },
-    },
-
-    collections: {
-      index: {
-        path: '/colecciones',
-        filepath: '/colecciones/index',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
-      },
-      all: {
-        path: '/colecciones/todo',
-        filepath: '/colecciones/[category]',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
-      },
-      vacuumMachines: {
-        path: '/colecciones/envasadoras-al-vacio',
-        filepath: '/colecciones/[category]',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
-      },
-      vacuumBags: {
-        path: '/colecciones/bolsas-para-envasadora-al-vacio',
-        filepath: '/colecciones/[category]',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
-      },
-    },
-    detail: {
-      everfresh: {
-        path: '/productos/envasadora-al-vacio',
-        filepath: '/productos/[landing]',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
-      },
-      bags: {
-        path: '/productos/bolsas-para-envasadora-al-vacio',
-        filepath: '/productos/[landing]',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
-      },
-      everfreshPack: {
-        path: '/productos/pack-envasadora-al-vacio',
-        filepath: '/productos/[landing]',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
-      },
-      bagsPack: {
-        path: '/productos/pack-bolsas-para-envasadora-al-vacio',
-        filepath: '/productos/[landing]',
-        protection: Protections.none,
-        type: PageTypes.main,
-        savePathOnLogin: {
-          enabled: true,
-        },
       },
     },
   },

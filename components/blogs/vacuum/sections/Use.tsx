@@ -8,14 +8,14 @@ import Typography from '@mui/material/Typography';
 
 import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
+import { getLandingPathById } from '@core/utils/products';
 import LinkButton from '@core/components/inputs/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
+import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 import Title from '@core/components/ui/Title';
 
 import { keywords } from '@lib/config/next-seo.config';
-import { pages } from '@lib/config/navigation.config';
-import colors from '@lib/config/theme/colors';
-import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
+import { landingConfigs } from '@lib/config/inventory.config';
 
 const Use = () => {
   const Subtitle = useCallback((props: { type: 'h3' | 'h4', text: FormatText }) => {
@@ -196,7 +196,7 @@ const Use = () => {
             maxWidth="xs_sm"
           />
           <LinkButton
-            href={pages.detail.bags.path}
+            href={getLandingPathById(2, landingConfigs)}
             id="advantages"
             customtype="actionPrimary"
             sx={{
