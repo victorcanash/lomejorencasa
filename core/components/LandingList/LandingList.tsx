@@ -43,9 +43,40 @@ const LandingList = (props: LandingListProps) => {
     return 40;
   }, []);
 
+  const landingsByCategory = useMemo(() => {
+    return getAllLandings().filter((landing) => {
+      let fromCategory = categoryModel ? false : true;
+      if (categoryModel) {
+        if (landing.products && landing.products.length > 0) {
+          landing.products.forEach((product) => {
+            if (product.categoryId === categoryModel.id) {
+              fromCategory = true;
+              return;
+            }
+          });
+        } else if (landing.packs && landing.packs.length > 0) {
+          landing.packs.forEach((pack) => {
+            if (fromCategory) {
+              return;
+            }
+            if (pack.inventories && pack.inventories.length > 0) {
+              pack.inventories.forEach((inventory) => {
+                if (inventory.product?.categoryId === categoryModel.id) {
+                  fromCategory = true;
+                  return;
+                }
+              })
+            }
+          });
+        }
+      }
+      return fromCategory;
+    })
+  }, [categoryModel, getAllLandings]);
+
   const allLandings = useMemo(() => {
-    return getAllLandings().slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
-  }, [currentPage, getAllLandings, limitByPage]);
+    return landingsByCategory.slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
+  }, [currentPage, landingsByCategory, limitByPage]);
 
   const totalPages = useMemo(() => {
     return Math.ceil(allLandings.length / limitByPage);
