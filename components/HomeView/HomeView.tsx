@@ -11,9 +11,14 @@ const HomeView = () => {
   return (
     <Box>
       <ProductBanner />
-      <CategoryList />
+      <CategoryList
+        type="stack"
+      />
       <LandingList
-        type="featured"
+        type="stack"
+        title={{
+          id: 'productList.featured.title',
+        }}
       />
       <BlogsList />
       <ProductReviews />

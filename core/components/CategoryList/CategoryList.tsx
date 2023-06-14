@@ -14,7 +14,7 @@ import Pagination from '@core/components/ui/Pagination';
 import CategoryItem from './CategoryItem';
 
 type CategoryListProps = {
-  type?: 'collectionsPage',
+  type: 'collectionsPage' | 'stack',
 };
 
 const CategoryList = (props: CategoryListProps) => {
@@ -40,20 +40,6 @@ const CategoryList = (props: CategoryListProps) => {
     return Math.ceil(allCategories.length / limitByPage);
   }, [allCategories.length, limitByPage]);
 
-  const isMasonryStyle = useMemo(() => {
-    if (type) {
-      return true;
-    }
-    return false;
-  }, [type]);
-
-  const isStackStyle = useMemo(() => {
-    if (!type) {
-      return true;
-    }
-    return false;
-  }, [type]);
-
   const handleChangePage = useCallback((_event: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
     setTimeout(() => {
@@ -64,8 +50,8 @@ const CategoryList = (props: CategoryListProps) => {
   return (
     <Container
       sx={{
-        mt: isStackStyle ? 6 : undefined,
-        overflowX: isStackStyle ? 'auto' : undefined,
+        mt: type === 'stack' ? 6 : undefined,
+        overflowX: type === 'stack' ? 'auto' : undefined,
       }}
     >
       <Box 
@@ -74,7 +60,7 @@ const CategoryList = (props: CategoryListProps) => {
       >
 
         {/* Masonry List */}
-        { isMasonryStyle &&
+        { type === 'collectionsPage' &&
           <>
             { allCategories.length > 0 ?
               <Masonry columns={{ xs: 2, xs_sm: 3, sm: 4, md: 5 }} spacing={0}>
@@ -113,7 +99,7 @@ const CategoryList = (props: CategoryListProps) => {
         }
 
         {/* Stack List */}
-        { isStackStyle &&
+        { type === 'stack' &&
           <Stack
             direction="row"
             spacing={2}
@@ -142,7 +128,7 @@ const CategoryList = (props: CategoryListProps) => {
         }
 
         {/* Pagination */}
-        { isMasonryStyle &&
+        { type === 'collectionsPage' &&
           <>
             <Box mt={allCategories.length > 0 ? 3 : 5} />
             <Pagination

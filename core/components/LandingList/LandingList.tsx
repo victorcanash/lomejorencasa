@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
+import type { FormatText } from '@core/types/texts';
 import type { CategoryConfig, ProductCategory } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
 import { useProductsContext } from '@core/contexts/ProductsContext';
@@ -21,9 +22,10 @@ import LandingItem from './LandingItem';
 import { pages } from '@lib/config/navigation.config';
 
 type LandingListProps = {
-  type?: 'featured',
+  type: 'collectionsPage' | 'stack',
   categoryModel?: ProductCategory,
   categoryConfig?: CategoryConfig,
+  title?: FormatText,
 };
 
 const LandingList = (props: LandingListProps) => {
@@ -31,6 +33,7 @@ const LandingList = (props: LandingListProps) => {
     type,
     categoryModel,
     categoryConfig,
+    title,
   } = props;
 
   const {
@@ -82,20 +85,6 @@ const LandingList = (props: LandingListProps) => {
     return Math.ceil(allLandings.length / limitByPage);
   }, [allLandings.length, limitByPage]);
 
-  const isMasonryStyle = useMemo(() => {
-    if (!type) {
-      return true;
-    }
-    return false;
-  }, [type]);
-
-  const isStackStyle = useMemo(() => {
-    if (type) {
-      return true;
-    }
-    return false;
-  }, [type]);
-
   const handleChangePage = useCallback((_event: ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
     setTimeout(() => {
@@ -107,7 +96,7 @@ const LandingList = (props: LandingListProps) => {
     <Container
       id="landings"
       sx={{
-        overflowX: isStackStyle ? 'auto' : undefined,
+        overflowX: type === 'stack' ? 'auto' : undefined,
       }}
     >
       <Box 
@@ -115,8 +104,8 @@ const LandingList = (props: LandingListProps) => {
         m="auto"
       >
 
-        {/* Title */}
-        { !type &&
+        {/* Header */}
+        { type === 'collectionsPage' &&
           <>
             <Breadcrumbs
               separator={<NavigateNextIcon fontSize="small" />}
@@ -139,38 +128,27 @@ const LandingList = (props: LandingListProps) => {
                 />
               </Link>
             </Breadcrumbs>
-
-            <Title
-              type="h1"
-              noMarginTop
-              texts={{
-                title: !categoryModel ? {
-                  id: 'productList.all.title',
-                } : undefined,
-                titleAdd: categoryModel ? categoryModel.name.current : undefined,
-              }}
-              divider={true}
-            />
           </>
         }
-        { type === 'featured' &&
-          <Title
-            type="h2"
-            texts={{
-              title: {
-                id: 'productList.featured.title',
-              },
-            }}
-            divider={false}
-          />
-        }
+        <Title
+          type={type === 'collectionsPage' ? 'h1' : 'h2'}
+          noMarginTop={type === 'collectionsPage' ? true : false}
+          texts={{
+            title: (!categoryModel && !title) ? {
+              id: 'productList.all.title',
+            } : title,
+            titleAdd: (categoryModel && !title) ?
+              categoryModel.name.current : undefined,
+          }}
+          divider={type === 'collectionsPage' ? true : false}
+        />
 
         {/* List */}
         { allLandings.length > 0 ?
           <>
 
             {/* Masonry List */}
-            { isMasonryStyle &&
+            { type === 'collectionsPage' &&
               <Masonry columns={{ xs: 2, sm_md: 3 }} spacing={0}>
                 { allLandings.map((landing) => (
                   <Box
@@ -199,7 +177,7 @@ const LandingList = (props: LandingListProps) => {
             }
 
             {/* Stack List */}
-            { isStackStyle &&
+            { type === 'stack' &&
               <Stack
                 direction="row"
                 spacing={2}
@@ -235,7 +213,7 @@ const LandingList = (props: LandingListProps) => {
         }
 
         {/* Pagination */}
-        { isMasonryStyle &&
+        { type === 'collectionsPage' &&
           <>
             <Box mt={allLandings.length > 0 ? 3 : 5} />
             <Pagination

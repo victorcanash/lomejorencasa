@@ -30,6 +30,7 @@ const CategoryPage: NextPage<CategoryPageProps> = (props) => {
 
       { (categoryModel && categoryConfig) &&
         <LandingList
+          type="collectionsPage"
           categoryModel={categoryModel}
           categoryConfig={categoryConfig}
         />
