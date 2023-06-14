@@ -15,6 +15,7 @@ import { getCookie } from 'cookies-next';
 
 import { ConsentKey, ConsentValues } from '@core/constants/cookies';
 import { Protections } from '@core/constants/auth';
+import { Page } from '@core/types/navigation';
 import type { PaypalCredentials } from '@core/types/payment';
 import type { User, GuestUser } from '@core/types/user';
 import type { CheckoutData } from '@core/types/checkout';
@@ -107,8 +108,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const isProtectedPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
-      if (page.filepath == router.pathname) {
-        if (page.protection == Protections.user) {
+      if ((page as Page)?.filepath == router.pathname) {
+        if ((page as Page)?.protection == Protections.user) {
           return true;
         }
         break;
@@ -119,8 +120,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const isAdminPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
-      if (page.filepath == router.pathname) {
-        if (page.protection == Protections.admin) {
+      if ((page as Page)?.filepath == router.pathname) {
+        if ((page as Page)?.protection == Protections.admin) {
           return true;
         }
         break;
@@ -131,8 +132,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getRedirectProtectedPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
-      if (page.filepath == router.pathname) {
-        return page.redirectPathOnProtected || pages.login.path;
+      if ((page as Page)?.filepath == router.pathname) {
+        return (page as Page)?.redirectPathOnProtected|| pages.login.path;
       }
     }
     return pages.login.path;
@@ -140,8 +141,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const getRedirectLogoutPath = useCallback(() => {
     for (const [, page] of Object.entries(pages)) {
-      if (page.filepath == router.pathname) {
-        return page.redirectPathOnLogout;
+      if ((page as Page)?.filepath == router.pathname) {
+        return (page as Page)?.redirectPathOnLogout|| pages.login.path;
       }
     }
     return undefined;
@@ -170,9 +171,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
     Object.entries(pages).forEach(([_key, page]) => {
-      if (page.filepath == router.pathname) {
-        if (page.savePathOnLogin.enabled) {
-          prevLoginPathRef.current = page.savePathOnLogin?.path || router.asPath;
+      if ((page as Page)?.filepath == router.pathname) {
+        if ((page as Page)?.savePathOnLogin?.enabled) {
+          prevLoginPathRef.current = (page as Page)?.savePathOnLogin?.path || router.asPath;
         }
         return;
       }
