@@ -121,7 +121,7 @@ const LandingList = (props: LandingListProps) => {
               </Link>
               <Link
                 underline="hover"
-                href={pages.collectionsIndex.path}
+                href={pages.collections.path}
               >
                 <FormattedMessage
                   id="productList.collections"
@@ -134,9 +134,7 @@ const LandingList = (props: LandingListProps) => {
           type={type === 'collectionsPage' ? 'h1' : 'h2'}
           noMarginTop={type === 'collectionsPage' ? true : false}
           texts={{
-            title: (!categoryModel && !title) ? {
-              id: 'productList.all.title',
-            } : title,
+            title: title,
             titleAdd: (categoryModel && !title) ?
               categoryModel.name.current : undefined,
           }}

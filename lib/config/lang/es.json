@@ -215,9 +215,12 @@
   "collections.h1": "Catálogo",
   "collections.noItems": "No existe ninguna categoría",
 
+  "products.metas.title": "Productos",
+  "products.metas.description": "Productos",
+  "products.h1": "Productos",
+
   "productList.home": "Inicio",
   "productList.collections": "Colecciones",
-  "productList.all.title": "Todos nuestros productos",
   "productList.featured.title": "Productos destacados",
   "productList.noItems": "No existe ningún producto.",
 

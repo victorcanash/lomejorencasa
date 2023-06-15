@@ -5,8 +5,8 @@ import type { Page } from '@core/types/navigation';
 const navigationConfig: {
   pages: {
     home: Page,
-    collectionsIndex: Page,
-    collectionsAll: Page,
+    collections: Page,
+    products: Page,
     about: Page,
     faq: Page,
     cart: Page,
@@ -56,7 +56,7 @@ const navigationConfig: {
         enabled: true,
       },
     },
-    collectionsIndex: {
+    collections: {
       path: '/colecciones',
       filepath: '/colecciones/index',
       protection: Protections.none,
@@ -65,9 +65,9 @@ const navigationConfig: {
         enabled: true,
       },
     },
-    collectionsAll: {
+    products: {
       path: '/colecciones/todo',
-      filepath: '/colecciones/[category]',
+      filepath: '/colecciones/todo',
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
