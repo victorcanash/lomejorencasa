@@ -102,6 +102,7 @@ export type BundleItemConfig = {
 
 export type Landing = {
   id: number,
+  slug: string,
   name: LocalizedText,
   description: LocalizedText,
   images: string[],
@@ -109,23 +110,36 @@ export type Landing = {
   packs: ProductPack[],
 };
 
-export type ProductCategory = {
+export type ProductCategoryGroup = {
   id: number,
+  slug: string,
   name: LocalizedText,
   description: LocalizedText,
   image?: string,
+  categories?: ProductCategory[],
+};
+
+export type ProductCategory = {
+  id: number,
+  categoryGroupId?: number,
+  slug: string,
+  name: LocalizedText,
+  description: LocalizedText,
+  image?: string,
+  categoryGroup?: ProductCategoryGroup,
+  products?: Product[],
 };
 
 export type Product = {
   id: number,
   landingId: number,
-  categoryId: number,
   name: LocalizedText,
   description: LocalizedText,
   rating: string,
   reviewsCount: number,
   lowestPrice: number,
   lowestRealPrice: number,
+  categories?: ProductCategory[],
   inventories?: ProductInventory[],
   discounts?: ProductDiscount[],
   activeDiscount?: ProductDiscount,

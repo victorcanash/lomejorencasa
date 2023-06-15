@@ -185,6 +185,7 @@ export const getProductPriceData = (product: Product | ProductInventory | Produc
   };
 };
 
+// ADMIN
 export const getAllProducts = async (
   token: string, 
   currentLocale: string, 
@@ -240,6 +241,7 @@ export const getAllProducts = async (
   });
 };
 
+// ADMIN
 export const getAllPacks = async (
   token: string, 
   currentLocale: string, 
@@ -386,6 +388,7 @@ export const getAllProductReviews = async (
   });
 };
 
+// ADMIN
 export const getProduct = (token: string, currentLocale: string, id: number, adminData = false, bigbuyData = false) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
@@ -415,6 +418,7 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
   });
 };
 
+// ADMIN
 export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     let promiseMW = createProduct;
@@ -476,6 +480,7 @@ const deleteProduct = (token: string, currentLocale: string, product: Product) =
   return axios.delete(`/products/${product.id}`, options)
 }
 
+// ADMIN
 export const manageProductCategory = (action: ManageActions, token: string, currentLocale: string, productCategory: ProductCategory) => {
   return new Promise<{productCategory: ProductCategory}>(async (resolve, reject) => {
     let promiseMW = createProductCategory;
@@ -537,6 +542,7 @@ const deleteProductCategory = (token: string, currentLocale: string, productCate
   return axios.delete(`/product-categories/${productCategory.id}`, options)
 }
 
+// ADMIN
 export const manageProductInventory = (action: ManageActions, token: string, currentLocale: string, productInventory: ProductInventory) => {
   return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {
     let promiseMW = createProductInventory;
@@ -598,6 +604,7 @@ const deleteProductInventory = (token: string, currentLocale: string, productInv
   return axios.delete(`/product-inventories/${productInventory.id}`, options)
 }
 
+// ADMIN
 export const manageProductDiscount = (action: ManageActions, token: string, currentLocale: string, productDiscount: ProductDiscount) => {
   return new Promise<{productDiscount: ProductDiscount}>(async (resolve, reject) => {
     let promiseMW = createProductDiscount;
@@ -659,6 +666,7 @@ const deleteProductDiscount = (token: string, currentLocale: string, productDisc
   return axios.delete(`/product-discounts/${productDiscount.id}`, options)
 };
 
+// ADMIN
 export const manageProductPack = (action: ManageActions, token: string, currentLocale: string, productPack: ProductPack) => {
   return new Promise<{productPack: ProductPack}>(async (resolve, reject) => {
     let promiseMW = createProductPack;
