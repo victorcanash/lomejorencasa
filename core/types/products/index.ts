@@ -106,6 +106,7 @@ export type Landing = {
   name: LocalizedText,
   description: LocalizedText,
   images: string[],
+  tutorialSources: string[],
   products: Product[],
   packs: ProductPack[],
 };
