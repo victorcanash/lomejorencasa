@@ -16,16 +16,13 @@ import type {
   AuthResetPsw 
 } from '@core/types/auth';
 import type { Cart, GuestCartCheck } from '@core/types/cart';
-import type { Landing, ProductCategory } from '@core/types/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
 import { convertCartToGuestCart, convertGuestCartCheckToCart, getGuestCart } from '@core/utils/cart';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@core/utils/storage';
 
-export const init = async (currentLocale: string, landingIds?: number[], categoryIds?: number[]) => {
+export const init = async (currentLocale: string) => {
   const guestCart = await getGuestCart();
   return new Promise<{
-    landings: Landing[],
-    productCategories: ProductCategory[],
     cart: Cart,
     token?: string,
     user?: User,
@@ -43,13 +40,10 @@ export const init = async (currentLocale: string, landingIds?: number[], categor
     };
     axios.post('/auth/init', {
       guestCart,
-      landingIds,
-      categoryIds,
     }, options)
       .then(async (response: AxiosResponse) => {
         if (
           response.status === StatusCodes.CREATED &&
-          response.data?.landings && response.data?.categories &&
           response.data?.paypal?.token
         ) {
           if (response.data.user) {
@@ -67,8 +61,6 @@ export const init = async (currentLocale: string, landingIds?: number[], categor
             await removeStorageItem(Storages.local, JWTTokenKey);
           }
           resolve({
-            landings: response.data.landings,
-            productCategories: response.data.categories,
             cart: response.data.user?.cart || convertGuestCartCheckToCart(response.data.guestCart as GuestCartCheck),
             token: token,
             user: response.data.user || undefined,
