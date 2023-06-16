@@ -64,7 +64,7 @@ const inventoryConfig: InventoryConfig = {
   landings: [
     {
       id: 1,
-      path: 'envasadora-al-vacio',
+      path: 'envasadora-al-vacio-everfresh',
       metas: {
         title: keywords.vacuumMachine.main,
         imgsAlt: keywords.vacuumMachine.main,
@@ -169,7 +169,7 @@ const inventoryConfig: InventoryConfig = {
     },
     {
       id: 2,
-      path: 'bolsas-para-envasadora-al-vacio',
+      path: 'bolsas-de-vacio-tm-electron',
       metas: {
         title: keywords.vacuumBags.main,
         imgsAlt: keywords.vacuumBags.main,
@@ -337,7 +337,7 @@ const inventoryConfig: InventoryConfig = {
     },
     {
       id: 3,
-      path: 'pack-envasadora-al-vacio',
+      path: 'pack-envasadora-everfresh-bolsas-tm-electron',
       metas: {
         title: keywords.vacuumMachine.main,
         imgsAlt: keywords.vacuumMachine.main,
@@ -438,7 +438,7 @@ const inventoryConfig: InventoryConfig = {
     },
     {
       id: 4,
-      path: 'pack-bolsas-para-envasadora-al-vacio',
+      path: 'pack-bolsas-de-vacio-tm-electron',
       metas: {
         title: keywords.vacuumBags.main,
         imgsAlt: keywords.vacuumBags.main,
