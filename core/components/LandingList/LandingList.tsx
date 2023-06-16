@@ -11,9 +11,8 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import type { FormatText } from '@core/types/texts';
-import type { CategoryConfig, ProductCategory } from '@core/types/products';
+import type { Landing, ProductCategory } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
-import { useProductsContext } from '@core/contexts/ProductsContext';
 import Link from '@core/components/navigation/Link';
 import Title from '@core/components/ui/Title';
 import Pagination from '@core/components/ui/Pagination';
@@ -23,22 +22,18 @@ import { pages } from '@lib/config/navigation.config';
 
 type LandingListProps = {
   type: 'collectionsPage' | 'stack',
-  categoryModel?: ProductCategory,
-  categoryConfig?: CategoryConfig,
+  category?: ProductCategory,
+  landings: Landing[],
   title?: FormatText,
 };
 
 const LandingList = (props: LandingListProps) => {
   const {
     type,
-    categoryModel,
-    categoryConfig,
+    category,
+    landings,
     title,
   } = props;
-
-  const {
-    getAllLandings,
-  } = useProductsContext();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -46,40 +41,9 @@ const LandingList = (props: LandingListProps) => {
     return 40;
   }, []);
 
-  const landingsByCategory = useMemo(() => {
-    return getAllLandings().filter((landing) => {
-      let fromCategory = categoryModel ? false : true;
-      if (categoryModel) {
-        if (landing.products && landing.products.length > 0) {
-          landing.products.forEach((product) => {
-            if (product.categoryId === categoryModel.id) {
-              fromCategory = true;
-              return;
-            }
-          });
-        } else if (landing.packs && landing.packs.length > 0) {
-          landing.packs.forEach((pack) => {
-            if (fromCategory) {
-              return;
-            }
-            if (pack.inventories && pack.inventories.length > 0) {
-              pack.inventories.forEach((inventory) => {
-                if (inventory.product?.categoryId === categoryModel.id) {
-                  fromCategory = true;
-                  return;
-                }
-              })
-            }
-          });
-        }
-      }
-      return fromCategory;
-    })
-  }, [categoryModel, getAllLandings]);
-
   const allLandings = useMemo(() => {
-    return landingsByCategory.slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
-  }, [currentPage, landingsByCategory, limitByPage]);
+    return landings.slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
+  }, [currentPage, landings, limitByPage]);
 
   const totalPages = useMemo(() => {
     return Math.ceil(allLandings.length / limitByPage);
@@ -135,8 +99,8 @@ const LandingList = (props: LandingListProps) => {
           noMarginTop={type === 'collectionsPage' ? true : false}
           texts={{
             title: title,
-            titleAdd: (categoryModel && !title) ?
-              categoryModel.name.current : undefined,
+            titleAdd: (category && !title) ?
+              category.name.current : undefined,
           }}
           divider={type === 'collectionsPage' ? true : false}
         />

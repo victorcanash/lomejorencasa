@@ -8,23 +8,21 @@ import Typography from '@mui/material/Typography';
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack'; 
 
+import type { ProductCategory, ProductCategoryGroup } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
-import { useProductsContext } from '@core/contexts/ProductsContext';
 import Pagination from '@core/components/ui/Pagination';
 import CategoryItem from './CategoryItem';
 
 type CategoryListProps = {
   type: 'collectionsPage' | 'stack',
+  categories: (ProductCategory | ProductCategoryGroup)[],
 };
 
 const CategoryList = (props: CategoryListProps) => {
   const {
     type,
+    categories,
   } = props;
-
-  const {
-    getAllCategories,
-  } = useProductsContext();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -33,8 +31,8 @@ const CategoryList = (props: CategoryListProps) => {
   }, []);
 
   const allCategories = useMemo(() => {
-    return getAllCategories().slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
-  }, [currentPage, getAllCategories, limitByPage]);
+    return categories.slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
+  }, [currentPage, categories, limitByPage]);
 
   const totalPages = useMemo(() => {
     return Math.ceil(allCategories.length / limitByPage);
