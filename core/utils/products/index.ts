@@ -9,6 +9,7 @@ import type {
   Landing,
   Product,
   ProductCategory,
+  ProductCategoryGroup,
   ProductInventory,
   ProductDiscount,
   ProductPack,
@@ -17,6 +18,8 @@ import type {
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+
+const locale = 'es';
 
 export const generateCategories = (categoryConfigs: CategoryConfig[]) => {
   const categories: ProductCategory[] = [];
@@ -183,6 +186,172 @@ export const getProductPriceData = (product: Product | ProductInventory | Produc
     price,
     originPrice,
   };
+};
+
+// MIDDLEWARE
+
+export const getAllProductCategories = async (
+  categoryGroups?: boolean,
+  page?: number,
+  limit?: number,
+  sortBy?: string, 
+  order?: string
+) => {
+  return new Promise<{
+    productCategories: (ProductCategory | ProductCategoryGroup)[],
+    totalPages: number, 
+    currentPage: number,
+  }>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      params: {
+        categoryGroups: categoryGroups,
+        page: page || 1,
+        limit: limit || 1000,
+        sortBy: sortBy || 'id',
+        order: order || 'asc',
+      },
+      headers: {
+        ...getLanguageHeaders(locale),
+      },
+    };
+    axios.get('/product-categories', options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.productCategories) {
+          resolve({
+            productCategories: response.data.productCategories,
+            totalPages: response.data.totalPages,
+            currentPage: response.data.currentPage,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get All Products Categories ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const getProductCategory = async (
+  slug: string,
+  landings?: {
+    page?: number,
+    limit?: number,
+    sortBy?: string, 
+    order?: string
+  }
+) => {
+  return new Promise<{
+    productCategory: ProductCategory | ProductCategoryGroup,
+    landingsResult: {
+      landings: Landing[],
+      totalPages: number, 
+      currentPage: number,
+    }
+  }>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      params: {
+        page: landings?.page || 1,
+        limit: landings?.limit || 1000,
+        sortBy: landings?.sortBy || 'id',
+        order: landings?.order || 'asc',
+      },
+      headers: {
+        ...getLanguageHeaders(locale),
+      },
+    };
+    axios.get(`/product-categories/${slug}`, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.productCategory) {
+          resolve({
+            productCategory: response.data.productCategory,
+            landingsResult: {
+              landings: response.data.landingsResult.landings,
+              totalPages: response.data.landingsResult.totalPages,
+              currentPage: response.data.landingsResult.currentPage,
+            },
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get Product Category ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const getAllLandings = async (
+  productsData?: boolean,
+  page?: number,
+  limit?: number,
+  sortBy?: string, 
+  order?: string
+) => {
+  return new Promise<{
+    landings: Landing[],
+    totalPages: number, 
+    currentPage: number,
+  }>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      params: {
+        productsData: productsData,
+        page: page || 1,
+        limit: limit || 1000,
+        sortBy: sortBy || 'id',
+        order: order || 'asc',
+      },
+      headers: {
+        ...getLanguageHeaders(locale),
+      },
+    };
+    axios.get('/landings', options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.landings) {
+          resolve({
+            landings: response.data.landings,
+            totalPages: response.data.totalPages,
+            currentPage: response.data.currentPage,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get All Landings ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+export const getLanding = async (
+  slug: string,
+) => {
+  return new Promise<{
+    landing: Landing,
+  }>(async (resolve, reject) => {
+    const options: AxiosRequestConfig = {
+      headers: {
+        ...getLanguageHeaders(locale),
+      },
+    };
+    axios.get(`/landings/${slug}`, options)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === StatusCodes.OK && response.data?.landing) {
+          resolve({
+            landing: response.data.landing,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg('Get Landing ERROR', error);
+        logBackendError(errorMsg);
+        reject(new Error(errorMsg));
+      }); 
+  });
 };
 
 // ADMIN
