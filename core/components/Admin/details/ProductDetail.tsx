@@ -41,7 +41,7 @@ const ProductDetail = (props: ProductDetailProps) => {
         {`${intl.formatMessage({ id: 'forms.description.es' })}: ${product.description.es}`}
       </Typography>
       <Typography component="div" variant="body1">
-        {`${intl.formatMessage({ id: 'forms.category' })}: ${getAllCategories().filter((item) => item.id == product.categoryId)[0]?.name.current}`}
+        {/*`${intl.formatMessage({ id: 'forms.category' })}: ${getAllCategories().filter((item) => item.id == product.categoryId)[0]?.name.current}`*/}
       </Typography>
      
       { created &&
