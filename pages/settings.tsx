@@ -30,7 +30,7 @@ const SettingsPage: NextPage = () => {
         }}
       />
 
-      { initialized && page.checked &&
+      { page.checked &&
         <Settings />
       }
     </>
