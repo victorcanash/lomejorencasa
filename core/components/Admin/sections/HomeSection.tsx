@@ -10,12 +10,9 @@ import Divider from '@core/components/ui/Divider';
 import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
-import { useProductsContext } from '@core/contexts/ProductsContext';
 
 const HomeSection = () => {
   const router = useRouter();
-
-  const { getAllCategories } = useProductsContext();
 
   const onClickSectionBtn = (section: AdminSections) => {
     router.push(`${pages.admin.path}?section=${section}`);
@@ -32,62 +29,10 @@ const HomeSection = () => {
           </Typography>
           <Button
             sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.checkProductCategories)}
+            onClick={() => onClickSectionBtn(AdminSections.checkStore)}
           >
             <FormattedMessage
-              id="admin.checkCategoriesBtn"
-            />
-          </Button>
-          <Button 
-            sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.checkProducts)}
-          >
-            <FormattedMessage
-              id="admin.checkProductsBtn"
-            />
-          </Button>
-          <Button
-            sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.checkProductPacks)}
-          >
-            <FormattedMessage
-              id="admin.checkPacksBtn"
-            />
-          </Button>
-        </Box>
-
-        <Divider mt={3} mb={3} />
-
-        <Box sx={{ m: 2 }}>
-          <Typography variant="h1" component="h2" gutterBottom>
-            <FormattedMessage
-              id="admin.create"
-            />
-          </Typography>
-          <Button
-            sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.createProductCategory)}
-          >
-            <FormattedMessage
-              id="admin.createCategoryBtn"
-            />
-          </Button>
-          <Button
-            sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.createProduct)}
-            disabled={getAllCategories().length <= 0}
-          >
-            <FormattedMessage
-              id="admin.createProductBtn"
-            />
-          </Button>
-          <Button
-            sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.createProductPack)}
-            disabled={getAllCategories().length <= 0}
-          >
-            <FormattedMessage
-              id="admin.createPackBtn"
+              id="admin.checkStoreBtn"
             />
           </Button>
         </Box>

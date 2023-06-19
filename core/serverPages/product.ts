@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next';
 
 import type { Product } from '@core/types/products';
-import { getProduct } from '@core/utils/products';
+// import { getProduct } from '@core/utils/products';
 
 export type ProductProps = {
   product: Product,
@@ -11,9 +11,9 @@ export const getProductProps: GetServerSideProps = async (context) => {
   const { id } = context.query;
   const idSearch = typeof id == 'string' && parseInt(id) >= 0 ? parseInt(id) : -1;
 
-  let result: { props: ProductProps } | { notFound: boolean } = { props: {} as ProductProps };
+  const result: { props: ProductProps } | { notFound: boolean } = { props: {} as ProductProps };
   
-  await getProduct('', context.locale || '', idSearch)
+  /*await getProduct('', context.locale || '', idSearch)
     .then((response: { product: Product }) => {
       result = {
         props: {
@@ -25,7 +25,7 @@ export const getProductProps: GetServerSideProps = async (context) => {
       result = {
         notFound: true
       }
-    });
+    });*/
 
   return result;
 };

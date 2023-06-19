@@ -2,10 +2,10 @@ import { useIntl } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 
-import { ProductCategory } from '@core/types/products';
+import { ProductCategory, ProductCategoryGroup } from '@core/types/products';
 
 type CategoryDetailProps = {
-  category: ProductCategory,
+  category: ProductCategory | ProductCategoryGroup,
   created: boolean,
 };
 

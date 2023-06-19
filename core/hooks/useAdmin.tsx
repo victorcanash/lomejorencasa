@@ -1,127 +1,136 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-import { useIntl } from 'react-intl';
+import { useSnackbar } from 'notistack';
 
 import { AdminSections } from '@core/constants/admin';
-import type { Product, ProductCategory, ProductPack } from '@core/types/products';
-import { getAllProducts, getAllPacks, getProduct } from '@core/utils/products';
-
-import searchConfig from '@lib/config/search.config';
+import type { ProductCategoryGroup } from '@core/types/products';
+import { getAllProductCategories, getProductCategory } from '@core/utils/products';
 import { useAppContext } from '@core/contexts/AppContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import { CheckProductsSectionProps } from '@core/components/Admin/sections/CheckProductsSection';
-import { CheckPacksSectionProps } from '@core/components/Admin/sections/CheckPacksSection';
+import { useAdminContext } from '@core/contexts/AdminContext';
 
-const useAdmin = (checkedPage: boolean) => {
-  const { setLoading } = useAppContext();
-  const { token } = useAuthContext();
-
+const useAdmin = () => {
   const router = useRouter();
-  const intl = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
 
-  const [section, setSection] = useState<AdminSections | undefined>(undefined);
-  const [checkProductsProps, setCheckProductsProps] = useState<CheckProductsSectionProps | undefined>(undefined);
-  const [checkPacksProps, setCheckPacksProps] = useState<CheckPacksSectionProps | undefined>(undefined);
+  const { setLoading } = useAppContext();
+  const {
+    section,
+    setSection,
+    categoryGroups,
+    setCategoryGroups,
+    categoriesWithoutGroup,
+    setCategoriesWithoutGroup,
+  } = useAdminContext();
 
-  const getAdminProduct = useCallback(async (id: number, bigbuyData: boolean, onSuccess: (product: Product) => void) => {
+  const firstRenderRef = useRef(false);
+
+  const getCategories = useCallback(async () => {
     setLoading(true);
-    await getProduct(token, intl.locale, id, true, bigbuyData)
-      .then((response: { product: Product }) => {
-        onSuccess(response.product);
+    await getAllProductCategories(true, true)
+      .then((response) => {
+        setCategoryGroups(response.productCategories.map((categoryGroupResponse) => {
+          const categoryGroup = categoryGroupResponse as ProductCategoryGroup;
+          return {
+            categoryGroup: categoryGroup,
+            checkCategories: categoryGroup.categories ? categoryGroup.categories.map((category) => {
+              return {
+                category: category,
+                landings: [],
+              };
+            }) : [],
+          };
+        }));
+        setCategoriesWithoutGroup(response.categoriesWithoutGroup ? response.categoriesWithoutGroup.map((categoryWithoutGroup) => {
+          return {
+            category: categoryWithoutGroup,
+            landings: [],
+          }
+        }) : []);
         setLoading(false);
-    }).catch((_error: Error) => {
-      setLoading(false);
-    })
-  }, [intl.locale, setLoading, token]);
-
-  const getCheckProductsProps = useCallback(async (sectionSearch: AdminSections) => {
-    const { category, page, sortBy, order, keywords } = router.query;
-    const categorySearch = typeof category == 'string' ? category : searchConfig.allProductsName;
-    const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
-    const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
-    const orderSearch = typeof order == 'string' ? order : 'asc';
-    const keywordsSearch = typeof keywords == 'string' ? keywords : '';
-
-    await getAllProducts(token, intl.locale, pageSearch, searchConfig.limitByPage, sortBySearch, orderSearch, keywordsSearch, categorySearch, searchConfig.orderRemains, true)
-      .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
-        setCheckProductsProps({
-          category: response.productCategory,
-          products: response.products,
-          totalPages: response.totalPages,
-          currentPage: response.currentPage,
-          keywords: keywordsSearch,
-          getAdminProduct: getAdminProduct,
-        });
-        setSection(sectionSearch);
-      }).catch((_error: Error) => {
-        setSection(AdminSections.home);
+        console.log('entra2')
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar(
+          error.message,
+          { variant: 'error' }
+        );
       });
-  }, [getAdminProduct, intl.locale, router.query, token]);
+  }, [enqueueSnackbar, setCategoriesWithoutGroup, setCategoryGroups, setLoading]);
 
-  const getCheckPacksProps = useCallback(async (sectionSearch: AdminSections) => {
-    const { page, sortBy, order } = router.query;
-    const pageSearch = typeof page == 'string' && parseInt(page) > 0 ? parseInt(page) : 1;
-    const sortBySearch = typeof sortBy == 'string' ? sortBy : 'id';
-    const orderSearch = typeof order == 'string' ? order : 'asc';
-
-    await getAllPacks(token, intl.locale, pageSearch, searchConfig.limitByPage, sortBySearch, orderSearch)
-      .then((response: { packs: ProductPack[], totalPages: number, currentPage: number }) => {
-        setCheckPacksProps({
-          packs: response.packs,
-          totalPages: response.totalPages,
-          currentPage: response.currentPage,
-        });
-        setSection(sectionSearch);
-      }).catch((_error: Error) => {
-        setSection(AdminSections.home);
+  const getCategoryDetails = async (slug: string) => {
+    setLoading(true);
+    await getProductCategory(slug)
+      .then((response) => {
+        const newCategoryGroups = categoryGroups.map((checkCategoryGroup) => {
+          return {
+            ...checkCategoryGroup,
+            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
+              if (checkCategory.category.slug === slug) {
+                return {
+                  ...checkCategory,
+                  landings: response.landingsResult.landings,
+                }
+              } else {
+                return checkCategory;
+              }
+            }),
+          }
+        })
+        const newCategoriesWithoutGroup = categoriesWithoutGroup.map((checkCategory) => {
+          if (checkCategory.category.slug === slug) {
+            return {
+              ...checkCategory,
+              landings: response.landingsResult.landings,
+            }
+          } else {
+            return checkCategory;
+          }
+        })
+        setCategoryGroups(newCategoryGroups);
+        setCategoriesWithoutGroup(newCategoriesWithoutGroup);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar(
+          error.message,
+          { variant: 'error' }
+        );
       });
-  }, [intl.locale, router.query, token]);
-  
+  };
+
   useEffect(() => {
-    if (checkedPage) {
-      let sectionSearch = AdminSections.home;
-      if (typeof router.query.section == 'string') {
-        switch (router.query.section) {
-          case AdminSections.checkProductCategories.toString():
-            sectionSearch = AdminSections.checkProductCategories;
-            break;
-          case AdminSections.checkProducts.toString():
-            sectionSearch = AdminSections.checkProducts;
-            getCheckProductsProps(sectionSearch);
-            return;
-          case AdminSections.checkProductPacks.toString():
-            sectionSearch = AdminSections.checkProductPacks;
-            getCheckPacksProps(sectionSearch);
-            return;
-          case AdminSections.createProductCategory.toString():
-            sectionSearch = AdminSections.createProductCategory;
-            break;
-          case AdminSections.createProduct.toString():
-            sectionSearch = AdminSections.createProduct;
-            break;
-          case AdminSections.createProductPack.toString():
-            sectionSearch = AdminSections.createProductPack;
-            break;
-          case AdminSections.createFailedOrder.toString():
-            sectionSearch = AdminSections.createFailedOrder;
-            break;
-          case AdminSections.sendOrderEmail.toString():
-            sectionSearch = AdminSections.sendOrderEmail;
-            break;
-          case AdminSections.sendFailedOrderEmail.toString():
-            sectionSearch = AdminSections.sendFailedOrderEmail;
-            break;
-        }
+    let sectionSearch = AdminSections.home;
+    if (typeof router.query.section == 'string') {
+      switch (router.query.section) {
+        case AdminSections.checkStore.toString():
+          sectionSearch = AdminSections.checkStore;
+          break;
+        case AdminSections.createFailedOrder.toString():
+          sectionSearch = AdminSections.createFailedOrder;
+          break;
+        case AdminSections.sendOrderEmail.toString():
+          sectionSearch = AdminSections.sendOrderEmail;
+          break;
+        case AdminSections.sendFailedOrderEmail.toString():
+          sectionSearch = AdminSections.sendFailedOrderEmail;
+          break;
       }
-      setSection(sectionSearch);
     }
-  }, [checkedPage, getCheckPacksProps, getCheckProductsProps, router.query.section]);
+    setSection(sectionSearch);
+  }, [router.query.section, setSection]);
+
+  useEffect(() => {
+    if (!firstRenderRef.current && section === AdminSections.checkStore) {
+      firstRenderRef.current = true;
+      getCategories();
+    }
+  }, [getCategories, section]);
 
   return {
-    section,
-    checkProductsProps,
-    checkPacksProps
+    getCategoryDetails,
   };
 };
 

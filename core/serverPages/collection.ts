@@ -1,7 +1,7 @@
 import type { GetServerSideProps } from 'next';
 
 import type { Product, ProductCategory } from '@core/types/products';
-import { getAllProducts } from '@core/utils/products';
+// import { getAllProducts } from '@core/utils/products';
 import searchConfig from '@lib/config/search.config';
 
 export type CollectionProps = {
@@ -21,9 +21,9 @@ export const getCollectionProps: GetServerSideProps = async (context) => {
   const orderSearch = typeof order == 'string' ? order : 'asc';
   const keywordsSearch = typeof keywords == 'string' ? keywords : '';
 
-  let result: { props: CollectionProps } | { notFound: boolean } = { props: {} as CollectionProps };
+  const result: { props: CollectionProps } | { notFound: boolean } = { props: {} as CollectionProps };
   
-  await getAllProducts('', context.locale || '', pageSearch, searchConfig.limitByPage, sortBySearch, orderSearch, keywordsSearch, categorySearch, searchConfig.orderRemains)
+  /*await getAllProducts('', context.locale || '', pageSearch, searchConfig.limitByPage, sortBySearch, orderSearch, keywordsSearch, categorySearch, searchConfig.orderRemains)
     .then((response: { products: Product[], productCategory: ProductCategory | null, totalPages: number, currentPage: number }) => {
       result = {
         props: {
@@ -39,7 +39,7 @@ export const getCollectionProps: GetServerSideProps = async (context) => {
       result = { 
         notFound: true 
       };
-    });
+    });*/
 
   return result;
 };

@@ -22,9 +22,9 @@ const AdminPage: NextPage = () => {
         marginTop={true}
       />
 
-      <Admin
-        pageChecked={page.checked}
-      />
+      { page.checked &&
+        <Admin />
+      }
     </>
   );
 };

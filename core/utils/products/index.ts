@@ -192,6 +192,7 @@ export const getProductPriceData = (product: Product | ProductInventory | Produc
 
 export const getAllProductCategories = async (
   categoryGroups?: boolean,
+  adminData?: boolean,
   page?: number,
   limit?: number,
   sortBy?: string, 
@@ -201,10 +202,12 @@ export const getAllProductCategories = async (
     productCategories: (ProductCategory | ProductCategoryGroup)[],
     totalPages: number, 
     currentPage: number,
+    categoriesWithoutGroup?: ProductCategory[]
   }>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       params: {
         categoryGroups: categoryGroups,
+        adminData: adminData,
         page: page || 1,
         limit: limit || 1000,
         sortBy: sortBy || 'id',
@@ -221,12 +224,13 @@ export const getAllProductCategories = async (
             productCategories: response.data.productCategories,
             totalPages: response.data.totalPages,
             currentPage: response.data.currentPage,
+            categoriesWithoutGroup: response.data.categoriesWithoutGroup,
           });
         } else {
           throw new Error('Something went wrong');
         }
       }).catch((error) => {
-        const errorMsg = getBackendErrorMsg('Get All Products Categories ERROR', error);
+        const errorMsg = getBackendErrorMsg('Get All Product Categories ERROR', error);
         logBackendError(errorMsg);
         reject(new Error(errorMsg));
       }); 
@@ -287,7 +291,7 @@ export const getAllLandings = async (
   productsData?: boolean,
   page?: number,
   limit?: number,
-  sortBy?: string, 
+  sortBy?: string,
   order?: string
 ) => {
   return new Promise<{
@@ -354,8 +358,7 @@ export const getLanding = async (
   });
 };
 
-// ADMIN
-export const getAllProducts = async (
+/*export const getAllProducts = async (
   token: string, 
   currentLocale: string, 
   page: number,
@@ -410,7 +413,6 @@ export const getAllProducts = async (
   });
 };
 
-// ADMIN
 export const getAllPacks = async (
   token: string, 
   currentLocale: string, 
@@ -453,7 +455,7 @@ export const getAllPacks = async (
         reject(new Error(errorMsg));
       }); 
   });
-};
+};*/
 
 export const createProductReview = (
   token: string,
@@ -557,7 +559,7 @@ export const getAllProductReviews = async (
   });
 };
 
-// ADMIN
+/*
 export const getProduct = (token: string, currentLocale: string, id: number, adminData = false, bigbuyData = false) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
@@ -585,69 +587,7 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
         reject(new Error(errorMsg));
       }); 
   });
-};
-
-// ADMIN
-export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
-  return new Promise<{product: Product}>(async (resolve, reject) => {
-    let promiseMW = createProduct;
-    let successStatus = StatusCodes.CREATED;
-    let errorTitle = 'Create Product ERROR';
-    if (action == ManageActions.update) {
-      promiseMW = updateProduct;
-      errorTitle = 'Update Product ERROR';
-    } else if (action == ManageActions.delete) {
-      promiseMW = deleteProduct;
-      successStatus = StatusCodes.OK;
-      errorTitle = 'Delete Product ERROR';
-    }
-
-    promiseMW(token, currentLocale, product)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === successStatus) {
-          resolve({
-            product: response.data.product,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg(errorTitle, error);
-        logBackendError(errorMsg)
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
-
-const createProduct = (token: string, currentLocale: string, product: Product) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      ...getAuthHeaders(token),
-      ...getLanguageHeaders(currentLocale),
-    },
-  };
-  return axios.post('/products', product, options);
-};
-
-const updateProduct = (token: string, currentLocale: string, product: Product) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      ...getAuthHeaders(token),
-      ...getLanguageHeaders(currentLocale),
-    },
-  };
-  return axios.put(`/products/${product.id}`, product, options);
-};
-
-const deleteProduct = (token: string, currentLocale: string, product: Product) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      ...getAuthHeaders(token),
-      ...getLanguageHeaders(currentLocale),
-    },
-  };
-  return axios.delete(`/products/${product.id}`, options)
-}
+};*/
 
 // ADMIN
 export const manageProductCategory = (action: ManageActions, token: string, currentLocale: string, productCategory: ProductCategory) => {
@@ -709,6 +649,68 @@ const deleteProductCategory = (token: string, currentLocale: string, productCate
     },
   };
   return axios.delete(`/product-categories/${productCategory.id}`, options)
+}
+
+// ADMIN
+export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
+  return new Promise<{product: Product}>(async (resolve, reject) => {
+    let promiseMW = createProduct;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Product ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateProduct;
+      errorTitle = 'Update Product ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteProduct;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Product ERROR';
+    }
+
+    promiseMW(token, currentLocale, product)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            product: response.data.product,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+const createProduct = (token: string, currentLocale: string, product: Product) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.post('/products', product, options);
+};
+
+const updateProduct = (token: string, currentLocale: string, product: Product) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.put(`/products/${product.id}`, product, options);
+};
+
+const deleteProduct = (token: string, currentLocale: string, product: Product) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.delete(`/products/${product.id}`, options)
 }
 
 // ADMIN

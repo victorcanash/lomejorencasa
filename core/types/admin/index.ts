@@ -1,5 +1,22 @@
 import { ManageActions } from '@core/constants/app';
-import { Product, ProductInventory, ProductDiscount } from '@core/types/products';
+import {
+  Product,
+  ProductInventory,
+  ProductDiscount,
+  ProductCategory,
+  ProductCategoryGroup,
+  Landing,
+} from '@core/types/products';
+
+export type CheckCategoryGroup = {
+  categoryGroup: ProductCategoryGroup
+  checkCategories: CheckCategory[]
+}
+
+export type CheckCategory = {
+  category: ProductCategory
+  landings: Landing[]
+};
 
 export type CheckProduct = {
   product: Product,
