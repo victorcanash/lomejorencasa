@@ -20,7 +20,7 @@ type CheckCategoriesSectionProps = {
   onClickUpdateBtn: (category: ProductCategory | ProductCategoryGroup) => void,
 };
 
-const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
+const  CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
   const {
     onClickSelectBtn,
     onClickCreateBtn,

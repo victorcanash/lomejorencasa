@@ -2,14 +2,18 @@ import { useState, useMemo } from 'react';
 
 import Box from '@mui/material/Box';
 
-import type { ProductCategoryGroup, ProductCategory } from '@core/types/products';
+import type { ProductCategoryGroup, ProductCategory, Landing } from '@core/types/products';
 import { ManageActions } from '@core/constants/app';
+import useProducts from '@core/hooks/useProducts';
 import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
 import CheckCategoriesSection from './CheckCategoriesSection';
 import CheckLandingsSection from './CheckLandingsSection';
 
 const CheckStoreSection = () => {
+  const { getCategoryDetails } = useProducts();
+
   const [selectCategory, setSelectCategory] = useState<ProductCategory | undefined>(undefined);
+  const [landings, setLandings] = useState<Landing[]>([]);
   const [updateCategory, setUpdateCategory] = useState<ProductCategory | ProductCategoryGroup | undefined>(undefined);
   const [createCategory, setCreateCategory] = useState<{
     enabled: boolean,
@@ -50,7 +54,12 @@ const CheckStoreSection = () => {
   }, [createCategory.enabled, selectCategory, updateCategory]);
 
   const onClickSelectBtn = (category: ProductCategory) => {
-    setSelectCategory(category);
+    getCategoryDetails(category.slug)
+      .then((response) => {
+        setSelectCategory(category);
+        setLandings(response.landings);
+      }).catch((error) => {
+      });
   };
 
   const onClickCreateBtn = (isGroup: boolean, groupId?: number) => {
@@ -78,6 +87,10 @@ const CheckStoreSection = () => {
     setCreateCategory({ enabled: false, isGroup: false, groupId: undefined });
   };
 
+  const onClickBackFromLandings = () => {
+    setSelectCategory(undefined);
+  };
+
   return (
     <Box>
       { checkCategoriesEnabled &&
@@ -90,6 +103,8 @@ const CheckStoreSection = () => {
       { checkLandingsEnabled && selectCategory &&
         <CheckLandingsSection
           productCategory={selectCategory}
+          landings={landings}
+          onClickBack={onClickBackFromLandings}
         />
       }
       { updateCategoryEnabled &&

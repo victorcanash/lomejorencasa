@@ -12,6 +12,7 @@ import type {
   ProductPack,
   ManageProductCategory,
   ProductCategoryGroup,
+  Landing,
 } from '@core/types/products';
 import {
   getProductCategory,
@@ -25,6 +26,7 @@ import {
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import { useAdminContext } from '@core/contexts/AdminContext';
+import { CheckCategory } from '@core/types/admin';
 
 const useProducts = () => {
   const { setLoading } = useAppContext();
@@ -45,45 +47,74 @@ const useProducts = () => {
   /* Admin */
 
   const getCategoryDetails = async (slug: string) => {
-    setLoading(true);
-    await getProductCategory(slug)
-      .then((response) => {
-        const newCategoryGroups = categoryGroups.map((checkCategoryGroup) => {
-          return {
-            ...checkCategoryGroup,
-            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
-              if (checkCategory.category.slug === slug) {
-                return {
-                  ...checkCategory,
-                  landings: response.landingsResult.landings,
-                }
-              } else {
-                return checkCategory;
-              }
-            }),
-          }
-        })
-        const newCategoriesWithoutGroup = categoriesWithoutGroup.map((checkCategory) => {
+    return new Promise<{
+      landings: Landing[],
+    }>(async (resolve, reject) => {
+      setLoading(true);
+      let landings: Landing[] = [];
+      categoryGroups.forEach((checkCategoryGroup) => {
+        checkCategoryGroup.checkCategories.forEach((checkCategory) => {
           if (checkCategory.category.slug === slug) {
-            return {
-              ...checkCategory,
-              landings: response.landingsResult.landings,
-            }
-          } else {
-            return checkCategory;
+            landings = checkCategory.landings;
           }
-        })
-        setCategoryGroups(newCategoryGroups);
-        setCategoriesWithoutGroup(newCategoriesWithoutGroup);
-        setLoading(false);
-      })
-      .catch((error) => {
-        setLoading(false);
-        enqueueSnackbar(
-          error.message,
-          { variant: 'error' }
-        );
+        });
       });
+      categoriesWithoutGroup.forEach((checkCategory) => {
+        if (checkCategory.category.slug === slug && checkCategory.landings.length > 0) {
+          landings = checkCategory.landings;
+        }
+      });
+      if (landings.length > 0) {
+        setLoading(false);
+        resolve({
+          landings: landings,
+        });
+        return;
+      }
+      await getProductCategory(slug)
+        .then((response) => {
+          const newCategoryGroups = categoryGroups.map((checkCategoryGroup) => {
+            return {
+              ...checkCategoryGroup,
+              checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
+                if (checkCategory.category.slug === slug) {
+                  return {
+                    ...checkCategory,
+                    landings: response.landingsResult.landings,
+                  }
+                } else {
+                  return checkCategory;
+                }
+              }),
+            }
+          })
+          const newCategoriesWithoutGroup = categoriesWithoutGroup.map((checkCategory) => {
+            if (checkCategory.category.slug === slug) {
+              return {
+                ...checkCategory,
+                landings: response.landingsResult.landings,
+              }
+            } else {
+              return checkCategory;
+            }
+          })
+          setCategoryGroups(newCategoryGroups);
+          setCategoriesWithoutGroup(newCategoriesWithoutGroup);
+          landings = response.landingsResult.landings;
+          setLoading(false);
+          resolve({
+            landings: landings,
+          });
+        })
+        .catch((error) => {
+          setLoading(false);
+          enqueueSnackbar(
+            error.message,
+            { variant: 'error' }
+          );
+          reject(error);
+        });
+    });
   };
 
   const manageProductCategory = async (

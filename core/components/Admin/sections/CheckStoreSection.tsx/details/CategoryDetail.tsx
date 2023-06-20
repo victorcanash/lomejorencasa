@@ -24,11 +24,11 @@ const CategoryDetail = (props: CategoryDetailProps) => {
 
   const intl = useIntl();
 
-  const handleClickSelectBtn = (category: ProductCategory) => {
-    onClickSelectBtn(category);
+  const handleClickSelectBtn = () => {
+    onClickSelectBtn(category as ProductCategory);
   };
 
-  const handleClickUpdateBtn = (category: ProductCategory | ProductCategoryGroup) => {
+  const handleClickUpdateBtn = () => {
     onClickUpdateBtn(category);
   };
 
@@ -46,8 +46,8 @@ const CategoryDetail = (props: CategoryDetailProps) => {
         </Typography>
       }
       <Typography component="div" variant="body1">
-          {`${intl.formatMessage({ id: 'forms.slug' })}: ${category.slug}`}
-        </Typography>
+        {`${intl.formatMessage({ id: 'forms.slug' })}: ${category.slug}`}
+      </Typography>
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.name.en' })}: ${category.name.en}`}
       </Typography>
@@ -67,7 +67,7 @@ const CategoryDetail = (props: CategoryDetailProps) => {
       { !isGroup &&
         <Button
           startIcon={<VisibilityIcon />}       
-          onClick={() => handleClickSelectBtn(category as ProductCategory)}
+          onClick={() => handleClickSelectBtn()}
         >
           <FormattedMessage
             id="admin.selectCategoryBtn"
@@ -76,7 +76,7 @@ const CategoryDetail = (props: CategoryDetailProps) => {
       }
       <Button
         startIcon={<UpdateIcon />}       
-        onClick={() => handleClickUpdateBtn(category)}
+        onClick={() => handleClickUpdateBtn()}
       >
         <FormattedMessage
           id="admin.updateCategoryBtn"
