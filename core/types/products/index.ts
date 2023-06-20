@@ -131,6 +131,16 @@ export type ProductCategory = {
   products?: Product[],
 };
 
+export type ManageProductCategory = {
+  id: number,
+  isCategoryGroup?: boolean,
+  categoryGroupId?: number,
+  slug: string,
+  name: LocalizedText,
+  description: LocalizedText,
+  image?: string,
+};
+
 export type Product = {
   id: number,
   landingId: number,

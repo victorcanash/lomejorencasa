@@ -1,14 +1,20 @@
+import { useState } from 'react';
+
 import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
-import type { ProductCategory } from '@core/types/products';
+import type { FormField } from '@core/types/forms';
+import type { ManageProductCategory, ProductCategory, ProductCategoryGroup } from '@core/types/products';
 
+import { useAdminContext } from '@core/contexts/AdminContext';
 import useForms from '@core/hooks/useForms';
 import useProducts from '@core/hooks/useProducts';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManagePCategoryFormProps = {
   action: ManageActions.create | ManageActions.update,
-  productCategory?: ProductCategory,
+  initIsCategoryGroup?: boolean,
+  initCategoryGroupId?: number,
+  productCategory?: ProductCategory | ProductCategoryGroup,
   onSubmitSuccess?: (productCategory: ProductCategory) => void,
   onDeleteSuccess?: () => void,
   onCancel?: () => void,
@@ -17,17 +23,34 @@ type ManagePCategoryFormProps = {
 const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   const { 
     action,
+    initIsCategoryGroup,
+    initCategoryGroupId,
     productCategory,
     onSubmitSuccess, 
     onDeleteSuccess,
     onCancel, 
   } = props;
 
+  const { categoryGroups } = useAdminContext();
+
   const { manageCategoryFormValidation, categoryFieldsInitValues } = useForms();
   const { manageProductCategory, errorMsg, successMsg } = useProducts();
 
-  const handleSubmit = async (values: ProductCategory) => {
-    manageProductCategory(action, values, onSubmitSuccess);
+  const [isCategoryGroup, setIsCategoryGroup] = useState((initIsCategoryGroup || (productCategory as ProductCategoryGroup)?.categories) ? true : undefined);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const handleChange = (event: any) => {
+    if (event.target.id === 'isCategoryGroup') {
+      setIsCategoryGroup(event.target.checked);
+    }
+  };
+
+  const handleSubmit = async (values: ManageProductCategory) => {
+    manageProductCategory(
+      action,
+      {...values, categoryGroupId: values.categoryGroupId === -1 ? undefined : values.categoryGroupId},
+      onSubmitSuccess
+    );
   };
 
   const handleDeleteBtn = () => {
@@ -46,23 +69,27 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
     <BaseForm 
       initialValues={{
         id: productCategory?.id || -1,
+        isCategoryGroup: (initIsCategoryGroup || (productCategory as ProductCategoryGroup)?.categories) ? true : false,
+        categoryGroupId: initCategoryGroupId || (productCategory as ProductCategory)?.categoryGroupId || -1,
+        slug: productCategory?.slug || categoryFieldsInitValues.slug,
         name: productCategory?.name || categoryFieldsInitValues.name,
         description: productCategory?.description || categoryFieldsInitValues.description,
-      } as ProductCategory}
+        image: productCategory?.image || categoryFieldsInitValues.image,
+      } as ManageProductCategory}
       validationSchema={manageCategoryFormValidation}
       enableReinitialize={true}
+      onChange={handleChange}
       formFieldGroups={[
         {
           titleTxt: {
             id: action == ManageActions.create ? 
               'forms.createCategory.title' : 'forms.updateCategory.title',
           },
-          formFields: [
+          formFields: ([
             {
               name: 'name.en',
               type: FormFieldTypes.text,
               required: true,
-              autoFocus: true,
             },
             {
               name: 'name.es',
@@ -78,8 +105,44 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
               name: 'description.es',
               type: FormFieldTypes.text,
               required: true, 
-            }
-          ],
+            },
+            {
+              name: 'slug',
+              type: FormFieldTypes.text,
+              required: true,
+            },
+            {
+              name: 'image',
+              type: FormFieldTypes.text,
+            },
+            {
+              name: 'isCategoryGroup',
+              type: FormFieldTypes.checkbox,
+            },
+          ] as FormField[]).concat(!isCategoryGroup ? [
+            {
+              name: 'categoryGroupId',
+              type: FormFieldTypes.select,
+              menuItems: [
+                {
+                  text: {
+                    id: 'forms.withoutGroupCategoryName',
+                  },
+                  value: -1,
+                }
+              ].concat(categoryGroups.map((checkCategory) => {
+                return {
+                  text: {
+                    id: 'forms.groupCategoryName',
+                    values: {
+                      name: checkCategory.categoryGroup.name.current,
+                    },
+                  },
+                  value: checkCategory.categoryGroup.id,
+                };
+              })),
+            },
+          ] : []),
         }
       ]}
       formButtons={{

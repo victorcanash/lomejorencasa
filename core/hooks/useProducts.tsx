@@ -9,6 +9,8 @@ import type {
   ProductInventory,
   ProductDiscount,
   ProductPack,
+  ManageProductCategory,
+  ProductCategoryGroup,
 } from '@core/types/products';
 import {
   manageProduct as manageProductMW,
@@ -20,12 +22,17 @@ import {
 
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
-import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useAdminContext } from '@core/contexts/AdminContext';
 
 const useProducts = () => {
   const { setLoading } = useAppContext();
   const { token } = useAuthContext();
-  const { getAllCategories, initProducts } = useProductsContext();
+  const {
+    categoryGroups,
+    setCategoryGroups,
+    categoriesWithoutGroup,
+    setCategoriesWithoutGroup,
+  } = useAdminContext();
 
   const intl = useIntl();
 
@@ -33,6 +40,123 @@ const useProducts = () => {
   const [successMsg, setSuccessMsg] = useState('');
 
   /* Admin */
+
+  const manageProductCategory = async (
+    action: ManageActions,
+    productCategory: ManageProductCategory,
+    onSuccess?: (productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void
+  ) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    manageProductCategoryMW(action, token, intl.locale, productCategory)
+      .then((response) => {
+        onManagePCategorySuccess(action, response.productCategory || productCategory, onSuccess);
+      }).catch((error: Error) => {
+        setErrorMsg(error.message);
+        setLoading(false);
+      });
+  };
+
+  const onManagePCategorySuccess = (
+    action: ManageActions,
+    productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory,
+    onSuccess?: (productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void
+  ) => {
+    switch (action) {
+      case ManageActions.create:
+        if ((productCategory as ProductCategoryGroup)?.categories) {
+          setCategoryGroups([
+            ...categoryGroups,
+            {
+              categoryGroup: productCategory as ProductCategoryGroup,
+              checkCategories: [],
+            }
+          ]);
+        } else if ((productCategory as ProductCategory)?.categoryGroupId) {
+          const newCategoryGroups = categoryGroups.map((checkCategoryGroup) => {
+            return {
+              ...checkCategoryGroup,
+              checkCategories: (checkCategoryGroup.categoryGroup.id === (productCategory as ProductCategory).categoryGroupId) ?
+                [
+                  ...checkCategoryGroup.checkCategories,
+                  {
+                    category: productCategory as ProductCategory,
+                    landings: []
+                  }
+                ]
+                :
+                checkCategoryGroup.checkCategories,
+            };
+          })
+          setCategoryGroups(newCategoryGroups);
+        } else {
+          setCategoriesWithoutGroup([
+            ...categoriesWithoutGroup,
+            {
+              category: productCategory as ProductCategory,
+              landings: [],
+            }
+          ]);
+        }
+        break;
+      case ManageActions.update:
+        const newCategoryGroups = categoryGroups.map((checkCategoryGroup) => {
+          if (checkCategoryGroup.categoryGroup.slug === productCategory.slug) {
+            return {
+              ...checkCategoryGroup,
+              categoryGroup: productCategory as ProductCategoryGroup,
+            };
+          }
+          return {
+            ...checkCategoryGroup,
+            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
+              if (checkCategory.category.slug === productCategory.slug) {
+                return {
+                  ...checkCategory,
+                  category: productCategory as ProductCategory,
+                };
+              } else {
+                return checkCategory;
+              }
+            }),
+          };
+        })
+        const newCategoriesWithoutGroup = categoriesWithoutGroup.map((checkCategory) => {
+          if (checkCategory.category.slug === productCategory.slug) {
+            return {
+              ...checkCategory,
+              category: productCategory as ProductCategory,
+            }
+          } else {
+            return checkCategory;
+          }
+        })
+        setCategoryGroups(newCategoryGroups);
+        setCategoriesWithoutGroup(newCategoriesWithoutGroup);
+        break;
+      case ManageActions.delete:
+        if ((productCategory as ManageProductCategory)?.isCategoryGroup) {
+          setCategoryGroups(categoryGroups.filter(checkCategoryGroup => checkCategoryGroup.categoryGroup.slug !== productCategory.slug));
+        } else if ((productCategory as ManageProductCategory)?.categoryGroupId) {
+          const newCategoryGroups = categoryGroups.map((checkCategoryGroup) => {
+            return {
+              ...checkCategoryGroup,
+              checkCategories: checkCategoryGroup.checkCategories.filter(checkCategory => checkCategory.category.slug !== productCategory.slug),
+            };
+          });
+          setCategoryGroups(newCategoryGroups);
+        } else {
+          setCategoriesWithoutGroup(categoriesWithoutGroup.filter(categoryWithoutGroup => categoryWithoutGroup.category.slug !== productCategory.slug));
+        }
+        break;
+    }
+    if (onSuccess) {
+      onSuccess(productCategory);
+    }
+    setLoading(false);
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePCategory' }));
+  };
 
   const createProduct = async (
     product: Product,
@@ -121,52 +245,6 @@ const deleteProduct = async (
     if (onSuccess) {
       onSuccess(product);
     }
-  };
-
-  const manageProductCategory = async (action: ManageActions, productCategory: ProductCategory, onSuccess?: (productCategory: ProductCategory) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    manageProductCategoryMW(action, token, intl.locale, productCategory)
-      .then((response: {productCategory: ProductCategory}) => {
-        let responseProductCategory = response.productCategory;
-        if (!responseProductCategory) {
-          responseProductCategory = productCategory;
-        }
-        onManagePCategorySuccess(action, responseProductCategory, onSuccess);
-      }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
-
-  const onManagePCategorySuccess = (action: ManageActions, productCategory: ProductCategory, onSuccess?: (productCategory: ProductCategory) => void) => {
-    switch (action) {
-      case ManageActions.create:
-        initProducts([...getAllCategories(), productCategory]);
-        break;
-      case ManageActions.update:
-        initProducts(
-          getAllCategories().map((item) => {
-            if (item.id === productCategory.id) {
-              return productCategory;
-            } else {
-              return item;
-            }
-          })
-        );
-        break;
-      case ManageActions.delete:
-        initProducts(
-          getAllCategories().filter(item => item.id !== productCategory.id)
-        );
-        break;
-    }
-    if (onSuccess) {
-      onSuccess(productCategory);
-    }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePCategory' }));
   };
 
   const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {

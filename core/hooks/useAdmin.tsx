@@ -48,7 +48,6 @@ const useAdmin = () => {
           }
         }) : []);
         setLoading(false);
-        console.log('entra2')
       })
       .catch((error) => {
         setLoading(false);

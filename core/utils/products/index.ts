@@ -15,6 +15,7 @@ import type {
   ProductPack,
   ProductReview,
   CreateProductReview,
+  ManageProductCategory,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
@@ -590,8 +591,8 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
 };*/
 
 // ADMIN
-export const manageProductCategory = (action: ManageActions, token: string, currentLocale: string, productCategory: ProductCategory) => {
-  return new Promise<{productCategory: ProductCategory}>(async (resolve, reject) => {
+export const manageProductCategory = (action: ManageActions, token: string, currentLocale: string, productCategory: ManageProductCategory) => {
+  return new Promise<{productCategory?: ProductCategory | ProductCategoryGroup}>(async (resolve, reject) => {
     let promiseMW = createProductCategory;
     let successStatus = StatusCodes.CREATED;
     let errorTitle = 'Create Product Category ERROR';
@@ -621,7 +622,7 @@ export const manageProductCategory = (action: ManageActions, token: string, curr
   });
 };
 
-const createProductCategory = (token: string, currentLocale: string, productCategory: ProductCategory) => {
+const createProductCategory = (token: string, currentLocale: string, productCategory: ManageProductCategory) => {
   const options: AxiosRequestConfig = {
     headers: {
       ...getAuthHeaders(token),
@@ -631,7 +632,7 @@ const createProductCategory = (token: string, currentLocale: string, productCate
   return axios.post('/product-categories', productCategory, options);
 };
 
-const updateProductCategory = (token: string, currentLocale: string, productCategory: ProductCategory) => {
+const updateProductCategory = (token: string, currentLocale: string, productCategory: ManageProductCategory) => {
   const options: AxiosRequestConfig = {
     headers: {
       ...getAuthHeaders(token),
@@ -641,7 +642,7 @@ const updateProductCategory = (token: string, currentLocale: string, productCate
   return axios.put(`/product-categories/${productCategory.id}`, productCategory, options);
 };
 
-const deleteProductCategory = (token: string, currentLocale: string, productCategory: ProductCategory) => {
+const deleteProductCategory = (token: string, currentLocale: string, productCategory: ManageProductCategory) => {
   const options: AxiosRequestConfig = {
     headers: {
       ...getAuthHeaders(token),

@@ -281,11 +281,20 @@ const useForms = () => {
   const categoryFieldsValidation = {
     name: Yup.object().shape(localizedTextsFieldsValidation),
     description: Yup.object().shape(localizedTextsFieldsValidation),
-  }
+    slug: Yup
+      .string()
+      .min(1)
+      .required(),
+    image: Yup
+      .string()
+      .min(1)
+  };
 
   const categoryFieldsInitValues = {
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
+    slug: '',
+    image: '',
   }
 
   const inventoryFieldsValidation = {
@@ -476,6 +485,7 @@ const useForms = () => {
   const manageCategoryFormValidation = Yup.object().shape({
     name: categoryFieldsValidation.name,
     description: categoryFieldsValidation.description,
+    slug: categoryFieldsValidation.slug,
   });
 
   const manageInventoryFormValidation = Yup.object().shape({
