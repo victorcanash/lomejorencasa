@@ -8,15 +8,7 @@ import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryFor
 import CheckCategoriesSection from './CheckCategoriesSection';
 import CheckLandingsSection from './CheckLandingsSection';
 
-type CheckStoreSectionProps = {
-  getCategoryDetails: (slug: string) => Promise<void>,
-};
-
-const CheckStoreSection = (props: CheckStoreSectionProps) => {
-  const {
-    getCategoryDetails,
-  } = props;
-
+const CheckStoreSection = () => {
   const [selectCategory, setSelectCategory] = useState<ProductCategory | undefined>(undefined);
   const [updateCategory, setUpdateCategory] = useState<ProductCategory | ProductCategoryGroup | undefined>(undefined);
   const [createCategory, setCreateCategory] = useState<{

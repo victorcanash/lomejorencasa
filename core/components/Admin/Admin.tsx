@@ -7,7 +7,6 @@ import { AdminSections } from '@core/constants/admin';
 import Divider from '@core/components/ui/Divider';
 
 import { useAdminContext } from '@core/contexts/AdminContext';
-import useAdmin from '@core/hooks/useAdmin';
 import Button from '@core/components/inputs/Button';
 import HomeSection from '@core/components/Admin/sections/HomeSection';
 import CheckStoreSection from '@core/components/Admin/sections/CheckStoreSection.tsx';
@@ -19,10 +18,6 @@ const Admin = () => {
   const {
     section,
   } = useAdminContext();
-
-  const {
-    getCategoryDetails,  
-  } = useAdmin();
 
   return (
     <Container>
@@ -38,9 +33,7 @@ const Admin = () => {
         <HomeSection />
       }
       { section === AdminSections.checkStore &&
-        <CheckStoreSection
-        getCategoryDetails={getCategoryDetails}
-        />
+        <CheckStoreSection />
       }
       { section === AdminSections.createFailedOrder &&
         <CreateFailedOrderSection />

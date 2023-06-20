@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { useIntl } from 'react-intl';
+import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
 import type { 
@@ -13,6 +14,7 @@ import type {
   ProductCategoryGroup,
 } from '@core/types/products';
 import {
+  getProductCategory,
   manageProduct as manageProductMW,
   manageProductCategory as manageProductCategoryMW,
   manageProductInventory as manageProductInventoryMW,
@@ -35,11 +37,54 @@ const useProducts = () => {
   } = useAdminContext();
 
   const intl = useIntl();
+  const { enqueueSnackbar } = useSnackbar();
 
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
 
   /* Admin */
+
+  const getCategoryDetails = async (slug: string) => {
+    setLoading(true);
+    await getProductCategory(slug)
+      .then((response) => {
+        const newCategoryGroups = categoryGroups.map((checkCategoryGroup) => {
+          return {
+            ...checkCategoryGroup,
+            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
+              if (checkCategory.category.slug === slug) {
+                return {
+                  ...checkCategory,
+                  landings: response.landingsResult.landings,
+                }
+              } else {
+                return checkCategory;
+              }
+            }),
+          }
+        })
+        const newCategoriesWithoutGroup = categoriesWithoutGroup.map((checkCategory) => {
+          if (checkCategory.category.slug === slug) {
+            return {
+              ...checkCategory,
+              landings: response.landingsResult.landings,
+            }
+          } else {
+            return checkCategory;
+          }
+        })
+        setCategoryGroups(newCategoryGroups);
+        setCategoriesWithoutGroup(newCategoriesWithoutGroup);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+        enqueueSnackbar(
+          error.message,
+          { variant: 'error' }
+        );
+      });
+  };
 
   const manageProductCategory = async (
     action: ManageActions,
@@ -311,6 +356,7 @@ const deleteProduct = async (
   };
 
   return {
+    getCategoryDetails,
     createProduct,
     updateProduct,
     deleteProduct,
