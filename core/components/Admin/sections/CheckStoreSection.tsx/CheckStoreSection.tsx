@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 import Box from '@mui/material/Box';
 
@@ -6,6 +6,7 @@ import type { ProductCategoryGroup, ProductCategory } from '@core/types/products
 import { ManageActions } from '@core/constants/app';
 import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
 import CheckCategoriesSection from './CheckCategoriesSection';
+import CheckLandingsSection from './CheckLandingsSection';
 
 type CheckStoreSectionProps = {
   getCategoryDetails: (slug: string) => Promise<void>,
@@ -16,7 +17,8 @@ const CheckStoreSection = (props: CheckStoreSectionProps) => {
     getCategoryDetails,
   } = props;
 
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | ProductCategoryGroup | undefined>(undefined);
+  const [selectCategory, setSelectCategory] = useState<ProductCategory | undefined>(undefined);
+  const [updateCategory, setUpdateCategory] = useState<ProductCategory | ProductCategoryGroup | undefined>(undefined);
   const [createCategory, setCreateCategory] = useState<{
     enabled: boolean,
     isGroup: boolean,
@@ -27,12 +29,44 @@ const CheckStoreSection = (props: CheckStoreSectionProps) => {
     groupId: undefined, 
   });
 
+  const checkCategoriesEnabled = useMemo(() => {
+    if (!selectCategory && !updateCategory && !createCategory.enabled) {
+      return true;
+    }
+    return false;
+  }, [createCategory.enabled, selectCategory, updateCategory]);
+
+  const checkLandingsEnabled = useMemo(() => {
+    if (selectCategory && !updateCategory && !createCategory.enabled) {
+      return true;
+    }
+    return false;
+  }, [createCategory.enabled, selectCategory, updateCategory]);
+
+  const updateCategoryEnabled = useMemo(() => {
+    if (!selectCategory && updateCategory && !createCategory.enabled) {
+      return true;
+    }
+    return false;
+  }, [createCategory.enabled, selectCategory, updateCategory]);
+
+  const createCategoryEnabled = useMemo(() => {
+    if (!selectCategory && !updateCategory && createCategory.enabled) {
+      return true;
+    }
+    return false;
+  }, [createCategory.enabled, selectCategory, updateCategory]);
+
+  const onClickSelectBtn = (category: ProductCategory) => {
+    setSelectCategory(category);
+  };
+
   const onClickCreateBtn = (isGroup: boolean, groupId?: number) => {
     setCreateCategory({ enabled: true, isGroup, groupId });
   };
 
   const onClickUpdateBtn = (category: ProductCategory | ProductCategoryGroup) => {
-    setSelectedCategory(category);
+    setUpdateCategory(category);
   };
 
   const onSuccessCreate = () => {
@@ -40,36 +74,42 @@ const CheckStoreSection = (props: CheckStoreSectionProps) => {
   };
 
   const onSuccessUpdate = () => {
-    setSelectedCategory(undefined);
+    setUpdateCategory(undefined);
   };
 
   const onSuccessDelete = () => {
-    setSelectedCategory(undefined);
+    setUpdateCategory(undefined);
   };
 
   const onCancel = () => {
-    setSelectedCategory(undefined);
+    setUpdateCategory(undefined);
     setCreateCategory({ enabled: false, isGroup: false, groupId: undefined });
   };
 
   return (
     <Box>
-      { (!selectedCategory && !createCategory.enabled) &&
+      { checkCategoriesEnabled &&
         <CheckCategoriesSection
+          onClickSelectBtn={onClickSelectBtn}
           onClickUpdateBtn={onClickUpdateBtn}
           onClickCreateBtn={onClickCreateBtn}
         />
       }
-      { (selectedCategory && !createCategory.enabled) &&
+      { checkLandingsEnabled && selectCategory &&
+        <CheckLandingsSection
+          productCategory={selectCategory}
+        />
+      }
+      { updateCategoryEnabled &&
         <ManagePCategoryForm
           action={ManageActions.update}
-          productCategory={selectedCategory}
+          productCategory={updateCategory}
           onSubmitSuccess={onSuccessUpdate}
           onDeleteSuccess={onSuccessDelete}
           onCancel={onCancel}
         />
       }
-      { (!selectedCategory && createCategory.enabled) &&
+      { createCategoryEnabled &&
         <ManagePCategoryForm
           action={ManageActions.create}
           initIsCategoryGroup={createCategory.isGroup}

@@ -7,21 +7,22 @@ import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import UpdateIcon from '@mui/icons-material/Update';
 import CreateIcon from '@mui/icons-material/Create';
 
 import type { ProductCategory, ProductCategoryGroup } from '@core/types/products';
 import { useAdminContext } from '@core/contexts/AdminContext';
 import Button from '@core/components/inputs/Button';
-import CategoryDetail from '@core/components/Admin/details/CategoryDetail';
+import CategoryDetail from './details/CategoryDetail';
 
 type CheckCategoriesSectionProps = {
+  onClickSelectBtn: (category: ProductCategory) => void,
   onClickCreateBtn: (isGroup: boolean, groupId?: number) => void,
   onClickUpdateBtn: (category: ProductCategory | ProductCategoryGroup) => void,
 };
 
 const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
   const {
+    onClickSelectBtn,
     onClickCreateBtn,
     onClickUpdateBtn,
   } = props;
@@ -33,10 +34,6 @@ const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
 
   const handleClickCreateBtn = (isGroup: boolean, groupId?: number) => {
     onClickCreateBtn(isGroup, groupId);
-  };
-
-  const handleClickUpdateBtn = (category: ProductCategory | ProductCategoryGroup) => {
-    onClickUpdateBtn(category);
   };
 
   return (
@@ -61,21 +58,14 @@ const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
           { categoryGroups.map((checkCategoryGroup) => (
             <Fragment key={checkCategoryGroup.categoryGroup.id}>
               <CategoryDetail
-                key={checkCategoryGroup.categoryGroup.id}
                 category={checkCategoryGroup.categoryGroup}
-                created={true}
+                isGroup
+                onClickSelectBtn={onClickSelectBtn}
+                onClickUpdateBtn={onClickUpdateBtn}
               />
               <Button
-                startIcon={<UpdateIcon />}
-                onClick={() => handleClickUpdateBtn(checkCategoryGroup.categoryGroup)}
-              >
-                <FormattedMessage
-                  id="admin.updateCategoryBtn"
-                />
-              </Button>
-              <Button
                 startIcon={<CreateIcon />}
-                onClick={() => handleClickCreateBtn(true, checkCategoryGroup.categoryGroup.id)}
+                onClick={() => handleClickCreateBtn(false, checkCategoryGroup.categoryGroup.id)}
               >
                 <FormattedMessage
                   id="admin.createCategoryBtn"
@@ -84,18 +74,10 @@ const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
               { checkCategoryGroup.checkCategories.map((checkCategory) => (
                 <Fragment key={checkCategory.category.id}>
                   <CategoryDetail
-                    key={checkCategory.category.id}
                     category={checkCategory.category}
-                    created={true}
+                    onClickSelectBtn={onClickSelectBtn}
+                    onClickUpdateBtn={onClickUpdateBtn}
                   />
-                  <Button
-                    startIcon={<UpdateIcon />}       
-                    onClick={() => handleClickUpdateBtn(checkCategory.category)}
-                  >
-                    <FormattedMessage
-                      id="admin.updateCategoryBtn"
-                    />
-                  </Button>
                 </Fragment>
               ))}
             </Fragment>
@@ -122,18 +104,10 @@ const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
           { categoriesWithoutGroup.map((checkCategory) => (
             <Fragment key={checkCategory.category.id}>
               <CategoryDetail
-                key={checkCategory.category.id}
                 category={checkCategory.category}
-                created={true}
+                onClickSelectBtn={onClickSelectBtn}
+                onClickUpdateBtn={onClickUpdateBtn}
               />
-              <Button
-                startIcon={<UpdateIcon />}       
-                onClick={() => handleClickUpdateBtn(checkCategory.category)}
-              >
-                <FormattedMessage
-                  id="admin.updateCategoryBtn"
-                />
-              </Button>
             </Fragment>
           ))}
         </AccordionDetails>

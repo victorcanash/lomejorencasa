@@ -577,6 +577,7 @@
   "admin.productPacks": "Packs de productos",
   "admin.productDetail": "Detalles del producto",
   "admin.createdProduct": "Producto creado",
+  "admin.selectCategoryBtn": "Ver landings de la categoría",
   "admin.createCategoryBtn": "Crear categoría",
   "admin.updateCategoryBtn": "Actualizar categoría",
   "admin.updateProductBtn": "Actualizar producto",
