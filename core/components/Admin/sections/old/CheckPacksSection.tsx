@@ -13,7 +13,7 @@ import Button from '@core/components/inputs/Button';
 
 import Pagination from '@core/components/ui/Pagination';
 import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
-import PackDetail from '@core/components/Admin/details/PackDetail';
+import PackDetail from '@core/components/Admin/sections/old/details/PackDetail';
 
 export type CheckPacksSectionProps = {
   packs: ProductPack[],

@@ -20,9 +20,9 @@ import Pagination from '@core/components/ui/Pagination';
 import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';
 import ManagePDiscountForm from '@core/components/forms/admin/ManagePDiscountForm';
-import ProductDetail from '@core/components/Admin/details/ProductDetail';
-import InventoriesDetail from '@core/components/Admin/details/InventoriesDetail';
-import DiscountsDetail from '@core/components/Admin/details/DiscountsDetail';
+import ProductDetail from '@core/components/Admin/sections/old/details/ProductDetail';
+import InventoriesDetail from '@core/components/Admin/sections/old/details/InventoriesDetail';
+import DiscountsDetail from '@core/components/Admin/sections/old/details/DiscountsDetail';
 
 export type CheckProductsSectionProps = {
   category: ProductCategory | null,

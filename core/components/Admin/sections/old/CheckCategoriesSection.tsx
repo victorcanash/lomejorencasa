@@ -12,7 +12,7 @@ import Button from '@core/components/inputs/Button';
 
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
-import CategoryDetail from '@core/components/Admin/details/CategoryDetail';
+import CategoryDetail from '@core/components/Admin/sections/old/details/CategoryDetail';
 
 const CheckCategoriesSection = () => {
   const { getAllCategories } = useProductsContext();
