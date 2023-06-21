@@ -28,7 +28,7 @@ import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import { useAdminContext } from '@core/contexts/AdminContext';
 
-const useProducts = () => {
+const useAdminStore = () => {
   const { setLoading } = useAppContext();
   const { token } = useAuthContext();
   const {
@@ -333,4 +333,4 @@ const deleteProduct = async (
   };
 };
 
-export default useProducts;
+export default useAdminStore;

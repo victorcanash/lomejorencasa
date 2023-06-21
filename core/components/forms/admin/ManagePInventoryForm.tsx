@@ -3,7 +3,7 @@ import { FormFieldTypes } from '@core/constants/forms';
 import type { ProductInventory, Product } from '@core/types/products';
 
 import useForms from '@core/hooks/useForms';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManagePInventoryFormProps = {
@@ -28,7 +28,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
   } = props;
 
   const { manageInventoryFormValidation, inventoryFieldsInitValues } = useForms();
-  const { manageProductInventory, errorMsg, successMsg } = useProducts();
+  const { manageProductInventory, errorMsg, successMsg } = useAdminStore();
 
   const handleSubmit = async (values: ProductInventory) => {
     if (manageOnSubmit) {

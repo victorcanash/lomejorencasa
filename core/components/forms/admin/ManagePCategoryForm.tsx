@@ -7,7 +7,7 @@ import type { ManageProductCategory, ProductCategory, ProductCategoryGroup } fro
 
 import { useAdminContext } from '@core/contexts/AdminContext';
 import useForms from '@core/hooks/useForms';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManagePCategoryFormProps = {
@@ -34,7 +34,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   const { checkCategoryGroups } = useAdminContext();
 
   const { manageCategoryFormValidation, categoryFieldsInitValues } = useForms();
-  const { manageProductCategory, errorMsg, successMsg } = useProducts();
+  const { manageProductCategory, errorMsg, successMsg } = useAdminStore();
 
   const [isCategoryGroup, setIsCategoryGroup] = useState((initIsCategoryGroup || (productCategory as ProductCategoryGroup)?.categories) ? true : undefined);
 

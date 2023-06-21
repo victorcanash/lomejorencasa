@@ -15,7 +15,7 @@ import Divider from '@core/components/ui/Divider';
 import Button from '@core/components/inputs/Button';
 
 import { pages } from '@lib/config/navigation.config';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
 import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';
 import ManagePDiscountForm from '@core/components/forms/admin/ManagePDiscountForm';
@@ -26,7 +26,7 @@ import DiscountsDetail from '@core/components/Admin/sections/old/details/Discoun
 const CreateProductSection = () => {
   const router = useRouter();
 
-  const { createProduct, errorMsg, successMsg } = useProducts();
+  const { createProduct, errorMsg, successMsg } = useAdminStore();
 
   const [product, setProduct] = useState<Product | undefined>(undefined);
   const [inventories, setInventories] = useState<ProductInventory[]>([]);

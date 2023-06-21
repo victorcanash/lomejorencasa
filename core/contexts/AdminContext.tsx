@@ -10,7 +10,6 @@ import {
   SetStateAction,
 } from 'react';
 import { useRouter } from 'next/router';
-
 import { useSnackbar } from 'notistack';
 
 import { ManageActions } from '@core/constants/app';
@@ -293,7 +292,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         setCheckCategoriesWithoutGroup(newDeleteCategoriesWithoutGroup);
         break;
     }
-  }
+  };
 
   const getCategories = useCallback(async () => {
     await getAllProductCategories(true, true)

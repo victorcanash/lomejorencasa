@@ -12,7 +12,7 @@ import type { ProductPack } from '@core/types/products';
 import Button from '@core/components/inputs/Button';
 
 import useForms from '@core/hooks/useForms';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import BaseForm from '@core/components/forms/BaseForm';
 import ManagePPackInventoryForm from '@core/components/forms/admin/ManagePPackInventoryForm';
 
@@ -36,7 +36,7 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
   const intl = useIntl();
 
   const { managePackFormValidation, packFieldsInitValues } = useForms();
-  const { manageProductPack, errorMsg, successMsg } = useProducts();
+  const { manageProductPack, errorMsg, successMsg } = useAdminStore();
 
   const [inventoryIds, setInventoryIds] = useState<number[]>(productPack?.inventoriesIds || []);
 

@@ -3,12 +3,12 @@ import { useState } from 'react';
 import Box from '@mui/material/Box';
 
 import type { CheckCategory } from '@core/types/admin';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import CheckCategoriesSection from './CheckCategoriesSection';
 import CheckLandingsSection from './CheckLandingsSection';
 
 const CheckStoreSection = () => {
-  const { getCategoryDetails } = useProducts();
+  const { getCategoryDetails } = useAdminStore();
 
   const [selectedCheckCategory, setSelectedCheckCategory] = useState<CheckCategory | undefined>(undefined);
 

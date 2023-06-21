@@ -3,7 +3,7 @@ import { FormFieldTypes } from '@core/constants/forms';
 import type { ProductDiscount, Product } from '@core/types/products';
 
 import useForms from '@core/hooks/useForms';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManagePDiscountFormProps = {
@@ -28,7 +28,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
   } = props;
 
   const { manageDiscountFormValidation, discountFieldsInitValues } = useForms();
-  const { manageProductDiscount, errorMsg, successMsg } = useProducts();
+  const { manageProductDiscount, errorMsg, successMsg } = useAdminStore();
 
   const handleSubmit = async (values: ProductDiscount) => {
     if (manageOnSubmit) {

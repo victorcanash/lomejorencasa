@@ -10,7 +10,7 @@ import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { Landing, ProductCategory } from '@core/types/products';
 import useForms from '@core/hooks/useForms';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManageLandingFormProps = {
@@ -33,7 +33,7 @@ const ManageLandingForm = (props: ManageLandingFormProps) => {
   } = props;
 
   const { manageLandingFormValidation, landingFieldsInitValues } = useForms();
-  const { manageLanding, errorMsg, successMsg } = useProducts();
+  const { manageLanding, errorMsg, successMsg } = useAdminStore();
 
   const [images, setImages] = useState<string[]>(landing?.images || []);
   const [tutorialSources, setTutorialSources] = useState<string[]>(landing?.tutorialSources || []);

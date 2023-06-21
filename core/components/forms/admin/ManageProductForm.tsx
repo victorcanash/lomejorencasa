@@ -12,7 +12,7 @@ import { FormFieldTypes } from '@core/constants/forms';
 import type { Landing, Product, ProductCategory } from '@core/types/products';
 import { useAdminContext } from '@core/contexts/AdminContext';
 import useForms from '@core/hooks/useForms';
-import useProducts from '@core/hooks/useProducts';
+import useAdminStore from '@core/hooks/useAdminStore';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManageProductFormProps = {
@@ -39,7 +39,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   const { checkCategories } = useAdminContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
-  const { manageProduct, errorMsg, successMsg } = useProducts();
+  const { manageProduct, errorMsg, successMsg } = useAdminStore();
 
   const [categoriesFromProduct, setCategoriesFromProduct] = useState<ProductCategory[]>(
     action === ManageActions.create && category ?
