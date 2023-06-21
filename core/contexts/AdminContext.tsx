@@ -20,19 +20,19 @@ import { getAllProductCategories } from '@core/utils/products';
 type ContextType = {
   section: AdminSections | undefined,
   setSection: Dispatch<SetStateAction<AdminSections | undefined>>,
-  categoryGroups: CheckCategoryGroup[],
-  setCategoryGroups: Dispatch<SetStateAction<CheckCategoryGroup[]>>,
-  categoriesWithoutGroup: CheckCategory[],
-  setCategoriesWithoutGroup: Dispatch<SetStateAction<CheckCategory[]>>,
+  checkCategoryGroups: CheckCategoryGroup[],
+  setCheckCategoryGroups: Dispatch<SetStateAction<CheckCategoryGroup[]>>,
+  checkCategoriesWithoutGroup: CheckCategory[],
+  setCheckCategoriesWithoutGroup: Dispatch<SetStateAction<CheckCategory[]>>,
 };
 
 export const AdminContext = createContext<ContextType>({
   section: undefined,
   setSection: () => {},
-  categoryGroups: [],
-  setCategoryGroups: () => {},
-  categoriesWithoutGroup: [],
-  setCategoriesWithoutGroup: () => {},
+  checkCategoryGroups: [],
+  setCheckCategoryGroups: () => {},
+  checkCategoriesWithoutGroup: [],
+  setCheckCategoriesWithoutGroup: () => {},
 });
 
 export const useAdminContext = () => {
@@ -48,15 +48,15 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   const { enqueueSnackbar } = useSnackbar();
 
   const [section, setSection] = useState<AdminSections | undefined>(undefined);
-  const [categoryGroups, setCategoryGroups] = useState<CheckCategoryGroup[]>([]);
-  const [categoriesWithoutGroup, setCategoriesWithoutGroup] = useState<CheckCategory[]>([]);
+  const [checkCategoryGroups, setCheckCategoryGroups] = useState<CheckCategoryGroup[]>([]);
+  const [checkCategoriesWithoutGroup, setCheckCategoriesWithoutGroup] = useState<CheckCategory[]>([]);
 
   const firstRenderRef = useRef(false);
 
   const getCategories = useCallback(async () => {
     await getAllProductCategories(true, true)
       .then((response) => {
-        setCategoryGroups(response.productCategories.map((categoryGroupResponse) => {
+        setCheckCategoryGroups(response.productCategories.map((categoryGroupResponse) => {
           const categoryGroup = categoryGroupResponse as ProductCategoryGroup;
           return {
             categoryGroup: categoryGroup,
@@ -68,7 +68,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
             }) : [],
           };
         }));
-        setCategoriesWithoutGroup(response.categoriesWithoutGroup ? response.categoriesWithoutGroup.map((categoryWithoutGroup) => {
+        setCheckCategoriesWithoutGroup(response.categoriesWithoutGroup ? response.categoriesWithoutGroup.map((categoryWithoutGroup) => {
           return {
             category: categoryWithoutGroup,
             landings: [],
@@ -81,7 +81,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           { variant: 'error' }
         );
       });
-  }, [enqueueSnackbar, setCategoriesWithoutGroup, setCategoryGroups]);
+  }, [enqueueSnackbar, setCheckCategoriesWithoutGroup, setCheckCategoryGroups]);
 
   useEffect(() => {
     let sectionSearch = AdminSections.home;
@@ -116,10 +116,10 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         section: section,
         setSection: setSection,
-        categoryGroups: categoryGroups,
-        setCategoryGroups: setCategoryGroups,
-        categoriesWithoutGroup: categoriesWithoutGroup,
-        setCategoriesWithoutGroup: setCategoriesWithoutGroup,
+        checkCategoryGroups,
+        setCheckCategoryGroups,
+        checkCategoriesWithoutGroup,
+        setCheckCategoriesWithoutGroup,
       }}
     >
       {children}

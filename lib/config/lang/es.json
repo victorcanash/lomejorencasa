@@ -581,6 +581,8 @@
   "admin.selectCategoryBtn": "Ver landings de la categoría",
   "admin.createCategoryBtn": "Crear categoría",
   "admin.updateCategoryBtn": "Actualizar categoría",
+  "admin.createLandingBtn": "Crear landing",
+  "admin.updateLandingBtn": "Actualizar landing",
   "admin.updateProductBtn": "Actualizar producto",
   "admin.updatePackBtn": "Actualizar pack de productos",
   "admin.createDiscountBtn": "Crear descuento",

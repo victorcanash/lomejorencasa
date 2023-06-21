@@ -1,37 +1,32 @@
-import { useState, useCallback, Fragment } from 'react';
+import { useState } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import CreateIcon from '@mui/icons-material/Create';
 
-import { ManageActions } from '@core/constants/app';
-import type { Landing, ProductCategory } from '@core/types/products';
+import type { CheckCategory } from '@core/types/admin';
+import type { Landing } from '@core/types/products';
 import Button from '@core/components/inputs/Button';
 import Divider from '@core/components/ui/Divider';
-import LandingDetail from './details/LandingDetail';
+import CheckLandingsList from './CheckLandingsList';
 import CreateLandingSection from './CreateLandingSection';
 
 type CheckLandingsSectionProps = {
-  productCategory: ProductCategory,
-  landings: Landing[],
+  checkCategory: CheckCategory,
   onClickBack: () => void,
 };
 
 const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
   const {
-    productCategory,
-    landings,
+    checkCategory,
     onClickBack,
   } = props;
-  const [createLanding, setCreateLanding] = useState(false);
+
   const [updateLanding, setUpdateLanding] = useState<Landing | undefined>(undefined);
+  const [createLanding, setCreateLanding] = useState(false);
 
-  const handleClickBack = useCallback(() => {
-    onClickBack();
-  }, [onClickBack]);
-
-  const handleClickCreateBtn = () => {
+  const onClickCreateBtn = () => {
     setCreateLanding(true);
   };
 
@@ -59,35 +54,33 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
   return (
     <>
       <Typography component="div" variant="h2">
-        {productCategory.name.current}
+        {checkCategory.category.name.current}
       </Typography>
       <Typography component="div" variant="h3">
-        {productCategory.description.current}
+        {checkCategory.category.description.current}
       </Typography>
-      <Button customtype="back" onClick={handleClickBack}>
+      <Button customtype="back" onClick={onClickBack}>
         <FormattedMessage id="admin.productCategoriesBack" />
       </Button>
       <Divider mt={1} mb={4} />
 
       <Button
         startIcon={<CreateIcon />}
-        onClick={() => handleClickCreateBtn()}
+        onClick={() => onClickCreateBtn()}
       >
         <FormattedMessage
-          id="admin.createCategoryBtn"
+          id="admin.createLandingBtn"
         />
       </Button>
 
-      { landings.map((landing) => (
-        <Fragment key={landing.id}>
-          <LandingDetail
-            landing={landing}
-            onClickUpdateBtn={onClickUpdateBtn}
-          />
-        </Fragment>
-      ))}
+      { (!updateLanding && !createLanding) &&
+        <CheckLandingsList
+          landings={checkCategory.landings}
+          onClickUpdateBtn={onClickUpdateBtn}
+        />
+      }
 
-      {/* updateLanding &&
+      {/* (updateLanding && !createLanding) &&
         <CreateLandingSection
           landing={updateLanding}
           onSubmitSuccess={onSuccessUpdate}
@@ -95,7 +88,7 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
           onCancel={onCancel}
         />
       */}
-      { createLanding &&
+      { (!updateLanding && createLanding) &&
         <CreateLandingSection
           onSubmitSuccess={onSuccessCreate}
           onCancel={onCancel}

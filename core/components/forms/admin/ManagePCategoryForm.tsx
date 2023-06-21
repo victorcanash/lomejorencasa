@@ -31,7 +31,7 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
     onCancel, 
   } = props;
 
-  const { categoryGroups } = useAdminContext();
+  const { checkCategoryGroups } = useAdminContext();
 
   const { manageCategoryFormValidation, categoryFieldsInitValues } = useForms();
   const { manageProductCategory, errorMsg, successMsg } = useProducts();
@@ -48,7 +48,11 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
   const handleSubmit = async (values: ManageProductCategory) => {
     manageProductCategory(
       action,
-      {...values, categoryGroupId: values.categoryGroupId === -1 ? undefined : values.categoryGroupId},
+      {
+        ...values,
+        categoryGroupId: values.categoryGroupId === -1 ?
+          undefined : values.categoryGroupId,
+      },
       onSubmitSuccess
     );
   };
@@ -130,15 +134,15 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
                   },
                   value: -1,
                 }
-              ].concat(categoryGroups.map((checkCategory) => {
+              ].concat(checkCategoryGroups.map((checkCategoryGroup) => {
                 return {
                   text: {
                     id: 'forms.groupCategoryName',
                     values: {
-                      name: checkCategory.categoryGroup.name.current,
+                      name: checkCategoryGroup.categoryGroup.name.current,
                     },
                   },
-                  value: checkCategory.categoryGroup.id,
+                  value: checkCategoryGroup.categoryGroup.id,
                 };
               })),
             },

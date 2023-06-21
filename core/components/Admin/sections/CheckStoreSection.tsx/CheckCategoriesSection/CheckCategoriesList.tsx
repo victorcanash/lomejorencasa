@@ -9,18 +9,18 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CreateIcon from '@mui/icons-material/Create';
 
-import type { ProductCategory, ProductCategoryGroup } from '@core/types/products';
+import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin';
 import { useAdminContext } from '@core/contexts/AdminContext';
 import Button from '@core/components/inputs/Button';
-import CategoryDetail from './details/CategoryDetail';
+import CheckCategoryDetail from './CheckCategoryDetail';
 
-type CheckCategoriesSectionProps = {
-  onClickSelectBtn: (category: ProductCategory) => void,
+type CheckCategoriesListProps = {
+  onClickSelectBtn: (checkCategory: CheckCategory) => void,
   onClickCreateBtn: (isGroup: boolean, groupId?: number) => void,
-  onClickUpdateBtn: (category: ProductCategory | ProductCategoryGroup) => void,
+  onClickUpdateBtn: (checkCategory: CheckCategory | CheckCategoryGroup) => void,
 };
 
-const  CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
+const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
   const {
     onClickSelectBtn,
     onClickCreateBtn,
@@ -28,13 +28,9 @@ const  CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
   } = props;
 
   const {
-    categoryGroups,
-    categoriesWithoutGroup,
+    checkCategoryGroups,
+    checkCategoriesWithoutGroup,
   } = useAdminContext();
-
-  const handleClickCreateBtn = (isGroup: boolean, groupId?: number) => {
-    onClickCreateBtn(isGroup, groupId);
-  };
 
   return (
     <>
@@ -49,23 +45,22 @@ const  CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
         <AccordionDetails>
           <Button
             startIcon={<CreateIcon />}
-            onClick={() => handleClickCreateBtn(true)}
+            onClick={() => onClickCreateBtn(true)}
           >
             <FormattedMessage
               id="admin.createCategoryBtn"
             />
           </Button>
-          { categoryGroups.map((checkCategoryGroup) => (
+          { checkCategoryGroups.map((checkCategoryGroup) => (
             <Fragment key={checkCategoryGroup.categoryGroup.id}>
-              <CategoryDetail
-                category={checkCategoryGroup.categoryGroup}
-                isGroup
+              <CheckCategoryDetail
+                checkCategory={checkCategoryGroup}
                 onClickSelectBtn={onClickSelectBtn}
                 onClickUpdateBtn={onClickUpdateBtn}
               />
               <Button
                 startIcon={<CreateIcon />}
-                onClick={() => handleClickCreateBtn(false, checkCategoryGroup.categoryGroup.id)}
+                onClick={() => onClickCreateBtn(false, checkCategoryGroup.categoryGroup.id)}
               >
                 <FormattedMessage
                   id="admin.createCategoryBtn"
@@ -73,8 +68,8 @@ const  CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
               </Button>
               { checkCategoryGroup.checkCategories.map((checkCategory) => (
                 <Fragment key={checkCategory.category.id}>
-                  <CategoryDetail
-                    category={checkCategory.category}
+                  <CheckCategoryDetail
+                    checkCategory={checkCategory}
                     onClickSelectBtn={onClickSelectBtn}
                     onClickUpdateBtn={onClickUpdateBtn}
                   />
@@ -95,16 +90,16 @@ const  CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
         <AccordionDetails>
           <Button
             startIcon={<CreateIcon />}
-            onClick={() => handleClickCreateBtn(false)}
+            onClick={() => onClickCreateBtn(false)}
           >
             <FormattedMessage
               id="admin.createCategoryBtn"
             />
           </Button>
-          { categoriesWithoutGroup.map((checkCategory) => (
+          { checkCategoriesWithoutGroup.map((checkCategory) => (
             <Fragment key={checkCategory.category.id}>
-              <CategoryDetail
-                category={checkCategory.category}
+              <CheckCategoryDetail
+                checkCategory={checkCategory}
                 onClickSelectBtn={onClickSelectBtn}
                 onClickUpdateBtn={onClickUpdateBtn}
               />
@@ -116,4 +111,4 @@ const  CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
   );
 };
 
-export default CheckCategoriesSection;
+export default CheckCategoriesList;

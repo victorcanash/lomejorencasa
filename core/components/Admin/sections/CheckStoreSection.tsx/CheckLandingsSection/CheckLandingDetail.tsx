@@ -10,22 +10,18 @@ import UpdateIcon from '@mui/icons-material/Update';
 import type { Landing } from '@core/types/products';
 // import CustomImage from '@core/components/CustomImage';
 
-type LandingDetailProps = {
+type CheckLandingDetailProps = {
   landing: Landing,
   onClickUpdateBtn: (landing: Landing) => void,
 };
 
-const LandingDetail = (props: LandingDetailProps) => {
+const CheckLandingDetail = (props: CheckLandingDetailProps) => {
   const {
     landing,
     onClickUpdateBtn
   } = props;
 
   const intl = useIntl();
-
-  const handleClickUpdateBtn = () => {
-    onClickUpdateBtn(landing);
-  };
 
   return (
     <>
@@ -59,15 +55,15 @@ const LandingDetail = (props: LandingDetailProps) => {
       ))}
 
       <Button
-        startIcon={<UpdateIcon />}       
-        onClick={() => handleClickUpdateBtn()}
+        startIcon={<UpdateIcon />}
+        onClick={() => onClickUpdateBtn(landing)}
       >
         <FormattedMessage
-          id="admin.updateCategoryBtn"
+          id="admin.updateLandingBtn"
         />
       </Button>
     </>
   );
 };
 
-export default LandingDetail;
+export default CheckLandingDetail;

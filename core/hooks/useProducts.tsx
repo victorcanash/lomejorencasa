@@ -32,10 +32,10 @@ const useProducts = () => {
   const { setLoading } = useAppContext();
   const { token } = useAuthContext();
   const {
-    categoryGroups,
-    setCategoryGroups,
-    categoriesWithoutGroup,
-    setCategoriesWithoutGroup,
+    checkCategoryGroups: categoryGroups,
+    setCheckCategoryGroups: setCategoryGroups,
+    checkCategoriesWithoutGroup: categoriesWithoutGroup,
+    setCheckCategoriesWithoutGroup: setCategoriesWithoutGroup,
   } = useAdminContext();
 
   const intl = useIntl();
