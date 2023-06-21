@@ -1,14 +1,23 @@
+import { useState } from 'react';
+
+import { FormattedMessage } from 'react-intl';
+
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Button from '@core/components/inputs/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+
 import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
-import type { Product } from '@core/types/products';
-
-import { useProductsContext } from '@core/contexts/ProductsContext';
+import type { Landing, Product, ProductCategory } from '@core/types/products';
+import { useAdminContext } from '@core/contexts/AdminContext';
 import useForms from '@core/hooks/useForms';
 import useProducts from '@core/hooks/useProducts';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManageProductFormProps = {
   action: ManageActions.create | ManageActions.update,
+  landing: Landing,
   product?: Product,
   onSubmitSuccess?: (product: Product) => void,
   onDeleteSuccess?: () => void,
@@ -16,32 +25,39 @@ type ManageProductFormProps = {
 };
 
 const ManageProductForm = (props: ManageProductFormProps) => {
-  const { 
-    action, 
-    product, 
-    onSubmitSuccess, 
+  const {
+    action,
+    landing,
+    product,
+    onSubmitSuccess,
     onDeleteSuccess,
     onCancel,
   } = props;
 
-  const { getAllCategories } = useProductsContext();
+  const { productCategories } = useAdminContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
-  const { updateProduct, deleteProduct, errorMsg, successMsg } = useProducts();
+  const { manageProduct, errorMsg, successMsg } = useProducts();
+
+  const [categoriesFromProduct, setCategoriesFromProduct] = useState<ProductCategory[]>(product?.categories || []);
 
   const handleSubmit = async (values: Product) => {
+    const newProduct = {
+      ...values,
+      categories: categoriesFromProduct,
+    } as Product;
     if (action == ManageActions.create) {
       if (onSubmitSuccess) {
-        onSubmitSuccess(values);
+        onSubmitSuccess(newProduct);
       }
     } else if (action == ManageActions.update) {
-      updateProduct(values, onSubmitSuccess);
+      manageProduct(action, newProduct, onSubmitSuccess);
     }
   };
 
   const handleDeleteBtn = () => {
     if (product) {
-      deleteProduct(product, onDeleteSuccess);
+      manageProduct(ManageActions.delete, product, onDeleteSuccess);
     }
   };
 
@@ -51,6 +67,26 @@ const ManageProductForm = (props: ManageProductFormProps) => {
     }
   };
 
+  const handleCategorySubmit = async (values: {categoryId: number}) => {
+    const existsCategory = categoriesFromProduct.find((categoryItem) => categoryItem.id === values.categoryId);
+    if (existsCategory) {
+      return;
+    }
+    const addCategory = productCategories.find((categoryItem) => categoryItem.id === values.categoryId);
+    if (addCategory) {
+      setCategoriesFromProduct([
+        ...categoriesFromProduct,
+        addCategory,
+      ]);
+    }
+  };
+
+  const handleRemoveCategoryBtn = (index: number) => {
+    setCategoriesFromProduct(
+      categoriesFromProduct.filter((_categoryItem, indexImg) => index !== indexImg)
+    );
+  };
+
   const maxWidth = '500px';
 
   return (
@@ -58,13 +94,11 @@ const ManageProductForm = (props: ManageProductFormProps) => {
       <BaseForm
         maxWidth={maxWidth} 
         initialValues={{
+          ...product,
           id: product?.id || -1,
-          categoryId: product?.categoryId || getAllCategories()[0].id,
+          landingId: product?.landingId || landing.id,
           name: product?.name || productFieldsInitValues.name,
           description: product?.description || productFieldsInitValues.description,
-          lowestPrice: product?.lowestPrice || 0,
-          lowestRealPrice: product?.lowestRealPrice || 0,
-          inventories: product ? product.inventories : [],
         } as Product}
         validationSchema={manageProductFormValidation}
         enableReinitialize={true}
@@ -75,22 +109,6 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 'forms.createProduct.title' : 'forms.updateProduct.title',
             },
             formFields: [
-              {
-                name: 'categoryId',
-                type: FormFieldTypes.select,
-                required: true,
-                menuItems: getAllCategories().map((category) => {
-                  return {
-                    text: {
-                      id: "forms.categoryName",
-                      values: {
-                        name: category.name.current
-                      }
-                    },
-                    value: category.id,
-                  };
-                }),
-              },
               {
                 name: 'name.en',
                 type: FormFieldTypes.text,
@@ -121,9 +139,10 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 'forms.createProduct.successBtn' : 'forms.updateProduct.successBtn',
             },
             onSubmit: handleSubmit,
+            disabled: (categoriesFromProduct.length < 1),
           },
           delete: action == ManageActions.update ? 
-            { 
+            {
               text: {
                 id: 'app.deleteBtn',
               },
@@ -142,6 +161,63 @@ const ManageProductForm = (props: ManageProductFormProps) => {
         successMsg={successMsg}
         errorMsg={errorMsg}
       />
+
+      <Typography component="div" variant="body1" textAlign="center" mt={2}>
+        <FormattedMessage
+          id="forms.categories"
+        />
+      </Typography>
+      <BaseForm
+        maxWidth={maxWidth} 
+        initialValues={{
+          categoryId: productCategories[0].id,
+        }}
+        formFieldGroups={[
+          {
+            formFields: [
+              {
+                name: 'categoryId',
+                type: FormFieldTypes.select,
+                required: true,
+                menuItems: productCategories.map((category) => {
+                  return {
+                    text: {
+                      id: 'forms.categoryName',
+                      values: {
+                        name: category.name.current
+                      }
+                    },
+                    value: category.id,
+                  };
+                }),
+              },
+            ],
+          }
+        ]}
+        formButtons={{
+          submit: {
+            text: {
+              id: 'app.addBtn',
+            },
+            onSubmit: handleCategorySubmit,
+          },
+        }}
+      />
+      { categoriesFromProduct.map((categoryItem, index) => (
+        <Box key={index}>
+          <Typography component="div" variant="body1">
+            {categoryItem.name.current}
+          </Typography>
+          <Button
+            startIcon={<DeleteIcon />}
+            onClick={() => handleRemoveCategoryBtn(index)}
+          >
+            <FormattedMessage
+              id="app.removeBtn"
+            />
+          </Button>
+        </Box>
+      ))}
     </>
   );
 };

@@ -12,22 +12,26 @@ import type { Landing } from '@core/types/products';
 
 type CheckLandingDetailProps = {
   landing: Landing,
-  onClickUpdateBtn: (landing: Landing) => void,
+  onClickUpdateBtn?: (landing: Landing) => void,
+  creating?: boolean,
 };
 
 const CheckLandingDetail = (props: CheckLandingDetailProps) => {
   const {
     landing,
-    onClickUpdateBtn
+    onClickUpdateBtn,
+    creating,
   } = props;
 
   const intl = useIntl();
 
   return (
     <>
-      <Typography component="div" variant="body1">
-        {`${intl.formatMessage({ id: 'forms.id' })}: ${landing.id}`}
-      </Typography>
+      { !creating &&
+        <Typography component="div" variant="body1">
+          {`${intl.formatMessage({ id: 'forms.id' })}: ${landing.id}`}
+        </Typography>
+      }
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.slug' })}: ${landing.slug}`}
       </Typography>
@@ -54,14 +58,16 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
         </Typography>
       ))}
 
-      <Button
-        startIcon={<UpdateIcon />}
-        onClick={() => onClickUpdateBtn(landing)}
-      >
-        <FormattedMessage
-          id="admin.updateLandingBtn"
-        />
-      </Button>
+      {!creating &&
+        <Button
+          startIcon={<UpdateIcon />}
+          onClick={onClickUpdateBtn ? () => onClickUpdateBtn(landing) : undefined}
+        >
+          <FormattedMessage
+            id="admin.updateLandingBtn"
+          />
+        </Button>
+      }
     </>
   );
 };

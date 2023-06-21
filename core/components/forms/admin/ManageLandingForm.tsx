@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import CreateIcon from '@mui/icons-material/Create';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import { ManageActions } from '@core/constants/app';
@@ -67,7 +66,7 @@ const ManageLandingForm = (props: ManageLandingFormProps) => {
     }
   };
 
-  const handleImageSubmit = async (values: {image: string}) => {
+  const handleImageSubmit = async (values: { image: string }) => {
     setImages([
       ...images,
       values.image,
@@ -80,13 +79,7 @@ const ManageLandingForm = (props: ManageLandingFormProps) => {
     );
   };
 
-  const handleAddTutorialSrcBtn = (tutorialSource: string) => {
-    setTutorialSources([
-      ...tutorialSources,
-      tutorialSource,
-    ]);
-  };
-  const handleTutorialSrcSubmit = async (values: {tutorialSource: string}) => {
+  const handleTutorialSrcSubmit = async (values: { tutorialSource: string }) => {
     setTutorialSources([
       ...tutorialSources,
       values.tutorialSource,
@@ -261,14 +254,6 @@ const ManageLandingForm = (props: ManageLandingFormProps) => {
           <Typography component="div" variant="body1">
             {tutorialSource}
           </Typography>
-          <Button
-            startIcon={<CreateIcon />}
-            onClick={() => handleAddTutorialSrcBtn(tutorialSource)}
-          >
-            <FormattedMessage
-              id="app.addBtn"
-            />
-          </Button>
           <Button
             startIcon={<DeleteIcon />}
             onClick={() => handleRemoveTutorialSrcBtn(index)}

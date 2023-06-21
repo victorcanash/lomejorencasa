@@ -1,6 +1,7 @@
 import {
   useState,
   useRef,
+  useMemo,
   useCallback,
   useEffect,
   createContext,
@@ -14,7 +15,7 @@ import { useSnackbar } from 'notistack';
 
 import { AdminSections } from '@core/constants/admin';
 import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin';
-import type { ProductCategoryGroup } from '@core/types/products';
+import type { ProductCategory, ProductCategoryGroup } from '@core/types/products';
 import { getAllProductCategories } from '@core/utils/products';
 
 type ContextType = {
@@ -24,6 +25,7 @@ type ContextType = {
   setCheckCategoryGroups: Dispatch<SetStateAction<CheckCategoryGroup[]>>,
   checkCategoriesWithoutGroup: CheckCategory[],
   setCheckCategoriesWithoutGroup: Dispatch<SetStateAction<CheckCategory[]>>,
+  productCategories: ProductCategory[],
 };
 
 export const AdminContext = createContext<ContextType>({
@@ -33,6 +35,7 @@ export const AdminContext = createContext<ContextType>({
   setCheckCategoryGroups: () => {},
   checkCategoriesWithoutGroup: [],
   setCheckCategoriesWithoutGroup: () => {},
+  productCategories: [],
 });
 
 export const useAdminContext = () => {
@@ -52,6 +55,19 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
   const [checkCategoriesWithoutGroup, setCheckCategoriesWithoutGroup] = useState<CheckCategory[]>([]);
 
   const firstRenderRef = useRef(false);
+
+  const productCategories = useMemo(() => {
+    const categories: ProductCategory[] = [];
+    checkCategoryGroups.forEach((checkCategoryGroup) => {
+      checkCategoryGroup.checkCategories.forEach((checkCategory) => {
+        categories.push(checkCategory.category);
+      })
+    });
+    checkCategoriesWithoutGroup.forEach((checkCategory) => {
+      categories.push(checkCategory.category);
+    });
+    return categories;
+  }, [checkCategoriesWithoutGroup, checkCategoryGroups]);
 
   const getCategories = useCallback(async () => {
     await getAllProductCategories(true, true)
@@ -120,6 +136,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         setCheckCategoryGroups,
         checkCategoriesWithoutGroup,
         setCheckCategoriesWithoutGroup,
+        productCategories: productCategories,
       }}
     >
       {children}

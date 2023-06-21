@@ -72,7 +72,7 @@ const useProducts = () => {
         });
         return;
       }
-      await getProductCategory(slug)
+      await getProductCategory(slug, undefined, true)
         .then((response) => {
           const newCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
             return {
@@ -244,7 +244,7 @@ const useProducts = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
-    manageLandingMW(ManageActions.update, token, intl.locale, landing)
+    manageLandingMW(action, token, intl.locale, landing)
       .then((response) => {
         onManageLandingSuccess(action, category, response.landing || landing, onSuccess);
       }).catch((error: Error) => {
@@ -353,7 +353,36 @@ const useProducts = () => {
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateLanding' }));
   };
 
-  const createProduct = async (
+  const manageProduct = async (
+    action: ManageActions,
+    product: Product,
+    onSuccess?: (product: Product) => void
+  ) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    manageProductMW(action, token, intl.locale, product)
+      .then((response) => {
+        onManageProductSuccess(action, response.product || product, onSuccess);
+      }).catch((error: Error) => {
+        setErrorMsg(error.message);
+        setLoading(false);
+      });
+  };
+
+  const onManageProductSuccess = (
+    action: ManageActions,
+    product: Product,
+    onSuccess?: (product: Product) => void
+  ) => {
+    if (onSuccess) {
+      onSuccess(product);
+    }
+    setLoading(false);
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateProduct' }));
+  };
+
+  /*const createProduct = async (
     product: Product,
     inventories: ProductInventory[], 
     discounts: ProductDiscount[],
@@ -417,7 +446,7 @@ const useProducts = () => {
     if (onSuccess) {
       onSuccess(product);
     }
-};
+  };
 
 const deleteProduct = async (
   product: Product, 
@@ -440,7 +469,7 @@ const deleteProduct = async (
     if (onSuccess) {
       onSuccess(product);
     }
-  };
+  };*/
 
   const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
     setLoading(true);
@@ -509,9 +538,7 @@ const deleteProduct = async (
     getCategoryDetails,
     manageProductCategory,
     manageLanding,
-    createProduct,
-    updateProduct,
-    deleteProduct,
+    manageProduct,
     manageProductInventory,
     manageProductDiscount,
     manageProductPack,

@@ -92,8 +92,10 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
           onCancel={onCancel}
         />
       }
+
       { (!updateLanding && createLanding) &&
         <CreateLandingSection
+          category={checkCategory.category}
           onSubmitSuccess={onSuccessCreate}
           onCancel={onCancel}
         />

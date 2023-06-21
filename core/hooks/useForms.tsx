@@ -298,16 +298,11 @@ const useForms = () => {
   };
 
   const productFieldsValidation = {
-    categoryId: Yup
-      .number()
-      .min(0)
-      .required(),
     name: Yup.object().shape(localizedTextsFieldsValidation),
     description: Yup.object().shape(localizedTextsFieldsValidation),
   };
 
   const productFieldsInitValues = {
-    categoryId: 0,
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
   };
@@ -505,7 +500,6 @@ const useForms = () => {
   });
 
   const manageProductFormValidation = Yup.object().shape({
-    categoryId: productFieldsValidation.categoryId,
     name: productFieldsValidation.name,
     description: productFieldsValidation.description,
   });
