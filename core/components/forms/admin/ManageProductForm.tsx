@@ -36,7 +36,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
     onCancel,
   } = props;
 
-  const { productCategories } = useAdminContext();
+  const { checkCategories } = useAdminContext();
 
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
   const { manageProduct, errorMsg, successMsg } = useProducts();
@@ -77,7 +77,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
     if (existsCategory) {
       return;
     }
-    const addCategory = productCategories.find((categoryItem) => categoryItem.id === values.categoryId);
+    const addCategory = checkCategories.find((checkCategory) => checkCategory.category.id === values.categoryId)?.category;
     if (addCategory) {
       setCategoriesFromProduct([
         ...categoriesFromProduct,
@@ -175,7 +175,7 @@ const ManageProductForm = (props: ManageProductFormProps) => {
       <BaseForm
         maxWidth={maxWidth} 
         initialValues={{
-          categoryId: productCategories[0].id,
+          categoryId: checkCategories[0].category.id,
         }}
         formFieldGroups={[
           {
@@ -184,15 +184,15 @@ const ManageProductForm = (props: ManageProductFormProps) => {
                 name: 'categoryId',
                 type: FormFieldTypes.select,
                 required: true,
-                menuItems: productCategories.map((category) => {
+                menuItems: checkCategories.map((checkcategory) => {
                   return {
                     text: {
                       id: 'forms.categoryName',
                       values: {
-                        name: category.name.current
+                        name: checkcategory.category.name.current
                       }
                     },
-                    value: category.id,
+                    value: checkcategory.category.id,
                   };
                 }),
               },

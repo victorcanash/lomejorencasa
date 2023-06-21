@@ -27,16 +27,15 @@ import {
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import { useAdminContext } from '@core/contexts/AdminContext';
-import { CheckCategory } from '@core/types/admin';
 
 const useProducts = () => {
   const { setLoading } = useAppContext();
   const { token } = useAuthContext();
   const {
-    checkCategoryGroups,
-    setCheckCategoryGroups,
-    checkCategoriesWithoutGroup,
-    setCheckCategoriesWithoutGroup,
+    getLandingsByCategorySlug,
+    onGetCategoryDetails,
+    onManageProductCategory,
+    onManageLanding,
   } = useAdminContext();
 
   const intl = useIntl();
@@ -52,59 +51,19 @@ const useProducts = () => {
       landings: Landing[],
     }>(async (resolve, reject) => {
       setLoading(true);
-      let landings: Landing[] = [];
-      checkCategoryGroups.forEach((checkCategoryGroup) => {
-        checkCategoryGroup.checkCategories.forEach((checkCategory) => {
-          if (checkCategory.category.slug === slug) {
-            landings = checkCategory.landings;
-          }
-        });
-      });
-      checkCategoriesWithoutGroup.forEach((checkCategory) => {
-        if (checkCategory.category.slug === slug && checkCategory.landings.length > 0) {
-          landings = checkCategory.landings;
-        }
-      });
-      if (landings.length > 0) {
+      if (getLandingsByCategorySlug(slug).length > 0) {
         setLoading(false);
         resolve({
-          landings: landings,
+          landings: getLandingsByCategorySlug(slug),
         });
         return;
       }
       await getProductCategory(slug, undefined, true)
         .then((response) => {
-          const newCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
-            return {
-              ...checkCategoryGroup,
-              checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
-                if (checkCategory.category.slug === slug) {
-                  return {
-                    ...checkCategory,
-                    landings: response.landingsResult.landings,
-                  }
-                } else {
-                  return checkCategory;
-                }
-              }),
-            }
-          })
-          const newCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
-            if (checkCategory.category.slug === slug) {
-              return {
-                ...checkCategory,
-                landings: response.landingsResult.landings,
-              }
-            } else {
-              return checkCategory;
-            }
-          })
-          setCheckCategoryGroups(newCategoryGroups);
-          setCheckCategoriesWithoutGroup(newCategoriesWithoutGroup);
-          landings = response.landingsResult.landings;
+          onGetCategoryDetails(response.landingsResult.landings, slug);
           setLoading(false);
           resolve({
-            landings: landings,
+            landings: response.landingsResult.landings,
           });
         })
         .catch((error) => {
@@ -140,94 +99,7 @@ const useProducts = () => {
     productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory,
     onSuccess?: (productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void
   ) => {
-    switch (action) {
-      case ManageActions.create:
-        if ((productCategory as ProductCategoryGroup)?.categories) {
-          setCheckCategoryGroups([
-            ...checkCategoryGroups,
-            {
-              categoryGroup: productCategory as ProductCategoryGroup,
-              checkCategories: [],
-            }
-          ]);
-        } else if ((productCategory as ProductCategory)?.categoryGroupId) {
-          const newCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
-            return {
-              ...checkCategoryGroup,
-              checkCategories: (checkCategoryGroup.categoryGroup.id === (productCategory as ProductCategory).categoryGroupId) ?
-                [
-                  ...checkCategoryGroup.checkCategories,
-                  {
-                    category: productCategory as ProductCategory,
-                    landings: []
-                  }
-                ]
-                :
-                checkCategoryGroup.checkCategories,
-            };
-          })
-          setCheckCategoryGroups(newCategoryGroups);
-        } else {
-          setCheckCategoriesWithoutGroup([
-            ...checkCategoriesWithoutGroup,
-            {
-              category: productCategory as ProductCategory,
-              landings: [],
-            }
-          ]);
-        }
-        break;
-      case ManageActions.update:
-        const newCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
-          if (checkCategoryGroup.categoryGroup.slug === productCategory.slug) {
-            return {
-              ...checkCategoryGroup,
-              categoryGroup: productCategory as ProductCategoryGroup,
-            };
-          }
-          return {
-            ...checkCategoryGroup,
-            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
-              if (checkCategory.category.slug === productCategory.slug) {
-                return {
-                  ...checkCategory,
-                  category: productCategory as ProductCategory,
-                };
-              } else {
-                return checkCategory;
-              }
-            }),
-          };
-        })
-        const newCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
-          if (checkCategory.category.slug === productCategory.slug) {
-            return {
-              ...checkCategory,
-              category: productCategory as ProductCategory,
-            }
-          } else {
-            return checkCategory;
-          }
-        })
-        setCheckCategoryGroups(newCategoryGroups);
-        setCheckCategoriesWithoutGroup(newCategoriesWithoutGroup);
-        break;
-      case ManageActions.delete:
-        if ((productCategory as ManageProductCategory)?.isCategoryGroup) {
-          setCheckCategoryGroups(checkCategoryGroups.filter(checkCategoryGroup => checkCategoryGroup.categoryGroup.slug !== productCategory.slug));
-        } else if ((productCategory as ManageProductCategory)?.categoryGroupId) {
-          const newCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
-            return {
-              ...checkCategoryGroup,
-              checkCategories: checkCategoryGroup.checkCategories.filter(checkCategory => checkCategory.category.slug !== productCategory.slug),
-            };
-          });
-          setCheckCategoryGroups(newCategoryGroups);
-        } else {
-          setCheckCategoriesWithoutGroup(checkCategoriesWithoutGroup.filter(categoryWithoutGroup => categoryWithoutGroup.category.slug !== productCategory.slug));
-        }
-        break;
-    }
+    onManageProductCategory(action, productCategory);
     if (onSuccess) {
       onSuccess(productCategory);
     }
@@ -259,93 +131,7 @@ const useProducts = () => {
     landing: Landing,
     onSuccess?: (landing: Landing) => void
   ) => {
-    switch (action) {
-      case ManageActions.create:
-        const newCreateCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
-          return {
-            ...checkCategoryGroup,
-            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
-              return {
-                ...checkCategory,
-                landings: checkCategory.category.id === category.id ?
-                  [
-                    ...checkCategory.landings,
-                    landing,
-                  ] : checkCategory.landings,
-              };
-            }),
-          };
-        });
-        const newCreateCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
-          return {
-            ...checkCategory,
-            landings: checkCategory.category.id === category.id ?
-              [
-                ...checkCategory.landings,
-                landing,
-              ] : checkCategory.landings,
-          };
-        });
-        setCheckCategoryGroups(newCreateCategoryGroups);
-        setCheckCategoriesWithoutGroup(newCreateCategoriesWithoutGroup);
-        break;
-      case ManageActions.update:
-        const newUpdateCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
-          return {
-            ...checkCategoryGroup,
-            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
-              return {
-                ...checkCategory,
-                landings: checkCategory.category.id === category.id ?
-                  checkCategory.landings.map((landingItem) => {
-                    if (landingItem.id === landing.id) {
-                      return {...landingItem, landing};
-                    }
-                    return landing;
-                  }) : checkCategory.landings,
-              };
-            }),
-          };
-        });
-        const newUpdateCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
-          return {
-            ...checkCategory,
-            landings: checkCategory.category.id === category.id ?
-              checkCategory.landings.map((landingItem) => {
-                if (landingItem.id === landing.id) {
-                  return {...landingItem, landing};
-                }
-                return landing;
-              }) : checkCategory.landings,
-          };
-        });
-        setCheckCategoryGroups(newUpdateCategoryGroups);
-        setCheckCategoriesWithoutGroup(newUpdateCategoriesWithoutGroup);
-        break;
-      case ManageActions.delete:
-        const newDeleteCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
-          return {
-            ...checkCategoryGroup,
-            checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
-              return {
-                ...checkCategory,
-                landings: checkCategory.category.id === category.id ?
-                  checkCategory.landings.filter((landingItem) => landingItem.id !== landing.id) : checkCategory.landings,
-              };
-            }),
-          };
-        });
-        const newDeleteCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
-          return {
-            ...checkCategory,
-            landings: checkCategory.category.id === category.id ?
-              checkCategory.landings.filter((landingItem) => landingItem.id !== landing.id) : checkCategory.landings,
-          };
-        });
-        setCheckCategoryGroups(newDeleteCategoryGroups);
-        setCheckCategoriesWithoutGroup(newDeleteCategoriesWithoutGroup);
-        break;
-    }
+    onManageLanding(action, category, landing);
     if (onSuccess) {
       onSuccess(landing);
     }
