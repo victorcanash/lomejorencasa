@@ -245,7 +245,8 @@ export const getProductCategory = async (
     limit?: number,
     sortBy?: string, 
     order?: string
-  }
+  },
+  adminData?: boolean
 ) => {
   return new Promise<{
     productCategory: ProductCategory | ProductCategoryGroup,
@@ -261,6 +262,7 @@ export const getProductCategory = async (
         limit: landings?.limit || 1000,
         sortBy: landings?.sortBy || 'id',
         order: landings?.order || 'asc',
+        adminData: adminData,
       },
       headers: {
         ...getLanguageHeaders(locale),
@@ -753,7 +755,14 @@ const createProduct = (token: string, currentLocale: string, product: Product) =
       ...getLanguageHeaders(currentLocale),
     },
   };
-  return axios.post('/products', product, options);
+  return axios.post(
+    '/products',
+    {
+      ...product,
+      categoriesIds: product.categories?.map((category) => { return category.id; }),
+    },
+    options
+  );
 };
 
 const updateProduct = (token: string, currentLocale: string, product: Product) => {
@@ -763,7 +772,14 @@ const updateProduct = (token: string, currentLocale: string, product: Product) =
       ...getLanguageHeaders(currentLocale),
     },
   };
-  return axios.put(`/products/${product.id}`, product, options);
+  return axios.put(
+    `/products/${product.id}`,
+    {
+      ...product,
+      categoriesIds: product.categories?.map((category) => { return category.id; }),
+    },
+    options
+  );
 };
 
 const deleteProduct = (token: string, currentLocale: string, product: Product) => {
