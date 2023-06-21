@@ -17,6 +17,7 @@ import BaseForm from '@core/components/forms/BaseForm';
 
 type ManageProductFormProps = {
   action: ManageActions.create | ManageActions.update,
+  category?: ProductCategory,
   landing: Landing,
   product?: Product,
   onSubmitSuccess?: (product: Product) => void,
@@ -27,6 +28,7 @@ type ManageProductFormProps = {
 const ManageProductForm = (props: ManageProductFormProps) => {
   const {
     action,
+    category,
     landing,
     product,
     onSubmitSuccess,
@@ -39,7 +41,10 @@ const ManageProductForm = (props: ManageProductFormProps) => {
   const { manageProductFormValidation, productFieldsInitValues } = useForms();
   const { manageProduct, errorMsg, successMsg } = useProducts();
 
-  const [categoriesFromProduct, setCategoriesFromProduct] = useState<ProductCategory[]>(product?.categories || []);
+  const [categoriesFromProduct, setCategoriesFromProduct] = useState<ProductCategory[]>(
+    action === ManageActions.create && category ?
+      [category] : product?.categories || [],
+  );
 
   const handleSubmit = async (values: Product) => {
     const newProduct = {

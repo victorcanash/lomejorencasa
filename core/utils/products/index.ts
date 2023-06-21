@@ -593,6 +593,7 @@ export const getProduct = (token: string, currentLocale: string, id: number, adm
 };*/
 
 // ADMIN
+
 export const manageProductCategory = (action: ManageActions, token: string, currentLocale: string, productCategory: ManageProductCategory) => {
   return new Promise<{productCategory?: ProductCategory | ProductCategoryGroup}>(async (resolve, reject) => {
     let promiseMW = createProductCategory;
@@ -654,7 +655,6 @@ const deleteProductCategory = (token: string, currentLocale: string, productCate
   return axios.delete(`/product-categories/${productCategory.id}`, options)
 }
 
-// ADMIN
 export const manageLanding = (action: ManageActions, token: string, currentLocale: string, landing: Landing) => {
   return new Promise<{landing: Landing}>(async (resolve, reject) => {
     let promiseMW = createLanding;
@@ -716,7 +716,6 @@ const deleteLanding = (token: string, currentLocale: string, landing: Landing) =
   return axios.delete(`/landings/${landing.id}`, options)
 }
 
-// ADMIN
 export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     let promiseMW = createProduct;
@@ -792,7 +791,6 @@ const deleteProduct = (token: string, currentLocale: string, product: Product) =
   return axios.delete(`/products/${product.id}`, options)
 }
 
-// ADMIN
 export const manageProductInventory = (action: ManageActions, token: string, currentLocale: string, productInventory: ProductInventory) => {
   return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {
     let promiseMW = createProductInventory;
@@ -854,7 +852,6 @@ const deleteProductInventory = (token: string, currentLocale: string, productInv
   return axios.delete(`/product-inventories/${productInventory.id}`, options)
 }
 
-// ADMIN
 export const manageProductDiscount = (action: ManageActions, token: string, currentLocale: string, productDiscount: ProductDiscount) => {
   return new Promise<{productDiscount: ProductDiscount}>(async (resolve, reject) => {
     let promiseMW = createProductDiscount;
@@ -916,7 +913,6 @@ const deleteProductDiscount = (token: string, currentLocale: string, productDisc
   return axios.delete(`/product-discounts/${productDiscount.id}`, options)
 };
 
-// ADMIN
 export const manageProductPack = (action: ManageActions, token: string, currentLocale: string, productPack: ProductPack) => {
   return new Promise<{productPack: ProductPack}>(async (resolve, reject) => {
     let promiseMW = createProductPack;

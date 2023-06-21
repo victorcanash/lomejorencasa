@@ -105,6 +105,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       { (landing && createProduct && !createPack && product && !pack) &&
         <ManageProductForm
           action={ManageActions.create}
+          category={category}
           landing={landing}
           onSubmitSuccess={onSuccessCreateProduct}
           onCancel={onCancelCreateProduct}
