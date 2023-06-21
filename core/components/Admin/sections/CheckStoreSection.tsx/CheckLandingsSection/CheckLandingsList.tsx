@@ -1,22 +1,23 @@
 import { Fragment } from 'react';
 
+import type { CheckCategory } from '@core/types/admin';
 import type { Landing } from '@core/types/products';
 import CheckLandingDetail from './CheckLandingDetail';
 
 type CheckLandingsListProps = {
-  landings: Landing[],
+  checkCategory: CheckCategory,
   onClickUpdateBtn: (landing: Landing) => void,
 };
 
 const CheckLandingsList = (props: CheckLandingsListProps) => {
   const {
-    landings,
+    checkCategory,
     onClickUpdateBtn,
   } = props;
 
   return (
     <>
-      { landings.map((landing) => (
+      { checkCategory.landings.map((landing) => (
         <Fragment key={landing.id}>
           <CheckLandingDetail
             landing={landing}

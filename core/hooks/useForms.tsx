@@ -261,21 +261,6 @@ const useForms = () => {
 
   const emailsFieldsInitValues = {
     locale: 'es', // intl.defaultLocale,
-  }
-
-  const productFieldsValidation = {
-    categoryId: Yup
-      .number()
-      .min(0)
-      .required(),
-    name: Yup.object().shape(localizedTextsFieldsValidation),
-    description: Yup.object().shape(localizedTextsFieldsValidation),
-  };
-
-  const productFieldsInitValues = {
-    categoryId: 0,
-    name: localizedTextsFieldsInitValues,
-    description: localizedTextsFieldsInitValues,
   };
 
   const categoryFieldsValidation = {
@@ -295,7 +280,37 @@ const useForms = () => {
     description: localizedTextsFieldsInitValues,
     slug: '',
     image: '',
-  }
+  };
+
+  const landingFieldsValidation = {
+    name: Yup.object().shape(localizedTextsFieldsValidation),
+    description: Yup.object().shape(localizedTextsFieldsValidation),
+    slug: Yup
+      .string()
+      .min(1)
+      .required(),
+  };
+
+  const landingFieldsInitValues = {
+    name: localizedTextsFieldsInitValues,
+    description: localizedTextsFieldsInitValues,
+    slug: '',
+  };
+
+  const productFieldsValidation = {
+    categoryId: Yup
+      .number()
+      .min(0)
+      .required(),
+    name: Yup.object().shape(localizedTextsFieldsValidation),
+    description: Yup.object().shape(localizedTextsFieldsValidation),
+  };
+
+  const productFieldsInitValues = {
+    categoryId: 0,
+    name: localizedTextsFieldsInitValues,
+    description: localizedTextsFieldsInitValues,
+  };
 
   const inventoryFieldsValidation = {
     sku: Yup
@@ -476,16 +491,23 @@ const useForms = () => {
     currency: orderFieldsValidation.currency,
   });
 
-  const manageProductFormValidation = Yup.object().shape({
-    categoryId: productFieldsValidation.categoryId,
-    name: productFieldsValidation.name,
-    description: productFieldsValidation.description,
-  });
-
   const manageCategoryFormValidation = Yup.object().shape({
     name: categoryFieldsValidation.name,
     description: categoryFieldsValidation.description,
     slug: categoryFieldsValidation.slug,
+    image: categoryFieldsValidation.image,
+  });
+
+  const manageLandingFormValidation = Yup.object().shape({
+    name: landingFieldsValidation.name,
+    description: landingFieldsValidation.description,
+    slug: landingFieldsValidation.slug,
+  });
+
+  const manageProductFormValidation = Yup.object().shape({
+    categoryId: productFieldsValidation.categoryId,
+    name: productFieldsValidation.name,
+    description: productFieldsValidation.description,
   });
 
   const manageInventoryFormValidation = Yup.object().shape({
@@ -579,8 +601,9 @@ const useForms = () => {
     couponFieldsInitValues,
     reviewFieldsInitValues,
     emailsFieldsInitValues,
-    productFieldsInitValues,
     categoryFieldsInitValues,
+    landingFieldsInitValues,
+    productFieldsInitValues,
     inventoryFieldsInitValues,
     discountFieldsInitValues,
     packFieldsInitValues,
@@ -602,8 +625,9 @@ const useForms = () => {
     createFailedOrderProductFormValidation,
     sendOrderEmailFormValidation,
     sendFailedOrderEmailFormValidation,
-    manageProductFormValidation,
     manageCategoryFormValidation,
+    manageLandingFormValidation,
+    manageProductFormValidation,
     manageInventoryFormValidation,
     manageDiscountFormValidation,
     managePackFormValidation,

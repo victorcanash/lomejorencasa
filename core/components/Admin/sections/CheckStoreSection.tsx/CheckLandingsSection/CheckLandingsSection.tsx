@@ -5,10 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import Typography from '@mui/material/Typography';
 import CreateIcon from '@mui/icons-material/Create';
 
+import { ManageActions } from '@core/constants/app';
 import type { CheckCategory } from '@core/types/admin';
 import type { Landing } from '@core/types/products';
 import Button from '@core/components/inputs/Button';
 import Divider from '@core/components/ui/Divider';
+import ManageLandingForm from '@core/components/forms/admin/ManageLandingForm';
 import CheckLandingsList from './CheckLandingsList';
 import CreateLandingSection from './CreateLandingSection';
 
@@ -75,19 +77,21 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
 
       { (!updateLanding && !createLanding) &&
         <CheckLandingsList
-          landings={checkCategory.landings}
+          checkCategory={checkCategory}
           onClickUpdateBtn={onClickUpdateBtn}
         />
       }
 
-      {/* (updateLanding && !createLanding) &&
-        <CreateLandingSection
+      {(updateLanding && !createLanding) &&
+        <ManageLandingForm
+          action={ManageActions.update}
+          category={checkCategory.category}
           landing={updateLanding}
           onSubmitSuccess={onSuccessUpdate}
           onDeleteSuccess={onSuccessDelete}
           onCancel={onCancel}
         />
-      */}
+      }
       { (!updateLanding && createLanding) &&
         <CreateLandingSection
           onSubmitSuccess={onSuccessCreate}

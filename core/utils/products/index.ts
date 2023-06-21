@@ -653,6 +653,68 @@ const deleteProductCategory = (token: string, currentLocale: string, productCate
 }
 
 // ADMIN
+export const manageLanding = (action: ManageActions, token: string, currentLocale: string, landing: Landing) => {
+  return new Promise<{landing: Landing}>(async (resolve, reject) => {
+    let promiseMW = createLanding;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Landing ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateLanding;
+      errorTitle = 'Update Landing ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteLanding;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Landing ERROR';
+    }
+
+    promiseMW(token, currentLocale, landing)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            landing: response.data.landing,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+const createLanding = (token: string, currentLocale: string, landing: Landing) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.post('/landings', landing, options);
+};
+
+const updateLanding = (token: string, currentLocale: string, landing: Landing) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.put(`/landings/${landing.id}`, landing, options);
+};
+
+const deleteLanding = (token: string, currentLocale: string, landing: Landing) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.delete(`/landings/${landing.id}`, options)
+}
+
+// ADMIN
 export const manageProduct = (action: ManageActions, token: string, currentLocale: string, product: Product) => {
   return new Promise<{product: Product}>(async (resolve, reject) => {
     let promiseMW = createProduct;
