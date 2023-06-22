@@ -56,13 +56,13 @@ const ManageProductForm = (props: ManageProductFormProps) => {
         onSubmitSuccess(newProduct);
       }
     } else if (action == ManageActions.update) {
-      manageProduct(action, newProduct, onSubmitSuccess);
+      manageProduct(action, landing, newProduct, onSubmitSuccess);
     }
   };
 
   const handleDeleteBtn = () => {
     if (product) {
-      manageProduct(ManageActions.delete, product, onDeleteSuccess);
+      manageProduct(ManageActions.delete, landing, product, onDeleteSuccess);
     }
   };
 

@@ -101,7 +101,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Create product model */}
-      { (landing && createProduct && !createPack && product && !pack) &&
+      { (landing && createProduct && !createPack && !product && !pack) &&
         <ManageProductForm
           action={ManageActions.create}
           category={category}
@@ -112,10 +112,10 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Create pack model */}
-      { (landing && !createProduct && createPack && !product && pack) &&
+      { (landing && !createProduct && createPack && !product && !pack) &&
         <ManagePPackForm
           action={ManageActions.create}
-          //category={category}
+          landing={landing}
           onSubmitSuccess={onSuccessCreatePack}
           onCancel={onCancelCreatePack}
         />

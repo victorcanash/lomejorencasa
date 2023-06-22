@@ -15,7 +15,14 @@ import { useSnackbar } from 'notistack';
 import { ManageActions } from '@core/constants/app';
 import { AdminSections } from '@core/constants/admin';
 import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin';
-import type { Landing, ManageProductCategory, ProductCategory, ProductCategoryGroup } from '@core/types/products';
+import type {
+  Landing,
+  ManageProductCategory,
+  Product,
+  ProductCategory,
+  ProductCategoryGroup,
+  ProductPack,
+} from '@core/types/products';
 import { getAllProductCategories } from '@core/utils/products';
 
 type ContextType = {
@@ -28,6 +35,8 @@ type ContextType = {
   onGetCategoryDetails: (landings: Landing[], categorySlug: string) => void,
   onManageProductCategory: (action: ManageActions, productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void,
   onManageLanding: (action: ManageActions, landing: Landing) => void,
+  onManageProduct: (action: ManageActions, landing: Landing, product: Product) => void,
+  onManageProductPack: (action: ManageActions, landing: Landing, pack: ProductPack) => void,
 };
 
 export const AdminContext = createContext<ContextType>({
@@ -40,6 +49,8 @@ export const AdminContext = createContext<ContextType>({
   onGetCategoryDetails: () => {},
   onManageProductCategory: () => {},
   onManageLanding: () => {},
+  onManageProduct: () => {},
+  onManageProductPack: () => {},
 });
 
 export const useAdminContext = () => {
@@ -344,6 +355,60 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const onManageProduct = (action: ManageActions, landing: Landing, product: Product) => {
+    let landingProducts = landing.products;
+    switch (action) {
+      case ManageActions.create:
+        landingProducts.push(product);
+        break;
+      case ManageActions.update:
+        landingProducts = landingProducts.map((landingProduct) => {
+          if (landingProduct.id === product.id) {
+            return product;
+          }
+          return landingProduct;
+        });
+        break;
+      case ManageActions.delete:
+        landingProducts = landingProducts.filter(landingProduct => landingProduct.id !== product.id);
+        break;
+    };
+    onManageLanding(
+      ManageActions.update,
+      {
+        ...landing,
+        products: landingProducts,
+      }
+    );
+  };
+
+  const onManageProductPack = (action: ManageActions, landing: Landing, pack: ProductPack) => {
+    let landingPacks = landing.packs;
+    switch (action) {
+      case ManageActions.create:
+        landingPacks.push(pack);
+        break;
+      case ManageActions.update:
+        landingPacks = landingPacks.map((landingPack) => {
+          if (landingPack.id === pack.id) {
+            return pack;
+          }
+          return landingPack;
+        });
+        break;
+      case ManageActions.delete:
+        landingPacks = landingPacks.filter(landingPack => landingPack.id !== pack.id);
+        break;
+    };
+    onManageLanding(
+      ManageActions.update,
+      {
+        ...landing,
+        packs: landingPacks,
+      }
+    );
+  };
+
   const getCategories = useCallback(async () => {
     await getAllProductCategories(true, true)
       .then((response) => {
@@ -414,6 +479,8 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         onGetCategoryDetails,
         onManageProductCategory,
         onManageLanding,
+        onManageProduct,
+        onManageProductPack,
       }}
     >
       {children}

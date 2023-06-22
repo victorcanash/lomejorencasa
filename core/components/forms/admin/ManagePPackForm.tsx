@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 
 import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
-import type { ProductPack } from '@core/types/products';
+import type { ProductPack, Landing } from '@core/types/products';
 import Button from '@core/components/inputs/Button';
 
 import useForms from '@core/hooks/useForms';
@@ -18,6 +18,7 @@ import ManagePPackInventoryForm from '@core/components/forms/admin/ManagePPackIn
 
 type ManagePPackFormProps = {
   action: ManageActions.create | ManageActions.update,
+  landing: Landing,
   productPack?: ProductPack,
   onSubmitSuccess?: (productPack: ProductPack) => void,
   onDeleteSuccess?: () => void,
@@ -27,6 +28,7 @@ type ManagePPackFormProps = {
 const ManagePPackForm = (props: ManagePPackFormProps) => {
   const { 
     action,
+    landing,
     productPack,
     onSubmitSuccess, 
     onDeleteSuccess,
@@ -38,30 +40,35 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
   const { managePackFormValidation, packFieldsInitValues } = useForms();
   const { manageProductPack, errorMsg, successMsg } = useAdminStore();
 
-  const [inventoryIds, setInventoryIds] = useState<number[]>(productPack?.inventoriesIds || []);
+  const [inventoriesIds, setInventoriesIds] = useState<number[]>(productPack?.inventoriesIds || []);
 
   const onSuccessCreatePackInventory = (inventoryId: number) => {
-    setInventoryIds(current => [...current, inventoryId]);
+    setInventoriesIds(current => [...current, inventoryId]);
   };
 
   const onClickDeletePackInventoryBtn = (deleteIndex: number) => {
-    setInventoryIds(
-      inventoryIds.filter((_item, index) => index !== deleteIndex)
+    setInventoriesIds(
+      inventoriesIds.filter((_item, index) => index !== deleteIndex)
     );
   };
 
   const handleSubmit = async (values: ProductPack) => {
-    if (inventoryIds && inventoryIds.length > 0) {
-      manageProductPack(action, {
-        ...values,
-        inventoriesIds: inventoryIds,
-      }, onSubmitSuccess);
+    const newPack = {
+      ...values,
+      inventoriesIds: inventoriesIds,
+    } as ProductPack;
+    if (action === ManageActions.create) {
+      if (onSubmitSuccess) {
+        onSubmitSuccess(newPack);
+      }
+    } else if (action == ManageActions.update) {
+      manageProductPack(action, landing, newPack, onSubmitSuccess);
     }
   };
 
   const handleDeleteBtn = () => {
     if (productPack) {
-      manageProductPack(ManageActions.delete, productPack, onDeleteSuccess);
+      manageProductPack(ManageActions.delete, landing, productPack, onDeleteSuccess);
     }
   };
 
@@ -78,14 +85,14 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
       <BaseForm
         maxWidth={maxWidth}
         initialValues={{
+          ...productPack,
           id: productPack?.id || -1,
+          landingId: productPack?.landingId || landing.id,
           name: productPack?.name || packFieldsInitValues.name,
           description: productPack?.description || packFieldsInitValues.description,
           price: productPack?.price || packFieldsInitValues.price,
-          quantity: productPack?.quantity || 0,
-          originalPrice: productPack?.originalPrice || 0,
-          inventories: productPack?.inventories || [],
-          inventoriesIds: productPack?.inventoriesIds || [],
+          image: productPack?.image || packFieldsInitValues.image,
+          metaId: productPack?.metaId || packFieldsInitValues.metaId,
         } as ProductPack}
         validationSchema={managePackFormValidation}
         enableReinitialize={true}
@@ -125,7 +132,15 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
                   value: '€',
                   position: 'end',
                 },
-              }
+              },
+              {
+                name: 'image',
+                type: FormFieldTypes.text,
+              },
+              {
+                name: 'metaId',
+                type: FormFieldTypes.text,
+              },
             ],
           }
         ]}
@@ -136,6 +151,7 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
                 'forms.createPack.successBtn' : 'forms.updatePack.successBtn',
             },
             onSubmit: handleSubmit,
+            disabled: (inventoriesIds.length < 1),
           },
           delete: action == ManageActions.update ? 
             { 
@@ -164,7 +180,7 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
       <ManagePPackInventoryForm
         onSubmitSuccess={onSuccessCreatePackInventory}
       />
-      { inventoryIds && inventoryIds.length > 0 &&
+      { inventoriesIds && inventoriesIds.length > 0 &&
         <Box
           sx={{
             maxWidth: maxWidth,
@@ -177,7 +193,7 @@ const ManagePPackForm = (props: ManagePPackFormProps) => {
             })}:`}
           </Typography>
           <Grid container spacing={1} pt={2} pb={5}>
-            { inventoryIds.map((item, index) => (
+            { inventoriesIds.map((item, index) => (
               <Grid item xs={6} sm={4} key={index}>
                 <Typography component="div" variant="body1">
                   {`${intl.formatMessage({ id: "forms.inventoryId" })}: ${item}`}

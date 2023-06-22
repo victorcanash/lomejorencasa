@@ -356,12 +356,20 @@ const useForms = () => {
       .number()
       .min(0)
       .required(),
+    image: Yup
+      .string()
+      .min(1),
+    metaId: Yup
+      .string()
+      .min(1),
   };
 
   const packFieldsInitValues = {
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
     price: 0,
+    image: '',
+    metaId: '',
   };
 
   const packInventoryFieldsValidation = {
@@ -523,6 +531,8 @@ const useForms = () => {
     name: packFieldsValidation.name,
     description: packFieldsValidation.description,
     price: packFieldsValidation.price,
+    image: packFieldsValidation.image,
+    metaId: packFieldsValidation.metaId,
   });
 
   const managePackInventoryFormValidation = Yup.object().shape({

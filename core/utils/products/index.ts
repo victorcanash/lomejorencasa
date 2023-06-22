@@ -791,6 +791,67 @@ const deleteProduct = (token: string, currentLocale: string, product: Product) =
   return axios.delete(`/products/${product.id}`, options)
 }
 
+export const manageProductPack = (action: ManageActions, token: string, currentLocale: string, productPack: ProductPack) => {
+  return new Promise<{productPack: ProductPack}>(async (resolve, reject) => {
+    let promiseMW = createProductPack;
+    let successStatus = StatusCodes.CREATED;
+    let errorTitle = 'Create Product Pack ERROR';
+    if (action == ManageActions.update) {
+      promiseMW = updateProductPack;
+      errorTitle = 'Update Product Pack ERROR';
+    } else if (action == ManageActions.delete) {
+      promiseMW = deleteProductPack;
+      successStatus = StatusCodes.OK;
+      errorTitle = 'Delete Product Pack ERROR';
+    }
+
+    promiseMW(token, currentLocale, productPack)
+      .then(async (response: AxiosResponse) => {
+        if (response.status === successStatus) {
+          resolve({
+            productPack: response.data.productPack,
+          });
+        } else {
+          throw new Error('Something went wrong');
+        }
+      }).catch((error) => {
+        const errorMsg = getBackendErrorMsg(errorTitle, error);
+        logBackendError(errorMsg)
+        reject(new Error(errorMsg));
+      }); 
+  });
+};
+
+const createProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.post('/product-packs', productPack, options);
+};
+
+const updateProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.put(`/product-packs/${productPack.id}`, productPack, options);
+};
+
+const deleteProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
+  const options: AxiosRequestConfig = {
+    headers: {
+      ...getAuthHeaders(token),
+      ...getLanguageHeaders(currentLocale),
+    },
+  };
+  return axios.delete(`/product-packs/${productPack.id}`, options)
+};
+
 export const manageProductInventory = (action: ManageActions, token: string, currentLocale: string, productInventory: ProductInventory) => {
   return new Promise<{productInventory: ProductInventory}>(async (resolve, reject) => {
     let promiseMW = createProductInventory;
@@ -911,65 +972,4 @@ const deleteProductDiscount = (token: string, currentLocale: string, productDisc
     },
   };
   return axios.delete(`/product-discounts/${productDiscount.id}`, options)
-};
-
-export const manageProductPack = (action: ManageActions, token: string, currentLocale: string, productPack: ProductPack) => {
-  return new Promise<{productPack: ProductPack}>(async (resolve, reject) => {
-    let promiseMW = createProductPack;
-    let successStatus = StatusCodes.CREATED;
-    let errorTitle = 'Create Product Pack ERROR';
-    if (action == ManageActions.update) {
-      promiseMW = updateProductPack;
-      errorTitle = 'Update Product Pack ERROR';
-    } else if (action == ManageActions.delete) {
-      promiseMW = deleteProductPack;
-      successStatus = StatusCodes.OK;
-      errorTitle = 'Delete Product Pack ERROR';
-    }
-
-    promiseMW(token, currentLocale, productPack)
-      .then(async (response: AxiosResponse) => {
-        if (response.status === successStatus) {
-          resolve({
-            productPack: response.data.productPack,
-          });
-        } else {
-          throw new Error('Something went wrong');
-        }
-      }).catch((error) => {
-        const errorMsg = getBackendErrorMsg(errorTitle, error);
-        logBackendError(errorMsg)
-        reject(new Error(errorMsg));
-      }); 
-  });
-};
-
-const createProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      ...getAuthHeaders(token),
-      ...getLanguageHeaders(currentLocale),
-    },
-  };
-  return axios.post('/product-packs', productPack, options);
-};
-
-const updateProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      ...getAuthHeaders(token),
-      ...getLanguageHeaders(currentLocale),
-    },
-  };
-  return axios.put(`/product-packs/${productPack.id}`, productPack, options);
-};
-
-const deleteProductPack = (token: string, currentLocale: string, productPack: ProductPack) => {
-  const options: AxiosRequestConfig = {
-    headers: {
-      ...getAuthHeaders(token),
-      ...getLanguageHeaders(currentLocale),
-    },
-  };
-  return axios.delete(`/product-packs/${productPack.id}`, options)
 };

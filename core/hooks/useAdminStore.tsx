@@ -36,6 +36,8 @@ const useAdminStore = () => {
     onGetCategoryDetails,
     onManageProductCategory,
     onManageLanding,
+    onManageProduct,
+    onManageProductPack,
   } = useAdminContext();
 
   const intl = useIntl();
@@ -147,7 +149,6 @@ const useAdminStore = () => {
 
   const manageProduct = async (
     action: ManageActions,
-    productCategory: ProductCategory,
     landing: Landing,
     product: Product,
     onSuccess?: (product: Product) => void
@@ -159,7 +160,6 @@ const useAdminStore = () => {
       .then((response) => {
         onManageProductSuccess(
           action,
-          productCategory,
           landing,
           response.product ? {
             ...product,
@@ -175,17 +175,56 @@ const useAdminStore = () => {
 
   const onManageProductSuccess = (
     action: ManageActions,
-    productCategory: ProductCategory,
     landing: Landing,
     product: Product,
     onSuccess?: (product: Product) => void
   ) => {
-
+    onManageProduct(action, landing, product);
     if (onSuccess) {
       onSuccess(product);
     }
     setLoading(false);
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateProduct' }));
+  };
+
+  const manageProductPack = async (
+    action: ManageActions,
+    landing: Landing,
+    productPack: ProductPack,
+    onSuccess?: (productPack: ProductPack) => void
+  ) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    manageProductPackMW(action, token, intl.locale, productPack)
+      .then((response) => {
+        onManageProductPackSuccess(
+          action,
+          landing,
+          response.productPack ? {
+            ...productPack,
+            ...response.productPack,
+          } : productPack,
+          onSuccess
+        );
+      }).catch((error: Error) => {
+        setErrorMsg(error.message);
+        setLoading(false);
+      });
+  };
+
+  const onManageProductPackSuccess = (
+    action: ManageActions,
+    landing: Landing,
+    productPack: ProductPack,
+    onSuccess?: (productPack: ProductPack) => void
+  ) => {
+    onManageProductPack(action, landing, productPack);
+    if (onSuccess) {
+      onSuccess(productPack);
+    }
+    setLoading(false);
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePPack' }));
   };
 
   /*const createProduct = async (
@@ -319,35 +358,14 @@ const deleteProduct = async (
     }
   };
 
-  const manageProductPack = async (action: ManageActions, productPack: ProductPack, onSuccess?: (productPack: ProductPack) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    manageProductPackMW(action, token, intl.locale, productPack)
-      .then((response: {productPack: ProductPack}) => {
-        onManagePPackSuccess(response.productPack, onSuccess);
-      }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
-
-  const onManagePPackSuccess = (productPack: ProductPack, onSuccess?: (productPack: ProductPack) => void) => {
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePPack' }));
-    if (onSuccess) {
-      onSuccess(productPack);
-    }
-  };
-
   return {
     getCategoryDetails,
     manageProductCategory,
     manageLanding,
     manageProduct,
+    manageProductPack,
     manageProductInventory,
     manageProductDiscount,
-    manageProductPack,
     errorMsg,
     successMsg,
   };
