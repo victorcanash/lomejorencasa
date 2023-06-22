@@ -85,7 +85,6 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
       {(updateLanding && !createLanding) &&
         <ManageLandingForm
           action={ManageActions.update}
-          category={checkCategory.category}
           landing={updateLanding}
           onSubmitSuccess={onSuccessUpdate}
           onDeleteSuccess={onSuccessDelete}

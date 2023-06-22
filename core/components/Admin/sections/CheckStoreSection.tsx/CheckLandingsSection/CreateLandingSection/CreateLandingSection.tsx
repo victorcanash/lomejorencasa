@@ -66,7 +66,6 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       { (!landing) &&
         <ManageLandingForm
           action={ManageActions.create}
-          category={category}
           onSubmitSuccess={onSuccessCreateLanding}
           onCancel={onCancel}
         />

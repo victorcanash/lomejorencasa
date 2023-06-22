@@ -8,14 +8,13 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { ManageActions } from '@core/constants/app';
 import { FormFieldTypes } from '@core/constants/forms';
-import type { Landing, ProductCategory } from '@core/types/products';
+import type { Landing } from '@core/types/products';
 import useForms from '@core/hooks/useForms';
 import useAdminStore from '@core/hooks/useAdminStore';
 import BaseForm from '@core/components/forms/BaseForm';
 
 type ManageLandingFormProps = {
   action: ManageActions.create | ManageActions.update,
-  category: ProductCategory,
   landing?: Landing,
   onSubmitSuccess?: (landing: Landing) => void,
   onDeleteSuccess?: () => void,
@@ -25,7 +24,6 @@ type ManageLandingFormProps = {
 const ManageLandingForm = (props: ManageLandingFormProps) => {
   const { 
     action,
-    category,
     landing,
     onSubmitSuccess,
     onDeleteSuccess,
@@ -50,13 +48,13 @@ const ManageLandingForm = (props: ManageLandingFormProps) => {
         onSubmitSuccess(newLanding);
       }
     } else if (action == ManageActions.update) {
-      manageLanding(action, category, newLanding, onSubmitSuccess);
+      manageLanding(action, newLanding, onSubmitSuccess);
     }
   };
 
   const handleDeleteBtn = () => {
     if (landing) {
-      manageLanding(ManageActions.delete, category, landing, onDeleteSuccess);
+      manageLanding(ManageActions.delete, landing, onDeleteSuccess);
     }
   };
 

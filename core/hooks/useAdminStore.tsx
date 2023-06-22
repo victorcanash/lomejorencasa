@@ -109,7 +109,6 @@ const useAdminStore = () => {
 
   const manageLanding = async (
     action: ManageActions,
-    category: ProductCategory,
     landing: Landing,
     onSuccess?: (landing: Landing) => void
   ) => {
@@ -118,7 +117,15 @@ const useAdminStore = () => {
     setSuccessMsg('');
     manageLandingMW(action, token, intl.locale, landing)
       .then((response) => {
-        onManageLandingSuccess(action, category, response.landing || landing, onSuccess);
+        onManageLandingSuccess(
+          action,
+          response.landing ?
+            {
+              ...landing,
+              ...response.landing,
+            } : landing,
+          onSuccess
+        );
       }).catch((error: Error) => {
         setErrorMsg(error.message);
         setLoading(false);
@@ -127,11 +134,10 @@ const useAdminStore = () => {
 
   const onManageLandingSuccess = (
     action: ManageActions,
-    category: ProductCategory,
     landing: Landing,
     onSuccess?: (landing: Landing) => void
   ) => {
-    onManageLanding(action, category, landing);
+    onManageLanding(action, landing);
     if (onSuccess) {
       onSuccess(landing);
     }
@@ -141,6 +147,8 @@ const useAdminStore = () => {
 
   const manageProduct = async (
     action: ManageActions,
+    productCategory: ProductCategory,
+    landing: Landing,
     product: Product,
     onSuccess?: (product: Product) => void
   ) => {
@@ -149,7 +157,16 @@ const useAdminStore = () => {
     setSuccessMsg('');
     manageProductMW(action, token, intl.locale, product)
       .then((response) => {
-        onManageProductSuccess(action, response.product || product, onSuccess);
+        onManageProductSuccess(
+          action,
+          productCategory,
+          landing,
+          response.product ? {
+            ...product,
+            ...response.product,
+          } : product,
+          onSuccess
+        );
       }).catch((error: Error) => {
         setErrorMsg(error.message);
         setLoading(false);
@@ -158,9 +175,12 @@ const useAdminStore = () => {
 
   const onManageProductSuccess = (
     action: ManageActions,
+    productCategory: ProductCategory,
+    landing: Landing,
     product: Product,
     onSuccess?: (product: Product) => void
   ) => {
+
     if (onSuccess) {
       onSuccess(product);
     }

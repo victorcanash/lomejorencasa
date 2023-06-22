@@ -27,7 +27,7 @@ type ContextType = {
   getLandingsByCategorySlug: (slug: string) => Landing[],
   onGetCategoryDetails: (landings: Landing[], categorySlug: string) => void,
   onManageProductCategory: (action: ManageActions, productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void,
-  onManageLanding: (action: ManageActions, category: ProductCategory, landing: Landing) => void,
+  onManageLanding: (action: ManageActions, landing: Landing) => void,
 };
 
 export const AdminContext = createContext<ContextType>({
@@ -133,8 +133,8 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
                   ...checkCategoryGroup.checkCategories,
                   {
                     category: productCategory as ProductCategory,
-                    landings: []
-                  }
+                    landings: [],
+                  },
                 ]
                 :
                 checkCategoryGroup.checkCategories,
@@ -204,16 +204,36 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const onManageLanding = (action: ManageActions, category: ProductCategory, landing: Landing) => {
+  const onManageLanding = (action: ManageActions, landing: Landing) => {
+    const categoriesIds: number[] = [];
+    landing.products.forEach((product) => {
+      product.categories?.forEach((category) => {
+        categoriesIds.push(category.id);
+      });
+    });
+    landing.packs.forEach((pack) => {
+      pack.inventories.forEach((inventory) => {
+        inventory.product.categories?.forEach((category) => {
+          categoriesIds.push(category.id);
+        });
+      });
+    });
+
     switch (action) {
       case ManageActions.create:
         const newCreateCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
           return {
             ...checkCategoryGroup,
             checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
+              let existsCategory = false;
+              categoriesIds.forEach((categoryId) => {
+                if (checkCategory.category.id === categoryId) {
+                  existsCategory = true;
+                }
+              });
               return {
                 ...checkCategory,
-                landings: checkCategory.category.id === category.id ?
+                landings: existsCategory ?
                   [
                     ...checkCategory.landings,
                     landing,
@@ -223,9 +243,15 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           };
         });
         const newCreateCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
+          let existsCategory = false;
+          categoriesIds.forEach((categoryId) => {
+            if (checkCategory.category.id === categoryId) {
+              existsCategory = true;
+            }
+          });
           return {
             ...checkCategory,
-            landings: checkCategory.category.id === category.id ?
+            landings: existsCategory ?
               [
                 ...checkCategory.landings,
                 landing,
@@ -240,9 +266,15 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           return {
             ...checkCategoryGroup,
             checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
+              let existsCategory = false;
+              categoriesIds.forEach((categoryId) => {
+                if (checkCategory.category.id === categoryId) {
+                  existsCategory = true;
+                }
+              });
               return {
                 ...checkCategory,
-                landings: checkCategory.category.id === category.id ?
+                landings: existsCategory ?
                   checkCategory.landings.map((landingItem) => {
                     if (landingItem.id === landing.id) {
                       return {...landingItem, landing};
@@ -254,9 +286,15 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           };
         });
         const newUpdateCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
+          let existsCategory = false;
+          categoriesIds.forEach((categoryId) => {
+            if (checkCategory.category.id === categoryId) {
+              existsCategory = true;
+            }
+          });
           return {
             ...checkCategory,
-            landings: checkCategory.category.id === category.id ?
+            landings: existsCategory ?
               checkCategory.landings.map((landingItem) => {
                 if (landingItem.id === landing.id) {
                   return {...landingItem, landing};
@@ -273,18 +311,30 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
           return {
             ...checkCategoryGroup,
             checkCategories: checkCategoryGroup.checkCategories.map((checkCategory) => {
+              let existsCategory = false;
+              categoriesIds.forEach((categoryId) => {
+                if (checkCategory.category.id === categoryId) {
+                  existsCategory = true;
+                }
+              });
               return {
                 ...checkCategory,
-                landings: checkCategory.category.id === category.id ?
+                landings: existsCategory ?
                   checkCategory.landings.filter((landingItem) => landingItem.id !== landing.id) : checkCategory.landings,
               };
             }),
           };
         });
         const newDeleteCategoriesWithoutGroup = checkCategoriesWithoutGroup.map((checkCategory) => {
+          let existsCategory = false;
+          categoriesIds.forEach((categoryId) => {
+            if (checkCategory.category.id === categoryId) {
+              existsCategory = true;
+            }
+          });
           return {
             ...checkCategory,
-            landings: checkCategory.category.id === category.id ?
+            landings: existsCategory ?
               checkCategory.landings.filter((landingItem) => landingItem.id !== landing.id) : checkCategory.landings,
           };
         });
