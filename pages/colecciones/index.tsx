@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
 
+import { CollectionsPageProps, getCollectionsStaticProps } from '@core/staticPages/collections';
 import { PageTypes } from '@core/constants/navigation';
-
 import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 import CategoryList from '@core/components/CategoryList';
 
-const CollectionsPage: NextPage = () => {
+const CollectionsPage: NextPage<CollectionsPageProps> = (props) => {
   const page = usePage();
 
   return (
@@ -26,12 +26,15 @@ const CollectionsPage: NextPage = () => {
           },
         }}
       />
-      
+
       <CategoryList
         type="collectionsPage"
+        categories={props.categories}
       />
     </>
   );
 };
 
 export default CollectionsPage;
+
+export const getStaticProps = getCollectionsStaticProps;

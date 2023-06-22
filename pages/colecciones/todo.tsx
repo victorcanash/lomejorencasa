@@ -1,11 +1,12 @@
 import type { NextPage } from 'next';
 
+import { ProductsPageProps, getProductsStaticProps } from '@core/staticPages/products';
 import { PageTypes } from '@core/constants/navigation';
 import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
 import LandingList from '@core/components/LandingList';
 
-const ProductsPage: NextPage = () => {
+const ProductsPage: NextPage<ProductsPageProps> = (props) => {
   const page = usePage();
 
   return (
@@ -21,6 +22,7 @@ const ProductsPage: NextPage = () => {
 
       <LandingList
         type="collectionsPage"
+        landings={props.landings}
         title={{
           id: 'products.h1',
         }}
@@ -30,3 +32,5 @@ const ProductsPage: NextPage = () => {
 };
 
 export default ProductsPage;
+
+export const getStaticProps = getProductsStaticProps;

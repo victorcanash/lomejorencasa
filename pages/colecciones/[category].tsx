@@ -7,34 +7,28 @@ import {
 } from '@core/staticPages/category';
 import { PageTypes } from '@core/constants/navigation';
 import usePage from '@core/hooks/usePage';
-import useCategoryPage from '@core/hooks/useCategoryPage';
 import PageHeader from '@core/components/pages/PageHeader';
 import LandingList from '@core/components/LandingList';
 
 const CategoryPage: NextPage<CategoryPageProps> = (props) => {
-  const { path } = props;
-
   const page = usePage();
-  const { categoryModel, categoryConfig } = useCategoryPage(path);
 
   return (
     <>
       <PageHeader
         pageType={PageTypes.main}
         metas={{
-          titleAdd: categoryConfig?.metas.title || path,
-          descriptionAdd: categoryConfig?.metas.title || path,
+          titleAdd: props.category.name.current,
+          descriptionAdd: props.category.description.current,
         }}
         marginTop={true}
       />
 
-      { (categoryModel && categoryConfig) &&
-        <LandingList
-          type="collectionsPage"
-          categoryModel={categoryModel}
-          categoryConfig={categoryConfig}
-        />
-      }
+      <LandingList
+        type="collectionsPage"
+        category={props.category}
+        landings={props.landings}
+      />
     </>
   );
 };
