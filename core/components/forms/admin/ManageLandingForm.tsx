@@ -148,7 +148,6 @@ const ManageLandingForm = (props: ManageLandingFormProps) => {
                 'forms.createProduct.successBtn' : 'forms.updateProduct.successBtn',
             },
             onSubmit: handleSubmit,
-            disabled: (images.length < 1 || tutorialSources.length < 1),
           },
           delete: action == ManageActions.update ? 
             { 

@@ -10,7 +10,6 @@ type ManagePInventoryFormProps = {
   action: ManageActions.create | ManageActions.update,
   product: Product,
   productInventory?: ProductInventory,
-  manageOnSubmit: boolean,
   onSubmitSuccess?: (productInventory: ProductInventory) => void,
   onDeleteSuccess?: () => void,
   onCancel?: () => void,
@@ -21,7 +20,6 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
     action, 
     product, 
     productInventory,
-    manageOnSubmit, 
     onSubmitSuccess, 
     onDeleteSuccess,
     onCancel,
@@ -31,12 +29,12 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
   const { manageProductInventory, errorMsg, successMsg } = useAdminStore();
 
   const handleSubmit = async (values: ProductInventory) => {
-    if (manageOnSubmit) {
-      manageProductInventory(action, values, onSubmitSuccess);
-    } else {
+    if (action == ManageActions.create) {
       if (onSubmitSuccess) {
         onSubmitSuccess(values);
       }
+    } else if (action == ManageActions.update) {
+      manageProductInventory(action, values, onSubmitSuccess);
     }
   };
 
@@ -55,6 +53,7 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
   return (
     <BaseForm 
       initialValues={{
+        ...productInventory,
         id: productInventory?.id || -1,
         productId: product.id,
         sku: productInventory?.sku || inventoryFieldsInitValues.sku,
@@ -62,15 +61,8 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
         description: productInventory?.description || inventoryFieldsInitValues.description,
         price: productInventory?.price || inventoryFieldsInitValues.price,
         quantity: productInventory?.quantity || inventoryFieldsInitValues.quantity,
-        realPrice: productInventory?.realPrice || 0,
-        bigbuy: {
-          id: productInventory?.bigbuy.id || '',
-          name: productInventory?.bigbuy.name || '',
-          description: productInventory?.bigbuy.description || '',
-          price: productInventory?.bigbuy.price || 0,
-          quantity: productInventory?.bigbuy.quantity || 0,
-        },
-        product: productInventory?.product || {} as Product,
+        image: productInventory?.image || inventoryFieldsInitValues.image,
+        metaId: productInventory?.metaId || inventoryFieldsInitValues.metaId,
       } as ProductInventory}
       validationSchema={manageInventoryFormValidation}
       enableReinitialize={true}
@@ -85,7 +77,6 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
               name: 'sku',
               type: FormFieldTypes.text,
               required: true,
-              autoFocus: true,
             },
             {
               name: 'name.en',
@@ -120,7 +111,15 @@ const ManagePInventoryForm = (props: ManagePInventoryFormProps) => {
               name: 'quantity',
               type: FormFieldTypes.numeric,
               required: true,
-            }
+            },
+            {
+              name: 'image',
+              type: FormFieldTypes.text,
+            },
+            {
+              name: 'metaId',
+              type: FormFieldTypes.text,
+            },
           ],
         }
       ]}

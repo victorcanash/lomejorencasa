@@ -109,6 +109,70 @@ const useAdminStore = () => {
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePCategory' }));
   };
 
+  const createLanding = async (
+    landing: Landing,
+    product?: Product,
+    productPack?: ProductPack,
+    onSuccess?: (landing: Landing) => void
+  ) => {
+    setLoading(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+    let newLanding: Landing | undefined = undefined;
+    let newProduct: Product | undefined = undefined;
+    let newProductPack: ProductPack | undefined = undefined;
+
+    try {
+      newLanding = await (await manageLandingMW(ManageActions.create, token, intl.locale, landing)).landing;
+
+      if (product) {
+        product.landingId = newLanding.id;
+        newProduct = await (await manageProductMW(ManageActions.create, token, intl.locale, product)).product;
+        if (product.inventories && product.inventories.length > 0) {
+          newProduct.inventories = [];
+          for (const inventory of product.inventories) {
+            inventory.productId = newProduct.id;
+            newProduct.inventories.push(await (await manageProductInventoryMW(ManageActions.create, token, intl.locale, inventory)).productInventory);
+          }
+        }
+        if (product.discounts && product.discounts.length > 0) {
+          newProduct.discounts = [];
+          for (const discount of product.discounts) {
+            discount.productId = newProduct.id;
+            newProduct.discounts.push(await (await manageProductDiscountMW(ManageActions.create, token, intl.locale, discount)).productDiscount);
+          }
+        }
+        newLanding.products = [newProduct];
+      } else if (productPack) {
+        productPack.landingId = newLanding.id;
+        newProductPack = await (await manageProductPackMW(ManageActions.create, token, intl.locale, productPack)).productPack;
+        newLanding.packs = [newProductPack];
+      }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (newLanding) {
+        await manageLandingMW(ManageActions.delete, token, intl.locale, landing);
+      }
+      setLoading(false);
+      setErrorMsg(error.message);
+      return;
+    }
+    onCreateLandingSuccess(newLanding, onSuccess);
+  };
+
+  const onCreateLandingSuccess = (
+    landing: Landing,
+    onSuccess?: (landing: Landing) => void
+  ) => {
+    onManageLanding(ManageActions.create, landing);
+    if (onSuccess) {
+      onSuccess(landing);
+    }
+    setLoading(false);
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createLanding' }));
+  };
+
   const manageLanding = async (
     action: ManageActions,
     landing: Landing,
@@ -227,95 +291,6 @@ const useAdminStore = () => {
     setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePPack' }));
   };
 
-  /*const createProduct = async (
-    product: Product,
-    inventories: ProductInventory[], 
-    discounts: ProductDiscount[],
-    onSuccess: () => void
-  ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    let productId = -1;
-
-    try {
-      productId = await (await manageProductMW(ManageActions.create, token, intl.locale, product)).product.id;
-      
-      for (const inventory of inventories) {
-        inventory.productId = productId;
-        await manageProductInventoryMW(ManageActions.create, token, intl.locale, inventory);
-      }
-
-      for (const discount of discounts) {
-        discount.productId = productId;
-        await manageProductDiscountMW(ManageActions.create, token, intl.locale, discount);
-      }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      if (productId > -1) {
-        product = { ...product, id: productId }
-        await manageProductMW(ManageActions.delete, token, intl.locale, product);
-      }
-      setLoading(false);
-      setErrorMsg(error.message);
-      return;
-    }
-
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createProduct' }));
-    onSuccess();
-  };
-
-  const updateProduct = async (
-    product: Product,
-    onSuccess?: (product: Product) => void
-  ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    let productResponse;
-
-    try {
-      productResponse = await (await manageProductMW(ManageActions.update, token, intl.locale, product)).product;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setErrorMsg(error.message);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateProduct' }));
-    if (onSuccess) {
-      onSuccess(product);
-    }
-  };
-
-const deleteProduct = async (
-  product: Product, 
-  onSuccess?: (product: Product) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-
-    try {
-      await manageProductMW(ManageActions.delete, token, intl.locale, product);
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setErrorMsg(error.message);
-      setLoading(false);
-      return;
-    }
-
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.deleteProduct' }));
-    if (onSuccess) {
-      onSuccess(product);
-    }
-  };*/
-
   const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
     setLoading(true);
     setErrorMsg('');
@@ -361,6 +336,7 @@ const deleteProduct = async (
   return {
     getCategoryDetails,
     manageProductCategory,
+    createLanding,
     manageLanding,
     manageProduct,
     manageProductPack,

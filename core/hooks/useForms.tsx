@@ -321,6 +321,12 @@ const useForms = () => {
       .number()
       .min(0)
       .required(),
+    image: Yup
+      .string()
+      .min(1),
+    metaId: Yup
+      .string()
+      .min(1),
   };
 
   const inventoryFieldsInitValues = {
@@ -329,6 +335,8 @@ const useForms = () => {
     description: localizedTextsFieldsInitValues,
     price: 0,
     quantity: 0,
+    image: '',
+    metaId: '',
   };
 
   const discountFieldsValidation = {
@@ -518,6 +526,8 @@ const useForms = () => {
     description: productFieldsValidation.description,
     price: inventoryFieldsValidation.price,
     quantity: inventoryFieldsValidation.quantity,
+    image: packFieldsValidation.image,
+    metaId: packFieldsValidation.metaId,
   });
 
   const manageDiscountFormValidation = Yup.object().shape({

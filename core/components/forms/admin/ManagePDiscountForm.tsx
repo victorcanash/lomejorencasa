@@ -10,7 +10,6 @@ type ManagePDiscountFormProps = {
   action: ManageActions.create | ManageActions.update,
   product: Product,
   productDiscount?: ProductDiscount,
-  manageOnSubmit: boolean,
   onSubmitSuccess?: (productDiscount: ProductDiscount) => void,
   onDeleteSuccess?: () => void,
   onCancel?: () => void,
@@ -21,7 +20,6 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
     action, 
     product, 
     productDiscount,
-    manageOnSubmit, 
     onSubmitSuccess, 
     onDeleteSuccess,
     onCancel,
@@ -31,12 +29,12 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
   const { manageProductDiscount, errorMsg, successMsg } = useAdminStore();
 
   const handleSubmit = async (values: ProductDiscount) => {
-    if (manageOnSubmit) {
-      manageProductDiscount(action, values, onSubmitSuccess);
-    } else {
+    if (action == ManageActions.create) {
       if (onSubmitSuccess) {
         onSubmitSuccess(values);
       }
+    } else if (action == ManageActions.update) {
+      manageProductDiscount(action, values, onSubmitSuccess);
     }
   };
 
@@ -55,6 +53,7 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
   return (
     <BaseForm 
       initialValues={{
+        ...productDiscount,
         id: productDiscount?.id || -1,
         productId: product.id,
         name: productDiscount?.name || discountFieldsInitValues.name,
@@ -75,7 +74,6 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
               name: 'name.en',
               type: FormFieldTypes.text,
               required: true,
-              autoFocus: true,
             },
             {
               name: 'name.es',

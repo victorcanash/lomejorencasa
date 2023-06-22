@@ -66,23 +66,24 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
       </Button>
       <Divider mt={1} mb={4} />
 
-      <Button
-        startIcon={<CreateIcon />}
-        onClick={() => onClickCreateBtn()}
-      >
-        <FormattedMessage
-          id="admin.createLandingBtn"
-        />
-      </Button>
-
       { (!updateLanding && !createLanding) &&
-        <CheckLandingsList
-          checkCategory={checkCategory}
-          onClickUpdateBtn={onClickUpdateBtn}
-        />
+        <>
+          <Button
+            startIcon={<CreateIcon />}
+            onClick={() => onClickCreateBtn()}
+          >
+            <FormattedMessage
+              id="admin.createLandingBtn"
+            />
+          </Button>
+          <CheckLandingsList
+            checkCategory={checkCategory}
+            onClickUpdateBtn={onClickUpdateBtn}
+          />
+        </>
       }
 
-      {(updateLanding && !createLanding) &&
+      { (updateLanding && !createLanding) &&
         <ManageLandingForm
           action={ManageActions.update}
           landing={updateLanding}
