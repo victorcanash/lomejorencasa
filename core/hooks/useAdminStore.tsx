@@ -89,7 +89,11 @@ const useAdminStore = () => {
     setSuccessMsg('');
     manageProductCategoryMW(action, token, intl.locale, productCategory)
       .then((response) => {
-        onManagePCategorySuccess(action, response.productCategory || productCategory, onSuccess);
+        onManagePCategorySuccess(
+          action,
+          response.productCategory || productCategory,
+          productCategory.isCategoryGroup || false,
+          onSuccess);
       }).catch((error: Error) => {
         setErrorMsg(error.message);
         setLoading(false);
@@ -99,9 +103,10 @@ const useAdminStore = () => {
   const onManagePCategorySuccess = (
     action: ManageActions,
     productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory,
+    isCategoryGroup: boolean,
     onSuccess?: (productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void
   ) => {
-    onManageProductCategory(action, productCategory);
+    onManageProductCategory(action, productCategory, isCategoryGroup);
     if (onSuccess) {
       onSuccess(productCategory);
     }

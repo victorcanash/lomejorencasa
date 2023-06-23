@@ -64,6 +64,7 @@ const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
         <ManagePCategoryForm
           action={ManageActions.update}
           productCategory={(updateCategory as CheckCategory)?.category || (updateCategory as CheckCategoryGroup).categoryGroup}
+          initIsCategoryGroup={(updateCategory as CheckCategory)?.category ? false : true}
           onSubmitSuccess={onSuccessUpdate}
           onDeleteSuccess={onSuccessDelete}
           onCancel={onCancel}

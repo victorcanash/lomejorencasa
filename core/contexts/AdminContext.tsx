@@ -33,7 +33,7 @@ type ContextType = {
   checkCategories: CheckCategory[],
   getLandingsByCategorySlug: (slug: string) => Landing[],
   onGetCategoryDetails: (landings: Landing[], categorySlug: string) => void,
-  onManageProductCategory: (action: ManageActions, productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void,
+  onManageProductCategory: (action: ManageActions, productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory, isCategoryGroup: boolean) => void,
   onManageLanding: (action: ManageActions, landing: Landing) => void,
   onManageProduct: (action: ManageActions, landing: Landing, product: Product) => void,
   onManageProductPack: (action: ManageActions, landing: Landing, pack: ProductPack) => void,
@@ -124,10 +124,10 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
     setCheckCategoriesWithoutGroup(newCategoriesWithoutGroup);
   };
 
-  const onManageProductCategory = (action: ManageActions, productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => {
+  const onManageProductCategory = (action: ManageActions, productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory, isCategoryGroup: boolean) => {
     switch (action) {
       case ManageActions.create:
-        if ((productCategory as ProductCategoryGroup)?.categories) {
+        if (isCategoryGroup) {
           setCheckCategoryGroups([
             ...checkCategoryGroups,
             {
@@ -198,7 +198,7 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
         setCheckCategoriesWithoutGroup(newCategoriesWithoutGroup);
         break;
       case ManageActions.delete:
-        if ((productCategory as ManageProductCategory)?.isCategoryGroup) {
+        if (isCategoryGroup) {
           setCheckCategoryGroups(checkCategoryGroups.filter(checkCategoryGroup => checkCategoryGroup.categoryGroup.slug !== productCategory.slug));
         } else if ((productCategory as ManageProductCategory)?.categoryGroupId) {
           const newCategoryGroups = checkCategoryGroups.map((checkCategoryGroup) => {
