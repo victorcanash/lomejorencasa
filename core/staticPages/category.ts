@@ -21,12 +21,14 @@ export const getCategoryStaticPaths: GetStaticPaths = async () => {
       categoriesGroups = response.productCategories;
     })
     .catch((error) => {
+      throw error;
     });
   await getAllProductCategories()
     .then((response) => {
       categories = response.productCategories;
     })
     .catch((error) => {
+      throw error;
     });
 
   const allCategories: (ProductCategoryGroup | ProductCategory)[] = categoriesGroups.concat(categories);
@@ -54,6 +56,7 @@ export const getCategoryStaticProps: GetStaticProps = async (context) => {
       landings = response.landingsResult.landings;
     })
     .catch((error) => {
+      throw error;
     });
 
   return {

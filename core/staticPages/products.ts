@@ -14,6 +14,7 @@ export const getProductsStaticProps: GetStaticProps = async () => {
       landings = response.landings;
     })
     .catch((error) => {
+      throw error;
     });
 
   return {

@@ -16,6 +16,7 @@ export const getHomeStaticProps: GetStaticProps = async () => {
       categoryGroups = response.productCategories;
     })
     .catch((error) => {
+      throw error;
     });
 
   let categoryFeatured: ProductCategory = {} as ProductCategory;
@@ -26,6 +27,7 @@ export const getHomeStaticProps: GetStaticProps = async () => {
       landingsFeatured = response.landingsResult.landings;
     })
     .catch((error) => {
+      throw error;
     });
 
   return {

@@ -19,6 +19,7 @@ export const getLandingStaticPaths: GetStaticPaths = async () => {
       landings = response.landings;
     })
     .catch((error) => {
+      throw error;
     });
 
   const paths = landings.map((landing) => {
@@ -43,6 +44,7 @@ export const getLandingStaticProps: GetStaticProps = async (context) => {
       landing = response.landing;
     })
     .catch((error) => {
+      throw error;
     });
 
   return {

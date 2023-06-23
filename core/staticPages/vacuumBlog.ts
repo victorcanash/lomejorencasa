@@ -16,12 +16,14 @@ export const getVacuumBlogStaticProps: GetStaticProps = async () => {
       landingVacuumMachine = response.landing;
     })
     .catch((error) => {
+      throw error;
     });
   await getLanding('bolsas-de-vacio-tm-electron')
     .then((response) => {
       landingVacuumBags = response.landing;
     })
     .catch((error) => {
+      throw error;
     });
 
   return {

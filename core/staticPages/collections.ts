@@ -14,6 +14,7 @@ export const getCollectionsStaticProps: GetStaticProps = async () => {
       categories = response.productCategories;
     })
     .catch((error) => {
+      throw error;
     });
 
   return {
