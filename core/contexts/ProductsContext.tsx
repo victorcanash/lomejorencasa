@@ -129,46 +129,6 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     };
   };
 
-  /*const setProductRating = useCallback((product: Product, rating: string, reviewsCount: number) => {
-    const oldLandings = [...landings.current];
-    let foundLanding: Landing | undefined = undefined;
-    let foundLandingIndex = -1;
-    for (let i = 0; i < oldLandings.length; i++) {
-      if (oldLandings[i].products.length > 0 && oldLandings[i].products[0].id === product.id) {
-        foundLanding = {...oldLandings[i]};
-        foundLandingIndex = i;
-        foundLanding.products[0].rating = rating;
-        foundLanding.products[0].reviewsCount = reviewsCount;
-        break;
-      }
-    }
-    if (!foundLanding) {
-      return;
-    }
-    oldLandings[foundLandingIndex] = foundLanding;
-    landings.current = [...oldLandings];
-  }, [landings]);
-
-  const setPackRating = useCallback((pack: ProductPack, rating: string, reviewsCount: number) => {
-    const oldLandings = [...landings.current];
-    let foundLanding: Landing | undefined = undefined;
-    let foundLandingIndex = -1;
-    for (let i = 0; i < oldLandings.length; i++) {
-      if (oldLandings[i].packs.length > 0 && oldLandings[i].packs[0].id === pack.id) {
-        foundLanding = {...oldLandings[i]};
-        foundLandingIndex = i;
-        foundLanding.packs[0].rating = rating;
-        foundLanding.packs[0].reviewsCount = reviewsCount;
-        break;
-      }
-    }
-    if (!foundLanding) {
-      return;
-    }
-    oldLandings[foundLandingIndex] = foundLanding;
-    landings.current = [...oldLandings];
-  }, [landings]);*/
-
   return (
     <ProductsContext.Provider
       value={{

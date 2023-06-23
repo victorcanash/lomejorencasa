@@ -17,15 +17,10 @@ import {
 import { uploadConfig } from '@lib/config/multimedia.config';
 import snackbarConfig from '@lib/config/snackbar.config';
 import { useAppContext } from '@core/contexts/AppContext';
-import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 
 const useReviews = () => {
   const { initialized, setLoading } = useAppContext();
-  const {
-    setProductRating,
-    setPackRating,
-  } = useProductsContext();
   const { token, isLogged } = useAuthContext();
 
   const intl = useIntl();
@@ -60,19 +55,6 @@ const useReviews = () => {
     ).then((response) => {
       setReviews([response.review, ...reviews]);
       setCurrentPage(1);
-      if (response.review.product) {
-        setProductRating(
-          response.review.product,
-          response.productRating.rating,
-          response.productRating.reviewsCount
-        );
-      } else if (response.review.pack) {
-        setPackRating(
-          response.review.pack,
-          response.productRating.rating,
-          response.productRating.reviewsCount
-        );
-      }
       scrollToSection('reviews', false);
       setLoading(false);
       enqueueSnackbar(
@@ -96,7 +78,7 @@ const useReviews = () => {
       setErrorMsg(errorMsg);
       setLoading(false);
     });
-  }, [enqueueSnackbar, intl, isLogged, reviews, setLoading, setPackRating, setProductRating, token]);
+  }, [enqueueSnackbar, intl, isLogged, reviews, setLoading, token]);
 
   const handleChangePage = useCallback((_event: React.ChangeEvent<unknown>, page: number) => {
     setCurrentPage(page);
