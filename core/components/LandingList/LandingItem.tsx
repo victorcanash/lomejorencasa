@@ -13,20 +13,12 @@ import AddIcon from '@mui/icons-material/Add';
 import type { Landing } from '@core/types/products';
 import { capitalizeFirstLetter } from '@core/utils/strings';
 import { convertElementToSx } from '@core/utils/themes';
-import {
-  getFirstLandingItem,
-  getLandingConfigById,
-  getLandingPathByConfig,
-  getProductPriceData,
-} from '@core/utils/products';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import useCart from '@core/hooks/useCart';
 import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 import ProductPrice from '@core/components/ProductPrice';
 
-import { pages } from '@lib/config/navigation.config';
-import { landingConfigs } from '@lib/config/inventory.config';
 import { themeCustomElements } from '@lib/config/theme/elements';
 
 type LandingItemProps = {
@@ -40,33 +32,15 @@ const LandingItem = (props: LandingItemProps) => {
 
   const {
     getItemImgUrl,
+    getItemPath,
+    getFirstLandingItem,
+    getProductPriceData,
   } = useProductsContext();
 
   const { addCartItem } = useCart(false);
 
-  const landingPath = useMemo(() => {
-    const landingConfig = getLandingConfigById(landing.id, landingConfigs);
-    if (landingConfig) {
-      return getLandingPathByConfig(landingConfig);
-    }
-    return pages.home.path;
-  }, [landing.id]);
-
   const landingName = useMemo(() => {
-    let name = landing.name?.current || '';
-    if (!name) {
-      const landingConfig = getLandingConfigById(landing.id, landingConfigs);
-      if (landingConfig) {
-        name = landingConfig.product?.name?.current ?
-          landingConfig.product.name.current : landingConfig.pack?.name?.current || '';
-      }
-    }
-    if (!name) {
-      const firstItem = getFirstLandingItem(landing);
-      if (firstItem?.name?.current) {
-        name = firstItem.name.current;
-      }
-    }
+    const name = landing.name?.current || '';
     return capitalizeFirstLetter(name);
   }, [landing]);
 
@@ -77,14 +51,14 @@ const LandingItem = (props: LandingItemProps) => {
       priceData = getProductPriceData(firstItem);
     }
     return priceData;
-  }, [landing]);
+  }, [getFirstLandingItem, getProductPriceData, landing]);
 
   const onClickAddCartBtn = useCallback(() => {
     const firstItem = getFirstLandingItem(landing);
     if (firstItem) {
       addCartItem(firstItem, 1);
     }
-  }, [addCartItem, landing]);
+  }, [addCartItem, getFirstLandingItem, landing]);
 
   return (
     <Card sx={{ overflow: 'visible' }}>
@@ -111,7 +85,7 @@ const LandingItem = (props: LandingItemProps) => {
           </IconButton>
         }
       />
-      <CardActionArea component={Link} href={landingPath}>
+      <CardActionArea component={Link} href={getItemPath(landing)}>
         <CardMedia>
           <Box>
             <CustomImage

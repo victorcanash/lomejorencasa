@@ -1,13 +1,15 @@
 import type { NextPage } from 'next';
 
+import { VacuumBlogPageProps, getVacuumBlogStaticProps } from '@core/staticPages/vacuumBlog';
 import { PageTypes } from '@core/constants/navigation';
-
-import { keywords } from '@lib/config/next-seo.config';
 import usePage from '@core/hooks/usePage';
 import PageHeader from '@core/components/pages/PageHeader';
+
+import { keywords } from '@lib/config/next-seo.config';
+
 import VacuumBlog from '@components/blogs/vacuum';
 
-const VacuumBlogPage: NextPage = () => {
+const VacuumBlogPage: NextPage<VacuumBlogPageProps> = (props) => {
   const page = usePage();
 
   return (
@@ -26,9 +28,13 @@ const VacuumBlogPage: NextPage = () => {
         }}
       />
 
-      <VacuumBlog />
+      <VacuumBlog
+        pageProps={props}
+      />
     </>
   );
 };
 
 export default VacuumBlogPage;
+
+export const getStaticProps = getVacuumBlogStaticProps;

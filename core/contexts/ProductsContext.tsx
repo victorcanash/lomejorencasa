@@ -1,69 +1,38 @@
 import {
   createContext,
-  useRef,
   useContext,
   useCallback,
 } from 'react';
 
-import {
-  categoryConfigs,
-  landingConfigs,
-} from '@lib/config/inventory.config';
 import type {
   Landing,
-  Product,
   ProductPack,
   ProductInventory,
   ProductCategory,
+  ProductCategoryGroup,
+  Product,
 } from '@core/types/products';
 import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import {
-  generateCategories,
-  generateLandings,
-  getLandingConfigByCartItem,
-  getLandingConfigById,
-  getCategoryConfigByPath,
-  getLandingConfigByPath,
-  getLandingPathByConfig,
-} from '@core/utils/products';
 
 import { pages } from '@lib/config/navigation.config';
 import { placeholderSrc } from '@lib/config/multimedia.config';
 
 type ProductsContext = {
-  getAllCategories: () => ProductCategory[],
-  getAllLandings: () => Landing[],
-  initProducts: (newCategories?: ProductCategory[], newLandings?: Landing[]) => void,
-  getCategoryByPath: (path: string) => ProductCategory | undefined,
-  getLandingByPath: (path: string) => Landing | undefined,
-  getLandingById: (id: number) => Landing | undefined,
-  getAllProducts: () => Product[],
-  getAllPacks: () => ProductPack[],
-  getAllLandingsProducts: () => (ProductPack | Product)[],
-  getPageUrlByCartItem: (item: CartItem | GuestCartCheckItem) => string,
-  getPageUrlByLandingId: (landingId: number) => string,
+  getItemPath: (item: ProductCategory | ProductCategoryGroup | Landing | CartItem | GuestCartCheckItem) => string,
   getItemImgUrl: (item: ProductCategory | Landing | CartItem | GuestCartCheckItem) => string,
   getLandingImgsUrl: (landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => string[],
-  setProductRating: (product: Product, rating: string, reviewsCount: number) => void,
-  setPackRating: (pack: ProductPack, rating: string, reviewsCount: number) => void,
+  getLandingItems: (landing: Landing) => (ProductPack | ProductInventory)[],
+  getFirstLandingItem: (landing: Landing) => ProductPack | ProductInventory | undefined,
+  getProductPriceData: (product: Product | ProductInventory | ProductPack) => { price: number, originPrice: number },
 };
 
 const ProductsContext = createContext<ProductsContext>({
-  getAllCategories: () => [],
-  getAllLandings: () => [],
-  initProducts: () => {},
-  getCategoryByPath: () => undefined,
-  getLandingByPath: () => undefined,
-  getLandingById: () => undefined,
-  getAllProducts: () => [],
-  getAllPacks: () => [],
-  getAllLandingsProducts: () => [],
-  getPageUrlByCartItem: () => '',
-  getPageUrlByLandingId: () => '',
+  getItemPath: () => '',
   getItemImgUrl: () => '',
   getLandingImgsUrl: () => [],
-  setProductRating: () => {},
-  setPackRating: () => {},
+  getLandingItems: () => [],
+  getFirstLandingItem: () => undefined,
+  getProductPriceData: () => ({} as { price: number, originPrice: number }),
 });
 
 export const useProductsContext = () => {
@@ -75,90 +44,17 @@ export const useProductsContext = () => {
 };
 
 export const ProductsProvider = ({ children }: { children: React.ReactNode }) => {
-  const categories = useRef<ProductCategory[]>(generateCategories(categoryConfigs));
-  const landings = useRef<Landing[]>(generateLandings(landingConfigs));
-
-  const getAllCategories = useCallback(() => {
-    return categories.current;
-  }, []);
-
-  const getAllLandings = useCallback(() => {
-    return landings.current;
-  }, []);
-
-  const initProducts = useCallback((newCategories?: ProductCategory[], newLandings?: Landing[]) => {
-    if (newCategories) {
-      categories.current = newCategories;
-    }
-    if (newLandings) {
-      landings.current = newLandings;
-    }
-  }, []);
-
-  const getCategoryByPath = useCallback((path: string) => {
-    let foundCategory: ProductCategory | undefined = undefined;
-    const foundCategoryConfig = getCategoryConfigByPath(path, categoryConfigs);
-    if (foundCategoryConfig) {
-      foundCategory = categories.current.find((category) => {
-        if (category.id === foundCategoryConfig.id) {
-          return category;
-        }
-      });
-    }
-    return foundCategory;
-  }, [categories]);
-
-  const getLandingByPath = useCallback((path: string) => {
-    let foundLanding: Landing | undefined = undefined;
-    const foundLandingConfig = getLandingConfigByPath(path, landingConfigs);
-    if (foundLandingConfig) {
-      foundLanding = landings.current.find((landing) => {
-        if (landing.id === foundLandingConfig.id) {
-          return landing;
-        }
-      });
-    }
-    return foundLanding;
-  }, [landings]);
-
-  const getLandingById = useCallback((id: number) => {
-    let foundLanding: Landing | undefined = undefined;
-    foundLanding = landings.current.find((landing) => {
-      if (landing.id === id) {
-        return landing;
+  const getItemPath = useCallback((item: ProductCategory | ProductCategoryGroup | Landing | CartItem | GuestCartCheckItem) => {
+    if ((item as ProductCategory | ProductCategoryGroup | Landing)?.slug) {
+      if ((item as Landing)?.images) {
+        return `/productos/${(item as Landing).slug}`;
+      } else {
+        return `/colecciones/${(item as ProductCategory | ProductCategoryGroup).slug}`;
       }
-    });
-    return foundLanding;
-  }, [landings]);
-
-  const getAllProducts = useCallback(() => {
-    return landings.current.filter((item) => item.products.length > 0).map((item) => {
-      return item.products[0];
-    })
-  }, [landings]);
-
-  const getAllPacks = useCallback(() => {
-    return landings.current.filter((item) => item.packs.length > 0).map((item) => {
-      return item.packs[0];
-    })
-  }, [landings]);
-
-  const getAllLandingsProducts = useCallback(() => {
-    let landingsProducts: (Product | ProductPack)[] = getAllProducts();
-    landingsProducts = landingsProducts.concat(getAllPacks());
-    return landingsProducts;
-  }, [getAllPacks, getAllProducts]);
-
-  const getPageUrlByCartItem = useCallback((item: CartItem | GuestCartCheckItem) => {
-    const foundLandingConfig = getLandingConfigByCartItem(item, landingConfigs);
-    return foundLandingConfig ?
-      getLandingPathByConfig(foundLandingConfig) : pages.home.path;
-  }, []);
-
-  const getPageUrlByLandingId = useCallback((landingId: number) => {
-    const foundLandingConfig = getLandingConfigById(landingId, landingConfigs);
-    return foundLandingConfig ?
-      getLandingPathByConfig(foundLandingConfig) : pages.home.path;
+    } else if ((item as CartItem | GuestCartCheckItem)?.inventory) {
+      return pages.home.path;
+    }
+    return pages.home.path;
   }, []);
   
   const getItemImgUrl = useCallback((item: ProductCategory | Landing | CartItem | GuestCartCheckItem) => {
@@ -179,18 +75,61 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   }, []);
   
   const getLandingImgsUrl = useCallback((landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => {
-    if (landing.images.length > 0) {
-      return landing.images.map((image, index) => {
-        if (index === 0) {
-          return selectedItem?.image || image;
-        }
-        return image;
-      });
+    const images: string[] = [];
+    if (selectedItem?.image) {
+      images.push(selectedItem.image)
     }
-    return [];
+    if (landing.images.length > 0) {
+      landing.images.forEach((image) => {
+        images.push(image);
+      });
+    } else if (!selectedItem?.image) {
+      images.push(placeholderSrc);
+    }
+    return images
   }, []);
 
-  const setProductRating = useCallback((product: Product, rating: string, reviewsCount: number) => {
+  const getLandingItems = useCallback((landing: Landing) => {
+    let landingItems: (ProductInventory | ProductPack)[] = [];
+    if (landing.products.length > 0) {
+      const landingInventories = landing.products[0].inventories;
+      if (landingInventories && landingInventories.length > 0) {
+        landingItems = landingInventories;
+      }
+    } else if (landing.packs.length > 0) {
+      landingItems = landing.packs;
+    }
+    return landingItems;
+  }, []);
+
+  const getFirstLandingItem = useCallback((landing: Landing) => {
+    const landingItems = getLandingItems(landing);
+    if (landingItems.length > 0) {
+      return landingItems[0];
+    }
+    return undefined;
+  }, [getLandingItems]);
+
+  const getProductPriceData = (product: Product | ProductInventory | ProductPack) => {
+    let price = 0;
+    let originPrice = 0;
+    if ((product as Product)?.lowestPrice) {
+      price = (product as Product).lowestRealPrice;
+      originPrice = (product as Product).lowestPrice;
+    } else if ((product as ProductInventory)?.realPrice) {
+      price = (product as ProductInventory).realPrice;
+      originPrice = (product as ProductInventory).price;
+    } else if ((product as ProductPack)?.originalPrice) {
+      price = (product as ProductPack).price;
+      originPrice = (product as ProductPack).originalPrice;
+    }
+    return {
+      price,
+      originPrice,
+    };
+  };
+
+  /*const setProductRating = useCallback((product: Product, rating: string, reviewsCount: number) => {
     const oldLandings = [...landings.current];
     let foundLanding: Landing | undefined = undefined;
     let foundLandingIndex = -1;
@@ -228,26 +167,17 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
     }
     oldLandings[foundLandingIndex] = foundLanding;
     landings.current = [...oldLandings];
-  }, [landings]);
+  }, [landings]);*/
 
   return (
     <ProductsContext.Provider
       value={{
-        getAllCategories,
-        getAllLandings,
-        initProducts,
-        getCategoryByPath,
-        getLandingByPath,
-        getLandingById,
-        getAllProducts,
-        getAllPacks,
-        getAllLandingsProducts,
-        getPageUrlByCartItem,
-        getPageUrlByLandingId,
+        getItemPath,
         getItemImgUrl,
         getLandingImgsUrl,
-        setProductRating,
-        setPackRating,
+        getLandingItems,
+        getFirstLandingItem,
+        getProductPriceData,
       }}
     >
       {children}

@@ -1,16 +1,25 @@
 import Box from '@mui/material/Box';
 
-import Intro from '@components/blogs/vacuum/sections/Intro';
-import PackingMachine from '@components/blogs/vacuum/sections/PackingMachine';
-import WhatIsVacuumPacked from '@components/blogs/vacuum/sections/WhatIsVacuumPacked';
-import WhyVacuumPacked from '@components/blogs/vacuum/sections/WhyVacuumPacked';
-import Characteristics from '@components/blogs/vacuum/sections/Characteristics';
-import Use from '@components/blogs/vacuum/sections/Use';
-import FoodStorage from '@components/blogs/vacuum/sections/FoodStorage';
-import Conservation from '@components/blogs/vacuum/sections/Conservation';
+import { VacuumBlogPageProps } from '@core/staticPages/vacuumBlog';
 import ProductReviews from '@core/components/ProductReviews';
 
-const VacuumBlog = () => {
+import Intro from './sections/Intro';
+import PackingMachine from './sections/PackingMachine';
+import WhatIsVacuumPacked from './sections/WhatIsVacuumPacked';
+import WhyVacuumPacked from './sections/WhyVacuumPacked';
+import Characteristics from './sections/Characteristics';
+import Use from './sections/Use';
+import FoodStorage from './sections/FoodStorage';
+import Conservation from './sections/Conservation';
+
+type VacuumBlogProps = {
+  pageProps: VacuumBlogPageProps,
+}
+
+const VacuumBlog = (props: VacuumBlogProps) => {
+  const {
+    pageProps,
+  } = props;
 
   return (
     <Box 
@@ -28,9 +37,12 @@ const VacuumBlog = () => {
 
       <Characteristics
         type="advantages"
+        landingVacuumMachine={pageProps.landingVacuumMachine}
       />
 
-      <Use />
+      <Use
+        landingVacuumBags={pageProps.landingVacuumBags}
+      />
 
       <FoodStorage />
 
@@ -38,6 +50,7 @@ const VacuumBlog = () => {
 
       <Characteristics
         type="characteristics"
+        landingVacuumMachine={pageProps.landingVacuumMachine}
       />
 
       <ProductReviews />

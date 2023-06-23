@@ -1,42 +1,59 @@
 import { ReactNode, useCallback } from 'react';
 
+import { useIntl } from 'react-intl';
+
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 
 import type { FormatText } from '@core/types/texts';
-import type { LandingConfig } from '@core/types/products';
+import type { Landing } from '@core/types/products';
 import Divider from '@core/components/ui/Divider';
+import CharacteristicsGroup from './CharacteristicsGroup';
 
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/config/theme/elements';
-import CharacteristicsGroup from '@core/components/LandingDetail/LandingCharacteristics/CharacteristicsGroup';
 
 type LandingCharacteristicsProps = {
-  landingConfig: LandingConfig,
+  landing: Landing,
 };
 
 const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
-  const { landingConfig } = props;
+  const { landing } = props;
 
-  const getElements = useCallback((text: FormatText, count: number) => {
+  const intl = useIntl();
+
+  const getElements = useCallback((text: FormatText) => {
+    let count = 1;
+    //intl.fallbackOnEmptyString = false;
+    while (count !== -1) {
+      const existingText = intl.formatMessage({ id: `${text.id}.${count}`, defaultMessage: '' });
+      if (existingText) {
+        count++;
+      } else {
+        count = -1;
+      }
+    }
+
     const elements = [] as FormatText[];
-    for (let i = 0; i < count; i++) {
-      elements.push({
-        id: `${text.id}.${i + 1}`,
-        values: {
-          'title': (...chunks: ReactNode[]) => (
-            <>
-              <span style={{ fontWeight: 500 }}>
-                {chunks}
-              </span>
-              <Divider themeElement={themeCustomElements.dividers?.subdivider} />
-            </>
-          ),
-        },
-      })
+    if (count !== -1) {
+      for (let i = 0; i < count; i++) {
+        elements.push({
+          id: `${text.id}.${i + 1}`,
+          values: {
+            'title': (...chunks: ReactNode[]) => (
+              <>
+                <span style={{ fontWeight: 500 }}>
+                  {chunks}
+                </span>
+                <Divider themeElement={themeCustomElements.dividers?.subdivider} />
+              </>
+            ),
+          },
+        })
+      }
     }
     return elements;
-  }, []);
+  }, [intl]);
 
   return (
     <Container id="characteristics">
@@ -51,8 +68,7 @@ const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
           }}
           elements={
             getElements(
-              { id: landingConfig.characteristics.details.text.id || 'productDetail.details' },
-              landingConfig.characteristics.details.count
+              { id: `landing.${landing.slug}.details` },
             )
           }
         />
@@ -62,8 +78,7 @@ const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
           }}
           elements={
             getElements(
-              { id: landingConfig.characteristics.includes.text.id || 'productDetail.includes' },
-              landingConfig.characteristics.includes.count
+              { id: `landing.${landing.slug}.includes` },
             )
           }
         />
@@ -73,14 +88,8 @@ const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
           }}
           elements={
             getElements(
-              { id: landingConfig.characteristics.dimensions.text.id || 'productDetail.dimensions' },
-              landingConfig.characteristics.dimensions.count
+              { id: `landing.${landing.slug}.dimensions` },
             )
-          }
-          source={ landingConfig.characteristics.dimensions.image ?
-            {
-              src: landingConfig.characteristics.dimensions.image,
-            } : undefined
           }
         />
         <CharacteristicsGroup

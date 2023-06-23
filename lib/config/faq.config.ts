@@ -1,8 +1,6 @@
 import type { FaqConfig } from '@core/types/faq';
-import { getLandingPathById } from '@core/utils/products';
 
 import { pages } from '@lib/config/navigation.config';
-import { landingConfigs } from '@lib/config/inventory.config';
 
 const faqConfig: FaqConfig = [
   {
@@ -38,7 +36,7 @@ const faqConfig: FaqConfig = [
         text: { 
           id: '5',
         },
-        path: getLandingPathById(2, landingConfigs),
+        path: undefined,
       },
       {
         text: { 

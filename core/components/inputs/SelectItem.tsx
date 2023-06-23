@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useCallback } from 'react';
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -8,16 +8,15 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
 import type { FormatText } from '@core/types/texts';
-import type { ProductInventory, ProductPack } from '@core/types/products';
+import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
 
 import { themeCustomElements } from '@lib/config/theme/elements';
 
 type SelectItemProps = {
-  landingId: number,
+  landing: Landing,
   items: (ProductInventory | ProductPack)[],
   selectInputLabel?: FormatText,
-  selectInputContent?: FormatText,
   initItem?: ProductInventory | ProductPack,
   selectedItem: ProductInventory | ProductPack | undefined,
   setSelectedItem: Dispatch<SetStateAction<ProductInventory | ProductPack | undefined>>
@@ -25,16 +24,13 @@ type SelectItemProps = {
 
 const SelectItem = (props: SelectItemProps) => {
   const {
-    landingId,
+    landing,
     items,
     selectInputLabel,
-    selectInputContent,
     initItem,
     selectedItem,
     setSelectedItem,
   } = props;
-
-  const intl = useIntl();
 
   const handleSelectChange = useCallback((event: SelectChangeEvent) => {
     const itemName = event.target.value as string;
@@ -42,21 +38,14 @@ const SelectItem = (props: SelectItemProps) => {
     setSelectedItem(item);
   }, [items, setSelectedItem]);
 
-  const getItemText = useCallback((item: ProductInventory | ProductPack, index: number) => {
-    if (selectInputContent?.id) {
-      return intl.formatMessage({ id: `${selectInputContent.id}.${index + 1}` }, selectInputContent.values);
-    }
-    return item.name.current;
-  }, [intl, selectInputContent?.id, selectInputContent?.values]);
-
   const enabled = useCallback((itemCheck: ProductInventory | ProductPack) => {
-    if ((itemCheck as ProductInventory)?.product?.landingId === landingId) {
+    if ((itemCheck as ProductInventory)?.product?.landingId === landing.id) {
       return true;
-    } else if ((itemCheck as ProductPack)?.landingId === landingId) {
+    } else if ((itemCheck as ProductPack)?.landingId === landing.id) {
       return true;
     }
     return false;
-  }, [landingId]);
+  }, [landing]);
 
   useEffect(() => {
     if (items.length <= 0) {
@@ -100,7 +89,7 @@ const SelectItem = (props: SelectItemProps) => {
                 key={index}
                 value={item.name.current}
               >
-                { getItemText(item, index) }
+                { item.description.current }
               </MenuItem>
             ))}
           </Select>

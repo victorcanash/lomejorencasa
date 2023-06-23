@@ -8,16 +8,26 @@ import Typography from '@mui/material/Typography';
 
 import type { FormatText } from '@core/types/texts';
 import type { Source } from '@core/types/multimedia';
-import { getLandingPathById } from '@core/utils/products';
+import type { Landing } from '@core/types/products';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import LinkButton from '@core/components/inputs/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 import Title from '@core/components/ui/Title';
 
 import { keywords } from '@lib/config/next-seo.config';
-import { landingConfigs } from '@lib/config/inventory.config';
 
-const Use = () => {
+type UseProps = {
+  landingVacuumBags: Landing,
+};
+
+const Use = (props: UseProps) => {
+  const {
+    landingVacuumBags,
+  } = props;
+
+  const { getItemPath } = useProductsContext();
+
   const Subtitle = useCallback((props: { type: 'h3' | 'h4', text: FormatText }) => {
     const { type, text } = props;
     return (
@@ -196,7 +206,7 @@ const Use = () => {
             maxWidth="xs_sm"
           />
           <LinkButton
-            href={getLandingPathById(2, landingConfigs)}
+            href={getItemPath(landingVacuumBags)}
             id="advantages"
             customtype="actionPrimary"
             sx={{

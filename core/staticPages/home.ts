@@ -5,7 +5,7 @@ import { getAllProductCategories, getProductCategory } from '@core/utils/product
 
 export type HomePageProps = {
   categoryGroups: ProductCategoryGroup[],
-  categoryFeatured: ProductCategory | null,
+  categoryFeatured: ProductCategory,
   landingsFeatured: Landing[],
 };
 
@@ -18,7 +18,7 @@ export const getHomeStaticProps: GetStaticProps = async () => {
     .catch((error) => {
     });
 
-  let categoryFeatured: ProductCategory | null = null;
+  let categoryFeatured: ProductCategory = {} as ProductCategory;
   let landingsFeatured: Landing[] = [];
   await getProductCategory('productos-destacados')
     .then((response) => {

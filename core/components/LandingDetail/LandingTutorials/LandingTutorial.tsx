@@ -4,17 +4,27 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import type { LandingTutorialConfig } from '@core/types/products';
+import type { NavItem } from '@core/types/navigation';
+import type { FormatText } from '@core/types/texts';
+import type { Source } from '@core/types/multimedia';
 import LinkButton from '@core/components/inputs/LinkButton';
 import Title from '@core/components/ui/Title';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
 
-type LandingTutorialProps = {
-  tutorialConfig: LandingTutorialConfig, 
+export type LandingTutorialProps = {
+  title: FormatText,
+  content: FormatText,
+  source: Source,
+  button?: NavItem,
 };
 
 const LandingTutorial = (props: LandingTutorialProps) => {
-  const { tutorialConfig } = props;
+  const {
+    title,
+    content,
+    source,
+    button,
+   } = props;
 
   return (
     <>
@@ -23,11 +33,11 @@ const LandingTutorial = (props: LandingTutorialProps) => {
           maxWidth="sm"
           m="auto"
         >
-          { tutorialConfig.title?.id &&
+          { title?.id &&
             <Title
               type="h2"
               texts={{
-                title: tutorialConfig.title,
+                title,
               }}
               divider={true}
             />
@@ -37,7 +47,7 @@ const LandingTutorial = (props: LandingTutorialProps) => {
 
       <MultimediaContainer
         type="default"
-        source={tutorialConfig.source}
+        source={source}
         mt={0}
       />
 
@@ -50,28 +60,28 @@ const LandingTutorial = (props: LandingTutorialProps) => {
             component="div"
             variant="body1"
             sx={{ mt: 3 }}
-            align={tutorialConfig.content.textAlign}
+            align={content.textAlign}
           >
             <FormattedMessage
-              id={tutorialConfig.content.id}
-              values={tutorialConfig.content.values}
-              defaultMessage={tutorialConfig.content.id}
+              id={content.id}
+              values={content.values}
+              defaultMessage={content.id}
             />
           </Typography>
 
-          { tutorialConfig.button?.text.id && tutorialConfig.button?.path &&
+          { button?.text.id && button?.path &&
             <LinkButton
-              href={tutorialConfig.button.path}
-              align={tutorialConfig.button.text.textAlign}
+              href={button.path}
+              align={button.text.textAlign}
               customtype="actionPrimary"
               sx={{
                 mt: 3,
               }}
             >
               <FormattedMessage 
-                id={tutorialConfig.button.text.id}
-                values={tutorialConfig.button.text.values}
-                defaultMessage={tutorialConfig.button.text.id}
+                id={button.text.id}
+                values={button.text.values}
+                defaultMessage={button.text.id}
               />
             </LinkButton>
           }

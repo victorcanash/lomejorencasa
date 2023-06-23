@@ -18,7 +18,6 @@ import Masonry from '@mui/lab/Masonry';
 
 import { convertToDate } from '@core/utils/dates';
 import { convertElementToSx } from '@core/utils/themes';
-import { getPackGeneralName } from '@core/utils/products';
 import { useAppContext } from '@core/contexts/AppContext';
 import useReviews from '@core/hooks/useReviews';
 import Title from '@core/components/ui/Title';
@@ -27,7 +26,6 @@ import CustomImage from '@core/components/multimedia/CustomImage';
 import ProductReviewForm from '@core/components/forms/products/ProductReviewForm';
 
 import { themeCustomElements } from '@lib/config/theme/elements';
-import { landingConfigs } from '@lib/config/inventory.config';
 
 const ProductReviews = () => {
   const { initialized } = useAppContext();
@@ -189,7 +187,7 @@ const ProductReviews = () => {
                             <Typography component="div" variant="body1Head" mb={1} sx={{ fontSize: '16px', fontWeight: '600' }}>
                               {
                                 item.pack ?
-                                  getPackGeneralName(item.pack, landingConfigs) : item.product?.name.current
+                                  item.pack.name.current : item.product?.name.current
                               }
                             </Typography>
                             <Typography component="div" variant="body1Head" mb={1}>

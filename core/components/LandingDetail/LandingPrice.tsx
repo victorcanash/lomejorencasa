@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
-import { getFirstLandingItem, getProductPriceData } from '@core/utils/products';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import ProductPrice from '@core/components/ProductPrice';
 
 type LandingPriceProps = {
@@ -27,6 +27,8 @@ const LandingPrice = (props: LandingPriceProps) => {
     selectedItem,
   } = props;
 
+  const { getFirstLandingItem, getProductPriceData } = useProductsContext();
+
   const data = useMemo(() => {
     let priceData = { price: 0, originPrice: 0 };
     if (selectedItem) {
@@ -38,7 +40,7 @@ const LandingPrice = (props: LandingPriceProps) => {
       }
     }
     return priceData;
-  }, [landingModel, selectedItem]);
+  }, [getFirstLandingItem, getProductPriceData, landingModel, selectedItem]);
 
   return (
     <Grid container columnSpacing={2} rowSpacing={0.5}>

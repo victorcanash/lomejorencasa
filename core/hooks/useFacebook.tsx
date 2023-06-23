@@ -3,10 +3,10 @@ import { useCallback, useMemo } from 'react';
 import type { FacebookEvent, FacebookEventContent } from '@core/types/facebook';
 import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
 import { sendFBEvent } from '@core/utils/facebook';
-import { getFirstLandingItem, getProductPriceData } from '@core/utils/products';
 
 import { useAuthContext } from '@core/contexts/AuthContext';
 import { useCartContext } from '@core/contexts/CartContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 
 const contentCategory = 'Camping Cookware';
 const contentType = 'product';
@@ -14,6 +14,7 @@ const contentType = 'product';
 const useFacebook = () => {
   const { currency } = useAuthContext();
   const { cart, totalPrice, totalQuantity } = useCartContext();
+  const { getFirstLandingItem, getProductPriceData } = useProductsContext();
 
   const cartContents = useMemo(() => {
     const contents: FacebookEventContent[] = [];
@@ -60,7 +61,7 @@ const useFacebook = () => {
     } as FacebookEvent;
 
     sendFBEvent('ViewContent', data);
-  }, [currency]);
+  }, [currency, getFirstLandingItem, getProductPriceData]);
 
   const sendAddToCartEvent = useCallback((item: ProductInventory | ProductPack, quantity: number) => {
     const data = {
@@ -76,7 +77,7 @@ const useFacebook = () => {
     } as FacebookEvent;
   
     sendFBEvent('AddToCart', data);
-  }, [currency]);
+  }, [currency, getProductPriceData]);
 
   const sendInitiateCheckoutEvent = useCallback(() => {
     const data = {

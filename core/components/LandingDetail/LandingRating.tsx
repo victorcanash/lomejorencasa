@@ -4,41 +4,40 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 
-import type { Landing, LandingConfig } from '@core/types/products';
+import type { Landing } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
-import { getLandingPathByConfig } from '@core/utils/products';
 import { useAppContext } from '@core/contexts/AppContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import LoadingRating from '@core/components/ui/LoadingRating';
 import Link from '@core/components/navigation/Link';
 
 type LandingRatingProps = {
-  landingModel: Landing,
-  landingConfig: LandingConfig,
+  landing: Landing,
 };
 
 const LandingRating = (props: LandingRatingProps) => {
   const {
-    landingModel,
-    landingConfig,
+    landing,
   } = props;
 
   const { initialized } = useAppContext();
+  const { getItemPath } = useProductsContext();
 
   const data = useMemo(() => {
     let rating = 0;
     let reviewsCount = 0;
-    if (landingModel.products.length > 0) {
-      rating = parseFloat(landingModel.products[0].rating);
-      reviewsCount = landingModel.products[0].reviewsCount;
-    } else if (landingModel.packs.length > 0) {
-      rating = parseFloat(landingModel.packs[0].rating);
-      reviewsCount = landingModel.packs[0].reviewsCount;
+    if (landing.products.length > 0) {
+      rating = parseFloat(landing.products[0].rating);
+      reviewsCount = landing.products[0].reviewsCount;
+    } else if (landing.packs.length > 0) {
+      rating = parseFloat(landing.packs[0].rating);
+      reviewsCount = landing.packs[0].reviewsCount;
     }
     return {
       rating,
       reviewsCount,
     };
-  }, [landingModel.packs, landingModel.products]);
+  }, [landing.packs, landing.products]);
   
   return (
     <>
@@ -46,7 +45,7 @@ const LandingRating = (props: LandingRatingProps) => {
         <LoadingRating />
         :
         <Link
-          href={getLandingPathByConfig(landingConfig)}
+          href={getItemPath(landing)}
           onClick={() => scrollToSection('reviews')}
           scroll={false}
           sx={{ textDecoration: 'none' }}

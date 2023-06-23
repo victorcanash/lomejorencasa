@@ -1,4 +1,4 @@
-import { ReactElement, useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { useInView } from 'react-intersection-observer';
@@ -17,37 +17,38 @@ import Box from '@mui/material/Box';
 import Slide from '@mui/material/Slide';
 import Masonry from '@mui/lab/Masonry';
 
-import type { Landing, LandingConfig, ProductInventory, ProductPack } from '@core/types/products';
+import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
 import type { Source } from '@core/types/multimedia';
-import { getFirstLandingItem, getLandingItems } from '@core/utils/products';
 import Link from '@core/components/navigation/Link';
-import { pages } from '@lib/config/navigation.config';
+import SelectItem from '@core/components/inputs/SelectItem';
+import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
+import Button from '@core/components/inputs/Button';
+import ProductReviews from '@core/components/ProductReviews';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import useCart from '@core/hooks/useCart';
-import Button from '@core/components/inputs/Button';
-import LandingCarousel from '@core/components/LandingDetail/LandingCarousel';
-import LandingRating from '@core/components/LandingDetail/LandingRating';
-import LandingPrice from '@core/components/LandingDetail/LandingPrice';
-import LandingAdvantage from '@core/components/LandingDetail/LandingAdvantage';
-import SelectItem from '@core/components/inputs/SelectItem';
-import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
-import BundleDetail from '@core/components/LandingDetail/BundleDetail';
-import LandingCharacteristics from '@core/components/LandingDetail/LandingCharacteristics';
-import LandingTutorial from '@core/components/LandingDetail/LandingTutorial';
-import ProductReviews from '@core/components/ProductReviews';
+import LandingCarousel from './LandingCarousel';
+import LandingRating from './LandingRating';
+import LandingPrice from './LandingPrice';
+import LandingAdvantage from './LandingAdvantage';
+// import BundleDetail from './BundleDetail';
+import LandingCharacteristics from './LandingCharacteristics';
+import LandingTutorials from './LandingTutorials';
+
+import { pages } from '@lib/config/navigation.config';
 
 type LandingDetailProps = {
-  landingModel: Landing,
-  landingConfig: LandingConfig,
+  landing: Landing,
 };
 
 const LandingDetail = (props: LandingDetailProps) => {
-  const { landingModel, landingConfig } = props;
+  const { landing } = props;
 
   const { initialized } = useAppContext();
   const {
     getLandingImgsUrl,
+    getLandingItems,
+    getFirstLandingItem,
   } = useProductsContext();
 
   const { addCartItem } = useCart(false);
@@ -78,23 +79,23 @@ const LandingDetail = (props: LandingDetailProps) => {
   }, [addCartItem, selectedItem, selectedQuantity])
 
   const title = useMemo(() => {
-    let text = getFirstLandingItem(landingModel)?.name.current || '';
+    let text = getFirstLandingItem(landing)?.name.current || '';
     if (selectedItem) {
       text = selectedItem.name.current;
     }
     return text;
-  }, [landingModel, selectedItem]);
+  }, [getFirstLandingItem, landing, selectedItem]);
 
   useEffect(() => {
     swiperRef.current?.slideTo(1, undefined, false);
-  }, [landingModel]);
+  }, [landing]);
 
   return (
     <Box sx={{ overflow: 'hidden' }}>
 
       {/* H1 */}
       <Typography component="h1" variant="h1" sx={{ display: 'none' }}>
-        { landingConfig.metas.title }
+        { landing.name.current }
       </Typography>
 
       {/* General Section */}
@@ -103,7 +104,7 @@ const LandingDetail = (props: LandingDetailProps) => {
 
           {/* Carousel */}
           <Box>
-            <Box
+            <Box 
               sx={{
                 maxWidth: {
                   xs: maxWidthSmall,
@@ -114,10 +115,10 @@ const LandingDetail = (props: LandingDetailProps) => {
             >
               <LandingCarousel
                 sources={
-                  getLandingImgsUrl(landingModel, selectedItem).map((item, index, items) => {
+                  getLandingImgsUrl(landing, selectedItem).map((item) => {
                     return {
                       src: item,
-                      alt: landingConfig.metas.imgsAlt,
+                      alt: landing.name.current,
                       priority: true,
                     } as Source;
                   })
@@ -148,8 +149,7 @@ const LandingDetail = (props: LandingDetailProps) => {
               {/* Rating */}
               <Box>
                 <LandingRating
-                  landingModel={landingModel}
-                  landingConfig={landingConfig}
+                  landing={landing}
                 />
               </Box>
 
@@ -163,7 +163,7 @@ const LandingDetail = (props: LandingDetailProps) => {
               {/* Price */}
               <Box sx={{ mb: 2 }}>
                 <LandingPrice
-                  landingModel={landingModel}
+                  landingModel={landing}
                   selectedItem={selectedItem}
                 />
               </Box>
@@ -204,10 +204,11 @@ const LandingDetail = (props: LandingDetailProps) => {
               <Grid container columnSpacing={2} rowSpacing={1}>
                 <Grid item>
                   <SelectItem
-                    landingId={landingModel.id}
-                    items={getLandingItems(landingModel)}
-                    selectInputLabel={landingConfig.product?.selectInputTexts?.label || landingConfig.pack?.selectInputTexts?.label}
-                    selectInputContent={landingConfig.product?.selectInputTexts?.content || landingConfig.pack?.selectInputTexts?.content}
+                    landing={landing}
+                    items={getLandingItems(landing)}
+                    selectInputLabel={{
+                      id: `landing.${landing.slug}.selectInventory.label`,
+                    }}
                     selectedItem={selectedItem}
                     setSelectedItem={setSelectedItem}
                   />
@@ -278,11 +279,9 @@ const LandingDetail = (props: LandingDetailProps) => {
               {/* Comments */}
               <Box>
                 <>
-                  { landingConfig.comment.id &&
-                    <Typography component="div" variant="body1">
-                      <FormattedMessage id={landingConfig.comment.id} values={landingConfig.comment.values} />
-                    </Typography>
-                  }
+                  <Typography component="div" variant="body1">
+                    <FormattedMessage id={`landing.${landing.slug}.comment`} />
+                  </Typography>
                   <Box mt={1}>
                     <Link href={pages.orders.path} variant="body1">
                       <FormattedMessage id="productDetail.trackingLink" />
@@ -294,7 +293,7 @@ const LandingDetail = (props: LandingDetailProps) => {
           </Box>
 
           {/* Bundle */}
-          { landingConfig.bundle &&
+          {/* landingConfig.bundle &&
             <Box>
               <Box
                 sx={{
@@ -312,23 +311,20 @@ const LandingDetail = (props: LandingDetailProps) => {
                 />
               </Box>
             </Box>
-          }
+          */}
 
         </Masonry>
       </Container>
 
       {/* Characteristics */}
       <LandingCharacteristics
-        landingConfig={landingConfig}
+        landing={landing}
       />
 
       {/* Tutorials */}
-      { landingConfig.tutorials?.map((item, index) => (
-        <LandingTutorial
-          key={index}
-          tutorialConfig={item}
-        />
-      ))}
+      <LandingTutorials
+        landing={landing}
+      />
 
       {/* Reviews */}
       <ProductReviews />

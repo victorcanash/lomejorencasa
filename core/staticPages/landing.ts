@@ -1,21 +1,30 @@
 import type { GetStaticProps, GetStaticPaths } from 'next';
 import { ParsedUrlQuery } from 'querystring';
 
-import { landingConfigs } from '@lib/config/inventory.config';
+import type { Landing } from '@core/types/products';
+import { getAllLandings, getLanding } from '@core/utils/products';
 
 export type LandingPageProps = {
-  path: string,
+  landing: Landing,
 };
 
 interface ILandingPageParams extends ParsedUrlQuery {
   landing: string
 };
 
-export const getLandingStaticPaths: GetStaticPaths = () => {
-  const paths = landingConfigs.map((landingConfig) => {
+export const getLandingStaticPaths: GetStaticPaths = async () => {
+  let landings: Landing[] = [];
+  await getAllLandings()
+    .then((response) => {
+      landings = response.landings;
+    })
+    .catch((error) => {
+    });
+
+  const paths = landings.map((landing) => {
     return {
       params: {
-        landing: landingConfig.path,
+        landing: landing.slug,
       } as ILandingPageParams,
     };
   });
@@ -25,11 +34,20 @@ export const getLandingStaticPaths: GetStaticPaths = () => {
   };
 };
 
-export const getLandingStaticProps: GetStaticProps = (context) => {
-  const { landing } = context.params as ILandingPageParams;
+export const getLandingStaticProps: GetStaticProps = async (context) => {
+  const { landing: slug } = context.params as ILandingPageParams;
+
+  let landing: Landing = {} as Landing;
+  await getLanding(slug)
+    .then((response) => {
+      landing = response.landing;
+    })
+    .catch((error) => {
+    });
+
   return {
     props: {
-      path: landing,
+      landing: landing,
     } as LandingPageProps,
   };
 };

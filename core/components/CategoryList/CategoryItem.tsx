@@ -1,21 +1,13 @@
-import { useMemo } from 'react';
-
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 
 import type { ProductCategory } from '@core/types/products';
 import { convertElementToSx } from '@core/utils/themes';
-import {
-  getCategoryPathByConfig,
-  getCategoryConfigById,
-} from '@core/utils/products';
 import { useProductsContext } from '@core/contexts/ProductsContext';
 import Link from '@core/components/navigation/Link';
 import CustomImage from '@core/components/multimedia/CustomImage';
 
-import { pages } from '@lib/config/navigation.config';
-import { categoryConfigs } from '@lib/config/inventory.config';
 import { themeCustomElements } from '@lib/config/theme/elements';
 
 type CategoryItemProps = {
@@ -29,18 +21,11 @@ const CategoryItem = (props: CategoryItemProps) => {
 
   const {
     getItemImgUrl,
+    getItemPath,
   } = useProductsContext();
 
-  const categoryPath = useMemo(() => {
-    const landingConfig = getCategoryConfigById(category.id, categoryConfigs);
-    if (landingConfig) {
-      return getCategoryPathByConfig(landingConfig);
-    }
-    return pages.home.path;
-  }, [category.id]);
-
   return (
-    <Link href={categoryPath} underline="none">
+    <Link href={getItemPath(category)} underline="none">
       <Box
         sx={{
           position: 'relative',

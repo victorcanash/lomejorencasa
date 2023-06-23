@@ -14,16 +14,13 @@ import type { UploadFile } from '@core/types/multimedia';
 import type { User } from '@core/types/user';
 import type { CreateProductReview, ProductPack } from '@core/types/products';
 import { getUserFullName } from '@core/utils/user';
-import { getPackGeneralName } from '@core/utils/products';
 import { convertElementToSx } from '@core/utils/themes';
-import { useProductsContext } from '@core/contexts/ProductsContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 import useForms from '@core/hooks/useForms';
 import useMultimedia from '@core/hooks/useMultimedia';
 import BaseForm from '@core/components/forms/BaseForm';
 import UploadInput from '@core/components/inputs/UploadInput';
 
-import { landingConfigs } from '@lib/config/inventory.config';
 import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ProductReviewFormProps = {
@@ -45,7 +42,6 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     emailQuery,
   } = props;
 
-  const { getAllLandingsProducts } = useProductsContext();
   const { user, isLogged } = useAuthContext();
 
   const { 
@@ -130,7 +126,7 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
                   required: true,
                   menuItems: getAllLandingsProducts().map((item) => {
                     const name = (item as ProductPack)?.originalPrice ?
-                      getPackGeneralName(item as ProductPack, landingConfigs) : item.name?.current;
+                      item.name.current : item.name.current;
                     const value = (item as ProductPack)?.originalPrice ?
                       `${item.id}.pack` : `${item.id}.product`;
                     return {

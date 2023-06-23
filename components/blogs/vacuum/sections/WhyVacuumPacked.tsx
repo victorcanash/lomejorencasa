@@ -6,7 +6,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import CustomImage from '@core/components/multimedia/CustomImage';
-import colors from '@lib/config/theme/colors';
 import Title from '@core/components/ui/Title';
 
 const WhyVacuumPacked = () => {

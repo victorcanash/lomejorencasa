@@ -8,21 +8,26 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import type { Source } from '@core/types/multimedia';
+import type { Landing } from '@core/types/products';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import LinkButton from '@core/components/inputs/LinkButton';
 import CustomImage from '@core/components/multimedia/CustomImage';
-
 import Title from '@core/components/ui/Title'; 
-import colors from '@lib/config/theme/colors';
-import { getLandingPathById } from '@core/utils/products';
 
-import { landingConfigs } from '@lib/config/inventory.config';
+import colors from '@lib/config/theme/colors';
 
 type CharacteristicsProps = {
   type: 'characteristics' | 'advantages',
+  landingVacuumMachine: Landing,
 };
 
 const Characteristics = (props: CharacteristicsProps) => {
-  const { type } = props;
+  const {
+    type,
+    landingVacuumMachine,
+  } = props;
+
+  const { getItemPath } = useProductsContext();
 
   const characteristicIcon = useCallback((
     source: Source,
@@ -209,7 +214,7 @@ const Characteristics = (props: CharacteristicsProps) => {
           >
             <Grid item>
               <LinkButton
-                href={getLandingPathById(1, landingConfigs)}
+                href={getItemPath(landingVacuumMachine)}
                 id="advantages"
                 customtype="actionPrimary"
               >
