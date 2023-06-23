@@ -327,7 +327,9 @@ const LandingDetail = (props: LandingDetailProps) => {
       />
 
       {/* Reviews */}
-      <ProductReviews />
+      <ProductReviews
+        landing={landing}
+      />
     </Box>
   );
 };

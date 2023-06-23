@@ -4,10 +4,7 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import type { UploadFile } from '@core/types/multimedia';
-import type {
-  ProductReview,
-  CreateProductReview,
-} from '@core/types/products';
+import type { ProductReview } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
 import {
   createProductReview as createProductReviewMW,
@@ -33,24 +30,18 @@ const useReviews = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const createProductReview = useCallback(async (
-    productReview: CreateProductReview,
+    productReview: ProductReview,
     uploadImgs: UploadFile[],
     onSuccess?: () => void,
   ) => {
     setLoading(true);
     setSuccessMsg('');
     setErrorMsg('');
-    const relatedProductTexts = productReview.relatedProduct.split('.');
-    const id = parseInt(relatedProductTexts[0]);
-    const type = relatedProductTexts[1];
-    const isPack = type === 'pack' ? true : false;
     const reviewImg = uploadImgs.length >= 1 ? uploadImgs[0].file : undefined;
     createProductReviewMW(
       isLogged() ? token : '',
       intl.locale,
       productReview,
-      id,
-      isPack,
       reviewImg
     ).then((response) => {
       setReviews([response.review, ...reviews]);

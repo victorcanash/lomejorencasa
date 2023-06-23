@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box';
 
 import { VacuumBlogPageProps } from '@core/staticPages/vacuumBlog';
-import ProductReviews from '@core/components/ProductReviews';
 
 import Intro from './sections/Intro';
 import PackingMachine from './sections/PackingMachine';
@@ -52,8 +51,6 @@ const VacuumBlog = (props: VacuumBlogProps) => {
         type="characteristics"
         landingVacuumMachine={pageProps.landingVacuumMachine}
       />
-
-      <ProductReviews />
     </Box>
   );
 };

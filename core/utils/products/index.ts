@@ -12,7 +12,6 @@ import type {
   ProductDiscount,
   ProductPack,
   ProductReview,
-  CreateProductReview,
   ManageProductCategory,
 } from '@core/types/products';
 import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
@@ -291,9 +290,7 @@ export const getAllPacks = async (
 export const createProductReview = (
   token: string,
   currentLocale: string,
-  productReview: CreateProductReview,
-  relatedProductId: number,
-  isPack: boolean,
+  productReview: ProductReview,
   reviewImg?: File,
 ) => {
   return new Promise<{
@@ -311,10 +308,7 @@ export const createProductReview = (
       },
     };
     const data = new FormData();
-    data.append(
-      isPack ? 'packId' : 'productId',
-      relatedProductId.toString()
-    );
+    data.append('landingId', productReview.landingId.toString());
     data.append('rating', productReview.rating.toString());
     data.append('title', productReview.title);
     data.append('description', productReview.description);

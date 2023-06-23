@@ -1,4 +1,4 @@
-import { Dispatch, useRef, useState, SetStateAction } from 'react';
+import { Dispatch, useRef, useState, useMemo, SetStateAction } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 import { FormikProps } from 'formik';
@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import { FormFieldTypes } from '@core/constants/forms';
 import type { UploadFile } from '@core/types/multimedia';
 import type { User } from '@core/types/user';
-import type { CreateProductReview, ProductPack } from '@core/types/products';
+import type { ProductReview, Landing  } from '@core/types/products';
 import { getUserFullName } from '@core/utils/user';
 import { convertElementToSx } from '@core/utils/themes';
 import { useAuthContext } from '@core/contexts/AuthContext';
@@ -24,9 +24,10 @@ import UploadInput from '@core/components/inputs/UploadInput';
 import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ProductReviewFormProps = {
+  landing: Landing,
   errorMsg: string,
   successMsg: string,
-  createProductReview: (productReview: CreateProductReview, uploadImgs: UploadFile[], onSuccess?: (() => void) | undefined) => Promise<void>,
+  createProductReview: (productReview: ProductReview, uploadImgs: UploadFile[], onSuccess?: (() => void) | undefined) => Promise<void>,
   setExpanded: Dispatch<SetStateAction<boolean>>,
   expanded: boolean,
   emailQuery?: string,
@@ -34,6 +35,7 @@ type ProductReviewFormProps = {
 
 const ProductReviewForm = (props: ProductReviewFormProps) => {
   const {
+    landing,
     errorMsg,
     successMsg,
     createProductReview,
@@ -56,11 +58,11 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
     handleClickDeleteUploadBtn,
   } = useMultimedia();
 
-  const formRef = useRef<FormikProps<CreateProductReview> | null>(null);
+  const formRef = useRef<FormikProps<ProductReview> | null>(null);
 
   const [maxWidth, _setMaxWidth] = useState('500px');
 
-  const handleSubmit = async (values: CreateProductReview) => {
+  const handleSubmit = async (values: ProductReview) => {
     createProductReview(values, uploadImgs, onCreateProductReviewSuccess);
   };
 
@@ -104,14 +106,13 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
           formikRef={formRef}
           maxWidth={maxWidth}
           initialValues={{
-            relatedProduct: (getAllLandingsProducts()[0] as ProductPack)?.originalPrice ?
-              `${getAllLandingsProducts()[0].id}.pack` : `${getAllLandingsProducts()[0].id}.product`,
+            landingId: landing.id,
             rating: reviewFieldsInitValues.rating,
             title: reviewFieldsInitValues.title,
             description: reviewFieldsInitValues.description,
             email: user.email || emailQuery || userFieldsInitValues.email,
             publicName: (user as User)?.firstName ? getUserFullName(user as User) : reviewFieldsInitValues.publicName,
-          } as CreateProductReview}
+          } as ProductReview}
           validationSchema={productReviewFormValidation}
           enableReinitialize={true}
           formFieldGroups={[
@@ -121,22 +122,18 @@ const ProductReviewForm = (props: ProductReviewFormProps) => {
               },
               formFields: [
                 {
-                  name: 'relatedProduct',
+                  name: 'landingId',
                   type: FormFieldTypes.select,
                   required: true,
-                  menuItems: getAllLandingsProducts().map((item) => {
-                    const name = (item as ProductPack)?.originalPrice ?
-                      item.name.current : item.name.current;
-                    const value = (item as ProductPack)?.originalPrice ?
-                      `${item.id}.pack` : `${item.id}.product`;
+                  menuItems: [landing].map((item) => {
                     return {
                       text: {
                         id: 'forms.selectProduct.content',
                         values: {
-                          name: name,
+                          name: item.description.current,
                         },
                       },
-                      value: value,
+                      value: item.id,
                     };
                   }),
                 },

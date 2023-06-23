@@ -32,7 +32,7 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
             {`${intl.formatMessage({ id: 'forms.id' })}: ${product.id}`}
           </Typography>
           <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: 'forms.landingId' })}: ${product.landingId}`}
+            {`${intl.formatMessage({ id: 'forms.landingIdAdmin' })}: ${product.landingId}`}
           </Typography>
         </>
       }
@@ -50,12 +50,6 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
       </Typography>
       { !creating &&
         <>
-          <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: 'forms.rating' })}: ${product.rating}`}
-          </Typography>
-          <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: 'forms.reviewsCount' })}: ${product.reviewsCount}`}
-          </Typography>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.lowestPrice' })}: ${product.lowestPrice}`}
           </Typography>

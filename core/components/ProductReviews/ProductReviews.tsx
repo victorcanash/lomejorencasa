@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography';
 import Rating from '@mui/material/Rating';
 import Masonry from '@mui/lab/Masonry';
 
+import type { Landing } from '@core/types/products';
 import { convertToDate } from '@core/utils/dates';
 import { convertElementToSx } from '@core/utils/themes';
 import { useAppContext } from '@core/contexts/AppContext';
@@ -27,7 +28,15 @@ import ProductReviewForm from '@core/components/forms/products/ProductReviewForm
 
 import { themeCustomElements } from '@lib/config/theme/elements';
 
-const ProductReviews = () => {
+type ProductReviewsProps = {
+  landing?: Landing,
+};
+
+const ProductReviews = (props: ProductReviewsProps) => {
+  const {
+    landing,
+  } = props;
+
   const { initialized } = useAppContext();
 
   const router = useRouter();
@@ -41,6 +50,13 @@ const ProductReviews = () => {
     handleChangePage,
     createProductReview,
   } = useReviews();
+
+  const reviewsList = useMemo(() => {
+    if (landing) {
+      return reviews.filter(review => review.landingId === landing.id);
+    }
+    return reviews;
+  }, [landing, reviews])
 
   const [expandedForm, setExpandedForm] = useState(false);
 
@@ -63,7 +79,7 @@ const ProductReviews = () => {
     <>
       { initialized &&
         <>
-          <Container id="reviews">
+          <Container id="reviews" sx={{ mb: 4 }}>
             <Box 
               maxWidth="md"
               m="auto"
@@ -79,8 +95,9 @@ const ProductReviews = () => {
               />
 
               {/* Create ProductReview Form */}
-              <Box mb={4}>
+              { landing &&
                 <ProductReviewForm
+                  landing={landing}
                   errorMsg={errorMsg}
                   successMsg={successMsg}
                   createProductReview={createProductReview}
@@ -88,7 +105,7 @@ const ProductReviews = () => {
                   expanded={expandedForm}
                   emailQuery={getReviewsQueries()?.email}
                 />
-              </Box>
+              }
             </Box>
           </Container>
           <Container sx={{ px: { xs: 1.5, sm: 2 } }}>
@@ -98,9 +115,9 @@ const ProductReviews = () => {
             >
 
               {/* ProductReview List */}
-              { reviews.length > 0 ?
+              { reviewsList.length > 0 ?
                 <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={0}>
-                  { reviews.map((item, index) => (
+                  { reviewsList.map((review, index) => (
                     <Box key={index}>
                       <Box
                         sx={{
@@ -126,14 +143,14 @@ const ProductReviews = () => {
                               <Grid container justifyContent="space-between">
                                 <Grid item>
                                   <Rating
-                                    value={item.rating}
+                                    value={review.rating}
                                     precision={0.5}
                                     readOnly
                                   />        
                                 </Grid>
                                 <Grid item>
                                   <Typography component="div" variant="body2" color="text.disabled" width="min-content">
-                                    { convertToDate(item.createdAt, router.locale) }
+                                    { convertToDate(review.createdAt, router.locale) }
                                   </Typography>
                                 </Grid>
                               </Grid>
@@ -141,7 +158,7 @@ const ProductReviews = () => {
                             subheader={
                               <>
                                 <Typography component="div" variant="body1" color="text.primary">
-                                  {item.publicName}
+                                  {review.publicName}
                                 </Typography>
                                 <Typography
                                   component="div"
@@ -161,7 +178,7 @@ const ProductReviews = () => {
                               </>
                             }
                           />
-                          { item.imageUrl &&
+                          { review.imageUrl &&
                             <CardMedia>
                               <Box
                                 sx={{
@@ -172,7 +189,7 @@ const ProductReviews = () => {
                                 }}
                               >
                                 <CustomImage
-                                  src={item.imageUrl}
+                                  src={review.imageUrl}
                                   layout="fill"
                                   objectFit="cover"
                                 />
@@ -181,20 +198,17 @@ const ProductReviews = () => {
                           }
                           <CardContent
                             sx={{
-                              mt: item.imageUrl ? undefined : -2,
+                              mt: review.imageUrl ? undefined : -2,
                             }}
                           >
                             <Typography component="div" variant="body1Head" mb={1} sx={{ fontSize: '16px', fontWeight: '600' }}>
-                              {
-                                item.pack ?
-                                  item.pack.name.current : item.product?.name.current
-                              }
+                              { review.landing?.name.current || '' }
                             </Typography>
                             <Typography component="div" variant="body1Head" mb={1}>
-                              { item.title }
+                              { review.title }
                             </Typography>
                             <Typography component="div" variant="body1">
-                              { item.description }
+                              { review.description }
                             </Typography>
                           </CardContent>
                         </Card>
@@ -211,7 +225,7 @@ const ProductReviews = () => {
               }
 
               {/* Pagination */}
-              <Box mt={reviews.length > 0 ? 3 : 5} />
+              <Box mt={reviewsList.length > 0 ? 3 : 5} />
               <Pagination
                 totalPages={totalPages}
                 currentPage={currentPage}

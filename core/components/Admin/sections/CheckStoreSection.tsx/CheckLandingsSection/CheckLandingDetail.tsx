@@ -57,16 +57,24 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
           {`${intl.formatMessage({ id: 'forms.tutorialSource' })}: ${tutorialSource}`}
         </Typography>
       ))}
-
       {!creating &&
-        <Button
-          startIcon={<UpdateIcon />}
-          onClick={onClickUpdateBtn ? () => onClickUpdateBtn(landing) : undefined}
-        >
-          <FormattedMessage
-            id="admin.updateLandingBtn"
-          />
-        </Button>
+        <>
+          <Typography component="div" variant="body1">
+            {`${intl.formatMessage({ id: 'forms.rating' })}: ${landing.rating}`}
+          </Typography>
+          <Typography component="div" variant="body1">
+            {`${intl.formatMessage({ id: 'forms.reviewsCount' })}: ${landing.reviewsCount}`}
+          </Typography>
+
+          <Button
+            startIcon={<UpdateIcon />}
+            onClick={onClickUpdateBtn ? () => onClickUpdateBtn(landing) : undefined}
+          >
+            <FormattedMessage
+              id="admin.updateLandingBtn"
+            />
+          </Button>
+        </>
       }
     </>
   );
