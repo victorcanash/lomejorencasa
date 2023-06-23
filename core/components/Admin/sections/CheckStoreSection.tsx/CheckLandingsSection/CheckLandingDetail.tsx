@@ -5,7 +5,7 @@ import { useIntl, FormattedMessage } from 'react-intl';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import UpdateIcon from '@mui/icons-material/Update';
-// import Box from '@mui/material/Box';
+import Box from '@mui/material/Box';
 
 import type { Landing } from '@core/types/products';
 // import CustomImage from '@core/components/CustomImage';
@@ -47,16 +47,26 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.description.es' })}: ${landing.description.es}`}
       </Typography>
-      { landing.images.map((image, index) => (
-        <Typography key={index} component="div" variant="body1">
-          {`${intl.formatMessage({ id: 'forms.image' })}: ${image}`}
-        </Typography>
-      ))}
-      { landing.tutorialSources.map((tutorialSource, index) => (
-        <Typography key={index} component="div" variant="body1">
-          {`${intl.formatMessage({ id: 'forms.tutorialSource' })}: ${tutorialSource}`}
-        </Typography>
-      ))}
+      <Typography component="div" variant="body1">
+        {`${intl.formatMessage({ id: 'forms.images' })}:`}
+      </Typography>
+      <Box ml={1}>
+        { landing.images.map((image, index) => (
+          <Typography key={index} component="div" variant="body1">
+            {image}
+          </Typography>
+        ))}
+      </Box>
+      <Typography component="div" variant="body1">
+        {`${intl.formatMessage({ id: 'forms.tutorialSource' })}:`}
+      </Typography>
+      <Box ml={1}>
+        { landing.tutorialSources.map((tutorialSource, index) => (
+          <Typography key={index} component="div" variant="body1">
+            {tutorialSource}
+          </Typography>
+        ))}
+      </Box>
       {!creating &&
         <>
           <Typography component="div" variant="body1">

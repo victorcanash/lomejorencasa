@@ -23,8 +23,8 @@ import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
 import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';
 import ManagePDiscountForm from '@core/components/forms/admin/ManagePDiscountForm';
 import CheckLandingDetail from '../CheckLandingDetail';
-import CheckProductDetail from '../CheckProductDetail';
-import CheckProductPackDetail from '../CheckProductPackDetail';
+import CheckProductDetail from '../CheckLandingItemsDetail/CheckProductDetail';
+import CheckProductPackDetail from '../CheckLandingItemsDetail/CheckProductPackDetail';
 
 type CreateLandingSectionProps = {
   category: ProductCategory,
