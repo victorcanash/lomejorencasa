@@ -343,11 +343,12 @@ export const createProductReview = (
 };
 
 export const getAllProductReviews = async (
-  currentLocale: string, 
+  currentLocale: string,
   page: number,
   limit: number,
-  sortBy: string, 
-  order: string, 
+  sortBy: string,
+  order: string,
+  landingId?: number
 ) => {
   return new Promise<{
     reviews: ProductReview[], 
@@ -360,6 +361,7 @@ export const getAllProductReviews = async (
         limit,
         sortBy,
         order,
+        landingId,
       },
       headers: {
         ...getLanguageHeaders(currentLocale),

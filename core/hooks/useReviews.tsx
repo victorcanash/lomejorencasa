@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import type { UploadFile } from '@core/types/multimedia';
-import type { ProductReview } from '@core/types/products';
+import type { Landing, ProductReview } from '@core/types/products';
 import { scrollToSection } from '@core/utils/navigation';
 import {
   createProductReview as createProductReviewMW,
@@ -16,7 +16,7 @@ import snackbarConfig from '@lib/config/snackbar.config';
 import { useAppContext } from '@core/contexts/AppContext';
 import { useAuthContext } from '@core/contexts/AuthContext';
 
-const useReviews = () => {
+const useReviews = (landing?: Landing) => {
   const { initialized, setLoading } = useAppContext();
   const { token, isLogged } = useAuthContext();
 
@@ -80,14 +80,15 @@ const useReviews = () => {
     const limit = 10;
     const sortBy = 'id';
     const order = 'desc';
-    await getAllProductReviewsMW(intl.locale, page, limit, sortBy, order)
-      .then((response: { reviews: ProductReview[], totalPages: number, currentPage: number }) => {
+    await getAllProductReviewsMW(intl.locale, page, limit, sortBy, order, landing?.id)
+      .then((response) => {
+        console.log(response)
         setReviews(response.reviews);
         setTotalPages(response.totalPages);
       }).catch((_error: Error) => {
         setReviews([]);
       });
-  }, [intl.locale]);
+  }, [intl.locale, landing?.id]);
 
   useEffect(() => {
     if (initialized) {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import { FormattedMessage } from 'react-intl';
@@ -20,10 +20,12 @@ import type { Landing } from '@core/types/products';
 import { convertToDate } from '@core/utils/dates';
 import { convertElementToSx } from '@core/utils/themes';
 import { useAppContext } from '@core/contexts/AppContext';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import useReviews from '@core/hooks/useReviews';
 import Title from '@core/components/ui/Title';
 import Pagination from '@core/components/ui/Pagination';
 import CustomImage from '@core/components/multimedia/CustomImage';
+import Link from '@core/components/navigation/Link';
 import ProductReviewForm from '@core/components/forms/products/ProductReviewForm';
 
 import { themeCustomElements } from '@lib/config/theme/elements';
@@ -38,6 +40,7 @@ const ProductReviews = (props: ProductReviewsProps) => {
   } = props;
 
   const { initialized } = useAppContext();
+  const { getItemPath } = useProductsContext();
 
   const router = useRouter();
 
@@ -49,14 +52,7 @@ const ProductReviews = (props: ProductReviewsProps) => {
     totalPages,
     handleChangePage,
     createProductReview,
-  } = useReviews();
-
-  const reviewsList = useMemo(() => {
-    if (landing) {
-      return reviews.filter(review => review.landingId === landing.id);
-    }
-    return reviews;
-  }, [landing, reviews])
+  } = useReviews(landing);
 
   const [expandedForm, setExpandedForm] = useState(false);
 
@@ -115,9 +111,9 @@ const ProductReviews = (props: ProductReviewsProps) => {
             >
 
               {/* ProductReview List */}
-              { reviewsList.length > 0 ?
+              { reviews.length > 0 ?
                 <Masonry columns={{ xs: 2, sm: 2, md: 3 }} spacing={0}>
-                  { reviewsList.map((review, index) => (
+                  { reviews.map((review, index) => (
                     <Box key={index}>
                       <Box
                         sx={{
@@ -201,9 +197,26 @@ const ProductReviews = (props: ProductReviewsProps) => {
                               mt: review.imageUrl ? undefined : -2,
                             }}
                           >
-                            <Typography component="div" variant="body1Head" mb={1} sx={{ fontSize: '16px', fontWeight: '600' }}>
-                              { review.landing?.name.current || '' }
-                            </Typography>
+                            { (landing || !review.landing) ?
+                              <Typography
+                                component="div"
+                                variant="body1Head"
+                                mb={1}
+                                sx={{ fontSize: '16px', fontWeight: '600' }}
+                              >
+                                { review.landing?.name.current || '' }
+                              </Typography>
+                              :
+                              <Typography
+                                component={Link}
+                                href={getItemPath(review.landing)}
+                                variant="body1Head"
+                                mb={1}
+                                sx={{ fontSize: '16px', fontWeight: '600' }}
+                              >
+                                { review.landing.name.current }
+                              </Typography>
+                            }
                             <Typography component="div" variant="body1Head" mb={1}>
                               { review.title }
                             </Typography>
@@ -225,7 +238,7 @@ const ProductReviews = (props: ProductReviewsProps) => {
               }
 
               {/* Pagination */}
-              <Box mt={reviewsList.length > 0 ? 3 : 5} />
+              <Box mt={reviews.length > 0 ? 3 : 5} />
               <Pagination
                 totalPages={totalPages}
                 currentPage={currentPage}
