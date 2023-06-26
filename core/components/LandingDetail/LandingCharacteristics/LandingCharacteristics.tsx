@@ -23,19 +23,13 @@ const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
   const intl = useIntl();
 
   const getElements = useCallback((text: FormatText) => {
-    let count = 1;
-    //intl.fallbackOnEmptyString = false;
-    while (count !== -1) {
-      const existingText = intl.formatMessage({ id: `${text.id}.${count}`, defaultMessage: '' });
-      if (existingText) {
-        count++;
-      } else {
-        count = -1;
-      }
+    let count = 0;
+    while (intl.messages[`${text.id}.${count + 1}`]) {
+      count++;
     }
 
     const elements = [] as FormatText[];
-    if (count !== -1) {
+    if (count > 0) {
       for (let i = 0; i < count; i++) {
         elements.push({
           id: `${text.id}.${i + 1}`,
@@ -45,7 +39,9 @@ const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
                 <span style={{ fontWeight: 500 }}>
                   {chunks}
                 </span>
-                <Divider themeElement={themeCustomElements.dividers?.subdivider} />
+                <Divider
+                  themeElement={themeCustomElements.dividers?.subdivider}
+                />
               </>
             ),
           },
@@ -97,7 +93,9 @@ const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
             id: 'productDetail.shipping.title',
           }}
           elements={[
-            { id: 'productDetail.shipping.1' }, { id: 'productDetail.shipping.2' }, { id: 'productDetail.shipping.3' }
+            { id: 'productDetail.shipping.1' },
+            { id: 'productDetail.shipping.2' },
+            { id: 'productDetail.shipping.3' }
           ]}
           link={{
             path: pages.orders.path,
@@ -111,7 +109,8 @@ const LandingCharacteristics = (props: LandingCharacteristicsProps) => {
             id: 'productDetail.refund.title',
           }}
           elements={[
-            { id: 'productDetail.refund.1' }, { id: 'productDetail.refund.2' }
+            { id: 'productDetail.refund.1' },
+            { id: 'productDetail.refund.2' }
           ]}
           link={{
             path: pages.resolutions.path,

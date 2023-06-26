@@ -16,22 +16,19 @@ const LandingTutorials = (props: LandingTutorialsProps) => {
   const intl = useIntl();
 
   const tutorialPropsList = useMemo(() => {
-    let count = 1;
     const textId = `landing.${landing.slug}.tutorials`;
-    //intl.fallbackOnEmptyString = false;
-    while (count !== -1) {
-      const existingTitleText = intl.formatMessage({ id: `${textId}.${count}.title`, defaultMessage: '' });
-      const existingContentText = intl.formatMessage({ id: `${textId}.${count}.content`, defaultMessage: '' });
-      const existingSource = landing.tutorialSources.length >= count ? true : false;
-      if (existingTitleText && existingContentText && existingSource) {
-        count++;
-      } else {
-        count = -1;
-      }
+
+    let count = 0;
+    while (
+      intl.messages[`${textId}.${count + 1}.title`] &&
+      intl.messages[`${textId}.${count + 1}.content`] &&
+      landing.tutorialSources.length >= (count + 1)
+    ) {
+      count++;
     }
 
     const tutorialPropsElements = [] as LandingTutorialProps[];
-    if (count !== -1) {
+    if (count > 0) {
       for (let i = 0; i < count; i++) {
         tutorialPropsElements.push({
           title: {
