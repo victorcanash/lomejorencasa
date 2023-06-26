@@ -217,14 +217,14 @@ export const AdminProvider = ({ children }: { children: React.ReactNode }) => {
 
   const onManageLanding = (action: ManageActions, landing: Landing) => {
     const categoriesIds: number[] = [];
-    landing.products.forEach((product) => {
+    landing.products?.forEach((product) => {
       product.categories?.forEach((category) => {
         categoriesIds.push(category.id);
       });
     });
-    landing.packs.forEach((pack) => {
-      pack.inventories.forEach((inventory) => {
-        inventory.product.categories?.forEach((category) => {
+    landing.packs?.forEach((pack) => {
+      pack.inventories?.forEach((inventory) => {
+        inventory.product?.categories?.forEach((category) => {
           categoriesIds.push(category.id);
         });
       });

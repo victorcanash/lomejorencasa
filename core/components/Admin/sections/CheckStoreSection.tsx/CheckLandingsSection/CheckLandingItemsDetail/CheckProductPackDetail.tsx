@@ -1,9 +1,11 @@
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import type { ProductPack } from '@core/types/products';
+import Button from '@core/components/inputs/Button';
 import CheckProductInventoryDetail from './CheckProductInventoryDetail';
 
 type CheckProductPackDetailProps = {
@@ -65,21 +67,43 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'discountPercent' })}: ${productPack.discountPercent}`}
           </Typography>
+          <Typography component="div" variant="body1">
+            {`${intl.formatMessage({ id: 'forms.inventories' })}:`}
+            { productPack.inventories?.map((inventory, index) => (
+              <Box key={index} ml={1}>
+                <CheckProductInventoryDetail
+                  index={index}
+                  productInventory={inventory}
+                  creating={creating}
+                  onClickRemoveBtn={onClickRemoveInventoryBtn}
+                />
+              </Box>
+            ))}
+          </Typography>
         </>
       }
-      <Typography component="div" variant="body1">
-        {`${intl.formatMessage({ id: 'forms.inventories' })}:`}
-        { productPack.inventories?.map((inventory, index) => (
-          <Box key={index} ml={1}>
-            <CheckProductInventoryDetail
-              index={index}
-              productInventory={inventory}
-              creating={creating}
-              onClickRemoveBtn={onClickRemoveInventoryBtn}
-            />
-          </Box>
-        ))}
-      </Typography>
+      { creating &&
+        <Typography component="div" variant="body1">
+          {`${intl.formatMessage({ id: 'forms.inventoriesIds' })}:`}
+          { productPack.inventoriesIds?.map((inventoryId, index) => (
+            <Box key={index} ml={1}>
+              <Typography component="div" variant="body1">
+                { inventoryId }
+              </Typography>
+              { onClickRemoveInventoryBtn &&
+                <Button
+                  startIcon={<DeleteIcon />}
+                  onClick={() => onClickRemoveInventoryBtn(index)}
+                >
+                  <FormattedMessage
+                    id="app.removeBtn"
+                  />
+                </Button>
+              }
+            </Box>
+          ))}
+        </Typography>
+      }
     </>
   );
 };

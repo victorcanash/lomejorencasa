@@ -88,6 +88,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
 
   const onCancelCreateInventory = () => {
     setProduct(undefined);
+    setPack(undefined);
   };
 
   const onSuccessCreateDiscount = (discount: ProductDiscount) => {
@@ -106,11 +107,19 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
   };
 
   const onClickRemoveInventoryBtn = (index: number) => {
-    const newProduct = {
-      ...product,
-      inventories: product?.inventories ? product.inventories.filter((_inventory, inventoryIndex) => inventoryIndex !== index) : [],
-    } as Product;
-    setProduct(newProduct);
+    if (product) {
+      const newProduct = {
+        ...product,
+        inventories: product?.inventories ? product.inventories.filter((_inventory, inventoryIndex) => inventoryIndex !== index) : [],
+      } as Product;
+      setProduct(newProduct);
+    } else if (pack) {
+      const newPack = {
+        ...pack,
+        inventoriesIds: pack?.inventoriesIds ? pack.inventoriesIds.filter((_inventoryId, inventoryIndex) => inventoryIndex !== index) : [],
+      } as ProductPack;
+      setPack(newPack);
+    }
   };
 
   const onClickRemoveDiscountBtn = (index: number) => {
@@ -249,13 +258,27 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
         </>
       }
 
+      { (landing && !createProduct && createPack && !product && pack) &&
+        <Button
+          fullWidth
+          onClick={onCancelCreateInventory}
+        >
+          <FormattedMessage
+            id="app.cancelBtn"
+          />
+        </Button>
+      }
+
       {/* Confirmation */}
       { (landing && (createProduct || createPack) && (product || pack)) &&
         <Box mt={4}>
           <Button
             fullWidth
             onClick={handleConfirmBtn}
-            disabled={!product?.inventories || product.inventories.length < 1}
+            disabled={
+              (product && (!product.inventories || product.inventories.length < 1)) ||
+              (pack && (!pack.inventoriesIds || pack.inventoriesIds.length < 1))
+            }
           >
             <FormattedMessage
               id="admin.confirmBtn"

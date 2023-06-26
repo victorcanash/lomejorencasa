@@ -157,7 +157,7 @@ const useAdminStore = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (newLanding) {
-        await manageLandingMW(ManageActions.delete, token, intl.locale, landing);
+        await manageLandingMW(ManageActions.delete, token, intl.locale, newLanding);
       }
       setLoading(false);
       setErrorMsg(error.message);
