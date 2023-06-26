@@ -7,6 +7,7 @@ const navigationConfig: {
     home: Page,
     collections: Page,
     products: Page,
+    offers: Page,
     about: Page,
     faq: Page,
     cart: Page,
@@ -68,6 +69,15 @@ const navigationConfig: {
     products: {
       path: '/colecciones/todo',
       filepath: '/colecciones/todo',
+      protection: Protections.none,
+      type: PageTypes.main,
+      savePathOnLogin: {
+        enabled: true,
+      },
+    },
+    offers: {
+      path: '/colecciones/ofertas',
+      filepath: '/colecciones/ofertas',
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {

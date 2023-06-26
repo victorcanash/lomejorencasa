@@ -119,10 +119,11 @@ export const getProductCategory = async (
 
 export const getAllLandings = async (
   productsData?: boolean,
+  onlyOffers?: boolean,
   page?: number,
   limit?: number,
   sortBy?: string,
-  order?: string
+  order?: string,
 ) => {
   return new Promise<{
     landings: Landing[],
@@ -131,7 +132,8 @@ export const getAllLandings = async (
   }>(async (resolve, reject) => {
     const options: AxiosRequestConfig = {
       params: {
-        productsData: productsData,
+        productsData,
+        onlyOffers,
         page: page || 1,
         limit: limit || 1000,
         sortBy: sortBy || 'id',

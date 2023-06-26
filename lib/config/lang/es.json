@@ -43,6 +43,7 @@
   "header.drawerItems.home": "Inicio",
   "header.drawerItems.shop": "Tienda",
   "header.drawerItems.all": "Todo",
+  "header.drawerItems.offers": "Ofertas",
   "header.drawerItems.unloggedProfile": "Identifícate",
   "header.drawerItems.loggedProfile": "Tu perfil",
   "header.drawerItems.orders": "Sigue tu pedido",
@@ -219,6 +220,10 @@
   "products.metas.title": "Productos",
   "products.metas.description": "Productos",
   "products.h1": "Productos",
+
+  "offers.metas.title": "Ofertas",
+  "offers.metas.description": "Ofertas",
+  "offers.h1": "Ofertas",
 
   "productList.home": "Inicio",
   "productList.collections": "Colecciones",

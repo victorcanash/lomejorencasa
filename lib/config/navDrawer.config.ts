@@ -21,6 +21,12 @@ const navDrawerConfig: NavDrawerConfig = {
           },
           path: pages.products.path,
         },
+        {
+          text: {
+            id: 'offers',
+          },
+          path: pages.offers.path,
+        },
       ],
       categories: true,
     },
