@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, ChangeEvent } from 'react';
+import { useMemo } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -12,7 +12,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import type { FormatText } from '@core/types/texts';
 import type { Landing, ProductCategory } from '@core/types/products';
-import { scrollToSection } from '@core/utils/navigation';
+import usePagination from '@core/hooks/usePagination';
 import Link from '@core/components/navigation/Link';
 import Title from '@core/components/ui/Title';
 import Pagination from '@core/components/ui/Pagination';
@@ -35,26 +35,16 @@ const LandingList = (props: LandingListProps) => {
     title,
   } = props;
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const limitByPage = useMemo(() => {
-    return 40;
-  }, []);
+  const {
+    currentPage,
+    allItems,
+    totalPages,
+    handleChangePage,
+  } = usePagination(landings, 'landings');
 
   const allLandings = useMemo(() => {
-    return landings.slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
-  }, [currentPage, landings, limitByPage]);
-
-  const totalPages = useMemo(() => {
-    return Math.ceil(allLandings.length / limitByPage);
-  }, [allLandings.length, limitByPage]);
-
-  const handleChangePage = useCallback((_event: ChangeEvent<unknown>, page: number) => {
-    setCurrentPage(page);
-    setTimeout(() => {
-      scrollToSection('landings', false);
-    });
-  }, []);
+    return allItems as Landing[];
+  }, [allItems]);
 
   return (
     <Container

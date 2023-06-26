@@ -1,4 +1,4 @@
-import { useState, useMemo, useCallback, ChangeEvent } from 'react';
+import { useMemo } from 'react';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -9,7 +9,7 @@ import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack'; 
 
 import type { ProductCategory, ProductCategoryGroup } from '@core/types/products';
-import { scrollToSection } from '@core/utils/navigation';
+import usePagination from '@core/hooks/usePagination';
 import Pagination from '@core/components/ui/Pagination';
 import CategoryItem from './CategoryItem';
 
@@ -24,29 +24,20 @@ const CategoryList = (props: CategoryListProps) => {
     categories,
   } = props;
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const limitByPage = useMemo(() => {
-    return 40;
-  }, []);
+  const {
+    currentPage,
+    allItems,
+    totalPages,
+    handleChangePage,
+  } = usePagination(categories, 'categories');
 
   const allCategories = useMemo(() => {
-    return categories.slice((currentPage - 1) * limitByPage, currentPage * limitByPage);
-  }, [currentPage, categories, limitByPage]);
-
-  const totalPages = useMemo(() => {
-    return Math.ceil(allCategories.length / limitByPage);
-  }, [allCategories.length, limitByPage]);
-
-  const handleChangePage = useCallback((_event: ChangeEvent<unknown>, page: number) => {
-    setCurrentPage(page);
-    setTimeout(() => {
-      scrollToSection('landings', false);
-    });
-  }, []);
+    return allItems as (ProductCategory | ProductCategoryGroup)[];
+  }, [allItems]);
 
   return (
     <Container
+      id="categories"
       sx={{
         mt: type === 'stack' ? 6 : undefined,
         overflowX: type === 'stack' ? 'auto' : undefined,
