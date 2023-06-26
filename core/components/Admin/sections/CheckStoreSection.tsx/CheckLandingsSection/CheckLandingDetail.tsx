@@ -50,7 +50,7 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.images' })}:`}
       </Typography>
-      <Box ml={1}>
+      <Box ml={2}>
         { landing.images.map((image, index) => (
           <Typography key={index} component="div" variant="body1">
             {image}
@@ -60,7 +60,7 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.tutorialSource' })}:`}
       </Typography>
-      <Box ml={1}>
+      <Box ml={2}>
         { landing.tutorialSources.map((tutorialSource, index) => (
           <Typography key={index} component="div" variant="body1">
             {tutorialSource}

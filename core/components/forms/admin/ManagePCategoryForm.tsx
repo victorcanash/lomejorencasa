@@ -59,7 +59,14 @@ const ManagePCategoryForm = (props: ManagePCategoryFormProps) => {
 
   const handleDeleteBtn = () => {
     if (productCategory) {
-      manageProductCategory(ManageActions.delete, productCategory, onDeleteSuccess);
+      manageProductCategory(
+        ManageActions.delete,
+        {
+          ...productCategory,
+          isCategoryGroup,
+        },
+        onDeleteSuccess
+      );
     }
   };
 

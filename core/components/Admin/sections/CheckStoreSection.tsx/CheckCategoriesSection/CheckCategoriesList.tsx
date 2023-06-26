@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
+import Box from '@mui/material/Box';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -32,6 +33,8 @@ const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
     checkCategoriesWithoutGroup,
   } = useAdminContext();
 
+  const intl = useIntl();
+
   return (
     <>
       <Accordion>
@@ -58,23 +61,28 @@ const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
                 onClickSelectBtn={onClickSelectBtn}
                 onClickUpdateBtn={onClickUpdateBtn}
               />
-              <Button
-                startIcon={<CreateIcon />}
-                onClick={() => onClickCreateBtn(false, checkCategoryGroup.categoryGroup.id)}
-              >
-                <FormattedMessage
-                  id="admin.createCategoryBtn"
-                />
-              </Button>
-              { checkCategoryGroup.checkCategories.map((checkCategory) => (
-                <Fragment key={checkCategory.category.id}>
-                  <CheckCategoryDetail
-                    checkCategory={checkCategory}
-                    onClickSelectBtn={onClickSelectBtn}
-                    onClickUpdateBtn={onClickUpdateBtn}
+              <Typography component="div" variant="body1">
+                {`${intl.formatMessage({ id: 'forms.categories' })}:`}
+              </Typography>
+              <Box ml={2}>
+                <Button
+                  startIcon={<CreateIcon />}
+                  onClick={() => onClickCreateBtn(false, checkCategoryGroup.categoryGroup.id)}
+                >
+                  <FormattedMessage
+                    id="admin.createCategoryBtn"
                   />
-                </Fragment>
-              ))}
+                </Button>
+                { checkCategoryGroup.checkCategories.map((checkCategory) => (
+                  <Fragment key={checkCategory.category.id}>
+                    <CheckCategoryDetail
+                      checkCategory={checkCategory}
+                      onClickSelectBtn={onClickSelectBtn}
+                      onClickUpdateBtn={onClickUpdateBtn}
+                    />
+                  </Fragment>
+                ))}
+              </Box>
             </Fragment>
           ))}
         </AccordionDetails>

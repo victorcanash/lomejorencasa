@@ -61,7 +61,7 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.categories' })}:`}
         { product.categories?.map((category) => (
-          <Box key={category.id} ml={1}>
+          <Box key={category.id} ml={2}>
             { category.name.current }
           </Box>
         ))}
@@ -69,7 +69,7 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.inventories' })}:`}
         { product.inventories?.map((inventory, index) => (
-          <Box key={index} ml={1}>
+          <Box key={index} ml={2}>
             <CheckProductInventoryDetail
               index={index}
               productInventory={inventory}
@@ -82,7 +82,7 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.discounts' })}:`}
         { product.discounts?.map((discount, index) => (
-          <Box key={index} ml={1}>
+          <Box key={index} ml={2}>
             <CheckProductDiscountDetail
               index={index}
               productDiscount={discount}
