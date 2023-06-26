@@ -11,18 +11,19 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import type { FormatText } from '@core/types/texts';
-import type { Landing, ProductCategory } from '@core/types/products';
+import type { Landing, ProductCategoryGroup, ProductCategory } from '@core/types/products';
 import usePagination from '@core/hooks/usePagination';
 import Link from '@core/components/navigation/Link';
 import Title from '@core/components/ui/Title';
 import Pagination from '@core/components/ui/Pagination';
+import CategoryList from '@core/components/CategoryList';
 import LandingItem from './LandingItem';
 
 import { pages } from '@lib/config/navigation.config';
 
 type LandingListProps = {
   type: 'collectionsPage' | 'stack',
-  category?: ProductCategory,
+  category?: ProductCategoryGroup | ProductCategory,
   landings: Landing[],
   title?: FormatText,
 };
@@ -94,6 +95,15 @@ const LandingList = (props: LandingListProps) => {
           }}
           divider={type === 'collectionsPage' ? true : false}
         />
+
+        { (type === 'collectionsPage' && (category as ProductCategoryGroup)?.categories) &&
+          <Box mx={-2} mb={4}>
+            <CategoryList
+              type="stack"
+              categories={(category as ProductCategoryGroup).categories || []}
+            />
+          </Box>
+        }
 
         {/* List */}
         { allLandings.length > 0 ?

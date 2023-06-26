@@ -5,7 +5,7 @@ import type { Landing, ProductCategory, ProductCategoryGroup } from '@core/types
 import { getAllProductCategories, getProductCategory } from '@core/utils/products';
 
 export type CategoryPageProps = {
-  category: ProductCategory,
+  category: ProductCategoryGroup | ProductCategory,
   landings: Landing[],
 };
 
@@ -48,7 +48,7 @@ export const getCategoryStaticPaths: GetStaticPaths = async () => {
 export const getCategoryStaticProps: GetStaticProps = async (context) => {
   const { category: slug } = context.params as ICategoryPageParams;
 
-  let category: ProductCategory = {} as ProductCategory;
+  let category: ProductCategoryGroup | ProductCategory = {} as ProductCategory;
   let landings: Landing[] = [];
   await getProductCategory(slug)
     .then((response) => {
