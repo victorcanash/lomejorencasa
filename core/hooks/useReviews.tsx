@@ -82,7 +82,6 @@ const useReviews = (landing?: Landing) => {
     const order = 'desc';
     await getAllProductReviewsMW(intl.locale, page, limit, sortBy, order, landing?.id)
       .then((response) => {
-        console.log(response)
         setReviews(response.reviews);
         setTotalPages(response.totalPages);
       }).catch((_error: Error) => {
