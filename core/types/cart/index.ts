@@ -19,6 +19,7 @@ export type CartItem = {
   inventory?: ProductInventory,
   pack?: ProductPack,
   quantity: number,
+  landingSlug?: string,
 };
 
 
@@ -40,6 +41,7 @@ export type GuestCartCheckItem = {
   inventory?: ProductInventory,
   pack?: ProductPack,
   quantity: number,
+  landingSlug?: string,
 };
 
 export type TotalAmount = {

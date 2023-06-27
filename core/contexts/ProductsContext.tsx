@@ -51,8 +51,8 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       } else {
         return `/colecciones/${(item as ProductCategory | ProductCategoryGroup).slug}`;
       }
-    } else if ((item as CartItem | GuestCartCheckItem)?.inventory) {
-      return pages.home.path;
+    } else if ((item as CartItem | GuestCartCheckItem)?.landingSlug) {
+      return `/productos/${(item as CartItem | GuestCartCheckItem).landingSlug}`;
     }
     return pages.home.path;
   }, []);
