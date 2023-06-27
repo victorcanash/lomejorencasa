@@ -83,8 +83,8 @@ const useCart = (checkTotalAmount = true) => {
     // Update cart item
     if (cartItemIndex > -1) {
       manageCartItem(ManageActions.update, token, cart, cartItem)
-        .then((_response: { cartItem: CartItem }) => {
-          cart.items[cartItemIndex] = cartItem;
+        .then((response: { cartItem: CartItem }) => {
+          cart.items[cartItemIndex] = response.cartItem;
           onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout);
         }).catch((_error: Error) => {
           onAddCartItemError();
@@ -94,8 +94,7 @@ const useCart = (checkTotalAmount = true) => {
     } else {
       manageCartItem(ManageActions.create, token, cart, cartItem)
         .then((response: { cartItem: CartItem }) => {
-          cartItem.id = response.cartItem.id;
-          cart.items.push(cartItem);
+          cart.items.push(response.cartItem);
           onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout);
         }).catch((_error: Error) => {
           onAddCartItemError();

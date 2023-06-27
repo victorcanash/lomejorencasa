@@ -1,6 +1,6 @@
 import type { FormatText, LocalizedText } from '@core/types/texts';
-import { NavItem } from '@core/types/navigation';
-import { Source } from '@core/types/multimedia';
+import type { NavItem } from '@core/types/navigation';
+import type { Source } from '@core/types/multimedia';
 
 export type ProductBannerConfig = {
   items: {
@@ -64,6 +64,7 @@ export type Product = {
   inventories?: ProductInventory[],
   discounts?: ProductDiscount[],
   activeDiscount?: ProductDiscount,
+  landing?: Landing,
 };
 
 export type ProductPack = {
@@ -79,6 +80,7 @@ export type ProductPack = {
   discountPercent: number,
   inventories: ProductInventory[],
   inventoriesIds: number[],
+  landing?: Landing,
 };
 
 export type ProductInventory = {

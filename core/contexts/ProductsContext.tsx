@@ -51,8 +51,10 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
       } else {
         return `/colecciones/${(item as ProductCategory | ProductCategoryGroup).slug}`;
       }
-    } else if ((item as CartItem | GuestCartCheckItem)?.landingSlug) {
-      return `/productos/${(item as CartItem | GuestCartCheckItem).landingSlug}`;
+    } else if ((item as CartItem | GuestCartCheckItem)?.inventory?.product?.landing) {
+      return `/productos/${(item as CartItem | GuestCartCheckItem).inventory?.product?.landing?.slug}`;
+    } else if ((item as CartItem | GuestCartCheckItem)?.pack?.landing) {
+      return `/productos/${(item as CartItem | GuestCartCheckItem).pack?.landing?.slug}`;
     }
     return pages.home.path;
   }, []);
