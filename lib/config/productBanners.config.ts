@@ -1,8 +1,78 @@
-import type { ProductBannerConfig } from '@core/types/products';
+import type { HomeBannersConfig, ProductBannerConfig } from '@core/types/banners';
 
 import { keywords } from '@lib/config/next-seo.config';
+import { pages } from '@lib/config/navigation.config';
 
-const productBannerConfig: ProductBannerConfig = {
+export const homeBannersConfig: HomeBannersConfig = {
+  allProducts: {
+    items: [
+      {
+        contentText: {
+          id: 'home.banner.1',
+        },
+        source: { 
+          src: 'v1687877275/LO%20MEJOR%20EN%20CASA/banners/kitchen_x2znfk.jpg',
+          alt: keywords.vacuumMachine.others[0],
+          priority: true,
+          width: '1920',
+          height: '1282', 
+        },
+        button: {
+          path: pages.products.path,
+          text: {
+            id: 'home.banner.buyBtn',
+          },
+        },
+      },
+    ],
+  },
+  seasonal: {
+    items: [
+      {
+        contentText: {
+          id: 'home.banner.1',
+        },
+        source: { 
+          src: 'v1687877275/LO%20MEJOR%20EN%20CASA/banners/kitchen_x2znfk.jpg',
+          alt: keywords.vacuumMachine.others[0],
+          priority: true,
+          width: '1920',
+          height: '1282', 
+        },
+        button: {
+          path: pages.products.path,
+          text: {
+            id: 'home.banner.buyBtn',
+          },
+        },
+      },
+    ],
+  },
+  offers: {
+    items: [
+      {
+        contentText: {
+          id: 'home.banner.1',
+        },
+        source: { 
+          src: 'v1687877275/LO%20MEJOR%20EN%20CASA/banners/kitchen_x2znfk.jpg',
+          alt: keywords.vacuumMachine.others[0],
+          priority: true,
+          width: '1920',
+          height: '1282', 
+        },
+        button: {
+          path: pages.products.path,
+          text: {
+            id: 'home.banner.buyBtn',
+          },
+        },
+      },
+    ],
+  },
+};
+
+export const vacuumBannerConfig: ProductBannerConfig = {
   items: [
     {
       contentText: {
@@ -78,5 +148,3 @@ const productBannerConfig: ProductBannerConfig = {
     },
   ],
 };
-
-export default productBannerConfig;

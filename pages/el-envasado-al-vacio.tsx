@@ -20,12 +20,6 @@ const VacuumBlogPage: NextPage<VacuumBlogPageProps> = (props) => {
           titleAdd: keywords.vacuumMachine.main,
           descriptionAdd: keywords.vacuumMachine.main,
         }}
-        marginTop={true}
-        texts={{
-          title: {
-            id: 'home.intro.title',
-          },
-        }}
       />
 
       <VacuumBlog

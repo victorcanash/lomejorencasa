@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 
 import { HomePageProps } from '@core/staticPages/home';
-import ProductBanner from '@core/components/banners/ProductBanner';
+import AllProductsBanner from '@core/components/banners/productBanners/AllProductsBanner';
 import CategoryList from '@core/components/CategoryList';
 import LandingList from '@core/components/LandingList';
 import BlogsList from '@core/components/BlogsList';
@@ -15,7 +15,7 @@ const HomeView = (props: HomeViewProps) => {
 
   return (
     <Box>
-      <ProductBanner />
+      <AllProductsBanner />
       <CategoryList
         type="stack"
         categories={pageProps.categoryGroups}

@@ -4,6 +4,8 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
+import Title from '@core/components/ui/Title';
+
 const Intro = () => {
 
   return (
@@ -12,6 +14,15 @@ const Intro = () => {
         maxWidth="sm"
         m="auto"
       >
+        <Title
+          type="h1"
+          texts={{
+            title: {
+              id: 'home.intro.title',
+            },
+          }}
+          divider={true}
+        />
         <Typography component="div" variant="body1">
           <FormattedMessage id="home.intro.description" />
         </Typography>

@@ -12,11 +12,12 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { convertElementToSx } from '@core/utils/themes';
 import LinkButton from '@core/components/inputs/LinkButton';
 import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
-import productBannerConfig from '@lib/config/productBanner.config';
+
+import { vacuumBannerConfig } from '@lib/config/productBanners.config';
 import { pages } from '@lib/config/navigation.config';
 import { themeCustomElements } from '@lib/config/theme/elements';
 
-const ProductBanner = () => {
+const VacuumBanner = () => {
   const smallBreakpoint = useMediaQuery('(max-width:600px)');
 
   const styleXs = useMemo(() => {
@@ -83,7 +84,7 @@ const ProductBanner = () => {
               disableOnInteraction: false,
             }}
           >
-            { productBannerConfig.items.map((item, index) => (
+            { vacuumBannerConfig.items.map((item, index) => (
               <SwiperSlide key={index}>
                 <MultimediaContainer
                   type="banner"
@@ -145,4 +146,4 @@ const ProductBanner = () => {
   );
 };
 
-export default ProductBanner;
+export default VacuumBanner;

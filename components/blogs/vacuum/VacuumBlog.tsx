@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 
 import { VacuumBlogPageProps } from '@core/staticPages/vacuumBlog';
+import VacuumBanner from '@core/components/banners/productBanners/VacuumBanner';
 
 import Intro from './sections/Intro';
 import PackingMachine from './sections/PackingMachine';
@@ -26,6 +27,8 @@ const VacuumBlog = (props: VacuumBlogProps) => {
         overflow: 'hidden',
       }}
     >
+      <VacuumBanner />
+
       <Intro />
 
       <PackingMachine />
