@@ -1,4 +1,4 @@
-import {
+/*import {
   createContext,
   useCallback,
   useState,
@@ -85,4 +85,4 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </SearchContext.Provider>
   );
-};
+};*/
