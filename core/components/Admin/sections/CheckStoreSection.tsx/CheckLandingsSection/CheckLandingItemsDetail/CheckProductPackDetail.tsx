@@ -3,6 +3,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import DeleteIcon from '@mui/icons-material/Delete';
+import UpdateIcon from '@mui/icons-material/Update';
 
 import type { ProductPack } from '@core/types/products';
 import Button from '@core/components/inputs/Button';
@@ -11,6 +12,7 @@ import CheckProductInventoryDetail from './CheckProductInventoryDetail';
 type CheckProductPackDetailProps = {
   productPack: ProductPack,
   creating?: boolean,
+  onClickUpdateBtn?: (productPack: ProductPack) => void,
   onClickRemoveInventoryBtn?: (index: number) => void,
 };
 
@@ -18,6 +20,7 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
   const {
     productPack,
     creating,
+    onClickUpdateBtn,
     onClickRemoveInventoryBtn,
   } = props;
 
@@ -65,12 +68,12 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
             {`${intl.formatMessage({ id: 'forms.originalPrice' })}: ${productPack.originalPrice}`}
           </Typography>
           <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: 'discountPercent' })}: ${productPack.discountPercent}`}
+            {`${intl.formatMessage({ id: 'forms.discountPercent' })}: ${productPack.discountPercent}`}
           </Typography>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.inventories' })}:`}
             { productPack.inventories?.map((inventory, index) => (
-              <Box key={index} ml={1}>
+              <Box key={index} ml={1}> 
                 <CheckProductInventoryDetail
                   index={index}
                   productInventory={inventory}
@@ -103,6 +106,16 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
             </Box>
           ))}
         </Typography>
+      }
+      { !creating &&
+        <Button
+          startIcon={<UpdateIcon />}
+          onClick={onClickUpdateBtn ? () => onClickUpdateBtn(productPack) : undefined}
+        >
+          <FormattedMessage
+            id="admin.updatePackBtn"
+          />
+        </Button>
       }
     </>
   );

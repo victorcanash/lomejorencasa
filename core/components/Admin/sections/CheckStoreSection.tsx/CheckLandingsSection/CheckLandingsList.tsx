@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
 
+import Box from '@mui/material/Box';
+
 import type { CheckCategory } from '@core/types/admin';
 import type { Landing } from '@core/types/products';
 import CheckLandingDetail from './CheckLandingDetail';
@@ -19,6 +21,7 @@ const CheckLandingsList = (props: CheckLandingsListProps) => {
     <>
       { checkCategory.landings.map((landing) => (
         <Fragment key={landing.id}>
+          <Box mt={3} />
           <CheckLandingDetail
             landing={landing}
             onClickUpdateBtn={onClickUpdateBtn}

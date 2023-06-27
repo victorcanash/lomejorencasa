@@ -1,15 +1,18 @@
-import { useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import UpdateIcon from '@mui/icons-material/Update';
 
 import type { Product } from '@core/types/products';
+import Button from '@core/components/inputs/Button';
 import CheckProductDiscountDetail from './CheckProductDiscountDetail';
 import CheckProductInventoryDetail from './CheckProductInventoryDetail';
 
 type CheckProductDetailProps = {
   product: Product,
   creating?: boolean,
+  onClickUpdateBtn?: (product: Product) => void,
   onClickRemoveInventoryBtn?: (index: number) => void,
   onClickRemoveDiscountBtn?: (index: number) => void,
 };
@@ -18,6 +21,7 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
   const {
     product,
     creating,
+    onClickUpdateBtn,
     onClickRemoveInventoryBtn,
     onClickRemoveDiscountBtn,
   } = props;
@@ -93,9 +97,19 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
         ))}
       </Typography>
       { !creating &&
-        <Typography component="div" variant="body1">
-          {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
-        </Typography>
+        <>
+          <Typography component="div" variant="body1">
+            {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
+          </Typography>
+          <Button
+            startIcon={<UpdateIcon />}
+            onClick={onClickUpdateBtn ? () => onClickUpdateBtn(product) : undefined}
+          >
+            <FormattedMessage
+              id="admin.updateProductBtn"
+            />
+          </Button>
+        </>
       }
     </>
   );
