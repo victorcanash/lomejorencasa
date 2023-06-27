@@ -1,4 +1,4 @@
-/*import {
+import {
   createContext,
   useCallback,
   useState,
@@ -7,7 +7,7 @@
   useContext,
 } from 'react';
 
-import { AdminSections } from '@core/constants/admin';
+// import { AdminSections } from '@core/constants/admin';
 import searchConfig from '@lib/config/search.config';
 import type { ProductCategory } from '@core/types/products';
 
@@ -55,17 +55,17 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
     admin = false
   ) => {
     const pagePath = !admin ? `${pages.home.path}/${categoryName}` : pages.admin.path;
-    let queries = `?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
-    if (admin) {
+    const queries = `?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
+    /*if (admin) {
       queries += `&section=${AdminSections.checkProducts}`;
-    }
+    }*/
     return `${pagePath}${queries}`;
   }, [order, sortBy]);
 
   const getPacksHref = useCallback((page = 1) => {
     const pagePath = pages.admin.path;
-    let queries = `?page=${page}&sortBy=${sortBy}&order=${order}`;
-    queries += `&section=${AdminSections.checkProductPacks}`;
+    const queries = `?page=${page}&sortBy=${sortBy}&order=${order}`;
+    //queries += `&section=${AdminSections.checkProductPacks}`;
     return `${pagePath}${queries}`;
   }, [order, sortBy]);
 
@@ -85,4 +85,4 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </SearchContext.Provider>
   );
-};*/
+};
