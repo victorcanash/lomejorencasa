@@ -26,6 +26,7 @@ type LandingListProps = {
   category?: ProductCategoryGroup | ProductCategory,
   landings: Landing[],
   title?: FormatText,
+  marginBottom?: boolean,
 };
 
 const LandingList = (props: LandingListProps) => {
@@ -34,6 +35,7 @@ const LandingList = (props: LandingListProps) => {
     category,
     landings,
     title,
+    marginBottom,
   } = props;
 
   const {
@@ -52,6 +54,7 @@ const LandingList = (props: LandingListProps) => {
       id="landings"
       sx={{
         overflowX: type === 'stack' ? 'auto' : undefined,
+        mb: marginBottom ? 6 : undefined,
       }}
     >
       <Box 

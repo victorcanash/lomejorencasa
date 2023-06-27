@@ -90,6 +90,20 @@ export type ThemeCustomConfig = {
     register?: {
       discountPercentText?: ThemeElement,
     },
+    home?: {
+      allProducts?: {
+        default?: ThemeElement,
+        small?: ThemeElement,
+      },
+      seasonal?: {
+        default?: ThemeElement,
+        small?: ThemeElement,
+      },
+      offers?: {
+        default?: ThemeElement,
+        small?: ThemeElement,
+      },
+    },
   },
   navBar?: {
     shippingBar?: {
@@ -144,6 +158,7 @@ export type ThemeCustomConfig = {
     },
     payNow?: ThemeElement,
     acceptCookies?: ThemeElement,
+    banner?: ThemeElement,
   },
   forms?: {
     accordion?: {

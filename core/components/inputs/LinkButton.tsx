@@ -8,7 +8,7 @@ import Link, { LinkProps } from '@core/components/navigation/Link';
 import { themeCustomElements } from '@lib/config/theme/elements';
 
 type ButtonProps = {
-  customtype?: 'actionPrimary' | 'actionSecondary',
+  customtype?: 'actionPrimary' | 'actionSecondary' | 'banner',
 };
 
 const LinkButton = (props: MuiButtonProps & LinkProps & ButtonProps) => {
@@ -23,6 +23,9 @@ const LinkButton = (props: MuiButtonProps & LinkProps & ButtonProps) => {
     } else if (customtype === 'actionSecondary') {
       return themeCustomElements.button?.action?.secondary ?
         convertElementToSx(themeCustomElements.button.action.secondary) : undefined;
+    } else if (customtype === 'banner') {
+      return themeCustomElements.button?.banner ?
+        convertElementToSx(themeCustomElements.button.banner) : undefined;
     }
     return undefined;
   }, [customtype]);

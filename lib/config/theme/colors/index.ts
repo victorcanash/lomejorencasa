@@ -33,6 +33,7 @@ const colors = {
     footer: '#FFFFFF',
     action: '#D32F2F',
     verified: '#0072C3',
+    banner: '#323232',
   },
   border: {
     divider: '#505252',

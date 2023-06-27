@@ -9,6 +9,7 @@ export type HomeBannersConfig = {
 };
 
 export type ProductBannerConfig = {
+  height: string,
   items: {
     contentText: FormatText,
     source: Source,

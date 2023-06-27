@@ -47,9 +47,23 @@ const typographies = {
     lineHeight: '26px',
     textTransform: 'uppercase',
   } as ThemeFontPropertyElement,
-  homeBanner: {
+  vacuumBanner: {
     default: {
       fontSize: '36px',
+      fontWeight: '700',
+      lineHeight: '42px',
+      letterSpacing: '0.17px',
+    } as ThemeFontPropertyElement,
+    small: {
+      fontSize: '33px',
+      fontWeight: '700',
+      lineHeight: '42px',
+      letterSpacing: '0.17px',
+    } as ThemeFontPropertyElement,
+  },
+  allProductsBanner: {
+    default: {
+      fontSize: '40px',
       fontWeight: '700',
       lineHeight: '42px',
       letterSpacing: '0.17px',

@@ -7,6 +7,8 @@ export type HomePageProps = {
   categoryGroups: ProductCategoryGroup[],
   categoryFeatured: ProductCategory,
   landingsFeatured: Landing[],
+  categoryNews: ProductCategory,
+  landingsNews: Landing[],
 };
 
 export const getHomeStaticProps: GetStaticProps = async () => {
@@ -30,11 +32,24 @@ export const getHomeStaticProps: GetStaticProps = async () => {
       throw error;
     });
 
+  let categoryNews: ProductCategory = {} as ProductCategory;
+  let landingsNews: Landing[] = [];
+  await getProductCategory('novedades')
+    .then((response) => {
+      categoryNews = response.productCategory;
+      landingsNews = response.landingsResult.landings;
+    })
+    .catch((error) => {
+      throw error;
+    });
+
   return {
     props: {
       categoryGroups: categoryGroups,
-      categoryFeatured: categoryFeatured,
-      landingsFeatured: landingsFeatured,
+      categoryFeatured,
+      landingsFeatured,
+      categoryNews,
+      landingsNews,
     } as HomePageProps,
   };
 };

@@ -451,7 +451,7 @@ export const themeCustomElements: ThemeCustomConfig = {
             default: colors.text.white,
           },
           font: {
-            default: typographies.homeBanner.default,
+            default: typographies.vacuumBanner.default,
           },
         },
       },
@@ -461,7 +461,7 @@ export const themeCustomElements: ThemeCustomConfig = {
             default: colors.text.white,
           },
           font: {
-            default: typographies.homeBanner.small,
+            default: typographies.vacuumBanner.small,
           },
         }, 
       },
@@ -479,6 +479,30 @@ export const themeCustomElements: ThemeCustomConfig = {
               textTransform: 'uppercase',
             },
           },
+        },
+      },
+    },
+    home: {
+      allProducts: {
+        default: {
+          text: {
+            color: {
+              default: colors.text.banner,
+            },
+            font: {
+              default: typographies.allProductsBanner.default,
+            },
+          },
+        },
+        small: {
+          text: {
+            color: {
+              default: '#323232',
+            },
+            font: {
+              default: typographies.allProductsBanner.small,
+            },
+          }, 
         },
       },
     },
@@ -759,6 +783,26 @@ export const themeCustomElements: ThemeCustomConfig = {
           padding: {
             top: 1.5,
             bottom: 1.5,
+          },
+        },
+      },
+    },
+    banner: {
+      text: {
+        color: {
+          default: colors.text.banner,
+        },
+        font: {
+          default: {
+            textAlign: 'center',
+          },
+        },
+      },
+      spacing: {
+        default: {
+          padding: {
+            top: 2,
+            bottom: 2,
           },
         },
       },

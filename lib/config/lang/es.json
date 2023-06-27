@@ -39,6 +39,15 @@
 
   "banners.maintenance": "Actualmente en mantenimiento",
 
+  "banners.allProducts.1": "Los mejores productos para tu hogar",
+  "banners.allProducts.btn": "Ver todo",
+
+  "banners.vacuum.1": "La envasadora\n más versátil\n para tus viajes",
+  "banners.vacuum.2": "Conserva tus\nalimentos de\nmanera eficiente",
+  "banners.vacuum.3": "Frescura al alcance\n de tu mano\n en un solo click",
+  "banners.vacuum.4": "Conserva tus\nalimentos de\nmanera eficiente",
+  "banners.vacuum.buyBtn": "Comprar ahora",
+
   "header.banners.shipping": "Envío gratuito dentro de la península (24-48h)",
   "header.drawerItems.home": "Inicio",
   "header.drawerItems.shop": "Tienda",
@@ -69,11 +78,6 @@
   "footer.utility.legal": "Aviso legal",
   "footer.utility.conditions": "Condiciones de venta",
 
-  "home.banner.1": "La envasadora\n más versátil\n para tus viajes",
-  "home.banner.2": "Conserva tus\nalimentos de\nmanera eficiente",
-  "home.banner.3": "Frescura al alcance\n de tu mano\n en un solo click",
-  "home.banner.4": "Conserva tus\nalimentos de\nmanera eficiente",
-  "home.banner.buyBtn": "Comprar ahora",
   "home.intro.title": "La solución perfecta para el envasado",
   "home.intro.description": "En un mundo en el que el precio de los alimentos está en constante aumento, es importante encontrar formas de preservar nuestras compras y evitar desperdiciar comida.\n\nPor ello, desde La Envasadora, ofrecernos una solución accesible y asequible para todos aquellos usuarios dispuestos a cambiar hacia un estilo de vida más sostenible.",
   "home.packingMachine.title": "¿Qué es una envasadora y cómo funciona?",
