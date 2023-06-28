@@ -33,27 +33,23 @@ const LeftBannerContent = (props: LeftBannerContentProps) => {
       container
       direction="column"
       wrap="nowrap"
-      justifyContent="left"
+      justifyContent="center"
+      alignItems="left"
       rowSpacing={4}
       sx={{
         position: 'relative',
         width: {
           xs: '87%',
           xs_sm: '75%',
-          sm_md: '70%',
+          sm: '70%',
+          sm_md: '65%',
+          md: '70%',
         },
         height: '100%',
         p: 2,
       }}
     >
-      <Grid
-        item
-        xs={12}
-        container
-        direction="column"
-        justifyContent="flex-end"
-        alignItems="left"
-      >
+      <Grid item>
         <Typography
           component="div"
           align={item.contentText.textAlign}
@@ -66,14 +62,7 @@ const LeftBannerContent = (props: LeftBannerContentProps) => {
           />
         </Typography>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        container
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="left"
-      >
+      <Grid item>
         <Grid item>
           <LinkButton
             href={item.button.path || pages.home.path}

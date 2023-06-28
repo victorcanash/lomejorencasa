@@ -34,6 +34,7 @@ const CenterBannerContent = (props: CenterBannerContentProps) => {
       direction="column"
       wrap="nowrap"
       justifyContent="center"
+      alignItems="center"
       rowSpacing={4}
       sx={{
         position: 'relative',
@@ -42,14 +43,7 @@ const CenterBannerContent = (props: CenterBannerContentProps) => {
         p: 2,
       }}
     >
-      <Grid
-        item
-        xs={12}
-        container
-        direction="column"
-        justifyContent="flex-end"
-        alignItems="center"
-      >
+      <Grid item>
         <Typography
           component="div"
           align={item.contentText.textAlign}
@@ -62,14 +56,7 @@ const CenterBannerContent = (props: CenterBannerContentProps) => {
           />
         </Typography>
       </Grid>
-      <Grid
-        item
-        xs={12}
-        container
-        direction="column"
-        justifyContent="flex-start"
-        alignItems="center"
-      >
+      <Grid item>
         <LinkButton
           href={item.button.path || pages.home.path}
           customtype="actionPrimary"
