@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
@@ -12,6 +13,7 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 import type { FormatText } from '@core/types/texts';
 import type { Landing, ProductCategoryGroup, ProductCategory } from '@core/types/products';
+import { useProductsContext } from '@core/contexts/ProductsContext';
 import usePagination from '@core/hooks/usePagination';
 import Link from '@core/components/navigation/Link';
 import Title from '@core/components/ui/Title';
@@ -37,6 +39,8 @@ const LandingList = (props: LandingListProps) => {
     title,
     marginBottom,
   } = props;
+
+  const { getItemPath } = useProductsContext();
 
   const {
     currentPage,
@@ -86,18 +90,44 @@ const LandingList = (props: LandingListProps) => {
                 />
               </Link>
             </Breadcrumbs>
+
+            <Title
+              type="h1"
+              noMarginTop
+              texts={{
+                title: title,
+                titleAdd: (category && !title) ?
+                  category.name.current : undefined,
+              }}
+              divider
+            />
           </>
         }
-        <Title
-          type={type === 'collectionsPage' ? 'h1' : 'h2'}
-          noMarginTop={type === 'collectionsPage' ? true : false}
-          texts={{
-            title: title,
-            titleAdd: (category && !title) ?
-              category.name.current : undefined,
-          }}
-          divider={type === 'collectionsPage' ? true : false}
-        />
+        { type === 'stack' &&
+          <Grid container wrap="nowrap" justifyContent="space-between" mt={6}>
+            <Grid item>
+              <Title
+                type="h2"
+                noMarginTop
+                texts={{
+                  title: title,
+                  titleAdd: (category && !title) ?
+                    category.name.current : undefined,
+                }}
+                divider={false}
+              />
+            </Grid>
+            { category &&
+              <Grid item>
+                <Typography component={Link} variant="body1Head" href={getItemPath(category)}>
+                  <FormattedMessage
+                    id="productList.all"
+                  />
+                </Typography>
+              </Grid>
+            }
+          </Grid>
+        }
 
         { (type === 'collectionsPage' && (category as ProductCategoryGroup)?.categories) &&
           <Box mx={-2} mb={4}>

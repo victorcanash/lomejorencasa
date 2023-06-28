@@ -245,6 +245,7 @@
   "productList.home": "Inicio",
   "productList.collections": "Colecciones",
   "productList.noItems": "No existe ningún producto.",
+  "productList.all": "Todos",
 
   "productDetail.price.iva": "IVA incluido",
   "productDetail.icons.shipping": "Entrega GRATIS en 24-48h.",

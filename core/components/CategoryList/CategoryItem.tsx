@@ -46,7 +46,8 @@ const CategoryItem = (props: CategoryItemProps) => {
           <CustomImage
             alt={category.name.current}
             src={getItemImgUrl(category)}          
-            layout="fill" 
+            layout="fill"
+            priority
           />
         </Avatar>
       </Box>
