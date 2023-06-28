@@ -17,18 +17,59 @@ const navDrawerConfig: NavDrawerConfig = {
       items: [
         {
           text: {
-            id: 'all',
+            id: 'shop.all',
           },
           path: pages.products.path,
         },
         {
           text: {
-            id: 'offers',
+            id: 'shop.offers',
           },
           path: pages.offers.path,
         },
+        {
+          text: {
+            id: 'shop.news',
+          },
+          path: '/colecciones/novedades',
+        },
+        {
+          text: {
+            id: 'shop.featured',
+          },
+          path: '/colecciones/productos-destacados',
+        },
+        {
+          text: {
+            id: 'shop.summer',
+          },
+          path: '/colecciones/verano',
+        },
+        {
+          text: {
+            id: 'shop.home',
+          },
+          path: '/colecciones/hogar',
+        },
+        {
+          text: {
+            id: 'shop.wellness',
+          },
+          path: '/colecciones/bienestar',
+        },
+        {
+          text: {
+            id: 'shop.kitchen',
+          },
+          path: '/colecciones/cocina',
+        },
+        {
+          text: {
+            id: 'shop.gadget',
+          },
+          path: '/colecciones/gadget',
+        },
       ],
-      categories: true,
     },
     {
       text: {

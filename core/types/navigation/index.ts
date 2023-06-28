@@ -43,5 +43,4 @@ export type NavDrawerItem = NavItem & {
     divider?: boolean,
   })[],
   open?: boolean,
-  categories?: boolean,
 };
