@@ -40,7 +40,7 @@ export const homeBannersConfig: HomeBannersConfig = {
           //alt: keywords.vacuumMachine.others[0],
         },
         button: {
-          path: pages.products.path,
+          path: '/colecciones/verano',
           text: {
             id: 'banners.seasonal.btn',
           },
@@ -56,7 +56,7 @@ export const homeBannersConfig: HomeBannersConfig = {
           id: 'banners.offers.1',
         },
         source: { 
-          src: 'v1687959489/LO%20MEJOR%20EN%20CASA/banners/offers_ddhom8.jpg',
+          src: 'v1687967565/LO%20MEJOR%20EN%20CASA/banners/offers_idf7wc.jpg',
           //alt: keywords.vacuumMachine.others[0],
         },
         button: {
