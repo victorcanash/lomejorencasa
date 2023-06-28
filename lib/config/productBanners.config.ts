@@ -56,7 +56,7 @@ export const homeBannersConfig: HomeBannersConfig = {
           id: 'banners.offers.1',
         },
         source: { 
-          src: 'v1687967565/LO%20MEJOR%20EN%20CASA/banners/offers_idf7wc.jpg',
+          src: 'v1687971407/LO%20MEJOR%20EN%20CASA/banners/offers_gwnswz.jpg',
           //alt: keywords.vacuumMachine.others[0],
         },
         button: {
