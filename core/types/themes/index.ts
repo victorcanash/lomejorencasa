@@ -92,16 +92,25 @@ export type ThemeCustomConfig = {
     },
     home?: {
       allProducts?: {
-        default?: ThemeElement,
-        small?: ThemeElement,
+        text?: {
+          default?: ThemeElement,
+          small?: ThemeElement,
+        },
+        btn?: ThemeElement,
       },
       seasonal?: {
-        default?: ThemeElement,
-        small?: ThemeElement,
+        text?: {
+          default?: ThemeElement,
+          small?: ThemeElement,
+        },
+        btn?: ThemeElement,
       },
       offers?: {
-        default?: ThemeElement,
-        small?: ThemeElement,
+        text?: {
+          default?: ThemeElement,
+          small?: ThemeElement,
+        },
+        btn?: ThemeElement,
       },
     },
   },
@@ -158,7 +167,6 @@ export type ThemeCustomConfig = {
     },
     payNow?: ThemeElement,
     acceptCookies?: ThemeElement,
-    banner?: ThemeElement,
   },
   forms?: {
     accordion?: {

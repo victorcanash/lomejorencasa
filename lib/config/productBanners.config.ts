@@ -14,7 +14,7 @@ export const homeBannersConfig: HomeBannersConfig = {
         },
         source: { 
           src: 'v1687881922/LO%20MEJOR%20EN%20CASA/banners/home_qgq47k.jpg',
-          alt: keywords.vacuumMachine.others[0],
+          //alt: keywords.vacuumMachine.others[0],
           priority: true,
         },
         button: {
@@ -31,17 +31,18 @@ export const homeBannersConfig: HomeBannersConfig = {
     items: [
       {
         contentText: {
-          id: 'banners.allProducts.1',
+          id: 'banners.seasonal.1',
+          textAlign: 'center',
         },
-        source: { 
-          src: 'v1687877275/LO%20MEJOR%20EN%20CASA/banners/kitchen_x2znfk.jpg',
-          alt: keywords.vacuumMachine.others[0],
-          priority: true,
+        source: {
+          type: 'video',
+          src: 'v1687951205/LO%20MEJOR%20EN%20CASA/banners/production_id_3681525_1080p_ot1hfr.mp4',
+          //alt: keywords.vacuumMachine.others[0],
         },
         button: {
           path: pages.products.path,
           text: {
-            id: 'banners.allProducts.btn',
+            id: 'banners.seasonal.btn',
           },
         },
       },
@@ -52,17 +53,16 @@ export const homeBannersConfig: HomeBannersConfig = {
     items: [
       {
         contentText: {
-          id: 'banners.allProducts.1',
+          id: 'banners.offers.1',
         },
         source: { 
-          src: 'v1687877275/LO%20MEJOR%20EN%20CASA/banners/kitchen_x2znfk.jpg',
-          alt: keywords.vacuumMachine.others[0],
-          priority: true,
+          src: 'v1687959489/LO%20MEJOR%20EN%20CASA/banners/offers_ddhom8.jpg',
+          //alt: keywords.vacuumMachine.others[0],
         },
         button: {
           path: pages.offers.path,
           text: {
-            id: 'banners.allProducts.btn',
+            id: 'banners.offers.btn',
           },
         },
       },

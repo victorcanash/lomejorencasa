@@ -1,59 +1,83 @@
-import { useCallback } from 'react';
+import { useMemo } from 'react';
 
-import { FormattedMessage } from 'react-intl';
 import { Autoplay } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import type { ThemeElement } from '@core/types/themes';
-import type { ProductBannerConfig } from '@core/types/banners';
 import { convertElementToSx } from '@core/utils/themes';
 import CustomImage from '@core/components/multimedia/CustomImage';
-import LinkButton from '@core/components/inputs/LinkButton';
+import CustomVideo from '@core/components/multimedia/CustomVideo';
+import CenterBannerContent from './bannerContents/CenterBannerContent';
+import LeftBannerContent from './bannerContents/LeftBannerContent';
 
-import { pages } from '@lib/config/navigation.config';
+import { homeBannersConfig } from '@lib/config/productBanners.config';
+import { themeCustomElements } from '@lib/config/theme/elements';
 
 type HomeBannerProps = {
-  productBannerConfig: ProductBannerConfig,
-  typographyThemeElements?: {
-    small?: ThemeElement,
-    default?: ThemeElement,
-  },
+  type: 'allProducts' | 'seasonal' | 'offers',
 };
 
 const HomeBanner = (props: HomeBannerProps) => {
   const {
-    productBannerConfig,
-    typographyThemeElements,
+    type,
   } = props;
 
   const smallBreakpoint = useMediaQuery('(max-width:600px)');
 
-  const getSxContent = useCallback(() => {
-    if (smallBreakpoint) {
-      return typographyThemeElements?.small ?
-        convertElementToSx(typographyThemeElements.small) : undefined;
+  const bannerConfig = useMemo(() => {
+    let config = homeBannersConfig.allProducts;
+    if (type === 'seasonal') {
+      config = homeBannersConfig.seasonal;
+    } else if (type === 'offers') {
+      config = homeBannersConfig.offers;
     }
-    return typographyThemeElements?.default ?
-      convertElementToSx(typographyThemeElements.default) : undefined;
-  }, [smallBreakpoint, typographyThemeElements?.default, typographyThemeElements?.small]);
+    return config;
+  }, [type]);
+
+  const themeElements = useMemo(() => {
+    let typographyThemeElement = themeCustomElements.banners?.home?.allProducts?.text;
+    let btnThemeElement = themeCustomElements.banners?.home?.allProducts?.btn;
+    if (type === 'seasonal') {
+      typographyThemeElement = themeCustomElements.banners?.home?.seasonal?.text;
+      btnThemeElement = themeCustomElements.banners?.home?.seasonal?.btn;
+    } else if (type === 'offers') {
+      typographyThemeElement = themeCustomElements.banners?.home?.offers?.text;
+      btnThemeElement = themeCustomElements.banners?.home?.offers?.btn;
+    }
+    return {
+      typography: typographyThemeElement,
+      btn: btnThemeElement,
+    };
+  }, [type]);
+
+  const typographySx = useMemo(() => {
+    if (smallBreakpoint) {
+      return themeElements.typography?.small ?
+        convertElementToSx(themeElements.typography.small) : undefined;
+    }
+    return themeElements.typography?.default ?
+      convertElementToSx(themeElements.typography.default) : undefined;
+  }, [smallBreakpoint, themeElements.typography?.default, themeElements.typography?.small]);
+
+  const btnSx = useMemo(() => {
+    return themeElements.btn ?
+      convertElementToSx(themeElements.btn) : undefined;
+  }, [themeElements.btn]);
 
   return (
     <Box
       sx={{
         position: 'relative',
         width: '100%',
-        height: productBannerConfig.height,
+        height: bannerConfig.height,
       }}
     >
       <Swiper
-        modules={productBannerConfig.items.length > 1 ? [Autoplay] : undefined}
+        modules={bannerConfig.items.length > 1 ? [Autoplay] : undefined}
         speed={1000} 
-        loop={productBannerConfig.items.length > 1 ? true : undefined}
+        loop={bannerConfig.items.length > 1 ? true : undefined}
         centeredSlides
         autoplay={{
           delay: 5000,
@@ -64,69 +88,52 @@ const HomeBanner = (props: HomeBannerProps) => {
           height: '100%',
         }}
       >
-        { productBannerConfig.items.map((item, index) => (
+        { bannerConfig.items.map((item, index) => (
           <SwiperSlide key={index}>
-            <CustomImage
-              src={item.source.src}
-              alt={item.source.alt}
-              layout="fill"
-              objectFit="cover"
-              priority={item.source.priority}
-            />
+            { item.source.type !== 'video' ?
+              <CustomImage
+                src={item.source.src}
+                alt={item.source.alt}
+                layout="fill"
+                objectFit="cover"
+                priority={item.source.priority}
+              />
+              :
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%',
+                }}
+              >
+                <CustomVideo
+                  src={item.source.src as string}
+                  style={{
+                    position: 'relative',
+                    objectFit: 'cover',
+                    width: '100%',
+                    height: bannerConfig.height,
+                  }}
+                />
+              </Box>
+            }
 
-            <Grid
-              container
-              direction="column"
-              wrap="nowrap"
-              justifyContent="center"
-              rowSpacing={4}
-              sx={{
-                position: 'relative',
-                width: '100%',
-                height: '100%',
-                p: 2,
-              }}
-            >
-              <Grid
-                item
-                xs={12}
-                container
-                direction="column"
-                justifyContent="flex-end"
-                alignItems="center"
-              >
-                <Typography
-                  component="div"
-                  align={item.contentText.textAlign}
-                  sx={getSxContent()}
-                >
-                  <FormattedMessage
-                    id={item.contentText.id}
-                    values={item.contentText.values}
-                    defaultMessage={item.contentText.id}
-                  />
-                </Typography>
-              </Grid>
-              <Grid
-                item
-                xs={12}
-                container
-                direction="column"
-                justifyContent="flex-start"
-                alignItems="center"
-              >
-                <LinkButton
-                  href={item.button.path || pages.home.path}
-                  customtype="banner"
-                >
-                  <FormattedMessage
-                    id={item.button.text.id}
-                    values={item.button.text.values}
-                    defaultMessage={item.button.text.id}
-                  />
-                </LinkButton>
-              </Grid>
-            </Grid>
+            { (type === 'allProducts' || type === 'seasonal') &&
+              <CenterBannerContent
+                item={item}
+                typographySx={typographySx}
+                btnSx={btnSx}
+              />
+            }
+            { (type === 'offers') && 
+              <LeftBannerContent
+                item={item}
+                typographySx={typographySx}
+                btnSx={btnSx}
+              />
+            }
           </SwiperSlide>
         ))}
       </Swiper>

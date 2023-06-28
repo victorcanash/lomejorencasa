@@ -7,9 +7,6 @@ import LandingList from '@core/components/LandingList';
 import BlogsList from '@core/components/BlogsList';
 import ProductReviews from '@core/components/ProductReviews';
 
-import { homeBannersConfig } from '@lib/config/productBanners.config';
-import { themeCustomElements } from '@lib/config/theme/elements';
-
 type HomeViewProps = {
   pageProps: HomePageProps,
 }
@@ -19,8 +16,7 @@ const HomeView = (props: HomeViewProps) => {
   return (
     <Box>
       <HomeBanner
-        productBannerConfig={homeBannersConfig.allProducts}
-        typographyThemeElements={themeCustomElements.banners?.home?.allProducts}
+        type="allProducts"
       />
 
       <CategoryList
@@ -38,8 +34,7 @@ const HomeView = (props: HomeViewProps) => {
       }
 
       <HomeBanner
-        productBannerConfig={homeBannersConfig.seasonal}
-        typographyThemeElements={themeCustomElements.banners?.home?.allProducts}
+        type="seasonal"
       />
 
       { pageProps.categoryNews &&
@@ -52,8 +47,7 @@ const HomeView = (props: HomeViewProps) => {
       }
 
       <HomeBanner
-        productBannerConfig={homeBannersConfig.offers}
-        typographyThemeElements={themeCustomElements.banners?.home?.allProducts}
+        type="offers"
       />
 
       <BlogsList />

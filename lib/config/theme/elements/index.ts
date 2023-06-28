@@ -484,25 +484,144 @@ export const themeCustomElements: ThemeCustomConfig = {
     },
     home: {
       allProducts: {
-        default: {
-          text: {
-            color: {
-              default: colors.text.banner,
+        text: {
+          default: {
+            text: {
+              color: {
+                default: colors.text.grey,
+              },
+              font: {
+                default: typographies.allProductsBanner.default,
+              },
             },
+          },
+          small: {
+            text: {
+              color: {
+                default: colors.text.grey,
+              },
+              font: {
+                default: typographies.allProductsBanner.small,
+              },
+            }, 
+          },
+        },
+        btn: {
+          backgroundColor: {
+            default: colors.background.buyNow.default,
+            hover: colors.background.buyNow.hover, 
+          },
+          text: {
             font: {
-              default: typographies.allProductsBanner.default,
+              default: typographies.allProductsBanner.button,
+            },
+            color: {
+              default: colors.text.white,
+              hover: colors.text.white,
+            },
+          },
+          spacing: {
+            default: {
+              padding: {
+                top: 2,
+                bottom: 2,
+              },
             },
           },
         },
-        small: {
+      },
+      seasonal: {
+        text: {
+          default: {
+            text: {
+              color: {
+                default: colors.text.white,
+              },
+              font: {
+                default: typographies.seasonalProductsBanner.default,
+              },
+            },
+          },
+          small: {
+            text: {
+              color: {
+                default: colors.text.white,
+              },
+              font: {
+                default: typographies.seasonalProductsBanner.small,
+              },
+            }, 
+          },
+        },
+        btn: {
+          backgroundColor: {
+            default: colors.background.input,
+            hover: colors.background.inputHover, 
+          },
           text: {
-            color: {
-              default: '#323232',
-            },
             font: {
-              default: typographies.allProductsBanner.small,
+              default: typographies.seasonalProductsBanner.button,
             },
-          }, 
+            color: {
+              default: colors.text.black,
+              hover: colors.text.black,
+            },
+          },
+          spacing: {
+            default: {
+              padding: {
+                top: 2,
+                bottom: 2,
+              },
+            },
+          },
+        },
+      },
+      offers: {
+        text: {
+          default: {
+            text: {
+              color: {
+                default: colors.text.white,
+              },
+              font: {
+                default: typographies.offersProductsBanner.default,
+              },
+            },
+          },
+          small: {
+            text: {
+              color: {
+                default: colors.text.white,
+              },
+              font: {
+                default: typographies.offersProductsBanner.small,
+              },
+            }, 
+          },
+        },
+        btn: {
+          backgroundColor: {
+            default: colors.background.action.primary.default,
+            hover: colors.background.action.primary.hover, 
+          },
+          text: {
+            font: {
+              default: typographies.offersProductsBanner.button,
+            },
+            color: {
+              default: colors.text.white,
+              hover: colors.text.white,
+            },
+          },
+          spacing: {
+            default: {
+              padding: {
+                top: 2,
+                bottom: 2,
+              },
+            },
+          },
         },
       },
     },
@@ -783,26 +902,6 @@ export const themeCustomElements: ThemeCustomConfig = {
           padding: {
             top: 1.5,
             bottom: 1.5,
-          },
-        },
-      },
-    },
-    banner: {
-      text: {
-        color: {
-          default: colors.text.banner,
-        },
-        font: {
-          default: {
-            textAlign: 'center',
-          },
-        },
-      },
-      spacing: {
-        default: {
-          padding: {
-            top: 2,
-            bottom: 2,
           },
         },
       },

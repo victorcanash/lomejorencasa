@@ -29,11 +29,11 @@ const colors = {
   text: {
     black: '#000000',
     white: '#FFFFFF',
+    grey: '#323232',
     disabled: '#858585',
     footer: '#FFFFFF',
     action: '#D32F2F',
     verified: '#0072C3',
-    banner: '#323232',
   },
   border: {
     divider: '#505252',
