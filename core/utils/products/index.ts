@@ -477,6 +477,9 @@ const deleteProductCategory = (token: string, currentLocale: string, productCate
       ...getAuthHeaders(token),
       ...getLanguageHeaders(currentLocale),
     },
+    params: {
+      isCategoryGroup: productCategory.isCategoryGroup,
+    },
   };
   return axios.delete(`/product-categories/${productCategory.id}`, options)
 }
