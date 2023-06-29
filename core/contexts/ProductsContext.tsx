@@ -78,14 +78,17 @@ export const ProductsProvider = ({ children }: { children: React.ReactNode }) =>
   
   const getLandingImgsUrl = useCallback((landing: Landing, selectedItem: ProductPack | ProductInventory | undefined) => {
     const images: string[] = [];
-    if (selectedItem?.image) {
-      images.push(selectedItem.image)
-    }
     if (landing.images.length > 0) {
-      landing.images.forEach((image) => {
-        images.push(image);
+      landing.images.forEach((image, index) => {
+        if (index === 0 && selectedItem?.image) {
+          images.push(selectedItem.image);
+        } else {
+          images.push(image);
+        }
       });
-    } else if (!selectedItem?.image) {
+    } else if (selectedItem?.image) {
+      images.push(selectedItem.image);
+    } else {
       images.push(placeholderSrc);
     }
     return images
