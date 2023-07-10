@@ -582,7 +582,7 @@ export const themeCustomElements: ThemeCustomConfig = {
           default: {
             text: {
               color: {
-                default: colors.text.white,
+                default: colors.text.black,
               },
               font: {
                 default: typographies.offersProductsBanner.default,
@@ -592,7 +592,7 @@ export const themeCustomElements: ThemeCustomConfig = {
           small: {
             text: {
               color: {
-                default: colors.text.white,
+                default: colors.text.black,
               },
               font: {
                 default: typographies.offersProductsBanner.small,
@@ -610,8 +610,8 @@ export const themeCustomElements: ThemeCustomConfig = {
               default: typographies.offersProductsBanner.button,
             },
             color: {
-              default: colors.text.white,
-              hover: colors.text.white,
+              default: colors.text.black,
+              hover: colors.text.black,
             },
           },
           spacing: {

@@ -104,19 +104,19 @@ const typographies = {
   offersProductsBanner: {
     default: {
       fontSize: '40px',
-      fontWeight: '500',
+      fontWeight: '700',
       lineHeight: '50px',
       letterSpacing: '0.17px',
     } as ThemeFontPropertyElement,
     small: {
       fontSize: '33px',
-      fontWeight: '500',
+      fontWeight: '700',
       lineHeight: '46px',
       letterSpacing: '0.17px',
     } as ThemeFontPropertyElement,
     button: {
       fontSize: '16px',
-      fontWeight: '500',
+      fontWeight: '700',
       lineHeight: '26px',
       textTransform: 'uppercase',
     } as ThemeFontPropertyElement,
