@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Masonry from '@mui/lab/Masonry';
 import Stack from '@mui/material/Stack';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -119,7 +118,7 @@ const LandingList = (props: LandingListProps) => {
             </Grid>
             { category &&
               <Grid item>
-                <Typography component={Link} variant="body1Head" href={getItemPath(category)}>
+                <Typography component={Link} variant="body1Head" href={getItemPath(category)} sx={{ lineHeight: '30px' }}>
                   <FormattedMessage
                     id="productList.all"
                   />
@@ -144,10 +143,13 @@ const LandingList = (props: LandingListProps) => {
 
             {/* Masonry List */}
             { type === 'collectionsPage' &&
-              <Masonry columns={{ xs: 2, sm_md: 3 }} spacing={0}>
+              <Grid container spacing={0}>
                 { allLandings.map((landing) => (
-                  <Box
+                  <Grid
                     key={landing.id}
+                    item
+                    xs={6}
+                    sm_md={4}
                   >
                     <Box
                       sx={{
@@ -166,9 +168,9 @@ const LandingList = (props: LandingListProps) => {
                         landing={landing}
                       />
                     </Box>
-                  </Box>
+                  </Grid>
                 ))}
-              </Masonry>
+              </Grid>
             }
 
             {/* Stack List */}

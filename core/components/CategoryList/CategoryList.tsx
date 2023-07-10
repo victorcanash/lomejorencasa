@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Masonry from '@mui/lab/Masonry';
+import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack'; 
 
 import type { ProductCategory, ProductCategoryGroup } from '@core/types/products';
@@ -52,10 +52,15 @@ const CategoryList = (props: CategoryListProps) => {
         { type === 'collectionsPage' &&
           <>
             { allCategories.length > 0 ?
-              <Masonry columns={{ xs: 2, xs_sm: 3, sm: 4, md: 5 }} spacing={0}>
+              <Grid container spacing={0}>
                 { allCategories.map((category) => (
-                  <Box
+                  <Grid
                     key={category.id}
+                    item
+                    xs={6}
+                    xs_sm={4}
+                    sm={3}
+                    md={2.4}
                   >
                     <Box
                       sx={{
@@ -74,9 +79,9 @@ const CategoryList = (props: CategoryListProps) => {
                         category={category}
                       />
                     </Box>
-                  </Box>
+                  </Grid>
                 ))}
-              </Masonry>
+              </Grid>
             :
               <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
                 <FormattedMessage
