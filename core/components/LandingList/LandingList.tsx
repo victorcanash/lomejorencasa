@@ -53,57 +53,16 @@ const LandingList = (props: LandingListProps) => {
   }, [allItems]);
 
   return (
-    <Container
-      id="landings"
-      sx={{
-        overflowX: type === 'stack' ? 'auto' : undefined,
-        mb: marginBottom ? 6 : undefined,
-      }}
-    >
-      <Box 
-        maxWidth="md"
-        m="auto"
-      >
-
-        {/* Header */}
-        { type === 'collectionsPage' &&
-          <>
-            <Breadcrumbs
-              separator={<NavigateNextIcon fontSize="small" />}
-              sx={{ mb: 1 }}
-            >
-              <Link
-                underline="hover"
-                href={pages.home.path}
-              >
-                <FormattedMessage
-                  id="productList.home"
-                />
-              </Link>
-              <Link
-                underline="hover"
-                href={pages.collections.path}
-              >
-                <FormattedMessage
-                  id="productList.collections"
-                />
-              </Link>
-            </Breadcrumbs>
-
-            <Title
-              type="h1"
-              noMarginTop
-              texts={{
-                title: title,
-                titleAdd: (category && !title) ?
-                  category.name.current : undefined,
-              }}
-              divider
-            />
-          </>
-        }
-        { type === 'stack' &&
-          <Grid container wrap="nowrap" justifyContent="space-between" mt={6}>
+    <>
+      { type === 'stack' &&
+        <Container>
+          <Grid
+            container
+            wrap="nowrap"
+            justifyContent="space-between"
+            mt={6}
+            mb={-1}
+          >
             <Grid item>
               <Title
                 type="h2"
@@ -126,102 +85,155 @@ const LandingList = (props: LandingListProps) => {
               </Grid>
             }
           </Grid>
-        }
+        </Container>
+      }
 
-        { (type === 'collectionsPage' && (category as ProductCategoryGroup)?.categories) &&
-          <Box mx={-2} mb={4}>
-            <CategoryList
-              type="stack"
-              categories={(category as ProductCategoryGroup).categories || []}
-            />
-          </Box>
-        }
+      <Container
+        id="landings"
+        sx={{
+          overflowX: type === 'stack' ? 'auto' : undefined,
+          mb: marginBottom ? 6 : undefined,
+          pt: type === 'stack' ? 1 : undefined,
+        }}
+      >
+        <Box 
+          //maxWidth="md"
+          m="auto"
+        >
 
-        {/* List */}
-        { allLandings.length > 0 ?
-          <>
+          {/* Header */}
+          { type === 'collectionsPage' &&
+            <>
+              <Breadcrumbs
+                separator={<NavigateNextIcon fontSize="small" />}
+                sx={{ mb: 1 }}
+              >
+                <Link
+                  underline="hover"
+                  href={pages.home.path}
+                >
+                  <FormattedMessage
+                    id="productList.home"
+                  />
+                </Link>
+                <Link
+                  underline="hover"
+                  href={pages.collections.path}
+                >
+                  <FormattedMessage
+                    id="productList.collections"
+                  />
+                </Link>
+              </Breadcrumbs>
 
-            {/* Masonry List */}
-            { type === 'collectionsPage' &&
-              <Grid container spacing={0}>
-                { allLandings.map((landing) => (
-                  <Grid
-                    key={landing.id}
-                    item
-                    xs={6}
-                    sm_md={4}
-                  >
+              <Title
+                type="h1"
+                noMarginTop
+                texts={{
+                  title: title,
+                  titleAdd: (category && !title) ?
+                    category.name.current : undefined,
+                }}
+                divider
+              />
+            </>
+          }
+
+          { (type === 'collectionsPage' && (category as ProductCategoryGroup)?.categories) &&
+            <Box mx={-2} mb={4}>
+              <CategoryList
+                type="stack"
+                categories={(category as ProductCategoryGroup).categories || []}
+              />
+            </Box>
+          }
+
+          {/* List */}
+          { allLandings.length > 0 ?
+            <>
+
+              {/* Masonry List */}
+              { type === 'collectionsPage' &&
+                <Grid container spacing={0}>
+                  { allLandings.map((landing) => (
+                    <Grid
+                      key={landing.id}
+                      item
+                      xs={6}
+                      sm_md={4}
+                    >
+                      <Box
+                        sx={{
+                          m: 'auto',
+                          mb: {
+                            xs: 1,
+                            sm: 2,
+                          },
+                          px: {
+                            xs: 0.5,
+                            sm: 1,
+                          }
+                        }}
+                      >
+                        <LandingItem
+                          landing={landing}
+                        />
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              }
+
+              {/* Stack List */}
+              { type === 'stack' &&
+                <Stack
+                  direction="row"
+                  spacing={2}
+                  pb={1}
+                >
+                  { allLandings.map((landing) => (
                     <Box
+                      key={landing.id}
                       sx={{
-                        m: 'auto',
-                        mb: {
-                          xs: 1,
-                          sm: 2,
+                        position: 'relative',
+                        width: 'max-content',
+                        minWidth: {
+                          xs: '43%',
+                          sm_md: '30%',
                         },
-                        px: {
-                          xs: 0.5,
-                          sm: 1,
-                        }
                       }}
                     >
                       <LandingItem
                         landing={landing}
                       />
                     </Box>
-                  </Grid>
-                ))}
-              </Grid>
-            }
+                  ))}
+                  <Box pl={1} sx={{ width: '250px' }} />
+                </Stack>
+              }
+            </>
+            :
+            <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
+              <FormattedMessage
+                id="productList.noItems"
+              />
+            </Typography>
+          }
 
-            {/* Stack List */}
-            { type === 'stack' &&
-              <Stack
-                direction="row"
-                spacing={2}
-                pb={1}
-              >
-                { allLandings.map((landing) => (
-                  <Box
-                    key={landing.id}
-                    sx={{
-                      position: 'relative',
-                      width: 'max-content',
-                      minWidth: {
-                        xs: '43%',
-                        sm_md: '30%',
-                      },
-                    }}
-                  >
-                    <LandingItem
-                      landing={landing}
-                    />
-                  </Box>
-                ))}
-                <Box pl={1} sx={{ width: '250px' }} />
-              </Stack>
-            }
-          </>
-          :
-          <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
-            <FormattedMessage
-              id="productList.noItems"
-            />
-          </Typography>
-        }
-
-        {/* Pagination */}
-        { type === 'collectionsPage' &&
-          <>
-            <Box mt={allLandings.length > 0 ? 3 : 5} />
-            <Pagination
-              totalPages={totalPages}
-              currentPage={currentPage}
-              onChangePage={handleChangePage}
-            />
-          </>
-        }
-      </Box>
-    </Container>
+          {/* Pagination */}
+          { type === 'collectionsPage' &&
+            <>
+              <Box mt={allLandings.length > 0 ? 3 : 5} />
+              <Pagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onChangePage={handleChangePage}
+              />
+            </>
+          }
+        </Box>
+      </Container>
+    </>
   );
 };
 
