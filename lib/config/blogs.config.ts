@@ -9,12 +9,12 @@ const blogsConfig: BlogsConfig = [
     },
     path: pages.vacuumBlog.path,
   },
-  {
+  /*{
     text: { 
       id: 'cbdBlog.h1',
     },
     path: pages.cbdBlog.path,
-  },
+  },*/
 ];
 
 export default blogsConfig;

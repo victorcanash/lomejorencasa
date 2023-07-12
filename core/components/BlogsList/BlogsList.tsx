@@ -14,8 +14,7 @@ const BlogsList = () => {
 
   return (
     <Container>
-      <Box 
-        maxWidth="md"
+      <Box
         m="auto"
       >
         <Title

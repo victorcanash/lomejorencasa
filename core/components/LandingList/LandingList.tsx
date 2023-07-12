@@ -96,8 +96,7 @@ const LandingList = (props: LandingListProps) => {
           pt: type === 'stack' ? 1 : undefined,
         }}
       >
-        <Box 
-          //maxWidth="md"
+        <Box
           m="auto"
         >
 

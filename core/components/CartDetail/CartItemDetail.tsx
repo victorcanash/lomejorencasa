@@ -118,8 +118,8 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               >
                 <Box
                   sx={{
-                    maxWidth: '250px',
-                    m: 'auto', 
+                    maxWidth: !page ? '250px' : '350px',
+                    //mr: 'auto',
                   }}
                 >
                   <CustomImage

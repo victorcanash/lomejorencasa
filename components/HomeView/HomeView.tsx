@@ -50,9 +50,9 @@ const HomeView = (props: HomeViewProps) => {
         type="offers"
       />
 
-      <BlogsList />
-
       <ProductReviews />
+
+      <BlogsList />
     </Box>
   );
 };

@@ -76,8 +76,7 @@ const ProductReviews = (props: ProductReviewsProps) => {
       { initialized &&
         <>
           <Container id="reviews" sx={{ mb: 4 }}>
-            <Box 
-              maxWidth="md"
+            <Box
               m="auto"
             >
               <Title
@@ -105,8 +104,7 @@ const ProductReviews = (props: ProductReviewsProps) => {
             </Box>
           </Container>
           <Container sx={{ px: { xs: 1.5, sm: 2 } }}>
-            <Box 
-              maxWidth="md"
+            <Box
               m="auto"
             >
 

@@ -1,15 +1,15 @@
-import { PageTypes } from '@core/constants/navigation';
+// import { PageTypes } from '@core/constants/navigation';
 
 import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import CbdBlog from '@components/blogs/cbd';
+// import PageHeader from '@core/components/pages/PageHeader';
+// import CbdBlog from '@components/blogs/cbd';
 
 const CbdBlogPage = () => {
   const page = usePage();
 
   return (
     <>
-      <PageHeader
+      {/*<PageHeader
         pageType={PageTypes.main}
         metas={{
           titleId: 'cbdBlog.metas.title',
@@ -23,7 +23,7 @@ const CbdBlogPage = () => {
         }}
       />
 
-      <CbdBlog />
+      <CbdBlog />*/}
     </>
   );
 };

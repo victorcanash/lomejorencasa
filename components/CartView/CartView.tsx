@@ -6,7 +6,7 @@ import CartDetail from '@core/components/CartDetail';
 const CartView = () => {
 
   return (
-    <Container maxWidth="md">
+    <Container>
       <CartDetail
         page={pages.cart}
       />

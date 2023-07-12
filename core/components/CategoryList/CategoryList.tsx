@@ -43,8 +43,7 @@ const CategoryList = (props: CategoryListProps) => {
         overflowX: type === 'stack' ? 'auto' : undefined,
       }}
     >
-      <Box 
-        maxWidth="md"
+      <Box
         m="auto"
       >
 

@@ -320,8 +320,8 @@ const navigationConfig: {
     to: 'https://lomejorencasa.es',
   },
   socialPaths: {
-    tiktok: 'https://www.tiktok.com/@laenvasadora',
-    instagram: 'https://www.instagram.com/laenvasadora/',
+    tiktok: 'https://www.tiktok.com/@lomejorencasa',
+    instagram: 'https://www.instagram.com/lomejorencasa/',
     facebook: 'https://www.facebook.com/profile.php?id=100092231104587',
   },
 };

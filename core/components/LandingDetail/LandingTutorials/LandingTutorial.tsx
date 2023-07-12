@@ -30,7 +30,7 @@ const LandingTutorial = (props: LandingTutorialProps) => {
     <>
       <Container id="tutorial">
         <Box 
-          maxWidth="sm"
+          //maxWidth="sm"
           m="auto"
         >
           { title?.id &&
@@ -49,11 +49,12 @@ const LandingTutorial = (props: LandingTutorialProps) => {
         type="default"
         source={source}
         mt={0}
+        maxWidth="md"
       />
 
       <Container>
         <Box 
-          maxWidth="sm"
+          maxWidth="md"
           m="auto"
         >
           <Typography
