@@ -602,8 +602,8 @@ export const themeCustomElements: ThemeCustomConfig = {
         },
         btn: {
           backgroundColor: {
-            default: colors.background.action.primary.default,
-            hover: colors.background.action.primary.hover, 
+            default: colors.background.input,
+            hover: colors.background.inputHover, 
           },
           text: {
             font: {
