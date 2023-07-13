@@ -12,60 +12,51 @@ const navDrawerConfig: NavDrawerConfig = {
     },
     {
       text: {
-        id: 'shop',
+        id: 'all',
+      },
+      path: pages.products.path,
+      items: [],
+    },
+    {
+      text: {
+        id: 'offers',
+      },
+      path: pages.offers.path,
+      items: [],
+    },
+    {
+      text: {
+        id: 'summer',
+      },
+      path: '/colecciones/verano',
+      items: [],
+    },
+    {
+      text: {
+        id: 'categories',
       },
       items: [
         {
           text: {
-            id: 'shop.all',
-          },
-          path: pages.products.path,
-        },
-        {
-          text: {
-            id: 'shop.offers',
-          },
-          path: pages.offers.path,
-        },
-        {
-          text: {
-            id: 'shop.news',
-          },
-          path: '/colecciones/novedades',
-        },
-        {
-          text: {
-            id: 'shop.featured',
-          },
-          path: '/colecciones/productos-destacados',
-        },
-        {
-          text: {
-            id: 'shop.summer',
-          },
-          path: '/colecciones/verano',
-        },
-        {
-          text: {
-            id: 'shop.home',
+            id: 'categories.home',
           },
           path: '/colecciones/hogar',
         },
         {
           text: {
-            id: 'shop.wellness',
+            id: 'categories.wellness',
           },
           path: '/colecciones/bienestar',
         },
         {
           text: {
-            id: 'shop.kitchen',
+            id: 'categories.kitchen',
           },
           path: '/colecciones/cocina',
         },
         {
           text: {
-            id: 'shop.gadget',
+            id: 'categories.gadget',
           },
           path: '/colecciones/gadget',
         },
@@ -113,12 +104,6 @@ const navDrawerConfig: NavDrawerConfig = {
             id: 'vacuumBlog',
           },
           path: pages.vacuumBlog.path,
-        },
-        {
-          text: {
-            id: 'cbdBlog',
-          },
-          path: pages.cbdBlog.path,
         },
       ],
     },
