@@ -2,6 +2,7 @@ import envConfig from '@core/config/env.config';
 import type { SeoConfig } from '@core/types/seo';
 
 export const keywords = {
+  main: 'Lomejorencasa',
   vacuumMachine: {
     main: 'Envasadora al Vacío',
     others: [
@@ -19,10 +20,11 @@ export const keywords = {
 
 const seoConfig: SeoConfig = {
   defaultSeoProps: {
-    defaultTitle: keywords.vacuumMachine.main,
+    defaultTitle: keywords.main,
     additionalMetaTags: [{
       property: 'keywords',
       content: [
+        keywords.main,
         keywords.vacuumMachine.main,
         keywords.vacuumMachine.others.join(','),
         keywords.vacuumBags.main,
@@ -30,14 +32,14 @@ const seoConfig: SeoConfig = {
       ].join(','),
     }, {
       name: 'author',
-      content: keywords.vacuumMachine.main,
+      content: keywords.main,
     }],
     openGraph: {
       type: 'website',
       locale: 'es_ES',
-      title: keywords.vacuumMachine.main,
+      title: keywords.main,
       url: envConfig.APP_URL,
-      siteName: keywords.vacuumMachine.main,
+      siteName: keywords.main,
     },
   },
 };

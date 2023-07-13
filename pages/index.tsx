@@ -17,8 +17,8 @@ const HomePage: NextPage<HomePageProps> = (props) => {
       <PageHeader
         pageType={PageTypes.main}
         metas={{
-          titleAdd: keywords.vacuumMachine.main,
-          descriptionAdd: keywords.vacuumMachine.main,
+          titleAdd: keywords.main,
+          descriptionAdd: keywords.main,
         }}
       />
 

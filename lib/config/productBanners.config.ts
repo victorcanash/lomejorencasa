@@ -14,7 +14,7 @@ export const homeBannersConfig: HomeBannersConfig = {
         },
         source: { 
           src: 'v1687881922/LO%20MEJOR%20EN%20CASA/banners/home_qgq47k.jpg',
-          //alt: keywords.vacuumMachine.others[0],
+          alt: keywords.main,
           priority: true,
         },
         button: {
@@ -37,7 +37,7 @@ export const homeBannersConfig: HomeBannersConfig = {
         source: {
           type: 'video',
           src: 'v1687951205/LO%20MEJOR%20EN%20CASA/banners/production_id_3681525_1080p_ot1hfr.mp4',
-          //alt: keywords.vacuumMachine.others[0],
+          alt: keywords.main,
         },
         button: {
           path: '/colecciones/verano',
@@ -57,7 +57,7 @@ export const homeBannersConfig: HomeBannersConfig = {
         },
         source: { 
           src: 'v1687971407/LO%20MEJOR%20EN%20CASA/banners/offers_gwnswz.jpg',
-          //alt: keywords.vacuumMachine.others[0],
+          alt: keywords.main,
         },
         button: {
           path: pages.offers.path,
