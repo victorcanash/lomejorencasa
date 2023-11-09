@@ -53,6 +53,7 @@ const LoginForm = () => {
                 name: 'password',
                 type: FormFieldTypes.password,
                 required: true,
+                autoComplete: 'current-password',
               },
               {
                 name: 'remember',

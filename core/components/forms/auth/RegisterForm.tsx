@@ -65,11 +65,13 @@ const RegisterForm = () => {
                 name: 'firstName',
                 type: FormFieldTypes.text,
                 required: true,
+                autoComplete: 'given-name',
               },
               {
                 name: 'lastName',
                 type: FormFieldTypes.text,
                 required: true,
+                autoComplete: 'family-name',
               },
               {
                 name: 'email',
@@ -80,6 +82,7 @@ const RegisterForm = () => {
                 name: 'password',
                 type: FormFieldTypes.password,
                 required: true,
+                autoComplete: 'current-password',
               },
               {
                 name: 'confirm',
