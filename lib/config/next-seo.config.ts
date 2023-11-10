@@ -1,5 +1,5 @@
-import envConfig from '@core/config/env.config';
-import type { SeoConfig } from '@core/types/seo';
+import envConfig from '@core/config/env.config'
+import type { SeoConfig } from '@core/types/seo'
 
 export const keywords = {
   main: 'Lomejorencasa',
@@ -7,16 +7,16 @@ export const keywords = {
     main: 'Envasadora al Vacío',
     others: [
       'Máquina de Vacío',
-      'Selladora de Alimentos',
-    ],
+      'Selladora de Alimentos'
+    ]
   },
   vacuumBags: {
     main: 'Bolsas para Envasadora al Vacío',
     others: [
-      'Bolsas de Vacío con Válvula',
-    ],
-  },
-};
+      'Bolsas de Vacío con Válvula'
+    ]
+  }
+}
 
 const seoConfig: SeoConfig = {
   defaultSeoProps: {
@@ -28,20 +28,20 @@ const seoConfig: SeoConfig = {
         keywords.vacuumMachine.main,
         keywords.vacuumMachine.others.join(','),
         keywords.vacuumBags.main,
-        keywords.vacuumBags.others.join(','),
-      ].join(','),
+        keywords.vacuumBags.others.join(',')
+      ].join(',')
     }, {
       name: 'author',
-      content: keywords.main,
+      content: keywords.main
     }],
     openGraph: {
       type: 'website',
       locale: 'es_ES',
       title: keywords.main,
       url: envConfig.APP_URL,
-      siteName: keywords.main,
-    },
-  },
-};
+      siteName: keywords.main
+    }
+  }
+}
 
-export default seoConfig;
+export default seoConfig

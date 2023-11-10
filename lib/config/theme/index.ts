@@ -1,37 +1,37 @@
-import { createTheme, ThemeOptions } from '@mui/material/styles';
-import type {} from '@mui/x-date-pickers/themeAugmentation';
+import { createTheme, type ThemeOptions } from '@mui/material/styles'
+import type {} from '@mui/x-date-pickers/themeAugmentation'
 
-import { convertElementToSx } from '@core/utils/themes';
+import { convertElementToSx } from '@core/utils/themes'
 
-import { themeDefaultElements } from '@lib/config/theme/elements';
+import { themeDefaultElements } from '@lib/config/theme/elements'
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
-    xs: true;
-    xs_sm: true;
-    sm: true;
-    sm_md: true;
-    md: true;
-    md_lg: true;
-    lg: true;
-    lg_xl: true;
-    xl: true;
+    xs: true
+    xs_sm: true
+    sm: true
+    sm_md: true
+    md: true
+    md_lg: true
+    lg: true
+    lg_xl: true
+    xl: true
   }
 
   interface TypographyVariants {
-    body1Head: React.CSSProperties;
-    body2Head: React.CSSProperties;
+    body1Head: React.CSSProperties
+    body2Head: React.CSSProperties
   }
   interface TypographyVariantsOptions {
-    body1Head: React.CSSProperties;
-    body2Head: React.CSSProperties;
+    body1Head: React.CSSProperties
+    body2Head: React.CSSProperties
   }
 };
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    body1Head: true;
-    body2Head: true;
+    body1Head: true
+    body2Head: true
   }
 };
 
@@ -46,27 +46,27 @@ const themeOptions: ThemeOptions = {
       md_lg: 1085,
       lg: 1200,
       lg_xl: 1350,
-      xl: 1536,
-    },
+      xl: 1536
+    }
   },
 
   palette: {
     mode: 'light',
     primary: {
-      main: themeDefaultElements.palette.backgroundColor.primary,
+      main: themeDefaultElements.palette.backgroundColor.primary
     },
     secondary: {
-      main: themeDefaultElements.palette.backgroundColor.secondary,
+      main: themeDefaultElements.palette.backgroundColor.secondary
     },
     background: {
       default: themeDefaultElements.palette.backgroundColor.primary,
-      paper: themeDefaultElements.paper?.backgroundColor?.default || themeDefaultElements.palette.backgroundColor.secondary,
+      paper: themeDefaultElements.paper?.backgroundColor?.default ?? themeDefaultElements.palette.backgroundColor.secondary
     },
     text: {
       primary: themeDefaultElements.palette.textColor.primary,
       secondary: themeDefaultElements.palette.textColor.secondary,
-      disabled: themeDefaultElements.palette.textColor.disabled,
-    },
+      disabled: themeDefaultElements.palette.textColor.disabled
+    }
   },
   typography: {
     fontFamily: themeDefaultElements.typography.fontFamily.join(','),
@@ -77,156 +77,156 @@ const themeOptions: ThemeOptions = {
     body1: convertElementToSx(themeDefaultElements.typography.body1),
     body2: convertElementToSx(themeDefaultElements.typography.body2),
     body1Head: convertElementToSx(themeDefaultElements.typography.body1Head),
-    body2Head: convertElementToSx(themeDefaultElements.typography.body2Head),
+    body2Head: convertElementToSx(themeDefaultElements.typography.body2Head)
   },
   components: {
     MuiLink: {
       styleOverrides: {
         root: {
           textDecoration: 'underline',
-          textDecorationColor: themeDefaultElements.link ? convertElementToSx(themeDefaultElements.link).color : undefined,
-          ...themeDefaultElements.link ? convertElementToSx(themeDefaultElements.link) : undefined,
-        },
-      },
+          textDecorationColor: (themeDefaultElements.link != null) ? convertElementToSx(themeDefaultElements.link).color : undefined,
+          ...(themeDefaultElements.link != null) ? convertElementToSx(themeDefaultElements.link) : undefined
+        }
+      }
     },
     MuiBreadcrumbs: {
       styleOverrides: {
-        separator: themeDefaultElements.breadcrumbs?.separator ? convertElementToSx(themeDefaultElements.breadcrumbs.separator) : undefined,
-      },
+        separator: ((themeDefaultElements.breadcrumbs?.separator) != null) ? convertElementToSx(themeDefaultElements.breadcrumbs.separator) : undefined
+      }
     },
     MuiAppBar: {
       styleOverrides: {
-        root: themeDefaultElements.appBar ? convertElementToSx(themeDefaultElements.appBar) : undefined,
-      },
+        root: (themeDefaultElements.appBar != null) ? convertElementToSx(themeDefaultElements.appBar) : undefined
+      }
     },
     MuiDialog: {
       styleOverrides: {
-        paper: themeDefaultElements.dialog ? convertElementToSx(themeDefaultElements.dialog) : undefined,
-      },
+        paper: (themeDefaultElements.dialog != null) ? convertElementToSx(themeDefaultElements.dialog) : undefined
+      }
     },
     MuiDialogTitle: {
       styleOverrides: {
-        root: themeDefaultElements.dialogTitle ? convertElementToSx(themeDefaultElements.dialogTitle) : undefined,
-      },
+        root: (themeDefaultElements.dialogTitle != null) ? convertElementToSx(themeDefaultElements.dialogTitle) : undefined
+      }
     },
     MuiDialogContentText: {
       styleOverrides: {
-        root: themeDefaultElements.dialogContentText ? convertElementToSx(themeDefaultElements.dialogContentText) : undefined,
-      },
+        root: (themeDefaultElements.dialogContentText != null) ? convertElementToSx(themeDefaultElements.dialogContentText) : undefined
+      }
     },
     MuiAccordion: {
       styleOverrides: {
-        root: themeDefaultElements.accordion ? convertElementToSx(themeDefaultElements.accordion) : undefined,
-      },
+        root: (themeDefaultElements.accordion != null) ? convertElementToSx(themeDefaultElements.accordion) : undefined
+      }
     },
     MuiAccordionSummary: {
       styleOverrides: {
-        root: themeDefaultElements.accordionSummary ? convertElementToSx(themeDefaultElements.accordionSummary) : undefined,
+        root: (themeDefaultElements.accordionSummary != null) ? convertElementToSx(themeDefaultElements.accordionSummary) : undefined,
         expandIconWrapper: {
-          color: themeDefaultElements.accordionSummary?.text?.color ? convertElementToSx(themeDefaultElements.accordionSummary).color : undefined,
+          color: ((themeDefaultElements.accordionSummary?.text?.color) != null) ? convertElementToSx(themeDefaultElements.accordionSummary).color : undefined
         }
-      },
+      }
     },
     MuiAccordionDetails: {
       styleOverrides: {
-        root: themeDefaultElements.accordionDetails ? convertElementToSx(themeDefaultElements.accordionDetails) : undefined,
-      },
+        root: (themeDefaultElements.accordionDetails != null) ? convertElementToSx(themeDefaultElements.accordionDetails) : undefined
+      }
     },
     MuiDivider: {
       styleOverrides: {
-        root: themeDefaultElements.divider ? convertElementToSx(themeDefaultElements.divider) : undefined,
-      },
+        root: (themeDefaultElements.divider != null) ? convertElementToSx(themeDefaultElements.divider) : undefined
+      }
     },
     MuiBackdrop: {
       styleOverrides: {
-        root: themeDefaultElements.backdrop ? convertElementToSx(themeDefaultElements.backdrop) : undefined,
-      },
+        root: (themeDefaultElements.backdrop != null) ? convertElementToSx(themeDefaultElements.backdrop) : undefined
+      }
     },
     MuiInputLabel: {
       styleOverrides: {
-        root: themeDefaultElements.inputLabel ? convertElementToSx(themeDefaultElements.inputLabel) : undefined,
-      },
+        root: (themeDefaultElements.inputLabel != null) ? convertElementToSx(themeDefaultElements.inputLabel) : undefined
+      }
     },
     MuiInputBase: {
       styleOverrides: {
-        root: themeDefaultElements.inputBase ? convertElementToSx(themeDefaultElements.inputBase) : undefined,
-      },
+        root: (themeDefaultElements.inputBase != null) ? convertElementToSx(themeDefaultElements.inputBase) : undefined
+      }
     },
     MuiButton: {
       styleOverrides: {
-        root: themeDefaultElements.button ? convertElementToSx(themeDefaultElements.button) : undefined,
-      },
+        root: (themeDefaultElements.button != null) ? convertElementToSx(themeDefaultElements.button) : undefined
+      }
     },
     MuiCheckbox: {
       styleOverrides: {
         root: {
-          ...themeDefaultElements.checkbox ? convertElementToSx(themeDefaultElements.checkbox) : undefined,
-          '&.Mui-checked': themeDefaultElements.checkbox ? convertElementToSx(themeDefaultElements.checkbox) : undefined,
-        },
-      },
+          ...(themeDefaultElements.checkbox != null) ? convertElementToSx(themeDefaultElements.checkbox) : undefined,
+          '&.Mui-checked': (themeDefaultElements.checkbox != null) ? convertElementToSx(themeDefaultElements.checkbox) : undefined
+        }
+      }
     },
     MuiListItemText: {
       styleOverrides: {
-        primary: themeDefaultElements.listItem ? convertElementToSx(themeDefaultElements.listItem) : undefined,
-      },
+        primary: (themeDefaultElements.listItem != null) ? convertElementToSx(themeDefaultElements.listItem) : undefined
+      }
     },
     MuiPaginationItem: {
       styleOverrides: {
-        root: themeDefaultElements.paginationItem ? convertElementToSx(themeDefaultElements.paginationItem) : undefined,
-      },
+        root: (themeDefaultElements.paginationItem != null) ? convertElementToSx(themeDefaultElements.paginationItem) : undefined
+      }
     },
     MuiCircularProgress: {
       styleOverrides: {
-        root: themeDefaultElements.circularProgress ? convertElementToSx(themeDefaultElements.circularProgress) : undefined,
-      },
+        root: (themeDefaultElements.circularProgress != null) ? convertElementToSx(themeDefaultElements.circularProgress) : undefined
+      }
     },
     MuiAvatar: {
       styleOverrides: {
-        root: themeDefaultElements.avatar ? convertElementToSx(themeDefaultElements.avatar) : undefined,
-      },
+        root: (themeDefaultElements.avatar != null) ? convertElementToSx(themeDefaultElements.avatar) : undefined
+      }
     },
     MuiIconButton: {
       styleOverrides: {
-        root: themeDefaultElements.iconButton ? convertElementToSx(themeDefaultElements.iconButton) : undefined,
-      },
+        root: (themeDefaultElements.iconButton != null) ? convertElementToSx(themeDefaultElements.iconButton) : undefined
+      }
     },
     MuiRating: {
       styleOverrides: {
-        icon: themeDefaultElements.rating?.icon ? convertElementToSx(themeDefaultElements.rating.icon) : undefined,
-      },
+        icon: ((themeDefaultElements.rating?.icon) != null) ? convertElementToSx(themeDefaultElements.rating.icon) : undefined
+      }
     },
     MuiStepIcon: {
       styleOverrides: {
-        root: themeDefaultElements.stepIcon?.default ? convertElementToSx(themeDefaultElements.stepIcon.default) : undefined,
-        text: themeDefaultElements.stepIcon?.text ? convertElementToSx(themeDefaultElements.stepIcon.text) : undefined,
-      },
+        root: ((themeDefaultElements.stepIcon?.default) != null) ? convertElementToSx(themeDefaultElements.stepIcon.default) : undefined,
+        text: ((themeDefaultElements.stepIcon?.text) != null) ? convertElementToSx(themeDefaultElements.stepIcon.text) : undefined
+      }
     },
     MuiStepLabel: {
       styleOverrides: {
-        labelContainer: themeDefaultElements.stepLabel?.labelContainer ? convertElementToSx(themeDefaultElements.stepLabel.labelContainer) : undefined,
-      },
+        labelContainer: ((themeDefaultElements.stepLabel?.labelContainer) != null) ? convertElementToSx(themeDefaultElements.stepLabel.labelContainer) : undefined
+      }
     },
     MuiBadge: {
       styleOverrides: {
-        badge: themeDefaultElements.badge ? convertElementToSx(themeDefaultElements.badge) : undefined,
-      },
+        badge: (themeDefaultElements.badge != null) ? convertElementToSx(themeDefaultElements.badge) : undefined
+      }
     },
     MuiAlert: {
       styleOverrides: {
-        root: themeDefaultElements.alert?.default ? convertElementToSx(themeDefaultElements.alert.default) : undefined,
-        standardSuccess: themeDefaultElements.alert?.success ? convertElementToSx(themeDefaultElements.alert.success) : undefined,
-        standardError: themeDefaultElements.alert?.error ? convertElementToSx(themeDefaultElements.alert.error) : undefined,
-        icon: themeDefaultElements.alert?.icon ? convertElementToSx(themeDefaultElements.alert.icon) : undefined,
-      },
+        root: ((themeDefaultElements.alert?.default) != null) ? convertElementToSx(themeDefaultElements.alert.default) : undefined,
+        standardSuccess: ((themeDefaultElements.alert?.success) != null) ? convertElementToSx(themeDefaultElements.alert.success) : undefined,
+        standardError: ((themeDefaultElements.alert?.error) != null) ? convertElementToSx(themeDefaultElements.alert.error) : undefined,
+        icon: ((themeDefaultElements.alert?.icon) != null) ? convertElementToSx(themeDefaultElements.alert.icon) : undefined
+      }
     },
     MuiDayPicker: {
       styleOverrides: {
-        weekDayLabel: themeDefaultElements.datePicker?.dayPicker?.weekDayLabel ? convertElementToSx(themeDefaultElements.datePicker.dayPicker.weekDayLabel) : undefined,
-      },
-    },
-  },
-};
+        weekDayLabel: ((themeDefaultElements.datePicker?.dayPicker?.weekDayLabel) != null) ? convertElementToSx(themeDefaultElements.datePicker.dayPicker.weekDayLabel) : undefined
+      }
+    }
+  }
+}
 
-const theme = createTheme(themeOptions);
+const theme = createTheme(themeOptions)
 
-export default theme;
+export default theme

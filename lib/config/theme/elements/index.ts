@@ -1,149 +1,149 @@
-import type { ThemeDefaultConfig, ThemeCustomConfig } from '@core/types/themes';
+import type { ThemeDefaultConfig, ThemeCustomConfig } from '@core/types/themes'
 
-import colors from '../colors';
-import typographies from '../typographies';
+import colors from '../colors'
+import typographies from '../typographies'
 
 export const themeDefaultElements: ThemeDefaultConfig = {
   palette: {
     backgroundColor: {
       primary: colors.background.primary,
-      secondary: colors.background.secondary,
+      secondary: colors.background.secondary
     },
     textColor: {
       primary: colors.text.black,
       secondary: colors.text.white,
-      disabled: colors.text.disabled,
-    },
+      disabled: colors.text.disabled
+    }
   },
   typography: {
     fontFamily: [
       'Poppins',
-      '-apple-system', 
-      'BlinkMacSystemFont', 
-      'Segoe UI', 
+      '-apple-system',
+      'BlinkMacSystemFont',
+      'Segoe UI',
       'Oxygen',
-      'Ubuntu', 
-      'Cantarell', 
-      'Fira Sans', 
-      'Droid Sans', 
+      'Ubuntu',
+      'Cantarell',
+      'Fira Sans',
+      'Droid Sans',
       'Helvetica Neue',
-      'sans-serif',
+      'sans-serif'
     ],
     h1: {
       text: {
-        font: { 
-          default: typographies.title,
+        font: {
+          default: typographies.title
         },
         color: {
-          default: colors.text.black,
-        },
-      },
+          default: colors.text.black
+        }
+      }
     },
     h2: {
       text: {
-        font: { 
-          default: typographies.title,
+        font: {
+          default: typographies.title
         },
         color: {
-          default: colors.text.black,
-        },
-      },
+          default: colors.text.black
+        }
+      }
     },
     h3: {
       text: {
-        font: { 
-          default: typographies.secondTitle,
-        },
-      },
+        font: {
+          default: typographies.secondTitle
+        }
+      }
     },
     h4: {
       text: {
-        font: { 
-          default: typographies.secondTitle,
-        },
-      },
+        font: {
+          default: typographies.secondTitle
+        }
+      }
     },
     body1Head: {
       text: {
-        font: { 
-          default: typographies.contentHead,
-        },
-      },
+        font: {
+          default: typographies.contentHead
+        }
+      }
     },
     body1: {
       text: {
-        font: { 
-          default: typographies.content,
-        },
-      },
+        font: {
+          default: typographies.content
+        }
+      }
     },
     body2Head: {
       text: {
-        font: { 
-          default: typographies.secondContentHead,
-        },
-      },
+        font: {
+          default: typographies.secondContentHead
+        }
+      }
     },
     body2: {
       text: {
-        font: { 
-          default: typographies.secondContent,
-        },
-      },
-    },
+        font: {
+          default: typographies.secondContent
+        }
+      }
+    }
   },
   link: {
     text: {
       color: {
-        default: colors.text.black,
-      },
-    },
+        default: colors.text.black
+      }
+    }
   },
   breadcrumbs: {
     separator: {
       text: {
         color: {
-          default: colors.text.black,
-        },
-      },
-    },
+          default: colors.text.black
+        }
+      }
+    }
   },
   paper: {
     backgroundColor: {
-      default: colors.background.secondary,
-    },
+      default: colors.background.secondary
+    }
   },
   appBar: {
     backgroundColor: {
-      default: colors.background.secondary,
-    },
+      default: colors.background.secondary
+    }
   },
   dialog: {
     backgroundColor: {
-      default: colors.background.primary,
-    },
+      default: colors.background.primary
+    }
   },
   dialogTitle: {
     text: {
       font: {
-        default: typographies.title,
-      },
-    },
+        default: typographies.title
+      }
+    }
   },
   dialogContentText: {
     text: {
       font: {
-        default: typographies.content,
+        default: typographies.content
       },
       color: {
-        default: colors.text.black,
-      },
-    },
+        default: colors.text.black
+      }
+    }
   },
   accordion: {
     backgroundColor: {
       default: '#F7F7F7',
-      before: 'transparent',
+      before: 'transparent'
     },
     border: {
       default: {
@@ -151,35 +151,35 @@ export const themeDefaultElements: ThemeDefaultConfig = {
           topRight: '25px',
           topLeft: '6px',
           bottomRight: '6px',
-          bottomLeft: '6px',
-        },
+          bottomLeft: '6px'
+        }
       },
       firstChild: {
         radius: {
           topRight: '25px',
           topLeft: '6px',
           bottomRight: '6px',
-          bottomLeft: '6px',
-        },
+          bottomLeft: '6px'
+        }
       },
       lastChild: {
         radius: {
           topRight: '25px',
           topLeft: '6px',
           bottomRight: '6px',
-          bottomLeft: '6px',
-        },
-      },
-    },
+          bottomLeft: '6px'
+        }
+      }
+    }
   },
   accordionSummary: {
     text: {
       color: {
-        default: colors.text.white,
-      },
+        default: colors.text.white
+      }
     },
     backgroundColor: {
-      default: colors.background.third,
+      default: colors.background.third
     },
     border: {
       default: {
@@ -187,300 +187,300 @@ export const themeDefaultElements: ThemeDefaultConfig = {
           topRight: '25px',
           topLeft: '6px',
           bottomRight: '0px',
-          bottomLeft: '0px',
-        },
-      },
-    },
+          bottomLeft: '0px'
+        }
+      }
+    }
   },
   accordionDetails: {
     backgroundColor: {
-      default: '#F7F7F7',
-    },
+      default: '#F7F7F7'
+    }
   },
   divider: {
     border: {
       default: {
         border: `2px solid ${colors.border.divider}99`,
-        radius: { all: '12px' },
-      },
-    },
+        radius: { all: '12px' }
+      }
+    }
   },
   backdrop: {
     backgroundColor: {
-      default: `${colors.text.black}bf`,
+      default: `${colors.text.black}bf`
     },
     text: {
       color: {
-        default: colors.text.white,
-      },
-    },
+        default: colors.text.white
+      }
+    }
   },
   inputLabel: {
     text: {
       font: {
-        default: typographies.input,
+        default: typographies.input
       },
       color: {
         default: colors.text.black,
-        focus: colors.text.black,
-      },
-    },
+        focus: colors.text.black
+      }
+    }
   },
   inputBase: {
     backgroundColor: {
       default: colors.background.input,
       hover: colors.background.inputHover,
-      focus: colors.background.inputHover,
+      focus: colors.background.inputHover
     },
     text: {
       font: {
-        default: typographies.input,
+        default: typographies.input
       },
       color: {
         default: colors.text.black,
         hover: colors.text.black,
-        focus: colors.text.black,
-      },
-    },
+        focus: colors.text.black
+      }
+    }
   },
   button: {
     backgroundColor: {
       default: colors.background.input,
-      hover: colors.background.inputHover,
+      hover: colors.background.inputHover
     },
     text: {
       font: {
-        default: typographies.button,
+        default: typographies.button
       },
       color: {
         default: colors.text.black,
-        hover: colors.text.black,
-      },
+        hover: colors.text.black
+      }
     },
     border: {
       default: {
-        radius: { all: '12px' },
-      },
-    },
+        radius: { all: '12px' }
+      }
+    }
   },
   checkbox: {
     text: {
       color: {
-        default: colors.text.black,
-      },
-    },
+        default: colors.text.black
+      }
+    }
   },
   listItem: {
     text: {
       font: {
-        default: typographies.content,
-      },
-    },
+        default: typographies.content
+      }
+    }
   },
   paginationItem: {
     backgroundColor: {
-      default: colors.background.secondary,
-    },
+      default: colors.background.secondary
+    }
   },
   circularProgress: {
     fill: {
-      default: colors.background.third,
-    },
+      default: colors.background.third
+    }
   },
   avatar: {
     backgroundColor: {
-      default: colors.background.third,
+      default: colors.background.third
     },
     text: {
       color: {
-        default: colors.text.white,
-      },
-    },
+        default: colors.text.white
+      }
+    }
   },
   iconButton: {
     text: {
       color: {
-        default: colors.text.black,
-      },
-    },
+        default: colors.text.black
+      }
+    }
   },
   rating: {
     icon: {
       text: {
         color: {
-          default: colors.background.ratingIcon,
-        },
-      },
+          default: colors.background.ratingIcon
+        }
+      }
     }
   },
   stepIcon: {
     default: {
       text: {
         font: {
-          default: typographies.title,
-        },
+          default: typographies.title
+        }
       },
       fill: {
-        default: colors.text.black,
-      },
+        default: colors.text.black
+      }
     },
     text: {
       fill: {
-        default: colors.background.primary,
-      },
-    },
+        default: colors.background.primary
+      }
+    }
   },
   stepLabel: {
     labelContainer: {
       text: {
         color: {
-          default: colors.text.disabled,
-        },
-      },
-    },
+          default: colors.text.disabled
+        }
+      }
+    }
   },
   badge: {
     backgroundColor: {
-      default: colors.background.action.primary.default,
+      default: colors.background.action.primary.default
     },
     text: {
       color: {
-        default: colors.text.white,
-      },
-    },
+        default: colors.text.white
+      }
+    }
   },
-  alert: { 
+  alert: {
     default: {
       text: {
         font: {
-          default: typographies.content,
-        },
-      },
+          default: typographies.content
+        }
+      }
     },
     success: {
       backgroundColor: {
-        default: colors.background.success,
-      },
+        default: colors.background.success
+      }
     },
     error: {
       backgroundColor: {
-        default: colors.background.error,
-      },
+        default: colors.background.error
+      }
     },
     icon: {
       spacing: {
         default: {
           padding: {
-            top: '10px',
-          },
-        },
-      },
-    },
+            top: '10px'
+          }
+        }
+      }
+    }
   },
   datePicker: {
     dayPicker: {
       weekDayLabel: {
         text: {
           color: {
-            default: colors.text.black,
+            default: colors.text.black
           },
           font: {
-            default: typographies.contentHead,
-          },
-        },
-      },
-    },
-  },
-};
+            default: typographies.contentHead
+          }
+        }
+      }
+    }
+  }
+}
 
 export const themeCustomElements: ThemeCustomConfig = {
   dividers: {
     subdivider: {
       border: {
         default: {
-          border: `1px solid ${colors.border.divider}99`,
-        },
-      },
+          border: `1px solid ${colors.border.divider}99`
+        }
+      }
     },
     payment: {
       border: {
         default: {
-          border: 'none',
-        },
-      },
+          border: 'none'
+        }
+      }
     },
     headerDrawer: {
       default: {
         border: {
           default: {
-            border: `1px solid ${colors.border.dividerDrawer}`,
-          },
-        },
+            border: `1px solid ${colors.border.dividerDrawer}`
+          }
+        }
       },
       highlight: {
         border: {
           default: {
-            border: `4px solid ${colors.border.dividerDrawer}`,
-          },
-        },
-      },
-    },
+            border: `4px solid ${colors.border.dividerDrawer}`
+          }
+        }
+      }
+    }
   },
   banners: {
     maintenance: {
       content: {
         backgroundColor: {
-          default: colors.background.action.primary.default,
+          default: colors.background.action.primary.default
         },
         text: {
           color: {
-            default: colors.text.white,
-          },
-        },
+            default: colors.text.white
+          }
+        }
       },
       icon: {
         fill: {
-          default: colors.text.white,
-        },
-      },
+          default: colors.text.white
+        }
+      }
     },
     product: {
       default: {
         text: {
           color: {
-            default: colors.text.white,
+            default: colors.text.white
           },
           font: {
-            default: typographies.vacuumBanner.default,
-          },
-        },
+            default: typographies.vacuumBanner.default
+          }
+        }
       },
       small: {
         text: {
           color: {
-            default: colors.text.white,
+            default: colors.text.white
           },
           font: {
-            default: typographies.vacuumBanner.small,
-          },
-        }, 
-      },
+            default: typographies.vacuumBanner.small
+          }
+        }
+      }
     },
     register: {
       discountPercentText: {
         text: {
           color: {
-            default: colors.text.action,
+            default: colors.text.action
           },
           font: {
             default: {
               fontWeight: '700',
               fontSize: '60px',
-              textTransform: 'uppercase',
-            },
-          },
-        },
-      },
+              textTransform: 'uppercase'
+            }
+          }
+        }
+      }
     },
     home: {
       allProducts: {
@@ -488,278 +488,278 @@ export const themeCustomElements: ThemeCustomConfig = {
           default: {
             text: {
               color: {
-                default: colors.text.grey,
+                default: colors.text.grey
               },
               font: {
-                default: typographies.allProductsBanner.default,
-              },
-            },
+                default: typographies.allProductsBanner.default
+              }
+            }
           },
           small: {
             text: {
               color: {
-                default: colors.text.grey,
+                default: colors.text.grey
               },
               font: {
-                default: typographies.allProductsBanner.small,
-              },
-            }, 
-          },
+                default: typographies.allProductsBanner.small
+              }
+            }
+          }
         },
         btn: {
           backgroundColor: {
             default: colors.background.buyNow.default,
-            hover: colors.background.buyNow.hover, 
+            hover: colors.background.buyNow.hover
           },
           text: {
             font: {
-              default: typographies.allProductsBanner.button,
+              default: typographies.allProductsBanner.button
             },
             color: {
               default: colors.text.white,
-              hover: colors.text.white,
-            },
+              hover: colors.text.white
+            }
           },
           spacing: {
             default: {
               padding: {
                 top: 2,
-                bottom: 2,
-              },
-            },
-          },
-        },
+                bottom: 2
+              }
+            }
+          }
+        }
       },
       seasonal: {
         text: {
           default: {
             text: {
               color: {
-                default: colors.text.white,
+                default: colors.text.white
               },
               font: {
-                default: typographies.seasonalProductsBanner.default,
-              },
-            },
+                default: typographies.seasonalProductsBanner.default
+              }
+            }
           },
           small: {
             text: {
               color: {
-                default: colors.text.white,
+                default: colors.text.white
               },
               font: {
-                default: typographies.seasonalProductsBanner.small,
-              },
-            }, 
-          },
+                default: typographies.seasonalProductsBanner.small
+              }
+            }
+          }
         },
         btn: {
           backgroundColor: {
             default: colors.background.input,
-            hover: colors.background.inputHover, 
+            hover: colors.background.inputHover
           },
           text: {
             font: {
-              default: typographies.seasonalProductsBanner.button,
+              default: typographies.seasonalProductsBanner.button
             },
             color: {
               default: colors.text.black,
-              hover: colors.text.black,
-            },
+              hover: colors.text.black
+            }
           },
           spacing: {
             default: {
               padding: {
                 top: 2,
-                bottom: 2,
-              },
-            },
-          },
-        },
+                bottom: 2
+              }
+            }
+          }
+        }
       },
       offers: {
         text: {
           default: {
             text: {
               color: {
-                default: colors.text.black,
+                default: colors.text.black
               },
               font: {
-                default: typographies.offersProductsBanner.default,
-              },
-            },
+                default: typographies.offersProductsBanner.default
+              }
+            }
           },
           small: {
             text: {
               color: {
-                default: colors.text.black,
+                default: colors.text.black
               },
               font: {
-                default: typographies.offersProductsBanner.small,
-              },
-            }, 
-          },
+                default: typographies.offersProductsBanner.small
+              }
+            }
+          }
         },
         btn: {
           backgroundColor: {
             default: colors.background.input,
-            hover: colors.background.inputHover, 
+            hover: colors.background.inputHover
           },
           text: {
             font: {
-              default: typographies.offersProductsBanner.button,
+              default: typographies.offersProductsBanner.button
             },
             color: {
               default: colors.text.black,
-              hover: colors.text.black,
-            },
+              hover: colors.text.black
+            }
           },
           spacing: {
             default: {
               padding: {
                 top: 2,
-                bottom: 2,
-              },
-            },
-          },
-        },
-      },
-    },
+                bottom: 2
+              }
+            }
+          }
+        }
+      }
+    }
   },
   navBar: {
     shippingBar: {
       content: {
         text: {
           color: {
-            default: colors.text.white,
-          },
+            default: colors.text.white
+          }
         },
         backgroundColor: {
-          default: colors.background.third,
-        },
-      },
-    },
+          default: colors.background.third
+        }
+      }
+    }
   },
   footer: {
     transition: {
       background: {
-        default: `linear-gradient(0deg, ${colors.background.footerContent} 7%, ${colors.background.footerGradient} 53%, ${colors.background.primary} 98%)`,
-      },
+        default: `linear-gradient(0deg, ${colors.background.footerContent} 7%, ${colors.background.footerGradient} 53%, ${colors.background.primary} 98%)`
+      }
     },
     content: {
       backgroundColor: {
-        default: colors.background.footerContent,
-      }, 
+        default: colors.background.footerContent
+      },
       text: {
         color: {
-          default: colors.text.footer,
-        },
-      },
+          default: colors.text.footer
+        }
+      }
     },
     title: {
       text: {
         color: {
-          default: colors.text.footer,
-        },
-      },
+          default: colors.text.footer
+        }
+      }
     },
     icons: {
       text: {
         color: {
-          default: colors.text.white,
-        },
-      },
-    },
+          default: colors.text.white
+        }
+      }
+    }
   },
   categoryList: {
     nameText: {
       text: {
         font: {
-          default: typographies.categoryList.name,
-        },
-      },
-    },
+          default: typographies.categoryList.name
+        }
+      }
+    }
   },
   landingList: {
     nameText: {
       text: {
         font: {
-          default: typographies.landingList.name,
-        },
-      },
-    },
-    price: {
-      originText: {
-        text: {
-          color: {
-            default: colors.text.disabled,
-          },
-          font: {
-            default: typographies.landingList.price.origin,
-          },
-        },
-      },
-      currentText: {
-        text: {
-          color: {
-            default: colors.text.action,
-          },
-          font: {
-            default: typographies.landingList.price.current,
-          },
-        },
-      },
-    },
-  },
-  landingDetail: {
-    selectLabel: {
-      text: {
-        color: {
-          default: colors.text.black,
-        },
-        font: {
-          default: {
-            fontSize: '20px',
-          },
-        },
+          default: typographies.landingList.name
+        }
       }
     },
     price: {
       originText: {
         text: {
           color: {
-            default: colors.text.disabled,
+            default: colors.text.disabled
           },
           font: {
-            default: typographies.landingDetail.price.origin,
-          },
-        },
+            default: typographies.landingList.price.origin
+          }
+        }
       },
       currentText: {
         text: {
           color: {
-            default: colors.text.action,
+            default: colors.text.action
           },
           font: {
-            default: typographies.landingDetail.price.current,
-          },
+            default: typographies.landingList.price.current
+          }
+        }
+      }
+    }
+  },
+  landingDetail: {
+    selectLabel: {
+      text: {
+        color: {
+          default: colors.text.black
         },
+        font: {
+          default: {
+            fontSize: '20px'
+          }
+        }
+      }
+    },
+    price: {
+      originText: {
+        text: {
+          color: {
+            default: colors.text.disabled
+          },
+          font: {
+            default: typographies.landingDetail.price.origin
+          }
+        }
+      },
+      currentText: {
+        text: {
+          color: {
+            default: colors.text.action
+          },
+          font: {
+            default: typographies.landingDetail.price.current
+          }
+        }
       },
       percentText: {
         text: {
           color: {
-            default: colors.text.white,
-          },
+            default: colors.text.white
+          }
         },
         backgroundColor: {
-          default: colors.background.action.secondary.default,
+          default: colors.background.action.secondary.default
         },
         border: {
           default: {
             radius: {
-              all: '45px',
-            },
-          },
+              all: '45px'
+            }
+          }
         },
         spacing: {
           default: {
@@ -767,151 +767,151 @@ export const themeCustomElements: ThemeCustomConfig = {
               top: '5px',
               bottom: '5px',
               right: '10px',
-              left: '10px',
-            },
-          },
-        },
-      },
+              left: '10px'
+            }
+          }
+        }
+      }
     },
     bundleTitle: {
       text: {
         color: {
-          default: colors.text.black,
+          default: colors.text.black
         },
         font: {
           default: {
-            fontSize: '20px',
-          },
-        },
+            fontSize: '20px'
+          }
+        }
       }
-    },
+    }
   },
   reviews: {
     verifiedText: {
       text: {
         color: {
-          default: colors.text.verified,
-        },
-      },
-    },
+          default: colors.text.verified
+        }
+      }
+    }
   },
   faq: {
     accordionGroup: {
       details: {
         backgroundColor: {
-          default: colors.background.accordionFormContent,
-        },
-      },
+          default: colors.background.accordionFormContent
+        }
+      }
     },
     accordion: {
       summary: {
         backgroundColor: {
-          default: colors.background.secondary,
-        },
-      },
-    },
+          default: colors.background.secondary
+        }
+      }
+    }
   },
   button: {
     action: {
       primary: {
         backgroundColor: {
           default: colors.background.action.primary.default,
-          hover: colors.background.action.primary.hover, 
+          hover: colors.background.action.primary.hover
         },
         text: {
           font: {
             default: {
-              textAlign: 'center',
-            },
+              textAlign: 'center'
+            }
           },
           color: {
             default: colors.text.white,
-            hover: colors.text.white,
-          },
+            hover: colors.text.white
+          }
         },
         spacing: {
           default: {
             padding: {
               top: 2,
-              bottom: 2,
-            },
-          },
-        },
+              bottom: 2
+            }
+          }
+        }
       },
       secondary: {
         backgroundColor: {
           default: colors.background.action.secondary.default,
-          hover: colors.background.action.secondary.hover, 
+          hover: colors.background.action.secondary.hover
         },
         text: {
           font: {
             default: {
-              textAlign: 'center',
-            },
+              textAlign: 'center'
+            }
           },
           color: {
             default: colors.text.white,
-            hover: colors.text.white,
-          },
-        },
-      },
+            hover: colors.text.white
+          }
+        }
+      }
     },
     payNow: {
       backgroundColor: {
         default: colors.background.buyNow.default,
-        hover: colors.background.buyNow.hover,
+        hover: colors.background.buyNow.hover
       },
       text: {
         font: {
           default: {
-            textAlign: 'center',
-          },
+            textAlign: 'center'
+          }
         },
         color: {
           default: colors.text.white,
-          hover: colors.text.white,
-        },
+          hover: colors.text.white
+        }
       },
       spacing: {
         default: {
           padding: {
             top: 2,
-            bottom: 2,
-          },
-        },
-      },
+            bottom: 2
+          }
+        }
+      }
     },
     acceptCookies: {
       backgroundColor: {
         default: colors.background.action.secondary.default,
-        hover: colors.background.action.secondary.hover, 
+        hover: colors.background.action.secondary.hover
       },
       text: {
         font: {
           default: {
-            textAlign: 'center',
-          },
+            textAlign: 'center'
+          }
         },
         color: {
           default: colors.text.black,
-          hover: colors.text.black,
-        },
+          hover: colors.text.black
+        }
       },
       spacing: {
         default: {
           padding: {
             top: 1.5,
-            bottom: 1.5,
-          },
-        },
-      },
-    },
-  },
-};
+            bottom: 1.5
+          }
+        }
+      }
+    }
+  }
+}
 
 export const paypalHostedFieldsStyle = {
-  'input': {
-    'transition': 'color 160ms linear',
+  input: {
+    transition: 'color 160ms linear',
     '-webkit-transition': 'color 160ms linear',
     'font-size-adjustfont-size': typographies.content.fontSize,
     'font-weight': typographies.content.fontWeight,
@@ -919,19 +919,19 @@ export const paypalHostedFieldsStyle = {
     'text-align': typographies.default.textAlign,
     'letter-spacing': typographies.default.letterSpacing,
     'font-family': themeDefaultElements.typography.fontFamily.join(','),
-    'color': colors.text.black,
-    'padding': '16.5px 14px',
+    color: colors.text.black,
+    padding: '16.5px 14px'
   },
   ':hover': {
-    'color': colors.text.black,
+    color: colors.text.black
   },
   ':focus': {
-    'color': colors.text.black,
+    color: colors.text.black
   },
-  '.invalid': {         
-    'color': colors.text.action,
-  },
-};
+  '.invalid': {
+    color: colors.text.action
+  }
+}
 
 export const paypalHostedFieldsSx = {
   height: '56px',
@@ -940,10 +940,10 @@ export const paypalHostedFieldsSx = {
   borderRadius: '4px',
   '&:hover': {
     backgroundColor: colors.background.inputHover,
-    border: `1px solid ${colors.text.black}`,
+    border: `1px solid ${colors.text.black}`
   },
   '&.Mui-focused': {
     backgroundColor: colors.background.inputHover,
-    border: `0px solid ${colors.text.black}`,
-  },
-};
+    border: `0px solid ${colors.text.black}`
+  }
+}

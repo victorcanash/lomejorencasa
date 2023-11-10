@@ -1,51 +1,51 @@
-import { PageTypes } from '@core/constants/navigation';
-import { Protections } from '@core/constants/auth';
-import type { Page } from '@core/types/navigation';
+import { PageTypes } from '@core/constants/navigation'
+import { Protections } from '@core/constants/auth'
+import type { Page } from '@core/types/navigation'
 
 const navigationConfig: {
   pages: {
-    home: Page,
-    collections: Page,
-    products: Page,
-    offers: Page,
-    about: Page,
-    faq: Page,
-    cart: Page,
-    checkout: Page,
-  
-    privacy: Page,
-    cookies: Page,
-    legal: Page,
-    conditions: Page,
-  
-    vacuumBlog: Page,
-    cbdBlog: Page,
-  
-    login: Page,
-    register: Page,
-    forgot: Page,
-    resendActivation: Page,
-    
-    contact: Page,
-    resolutions: Page,
-    orders: Page,
-    settings: Page,
-  
-    activation: Page,
-    reset: Page,
-    newemail: Page,
-    
-    admin: Page,
-  },
+    home: Page
+    collections: Page
+    products: Page
+    offers: Page
+    about: Page
+    faq: Page
+    cart: Page
+    checkout: Page
+
+    privacy: Page
+    cookies: Page
+    legal: Page
+    conditions: Page
+
+    vacuumBlog: Page
+    cbdBlog: Page
+
+    login: Page
+    register: Page
+    forgot: Page
+    resendActivation: Page
+
+    contact: Page
+    resolutions: Page
+    orders: Page
+    settings: Page
+
+    activation: Page
+    reset: Page
+    newemail: Page
+
+    admin: Page
+  }
   originRedirects: {
-    from: string[],
-    to: string,
-  },
+    from: string[]
+    to: string
+  }
   socialPaths: {
-    tiktok: string,
-    instagram: string,
-    facebook: string,
-  },
+    tiktok: string
+    instagram: string
+    facebook: string
+  }
 } = {
   pages: {
     home: {
@@ -54,8 +54,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     collections: {
       path: '/colecciones',
@@ -63,8 +63,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     products: {
       path: '/colecciones/todo',
@@ -72,8 +72,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     offers: {
       path: '/colecciones/ofertas',
@@ -81,8 +81,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     about: {
       path: '/about',
@@ -90,8 +90,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     faq: {
       path: '/preguntas-frequentes',
@@ -99,8 +99,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     cart: {
       path: '/cart',
@@ -108,8 +108,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     checkout: {
       path: '/checkout',
@@ -118,19 +118,19 @@ const navigationConfig: {
       type: PageTypes.main,
       savePathOnLogin: {
         enabled: true,
-        path: '/checkout',
+        path: '/checkout'
       },
-      redirectPathOnLogout: '/',
+      redirectPathOnLogout: '/'
     },
-  
+
     privacy: {
       path: '/privacy',
       filepath: '/privacy',
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     cookies: {
       path: '/cookies',
@@ -138,8 +138,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     legal: {
       path: '/legal',
@@ -147,8 +147,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     conditions: {
       path: '/conditions',
@@ -156,18 +156,18 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
-  
+
     vacuumBlog: {
       path: '/el-envasado-al-vacio',
       filepath: '/el-envasado-al-vacio',
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     cbdBlog: {
       path: '/CBD-y-el-insomnio',
@@ -175,18 +175,18 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
-  
+
     login: {
       path: '/login',
       filepath: '/login',
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
     register: {
       path: '/register',
@@ -194,8 +194,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
     forgot: {
       path: '/forgot',
@@ -203,8 +203,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
     resendActivation: {
       path: '/resend-activation',
@@ -212,18 +212,18 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
-    
+
     contact: {
       path: '/contacto',
       filepath: '/contacto',
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     resolutions: {
       path: '/resolutions',
@@ -231,8 +231,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     orders: {
       path: '/orders',
@@ -240,8 +240,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     settings: {
       path: '/settings',
@@ -249,18 +249,18 @@ const navigationConfig: {
       protection: Protections.user,
       type: PageTypes.main,
       savePathOnLogin: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
-  
+
     activation: {
       path: '/activation',
       filepath: '/activation',
       protection: Protections.none,
       type: PageTypes.link,
       savePathOnLogin: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
     reset: {
       path: '/reset',
@@ -268,8 +268,8 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.link,
       savePathOnLogin: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
     newemail: {
       path: '/newemail',
@@ -277,19 +277,19 @@ const navigationConfig: {
       protection: Protections.none,
       type: PageTypes.link,
       savePathOnLogin: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
-    
+
     admin: {
       path: '/admin',
       filepath: '/admin',
       protection: Protections.admin,
       type: PageTypes.admin,
       savePathOnLogin: {
-        enabled: false,
-      },
-    },
+        enabled: false
+      }
+    }
   },
   originRedirects: {
     from: [
@@ -315,21 +315,21 @@ const navigationConfig: {
       'lomejorencasa.store',
       'www.lomejorencasa.store',
       'lomejorencasa.website',
-      'www.lomejorencasa.website',
+      'www.lomejorencasa.website'
     ],
-    to: 'https://lomejorencasa.es',
+    to: 'https://lomejorencasa.es'
   },
   socialPaths: {
     tiktok: 'https://www.tiktok.com/@lomejorencasa',
     instagram: 'https://www.instagram.com/lomejorencasa/',
-    facebook: 'https://www.facebook.com/profile.php?id=100092231104587',
-  },
-};
+    facebook: 'https://www.facebook.com/profile.php?id=100092231104587'
+  }
+}
 
-export default navigationConfig;
+export default navigationConfig
 
-export const pages = navigationConfig.pages;
+export const pages = navigationConfig.pages
 
-export const originRedirects = navigationConfig.originRedirects;
+export const originRedirects = navigationConfig.originRedirects
 
-export const socialPaths = navigationConfig.socialPaths;
+export const socialPaths = navigationConfig.socialPaths

@@ -1,154 +1,154 @@
-import type { NavDrawerConfig } from '@core/types/navigation';
-import { pages } from '@lib/config/navigation.config';
+import type { NavDrawerConfig } from '@core/types/navigation'
+import { pages } from '@lib/config/navigation.config'
 
 const navDrawerConfig: NavDrawerConfig = {
   main: [
     {
       text: {
-        id: 'home',
+        id: 'home'
       },
       path: pages.home.path,
-      items: [],
+      items: []
     },
     {
       text: {
-        id: 'all',
+        id: 'all'
       },
       path: pages.products.path,
-      items: [],
+      items: []
     },
     {
       text: {
-        id: 'offers',
+        id: 'offers'
       },
       path: pages.offers.path,
-      items: [],
+      items: []
     },
     {
       text: {
-        id: 'summer',
+        id: 'summer'
       },
       path: '/colecciones/verano',
-      items: [],
+      items: []
     },
     {
       text: {
-        id: 'categories',
+        id: 'categories'
       },
       items: [
         {
           text: {
-            id: 'categories.home',
+            id: 'categories.home'
           },
-          path: '/colecciones/hogar',
+          path: '/colecciones/hogar'
         },
         {
           text: {
-            id: 'categories.wellness',
+            id: 'categories.wellness'
           },
-          path: '/colecciones/bienestar',
+          path: '/colecciones/bienestar'
         },
         {
           text: {
-            id: 'categories.kitchen',
+            id: 'categories.kitchen'
           },
-          path: '/colecciones/cocina',
+          path: '/colecciones/cocina'
         },
         {
           text: {
-            id: 'categories.gadget',
+            id: 'categories.gadget'
           },
-          path: '/colecciones/gadget',
-        },
-      ],
+          path: '/colecciones/gadget'
+        }
+      ]
     },
     {
       text: {
-        id: 'orders',
+        id: 'orders'
       },
       path: pages.orders.path,
-      items: [],
+      items: []
     },
     {
       text: {
-        id: 'info',
+        id: 'info'
       },
       items: [
         {
           text: {
-            id: 'contact',
+            id: 'contact'
           },
-          path: pages.contact.path,
+          path: pages.contact.path
         },
         {
           text: {
-            id: 'resolutions',
+            id: 'resolutions'
           },
-          path: pages.resolutions.path,
+          path: pages.resolutions.path
         },
         {
           text: {
-            id: 'about',
+            id: 'about'
           },
-          path: pages.about.path,
+          path: pages.about.path
         },
         {
           text: {
-            id: 'faq',
+            id: 'faq'
           },
           path: pages.faq.path,
-          divider: true,
+          divider: true
         },
         {
           text: {
-            id: 'vacuumBlog',
+            id: 'vacuumBlog'
           },
-          path: pages.vacuumBlog.path,
-        },
-      ],
-    },
+          path: pages.vacuumBlog.path
+        }
+      ]
+    }
   ],
   logged: [
     {
       text: {
-        id: 'loggedProfile',
+        id: 'loggedProfile'
       },
       items: [
         {
           text: {
-            id: 'settings',
+            id: 'settings'
           },
-          path: pages.settings.path,
+          path: pages.settings.path
         },
         {
           text: {
-            id: 'signOut',
-          },
-        },
-      ],
-    },
+            id: 'signOut'
+          }
+        }
+      ]
+    }
   ],
   unlogged: [
     {
       text: {
-        id: 'unloggedProfile',
+        id: 'unloggedProfile'
       },
       items: [
         {
           text: {
-            id: 'signIn',
+            id: 'signIn'
           },
-          path: pages.login.path,
+          path: pages.login.path
         },
         {
           text: {
-            id: 'register',
+            id: 'register'
           },
-          path: pages.register.path,
-        },
-      ],
-    },
-  ],
-};
+          path: pages.register.path
+        }
+      ]
+    }
+  ]
+}
 
-export default navDrawerConfig;
+export default navDrawerConfig

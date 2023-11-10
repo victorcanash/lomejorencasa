@@ -1,68 +1,68 @@
-import type { FaqConfig } from '@core/types/faq';
+import type { FaqConfig } from '@core/types/faq'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
 const faqConfig: FaqConfig = [
   {
     title: {
-      id: 'packing',
+      id: 'packing'
     },
     questions: [
       {
-        text: { 
-          id: '1',
+        text: {
+          id: '1'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '2',
+        text: {
+          id: '2'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '3',
+        text: {
+          id: '3'
         },
-        path: `${pages.vacuumBlog.path}#advantages`,
+        path: `${pages.vacuumBlog.path}#advantages`
       },
       {
-        text: { 
-          id: '4',
+        text: {
+          id: '4'
         },
-        path: `${pages.vacuumBlog.path}#use`,
+        path: `${pages.vacuumBlog.path}#use`
       },
       {
-        text: { 
-          id: '5',
+        text: {
+          id: '5'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '6',
+        text: {
+          id: '6'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '7',
+        text: {
+          id: '7'
         },
-        path: pages.vacuumBlog.path,
+        path: pages.vacuumBlog.path
       },
       {
-        text: { 
-          id: '8',
+        text: {
+          id: '8'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '9',
+        text: {
+          id: '9'
         },
-        path: undefined,
+        path: undefined
       }
-    ],
+    ]
   },
   {
     title: {
@@ -70,92 +70,92 @@ const faqConfig: FaqConfig = [
     },
     questions: [
       {
-        text: { 
-          id: '1',
+        text: {
+          id: '1'
         },
-        path: `${pages.vacuumBlog.path}#conservation`,
+        path: `${pages.vacuumBlog.path}#conservation`
       },
       {
-        text: { 
-          id: '2',
+        text: {
+          id: '2'
         },
-        path: `${pages.vacuumBlog.path}#convervation`,
+        path: `${pages.vacuumBlog.path}#convervation`
       },
       {
-        text: { 
-          id: '3',
+        text: {
+          id: '3'
         },
-        path: `${pages.vacuumBlog.path}#conservation`,
+        path: `${pages.vacuumBlog.path}#conservation`
       },
       {
-        text: { 
-          id: '4',
+        text: {
+          id: '4'
         },
-        path: `${pages.vacuumBlog.path}#convervation`,
+        path: `${pages.vacuumBlog.path}#convervation`
       },
       {
-        text: { 
-          id: '5',
+        text: {
+          id: '5'
         },
-        path: `${pages.vacuumBlog.path}#convervation`,
+        path: `${pages.vacuumBlog.path}#convervation`
       },
       {
-        text: { 
-          id: '6',
+        text: {
+          id: '6'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '7',
+        text: {
+          id: '7'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '8',
+        text: {
+          id: '8'
         },
-        path: `${pages.vacuumBlog.path}#convervation`,
+        path: `${pages.vacuumBlog.path}#convervation`
       },
       {
-        text: { 
-          id: '9',
+        text: {
+          id: '9'
         },
-        path: undefined,
+        path: undefined
       },
       {
-        text: { 
-          id: '10',
+        text: {
+          id: '10'
         },
-        path: `${pages.vacuumBlog.path}#convervation`,
+        path: `${pages.vacuumBlog.path}#convervation`
       }
-    ],
+    ]
   },
   {
     title: {
-      id: 'shipping',
+      id: 'shipping'
     },
     questions: [
       {
-        text: { 
-          id: '1',
+        text: {
+          id: '1'
         },
-        path: pages.conditions.path,
+        path: pages.conditions.path
       },
       {
-        text: { 
-          id: '2',
+        text: {
+          id: '2'
         },
-        path: pages.orders.path,
+        path: pages.orders.path
       },
       {
-        text: { 
-          id: '3',
+        text: {
+          id: '3'
         },
-        path: pages.conditions.path,
-      },
-    ],
-  },
-];
+        path: pages.conditions.path
+      }
+    ]
+  }
+]
 
-export default faqConfig;
+export default faqConfig

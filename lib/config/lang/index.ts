@@ -1,12 +1,12 @@
-import es from './es.json';
-import landingEs from './landingEs.json';
+import es from './es.json'
+import landingEs from './landingEs.json'
 
 const esObj = {
   ...es,
-  ...landingEs,
-};
+  ...landingEs
+}
 
 export const messages = {
   en: esObj,
-  es: esObj,
-};
+  es: esObj
+}

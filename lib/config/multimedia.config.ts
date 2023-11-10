@@ -1,4 +1,4 @@
-import type { MultimediaConfig } from '@core/types/multimedia';
+import type { MultimediaConfig } from '@core/types/multimedia'
 
 const multimediaConfig: MultimediaConfig = {
   placeholderSrc: 'v1681059169/laenvasadora/LANDING%20PAGE/placeholder_tl7jks.jpg',
@@ -14,14 +14,14 @@ const multimediaConfig: MultimediaConfig = {
       '.apng',
       '.avif',
       '.svg',
-      '.webp',
+      '.webp'
     ],
-    maxSize: '10mb',
-  },
-};
+    maxSize: '10mb'
+  }
+}
 
-export default multimediaConfig;
+export default multimediaConfig
 
-export const placeholderSrc = multimediaConfig.placeholderSrc;
+export const placeholderSrc = multimediaConfig.placeholderSrc
 
-export const uploadConfig = multimediaConfig.upload;
+export const uploadConfig = multimediaConfig.upload

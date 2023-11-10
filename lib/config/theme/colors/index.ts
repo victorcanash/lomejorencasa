@@ -11,20 +11,20 @@ const colors = {
     action: {
       primary: {
         default: '#E85D4A',
-        hover: '#DC867A',
+        hover: '#DC867A'
       },
       secondary: {
         default: '#FFA856',
-        hover: '#FDC28B',
-      },
+        hover: '#FDC28B'
+      }
     },
     buyNow: {
       default: '#000000',
-      hover: '#585858',
+      hover: '#585858'
     },
     success: '#D1FFD1',
     error: '#FFC7C7',
-    ratingIcon: '#FAAF00',
+    ratingIcon: '#FAAF00'
   },
   text: {
     black: '#000000',
@@ -33,12 +33,12 @@ const colors = {
     disabled: '#858585',
     footer: '#FFFFFF',
     action: '#D32F2F',
-    verified: '#0072C3',
+    verified: '#0072C3'
   },
   border: {
     divider: '#505252',
-    dividerDrawer: '#ebebeb',
-  },
-};
+    dividerDrawer: '#ebebeb'
+  }
+}
 
-export default colors;
+export default colors
