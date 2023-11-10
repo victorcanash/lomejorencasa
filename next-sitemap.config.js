@@ -1,12 +1,12 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
-  generateRobotsTxt: true,
-  //changefreq: 'daily',
-  //priority: 0.7,
-  //sitemapSize: 5000,
-  //exclude: ['/protected-page', '/awesome/secret-page'],
-  /*alternateRefs: [
+  siteUrl: process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000',
+  generateRobotsTxt: true
+  // changefreq: 'daily',
+  // priority: 0.7,
+  // sitemapSize: 5000,
+  // exclude: ['/protected-page', '/awesome/secret-page'],
+  /* alternateRefs: [
     {
       href: 'https://es.example.com',
       hreflang: 'es',
@@ -15,9 +15,9 @@ module.exports = {
       href: 'https://fr.example.com',
       hreflang: 'fr',
     },
-  ],*/
+  ], */
   // Default transformation function
-  /*transform: async (config, path) => {
+  /* transform: async (config, path) => {
     return {
       loc: path, // => this will be exported as http(s)://<config.siteUrl>/<path>
       changefreq: config.changefreq,
@@ -49,5 +49,5 @@ module.exports = {
       'https://example.com/my-custom-sitemap-2.xml',
       'https://example.com/my-custom-sitemap-3.xml',
     ],
-  },*/
+  }, */
 }

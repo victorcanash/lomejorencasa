@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import Faq from '@core/components/Faq';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import Faq from '@core/components/Faq'
 
 const FaqPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -15,19 +15,19 @@ const FaqPage: NextPage = () => {
         pageType={PageTypes.main}
         metas={{
           titleId: 'faq.metas.title',
-          descriptionId: 'faq.metas.description',
+          descriptionId: 'faq.metas.description'
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'faq.h1',
-          },
+            id: 'faq.h1'
+          }
         }}
-      /> 
-      
+      />
+
       <Faq />
     </>
-  );
-};
+  )
+}
 
-export default FaqPage;
+export default FaqPage

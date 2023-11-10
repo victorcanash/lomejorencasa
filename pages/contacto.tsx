@@ -1,15 +1,15 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import UserContactForm from '@core/components/forms/user/UserContactForm';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import UserContactForm from '@core/components/forms/user/UserContactForm'
 
 const ContactPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -17,13 +17,13 @@ const ContactPage: NextPage = () => {
         pageType={PageTypes.main}
         metas={{
           titleId: 'contact.metas.title',
-          descriptionId: 'contact.metas.description',
+          descriptionId: 'contact.metas.description'
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'contact.h1',
-          },
+            id: 'contact.h1'
+          }
         }}
       />
 
@@ -31,7 +31,7 @@ const ContactPage: NextPage = () => {
         <UserContactForm />
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default ContactPage;
+export default ContactPage

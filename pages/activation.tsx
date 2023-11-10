@@ -1,18 +1,18 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import { ActivationProps, getActivationProps } from '@core/serverPages/activation';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import ActivationForm from '@core/components/forms/auth/ActivationForm';
+import { type ActivationProps, getActivationProps } from '@core/serverPages/activation'
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import ActivationForm from '@core/components/forms/auth/ActivationForm'
 
 const ActivationPage: NextPage<ActivationProps> = (props) => {
-  const { successMsg, errorMsg } = props;
+  const { successMsg, errorMsg } = props
 
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -22,20 +22,20 @@ const ActivationPage: NextPage<ActivationProps> = (props) => {
           titleId: 'activation.metas.title',
           descriptionId: 'activation.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
       />
 
       <Container>
-        <ActivationForm 
+        <ActivationForm
           successMsg={successMsg}
           errorMsg={errorMsg}
         />
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default ActivationPage;
+export default ActivationPage
 
-export const getServerSideProps = getActivationProps;
+export const getServerSideProps = getActivationProps

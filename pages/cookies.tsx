@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import Cookies from '@core/components/legalTexts/Cookies';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import Cookies from '@core/components/legalTexts/Cookies'
 
 const CookiesPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -17,19 +17,19 @@ const CookiesPage: NextPage = () => {
           titleId: 'cookies.metas.title',
           descriptionId: 'cookies.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'cookies.h1',
-          },
+            id: 'cookies.h1'
+          }
         }}
       />
 
       <Cookies />
     </>
-  );
-};
+  )
+}
 
-export default CookiesPage;
+export default CookiesPage

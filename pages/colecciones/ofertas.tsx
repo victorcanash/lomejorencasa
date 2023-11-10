@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { OffersPageProps, getOffersStaticProps } from '@core/staticPages/offers';
-import { PageTypes } from '@core/constants/navigation';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import LandingList from '@core/components/LandingList';
+import { type OffersPageProps, getOffersStaticProps } from '@core/staticPages/offers'
+import { PageTypes } from '@core/constants/navigation'
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import LandingList from '@core/components/LandingList'
 
 const OffersPage: NextPage<OffersPageProps> = (props) => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -15,7 +15,7 @@ const OffersPage: NextPage<OffersPageProps> = (props) => {
         pageType={PageTypes.main}
         metas={{
           titleId: 'offers.metas.title',
-          descriptionId: 'offers.metas.description',
+          descriptionId: 'offers.metas.description'
         }}
         marginTop={true}
       />
@@ -24,13 +24,13 @@ const OffersPage: NextPage<OffersPageProps> = (props) => {
         type="collectionsPage"
         landings={props.landings}
         title={{
-          id: 'offers.h1',
+          id: 'offers.h1'
         }}
       />
     </>
-  );
-};
+  )
+}
 
-export default OffersPage;
+export default OffersPage
 
-export const getStaticProps = getOffersStaticProps;
+export const getStaticProps = getOffersStaticProps

@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import Admin from '@core/components/Admin';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import Admin from '@core/components/Admin'
 
 const AdminPage: NextPage = () => {
-  const page = usePage();
+  const page = usePage()
 
   return (
     <>
@@ -17,7 +17,7 @@ const AdminPage: NextPage = () => {
           titleId: 'admin.metas.title',
           descriptionId: 'admin.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
       />
@@ -26,7 +26,7 @@ const AdminPage: NextPage = () => {
         <Admin />
       }
     </>
-  );
-};
+  )
+}
 
-export default AdminPage;
+export default AdminPage

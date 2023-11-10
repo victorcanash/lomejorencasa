@@ -1,17 +1,17 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { useIntl } from 'react-intl';
+import { useIntl } from 'react-intl'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import ErrorView from '@core/components/exceptions/ErrorView';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import ErrorView from '@core/components/exceptions/ErrorView'
 
 const NotFoundPage: NextPage = () => {
-  const intl = useIntl();
+  const intl = useIntl()
 
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -21,14 +21,14 @@ const NotFoundPage: NextPage = () => {
           titleId: 'notfound.metas.title',
           descriptionId: 'notfound.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
       />
 
       <ErrorView title={intl.formatMessage({ id: 'notfound.h1' })} />
     </>
-  );
-};
+  )
+}
 
-export default NotFoundPage;
+export default NotFoundPage

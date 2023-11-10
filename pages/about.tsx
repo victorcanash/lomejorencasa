@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import AboutView from '@components/AboutView';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import AboutView from '@components/AboutView'
 
 const AboutPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -17,19 +17,19 @@ const AboutPage: NextPage = () => {
           titleId: 'about.metas.title',
           descriptionId: 'about.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'about.h1',
-          },
+            id: 'about.h1'
+          }
         }}
       />
-      
+
       <AboutView />
     </>
-  );
-};
+  )
+}
 
-export default AboutPage;
+export default AboutPage

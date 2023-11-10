@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import Legal from '@core/components/legalTexts/Legal';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import Legal from '@core/components/legalTexts/Legal'
 
 const LegalPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -17,19 +17,19 @@ const LegalPage: NextPage = () => {
           titleId: 'legal.metas.title',
           descriptionId: 'legal.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         texts={{
           title: {
-            id: 'legal.h1',
-          },
+            id: 'legal.h1'
+          }
         }}
         marginTop={true}
       />
 
       <Legal />
     </>
-  );
-};
+  )
+}
 
-export default LegalPage;
+export default LegalPage

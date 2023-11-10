@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { ProductsPageProps, getProductsStaticProps } from '@core/staticPages/products';
-import { PageTypes } from '@core/constants/navigation';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import LandingList from '@core/components/LandingList';
+import { type ProductsPageProps, getProductsStaticProps } from '@core/staticPages/products'
+import { PageTypes } from '@core/constants/navigation'
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import LandingList from '@core/components/LandingList'
 
 const ProductsPage: NextPage<ProductsPageProps> = (props) => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -15,7 +15,7 @@ const ProductsPage: NextPage<ProductsPageProps> = (props) => {
         pageType={PageTypes.main}
         metas={{
           titleId: 'products.metas.title',
-          descriptionId: 'products.metas.description',
+          descriptionId: 'products.metas.description'
         }}
         marginTop={true}
       />
@@ -24,13 +24,13 @@ const ProductsPage: NextPage<ProductsPageProps> = (props) => {
         type="collectionsPage"
         landings={props.landings}
         title={{
-          id: 'products.h1',
+          id: 'products.h1'
         }}
       />
     </>
-  );
-};
+  )
+}
 
-export default ProductsPage;
+export default ProductsPage
 
-export const getStaticProps = getProductsStaticProps;
+export const getStaticProps = getProductsStaticProps

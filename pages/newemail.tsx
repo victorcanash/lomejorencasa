@@ -1,15 +1,15 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import ConfirmNewEmailForm from '@core/components/forms/auth/ConfirmNewEmailForm';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import ConfirmNewEmailForm from '@core/components/forms/auth/ConfirmNewEmailForm'
 
 const NewEmailPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -19,7 +19,7 @@ const NewEmailPage: NextPage = () => {
           titleId: 'newemail.metas.title',
           descriptionId: 'newemail.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
       />
 
@@ -27,7 +27,7 @@ const NewEmailPage: NextPage = () => {
         <ConfirmNewEmailForm />
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default NewEmailPage;
+export default NewEmailPage

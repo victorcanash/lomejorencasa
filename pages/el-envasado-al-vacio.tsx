@@ -1,16 +1,16 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { VacuumBlogPageProps, getVacuumBlogStaticProps } from '@core/staticPages/vacuumBlog';
-import { PageTypes } from '@core/constants/navigation';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
+import { type VacuumBlogPageProps, getVacuumBlogStaticProps } from '@core/staticPages/vacuumBlog'
+import { PageTypes } from '@core/constants/navigation'
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
 
-import { keywords } from '@lib/config/next-seo.config';
+import { keywords } from '@lib/config/next-seo.config'
 
-import VacuumBlog from '@components/blogs/vacuum';
+import VacuumBlog from '@components/blogs/vacuum'
 
 const VacuumBlogPage: NextPage<VacuumBlogPageProps> = (props) => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -18,7 +18,7 @@ const VacuumBlogPage: NextPage<VacuumBlogPageProps> = (props) => {
         pageType={PageTypes.main}
         metas={{
           titleAdd: keywords.vacuumMachine.main,
-          descriptionAdd: keywords.vacuumMachine.main,
+          descriptionAdd: keywords.vacuumMachine.main
         }}
       />
 
@@ -26,9 +26,9 @@ const VacuumBlogPage: NextPage<VacuumBlogPageProps> = (props) => {
         pageProps={props}
       />
     </>
-  );
-};
+  )
+}
 
-export default VacuumBlogPage;
+export default VacuumBlogPage
 
-export const getStaticProps = getVacuumBlogStaticProps;
+export const getStaticProps = getVacuumBlogStaticProps

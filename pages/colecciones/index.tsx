@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { CollectionsPageProps, getCollectionsStaticProps } from '@core/staticPages/collections';
-import { PageTypes } from '@core/constants/navigation';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import CategoryList from '@core/components/CategoryList';
+import { type CollectionsPageProps, getCollectionsStaticProps } from '@core/staticPages/collections'
+import { PageTypes } from '@core/constants/navigation'
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import CategoryList from '@core/components/CategoryList'
 
 const CollectionsPage: NextPage<CollectionsPageProps> = (props) => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -17,13 +17,13 @@ const CollectionsPage: NextPage<CollectionsPageProps> = (props) => {
           titleId: 'collections.metas.title',
           descriptionId: 'collections.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'collections.h1',
-          },
+            id: 'collections.h1'
+          }
         }}
       />
 
@@ -32,9 +32,9 @@ const CollectionsPage: NextPage<CollectionsPageProps> = (props) => {
         categories={props.categories}
       />
     </>
-  );
-};
+  )
+}
 
-export default CollectionsPage;
+export default CollectionsPage
 
-export const getStaticProps = getCollectionsStaticProps;
+export const getStaticProps = getCollectionsStaticProps

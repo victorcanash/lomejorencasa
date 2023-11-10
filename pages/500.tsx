@@ -1,17 +1,17 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { useIntl } from 'react-intl';
+import { useIntl } from 'react-intl'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import ErrorView from '@core/components/exceptions/ErrorView';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import ErrorView from '@core/components/exceptions/ErrorView'
 
 const ErrorPage: NextPage = () => {
-  const intl = useIntl();
+  const intl = useIntl()
 
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -21,14 +21,14 @@ const ErrorPage: NextPage = () => {
           titleId: 'error.metas.title',
           descriptionId: 'error.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
       />
 
       <ErrorView title={intl.formatMessage({ id: 'error.h1' })} />
     </>
-  );
-};
+  )
+}
 
-export default ErrorPage;
+export default ErrorPage

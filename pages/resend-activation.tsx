@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import ResendActivation from '@core/components/auth/ResendActivation';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import ResendActivation from '@core/components/auth/ResendActivation'
 
 const ResendActivationPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -17,14 +17,14 @@ const ResendActivationPage: NextPage = () => {
           titleId: 'login.metas.title',
           descriptionId: 'login.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
       />
 
       <ResendActivation />
     </>
-  );
-};
+  )
+}
 
-export default ResendActivationPage;
+export default ResendActivationPage

@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import Orders from '@core/components/Orders';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import Orders from '@core/components/Orders'
 
 const OrdersPage: NextPage = () => {
-  const page = usePage(false);
+  const page = usePage(false)
 
   return (
     <>
@@ -17,13 +17,13 @@ const OrdersPage: NextPage = () => {
           titleId: 'orders.metas.title',
           descriptionId: 'orders.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'orders.h1',
-          },
+            id: 'orders.h1'
+          }
         }}
       />
 
@@ -31,7 +31,7 @@ const OrdersPage: NextPage = () => {
         pageChecked={page.checked}
       />
     </>
-  );
-};
+  )
+}
 
-export default OrdersPage;
+export default OrdersPage

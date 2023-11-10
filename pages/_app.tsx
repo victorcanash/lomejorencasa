@@ -1,89 +1,89 @@
-import 'dayjs/locale/en';
-import 'dayjs/locale/es';
-import '@fortawesome/fontawesome-svg-core/styles.css'; 
-import 'swiper/css';
-import 'swiper/css/bundle';
-import 'swiper/css/pagination';
-import 'swiper/css/effect-cards';
-import 'styles/globals.css';
+import 'dayjs/locale/en'
+import 'dayjs/locale/es'
+import '@fortawesome/fontawesome-svg-core/styles.css'
+import 'swiper/css'
+import 'swiper/css/bundle'
+import 'swiper/css/pagination'
+import 'swiper/css/effect-cards'
+import 'styles/globals.css'
 
-import Head from 'next/head';
-import type { AppProps } from 'next/app';
+import Head from 'next/head'
+import type { AppProps } from 'next/app'
 import Script from 'next/script'
 
-import { DefaultSeo } from 'next-seo';
-import { IntlProvider } from 'react-intl';
-import { SnackbarProvider } from 'notistack';
-import { getCookie } from 'cookies-next';
+import { DefaultSeo } from 'next-seo'
+import { IntlProvider } from 'react-intl'
+import { SnackbarProvider } from 'notistack'
+import { getCookie } from 'cookies-next'
 
-import { CacheProvider, EmotionCache } from '@emotion/react';
-import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { config } from '@fortawesome/fontawesome-svg-core';
+import { CacheProvider, type EmotionCache } from '@emotion/react'
+import { ThemeProvider } from '@mui/material/styles'
+import CssBaseline from '@mui/material/CssBaseline'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { config } from '@fortawesome/fontawesome-svg-core'
 
-import createEmotionCache from '@core/cache/createEmotionCache';
-import envConfig from '@core/config/env.config';
-import { AdConsentKey, AnalyticConsentKey, ConsentKey, ConsentValues } from '@core/constants/cookies';
-import { consentFBEvents } from '@core/utils/facebook';
-import { consentGTMEvents } from '@core/utils/gtm';
+import createEmotionCache from '@core/cache/createEmotionCache'
+import envConfig from '@core/config/env.config'
+import { AdConsentKey, AnalyticConsentKey, ConsentKey, ConsentValues } from '@core/constants/cookies'
+import { consentFBEvents } from '@core/utils/facebook'
+import { consentGTMEvents } from '@core/utils/gtm'
 
-import seoConfig from '@lib/config/next-seo.config';
-import { messages } from '@lib/config/lang';
-import theme from '@lib/config/theme';
-import snackbarConfig from '@lib/config/snackbar.config';
-import { AppProvider } from '@core/contexts/AppContext';
-import { ProductsProvider } from '@core/contexts/ProductsContext';
-import { CartProvider } from '@core/contexts/CartContext';
-import { AuthProvider } from '@core/contexts/AuthContext';
-import ErrorBoundary from '@core/components/exceptions/ErrorBoundary';
-import MainLayout from '@core/components/layouts/MainLayout';
+import seoConfig from '@lib/config/next-seo.config'
+import { messages } from '@lib/config/lang'
+import theme from '@lib/config/theme'
+import snackbarConfig from '@lib/config/snackbar.config'
+import { AppProvider } from '@core/contexts/AppContext'
+import { ProductsProvider } from '@core/contexts/ProductsContext'
+import { CartProvider } from '@core/contexts/CartContext'
+import { AuthProvider } from '@core/contexts/AuthContext'
+import ErrorBoundary from '@core/components/exceptions/ErrorBoundary'
+import MainLayout from '@core/components/layouts/MainLayout'
 
-// Tell Font Awesome to skip adding the CSS automatically 
+// Tell Font Awesome to skip adding the CSS automatically
 // since it's already imported above
-config.autoAddCss = false; 
+config.autoAddCss = false
 
-const clientSideEmotionCache = createEmotionCache();
+const clientSideEmotionCache = createEmotionCache()
 
-const locale = 'es';
+const locale = 'es'
 
 interface MyAppProps extends AppProps {
-  emotionCache?: EmotionCache;
+  emotionCache?: EmotionCache
 }
 
-function MyApp(props: MyAppProps) {
-  const { 
-    Component, 
-    emotionCache = clientSideEmotionCache, 
-    pageProps 
-  } = props;
+function MyApp (props: MyAppProps) {
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps
+  } = props
 
   const onReadyPixelFB = () => {
-    const consentValue = getCookie(ConsentKey);
+    const consentValue = getCookie(ConsentKey)
     if (consentValue !== ConsentValues.accepted) {
-      return;
+      return
     }
-    const adConsentValue = getCookie(AdConsentKey);
+    const adConsentValue = getCookie(AdConsentKey)
     if (adConsentValue === ConsentValues.accepted) {
       setTimeout(() => {
-        consentFBEvents(true);
-      }, 3000);
+        consentFBEvents(true)
+      }, 3000)
     }
-  };
+  }
 
   const onReadyGTM = () => {
-    const consentValue = getCookie(ConsentKey);
+    const consentValue = getCookie(ConsentKey)
     if (consentValue !== ConsentValues.accepted) {
-      return;
+      return
     }
-    const analyticConsentValue = getCookie(AnalyticConsentKey);
+    const analyticConsentValue = getCookie(AnalyticConsentKey)
     if (analyticConsentValue === ConsentValues.accepted) {
       setTimeout(() => {
-        consentGTMEvents(true);
-      }, 3000);
+        consentGTMEvents(true)
+      }, 3000)
     }
-  };
+  }
 
   return (
     <>
@@ -112,10 +112,10 @@ function MyApp(props: MyAppProps) {
             'https://connect.facebook.net/en_US/fbevents.js');
             fbq('consent', 'revoke');
             fbq('init', ${envConfig.FB_PIXEL_ID});
-          `,
+          `
         }}
         onReady={() => {
-          onReadyPixelFB();
+          onReadyPixelFB()
         }}
       />
       {/* Google Tag Manager - Global base code */}
@@ -143,20 +143,20 @@ function MyApp(props: MyAppProps) {
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer', '${envConfig.GTM_ID}');
-          `,
+          `
         }}
         onReady={() => {
-          onReadyGTM();
+          onReadyGTM()
         }}
       />
 
       <IntlProvider locale={locale} messages={messages[locale]}>
         <CacheProvider value={emotionCache}>
-          <SnackbarProvider maxSnack={snackbarConfig.maxSnack} autoHideDuration={snackbarConfig.durations.default}>     
+          <SnackbarProvider maxSnack={snackbarConfig.maxSnack} autoHideDuration={snackbarConfig.durations.default}>
               <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={locale}>
-                    
+
                   <ErrorBoundary>
                     <AppProvider>
                       <ProductsProvider>
@@ -164,21 +164,21 @@ function MyApp(props: MyAppProps) {
                           <AuthProvider>
                             <MainLayout>
                               <Component {...pageProps} />
-                            </MainLayout> 
+                            </MainLayout>
                           </AuthProvider>
                         </CartProvider>
                       </ProductsProvider>
                     </AppProvider>
                   </ErrorBoundary>
 
-                </LocalizationProvider>    
+                </LocalizationProvider>
               </ThemeProvider>
 
           </SnackbarProvider>
         </CacheProvider>
       </IntlProvider>
     </>
-  );
+  )
 };
 
-export default MyApp;
+export default MyApp

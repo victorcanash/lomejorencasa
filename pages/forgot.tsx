@@ -1,15 +1,15 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import ForgotPswForm from '@core/components/forms/auth/ForgotPswForm';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import ForgotPswForm from '@core/components/forms/auth/ForgotPswForm'
 
-const ForgotPage: NextPage = () => { 
-  const page = usePage();
+const ForgotPage: NextPage = () => {
+  usePage()
 
   return (
     <>
@@ -19,16 +19,16 @@ const ForgotPage: NextPage = () => {
           titleId: 'forgot.metas.title',
           descriptionId: 'forgot.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
       />
-      
+
       <Container>
         <ForgotPswForm />
       </Container>
     </>
   )
-};
+}
 
-export default ForgotPage;
+export default ForgotPage

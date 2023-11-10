@@ -1,17 +1,17 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
 import {
-  CategoryPageProps,
+  type CategoryPageProps,
   getCategoryStaticPaths,
-  getCategoryStaticProps,
-} from '@core/staticPages/category';
-import { PageTypes } from '@core/constants/navigation';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import LandingList from '@core/components/LandingList';
+  getCategoryStaticProps
+} from '@core/staticPages/category'
+import { PageTypes } from '@core/constants/navigation'
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import LandingList from '@core/components/LandingList'
 
 const CategoryPage: NextPage<CategoryPageProps> = (props) => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -19,7 +19,7 @@ const CategoryPage: NextPage<CategoryPageProps> = (props) => {
         pageType={PageTypes.main}
         metas={{
           titleAdd: props.category.name.current,
-          descriptionAdd: props.category.description.current,
+          descriptionAdd: props.category.description.current
         }}
         marginTop={true}
       />
@@ -30,11 +30,11 @@ const CategoryPage: NextPage<CategoryPageProps> = (props) => {
         landings={props.landings}
       />
     </>
-  );
-};
+  )
+}
 
-export default CategoryPage;
+export default CategoryPage
 
-export const getStaticPaths = getCategoryStaticPaths;
+export const getStaticPaths = getCategoryStaticPaths
 
-export const getStaticProps = getCategoryStaticProps;
+export const getStaticProps = getCategoryStaticProps

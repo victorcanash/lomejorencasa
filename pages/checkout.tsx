@@ -1,13 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import Checkout from '@core/components/Checkout';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import Checkout from '@core/components/Checkout'
 
 const CheckoutPage: NextPage = () => {
-  const page = usePage(false);
+  const page = usePage(false)
 
   return (
     <>
@@ -17,7 +17,7 @@ const CheckoutPage: NextPage = () => {
           titleId: 'checkout.metas.title',
           descriptionId: 'checkout.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
       />
@@ -26,7 +26,7 @@ const CheckoutPage: NextPage = () => {
         pageChecked={page.checked}
       />
     </>
-  );
-};
+  )
+}
 
-export default CheckoutPage;
+export default CheckoutPage

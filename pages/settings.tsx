@@ -1,16 +1,13 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import { useAppContext } from '@core/contexts/AppContext';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import Settings from '@core/components/Settings';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import Settings from '@core/components/Settings'
 
-const SettingsPage: NextPage = () => { 
-  const { initialized } = useAppContext();
-
-  const page = usePage();
+const SettingsPage: NextPage = () => {
+  const page = usePage()
 
   return (
     <>
@@ -20,13 +17,13 @@ const SettingsPage: NextPage = () => {
           titleId: 'settings.metas.title',
           descriptionId: 'settings.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
         marginTop={true}
         texts={{
           title: {
-            id: 'settings.h1',
-          },
+            id: 'settings.h1'
+          }
         }}
       />
 
@@ -34,7 +31,7 @@ const SettingsPage: NextPage = () => {
         <Settings />
       }
     </>
-  );
-};
+  )
+}
 
-export default SettingsPage;
+export default SettingsPage

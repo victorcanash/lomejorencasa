@@ -1,17 +1,17 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
 import {
-  LandingPageProps,
+  type LandingPageProps,
   getLandingStaticPaths,
-  getLandingStaticProps,
-} from '@core/staticPages/landing';
-import { PageTypes } from '@core/constants/navigation';
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import LandingDetail from '@core/components/LandingDetail';
+  getLandingStaticProps
+} from '@core/staticPages/landing'
+import { PageTypes } from '@core/constants/navigation'
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import LandingDetail from '@core/components/LandingDetail'
 
 const LandingPage: NextPage<LandingPageProps> = (props) => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -19,7 +19,7 @@ const LandingPage: NextPage<LandingPageProps> = (props) => {
         pageType={PageTypes.main}
         metas={{
           titleAdd: props.landing.name.current,
-          descriptionAdd: props.landing.description.current,
+          descriptionAdd: props.landing.description.current
         }}
         marginTop={true}
       />
@@ -28,11 +28,11 @@ const LandingPage: NextPage<LandingPageProps> = (props) => {
         landing={props.landing}
       />
     </>
-  );
-};
+  )
+}
 
-export default LandingPage;
+export default LandingPage
 
-export const getStaticPaths = getLandingStaticPaths;
+export const getStaticPaths = getLandingStaticPaths
 
-export const getStaticProps = getLandingStaticProps;
+export const getStaticProps = getLandingStaticProps

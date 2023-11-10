@@ -1,15 +1,15 @@
-import type { NextPage } from 'next';
+import type { NextPage } from 'next'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import usePage from '@core/hooks/usePage';
-import PageHeader from '@core/components/pages/PageHeader';
-import ResetPswForm from '@core/components/forms/auth/ResetPswForm';
+import usePage from '@core/hooks/usePage'
+import PageHeader from '@core/components/pages/PageHeader'
+import ResetPswForm from '@core/components/forms/auth/ResetPswForm'
 
 const ResetPage: NextPage = () => {
-  const page = usePage();
+  usePage()
 
   return (
     <>
@@ -19,7 +19,7 @@ const ResetPage: NextPage = () => {
           titleId: 'reset.metas.title',
           descriptionId: 'reset.metas.description',
           noindex: true,
-          nofollow: true,
+          nofollow: true
         }}
       />
 
@@ -27,7 +27,7 @@ const ResetPage: NextPage = () => {
         <ResetPswForm />
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default ResetPage;
+export default ResetPage
