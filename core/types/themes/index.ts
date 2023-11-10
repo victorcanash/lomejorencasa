@@ -177,6 +177,26 @@ export type ThemeCustomConfig = {
   },
 };
 
+export type ThemeTypographies = {
+  default: ThemeFontPropertyElement
+  title: ThemeFontPropertyElement
+  secondTitle: ThemeFontPropertyElement
+  contentHead: ThemeFontPropertyElement
+  content: ThemeFontPropertyElement
+  secondContentHead: ThemeFontPropertyElement
+  secondContent: ThemeFontPropertyElement
+  input: ThemeFontPropertyElement
+  button: ThemeFontPropertyElement
+  homeBanner: {
+    default: ThemeFontPropertyElement
+    small: ThemeFontPropertyElement
+  },
+  price: {
+    origin: ThemeFontPropertyElement
+    current: ThemeFontPropertyElement
+  },
+};
+
 export type ThemeElement = {
   background?: ThemeColorElement,
   backgroundColor?: ThemeColorElement,
