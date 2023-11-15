@@ -1,96 +1,101 @@
-import { Fragment, useCallback, useMemo } from 'react';
+import { Fragment, useCallback, useMemo } from 'react'
 
 import NP from 'number-precision'
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
-import { firstBuyDiscountPercent } from '@lib/config/payment.config';
-import type { Page } from '@core/types/navigation';
-import type { Order } from '@core/types/orders';
-import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import LinkButton from '@core/components/inputs/LinkButton';
-import Divider from '@core/components/ui/Divider';
+import { firstBuyDiscountPercent } from '@lib/config/payment.config'
+import type { Page } from '@core/types/navigation'
+import type { Order } from '@core/types/orders'
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart'
+import LinkButton from '@core/components/inputs/LinkButton'
+import Divider from '@core/components/ui/Divider'
 
-import { themeCustomElements } from '@lib/config/theme/elements';
-import { pages } from '@lib/config/navigation.config';
-import { useCartContext } from '@core/contexts/CartContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import useCart from '@core/hooks/useCart';
-import CartItemDetail from '@core/components/CartDetail/CartItemDetail';
+import { themeCustomElements } from '@lib/config/theme/elements'
+import { pages } from '@lib/config/navigation.config'
+import { useCartContext } from '@core/contexts/CartContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import useCart from '@core/hooks/useCart'
+import CartItemDetail from '@core/components/CartDetail/CartItemDetail'
 
-type CartDetailProps = {
-  page?: Page,
-  order?: Order,
-};
+interface CartDetailProps {
+  page?: Page
+  order?: Order
+}
 
 const CartDetail = (props: CartDetailProps) => {
-  const { 
+  const {
     page,
-    order,
-  } = props;
+    order
+  } = props
 
-  const { cart, totalPrice, disabledCheckoutPage, closeDrawer } = useCartContext();
-  const { convertPriceToString } = useAuthContext();
+  const { cart, totalPrice, disabledCheckoutPage, closeDrawer } = useCartContext()
+  const { convertPriceToString } = useAuthContext()
 
-  const intl = useIntl();
+  const intl = useIntl()
 
-  const { totalAmount, updateCartItemQuantity } = useCart();
+  const { totalAmount, updateCartItemQuantity } = useCart()
 
   const Subdivider = useCallback((props: { mt?: number, mb?: number }) => (
     <Divider
       themeElement={themeCustomElements.dividers?.subdivider}
-      mt={props.mt || 1}
-      mb={props.mb || 1}
+      mt={props.mt ?? 1}
+      mb={props.mb ?? 1}
     />
-  ), []);
+  ), [])
 
   const items = useMemo(() => {
-    let listItems: (CartItem | GuestCartCheckItem)[] = [];
+    let listItems: Array<CartItem | GuestCartCheckItem> = []
     if (page === pages.orders) {
-      listItems = order?.items || [];
+      listItems = order?.items ?? []
     } else {
-      listItems = cart.items;
+      listItems = cart.items
     }
-    return listItems;
-  }, [cart.items, order?.items, page]);
+    return listItems
+  }, [cart.items, order?.items, page])
 
   const breakdown = useMemo(() => {
     return {
-      subtotal: page !== pages.orders ?
-        totalPrice : NP.plus(
-          parseFloat(order?.transaction.amount.breakdown.itemTotal.value || '0'),
-          parseFloat(order?.transaction.amount.breakdown.taxTotal.value || '0')
+      subtotal: page !== pages.orders
+        ? totalPrice
+        : NP.plus(
+          parseFloat(order?.transaction.amount.breakdown.itemTotal.value ?? '0'),
+          parseFloat(order?.transaction.amount.breakdown.taxTotal.value ?? '0')
         ),
-      discount: page !== pages.orders ?
-        totalAmount.totalDiscount : parseFloat(order?.transaction.amount.breakdown.discount.value || '0'),
-      shipping: page !== pages.orders ?
-        0 : parseFloat(order?.transaction.amount.breakdown.shipping.value || '0'),
-      total: page !== pages.orders ?
-        totalAmount.total : parseFloat(order?.transaction.amount.value || '0'),
+      discount: page !== pages.orders
+        ? totalAmount.totalDiscount
+        : parseFloat(order?.transaction.amount.breakdown.discount.value ?? '0'),
+      shipping: page !== pages.orders
+        ? 0
+        : parseFloat(order?.transaction.amount.breakdown.shipping.value ?? '0'),
+      total: page !== pages.orders
+        ? totalAmount.total
+        : parseFloat(order?.transaction.amount.value ?? '0')
     }
-  }, [order?.transaction.amount.breakdown.discount.value, order?.transaction.amount.breakdown.itemTotal.value, order?.transaction.amount.breakdown.shipping.value, order?.transaction.amount.breakdown.taxTotal.value, order?.transaction.amount.value, page, totalAmount.total, totalAmount.totalDiscount, totalPrice]);
+  }, [order?.transaction.amount.breakdown.discount.value, order?.transaction.amount.breakdown.itemTotal.value, order?.transaction.amount.breakdown.shipping.value, order?.transaction.amount.breakdown.taxTotal.value, order?.transaction.amount.value, page, totalAmount.total, totalAmount.totalDiscount, totalPrice])
 
   return (
     <>
-      { items.length > 0 ?
-        <>
+      { items.length > 0
+        ? <>
           {/* Cart Items Detail */}
           <Box>
             { items.map((item, index) => (
               <Fragment key={index}>
                 { ((page === pages.checkout && item.quantity > 0) || (page !== pages.checkout)) &&
                   <>
-                    <CartItemDetail 
+                    <CartItemDetail
                       item={item}
                       Subdivider={Subdivider}
                       page={page}
                       updateQuantity={(page !== pages.checkout && page !== pages.orders)
-                        ? updateCartItemQuantity : undefined
+                        ? updateCartItemQuantity
+                        : undefined
                       }
-                      priorityImg={index <= 4 ? true : false}
+                      priorityImg={index <= 4}
                     />
                     <Divider
                       mt={3}
@@ -103,12 +108,11 @@ const CartDetail = (props: CartDetailProps) => {
           </Box>
           {/* Cart All Detail */}
           <Box>
-            { page !== pages.orders ?
-              <Typography variant="h3" textAlign="center" mt={-1}>
+            { page !== pages.orders
+              ? <Typography variant="h3" textAlign="center" mt={-1}>
                 <FormattedMessage id="cart.totalTitle" />
               </Typography>
-              :
-              <Typography variant="h3" textAlign="center" mt={-1}>
+              : <Typography variant="h3" textAlign="center" mt={-1}>
                 <FormattedMessage id="orders.detail.breakdown" />
               </Typography>
             }
@@ -123,7 +127,7 @@ const CartDetail = (props: CartDetailProps) => {
                     />
                   </Typography>
                 </Grid>
-                <Grid item>  
+                <Grid item>
                   <Typography component="div" variant="body1">
                     {convertPriceToString(breakdown.subtotal)}
                   </Typography>
@@ -160,14 +164,13 @@ const CartDetail = (props: CartDetailProps) => {
                   </Typography>
                 </Grid>
                 <Grid item>
-                  { breakdown.shipping <= 0 ?
-                    <Typography component="div" variant="body1">
+                  { breakdown.shipping <= 0
+                    ? <Typography component="div" variant="body1">
                       <FormattedMessage
                         id="cart.freeShipping"
                       />
                     </Typography>
-                    :
-                    <Typography component="div" variant="body1">
+                    : <Typography component="div" variant="body1">
                       { convertPriceToString(breakdown.shipping) }
                     </Typography>
                   }
@@ -195,7 +198,7 @@ const CartDetail = (props: CartDetailProps) => {
               </Grid>
             </Box>
           </Box>
-          { !page &&
+          { (page == null) &&
             <Box mt={3}>
               {/* Cart Button */}
               <LinkButton
@@ -217,7 +220,7 @@ const CartDetail = (props: CartDetailProps) => {
                 fullWidth
                 customtype="actionPrimary"
                 sx={{
-                  mt: 3,
+                  mt: 3
                 }}
               >
                 <FormattedMessage id="cart.checkoutBtn" />
@@ -225,13 +228,12 @@ const CartDetail = (props: CartDetailProps) => {
             </Box>
           }
         </>
-        :
-        <Typography component='div' variant='body1' sx={{ my: 5, textAlign: 'center' }}>
+        : <Typography component='div' variant='body1' sx={{ my: 5, textAlign: 'center' }}>
           <FormattedMessage id="cart.noItems" />
         </Typography>
       }
     </>
-  );
-};
+  )
+}
 
-export default CartDetail;
+export default CartDetail

@@ -1,80 +1,80 @@
-import { useCallback } from 'react';
+import { useCallback } from 'react'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import type { Order, OrderContact } from '@core/types/orders';
+import { FormFieldTypes } from '@core/constants/forms'
+import type { Order, OrderContact } from '@core/types/orders'
 
-import { pages } from '@lib/config/navigation.config';
-import useForms from '@core/hooks/useForms';
-import BaseForm from '@core/components/forms/BaseForm';
+import { pages } from '@lib/config/navigation.config'
+import useForms from '@core/hooks/useForms'
+import BaseForm from '@core/components/forms/BaseForm'
 
-type GetOrderFormProps = {
-  getOrder: (orderContact: OrderContact, onSuccess?: ((order: Order) => void) | undefined, onError?: ((errorMsg: string) => void) | undefined) => Promise<void>,
-  onSuccess: (order: Order) => void,
-  successMsg: string,
-  errorMsg: string,
-};
+interface GetOrderFormProps {
+  getOrder: (orderContact: OrderContact, onSuccess?: ((order: Order) => void) | undefined, onError?: ((errorMsg: string) => void) | undefined) => Promise<void>
+  onSuccess: (order: Order) => void
+  successMsg: string
+  errorMsg: string
+}
 
 const GetOrderForm = (props: GetOrderFormProps) => {
   const {
     getOrder,
     onSuccess,
     successMsg,
-    errorMsg,
-  } = props;
+    errorMsg
+  } = props
 
-  const { getOrderFormValidation, orderFieldsInitValues } = useForms();
+  const { getOrderFormValidation, orderFieldsInitValues } = useForms()
 
   const handleSubmit = useCallback(async (values: OrderContact) => {
-    getOrder(values, onSuccess);
-  }, [getOrder, onSuccess]);
+    void getOrder(values, onSuccess)
+  }, [getOrder, onSuccess])
 
   return (
-    <BaseForm 
+    <BaseForm
       initialValues={{
         orderId: orderFieldsInitValues.bigbuyId,
-        guestUserEmail: orderFieldsInitValues.guestUserEmail,
-      } as OrderContact}
+        guestUserEmail: orderFieldsInitValues.guestUserEmail
+      }}
       validationSchema={getOrderFormValidation}
       formFieldGroups={[
         {
           descriptionTxt: {
-            id: 'forms.getOrder.description',
+            id: 'forms.getOrder.description'
           },
           formFields: [
             {
               name: 'orderId',
               type: FormFieldTypes.text,
               required: true,
-              autoFocus: true,
+              autoFocus: true
             },
             {
               name: 'guestUserEmail',
               type: FormFieldTypes.text,
-              required: true,
-            },
-          ],
+              required: true
+            }
+          ]
         }
       ]}
       formButtons={{
         submit: {
           text: {
-            id: 'forms.getOrder.successBtn',
+            id: 'forms.getOrder.successBtn'
           },
-          onSubmit: handleSubmit,
-        },
+          onSubmit: handleSubmit
+        }
       }}
       linksItems={[
         {
           text: {
-            id: 'forms.getOrder.contactLink',
+            id: 'forms.getOrder.contactLink'
           },
-          path: pages.contact.path,
+          path: pages.contact.path
         }
       ]}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
-  );
-};
+  )
+}
 
-export default GetOrderForm;
+export default GetOrderForm

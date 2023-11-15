@@ -1,66 +1,70 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-import { convertElementToSx } from '@core/utils/themes';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import { themeCustomElements } from '@lib/config/theme/elements';
+import { convertElementToSx } from '@core/utils/themes'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import { themeCustomElements } from '@lib/config/theme/elements'
 
-type ProductPriceProps = {
-  type: 'landingDetail' | 'landingList', 
-  price: number,
-  originPrice: number,
-};
+interface ProductPriceProps {
+  type: 'landingDetail' | 'landingList'
+  price: number
+  originPrice: number
+}
 
 const ProductPrice = (props: ProductPriceProps) => {
   const {
     type,
     price,
-    originPrice,
-  } = props;
+    originPrice
+  } = props
 
-  const { convertPriceToString } = useAuthContext();
+  const { convertPriceToString } = useAuthContext()
 
   const themeTexts = useMemo(() => {
     let texts = {
       currentPrice: themeCustomElements.landingDetail?.price?.currentText,
-      originPrice: themeCustomElements.landingDetail?.price?.originText,
-    };
+      originPrice: themeCustomElements.landingDetail?.price?.originText
+    }
     if (type === 'landingList') {
       texts = {
         currentPrice: themeCustomElements.landingList?.price?.currentText,
-        originPrice: themeCustomElements.landingList?.price?.originText,
-      };
+        originPrice: themeCustomElements.landingList?.price?.originText
+      }
     }
-    return texts;
-  }, [type]);
+    return texts
+  }, [type])
 
   return (
     <Typography
       component={type === 'landingDetail' ? 'h2' : 'div'}
       variant={type === 'landingDetail' ? 'h2' : 'body1Head'}
       sx={{
-        ...themeTexts.currentPrice ?
-          convertElementToSx(themeTexts.currentPrice) : undefined,
+        ...(themeTexts.currentPrice != null)
+          ? convertElementToSx(themeTexts.currentPrice)
+          : undefined
       }}
     >
-      { price !== originPrice ?
-        <>
+      { price !== originPrice
+        ? <>
           <Box
             component="span"
             sx={{
-              ...themeTexts.originPrice ?
-                convertElementToSx(themeTexts.originPrice) : undefined,
-              color: themeTexts.currentPrice ?
-                convertElementToSx(themeTexts.currentPrice).color : undefined,
+              ...(themeTexts.originPrice != null)
+                ? convertElementToSx(themeTexts.originPrice)
+                : undefined,
+              color: (themeTexts.currentPrice != null)
+                ? convertElementToSx(themeTexts.currentPrice).color
+                : undefined
             }}
           >
             <Box
               component="span"
               sx={{
-                color: themeTexts.originPrice ?
-                  convertElementToSx(themeTexts.originPrice).color : undefined,
+                color: (themeTexts.originPrice != null)
+                  ? convertElementToSx(themeTexts.originPrice).color
+                  : undefined
               }}
             >
               {`${convertPriceToString(originPrice)}`}
@@ -68,13 +72,12 @@ const ProductPrice = (props: ProductPriceProps) => {
           </Box>
           {` ${convertPriceToString(price)}`}
         </>
-        :
-        <>
+        : <>
           {`${convertPriceToString(price)}`}
         </>
       }
     </Typography>
-  );
-};
+  )
+}
 
-export default ProductPrice;
+export default ProductPrice

@@ -1,20 +1,20 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import ListItemText from '@mui/material/ListItemText'
+import Typography from '@mui/material/Typography'
+import ExpandLess from '@mui/icons-material/ExpandLess'
+import ExpandMore from '@mui/icons-material/ExpandMore'
 
-import type { NavDrawerItem } from '@core/types/navigation';
+import type { NavDrawerItem } from '@core/types/navigation'
 
-type NavDrawerBtnContentProps = {
-  item: NavDrawerItem,
-};
+interface NavDrawerBtnContentProps {
+  item: NavDrawerItem
+}
 
 const NavDrawerBtnContent = (props: NavDrawerBtnContentProps) => {
   const {
-    item,
-  } = props;
+    item
+  } = props
 
   return (
     <>
@@ -29,13 +29,13 @@ const NavDrawerBtnContent = (props: NavDrawerBtnContentProps) => {
           </Typography>
         }
       />
-      { item.items && item.items?.length > 0 &&
+      { item.items?.length > 0 &&
         <>
-          { item.open ? <ExpandLess /> : <ExpandMore /> }
+          { (item.open === true) ? <ExpandLess /> : <ExpandMore /> }
         </>
       }
     </>
-  );
-};
+  )
+}
 
-export default NavDrawerBtnContent;
+export default NavDrawerBtnContent

@@ -1,49 +1,49 @@
-import { FormFieldTypes } from '@core/constants/forms';
+import { FormFieldTypes } from '@core/constants/forms'
 
-import useForms from '@core/hooks/useForms';
-import BaseForm from '@core/components/forms/BaseForm';
+import useForms from '@core/hooks/useForms'
+import BaseForm from '@core/components/forms/BaseForm'
 
-type ManagePPackInventoryFormProps = {
-  onSubmitSuccess: (id: number) => void,
-};
+interface ManagePPackInventoryFormProps {
+  onSubmitSuccess: (id: number) => void
+}
 
 const ManagePPackInventoryForm = (props: ManagePPackInventoryFormProps) => {
-  const { onSubmitSuccess } = props;
+  const { onSubmitSuccess } = props
 
-  const { managePackInventoryFormValidation, packInventoryFieldsInitValues } = useForms();
+  const { managePackInventoryFormValidation, packInventoryFieldsInitValues } = useForms()
 
   const handleSubmit = async (values: { id: number }) => {
     onSubmitSuccess(values.id)
-  };
+  }
 
   return (
-    <BaseForm 
+    <BaseForm
       initialValues={packInventoryFieldsInitValues}
       validationSchema={managePackInventoryFormValidation}
       formFieldGroups={[
         {
           titleTxt: {
-            id: 'forms.createPackInventory.title',
+            id: 'forms.createPackInventory.title'
           },
           formFields: [
             {
               name: 'id',
               type: FormFieldTypes.numeric,
-              required: true,
+              required: true
             }
-          ],
+          ]
         }
       ]}
       formButtons={{
         submit: {
           text: {
-            id: 'forms.createPackInventory.successBtn',
+            id: 'forms.createPackInventory.successBtn'
           },
-          onSubmit: handleSubmit,
-        },
+          onSubmit: handleSubmit
+        }
       }}
     />
-  );
-};
+  )
+}
 
-export default ManagePPackInventoryForm;
+export default ManagePPackInventoryForm

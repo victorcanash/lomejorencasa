@@ -1,73 +1,73 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-import type { NavDrawerItem } from '@core/types/navigation';
+import type { NavDrawerItem } from '@core/types/navigation'
 
-import navDrawerConfig from '@lib/config/navDrawer.config';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import { useCartContext } from '@core/contexts/CartContext';
+import navDrawerConfig from '@lib/config/navDrawer.config'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import { useCartContext } from '@core/contexts/CartContext'
 
 const useNavDrawer = () => {
-  const { isLogged } = useAuthContext();
-  const { closeDrawer: closeCartDrawer } = useCartContext();
+  const { isLogged } = useAuthContext()
+  const { closeDrawer: closeCartDrawer } = useCartContext()
 
-  const [items, setItems] = useState<NavDrawerItem[]>([]);
-  const [open, setOpen] = useState(false);
+  const [items, setItems] = useState<NavDrawerItem[]>([])
+  const [open, setOpen] = useState(false)
 
   const closeCollapses = () => {
     setItems(
       items.map((current) => {
         return {
           ...current,
-          open: false,
+          open: false
         }
       })
-    );
-  };
+    )
+  }
 
   const handleOpen = () => {
-    closeCartDrawer();
-    setOpen(!open);
-    closeCollapses();
-  };
+    closeCartDrawer()
+    setOpen(!open)
+    closeCollapses()
+  }
 
   const close = () => {
-    closeCartDrawer();
+    closeCartDrawer()
     if (open) {
-      setOpen(false);
-      closeCollapses();
+      setOpen(false)
+      closeCollapses()
     }
-  };
+  }
 
   const handleCollapse = (item: NavDrawerItem) => {
     setItems(
       items.map((current) => {
-        if (current.text == item.text) {
-          return { 
-            ...current, 
-            open: !current.open 
-          };
+        if (current.text === item.text) {
+          return {
+            ...current,
+            open: !(current.open ?? false)
+          }
         } else {
-          return current;
+          return current
         }
       })
-    );
-  };
+    )
+  }
 
   useEffect(() => {
     if (isLogged()) {
-      setItems(navDrawerConfig.main.concat(navDrawerConfig.logged));
+      setItems(navDrawerConfig.main.concat(navDrawerConfig.logged))
     } else {
-      setItems(navDrawerConfig.main.concat(navDrawerConfig.unlogged));
+      setItems(navDrawerConfig.main.concat(navDrawerConfig.unlogged))
     }
-  }, [isLogged]);
+  }, [isLogged])
 
   return {
     items,
     open,
     handleOpen,
     close,
-    handleCollapse,
-  };
-};
+    handleCollapse
+  }
+}
 
-export default useNavDrawer;
+export default useNavDrawer

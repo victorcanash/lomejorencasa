@@ -1,31 +1,31 @@
-import { GoogleLogin as ApiGoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { GoogleLogin as ApiGoogleLogin, type CredentialResponse } from '@react-oauth/google'
 
-import { getBackendErrorMsg, logBackendError } from '@core/utils/errors';
+import { getBackendErrorMsg, logBackendError } from '@core/utils/errors'
 
-type GoogleLoginProps = {
-  login: (accessToken: string) => void,
-};
+interface GoogleLoginProps {
+  login: (accessToken: string) => void
+}
 
 const GoogleLogin = (props: GoogleLoginProps) => {
-  const { login } = props;
+  const { login } = props
 
   const onSuccessGoogleLogin = (credentialResponse: CredentialResponse) => {
-    if (credentialResponse.credential) {
-      onSuccessAuth(credentialResponse.credential);
+    if (credentialResponse.credential != null) {
+      onSuccessAuth(credentialResponse.credential)
     } else {
-      onErrorGoogleLogin(new Error('Empty credentials'));
+      onErrorGoogleLogin(new Error('Empty credentials'))
     }
-  };
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onErrorGoogleLogin = (error?: any) => {
-    const errorMsg = getBackendErrorMsg('SDK Google OAuth2 ERROR', error || new Error());
-    logBackendError(errorMsg);
-  };
+    const errorMsg = getBackendErrorMsg('SDK Google OAuth2 ERROR', (Boolean(error)) || new Error())
+    logBackendError(errorMsg)
+  }
 
   const onSuccessAuth = (accessToken: string) => {
-    login(accessToken);
-  };
+    login(accessToken)
+  }
 
   return (
     <ApiGoogleLogin
@@ -33,7 +33,7 @@ const GoogleLogin = (props: GoogleLoginProps) => {
       onError={onErrorGoogleLogin}
       locale="es"
     />
-  );
-};
+  )
+}
 
-export default GoogleLogin;
+export default GoogleLogin

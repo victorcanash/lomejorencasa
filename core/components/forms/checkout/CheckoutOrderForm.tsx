@@ -1,11 +1,10 @@
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
 
-import { pages } from '@lib/config/navigation.config';
-import BaseForm from '@core/components/forms/BaseForm';
-import CartDetail from '@core/components/CartDetail';
+import { pages } from '@lib/config/navigation.config'
+import BaseForm from '@core/components/forms/BaseForm'
+import CartDetail from '@core/components/CartDetail'
 
 const CheckoutOrderForm = () => {
-
   return (
     <BaseForm
       maxWidth="800px"
@@ -14,7 +13,7 @@ const CheckoutOrderForm = () => {
         {
           titleTxt: {
             id: 'checkout.order',
-            textAlign: 'center',
+            textAlign: 'center'
           },
           extraElements:
             <Box mt={2}>
@@ -22,11 +21,11 @@ const CheckoutOrderForm = () => {
                 page={pages.checkout}
               />
             </Box>
-          ,
+
         }
       ]}
     />
-  );
-};
+  )
+}
 
-export default CheckoutOrderForm;
+export default CheckoutOrderForm

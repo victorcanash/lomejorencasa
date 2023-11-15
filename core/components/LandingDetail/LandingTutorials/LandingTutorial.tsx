@@ -1,43 +1,43 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-import type { NavItem } from '@core/types/navigation';
-import type { FormatText } from '@core/types/texts';
-import type { Source } from '@core/types/multimedia';
-import LinkButton from '@core/components/inputs/LinkButton';
-import Title from '@core/components/ui/Title';
-import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
+import type { NavItem } from '@core/types/navigation'
+import type { FormatText } from '@core/types/texts'
+import type { Source } from '@core/types/multimedia'
+import LinkButton from '@core/components/inputs/LinkButton'
+import Title from '@core/components/ui/Title'
+import MultimediaContainer from '@core/components/multimedia/MultimediaContainer'
 
-export type LandingTutorialProps = {
-  title: FormatText,
-  content: FormatText,
-  source: Source,
-  button?: NavItem,
-};
+export interface LandingTutorialProps {
+  title: FormatText
+  content: FormatText
+  source: Source
+  button?: NavItem
+}
 
 const LandingTutorial = (props: LandingTutorialProps) => {
   const {
     title,
     content,
     source,
-    button,
-   } = props;
+    button
+  } = props
 
   return (
     <>
       <Container id="tutorial">
-        <Box 
-          //maxWidth="sm"
+        <Box
+          // maxWidth="sm"
           m="auto"
         >
-          { title?.id &&
+          { ((title.id) != null) &&
             <Title
               type="h2"
               texts={{
-                title,
+                title
               }}
               divider={true}
             />
@@ -53,7 +53,7 @@ const LandingTutorial = (props: LandingTutorialProps) => {
       />
 
       <Container>
-        <Box 
+        <Box
           maxWidth="md"
           m="auto"
         >
@@ -70,16 +70,16 @@ const LandingTutorial = (props: LandingTutorialProps) => {
             />
           </Typography>
 
-          { button?.text.id && button?.path &&
+          { ((button?.text.id) != null) && ((button?.path) != null) &&
             <LinkButton
               href={button.path}
               align={button.text.textAlign}
               customtype="actionPrimary"
               sx={{
-                mt: 3,
+                mt: 3
               }}
             >
-              <FormattedMessage 
+              <FormattedMessage
                 id={button.text.id}
                 values={button.text.values}
                 defaultMessage={button.text.id}
@@ -89,7 +89,7 @@ const LandingTutorial = (props: LandingTutorialProps) => {
         </Box>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default LandingTutorial;
+export default LandingTutorial

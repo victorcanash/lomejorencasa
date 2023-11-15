@@ -1,90 +1,93 @@
-import { MouseEvent, useMemo, useCallback } from 'react';
-import { useRouter } from 'next/router';
+import { type MouseEvent, useMemo, useCallback } from 'react'
+import { useRouter } from 'next/router'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import MuiButton, { ButtonProps as MuiButtonProps } from '@mui/material/Button';
-import LoadingButton from '@mui/lab/LoadingButton';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import SaveIcon from '@mui/icons-material/Save';
+import MuiButton, { type ButtonProps as MuiButtonProps } from '@mui/material/Button'
+import LoadingButton from '@mui/lab/LoadingButton'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import SaveIcon from '@mui/icons-material/Save'
 
-import { convertElementToSx } from '@core/utils/themes';
+import { convertElementToSx } from '@core/utils/themes'
 
-import { themeCustomElements } from '@lib/config/theme/elements';
+import { themeCustomElements } from '@lib/config/theme/elements'
 
-type ButtonProps = {
-  customtype?: 'actionPrimary' | 'actionSecondary' | 'back' | 'payNow' | 'acceptCookies',
-  loading?: 'true',
-};
+interface ButtonProps {
+  customtype?: 'actionPrimary' | 'actionSecondary' | 'back' | 'payNow' | 'acceptCookies'
+  loading?: 'true'
+}
 
 const Button = (props: MuiButtonProps & ButtonProps) => {
   const {
     customtype,
-    loading: loading,
-  } = props;
+    loading
+  } = props
 
-  const router = useRouter();
+  const router = useRouter()
 
   const handleOnClick = useCallback((event: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>) => {
-    if (props.onClick) {
-      props.onClick(event);
+    if (props.onClick != null) {
+      props.onClick(event)
     } else if (customtype === 'back') {
-      router.back();
+      router.back()
     }
-  }, [props, router, customtype]);
+  }, [props, router, customtype])
 
   const startIcon = useMemo(() => {
-    if (props.startIcon) {
-      return props.startIcon;
+    if (props.startIcon != null) {
+      return props.startIcon
     } else if (customtype === 'back') {
-      return <ArrowBackIcon />;
+      return <ArrowBackIcon />
     }
-    return undefined;
-  }, [props.startIcon, customtype]);
+    return undefined
+  }, [props.startIcon, customtype])
 
   const children = useMemo(() => {
-    if (props.children) {
-      return props.children;
+    if (props.children != null) {
+      return props.children
     } else if (customtype === 'back') {
-      return <FormattedMessage id="app.backBtn" />;
+      return <FormattedMessage id="app.backBtn" />
     }
-    return undefined;
-  }, [props.children, customtype]);
+    return undefined
+  }, [props.children, customtype])
 
   const typeSx = useMemo(() => {
     if (customtype === 'actionPrimary') {
-      return themeCustomElements.button?.action?.primary ?
-        convertElementToSx(themeCustomElements.button.action.primary) : undefined;
+      return ((themeCustomElements.button?.action?.primary) != null)
+        ? convertElementToSx(themeCustomElements.button.action.primary)
+        : undefined
     } else if (customtype === 'actionSecondary') {
-      return themeCustomElements.button?.action?.secondary ?
-        convertElementToSx(themeCustomElements.button.action.secondary) : undefined;
+      return ((themeCustomElements.button?.action?.secondary) != null)
+        ? convertElementToSx(themeCustomElements.button.action.secondary)
+        : undefined
     } else if (customtype === 'payNow') {
-      return themeCustomElements.button?.payNow ?
-        convertElementToSx(themeCustomElements.button.payNow) : undefined;
+      return ((themeCustomElements.button?.payNow) != null)
+        ? convertElementToSx(themeCustomElements.button.payNow)
+        : undefined
     } else if (customtype === 'acceptCookies') {
-      return themeCustomElements.button?.acceptCookies ?
-        convertElementToSx(themeCustomElements.button.acceptCookies) : undefined;
+      return ((themeCustomElements.button?.acceptCookies) != null)
+        ? convertElementToSx(themeCustomElements.button.acceptCookies)
+        : undefined
     }
-    return undefined;
-  }, [customtype]);
+    return undefined
+  }, [customtype])
 
   return (
     <>
-      { !loading ?
-        <MuiButton
+      { loading == null
+        ? <MuiButton
           variant="contained"
           {...props}
           onClick={handleOnClick}
           startIcon={startIcon}
           sx={{
             ...typeSx,
-            ...props.sx,
+            ...props.sx
           }}
         >
           { children }
         </MuiButton>
-        :
-        <LoadingButton
+        : <LoadingButton
           variant="contained"
           {...props}
           loading
@@ -92,14 +95,14 @@ const Button = (props: MuiButtonProps & ButtonProps) => {
           startIcon={<SaveIcon fontSize="large" />}
           sx={{
             ...typeSx,
-            ...props.sx,
+            ...props.sx
           }}
         >
           { children }
         </LoadingButton>
       }
     </>
-  );
-};
+  )
+}
 
-export default Button;
+export default Button

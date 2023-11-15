@@ -1,17 +1,17 @@
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
 
-type LoadingProps = {
+interface LoadingProps {
   open: boolean
-};
+}
 
 const Loading = (props: LoadingProps) => {
-  const { open } = props;
+  const { open } = props
 
   return (
     <Backdrop
-      sx={{ 
-        zIndex: (theme) => theme.zIndex.modal + 5 
+      sx={{
+        zIndex: (theme) => theme.zIndex.modal + 5
       }}
       open={open}
     >
@@ -19,7 +19,7 @@ const Loading = (props: LoadingProps) => {
         size='60px'
       />
     </Backdrop>
-  );
-};
+  )
+}
 
-export default Loading;
+export default Loading

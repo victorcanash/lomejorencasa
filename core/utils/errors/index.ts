@@ -1,21 +1,23 @@
-import { capitalizeFirstLetter } from '@core/utils/strings';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { capitalizeFirstLetter } from '@core/utils/strings'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getBackendErrorMsg = (title: string, error: any) => {
-  let errorMsg = error.message;
-  if (error.response?.data?.message) {
-    errorMsg = error.response.data.message;
+export const getBackendErrorMsg = (title: string, error: unknown) => {
+  let errorMsg = ''
+  if (error instanceof Error) {
+    errorMsg = error.message
+  } else if ((error as any).response?.data?.message != null) {
+    errorMsg = (error as any).response.data.message
   } else {
-    const errorValFields = error.response?.data?.fields;
-    if (errorValFields?.length > 0 && 
-      errorValFields[0]?.error &&
-      errorValFields[0]?.name) {
-      errorMsg = `${capitalizeFirstLetter(errorValFields[0].error)} with the ${errorValFields[0].name} field`;
+    const errorValFields = (error as any).response?.data?.fields
+    if (errorValFields?.length > 0 &&
+      errorValFields[0]?.error != null &&
+      errorValFields[0]?.name != null) {
+      errorMsg = `${capitalizeFirstLetter(errorValFields[0].error)} with the ${errorValFields[0].name} field`
     }
   }
-  return `[${title}]: ${errorMsg as string}`;
-};
+  return `[${title}]: ${errorMsg}`
+}
 
 export const logBackendError = (errorMsg: string) => {
-  console.error(`${errorMsg}`);
-};
+  console.error(`${errorMsg}`)
+}

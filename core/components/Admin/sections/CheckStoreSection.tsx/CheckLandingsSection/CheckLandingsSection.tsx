@@ -1,57 +1,57 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import CreateIcon from '@mui/icons-material/Create';
+import Typography from '@mui/material/Typography'
+import CreateIcon from '@mui/icons-material/Create'
 
-import { ManageActions } from '@core/constants/app';
-import type { CheckCategory } from '@core/types/admin';
-import type { Landing } from '@core/types/products';
-import Button from '@core/components/inputs/Button';
-import Divider from '@core/components/ui/Divider';
-import ManageLandingForm from '@core/components/forms/admin/ManageLandingForm';
-import CheckLandingsList from './CheckLandingsList';
-import CreateLandingSection from './CreateLandingSection';
+import { ManageActions } from '@core/constants/app'
+import type { CheckCategory } from '@core/types/admin'
+import type { Landing } from '@core/types/products'
+import Button from '@core/components/inputs/Button'
+import Divider from '@core/components/ui/Divider'
+import ManageLandingForm from '@core/components/forms/admin/ManageLandingForm'
+import CheckLandingsList from './CheckLandingsList'
+import CreateLandingSection from './CreateLandingSection'
 
-type CheckLandingsSectionProps = {
-  checkCategory: CheckCategory,
-  onClickBack: () => void,
-};
+interface CheckLandingsSectionProps {
+  checkCategory: CheckCategory
+  onClickBack: () => void
+}
 
 const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
   const {
     checkCategory,
-    onClickBack,
-  } = props;
+    onClickBack
+  } = props
 
-  const [updateLanding, setUpdateLanding] = useState<Landing | undefined>(undefined);
-  const [createLanding, setCreateLanding] = useState(false);
+  const [updateLanding, setUpdateLanding] = useState<Landing | undefined>(undefined)
+  const [createLanding, setCreateLanding] = useState(false)
 
   const onClickCreateBtn = () => {
-    setCreateLanding(true);
-  };
+    setCreateLanding(true)
+  }
 
   const onClickUpdateBtn = (landing: Landing) => {
-    setUpdateLanding(landing);
-  };
+    setUpdateLanding(landing)
+  }
 
   const onSuccessCreate = () => {
-    setCreateLanding(false);
-  };
+    setCreateLanding(false)
+  }
 
   const onSuccessUpdate = () => {
-    setUpdateLanding(undefined);
-  };
+    setUpdateLanding(undefined)
+  }
 
   const onSuccessDelete = () => {
-    setUpdateLanding(undefined);
-  };
+    setUpdateLanding(undefined)
+  }
 
   const onCancel = () => {
-    setUpdateLanding(undefined);
-    setCreateLanding(false);
-  };
+    setUpdateLanding(undefined)
+    setCreateLanding(false)
+  }
 
   return (
     <>
@@ -66,11 +66,11 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
       </Button>
       <Divider mt={1} mb={4} />
 
-      { (!updateLanding && !createLanding) &&
+      { ((updateLanding == null) && !createLanding) &&
         <>
           <Button
             startIcon={<CreateIcon />}
-            onClick={() => onClickCreateBtn()}
+            onClick={() => { onClickCreateBtn() }}
           >
             <FormattedMessage
               id="admin.createLandingBtn"
@@ -83,7 +83,7 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
         </>
       }
 
-      { (updateLanding && !createLanding) &&
+      { ((updateLanding != null) && !createLanding) &&
         <ManageLandingForm
           action={ManageActions.update}
           landing={updateLanding}
@@ -93,7 +93,7 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
         />
       }
 
-      { (!updateLanding && createLanding) &&
+      { ((updateLanding == null) && createLanding) &&
         <CreateLandingSection
           category={checkCategory.category}
           onSubmitSuccess={onSuccessCreate}
@@ -101,7 +101,7 @@ const CheckLandingsSection = (props: CheckLandingsSectionProps) => {
         />
       }
     </>
-  );
-};
+  )
+}
 
-export default CheckLandingsSection;
+export default CheckLandingsSection

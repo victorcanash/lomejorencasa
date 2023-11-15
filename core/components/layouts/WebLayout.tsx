@@ -1,46 +1,46 @@
-import { ReactNode, useCallback, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { type ReactNode, useCallback, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
-import { scrollToSection } from '@core/utils/navigation';
-import { sendPageViewFBEvent } from '@core/utils/facebook';
-import { sendPageViewGTMEvent } from '@core/utils/gtm';
+import { scrollToSection } from '@core/utils/navigation'
+import { sendPageViewFBEvent } from '@core/utils/facebook'
+import { sendPageViewGTMEvent } from '@core/utils/gtm'
 
-import { useAppContext } from '@core/contexts/AppContext';
-import MainComponent from '@core/components/layouts/MainComponent';
-import NavBar from '@core/components/NavBar';
-import Footer from '@core/components/Footer';
-import AppBanners from '@core/components/banners/AppBanners';
+import { useAppContext } from '@core/contexts/AppContext'
+import MainComponent from '@core/components/layouts/MainComponent'
+import NavBar from '@core/components/NavBar'
+import Footer from '@core/components/Footer'
+import AppBanners from '@core/components/banners/AppBanners'
 
 const WebLayout = ({ children }: { children: ReactNode }) => {
-  const { initialized } = useAppContext();
+  const { initialized } = useAppContext()
 
-  const router = useRouter();
+  const router = useRouter()
 
   const checkScroll = useCallback(() => {
-    const path = window.location.hash;
-    if (path && path.includes('#')) {
-      scrollToSection();
+    const path = window.location.hash
+    if (path.includes('#')) {
+      scrollToSection()
     }
-  }, []);
+  }, [])
 
   useEffect(() => {
-    checkScroll();
+    checkScroll()
     // This pageview only triggers the first time (it's important for Pixel to have real information)
-    sendPageViewFBEvent();
+    sendPageViewFBEvent()
     const handleRouteChange = (url: string) => {
-      checkScroll();
-      sendPageViewFBEvent();
-      sendPageViewGTMEvent(url);
-    };
-    router.events.on('routeChangeComplete', handleRouteChange);
+      checkScroll()
+      sendPageViewFBEvent()
+      sendPageViewGTMEvent(url)
+    }
+    router.events.on('routeChangeComplete', handleRouteChange)
     return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [checkScroll, router.events]);
+      router.events.off('routeChangeComplete', handleRouteChange)
+    }
+  }, [checkScroll, router.events])
 
   useEffect(() => {
     if (initialized) {
-      checkScroll();
+      checkScroll()
     }
   }, [checkScroll, initialized])
 
@@ -53,7 +53,7 @@ const WebLayout = ({ children }: { children: ReactNode }) => {
       </MainComponent>
       <Footer />
     </>
-  );
-};
+  )
+}
 
-export default WebLayout;
+export default WebLayout

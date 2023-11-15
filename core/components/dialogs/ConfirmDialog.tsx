@@ -1,52 +1,52 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
-import Transition from '@core/components/animations/Transition';
-import Button from '@core/components/inputs/Button';
+import Transition from '@core/components/animations/Transition'
+import Button from '@core/components/inputs/Button'
 
-type ConfirmDialogProps = {
-  open: boolean,
-  handleDialog: () => void,
-  onConfirm: () => void,
-};
+interface ConfirmDialogProps {
+  open: boolean
+  handleDialog: () => void
+  onConfirm: () => void
+}
 
 const ConfirmDialog = (props: ConfirmDialogProps) => {
-  const { 
+  const {
     open,
     handleDialog,
-    onConfirm, 
-  } = props;
+    onConfirm
+  } = props
 
-  const [confirmValue, setConfirmValue] = useState('');
+  const [confirmValue, setConfirmValue] = useState('')
 
-  const confirmTxt = 'confirm';
+  const confirmTxt = 'confirm'
 
-  const confirmFieldError = confirmValue != confirmTxt;
+  const confirmFieldError = confirmValue !== confirmTxt
 
   const handleChangeConfirmField = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setConfirmValue(event.target.value);
-  };
+    setConfirmValue(event.target.value)
+  }
 
   const handleClickCancelBtn = () => {
-    handleDialog();
+    handleDialog()
   }
 
   const handleClickConfirmBtn = () => {
-    handleDialog();
-    onConfirm();
+    handleDialog()
+    onConfirm()
   }
 
   useEffect(() => {
-    setConfirmValue('');
-  }, [open]);
+    setConfirmValue('')
+  }, [open])
 
   return (
     <Dialog
@@ -60,12 +60,12 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         <FormattedMessage id="dialogs.confirm.title" />
       </DialogTitle>
       <DialogContent>
-        <DialogContentText 
+        <DialogContentText
           id="confirm-dialog"
         >
-          <FormattedMessage 
+          <FormattedMessage
             id="dialogs.confirm.content"
-            values={{ confirmTxt }} 
+            values={{ confirmTxt }}
           />
         </DialogContentText>
         <TextField
@@ -77,12 +77,12 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button 
+        <Button
           onClick={handleClickCancelBtn}
         >
           <FormattedMessage id="dialogs.confirm.cancelBtn" />
         </Button>
-        <Button 
+        <Button
           onClick={handleClickConfirmBtn}
           disabled={confirmFieldError}
         >
@@ -90,7 +90,7 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default ConfirmDialog;
+export default ConfirmDialog

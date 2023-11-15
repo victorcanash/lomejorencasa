@@ -1,13 +1,13 @@
-import { Step, StepLabel, Stepper as MuiStepper } from '@mui/material';
+import { Step, StepLabel, Stepper as MuiStepper } from '@mui/material'
 
-type Stepper = {
-  activeStep: number,
-  steps: string[],
-  mb?: number,
-};
+interface StepperProps {
+  activeStep: number
+  steps: string[]
+  mb?: number
+}
 
-const Stepper = (props: Stepper) => {
-  const { activeStep, steps, mb } = props;
+const Stepper = (props: StepperProps) => {
+  const { activeStep, steps, mb } = props
 
   return (
     <MuiStepper alternativeLabel activeStep={activeStep} sx={{ mb }}>
@@ -19,7 +19,7 @@ const Stepper = (props: Stepper) => {
         )
       })}
     </MuiStepper>
-  );
-};
+  )
+}
 
-export default Stepper;
+export default Stepper

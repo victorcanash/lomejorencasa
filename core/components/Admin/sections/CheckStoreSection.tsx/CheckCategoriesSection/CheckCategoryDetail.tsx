@@ -1,43 +1,43 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import UpdateIcon from '@mui/icons-material/Update';
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import UpdateIcon from '@mui/icons-material/Update'
 
-import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin';
-import type { ProductCategory } from '@core/types/products';
+import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin'
+import type { ProductCategory } from '@core/types/products'
 
-type CheckCategoryDetailProps = {
-  checkCategory: CheckCategory | CheckCategoryGroup,
-  onClickSelectBtn: (checkCategory: CheckCategory) => void,
-  onClickUpdateBtn: (checkCategory: CheckCategory | CheckCategoryGroup) => void,
-};
+interface CheckCategoryDetailProps {
+  checkCategory: CheckCategory | CheckCategoryGroup
+  onClickSelectBtn: (checkCategory: CheckCategory) => void
+  onClickUpdateBtn: (checkCategory: CheckCategory | CheckCategoryGroup) => void
+}
 
 const CheckCategoryDetail = (props: CheckCategoryDetailProps) => {
   const {
     checkCategory,
     onClickSelectBtn,
-    onClickUpdateBtn,
-  } = props;
+    onClickUpdateBtn
+  } = props
 
-  const intl = useIntl();
+  const intl = useIntl()
 
   const isGroup = useMemo(() => {
-    if ((checkCategory as CheckCategory)?.category) {
-      return false;
+    if ((checkCategory as CheckCategory)?.category != null) {
+      return false
     }
-    return true;
-  }, [checkCategory]);
+    return true
+  }, [checkCategory])
 
   const modelCategory = useMemo(() => {
-    if ((checkCategory as CheckCategory)?.category) {
-      return (checkCategory as CheckCategory).category;
+    if ((checkCategory as CheckCategory)?.category != null) {
+      return (checkCategory as CheckCategory).category
     }
-    return (checkCategory as CheckCategoryGroup).categoryGroup;
-  }, [checkCategory]);
+    return (checkCategory as CheckCategoryGroup).categoryGroup
+  }, [checkCategory])
 
   return (
     <>
@@ -46,9 +46,9 @@ const CheckCategoryDetail = (props: CheckCategoryDetailProps) => {
       </Typography>
       { !isGroup &&
         <Typography component="div" variant="body1">
-          {(modelCategory as ProductCategory).categoryGroupId ?
-            `${intl.formatMessage({ id: 'forms.categoryGroupId' })}: ${(modelCategory as ProductCategory).categoryGroupId}` :
-            `${intl.formatMessage({ id: 'forms.withoutGroupCategoryName' })}`
+          {((modelCategory as ProductCategory).categoryGroupId != null)
+            ? `${intl.formatMessage({ id: 'forms.categoryGroupId' })}: ${(modelCategory as ProductCategory).categoryGroupId}`
+            : `${intl.formatMessage({ id: 'forms.withoutGroupCategoryName' })}`
           }
         </Typography>
       }
@@ -73,8 +73,8 @@ const CheckCategoryDetail = (props: CheckCategoryDetailProps) => {
 
       { !isGroup &&
         <Button
-          startIcon={<VisibilityIcon />}       
-          onClick={() => onClickSelectBtn(checkCategory as CheckCategory)}
+          startIcon={<VisibilityIcon />}
+          onClick={() => { onClickSelectBtn(checkCategory as CheckCategory) }}
         >
           <FormattedMessage
             id="admin.selectCategoryBtn"
@@ -82,15 +82,15 @@ const CheckCategoryDetail = (props: CheckCategoryDetailProps) => {
         </Button>
       }
       <Button
-        startIcon={<UpdateIcon />}       
-        onClick={() => onClickUpdateBtn(checkCategory)}
+        startIcon={<UpdateIcon />}
+        onClick={() => { onClickUpdateBtn(checkCategory) }}
       >
         <FormattedMessage
           id="admin.updateCategoryBtn"
         />
       </Button>
     </>
-  );
-};
+  )
+}
 
-export default CheckCategoryDetail;
+export default CheckCategoryDetail

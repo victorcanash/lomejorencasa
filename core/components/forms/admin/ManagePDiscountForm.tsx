@@ -1,94 +1,95 @@
-import { ManageActions } from '@core/constants/app';
-import { FormFieldTypes } from '@core/constants/forms';
-import type { ProductDiscount, Product } from '@core/types/products';
+import { ManageActions } from '@core/constants/app'
+import { FormFieldTypes } from '@core/constants/forms'
+import type { ProductDiscount, Product } from '@core/types/products'
 
-import useForms from '@core/hooks/useForms';
-import useAdminStore from '@core/hooks/useAdminStore';
-import BaseForm from '@core/components/forms/BaseForm';
+import useForms from '@core/hooks/useForms'
+import useAdminStore from '@core/hooks/useAdminStore'
+import BaseForm from '@core/components/forms/BaseForm'
 
-type ManagePDiscountFormProps = {
-  action: ManageActions.create | ManageActions.update,
-  product: Product,
-  productDiscount?: ProductDiscount,
-  onSubmitSuccess?: (productDiscount: ProductDiscount) => void,
-  onDeleteSuccess?: () => void,
-  onCancel?: () => void,
-};
+interface ManagePDiscountFormProps {
+  action: ManageActions.create | ManageActions.update
+  product: Product
+  productDiscount?: ProductDiscount
+  onSubmitSuccess?: (productDiscount: ProductDiscount) => void
+  onDeleteSuccess?: () => void
+  onCancel?: () => void
+}
 
 const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
-  const { 
-    action, 
-    product, 
+  const {
+    action,
+    product,
     productDiscount,
-    onSubmitSuccess, 
+    onSubmitSuccess,
     onDeleteSuccess,
-    onCancel,
-  } = props;
+    onCancel
+  } = props
 
-  const { manageDiscountFormValidation, discountFieldsInitValues } = useForms();
-  const { manageProductDiscount, errorMsg, successMsg } = useAdminStore();
+  const { manageDiscountFormValidation, discountFieldsInitValues } = useForms()
+  const { manageProductDiscount, errorMsg, successMsg } = useAdminStore()
 
   const handleSubmit = async (values: ProductDiscount) => {
-    if (action == ManageActions.create) {
-      if (onSubmitSuccess) {
-        onSubmitSuccess(values);
+    if (action === ManageActions.create) {
+      if (onSubmitSuccess != null) {
+        onSubmitSuccess(values)
       }
-    } else if (action == ManageActions.update) {
-      manageProductDiscount(action, values, onSubmitSuccess);
+    } else if (action === ManageActions.update) {
+      void manageProductDiscount(action, values, onSubmitSuccess)
     }
-  };
+  }
 
   const handleDeleteBtn = () => {
-    if (productDiscount) {
-      manageProductDiscount(ManageActions.delete, productDiscount, onDeleteSuccess);
+    if (productDiscount != null) {
+      void manageProductDiscount(ManageActions.delete, productDiscount, onDeleteSuccess)
     }
-  };
+  }
 
   const handleCancelBtn = () => {
-    if (onCancel) {
-      onCancel();
+    if (onCancel != null) {
+      onCancel()
     }
   }
 
   return (
-    <BaseForm 
+    <BaseForm
       initialValues={{
         ...productDiscount,
-        id: productDiscount?.id || -1,
+        id: productDiscount?.id ?? -1,
         productId: product.id,
-        name: productDiscount?.name || discountFieldsInitValues.name,
-        description: productDiscount?.description || discountFieldsInitValues.description,
-        discountPercent: productDiscount?.discountPercent || discountFieldsInitValues.discountPercent,
-        active: productDiscount?.active || discountFieldsInitValues.active,
-      } as ProductDiscount}
+        name: productDiscount?.name ?? discountFieldsInitValues.name,
+        description: productDiscount?.description ?? discountFieldsInitValues.description,
+        discountPercent: productDiscount?.discountPercent ?? discountFieldsInitValues.discountPercent,
+        active: productDiscount?.active ?? discountFieldsInitValues.active
+      }}
       validationSchema={manageDiscountFormValidation}
       enableReinitialize={true}
       formFieldGroups={[
         {
           titleTxt: {
-            id: action == ManageActions.create ? 
-              'forms.createDiscount.title' : 'forms.updateDiscount.title',
+            id: action === ManageActions.create
+              ? 'forms.createDiscount.title'
+              : 'forms.updateDiscount.title'
           },
           formFields: [
             {
               name: 'name.en',
               type: FormFieldTypes.text,
-              required: true,
+              required: true
             },
             {
               name: 'name.es',
               type: FormFieldTypes.text,
-              required: true,
+              required: true
             },
             {
               name: 'description.en',
               type: FormFieldTypes.text,
-              required: true,
+              required: true
             },
             {
               name: 'description.es',
               type: FormFieldTypes.text,
-              required: true, 
+              required: true
             },
             {
               name: 'discountPercent',
@@ -96,45 +97,47 @@ const ManagePDiscountForm = (props: ManagePDiscountFormProps) => {
               required: true,
               adornment: {
                 value: '%',
-                position: 'end',
-              },
+                position: 'end'
+              }
             },
             {
               name: 'active',
-              type: FormFieldTypes.checkbox,
+              type: FormFieldTypes.checkbox
             }
-          ],
+          ]
         }
       ]}
       formButtons={{
         submit: {
-          text: { 
-            id: action == ManageActions.create ?
-              'forms.createDiscount.successBtn' : 'forms.updateDiscount.successBtn',
+          text: {
+            id: action === ManageActions.create
+              ? 'forms.createDiscount.successBtn'
+              : 'forms.updateDiscount.successBtn'
           },
-          onSubmit: handleSubmit,
+          onSubmit: handleSubmit
         },
-        delete: action == ManageActions.update ? 
-          { 
-            text: {
-              id: 'app.deleteBtn',
-            },
-            onClick: handleDeleteBtn,
-            confirm: {
-              enabled: true,
-            },
-          } : undefined,
+        delete: action === ManageActions.update
+          ? {
+              text: {
+                id: 'app.deleteBtn'
+              },
+              onClick: handleDeleteBtn,
+              confirm: {
+                enabled: true
+              }
+            }
+          : undefined,
         cancel: {
           text: {
-            id: 'app.cancelBtn',
+            id: 'app.cancelBtn'
           },
-          onClick: handleCancelBtn,
-        },
+          onClick: handleCancelBtn
+        }
       }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
-  );
-};
+  )
+}
 
-export default ManagePDiscountForm;
+export default ManagePDiscountForm

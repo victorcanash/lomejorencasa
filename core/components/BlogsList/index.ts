@@ -1,3 +1,3 @@
-import BlogsList from './BlogsList';
+import BlogsList from './BlogsList'
 
-export default BlogsList;
+export default BlogsList

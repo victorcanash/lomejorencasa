@@ -1,3 +1,3 @@
-import { NavItem } from '@core/types/navigation';
+import { type NavItem } from '@core/types/navigation'
 
-export type BlogsConfig = NavItem[];
+export type BlogsConfig = NavItem[]

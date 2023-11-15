@@ -1,18 +1,17 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-import envConfig from '@core/config/env.config';
-import Link from '@core/components/navigation/Link';
+import envConfig from '@core/config/env.config'
+import Link from '@core/components/navigation/Link'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
 const Conditions = () => {
-
   return (
     <Container>
       <Typography variant="h2" mb={3}>
@@ -196,16 +195,16 @@ const Conditions = () => {
         <FormattedMessage
           id="conditions.claim.description"
           values={{
-            'link': (...chunks: ReactNode[]) => (
+            link: (...chunks: ReactNode[]) => (
               <Link href="https://ec.europa.eu/consumers/odr/" target="_blank">
                 {chunks}
               </Link>
-            ),
+            )
           }}
         />
       </Typography>
     </Container>
-  );
-};
+  )
+}
 
-export default Conditions;
+export default Conditions

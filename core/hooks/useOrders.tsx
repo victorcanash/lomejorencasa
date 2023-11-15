@@ -1,39 +1,39 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react'
 
-import { useIntl } from 'react-intl';
-import { useSnackbar } from 'notistack';
+import { useIntl } from 'react-intl'
+import { useSnackbar } from 'notistack'
 
-import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail, OrderSendEmail } from '@core/types/orders';
-import type { User } from '@core/types/user';
-import { 
-  getOrders as getOrdersMW, 
+import type { Order, OrderContact, OrderFailedCreate, OrderFailedSendEmail, OrderSendEmail } from '@core/types/orders'
+import type { User } from '@core/types/user'
+import {
+  getOrders as getOrdersMW,
   getOrderByBigbuyId as getOrderByBigbuyIdMW,
   getOrderById as getOrderByIdMW,
   createFailedOrder as createFailedOrderMW,
   sendOrderEmail as sendOrderEmailMW,
-  sendFailedOrderEmail as sendFailedOrderEmailMW,
-} from '@core/utils/orders';
+  sendFailedOrderEmail as sendFailedOrderEmailMW
+} from '@core/utils/orders'
 
-import { useAppContext } from '@core/contexts/AppContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
+import { useAppContext } from '@core/contexts/AppContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
 
 const useOrders = () => {
-  const { setLoading } = useAppContext();
-  const { token, user, isLogged } = useAuthContext();
+  const { setLoading } = useAppContext()
+  const { token, user, isLogged } = useAuthContext()
 
-  const intl = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
+  const intl = useIntl()
+  const { enqueueSnackbar } = useSnackbar()
 
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('')
+  const [successMsg, setSuccessMsg] = useState('')
 
   const onGetOrdersSuccess = useCallback((orders: Order[], totalPages: number, currentPage: number, onSuccess?: (orders: Order[], totalPages: number, currentPage: number) => void) => {
-    if (onSuccess) {
-      onSuccess(orders, totalPages, currentPage);
+    if (onSuccess != null) {
+      onSuccess(orders, totalPages, currentPage)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'orders.list.successes.default' }));
-  }, [intl, setLoading]);
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'orders.list.successes.default' }))
+  }, [intl, setLoading])
 
   const getOrders = useCallback(async (
     page: number,
@@ -41,166 +41,166 @@ const useOrders = () => {
     onError?: (errorMsg: string) => void
   ) => {
     if (!isLogged()) {
-      return;
+      return
     }
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    await getOrdersMW(token, page, 'id', 'desc', (user as User)?.id || -1)
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
+    await getOrdersMW(token, page, 'id', 'desc', (user as User)?.id ?? -1)
       .then((response) => {
-        onGetOrdersSuccess(response.orders, response.totalPages, response.currentPage, onSuccess);
+        onGetOrdersSuccess(response.orders, response.totalPages, response.currentPage, onSuccess)
       }).catch((error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
-        setLoading(false);
+        const errorMsg = error.message
+        setErrorMsg(errorMsg)
+        setLoading(false)
         enqueueSnackbar(
           intl.formatMessage({ id: 'orders.list.errors.default' }),
           { variant: 'error' }
-        );
-        if (onError) {
-          onError(errorMsg);
+        )
+        if (onError != null) {
+          onError(errorMsg)
         }
-      });
-  }, [enqueueSnackbar, intl, isLogged, onGetOrdersSuccess, setLoading, token, user]);
+      })
+  }, [enqueueSnackbar, intl, isLogged, onGetOrdersSuccess, setLoading, token, user])
 
   const onGetOrderSuccess = useCallback((order: Order, onSuccess?: (order: Order) => void) => {
-    if (onSuccess) {
-      onSuccess(order);
+    if (onSuccess != null) {
+      onSuccess(order)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'orders.detail.successes.default' }));
-  }, [intl, setLoading]);
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'orders.detail.successes.default' }))
+  }, [intl, setLoading])
 
   const getOrderById = useCallback(async (
     id: number,
     onSuccess?: (order: Order) => void,
     onError?: (errorMsg: string) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     await getOrderByIdMW(token, id)
       .then((response: { order: Order }) => {
-        onGetOrderSuccess(response.order, onSuccess);
+        onGetOrderSuccess(response.order, onSuccess)
       }).catch((error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
-        setLoading(false);
+        const errorMsg = error.message
+        setErrorMsg(errorMsg)
+        setLoading(false)
         enqueueSnackbar(
-          intl.formatMessage({ id: 'orders.detail.errors.default' }), 
+          intl.formatMessage({ id: 'orders.detail.errors.default' }),
           { variant: 'error' }
-        );
-        if (onError) {
-          onError(errorMsg);
+        )
+        if (onError != null) {
+          onError(errorMsg)
         }
-      });
-  }, [enqueueSnackbar, intl, onGetOrderSuccess, setLoading, token]);
+      })
+  }, [enqueueSnackbar, intl, onGetOrderSuccess, setLoading, token])
 
   const getOrderByBigbuyId = useCallback(async (
     orderContact: OrderContact,
     onSuccess?: (order: Order) => void,
     onError?: (errorMsg: string) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     await getOrderByBigbuyIdMW(orderContact)
       .then((response: { order: Order }) => {
-        onGetOrderSuccess(response.order, onSuccess);
+        onGetOrderSuccess(response.order, onSuccess)
       }).catch((error) => {
-        let errorMsg = error.message; 
+        let errorMsg: string = error.message
         if (errorMsg.includes('bigbuyId')) {
-          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.bigbuyId' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.bigbuyId' })
         } else if (errorMsg.includes('email')) {
-          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.guestUserEmail' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.guestUserEmail' })
         } else if (errorMsg.includes('be logged')) {
-          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.loggedOrder' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.loggedOrder' })
         } else {
-          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.default' });
+          errorMsg = intl.formatMessage({ id: 'orders.detail.errors.default' })
         }
-        setErrorMsg(errorMsg);
-        setLoading(false);
-        if (onError) {
-          onError(errorMsg);
+        setErrorMsg(errorMsg)
+        setLoading(false)
+        if (onError != null) {
+          onError(errorMsg)
         }
-      });
-  }, [intl, onGetOrderSuccess, setLoading]);
+      })
+  }, [intl, onGetOrderSuccess, setLoading])
 
   const onCreateFailedOrderSuccess = useCallback((
     order: Order | undefined,
     onSuccess?: (order?: Order) => void
   ) => {
-    if (onSuccess) {
-      onSuccess(order);
+    if (onSuccess != null) {
+      onSuccess(order)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createOrder' }));
-  }, [intl, setLoading]);
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createOrder' }))
+  }, [intl, setLoading])
 
   const createFailedOrder = useCallback(async (
     order: OrderFailedCreate,
     onSuccess?: (order?: Order) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     await createFailedOrderMW(token, order)
       .then((response: { order?: Order }) => {
-        onCreateFailedOrderSuccess(response.order, onSuccess);
+        onCreateFailedOrderSuccess(response.order, onSuccess)
       }).catch((error) => {
-        let errorMsg = error.message;
+        let errorMsg: string = error.message
         if (errorMsg.includes('payment data error')) {
-          errorMsg = intl.formatMessage({ id: 'admin.errors.invalidOrderTransactionId' });
+          errorMsg = intl.formatMessage({ id: 'admin.errors.invalidOrderTransactionId' })
         }
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
-  }, [intl, onCreateFailedOrderSuccess, setLoading, token]);
+        setErrorMsg(errorMsg)
+        setLoading(false)
+      })
+  }, [intl, onCreateFailedOrderSuccess, setLoading, token])
 
   const onSendOrderEmailSuccess = useCallback((
     order: Order,
     onSuccess?: (order: Order) => void
   ) => {
-    if (onSuccess) {
-      onSuccess(order);
+    if (onSuccess != null) {
+      onSuccess(order)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.sendOrderEmail' }));
-  }, [intl, setLoading]);
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.sendOrderEmail' }))
+  }, [intl, setLoading])
 
   const sendOrderEmail = useCallback(async (
     order: OrderSendEmail,
     onSuccess?: (order: Order) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     await sendOrderEmailMW(token, order)
       .then((response: { order: Order }) => {
-        onSendOrderEmailSuccess(response.order, onSuccess);
+        onSendOrderEmailSuccess(response.order, onSuccess)
       }).catch((error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
-  }, [onSendOrderEmailSuccess, setLoading, token]);
+        const errorMsg = error.message
+        setErrorMsg(errorMsg)
+        setLoading(false)
+      })
+  }, [onSendOrderEmailSuccess, setLoading, token])
 
   const sendFailedOrderEmail = useCallback(async (
     order: OrderFailedSendEmail,
     onSuccess?: (order: Order) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     await sendFailedOrderEmailMW(token, order)
       .then((response: { order: Order }) => {
-        onSendOrderEmailSuccess(response.order, onSuccess);
+        onSendOrderEmailSuccess(response.order, onSuccess)
       }).catch((error) => {
-        const errorMsg = error.message;
-        setErrorMsg(errorMsg);
-        setLoading(false);
-      });
-  }, [onSendOrderEmailSuccess, setLoading, token]);
+        const errorMsg = error.message
+        setErrorMsg(errorMsg)
+        setLoading(false)
+      })
+  }, [onSendOrderEmailSuccess, setLoading, token])
 
   return {
     errorMsg,
@@ -212,8 +212,8 @@ const useOrders = () => {
     getOrderById,
     createFailedOrder,
     sendOrderEmail,
-    sendFailedOrderEmail,
-  };
-};
+    sendFailedOrderEmail
+  }
+}
 
-export default useOrders;
+export default useOrders

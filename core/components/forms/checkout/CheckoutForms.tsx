@@ -1,16 +1,16 @@
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
 
-import { useAuthContext } from '@core/contexts/AuthContext';
-import usePayments from '@core/hooks/usePayments';
-import CheckoutAuthForm from '@core/components/forms/checkout/CheckoutAuthForm';
-import CheckoutCouponForm from '@core/components/forms/checkout/CheckoutCouponForm';
-import CheckoutContactForm from '@core/components/forms/checkout/CheckoutContactForm';
-import CheckoutOrderForm from '@core/components/forms/checkout/CheckoutOrderForm';
-import CheckoutPaymentForm from '@core/components/forms/checkout/CheckoutPaymentForm';
+import { useAuthContext } from '@core/contexts/AuthContext'
+import usePayments from '@core/hooks/usePayments'
+import CheckoutAuthForm from '@core/components/forms/checkout/CheckoutAuthForm'
+import CheckoutCouponForm from '@core/components/forms/checkout/CheckoutCouponForm'
+import CheckoutContactForm from '@core/components/forms/checkout/CheckoutContactForm'
+import CheckoutOrderForm from '@core/components/forms/checkout/CheckoutOrderForm'
+import CheckoutPaymentForm from '@core/components/forms/checkout/CheckoutPaymentForm'
 
 const CheckoutForms = () => {
-  const { isLogged } = useAuthContext();
+  const { isLogged } = useAuthContext()
 
   const {
     contactFormRef,
@@ -25,8 +25,8 @@ const CheckoutForms = () => {
     rememberFieldValue,
     handleRememberField,
     errorMsg,
-    successMsg,
-  } = usePayments();
+    successMsg
+  } = usePayments()
 
   return (
     <Container>
@@ -63,7 +63,7 @@ const CheckoutForms = () => {
         />
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default CheckoutForms;
+export default CheckoutForms

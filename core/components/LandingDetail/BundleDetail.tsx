@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
+/* eslint-disable no-lone-blocks */
 /*
 import { useCallback, useMemo } from 'react';
 
@@ -24,15 +26,15 @@ import { useProductsContext } from '@core/contexts/ProductsContext';
 import ProductPrice from '@core/components/ProductPrice';
 */
 
-type BundleDetailProps = {
+interface BundleDetailProps {
   /*
   bundleConfig: BundleConfig,
   addCartItem: (productItem: ProductPack | ProductInventory, quantity: number) => void,
   */
-};
+}
 
 const BundleDetail = (props: BundleDetailProps) => {
-  {/*const {
+  { /* const {
     bundleConfig,
     addCartItem,
   } = props;
@@ -112,11 +114,11 @@ const BundleDetail = (props: BundleDetailProps) => {
       </>
     );
   }, [bundleConfig.firstItem.name?.id, bundleConfig.firstItem.name?.values, bundleConfig.landingId, bundleConfig.secondItem?.name?.id, bundleConfig.secondItem?.name?.values, getPageUrlByLandingId, intl, productPack]);
-  */}
+  */ }
 
   return (
     <>
-      {/*<Typography
+      {/* <Typography
         variant="h3"
         color="text.primary"
         sx={{
@@ -195,16 +197,16 @@ const BundleDetail = (props: BundleDetailProps) => {
             loading={initialized ? undefined : 'true'}
             onClick={onClickAddCartBtn}
             sx={{
-              py: 1, 
+              py: 1,
               mb: 3,
             }}
           >
             <FormattedMessage id="productDetail.addCartPackBtn" />
           </Button>
         </Grid>
-      </Grid>*/}
+      </Grid> */}
     </>
-  );
-};
+  )
+}
 
-export default BundleDetail;
+export default BundleDetail

@@ -1,41 +1,41 @@
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
+  type Dispatch,
+  type SetStateAction,
   useCallback,
   useContext,
   useEffect,
-  useState,
-} from 'react';
+  useState
+} from 'react'
 
 import NP from 'number-precision'
 
-import envConfig from '@core/config/env.config';
-import { Environments } from '@core/constants/app';
-import type { Cart } from '@core/types/cart';
-import { getItemAmount } from '@core/utils/cart';
+import envConfig from '@core/config/env.config'
+import { Environments } from '@core/constants/app'
+import type { Cart } from '@core/types/cart'
+import { getItemAmount } from '@core/utils/cart'
 
-type ContextType = {
-  cart: Cart,
-  totalQuantity: number,
-  setTotalQuantity: Dispatch<SetStateAction<number>>,
-  totalPrice: number,
-  setTotalPrice: Dispatch<SetStateAction<number>>,
-  initCart: (cart: Cart) => void,
-  cleanCart: () => void,
-  removeCart: () => void,
-  disabledCheckoutPage: () => boolean,
-  drawerOpen: boolean,
-  handleDrawerOpen: () => void,
-  closeDrawer: () => void,
-  openDrawer: () => void,
-};
+interface ContextType {
+  cart: Cart
+  totalQuantity: number
+  setTotalQuantity: Dispatch<SetStateAction<number>>
+  totalPrice: number
+  setTotalPrice: Dispatch<SetStateAction<number>>
+  initCart: (cart: Cart) => void
+  cleanCart: () => void
+  removeCart: () => void
+  disabledCheckoutPage: () => boolean
+  drawerOpen: boolean
+  handleDrawerOpen: () => void
+  closeDrawer: () => void
+  openDrawer: () => void
+}
 
 export const CartContext = createContext<ContextType>({
   cart: {
     id: -1,
     userId: -1,
-    items: [],
+    items: []
   },
   totalQuantity: 0,
   setTotalQuantity: () => {},
@@ -48,88 +48,83 @@ export const CartContext = createContext<ContextType>({
   drawerOpen: false,
   handleDrawerOpen: () => {},
   closeDrawer: () => {},
-  openDrawer: () => {},
-});
+  openDrawer: () => {}
+})
 
 export const useCartContext = () => {
-  const context = useContext(CartContext);
-  if (!context) {
-    throw new Error('Error while reading CartContext');
-  }
-
-  return context;
-};
+  return useContext(CartContext)
+}
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [cart, setCart] = useState<Cart>({
     id: -1,
     userId: -1,
-    items: [],
-  });
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [drawerOpen, setDrawerOpen] = useState(false);
+    items: []
+  })
+  const [totalQuantity, setTotalQuantity] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   const handleDrawerOpen = () => {
-    setDrawerOpen(!drawerOpen);
-  };
+    setDrawerOpen(!drawerOpen)
+  }
 
   const closeDrawer = () => {
     if (drawerOpen) {
-      setDrawerOpen(false);
+      setDrawerOpen(false)
     }
-  };
+  }
 
-  const openDrawer  = () => {
+  const openDrawer = () => {
     if (!drawerOpen) {
-      setDrawerOpen(true);
+      setDrawerOpen(true)
     }
-  };
+  }
 
   const initCart = useCallback((cart: Cart) => {
-    setCart(cart);
-  }, []);
+    setCart(cart)
+  }, [])
 
   const cleanCart = () => {
     setCart({
       ...cart,
-      items: [],
+      items: []
     })
-    setTotalQuantity(0);
-    setTotalPrice(0);
-  };
+    setTotalQuantity(0)
+    setTotalPrice(0)
+  }
 
   const removeCart = useCallback(() => {
     setCart({
       id: -1,
       userId: -1,
-      items: [],
-    });
-    setTotalQuantity(0);
-    setTotalPrice(0);
-  }, []);
+      items: []
+    })
+    setTotalQuantity(0)
+    setTotalPrice(0)
+  }, [])
 
   const disabledCheckoutPage = useCallback(() => {
     if (envConfig.APP_ENV === Environments.development) {
-      return true;
+      return true
     } else if (totalPrice <= 0) {
-      return true;
+      return true
     }
-    return false;
-  }, [totalPrice]);
+    return false
+  }, [totalPrice])
 
   useEffect(() => {
-    let totalPriceResult = 0;
-    let totalQuantityResult = 0;
+    let totalPriceResult = 0
+    let totalQuantityResult = 0
     if (cart.items.length > 0) {
       cart.items.forEach((item) => {
         totalPriceResult = NP.plus(totalPriceResult, getItemAmount(item).itemTotalWithQuantity)
         totalQuantityResult = NP.plus(totalQuantityResult, item.quantity)
-      });
+      })
     }
-    setTotalPrice(totalPriceResult);
-    setTotalQuantity(totalQuantityResult);
-  }, [cart, cart.items, cart.items.length]);
+    setTotalPrice(totalPriceResult)
+    setTotalQuantity(totalQuantityResult)
+  }, [cart, cart.items, cart.items.length])
 
   return (
     <CartContext.Provider
@@ -146,10 +141,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         drawerOpen,
         handleDrawerOpen,
         closeDrawer,
-        openDrawer,
+        openDrawer
       }}
     >
       {children}
     </CartContext.Provider>
-  );
-};
+  )
+}

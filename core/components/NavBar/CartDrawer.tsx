@@ -1,30 +1,30 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 
-import { useCartContext } from '@core/contexts/CartContext';
-import Divider from '@core/components/ui/Divider';
-import CartDetail from '@core/components/CartDetail';
+import { useCartContext } from '@core/contexts/CartContext'
+import Divider from '@core/components/ui/Divider'
+import CartDetail from '@core/components/CartDetail'
 
-type CartDrawerProps = {
-  minHeight: string,
-};
+interface CartDrawerProps {
+  minHeight: string
+}
 
 const CartDrawer = (props: CartDrawerProps) => {
   const {
-    minHeight,
-   } = props;
+    minHeight
+  } = props
 
   const {
     drawerOpen,
-    handleDrawerOpen,
-  } = useCartContext();
+    handleDrawerOpen
+  } = useCartContext()
 
   return (
     <Drawer
@@ -32,19 +32,19 @@ const CartDrawer = (props: CartDrawerProps) => {
       open={drawerOpen}
       onClose={handleDrawerOpen}
       sx={{
-        flexShrink: 0,
+        flexShrink: 0
       }}
       PaperProps={{
         sx: {
-          backgroundColor: 'primary.main',
-        },
+          backgroundColor: 'primary.main'
+        }
       }}
     >
       <Toolbar
         variant="dense"
         disableGutters
         sx={{
-          minHeight: minHeight,
+          minHeight
         }}
       />
       <Box
@@ -52,9 +52,9 @@ const CartDrawer = (props: CartDrawerProps) => {
           overflow: 'auto',
           width: {
             xs: '100vw',
-            sm: '600px',
+            sm: '600px'
           },
-          p: '16px',
+          p: '16px'
         }}
       >
         {/* Title */}
@@ -79,7 +79,7 @@ const CartDrawer = (props: CartDrawerProps) => {
         <CartDetail />
       </Box>
     </Drawer>
-  );
-};
+  )
+}
 
-export default CartDrawer;
+export default CartDrawer

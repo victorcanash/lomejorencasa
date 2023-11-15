@@ -1,66 +1,66 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import ErrorIcon from '@mui/icons-material/Error';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import ErrorIcon from '@mui/icons-material/Error'
 
-import type { FormatText } from '@core/types/texts';
+import type { FormatText } from '@core/types/texts'
 
-import BaseForm from '@core/components/forms/BaseForm';
+import BaseForm from '@core/components/forms/BaseForm'
 
-type ActivationFormProps = {
-  successMsg: string,
-  errorMsg: string,
-};
+interface ActivationFormProps {
+  successMsg: string
+  errorMsg: string
+}
 
 const ActivationForm = (props: ActivationFormProps) => {
-  const { successMsg, errorMsg } = props;
+  const { successMsg, errorMsg } = props
 
   const getDescriptionTxt = () => {
-    let descriptionTxt: FormatText | undefined = undefined;
-    if (successMsg) {
+    let descriptionTxt: FormatText | undefined
+    if (successMsg !== '') {
       descriptionTxt = {
-        id: 'activation.successes.default',
-      };
-    } else if (errorMsg) {
+        id: 'activation.successes.default'
+      }
+    } else if (errorMsg !== '') {
       if (errorMsg.includes('was already activated')) {
         descriptionTxt = {
-          id: 'activation.errors.alreadyActivated',
-        };
+          id: 'activation.errors.alreadyActivated'
+        }
       } else if (errorMsg.includes('locked out')) {
         descriptionTxt = {
-          id: 'activation.errors.lockedOut',
-        };
-      } else if (errorMsg.includes('Token is missing or has expirated')){
+          id: 'activation.errors.lockedOut'
+        }
+      } else if (errorMsg.includes('Token is missing or has expirated')) {
         descriptionTxt = {
-          id: 'activation.errors.invalidToken',
-        };
+          id: 'activation.errors.invalidToken'
+        }
       } else {
         descriptionTxt = {
-          id: 'activation.errors.default',
-        };
+          id: 'activation.errors.default'
+        }
       }
     }
-    if (descriptionTxt) {
-      descriptionTxt.textAlign = 'center';
+    if (descriptionTxt != null) {
+      descriptionTxt.textAlign = 'center'
     }
-    return descriptionTxt;
+    return descriptionTxt
   }
 
   return (
     <BaseForm
       formFieldGroups={[
         {
-          avatarIcon: successMsg ?
-            <CheckCircleIcon fontSize="large" /> :
-            <ErrorIcon fontSize="large" />,
+          avatarIcon: (successMsg !== '')
+            ? <CheckCircleIcon fontSize="large" />
+            : <ErrorIcon fontSize="large" />,
           avatarBgColor: 'transparent',
           titleTxt: {
             id: 'forms.activation.title',
-            textAlign: 'center',
+            textAlign: 'center'
           },
-          descriptionTxt: getDescriptionTxt(),
+          descriptionTxt: getDescriptionTxt()
         }
       ]}
     />
-  );
-};
+  )
+}
 
-export default ActivationForm;
+export default ActivationForm

@@ -1,96 +1,95 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react'
 
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import IconButton from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
+import DeleteIcon from '@mui/icons-material/Delete'
 
-import type { Page } from '@core/types/navigation';
-import type { CartItem, GuestCartCheckItem } from '@core/types/cart';
-import { getItemAmount, availableItemQuantity } from '@core/utils/cart';
-import Link from '@core/components/navigation/Link';
-import CustomImage from '@core/components/multimedia/CustomImage';
+import type { Page } from '@core/types/navigation'
+import type { CartItem, GuestCartCheckItem } from '@core/types/cart'
+import { getItemAmount, availableItemQuantity, instanceOfCartItem } from '@core/utils/cart'
+import Link from '@core/components/navigation/Link'
+import CustomImage from '@core/components/multimedia/CustomImage'
 
-import { pages } from '@lib/config/navigation.config';
-import { useProductsContext } from '@core/contexts/ProductsContext';
-import { useCartContext } from '@core/contexts/CartContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
-import ProductCouponForm from '@core/components/forms/products/ProductCouponForm';
+import { pages } from '@lib/config/navigation.config'
+import { useProductsContext } from '@core/contexts/ProductsContext'
+import { useCartContext } from '@core/contexts/CartContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity'
+import ProductCouponForm from '@core/components/forms/products/ProductCouponForm'
 
-type CartItemDetailProps = {
-  item: CartItem | GuestCartCheckItem,
+interface CartItemDetailProps {
+  item: CartItem | GuestCartCheckItem
   Subdivider: (props: {
-    mt?: number;
-    mb?: number;
-  }) => JSX.Element,
-  page?: Page,
-  updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void,
-  priorityImg?: boolean,
-};
+    mt?: number
+    mb?: number
+  }) => JSX.Element
+  page?: Page
+  updateQuantity?: (cartItem: CartItem, quantity: number, forceUpdate?: boolean) => void
+  priorityImg?: boolean
+}
 
 const CartItemDetail = (props: CartItemDetailProps) => {
-  const { 
-    item, 
+  const {
+    item,
     Subdivider,
     page,
-    updateQuantity, 
-    priorityImg 
-  } = props;
+    updateQuantity,
+    priorityImg
+  } = props
 
-  const { getItemPath, getItemImgUrl } = useProductsContext();
-  const { closeDrawer } = useCartContext();
-  const { convertPriceToString } = useAuthContext();
+  const { getItemPath, getItemImgUrl } = useProductsContext()
+  const { closeDrawer } = useCartContext()
+  const { convertPriceToString } = useAuthContext()
 
-  const intl = useIntl();
+  const intl = useIntl()
 
-  const [selectedQuantity, setSelectedQuantity] = useState(item.quantity);
-  const [availableQuantity, setAvailableQuantity] = useState(true);
+  const [selectedQuantity, setSelectedQuantity] = useState(item.quantity)
+  const [availableQuantity, setAvailableQuantity] = useState(true)
 
   const handleRemoveItem = useCallback(() => {
-    if (updateQuantity) {
-      updateQuantity(item as CartItem, 0, true);
+    if (updateQuantity != null) {
+      updateQuantity(item as CartItem, 0, true)
     }
-  }, [item, updateQuantity]);
+  }, [item, updateQuantity])
 
   const handleSelectedQuantityChange = useCallback((quantity: number) => {
-    if (updateQuantity) {
-      updateQuantity(item as CartItem, quantity);
+    if (updateQuantity != null) {
+      updateQuantity(item as CartItem, quantity)
     }
-  }, [item, updateQuantity]);
+  }, [item, updateQuantity])
 
   const checkAvailableQuantity = useCallback(() => {
-    if ((item as CartItem)?.cartId) {
-      setAvailableQuantity(availableItemQuantity(item));
-      return;
-    } else if ((item as GuestCartCheckItem)?.quantity) {
+    if (instanceOfCartItem(item)) {
+      setAvailableQuantity(availableItemQuantity(item))
+    } else {
       if (item.quantity <= 0) {
-        setAvailableQuantity(false);
-        return;
+        setAvailableQuantity(false)
+        return
       }
-      setAvailableQuantity(true);
+      setAvailableQuantity(true)
     }
   }, [item])
 
   useEffect(() => {
-    checkAvailableQuantity();
-  }, [checkAvailableQuantity]);
+    checkAvailableQuantity()
+  }, [checkAvailableQuantity])
 
   return (
     <>
       {/* Delete Button */}
-      { updateQuantity &&
+      { (updateQuantity != null) &&
         <Grid container direction="row-reverse">
           <Grid item>
-            <Tooltip 
-              title={intl.formatMessage({ id: 'app.deleteBtn' })} 
+            <Tooltip
+              title={intl.formatMessage({ id: 'app.deleteBtn' })}
               placement='top'
             >
-              <IconButton 
+              <IconButton
                 onClick={handleRemoveItem}
               >
                 <DeleteIcon />
@@ -104,22 +103,22 @@ const CartItemDetail = (props: CartItemDetailProps) => {
         { page !== pages.checkout &&
           <Grid item xs={12} xs_sm={6}>
             {/* Product Image */}
-            {/*<Box
+            {/* <Box
               sx={{
                 border: {
                   xs: `2px solid ${colors.border.divider}4f`,
                   xs_sm: 'none',
                 },
               }}
-            >*/}
+            > */}
               <Link
                 onClick={closeDrawer}
                 href={getItemPath(item)}
               >
                 <Box
                   sx={{
-                    maxWidth: !page ? '250px' : '350px',
-                    //mr: 'auto',
+                    maxWidth: (page == null) ? '250px' : '350px'
+                    // mr: 'auto',
                   }}
                 >
                   <CustomImage
@@ -133,7 +132,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                   />
                 </Box>
               </Link>
-            {/*</Box>*/}
+            {/* </Box> */}
           </Grid>
         }
 
@@ -153,7 +152,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
               </Grid>
               <Grid item>
                 <Typography component="div" variant="body1">
-                  {item.inventory?.name.current || item.pack?.name.current}
+                  {item.inventory?.name.current ?? item.pack?.name.current}
                 </Typography>
               </Grid>
             </Grid>
@@ -184,26 +183,25 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                 </Typography>
               </Grid>
               <Grid item>
-                { !updateQuantity ?
-                  <Typography component="div" variant="body1">
+                { (updateQuantity == null)
+                  ? <Typography component="div" variant="body1">
                     {item.quantity.toString()}
                   </Typography>
-                  :
-                  <>
+                  : <>
                     <SelectItemQuantity
                       item={item as CartItem}
                       selectedQuantity={selectedQuantity}
                       setSelectedQuantity={setSelectedQuantity}
                       onChange={handleSelectedQuantityChange}
-                    /> 
-                    { ((item.inventory || item.pack) && item.quantity <= 0) &&
-                      <Typography 
+                    />
+                    { (((item.inventory != null) || (item.pack != null)) && item.quantity <= 0) &&
+                      <Typography
                         variant="body2"
                         color={!availableQuantity ? { color: 'text.disabled' } : { color: 'text.primary' }}
                       >
-                        { !availableQuantity ? 
-                          intl.formatMessage({ id: 'cart.inventoryUnavailable' }) : 
-                          intl.formatMessage({ id: 'cart.inventoryAvailable' })
+                        { !availableQuantity
+                          ? intl.formatMessage({ id: 'cart.inventoryUnavailable' })
+                          : intl.formatMessage({ id: 'cart.inventoryAvailable' })
                         }
                       </Typography>
                     }
@@ -220,7 +218,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
                     id="cart.subtotal"
                   />
                 </Typography>
-              </Grid> 
+              </Grid>
               <Grid item>
                 <Typography component="div" variant="body1">
                   {convertPriceToString(getItemAmount(item).itemTotalWithQuantity)}
@@ -242,7 +240,7 @@ const CartItemDetail = (props: CartItemDetailProps) => {
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default CartItemDetail;
+export default CartItemDetail

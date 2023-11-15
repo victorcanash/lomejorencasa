@@ -1,19 +1,19 @@
-import Badge from '@mui/material/Badge';
-import Typography from '@mui/material/Typography';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge'
+import Typography from '@mui/material/Typography'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 
-import { useCartContext } from '@core/contexts/CartContext';
+import { useCartContext } from '@core/contexts/CartContext'
 
-type CartIconProps = {
-  smallBreakpoint: boolean,
-};
+interface CartIconProps {
+  smallBreakpoint: boolean
+}
 
 const CartIcon = (props: CartIconProps) => {
   const {
-    smallBreakpoint,
-  } = props;
+    smallBreakpoint
+  } = props
 
-  const { totalQuantity } = useCartContext();
+  const { totalQuantity } = useCartContext()
 
   return (
     <Badge
@@ -24,9 +24,9 @@ const CartIcon = (props: CartIconProps) => {
       }
       invisible={totalQuantity < 1}
     >
-      <ShoppingCartIcon sx={{ fontSize: smallBreakpoint ? 25: 30 }} />
+      <ShoppingCartIcon sx={{ fontSize: smallBreakpoint ? 25 : 30 }} />
     </Badge>
-  );
-};
+  )
+}
 
-export default CartIcon;
+export default CartIcon

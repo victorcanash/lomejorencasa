@@ -1,29 +1,30 @@
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
-import { useIntl } from 'react-intl';
-import { useSnackbar } from 'notistack';
+import { useIntl } from 'react-intl'
+import { useSnackbar } from 'notistack'
 
-import { ManageActions } from '@core/constants/app';
-import { maxQuantity } from '@core/config/cart.config';
-import type { Cart, CartItem, TotalAmount } from '@core/types/cart';
-import type { ProductInventory, ProductPack } from '@core/types/products';
-import { 
-  manageCartItem, 
-  checkCart as checkCartMW, 
+import { ManageActions } from '@core/constants/app'
+import { maxQuantity } from '@core/config/cart.config'
+import type { Cart, CartItem, TotalAmount } from '@core/types/cart'
+import type { ProductInventory, ProductPack } from '@core/types/products'
+import {
+  manageCartItem,
+  checkCart as checkCartMW,
   getItemAmount,
-  getTotalAmount,
-} from '@core/utils/cart';
+  getTotalAmount
+} from '@core/utils/cart'
+import { instanceOfProductInventory, instanceOfProductPack } from '@core/utils/products'
 
-import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@core/contexts/AppContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import { useCartContext } from '@core/contexts/CartContext';
-import useFacebook from '@core/hooks/useFacebook';
+import { pages } from '@lib/config/navigation.config'
+import { useAppContext } from '@core/contexts/AppContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import { useCartContext } from '@core/contexts/CartContext'
+import useFacebook from '@core/hooks/useFacebook'
 
 const useCart = (checkTotalAmount = true) => {
-  const { setLoading } = useAppContext();
-  const { user, token, isLogged } = useAuthContext();
+  const { setLoading } = useAppContext()
+  const { user, token, isLogged } = useAuthContext()
   const {
     cart,
     initCart,
@@ -31,208 +32,205 @@ const useCart = (checkTotalAmount = true) => {
     setTotalQuantity,
     totalPrice,
     setTotalPrice,
-    openDrawer,
-  } = useCartContext();
+    openDrawer
+  } = useCartContext()
 
-  const router = useRouter();
-  const intl = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
+  const router = useRouter()
+  const intl = useIntl()
+  const { enqueueSnackbar } = useSnackbar()
 
-  const { sendAddToCartEvent } = useFacebook();
+  const { sendAddToCartEvent } = useFacebook()
 
-  const [totalAmount, setTotalAmount] = useState({
+  const [totalAmount, setTotalAmount] = useState<TotalAmount>({
     itemsAmount: [],
     subtotal: 0,
     totalVat: 0,
     totalDiscount: 0,
     total: 0,
-    totalQuantity: 0,
-  } as TotalAmount);
+    totalQuantity: 0
+  })
 
   const addCartItem = (productItem: ProductInventory | ProductPack, quantity: number, goToCheckout?: boolean) => {
     if (totalQuantity + quantity > maxQuantity) {
-      onMaxCartQuantityError();
-      return;
+      onMaxCartQuantityError()
+      return
     }
-    setLoading(true);
+    setLoading(true)
 
-    sendAddToCartEvent(productItem, quantity);
+    sendAddToCartEvent(productItem, quantity)
 
-    const cartItem = {
+    const cartItem: CartItem = {
       id: 0,
       cartId: cart.id,
-      inventoryId: (productItem as ProductInventory)?.sku ? productItem.id : undefined,
-      packId: (productItem as ProductInventory)?.sku ? undefined : productItem.id,
-      inventory: (productItem as ProductInventory)?.sku ? productItem : undefined,
-      pack: (productItem as ProductInventory)?.sku ? undefined : productItem,
-      quantity: quantity,
-    } as CartItem;
+      inventoryId: instanceOfProductInventory(productItem) ? productItem.id : undefined,
+      packId: instanceOfProductInventory(productItem) ? undefined : productItem.id,
+      inventory: instanceOfProductInventory(productItem) ? productItem : undefined,
+      pack: instanceOfProductInventory(productItem) ? undefined : productItem,
+      quantity
+    }
 
-    let cartItemIndex = -1;
+    let cartItemIndex = -1
     cart.items.forEach((item, index) => {
-      if (((productItem as ProductInventory)?.sku && item.inventoryId === productItem.id) ||
-          ((productItem as ProductPack)?.inventories && item.packId === productItem.id)) {
-        cartItemIndex = index;
-        cartItem.id = item.id;
-        cartItem.quantity += item.quantity;
-        return;
+      if ((instanceOfProductInventory(productItem) && item.inventoryId === productItem.id) ||
+          ((instanceOfProductPack(productItem) && item.packId === productItem.id))) {
+        cartItemIndex = index
+        cartItem.id = item.id
+        cartItem.quantity += item.quantity
       }
-    });
+    })
 
-    const itemAmount = getItemAmount(cartItem, quantity);
+    const itemAmount = getItemAmount(cartItem, quantity)
     // Update cart item
     if (cartItemIndex > -1) {
       manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((response: { cartItem: CartItem }) => {
-          cart.items[cartItemIndex] = response.cartItem;
-          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout);
+          cart.items[cartItemIndex] = response.cartItem
+          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout)
         }).catch((_error: Error) => {
-          onAddCartItemError();
-        });
+          onAddCartItemError()
+        })
 
     // Create cart item
     } else {
       manageCartItem(ManageActions.create, token, cart, cartItem)
         .then((response: { cartItem: CartItem }) => {
-          cart.items.push(response.cartItem);
-          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout);
+          cart.items.push(response.cartItem)
+          onAddCartItemSuccess(quantity, itemAmount.itemTotalWithQuantity, goToCheckout)
         }).catch((_error: Error) => {
-          onAddCartItemError();
-        });
+          onAddCartItemError()
+        })
     };
-  };
+  }
 
   const onAddCartItemSuccess = (quantity: number, itemPrice: number, goToCheckout?: boolean) => {
-    setTotalQuantity(totalQuantity + quantity);
-    setTotalPrice(totalPrice + itemPrice);
-    if (!goToCheckout) {
-      setLoading(false);
-      openDrawer();
+    setTotalQuantity(totalQuantity + quantity)
+    setTotalPrice(totalPrice + itemPrice)
+    if (!(goToCheckout ?? false)) {
+      setLoading(false)
+      openDrawer()
     } else {
-      router.push(pages.checkout.path);
+      void router.push(pages.checkout.path)
     }
-  };
+  }
 
   const onAddCartItemError = () => {
-    setLoading(false);
+    setLoading(false)
     enqueueSnackbar(
-      intl.formatMessage({ id: 'cart.errors.add' }), 
+      intl.formatMessage({ id: 'cart.errors.add' }),
       { variant: 'error' }
-    );
-  };
+    )
+  }
 
   const updateCartItemQuantity = async (cartItem: CartItem, quantity: number, forceUpdate = false) => {
-    if (cartItem.quantity == quantity && !forceUpdate) {
-      return;
+    if (cartItem.quantity === quantity && !forceUpdate) {
+      return
     };
-    if (((totalQuantity - cartItem.quantity) + quantity > maxQuantity) && 
+    if (((totalQuantity - cartItem.quantity) + quantity > maxQuantity) &&
         (cartItem.quantity < quantity)) {
-      onMaxCartQuantityError();
-      return;
+      onMaxCartQuantityError()
+      return
     }
-    setLoading(true);
+    setLoading(true)
 
-    const cartItemIndex = cart.items.indexOf(cartItem);
+    const cartItemIndex = cart.items.indexOf(cartItem)
 
     // Update cart item
     if (quantity > 0) {
-      const addedQuantity = quantity - cartItem.quantity;
-      const itemAmount = getItemAmount(cartItem, addedQuantity);
-      cartItem.quantity = quantity;
+      const addedQuantity = quantity - cartItem.quantity
+      const itemAmount = getItemAmount(cartItem, addedQuantity)
+      cartItem.quantity = quantity
       manageCartItem(ManageActions.update, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
-          cart.items[cartItemIndex] = cartItem;
-          onUpdateCartItemSuccess(addedQuantity, itemAmount.itemTotalWithQuantity);
+          cart.items[cartItemIndex] = cartItem
+          onUpdateCartItemSuccess(addedQuantity, itemAmount.itemTotalWithQuantity)
         }).catch((_error: Error) => {
-          onUpdateCartItemError();
-        });
+          onUpdateCartItemError()
+        })
 
     // Delete cart item
     } else {
-      const addedQuantity = -cartItem.quantity;
-      const itemAmount = getItemAmount(cartItem, addedQuantity);
+      const addedQuantity = -cartItem.quantity
+      const itemAmount = getItemAmount(cartItem, addedQuantity)
       manageCartItem(ManageActions.delete, token, cart, cartItem)
         .then((_response: { cartItem: CartItem }) => {
-          cart.items.splice(cartItemIndex, 1);
-          onUpdateCartItemSuccess(addedQuantity, itemAmount.itemTotalWithQuantity);
+          cart.items.splice(cartItemIndex, 1)
+          onUpdateCartItemSuccess(addedQuantity, itemAmount.itemTotalWithQuantity)
         }).catch((_error: Error) => {
-          onUpdateCartItemError();
-        });
+          onUpdateCartItemError()
+        })
     };
-  };
+  }
 
   const onUpdateCartItemSuccess = (addedQuantity: number, addedPrice: number) => {
-    setTotalPrice(totalPrice + addedPrice);
-    setTotalQuantity(totalQuantity + addedQuantity);
-    setLoading(false);
-  };
+    setTotalPrice(totalPrice + addedPrice)
+    setTotalQuantity(totalQuantity + addedQuantity)
+    setLoading(false)
+  }
 
   const onUpdateCartItemError = () => {
-    setLoading(false);
+    setLoading(false)
     enqueueSnackbar(
-      intl.formatMessage({ id: 'cart.errors.update' }), 
+      intl.formatMessage({ id: 'cart.errors.update' }),
       { variant: 'error' }
-    );
-  };
+    )
+  }
 
   const checkCart = async (onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void) => {
-    setLoading(true);
+    setLoading(true)
     checkCartMW(isLogged() ? token : undefined, cart)
-      .then((response: {cart: Cart, changedItemsByInventory: CartItem[]}) => {
-        onCheckCartSuccess(response.cart, response.changedItemsByInventory, onSuccess);
+      .then((response: { cart: Cart, changedItemsByInventory: CartItem[] }) => {
+        onCheckCartSuccess(response.cart, response.changedItemsByInventory, onSuccess)
       }).catch((_error: Error) => {
-        onCheckCartError();
-      });
-  };
+        onCheckCartError()
+      })
+  }
 
   const onCheckCartSuccess = (newCart: Cart, changedItemsByInventory: CartItem[], onSuccess?: (changedCart: boolean, changedItemsByInventory: CartItem[]) => void) => {
-    const diffCarts = cart?.items.filter(item => {
+    const diffCarts = cart.items.filter(item => {
       return !newCart.items.some(newItem => {
         return (
           newItem.id === item.id &&
           newItem.quantity === item.quantity
-        );
-      });
-    });
-    let changedCart = false;
-    if ((diffCarts && diffCarts.length > 0) || 
-        (cart && cart.items.length != newCart.items.length)) {
-      changedCart = true;
-    } 
-
-    initCart(newCart);
-    if (onSuccess) {
-      onSuccess(changedCart, changedItemsByInventory);
+        )
+      })
+    })
+    let changedCart = false
+    if ((diffCarts.length > 0) ||
+        (cart.items.length !== newCart.items.length)) {
+      changedCart = true
     }
-  };
+
+    initCart(newCart)
+    onSuccess?.(changedCart, changedItemsByInventory)
+  }
 
   const onCheckCartError = () => {
-    setLoading(false);
+    setLoading(false)
     enqueueSnackbar(
-      intl.formatMessage({ id: 'cart.errors.check' }), 
+      intl.formatMessage({ id: 'cart.errors.check' }),
       { variant: 'error' }
-    );
-  };
+    )
+  }
 
   const onMaxCartQuantityError = () => {
     enqueueSnackbar(
-      intl.formatMessage({ id: 'cart.errors.maxQuantity' }), 
+      intl.formatMessage({ id: 'cart.errors.maxQuantity' }),
       { variant: 'error' }
-    );
-  };
+    )
+  }
 
   useEffect(() => {
     if (checkTotalAmount) {
-      setTotalAmount(getTotalAmount(cart, user));
+      setTotalAmount(getTotalAmount(cart, user))
     }
-  }, [cart, cart.items, cart.items.length, checkTotalAmount, totalPrice, user]);
+  }, [cart, cart.items, cart.items.length, checkTotalAmount, totalPrice, user])
 
   return {
     totalAmount,
     addCartItem,
     updateCartItemQuantity,
-    checkCart,
-  };
-};
+    checkCart
+  }
+}
 
-export default useCart;
+export default useCart

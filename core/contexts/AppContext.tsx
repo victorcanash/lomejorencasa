@@ -1,43 +1,39 @@
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
+  type Dispatch,
+  type SetStateAction,
   useContext,
   useState,
-  useEffect,
-} from 'react';
+  useEffect
+} from 'react'
 
-import NP from 'number-precision';
+import NP from 'number-precision'
 
-type ContextType = {
-  loading: boolean,
-  setLoading: Dispatch<SetStateAction<boolean>>,
-  initialized: boolean,
-  setInitialized: Dispatch<SetStateAction<boolean>>,
-};
+interface ContextType {
+  loading: boolean
+  setLoading: Dispatch<SetStateAction<boolean>>
+  initialized: boolean
+  setInitialized: Dispatch<SetStateAction<boolean>>
+}
 
 export const AppContext = createContext<ContextType>({
   loading: false,
   setLoading: () => {},
   initialized: false,
-  setInitialized: () => {},
-});
+  setInitialized: () => {}
+})
 
 export const useAppContext = () => {
-  const context = useContext(AppContext);
-  if (!context) {
-    throw new Error('Error while reading AppContext');
-  }
-  return context;
-};
+  return useContext(AppContext)
+}
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [loading, setLoading] = useState(false);
-  const [initialized, setInitialized] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [initialized, setInitialized] = useState(false)
 
   useEffect(() => {
-    NP.enableBoundaryChecking(false);
-  }, []);
+    NP.enableBoundaryChecking(false)
+  }, [])
 
   return (
     <AppContext.Provider
@@ -45,10 +41,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         loading,
         setLoading,
         initialized,
-        setInitialized,
+        setInitialized
       }}
     >
       {children}
     </AppContext.Provider>
-  );
-};
+  )
+}

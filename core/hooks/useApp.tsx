@@ -1,24 +1,24 @@
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback } from 'react'
 
-import useForms from '@core/hooks/useForms';
+import useForms from '@core/hooks/useForms'
 
 const useApp = () => {
-  const { initForms } = useForms();
+  const { initForms } = useForms()
 
-  const firstRenderRef = useRef(false);
+  const firstRenderRef = useRef(false)
 
   const initData = useCallback(async () => {
-    initForms();
-  }, [initForms]);
+    initForms()
+  }, [initForms])
 
   useEffect(() => {
     if (!firstRenderRef.current) {
-      firstRenderRef.current = true;
-      initData();
+      firstRenderRef.current = true
+      void initData()
     }
-  }, [initData]);
+  }, [initData])
 
-  return {};
-};
+  return {}
+}
 
-export default useApp;
+export default useApp

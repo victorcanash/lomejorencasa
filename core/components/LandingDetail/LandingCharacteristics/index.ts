@@ -1,3 +1,3 @@
-import LandingCharacteristics from './LandingCharacteristics';
+import LandingCharacteristics from './LandingCharacteristics'
 
-export default LandingCharacteristics;
+export default LandingCharacteristics

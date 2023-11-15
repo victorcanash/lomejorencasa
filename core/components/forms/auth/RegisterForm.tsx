@@ -1,42 +1,42 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-/*import { FormattedMessage } from 'react-intl';
+/* import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import Box from '@mui/material/Box';*/
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Box from '@mui/material/Box'; */
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import type { AuthRegister } from '@core/types/auth';
+import { FormFieldTypes } from '@core/constants/forms'
+import type { AuthRegister } from '@core/types/auth'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 // import { useAppContext } from '@lib/contexts/AppContext';
-import useForms from '@core/hooks/useForms';
-import useAuth from '@core/hooks/useAuth';
-import BaseForm from '@core/components/forms/BaseForm';
+import useForms from '@core/hooks/useForms'
+import useAuth from '@core/hooks/useAuth'
+import BaseForm from '@core/components/forms/BaseForm'
 // import GoogleLogin from '@components/google/GoogleLogin';
 
 const RegisterForm = () => {
   // const { initialized } = useAppContext();
 
-  const { registerFormValidation, userFieldsInitValues } = useForms();
-  const { register, /*loginGoogle, */errorMsg } = useAuth();
+  const { registerFormValidation, userFieldsInitValues } = useForms()
+  const { register, /* loginGoogle, */errorMsg } = useAuth()
 
-  const [acceptPolicy, setAcceptPolicy] = useState(false);
+  const [acceptPolicy, setAcceptPolicy] = useState(false)
 
   const handleSubmit = async (values: AuthRegister) => {
-    register(values);
-  };
+    void register(values)
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
     if (event.target.name === 'acceptPolicy') {
-      setAcceptPolicy(event.target.checked);
+      setAcceptPolicy(event.target.checked)
     }
-  };
+  }
 
-  const maxWidth = '500px';
+  const maxWidth = '500px'
 
   return (
     <>
@@ -51,76 +51,76 @@ const RegisterForm = () => {
           lastName: userFieldsInitValues.lastName,
           birthday: userFieldsInitValues.birthday,
           getEmails: userFieldsInitValues.getEmails,
-          acceptPolicy: userFieldsInitValues.acceptPolicy,
-        } as AuthRegister}
+          acceptPolicy: userFieldsInitValues.acceptPolicy
+        }}
         validationSchema={registerFormValidation}
         formFieldGroups={[
           {
             avatarIcon: <LockOutlinedIcon />,
             titleTxt: {
-              id: 'forms.register.title',
+              id: 'forms.register.title'
             },
             formFields: [
               {
                 name: 'firstName',
                 type: FormFieldTypes.text,
                 required: true,
-                autoComplete: 'given-name',
+                autoComplete: 'given-name'
               },
               {
                 name: 'lastName',
                 type: FormFieldTypes.text,
                 required: true,
-                autoComplete: 'family-name',
+                autoComplete: 'family-name'
               },
               {
                 name: 'email',
                 type: FormFieldTypes.text,
-                required: true,
+                required: true
               },
               {
                 name: 'password',
                 type: FormFieldTypes.password,
                 required: true,
-                autoComplete: 'current-password',
+                autoComplete: 'current-password'
               },
               {
                 name: 'confirm',
                 type: FormFieldTypes.password,
-                required: true,
+                required: true
               },
               {
                 name: 'birthday',
                 type: FormFieldTypes.datePicker,
-                required: true,
+                required: true
               },
               {
                 name: 'getEmails',
-                type: FormFieldTypes.checkbox,
+                type: FormFieldTypes.checkbox
               },
               {
                 name: 'acceptPolicy',
-                type: FormFieldTypes.checkbox,
-              },
-            ],
+                type: FormFieldTypes.checkbox
+              }
+            ]
           }
         ]}
         formButtons={{
           submit: {
             text: {
-              id: 'forms.register.successBtn',
+              id: 'forms.register.successBtn'
             },
             onSubmit: handleSubmit,
-            disabled: !acceptPolicy,
-          },
+            disabled: !acceptPolicy
+          }
         }}
         errorMsg={errorMsg}
         linksItems={[
           {
             text: {
-              id: 'forms.register.loginLink',
+              id: 'forms.register.loginLink'
             },
-            path: pages.login.path,
+            path: pages.login.path
           }
         ]}
       />
@@ -143,7 +143,7 @@ const RegisterForm = () => {
         </Box>
       */}
     </>
-  );
-};
+  )
+}
 
-export default RegisterForm;
+export default RegisterForm

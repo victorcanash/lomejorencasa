@@ -1,31 +1,31 @@
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Typography from '@mui/material/Typography'
+import DeleteIcon from '@mui/icons-material/Delete'
 
-import type { ProductDiscount } from '@core/types/products';
-import Button from '@core/components/inputs/Button';
+import type { ProductDiscount } from '@core/types/products'
+import Button from '@core/components/inputs/Button'
 
-type CheckProductDiscountDetailProps = {
-  index: number,
-  productDiscount: ProductDiscount,
-  creating?: boolean,
-  onClickRemoveBtn?: (index: number) => void,
-};
+interface CheckProductDiscountDetailProps {
+  index: number
+  productDiscount: ProductDiscount
+  creating?: boolean
+  onClickRemoveBtn?: (index: number) => void
+}
 
 const CheckProductDiscountDetail = (props: CheckProductDiscountDetailProps) => {
   const {
     index,
-    productDiscount, 
+    productDiscount,
     creating,
-    onClickRemoveBtn,
-  } = props;
+    onClickRemoveBtn
+  } = props
 
-  const intl = useIntl();
+  const intl = useIntl()
 
   return (
     <>
-      { !creating &&
+      { !(creating ?? false) &&
         <>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.id' })}: ${productDiscount.id}`}
@@ -54,10 +54,10 @@ const CheckProductDiscountDetail = (props: CheckProductDiscountDetailProps) => {
         {`${intl.formatMessage({ id: 'forms.active' })}: ${productDiscount.active}`}
       </Typography>
 
-      { creating && onClickRemoveBtn &&
+      { (creating ?? false) && (onClickRemoveBtn != null) &&
         <Button
           startIcon={<DeleteIcon />}
-          onClick={() => onClickRemoveBtn(index)}
+          onClick={() => { onClickRemoveBtn(index) }}
         >
           <FormattedMessage
             id="app.removeBtn"
@@ -65,7 +65,7 @@ const CheckProductDiscountDetail = (props: CheckProductDiscountDetailProps) => {
         </Button>
       }
     </>
-  );
-};
+  )
+}
 
-export default CheckProductDiscountDetail;
+export default CheckProductDiscountDetail

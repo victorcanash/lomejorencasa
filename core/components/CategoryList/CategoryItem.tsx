@@ -1,28 +1,28 @@
-import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Avatar from '@mui/material/Avatar'
+import Typography from '@mui/material/Typography'
 
-import type { ProductCategory } from '@core/types/products';
-import { convertElementToSx } from '@core/utils/themes';
-import { useProductsContext } from '@core/contexts/ProductsContext';
-import Link from '@core/components/navigation/Link';
-import CustomImage from '@core/components/multimedia/CustomImage';
+import type { ProductCategory } from '@core/types/products'
+import { convertElementToSx } from '@core/utils/themes'
+import { useProductsContext } from '@core/contexts/ProductsContext'
+import Link from '@core/components/navigation/Link'
+import CustomImage from '@core/components/multimedia/CustomImage'
 
-import { themeCustomElements } from '@lib/config/theme/elements';
+import { themeCustomElements } from '@lib/config/theme/elements'
 
-type CategoryItemProps = {
-  category: ProductCategory,
-};
+interface CategoryItemProps {
+  category: ProductCategory
+}
 
 const CategoryItem = (props: CategoryItemProps) => {
   const {
-    category,
-  } = props;
+    category
+  } = props
 
   const {
     getItemImgUrl,
-    getItemPath,
-  } = useProductsContext();
+    getItemPath
+  } = useProductsContext()
 
   return (
     <Link href={getItemPath(category)} underline="none">
@@ -30,7 +30,7 @@ const CategoryItem = (props: CategoryItemProps) => {
         sx={{
           position: 'relative',
           width: '100%',
-          paddingTop: '100%',
+          paddingTop: '100%'
         }}
       >
         <Avatar
@@ -40,12 +40,12 @@ const CategoryItem = (props: CategoryItemProps) => {
             height: '100%',
             top: '50%',
             left: '50%',
-            transform: 'translate(-50%, -50%)',
+            transform: 'translate(-50%, -50%)'
           }}
         >
           <CustomImage
             alt={category.name.current}
-            src={getItemImgUrl(category)}          
+            src={getItemImgUrl(category)}
             layout="fill"
             priority
           />
@@ -57,15 +57,16 @@ const CategoryItem = (props: CategoryItemProps) => {
         m="auto"
         mt={1}
         sx={{
-          ...themeCustomElements.categoryList?.nameText?
-            convertElementToSx(themeCustomElements.categoryList.nameText) : undefined,
-          wordWrap: 'break-word',
+          ...((themeCustomElements.categoryList?.nameText) != null)
+            ? convertElementToSx(themeCustomElements.categoryList.nameText)
+            : undefined,
+          wordWrap: 'break-word'
         }}
       >
         { category.name.current }
       </Typography>
     </Link>
-  );
-};
+  )
+}
 
-export default CategoryItem;
+export default CategoryItem

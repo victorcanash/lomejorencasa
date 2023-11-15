@@ -2,29 +2,29 @@ import {
   createContext,
   useCallback,
   useState,
-  Dispatch,
-  SetStateAction,
-  useContext,
-} from 'react';
+  type Dispatch,
+  type SetStateAction,
+  useContext
+} from 'react'
 
 // import { AdminSections } from '@core/constants/admin';
-import searchConfig from '@lib/config/search.config';
-import type { ProductCategory } from '@core/types/products';
+import searchConfig from '@lib/config/search.config'
+import type { ProductCategory } from '@core/types/products'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
-type SearchContext = {
-  productCategories: ProductCategory[],
-  setProductCategories: Dispatch<SetStateAction<ProductCategory[]>>,
-  sortBy: string,
-  setSortBy: Dispatch<SetStateAction<string>>,
-  order: string,
-  setOrder: Dispatch<SetStateAction<string>>,
-  getHref: (categoryName?: string, page?: number, keywords?: string, admin?: boolean) => string,
-  getPacksHref: (page?: number) => string,
-};
+interface ContextType {
+  productCategories: ProductCategory[]
+  setProductCategories: Dispatch<SetStateAction<ProductCategory[]>>
+  sortBy: string
+  setSortBy: Dispatch<SetStateAction<string>>
+  order: string
+  setOrder: Dispatch<SetStateAction<string>>
+  getHref: (categoryName?: string, page?: number, keywords?: string, admin?: boolean) => string
+  getPacksHref: (page?: number) => string
+}
 
-const SearchContext = createContext<SearchContext>({
+const SearchContext = createContext<ContextType>({
   productCategories: [],
   setProductCategories: () => {},
   sortBy: 'id',
@@ -32,42 +32,37 @@ const SearchContext = createContext<SearchContext>({
   order: 'asc',
   setOrder: () => {},
   getHref: () => '',
-  getPacksHref: () => '',
-});
+  getPacksHref: () => ''
+})
 
 export const useSearchContext = () => {
-  const context = useContext(SearchContext);
-  if (!context) {
-    throw new Error('Error while reading SearchContext');
-  }
-
-  return context;
-};
+  return useContext(SearchContext)
+}
 
 export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
-  const [productCategories, setProductCategories] = useState<ProductCategory[]>([]);
-  const [sortBy, setSortBy] = useState('id');
-  const [order, setOrder] = useState('asc');
+  const [productCategories, setProductCategories] = useState<ProductCategory[]>([])
+  const [sortBy, setSortBy] = useState('id')
+  const [order, setOrder] = useState('asc')
 
   const getHref = useCallback((
     categoryName = searchConfig.allProductsName,
     page = 1, keywords = '',
     admin = false
   ) => {
-    const pagePath = !admin ? `${pages.home.path}/${categoryName}` : pages.admin.path;
-    const queries = `?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`;
-    /*if (admin) {
+    const pagePath = !admin ? `${pages.home.path}/${categoryName}` : pages.admin.path
+    const queries = `?page=${page}&sortBy=${sortBy}&order=${order}&keywords=${keywords}`
+    /* if (admin) {
       queries += `&section=${AdminSections.checkProducts}`;
-    }*/
-    return `${pagePath}${queries}`;
-  }, [order, sortBy]);
+    } */
+    return `${pagePath}${queries}`
+  }, [order, sortBy])
 
   const getPacksHref = useCallback((page = 1) => {
-    const pagePath = pages.admin.path;
-    const queries = `?page=${page}&sortBy=${sortBy}&order=${order}`;
-    //queries += `&section=${AdminSections.checkProductPacks}`;
-    return `${pagePath}${queries}`;
-  }, [order, sortBy]);
+    const pagePath = pages.admin.path
+    const queries = `?page=${page}&sortBy=${sortBy}&order=${order}`
+    // queries += `&section=${AdminSections.checkProductPacks}`;
+    return `${pagePath}${queries}`
+  }, [order, sortBy])
 
   return (
     <SearchContext.Provider
@@ -79,10 +74,10 @@ export const SearchProvider = ({ children }: { children: React.ReactNode }) => {
         order,
         setOrder,
         getHref,
-        getPacksHref,
+        getPacksHref
       }}
     >
       {children}
     </SearchContext.Provider>
-  );
-};
+  )
+}

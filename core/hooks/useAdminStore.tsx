@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { useIntl } from 'react-intl';
-import { useSnackbar } from 'notistack';
+import { useIntl } from 'react-intl'
+import { useSnackbar } from 'notistack'
 
-import { ManageActions } from '@core/constants/app';
-import type { 
+import { ManageActions } from '@core/constants/app'
+import type {
   Product,
   ProductCategory,
   ProductInventory,
@@ -12,93 +12,93 @@ import type {
   ProductPack,
   ManageProductCategory,
   ProductCategoryGroup,
-  Landing,
-} from '@core/types/products';
+  Landing
+} from '@core/types/products'
 import {
   getProductCategory,
   manageProductCategory as manageProductCategoryMW,
-  manageLanding as manageLandingMW, 
+  manageLanding as manageLandingMW,
   manageProduct as manageProductMW,
   manageProductInventory as manageProductInventoryMW,
   manageProductDiscount as manageProductDiscountMW,
-  manageProductPack as manageProductPackMW,
-} from '@core/utils/products';
+  manageProductPack as manageProductPackMW
+} from '@core/utils/products'
 
-import { useAppContext } from '@core/contexts/AppContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import { useAdminContext } from '@core/contexts/AdminContext';
+import { useAppContext } from '@core/contexts/AppContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import { useAdminContext } from '@core/contexts/AdminContext'
 
 const useAdminStore = () => {
-  const { setLoading } = useAppContext();
-  const { token } = useAuthContext();
+  const { setLoading } = useAppContext()
+  const { token } = useAuthContext()
   const {
     getLandingsByCategorySlug,
     onGetCategoryDetails,
     onManageProductCategory,
     onManageLanding,
     onManageProduct,
-    onManageProductPack,
-  } = useAdminContext();
+    onManageProductPack
+  } = useAdminContext()
 
-  const intl = useIntl();
-  const { enqueueSnackbar } = useSnackbar();
+  const intl = useIntl()
+  const { enqueueSnackbar } = useSnackbar()
 
-  const [errorMsg, setErrorMsg] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('')
+  const [successMsg, setSuccessMsg] = useState('')
 
   /* Admin */
 
   const getCategoryDetails = async (slug: string) => {
-    return new Promise<{
-      landings: Landing[],
-    }>(async (resolve, reject) => {
-      setLoading(true);
+    return await new Promise<{
+      landings: Landing[]
+    }>((resolve, reject) => {
+      setLoading(true)
       if (getLandingsByCategorySlug(slug).length > 0) {
-        setLoading(false);
+        setLoading(false)
         resolve({
-          landings: getLandingsByCategorySlug(slug),
-        });
-        return;
+          landings: getLandingsByCategorySlug(slug)
+        })
+        return
       }
-      await getProductCategory(slug, undefined, true)
+      void getProductCategory(slug, undefined, true)
         .then((response) => {
-          onGetCategoryDetails(response.landingsResult.landings, slug);
-          setLoading(false);
+          onGetCategoryDetails(response.landingsResult.landings, slug)
+          setLoading(false)
           resolve({
-            landings: response.landingsResult.landings,
-          });
+            landings: response.landingsResult.landings
+          })
         })
         .catch((error) => {
-          setLoading(false);
+          setLoading(false)
           enqueueSnackbar(
             error.message,
             { variant: 'error' }
-          );
-          reject(error);
-        });
-    });
-  };
+          )
+          reject(error)
+        })
+    })
+  }
 
   const manageProductCategory = async (
     action: ManageActions,
     productCategory: ManageProductCategory,
     onSuccess?: (productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     manageProductCategoryMW(action, token, intl.locale, productCategory)
       .then((response) => {
         onManagePCategorySuccess(
           action,
-          response.productCategory || productCategory,
-          productCategory.isCategoryGroup || false,
-          onSuccess);
+          response.productCategory ?? productCategory,
+          productCategory.isCategoryGroup ?? false,
+          onSuccess)
       }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
+        setErrorMsg(error.message)
+        setLoading(false)
+      })
+  }
 
   const onManagePCategorySuccess = (
     action: ManageActions,
@@ -106,13 +106,13 @@ const useAdminStore = () => {
     isCategoryGroup: boolean,
     onSuccess?: (productCategory: ProductCategory | ProductCategoryGroup | ManageProductCategory) => void
   ) => {
-    onManageProductCategory(action, productCategory, isCategoryGroup);
-    if (onSuccess) {
-      onSuccess(productCategory);
+    onManageProductCategory(action, productCategory, isCategoryGroup)
+    if (onSuccess != null) {
+      onSuccess(productCategory)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePCategory' }));
-  };
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePCategory' }))
+  }
 
   const createLanding = async (
     landing: Landing,
@@ -120,101 +120,102 @@ const useAdminStore = () => {
     productPack?: ProductPack,
     onSuccess?: (landing: Landing) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
-    let newLanding: Landing | undefined = undefined;
-    let newProduct: Product | undefined = undefined;
-    let newProductPack: ProductPack | undefined = undefined;
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
+    let newLanding: Landing | undefined
+    let newProduct: Product | undefined
+    let newProductPack: ProductPack | undefined
 
     try {
-      newLanding = await (await manageLandingMW(ManageActions.create, token, intl.locale, landing)).landing;
+      newLanding = (await manageLandingMW(ManageActions.create, token, intl.locale, landing)).landing
 
-      if (product) {
-        product.landingId = newLanding.id;
-        newProduct = await (await manageProductMW(ManageActions.create, token, intl.locale, product)).product;
-        if (product.inventories && product.inventories.length > 0) {
-          newProduct.inventories = [];
+      if (product != null) {
+        product.landingId = newLanding.id
+        newProduct = (await manageProductMW(ManageActions.create, token, intl.locale, product)).product
+        if ((product.inventories != null) && product.inventories.length > 0) {
+          newProduct.inventories = []
           for (const inventory of product.inventories) {
-            inventory.productId = newProduct.id;
-            newProduct.inventories.push(await (await manageProductInventoryMW(ManageActions.create, token, intl.locale, inventory)).productInventory);
+            inventory.productId = newProduct.id
+            newProduct.inventories.push((await manageProductInventoryMW(ManageActions.create, token, intl.locale, inventory)).productInventory)
           }
         }
-        if (product.discounts && product.discounts.length > 0) {
-          newProduct.discounts = [];
+        if ((product.discounts != null) && product.discounts.length > 0) {
+          newProduct.discounts = []
           for (const discount of product.discounts) {
-            discount.productId = newProduct.id;
-            newProduct.discounts.push(await (await manageProductDiscountMW(ManageActions.create, token, intl.locale, discount)).productDiscount);
+            discount.productId = newProduct.id
+            newProduct.discounts.push((await manageProductDiscountMW(ManageActions.create, token, intl.locale, discount)).productDiscount)
           }
         }
-        newLanding.products = [newProduct];
-      } else if (productPack) {
-        productPack.landingId = newLanding.id;
-        newProductPack = await (await manageProductPackMW(ManageActions.create, token, intl.locale, productPack)).productPack;
-        newLanding.packs = [newProductPack];
+        newLanding.products = [newProduct]
+      } else if (productPack != null) {
+        productPack.landingId = newLanding.id
+        newProductPack = (await manageProductPackMW(ManageActions.create, token, intl.locale, productPack)).productPack
+        newLanding.packs = [newProductPack]
       }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      if (newLanding) {
-        await manageLandingMW(ManageActions.delete, token, intl.locale, newLanding);
+      if (newLanding != null) {
+        await manageLandingMW(ManageActions.delete, token, intl.locale, newLanding)
       }
-      setLoading(false);
-      setErrorMsg(error.message);
-      return;
+      setLoading(false)
+      setErrorMsg(error.message)
+      return
     }
-    onCreateLandingSuccess(newLanding, onSuccess);
-  };
+    onCreateLandingSuccess(newLanding, onSuccess)
+  }
 
   const onCreateLandingSuccess = (
     landing: Landing,
     onSuccess?: (landing: Landing) => void
   ) => {
-    onManageLanding(ManageActions.create, landing);
-    if (onSuccess) {
-      onSuccess(landing);
+    onManageLanding(ManageActions.create, landing)
+    if (onSuccess != null) {
+      onSuccess(landing)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createLanding' }));
-  };
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.createLanding' }))
+  }
 
   const manageLanding = async (
     action: ManageActions,
     landing: Landing,
     onSuccess?: (landing: Landing) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     manageLandingMW(action, token, intl.locale, landing)
       .then((response) => {
         onManageLandingSuccess(
           action,
-          response.landing ?
-            {
-              ...landing,
-              ...response.landing,
-            } : landing,
+          response.landing != null
+            ? {
+                ...landing,
+                ...response.landing
+              }
+            : landing,
           onSuccess
-        );
+        )
       }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
+        setErrorMsg(error.message)
+        setLoading(false)
+      })
+  }
 
   const onManageLandingSuccess = (
     action: ManageActions,
     landing: Landing,
     onSuccess?: (landing: Landing) => void
   ) => {
-    onManageLanding(action, landing);
-    if (onSuccess) {
-      onSuccess(landing);
+    onManageLanding(action, landing)
+    if (onSuccess != null) {
+      onSuccess(landing)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateLanding' }));
-  };
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateLanding' }))
+  }
 
   const manageProduct = async (
     action: ManageActions,
@@ -222,25 +223,27 @@ const useAdminStore = () => {
     product: Product,
     onSuccess?: (product: Product) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     manageProductMW(action, token, intl.locale, product)
       .then((response) => {
         onManageProductSuccess(
           action,
           landing,
-          response.product ? {
-            ...product,
-            ...response.product,
-          } : product,
+          response.product != null
+            ? {
+                ...product,
+                ...response.product
+              }
+            : product,
           onSuccess
-        );
+        )
       }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
+        setErrorMsg(error.message)
+        setLoading(false)
+      })
+  }
 
   const onManageProductSuccess = (
     action: ManageActions,
@@ -248,13 +251,13 @@ const useAdminStore = () => {
     product: Product,
     onSuccess?: (product: Product) => void
   ) => {
-    onManageProduct(action, landing, product);
-    if (onSuccess) {
-      onSuccess(product);
+    onManageProduct(action, landing, product)
+    if (onSuccess != null) {
+      onSuccess(product)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateProduct' }));
-  };
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updateProduct' }))
+  }
 
   const manageProductPack = async (
     action: ManageActions,
@@ -262,25 +265,27 @@ const useAdminStore = () => {
     productPack: ProductPack,
     onSuccess?: (productPack: ProductPack) => void
   ) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     manageProductPackMW(action, token, intl.locale, productPack)
       .then((response) => {
         onManageProductPackSuccess(
           action,
           landing,
-          response.productPack ? {
-            ...productPack,
-            ...response.productPack,
-          } : productPack,
+          response.productPack != null
+            ? {
+                ...productPack,
+                ...response.productPack
+              }
+            : productPack,
           onSuccess
-        );
+        )
       }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
+        setErrorMsg(error.message)
+        setLoading(false)
+      })
+  }
 
   const onManageProductPackSuccess = (
     action: ManageActions,
@@ -288,55 +293,55 @@ const useAdminStore = () => {
     productPack: ProductPack,
     onSuccess?: (productPack: ProductPack) => void
   ) => {
-    onManageProductPack(action, landing, productPack);
-    if (onSuccess) {
-      onSuccess(productPack);
+    onManageProductPack(action, landing, productPack)
+    if (onSuccess != null) {
+      onSuccess(productPack)
     }
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePPack' }));
-  };
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePPack' }))
+  }
 
   const manageProductInventory = async (action: ManageActions, productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     manageProductInventoryMW(action, token, intl.locale, productInventory)
-      .then((response: {productInventory: ProductInventory}) => {
-        onManagePInventorySuccess(response.productInventory, onSuccess);
+      .then((response: { productInventory: ProductInventory }) => {
+        onManagePInventorySuccess(response.productInventory, onSuccess)
       }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
+        setErrorMsg(error.message)
+        setLoading(false)
+      })
+  }
 
   const onManagePInventorySuccess = (productInventory: ProductInventory, onSuccess?: (productInventory: ProductInventory) => void) => {
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePInventory' }));
-    if (onSuccess) {
-      onSuccess(productInventory);
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePInventory' }))
+    if (onSuccess != null) {
+      onSuccess(productInventory)
     }
-  };
+  }
 
   const manageProductDiscount = async (action: ManageActions, productDiscount: ProductDiscount, onSuccess?: (productDiscount: ProductDiscount) => void) => {
-    setLoading(true);
-    setErrorMsg('');
-    setSuccessMsg('');
+    setLoading(true)
+    setErrorMsg('')
+    setSuccessMsg('')
     manageProductDiscountMW(action, token, intl.locale, productDiscount)
-      .then((response: {productDiscount: ProductDiscount}) => {
-        onManagePDiscountSuccess(response.productDiscount, onSuccess);
+      .then((response: { productDiscount: ProductDiscount }) => {
+        onManagePDiscountSuccess(response.productDiscount, onSuccess)
       }).catch((error: Error) => {
-        setErrorMsg(error.message);
-        setLoading(false);
-      });
-  };
+        setErrorMsg(error.message)
+        setLoading(false)
+      })
+  }
 
   const onManagePDiscountSuccess = (productDiscount: ProductDiscount, onSuccess?: (productDiscount: ProductDiscount) => void) => {
-    setLoading(false);
-    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePDiscount' }));
-    if (onSuccess) {
-      onSuccess(productDiscount);
+    setLoading(false)
+    setSuccessMsg(intl.formatMessage({ id: 'admin.successes.updatePDiscount' }))
+    if (onSuccess != null) {
+      onSuccess(productDiscount)
     }
-  };
+  }
 
   return {
     getCategoryDetails,
@@ -348,8 +353,8 @@ const useAdminStore = () => {
     manageProductInventory,
     manageProductDiscount,
     errorMsg,
-    successMsg,
-  };
-};
+    successMsg
+  }
+}
 
-export default useAdminStore;
+export default useAdminStore

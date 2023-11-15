@@ -1,21 +1,21 @@
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import type { User } from '@core/types/user';
+import type { User } from '@core/types/user'
 
-import { useAuthContext } from '@core/contexts/AuthContext';
-import Divider from '@core/components/ui/Divider';
-import UserUpdateForm from '@core/components/forms/user/UserUpdateForm';
-import UpdateEmailForm from '@core/components/forms/auth/UpdateEmailForm';
-import UpdatePswForm from '@core/components/forms/auth/UpdatePswForm';
+import { useAuthContext } from '@core/contexts/AuthContext'
+import Divider from '@core/components/ui/Divider'
+import UserUpdateForm from '@core/components/forms/user/UserUpdateForm'
+import UpdateEmailForm from '@core/components/forms/auth/UpdateEmailForm'
+import UpdatePswForm from '@core/components/forms/auth/UpdatePswForm'
 
 const Settings = () => {
-  const { user } = useAuthContext();
+  const { user } = useAuthContext()
 
   return (
     <Container>
       <UserUpdateForm />
 
-      { !(user as User)?.authProvider &&
+      { (((user as User)?.authProvider) == null) &&
         <>
           <Divider mb={3} mt={5} />
 
@@ -27,7 +27,7 @@ const Settings = () => {
         </>
       }
     </Container>
-  );
-};
+  )
+}
 
-export default Settings;
+export default Settings

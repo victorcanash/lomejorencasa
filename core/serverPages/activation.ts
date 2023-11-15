@@ -1,34 +1,34 @@
-import type { GetServerSideProps } from 'next';
+import type { GetServerSideProps } from 'next'
 
-import { activateUser } from '@core/utils/auth';
+import { activateUser } from '@core/utils/auth'
 
-export type ActivationProps = {
-  successMsg: string,
-  errorMsg: string,
-};
+export interface ActivationProps {
+  successMsg: string
+  errorMsg: string
+}
 
 export const getActivationProps: GetServerSideProps = async (context) => {
-  const { token } = context.query;
-  const tokenSearch = typeof token == 'string' ? token : '';
+  const { token } = context.query
+  const tokenSearch = typeof token === 'string' ? token : ''
 
-  let result: { props: ActivationProps } | { notFound: boolean } = { props: {} as ActivationProps };
+  let result: { props: ActivationProps } | { notFound: boolean } = { props: { successMsg: '', errorMsg: '' } }
 
   await activateUser(tokenSearch).then(() => {
     result = {
       props: {
         successMsg: 'Succeeded',
-        errorMsg: '',
+        errorMsg: ''
       }
-    };
+    }
   }).catch((error: Error) => {
-    const errorMsg = error.message;
+    const errorMsg = error.message
     result = {
       props: {
         successMsg: '',
-        errorMsg: errorMsg,
+        errorMsg
       }
-    };
+    }
   })
 
-  return result;
-};
+  return result
+}

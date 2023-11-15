@@ -1,48 +1,47 @@
-import type { ProductInventory, ProductPack } from '@core/types/products';
+import type { ProductInventory, ProductPack } from '@core/types/products'
 
-export type CartConfig = {
-  maxQuantity: number,
-  rangeChangeItemQuantity: number,
-};
+export interface CartConfig {
+  maxQuantity: number
+  rangeChangeItemQuantity: number
+}
 
-export type Cart = {
-  id: number,
-  userId: number,
-  items: CartItem[],
-};
+export interface Cart {
+  id: number
+  userId: number
+  items: CartItem[]
+}
 
-export type CartItem = {
-  id: number,
-  cartId: number,
-  inventoryId?: number,
-  packId?: number,
-  inventory?: ProductInventory,
-  pack?: ProductPack,
-  quantity: number,
-};
+export interface CartItem {
+  id: number
+  cartId: number
+  inventoryId?: number
+  packId?: number
+  inventory?: ProductInventory
+  pack?: ProductPack
+  quantity: number
+}
 
+export interface GuestCart {
+  items: GuestCartItem[]
+}
 
-export type GuestCart = {
-  items: GuestCartItem[],
-};
+export interface GuestCartItem {
+  inventoryId?: number
+  packId?: number
+  quantity: number
+}
 
-export type GuestCartItem = {
-  inventoryId?: number,
-  packId?: number,
-  quantity: number,
-};
+export interface GuestCartCheck {
+  items: GuestCartCheckItem[]
+}
 
-export type GuestCartCheck = {
-  items: GuestCartCheckItem[],
-};
+export interface GuestCartCheckItem {
+  inventory?: ProductInventory
+  pack?: ProductPack
+  quantity: number
+}
 
-export type GuestCartCheckItem = {
-  inventory?: ProductInventory,
-  pack?: ProductPack,
-  quantity: number,
-};
-
-export type TotalAmount = {
+export interface TotalAmount {
   itemsAmount: ItemAmount[]
   subtotal: number
   totalVat: number
@@ -51,7 +50,7 @@ export type TotalAmount = {
   totalQuantity: number
 }
 
-export type ItemAmount = {
+export interface ItemAmount {
   itemVat: number
   itemSubtotal: number
   itemTotal: number

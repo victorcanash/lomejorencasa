@@ -1,32 +1,32 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import { SxProps, Theme } from '@mui/material/styles';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { type SxProps, type Theme } from '@mui/material/styles'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
-import type { FormatText } from '@core/types/texts';
-import type { Source } from '@core/types/multimedia';
-import type { NavItem } from '@core/types/navigation';
-import LinkButton from '@core/components/inputs/LinkButton';
+import type { FormatText } from '@core/types/texts'
+import type { Source } from '@core/types/multimedia'
+import type { NavItem } from '@core/types/navigation'
+import LinkButton from '@core/components/inputs/LinkButton'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
-type LeftBannerContentProps = {
+interface LeftBannerContentProps {
   item: {
-    contentText: FormatText,
-    source: Source,
-    button: NavItem,
-  },
-  typographySx?: SxProps<Theme> | undefined,
-  btnSx?: SxProps<Theme> | undefined,
-};
+    contentText: FormatText
+    source: Source
+    button: NavItem
+  }
+  typographySx?: SxProps<Theme> | undefined
+  btnSx?: SxProps<Theme> | undefined
+}
 
 const LeftBannerContent = (props: LeftBannerContentProps) => {
   const {
     item,
     typographySx,
-    btnSx,
-  } = props;
+    btnSx
+  } = props
 
   return (
     <Grid
@@ -43,10 +43,10 @@ const LeftBannerContent = (props: LeftBannerContentProps) => {
           xs_sm: '75%',
           sm: '70%',
           sm_md: '65%',
-          md: '70%',
+          md: '70%'
         },
         height: '100%',
-        p: 2,
+        p: 2
       }}
     >
       <Grid item>
@@ -65,7 +65,7 @@ const LeftBannerContent = (props: LeftBannerContentProps) => {
       <Grid item>
         <Grid item>
           <LinkButton
-            href={item.button.path || pages.home.path}
+            href={item.button.path ?? pages.home.path}
             customtype="actionPrimary"
             sx={btnSx}
           >
@@ -78,7 +78,7 @@ const LeftBannerContent = (props: LeftBannerContentProps) => {
         </Grid>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default LeftBannerContent;
+export default LeftBannerContent

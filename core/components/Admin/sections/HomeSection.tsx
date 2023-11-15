@@ -1,21 +1,21 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-import { AdminSections } from '@core/constants/admin';
-import Divider from '@core/components/ui/Divider';
-import Button from '@core/components/inputs/Button';
+import { AdminSections } from '@core/constants/admin'
+import Divider from '@core/components/ui/Divider'
+import Button from '@core/components/inputs/Button'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
 const HomeSection = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   const onClickSectionBtn = (section: AdminSections) => {
-    router.push(`${pages.admin.path}?section=${section}`);
+    void router.push(`${pages.admin.path}?section=${section}`)
   }
 
   return (
@@ -29,7 +29,7 @@ const HomeSection = () => {
           </Typography>
           <Button
             sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.checkStore)}
+            onClick={() => { onClickSectionBtn(AdminSections.checkStore) }}
           >
             <FormattedMessage
               id="admin.checkStoreBtn"
@@ -47,7 +47,7 @@ const HomeSection = () => {
           </Typography>
           <Button
             sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.sendOrderEmail)}
+            onClick={() => { onClickSectionBtn(AdminSections.sendOrderEmail) }}
           >
             <FormattedMessage
               id="admin.sendOrderEmailBtn"
@@ -65,7 +65,7 @@ const HomeSection = () => {
           </Typography>
           <Button
             sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.createFailedOrder)}
+            onClick={() => { onClickSectionBtn(AdminSections.createFailedOrder) }}
           >
             <FormattedMessage
               id="admin.createFailedOrderBtn"
@@ -73,7 +73,7 @@ const HomeSection = () => {
           </Button>
           <Button
             sx={{ m: 2 }}
-            onClick={() => onClickSectionBtn(AdminSections.sendFailedOrderEmail)}
+            onClick={() => { onClickSectionBtn(AdminSections.sendFailedOrderEmail) }}
           >
             <FormattedMessage
               id="admin.sendFailedOrderEmailBtn"
@@ -82,7 +82,7 @@ const HomeSection = () => {
         </Box>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default HomeSection;
+export default HomeSection

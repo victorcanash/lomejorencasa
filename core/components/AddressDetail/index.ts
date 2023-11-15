@@ -1,3 +1,3 @@
-import AddressDetail from './AddressDetail';
+import AddressDetail from './AddressDetail'
 
-export default AddressDetail;
+export default AddressDetail

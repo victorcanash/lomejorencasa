@@ -1,63 +1,63 @@
-import { Dispatch, SetStateAction, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { type Dispatch, type SetStateAction, useEffect } from 'react'
+import { useRouter } from 'next/router'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Backdrop from '@mui/material/Backdrop';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Backdrop from '@mui/material/Backdrop'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 
-import { convertElementToSx } from '@core/utils/themes';
-import { useAppContext } from '@core/contexts/AppContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import Button from '@core/components/inputs/Button';
+import { convertElementToSx } from '@core/utils/themes'
+import { useAppContext } from '@core/contexts/AppContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import Button from '@core/components/inputs/Button'
 
-import { pages } from '@lib/config/navigation.config';
-import { themeCustomElements } from '@lib/config/theme/elements';
-import { firstBuyDiscountPercent } from '@lib/config/payment.config';
+import { pages } from '@lib/config/navigation.config'
+import { themeCustomElements } from '@lib/config/theme/elements'
+import { firstBuyDiscountPercent } from '@lib/config/payment.config'
 
-type RegisterBannerProps = {
-  open: boolean,
-  setOpen: Dispatch<SetStateAction<boolean>>,
-  handleBanner: () => void,
-};
+interface RegisterBannerProps {
+  open: boolean
+  setOpen: Dispatch<SetStateAction<boolean>>
+  handleBanner: () => void
+}
 
 const RegisterBanner = (props: RegisterBannerProps) => {
   const {
     open,
     setOpen,
-    handleBanner,
-  } = props;
+    handleBanner
+  } = props
 
-  const { initialized } = useAppContext();
-  const { isLogged, enabledRegisterBanner } = useAuthContext();
+  const { initialized } = useAppContext()
+  const { isLogged, enabledRegisterBanner } = useAuthContext()
 
-  const router = useRouter();
+  const router = useRouter()
 
   const handleClickLaterBtn = () => {
-    handleBanner();
-  };
+    handleBanner()
+  }
 
   const handleClickRegisterBtn = () => {
-    handleBanner();
-    router.push(pages.register.path);
-  };
+    handleBanner()
+    void router.push(pages.register.path)
+  }
 
   useEffect(() => {
     if (initialized && enabledRegisterBanner.current) {
-      enabledRegisterBanner.current = false;
+      enabledRegisterBanner.current = false
       if (!isLogged()) {
         setTimeout(() => {
-          setOpen(true);
-        }, 5000);
+          setOpen(true)
+        }, 5000)
       }
     }
-  }, [enabledRegisterBanner, initialized, isLogged, setOpen]);
+  }, [enabledRegisterBanner, initialized, isLogged, setOpen])
 
   return (
     <Backdrop
-      sx={{ 
+      sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         position: 'fixed',
         top: '50%',
@@ -67,7 +67,7 @@ const RegisterBanner = (props: RegisterBannerProps) => {
         px: 1,
         py: 2,
         backgroundColor: 'rgb(0 0 0 / 90%)',
-        boxShadow: 3,
+        boxShadow: 3
       }}
       open={open}
     >
@@ -101,9 +101,10 @@ const RegisterBanner = (props: RegisterBannerProps) => {
                 variant="h3"
                 textAlign="center"
                 sx={{
-                  ...themeCustomElements.banners?.register?.discountPercentText ?
-                    convertElementToSx(themeCustomElements.banners.register.discountPercentText) : undefined,
-                  mb: 2,
+                  ...((themeCustomElements.banners?.register?.discountPercentText) != null)
+                    ? convertElementToSx(themeCustomElements.banners.register.discountPercentText)
+                    : undefined,
+                  mb: 2
                 }}
               >
                 {`-${firstBuyDiscountPercent}%`}
@@ -139,7 +140,7 @@ const RegisterBanner = (props: RegisterBannerProps) => {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            <Button 
+            <Button
               onClick={handleClickLaterBtn}
             >
               <FormattedMessage id="banners.register.laterBtn" />
@@ -148,7 +149,7 @@ const RegisterBanner = (props: RegisterBannerProps) => {
         </Grid>
       </Box>
     </Backdrop>
-  );
-};
+  )
+}
 
-export default RegisterBanner;
+export default RegisterBanner

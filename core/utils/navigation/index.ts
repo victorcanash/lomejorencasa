@@ -1,15 +1,15 @@
 export const scrollToSection = (id?: string, smooth = true, addedY = 121) => {
   setTimeout(() => {
-    if (!id) {
-      id = window.location.hash.replace('#', '');
+    if (id == null) {
+      id = window.location.hash.replace('#', '')
     }
-    const element = window.document.getElementById(id);
-    if (element) {
-      const r = element.getBoundingClientRect();
+    const element = window.document.getElementById(id)
+    if (element != null) {
+      const r = element.getBoundingClientRect()
       window.top?.scroll({
         top: scrollY + (r.top - addedY),
-        behavior: smooth ? 'smooth' : undefined,
-      });
+        behavior: smooth ? 'smooth' : undefined
+      })
     }
-  }, smooth ? 600 : 0);
-};
+  }, smooth ? 600 : 0)
+}

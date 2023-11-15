@@ -1,15 +1,14 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-import Link from '@core/components/navigation/Link';
+import Link from '@core/components/navigation/Link'
 
 const Cookies = () => {
-
   return (
     <Container>
       <Typography variant="body1">
@@ -34,11 +33,11 @@ const Cookies = () => {
           <FormattedMessage
             id="cookies.thirdParty.1"
             values={{
-              'link': (...chunks: ReactNode[]) => (
+              link: (...chunks: ReactNode[]) => (
                 <Link href="https://policies.google.com/technologies/cookies" target="_blank">
                   {chunks}
                 </Link>
-              ),
+              )
             }}
           />
         </Typography>
@@ -46,11 +45,11 @@ const Cookies = () => {
           <FormattedMessage
             id="cookies.thirdParty.2"
             values={{
-              'link': (...chunks: ReactNode[]) => (
+              link: (...chunks: ReactNode[]) => (
                 <Link href="https://www.cloudinary.com/privacy/cookie-policy" target="_blank">
                   {chunks}
                 </Link>
-              ),
+              )
             }}
           />
         </Typography>
@@ -58,11 +57,11 @@ const Cookies = () => {
           <FormattedMessage
             id="cookies.thirdParty.3"
             values={{
-              'link': (...chunks: ReactNode[]) => (
+              link: (...chunks: ReactNode[]) => (
                 <Link href="https://www.paypal.com/es/webapps/mpp/ua/cookie-full" target="_blank">
                   {chunks}
                 </Link>
-              ),
+              )
             }}
           />
         </Typography>
@@ -70,11 +69,11 @@ const Cookies = () => {
           <FormattedMessage
             id="cookies.thirdParty.4"
             values={{
-              'link': (...chunks: ReactNode[]) => (
+              link: (...chunks: ReactNode[]) => (
                 <Link href="https://www.facebook.com/privacy/policies/cookies" target="_blank">
                   {chunks}
                 </Link>
-              ),
+              )
             }}
           />
         </Typography>
@@ -90,7 +89,7 @@ const Cookies = () => {
         <FormattedMessage id="cookies.refuse.description" />
       </Typography>
     </Container>
-  );
-};
+  )
+}
 
-export default Cookies;
+export default Cookies

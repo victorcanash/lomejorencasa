@@ -1,68 +1,68 @@
-import { useCallback } from 'react';
+import { useCallback } from 'react'
 
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
 
-import type { Source } from '@core/types/multimedia';
-import CustomImage from '@core/components/multimedia/CustomImage';
-import CustomVideo from '@core/components/multimedia/CustomVideo';
+import type { Source } from '@core/types/multimedia'
+import CustomImage from '@core/components/multimedia/CustomImage'
+import CustomVideo from '@core/components/multimedia/CustomVideo'
 
-type MultimediaContainerProps = {
-  type: 'default' | 'banner',
-  source: Source,
-  maxWidth?: string,
-  width?: string,
-  mt?: number,
-  borderRadius?: string,
-};
+interface MultimediaContainerProps {
+  type: 'default' | 'banner'
+  source: Source
+  maxWidth?: string
+  width?: string
+  mt?: number
+  borderRadius?: string
+}
 
 const MultimediaContainer = (props: MultimediaContainerProps) => {
-  const { 
-    type, 
+  const {
+    type,
     source,
     maxWidth,
-    width, 
+    width,
     mt,
-    borderRadius,
-  } = props;
+    borderRadius
+  } = props
 
   const getMaxWidth = useCallback(() => {
-    if (maxWidth) {
-      return maxWidth;
+    if (maxWidth != null) {
+      return maxWidth
     }
-    if (type == 'default') {
-      return 'sm';
-    } else if (type == 'banner') {
-      return 'md_lg';
+    if (type === 'default') {
+      return 'sm'
+    } else if (type === 'banner') {
+      return 'md_lg'
     }
-    return maxWidth;
-  }, [maxWidth, type]);
+    return maxWidth
+  }, [maxWidth, type])
 
   const getMt = useCallback(() => {
     if (mt !== undefined) {
-      return mt;
+      return mt
     }
-    if (type == 'default') {
-      return 4;
-    } else if (type == 'banner') {
-      return 0;
+    if (type === 'default') {
+      return 4
+    } else if (type === 'banner') {
+      return 0
     }
-    return mt;
-  }, [mt, type]);
+    return mt
+  }, [mt, type])
 
   const getBorderRadius = useCallback(() => {
-    if (borderRadius) {
-      return borderRadius;
+    if (borderRadius != null) {
+      return borderRadius
     }
-    if (type == 'default') {
-      return '17px';
+    if (type === 'default') {
+      return '17px'
     }
-    return borderRadius;
-  }, [borderRadius, type]);
+    return borderRadius
+  }, [borderRadius, type])
 
   const getSourceWidth = useCallback(() => {
-    const right = getBorderRadius() || '0px';
-    return `calc(100% + (${right} * 2))`;
-  }, [getBorderRadius]);
+    const right = getBorderRadius() ?? '0px'
+    return `calc(100% + (${right} * 2))`
+  }, [getBorderRadius])
 
   return (
     <Box
@@ -71,42 +71,41 @@ const MultimediaContainer = (props: MultimediaContainerProps) => {
       m="auto"
       mt={getMt()}
     >
-      { source.type === 'video' ?
-        <>
+      { source.type === 'video'
+        ? <>
           <CustomVideo
             src={source.src as string}
             style={{
               position: 'relative',
               right: getBorderRadius(),
               width: getSourceWidth(),
-              borderRadius: getBorderRadius(),
+              borderRadius: getBorderRadius()
             }}
           />
         </>
-        :
-        <Box
+        : <Box
           sx={{
             position: 'relative',
             right: getBorderRadius(),
-            width: getSourceWidth(),
+            width: getSourceWidth()
           }}
         >
           <CustomImage
             src={source.src}
             alt={source.alt}
-            width={source.width || '1920'}
-            height={source.height || '1080'}
+            width={source.width ?? '1920'}
+            height={source.height ?? '1080'}
             layout="responsive"
             objectFit="cover"
             priority={source.priority}
             style={{
-              borderRadius: getBorderRadius(),
+              borderRadius: getBorderRadius()
             }}
           />
         </Box>
       }
     </Box>
-  );
-};
+  )
+}
 
-export default MultimediaContainer;
+export default MultimediaContainer

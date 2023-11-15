@@ -1,52 +1,51 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { useIntl } from 'react-intl';
+import { useIntl } from 'react-intl'
 
-import type { Landing } from '@core/types/products';
-import type { Source } from '@core/types/multimedia';
-import LandingTutorial, { LandingTutorialProps } from './LandingTutorial';
+import type { Landing } from '@core/types/products'
+import LandingTutorial, { type LandingTutorialProps } from './LandingTutorial'
 
-type LandingTutorialsProps = {
-  landing: Landing,
-};
+interface LandingTutorialsProps {
+  landing: Landing
+}
 
 const LandingTutorials = (props: LandingTutorialsProps) => {
-  const { landing } = props;
+  const { landing } = props
 
-  const intl = useIntl();
+  const intl = useIntl()
 
   const tutorialPropsList = useMemo(() => {
-    const textId = `landing.${landing.slug}.tutorials`;
+    const textId = `landing.${landing.slug}.tutorials`
 
-    let count = 0;
+    let count = 0
     while (
-      intl.messages[`${textId}.${count + 1}.title`] &&
-      intl.messages[`${textId}.${count + 1}.content`] &&
+      intl.messages[`${textId}.${count + 1}.title`] != null && intl.messages[`${textId}.${count + 1}.title`] !== '' &&
+      intl.messages[`${textId}.${count + 1}.content`] != null && intl.messages[`${textId}.${count + 1}.content`] !== '' &&
       landing.tutorialSources.length >= (count + 1)
     ) {
-      count++;
+      count++
     }
 
-    const tutorialPropsElements = [] as LandingTutorialProps[];
+    const tutorialPropsElements = [] as LandingTutorialProps[]
     if (count > 0) {
       for (let i = 0; i < count; i++) {
         tutorialPropsElements.push({
           title: {
-            id: `${textId}.${i + 1}.title`,
+            id: `${textId}.${i + 1}.title`
           },
           content: {
-            id: `${textId}.${i + 1}.content`,
+            id: `${textId}.${i + 1}.content`
           },
           source: {
             type: landing.tutorialSources[i].includes('.mp4') ? 'video' : 'image',
             src: landing.tutorialSources[i],
-            alt: landing.name.current,
+            alt: landing.name.current
           }
         })
       }
     }
-    return tutorialPropsElements;
-  }, [intl, landing.name, landing.slug, landing.tutorialSources]);
+    return tutorialPropsElements
+  }, [intl, landing.name, landing.slug, landing.tutorialSources])
 
   return (
     <>
@@ -57,7 +56,7 @@ const LandingTutorials = (props: LandingTutorialsProps) => {
         />
       ))}
     </>
-  );
-};
+  )
+}
 
-export default LandingTutorials;
+export default LandingTutorials

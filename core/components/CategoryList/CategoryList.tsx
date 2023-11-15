@@ -1,46 +1,46 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack'; 
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Stack from '@mui/material/Stack'
 
-import type { ProductCategory, ProductCategoryGroup } from '@core/types/products';
-import usePagination from '@core/hooks/usePagination';
-import Pagination from '@core/components/ui/Pagination';
-import CategoryItem from './CategoryItem';
+import type { ProductCategory, ProductCategoryGroup } from '@core/types/products'
+import usePagination from '@core/hooks/usePagination'
+import Pagination from '@core/components/ui/Pagination'
+import CategoryItem from './CategoryItem'
 
-type CategoryListProps = {
-  type: 'collectionsPage' | 'stack',
-  categories: (ProductCategory | ProductCategoryGroup)[],
-};
+interface CategoryListProps {
+  type: 'collectionsPage' | 'stack'
+  categories: Array<ProductCategory | ProductCategoryGroup>
+}
 
 const CategoryList = (props: CategoryListProps) => {
   const {
     type,
-    categories,
-  } = props;
+    categories
+  } = props
 
   const {
     currentPage,
     allItems,
     totalPages,
-    handleChangePage,
-  } = usePagination(categories, 'categories');
+    handleChangePage
+  } = usePagination(categories, 'categories')
 
   const allCategories = useMemo(() => {
-    return allItems as (ProductCategory | ProductCategoryGroup)[];
-  }, [allItems]);
+    return allItems as Array<ProductCategory | ProductCategoryGroup>
+  }, [allItems])
 
   return (
     <Container
       id="categories"
       sx={{
         mt: type === 'stack' ? 6 : undefined,
-        overflowX: type === 'stack' ? 'auto' : undefined,
+        overflowX: type === 'stack' ? 'auto' : undefined
       }}
     >
       <Box
@@ -50,8 +50,8 @@ const CategoryList = (props: CategoryListProps) => {
         {/* Masonry List */}
         { type === 'collectionsPage' &&
           <>
-            { allCategories.length > 0 ?
-              <Grid container spacing={0}>
+            { allCategories.length > 0
+              ? <Grid container spacing={0}>
                 { allCategories.map((category) => (
                   <Grid
                     key={category.id}
@@ -66,11 +66,11 @@ const CategoryList = (props: CategoryListProps) => {
                         m: 'auto',
                         mb: {
                           xs: 1,
-                          sm: 2,
+                          sm: 2
                         },
                         px: {
                           xs: 0.5,
-                          sm: 1,
+                          sm: 1
                         }
                       }}
                     >
@@ -81,8 +81,7 @@ const CategoryList = (props: CategoryListProps) => {
                   </Grid>
                 ))}
               </Grid>
-            :
-              <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
+              : <Typography component="h3" variant="body1" sx={{ textAlign: 'center' }}>
                 <FormattedMessage
                   id="collections.noItems"
                 />
@@ -106,8 +105,8 @@ const CategoryList = (props: CategoryListProps) => {
                   width: 'max-content',
                   minWidth: {
                     xs: '26%',
-                    sm_md: '22%',
-                  },
+                    sm_md: '22%'
+                  }
                 }}
 
               >
@@ -133,7 +132,7 @@ const CategoryList = (props: CategoryListProps) => {
         }
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default CategoryList;
+export default CategoryList

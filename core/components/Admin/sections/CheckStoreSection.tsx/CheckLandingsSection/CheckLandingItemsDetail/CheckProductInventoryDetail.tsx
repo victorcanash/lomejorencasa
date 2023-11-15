@@ -1,31 +1,31 @@
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Typography from '@mui/material/Typography'
+import DeleteIcon from '@mui/icons-material/Delete'
 
-import type { ProductInventory } from '@core/types/products';
-import Button from '@core/components/inputs/Button';
+import type { ProductInventory } from '@core/types/products'
+import Button from '@core/components/inputs/Button'
 
-type CheckProductInventoryDetailProps = {
-  index: number,
-  productInventory: ProductInventory,
-  creating?: boolean,
-  onClickRemoveBtn?: (index: number) => void,
-};
+interface CheckProductInventoryDetailProps {
+  index: number
+  productInventory: ProductInventory
+  creating?: boolean
+  onClickRemoveBtn?: (index: number) => void
+}
 
 const CheckProductInventoryDetail = (props: CheckProductInventoryDetailProps) => {
   const {
     index,
     productInventory,
     creating,
-    onClickRemoveBtn,
-  } = props;
+    onClickRemoveBtn
+  } = props
 
-  const intl = useIntl();
+  const intl = useIntl()
 
   return (
     <>
-      { !creating &&
+      { !(creating ?? false) &&
         <>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.id' })}: ${productInventory.id}`}
@@ -62,7 +62,7 @@ const CheckProductInventoryDetail = (props: CheckProductInventoryDetailProps) =>
       <Typography component="div" variant="body1">
           {`${intl.formatMessage({ id: 'forms.metaId' })}: ${productInventory.metaId}`}
       </Typography>
-      { !creating &&
+      { !(creating ?? false) &&
         <>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.realPrice' })}: ${productInventory.realPrice}`}
@@ -85,10 +85,10 @@ const CheckProductInventoryDetail = (props: CheckProductInventoryDetailProps) =>
         </>
       }
 
-      { creating && onClickRemoveBtn &&
+      { (creating ?? false) && (onClickRemoveBtn != null) &&
         <Button
           startIcon={<DeleteIcon />}
-          onClick={() => onClickRemoveBtn(index)}
+          onClick={() => { onClickRemoveBtn(index) }}
         >
           <FormattedMessage
             id="app.removeBtn"
@@ -96,7 +96,7 @@ const CheckProductInventoryDetail = (props: CheckProductInventoryDetailProps) =>
         </Button>
       }
     </>
-  );
-};
+  )
+}
 
-export default CheckProductInventoryDetail;
+export default CheckProductInventoryDetail

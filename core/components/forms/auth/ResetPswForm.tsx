@@ -1,67 +1,67 @@
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import type { AuthResetPsw } from '@core/types/auth';
+import { FormFieldTypes } from '@core/constants/forms'
+import type { AuthResetPsw } from '@core/types/auth'
 
-import useForms from '@core/hooks/useForms';
-import useAuth from '@core/hooks/useAuth';
-import BaseForm from '@core/components/forms/BaseForm';
+import useForms from '@core/hooks/useForms'
+import useAuth from '@core/hooks/useAuth'
+import BaseForm from '@core/components/forms/BaseForm'
 
 const ResetPswForm = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { resetPasswordFormValidation, userFieldsInitValues } = useForms();
-  const { resetPsw: resetPassword, errorMsg, successMsg } = useAuth();
+  const { resetPasswordFormValidation, userFieldsInitValues } = useForms()
+  const { resetPsw: resetPassword, errorMsg, successMsg } = useAuth()
 
   const handleSubmit = async (values: AuthResetPsw) => {
-    const updateToken = typeof router.query.token == 'string' ? router.query.token : '';
-    resetPassword(updateToken, values);
-  };
+    const updateToken = typeof router.query.token === 'string' ? router.query.token : ''
+    void resetPassword(updateToken, values)
+  }
 
   return (
-    <BaseForm 
+    <BaseForm
       initialValues={{
         newPassword: userFieldsInitValues.password,
-        newConfirm: userFieldsInitValues.confirm,
-      } as AuthResetPsw}
+        newConfirm: userFieldsInitValues.confirm
+      }}
       validationSchema={resetPasswordFormValidation}
       formFieldGroups={[
         {
           titleTxt: {
             id: 'forms.resetPassword.title',
-            textAlign: 'center',
+            textAlign: 'center'
           },
           descriptionTxt: {
             id: 'forms.resetPassword.description',
-            textAlign: 'center',
+            textAlign: 'center'
           },
           formFields: [
             {
               name: 'newPassword',
               type: FormFieldTypes.password,
               required: true,
-              autoFocus: true,
+              autoFocus: true
             },
             {
               name: 'newConfirm',
               type: FormFieldTypes.password,
-              required: true,
+              required: true
             }
-          ],
+          ]
         }
       ]}
       formButtons={{
         submit: {
           text: {
-            id: 'forms.resetPassword.successBtn',
+            id: 'forms.resetPassword.successBtn'
           },
-          onSubmit: handleSubmit,
-        },
+          onSubmit: handleSubmit
+        }
       }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
-  );
-};
+  )
+}
 
-export default ResetPswForm;
+export default ResetPswForm

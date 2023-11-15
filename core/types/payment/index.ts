@@ -1,9 +1,9 @@
-export type PaymentConfig = {
-  vatPercent: number,
-  firstBuyDiscountPercent: number,
-};
+export interface PaymentConfig {
+  vatPercent: number
+  firstBuyDiscountPercent: number
+}
 
-export type PaypalCredentials = {
-  token: string,
-  advancedCards?: boolean,
-};
+export interface PaypalCredentials {
+  token: string
+  advancedCards?: boolean
+}

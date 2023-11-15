@@ -1,3 +1,3 @@
-import LandingList from './LandingList';
+import LandingList from './LandingList'
 
-export default LandingList;
+export default LandingList

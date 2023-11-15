@@ -1,4 +1,4 @@
-export const JWTTokenKey = 'jwt_token';
+export const JWTTokenKey = 'jwt_token'
 
 export enum Protections {
   none = 'none',

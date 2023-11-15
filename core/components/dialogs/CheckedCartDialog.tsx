@@ -1,34 +1,34 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
 
-import type { CartItem } from '@core/types/cart';
-import Transition from '@core/components/animations/Transition';
-import Button from '@core/components/inputs/Button';
+import type { CartItem } from '@core/types/cart'
+import Transition from '@core/components/animations/Transition'
+import Button from '@core/components/inputs/Button'
 
-type CheckedCartDialogProps = {
-  open: boolean,
-  handleDialog: () => void,
-  changedCart: boolean,
-  changedItemsByInventory: CartItem[],
-  message?: string,
-};
+interface CheckedCartDialogProps {
+  open: boolean
+  handleDialog: () => void
+  changedCart: boolean
+  changedItemsByInventory: CartItem[]
+  message?: string
+}
 
 const CheckedCartDialog = (props: CheckedCartDialogProps) => {
-  const { 
+  const {
     open,
     handleDialog,
     changedCart,
     changedItemsByInventory,
-    message,
-  } = props;
+    message
+  } = props
 
   const handleClickAcceptBtn = () => {
-    handleDialog();
+    handleDialog()
   }
 
   return (
@@ -45,7 +45,7 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
       <DialogContent>
         { changedItemsByInventory.length > 0 &&
           <>
-            <DialogContentText 
+            <DialogContentText
               id="checked-cart-dialog"
               mb={1}
             >
@@ -57,8 +57,8 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
                 <FormattedMessage
                   id="dialogs.checkedCart.content.changedItem"
                   values={{
-                    productName: item.inventory?.name.current || item.pack?.name.current,
-                    quantity: item.quantity,
+                    productName: item.inventory?.name.current ?? item.pack?.name.current,
+                    quantity: item.quantity
                   }}
                 />
               </DialogContentText>
@@ -70,21 +70,21 @@ const CheckedCartDialog = (props: CheckedCartDialogProps) => {
             <FormattedMessage id="dialogs.checkedCart.content.changedCart" />
           </DialogContentText>
         }
-        { message &&
+        { (message != null) &&
           <DialogContentText>
             {message}
           </DialogContentText>
         }
       </DialogContent>
       <DialogActions>
-        <Button 
+        <Button
           onClick={handleClickAcceptBtn}
         >
           <FormattedMessage id="dialogs.checkedCart.acceptBtn" />
         </Button>
       </DialogActions>
     </Dialog>
-  );
-};
+  )
+}
 
-export default CheckedCartDialog;
+export default CheckedCartDialog

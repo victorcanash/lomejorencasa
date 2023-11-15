@@ -1,72 +1,72 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl'
 // import { Pagination } from 'swiper';
 // import { Swiper, SwiperSlide } from 'swiper/react';
 
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import UpdateIcon from '@mui/icons-material/Update';
-import Box from '@mui/material/Box';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Typography from '@mui/material/Typography'
+import Button from '@mui/material/Button'
+import UpdateIcon from '@mui/icons-material/Update'
+import Box from '@mui/material/Box'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 
-import { ManageActions } from '@core/constants/app';
-import type { Landing, Product, ProductPack } from '@core/types/products';
+import { ManageActions } from '@core/constants/app'
+import type { Landing, Product, ProductPack } from '@core/types/products'
 // import CustomImage from '@core/components/CustomImage';
-import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
-import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
-import CheckProductDetail from './CheckLandingItemsDetail/CheckProductDetail';
-import CheckProductPackDetail from './CheckLandingItemsDetail/CheckProductPackDetail';
+import ManageProductForm from '@core/components/forms/admin/ManageProductForm'
+import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm'
+import CheckProductDetail from './CheckLandingItemsDetail/CheckProductDetail'
+import CheckProductPackDetail from './CheckLandingItemsDetail/CheckProductPackDetail'
 
-type CheckLandingDetailProps = {
-  landing: Landing,
-  onClickUpdateBtn?: (landing: Landing) => void,
-  creating?: boolean,
-};
+interface CheckLandingDetailProps {
+  landing: Landing
+  onClickUpdateBtn?: (landing: Landing) => void
+  creating?: boolean
+}
 
 const CheckLandingDetail = (props: CheckLandingDetailProps) => {
   const {
     landing,
     onClickUpdateBtn,
-    creating,
-  } = props;
+    creating
+  } = props
 
-  const intl = useIntl();
+  const intl = useIntl()
 
-  const [updateProduct, setUpdateProduct] = useState<Product | undefined>(undefined);
-  const [updateProductPack, setUpdateProductPack] = useState<ProductPack | undefined>(undefined);
+  const [updateProduct, setUpdateProduct] = useState<Product | undefined>(undefined)
+  const [updateProductPack, setUpdateProductPack] = useState<ProductPack | undefined>(undefined)
 
   const onClickUpdateProductBtn = (product: Product) => {
-    setUpdateProduct(product);
-  };
+    setUpdateProduct(product)
+  }
 
   const onClickUpdatePackBtn = (productPack: ProductPack) => {
-    setUpdateProductPack(productPack);
-  };
+    setUpdateProductPack(productPack)
+  }
 
   const onSuccessUpdate = () => {
-    setUpdateProduct(undefined);
-    setUpdateProductPack(undefined);
-  };
+    setUpdateProduct(undefined)
+    setUpdateProductPack(undefined)
+  }
 
   const onSuccessDelete = () => {
-    setUpdateProduct(undefined);
-    setUpdateProductPack(undefined);
-  };
+    setUpdateProduct(undefined)
+    setUpdateProductPack(undefined)
+  }
 
   const onCancel = () => {
-    setUpdateProduct(undefined);
-    setUpdateProductPack(undefined);
-  };
+    setUpdateProduct(undefined)
+    setUpdateProductPack(undefined)
+  }
 
   return (
     <>
-      { (!updateProduct && !updateProductPack) ?
-        <>
-          { !creating &&
+      { ((updateProduct == null) && (updateProductPack == null))
+        ? <>
+          { !(creating ?? false) &&
             <Typography component="div" variant="body1">
               {`${intl.formatMessage({ id: 'forms.id' })}: ${landing.id}`}
             </Typography>
@@ -106,7 +106,7 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
               </Typography>
             ))}
           </Box>
-          {!creating &&
+          {!(creating ?? false) &&
             <>
               <Typography component="div" variant="body1">
                 {`${intl.formatMessage({ id: 'forms.rating' })}: ${landing.rating}`}
@@ -117,7 +117,7 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
 
               <Button
                 startIcon={<UpdateIcon />}
-                onClick={onClickUpdateBtn ? () => onClickUpdateBtn(landing) : undefined}
+                onClick={(onClickUpdateBtn != null) ? () => { onClickUpdateBtn(landing) } : undefined}
               >
                 <FormattedMessage
                   id="admin.updateLandingBtn"
@@ -129,7 +129,7 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
                   expandIcon={<ExpandMoreIcon />}
                 >
                   <Typography>
-                    <FormattedMessage id={landing.products && landing.products.length > 0 ? 'admin.products' : 'admin.packs'} />
+                    <FormattedMessage id={landing.products != null && landing.products.length > 0 ? 'admin.products' : 'admin.packs'} />
                   </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
@@ -154,10 +154,9 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
             </>
           }
         </>
-        :
-        <>
-          { (updateProduct && !updateProductPack) ?
-            <ManageProductForm
+        : <>
+          { ((updateProduct != null) && (updateProductPack == null))
+            ? <ManageProductForm
               action={ManageActions.update}
               landing={landing}
               product={updateProduct}
@@ -165,8 +164,7 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
               onDeleteSuccess={onSuccessDelete}
               onCancel={onCancel}
             />
-            :
-            <ManagePPackForm
+            : <ManagePPackForm
               action={ManageActions.update}
               landing={landing}
               productPack={updateProductPack}
@@ -178,7 +176,7 @@ const CheckLandingDetail = (props: CheckLandingDetailProps) => {
         </>
       }
     </>
-  );
-};
+  )
+}
 
-export default CheckLandingDetail;
+export default CheckLandingDetail

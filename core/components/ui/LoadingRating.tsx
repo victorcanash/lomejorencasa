@@ -1,8 +1,7 @@
-import Rating from "@mui/material/Rating";
-import CircularProgress from '@mui/material/CircularProgress';
+import Rating from '@mui/material/Rating'
+import CircularProgress from '@mui/material/CircularProgress'
 
 const LoadingRating = () => {
-
   return (
     <Rating
       value={5}
@@ -10,7 +9,7 @@ const LoadingRating = () => {
       readOnly
       sx={{ mb: '7px' }}
     />
-  );
-};
+  )
+}
 
-export default LoadingRating;
+export default LoadingRating

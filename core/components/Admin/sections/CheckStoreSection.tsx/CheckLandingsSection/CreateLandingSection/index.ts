@@ -1,3 +1,3 @@
-import CreateLandingSection from './CreateLandingSection';
+import CreateLandingSection from './CreateLandingSection'
 
-export default CreateLandingSection;
+export default CreateLandingSection

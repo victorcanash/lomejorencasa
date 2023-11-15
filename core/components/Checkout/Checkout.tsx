@@ -1,60 +1,60 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react'
 
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
-import { isAdminUser } from '@core/utils/auth';
+import { isAdminUser } from '@core/utils/auth'
 
-import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@core/contexts/AppContext';
-import { useCartContext } from '@core/contexts/CartContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import CheckoutForms from '@core/components/forms/checkout';
+import { pages } from '@lib/config/navigation.config'
+import { useAppContext } from '@core/contexts/AppContext'
+import { useCartContext } from '@core/contexts/CartContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import CheckoutForms from '@core/components/forms/checkout'
 
-type CheckoutProps = {
-  pageChecked: boolean,
-};
+interface CheckoutProps {
+  pageChecked: boolean
+}
 
 const Checkout = (props: CheckoutProps) => {
   const {
-    pageChecked,
-  } = props;
+    pageChecked
+  } = props
 
-  const { setLoading } = useAppContext();
-  const { disabledCheckoutPage } = useCartContext();
-  const {token, paypal } = useAuthContext();
+  const { setLoading } = useAppContext()
+  const { disabledCheckoutPage } = useCartContext()
+  const { token, paypal } = useAuthContext()
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const [loadedCheckout, setLoadedCheckout] = useState(disabledCheckoutPage() ? false : true);
+  const [loadedCheckout, setLoadedCheckout] = useState(!disabledCheckoutPage())
 
   const init = useCallback(async () => {
     if (disabledCheckoutPage()) {
-      let isAdmin = false;
+      let isAdmin = false
       await isAdminUser(token).then((response: boolean) => {
-        isAdmin = response;
+        isAdmin = response
       }).catch((_error) => {})
       if (!isAdmin) {
-        router.push(pages.home.path);
-        return;
+        void router.push(pages.home.path)
+        return
       }
     }
-    setLoadedCheckout(true);
-    setLoading(false);
-  }, [disabledCheckoutPage, router, setLoading, token]);
+    setLoadedCheckout(true)
+    setLoading(false)
+  }, [disabledCheckoutPage, router, setLoading, token])
 
   useEffect(() => {
     if (pageChecked) {
-      init();
+      void init()
     }
-  }, [init, pageChecked]);
+  }, [init, pageChecked])
 
   return (
     <>
-      { (loadedCheckout && paypal) &&
+      { (loadedCheckout && (paypal != null)) &&
         <CheckoutForms />
       }
     </>
-  );
-};
+  )
+}
 
-export default Checkout;
+export default Checkout

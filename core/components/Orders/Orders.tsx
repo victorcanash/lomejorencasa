@@ -1,31 +1,31 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/router';
+import { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/router'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import type { Order } from '@core/types/orders';
+import type { Order } from '@core/types/orders'
 
-import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@core/contexts/AppContext';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import useOrders from '@core/hooks/useOrders';
-import OrderDetail from '@core/components/Orders/OrderDetail';
-import OrderList from '@core/components/Orders/OrderList';
-import GetOrderForm from '@core/components/forms/orders/GetOrderForm';
+import { pages } from '@lib/config/navigation.config'
+import { useAppContext } from '@core/contexts/AppContext'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import useOrders from '@core/hooks/useOrders'
+import OrderDetail from '@core/components/Orders/OrderDetail'
+import OrderList from '@core/components/Orders/OrderList'
+import GetOrderForm from '@core/components/forms/orders/GetOrderForm'
 
-type OrdersProps = {
-  pageChecked: boolean,
-};
+interface OrdersProps {
+  pageChecked: boolean
+}
 
 const Orders = (props: OrdersProps) => {
   const {
-    pageChecked,
-  } = props;
+    pageChecked
+  } = props
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const { initialized, setLoading } = useAppContext();
-  const { isLogged } = useAuthContext();
+  const { initialized, setLoading } = useAppContext()
+  const { isLogged } = useAuthContext()
 
   const {
     getOrders,
@@ -34,91 +34,91 @@ const Orders = (props: OrdersProps) => {
     successMsg,
     errorMsg,
     setSuccessMsg,
-    setErrorMsg,
-  } = useOrders();
+    setErrorMsg
+  } = useOrders()
 
-  const [loadedOrders, setLoadedOrders] = useState(false);
-  const [loadingOrderQueries, setLoadingOrderQueries] = useState(true);
-  const [loggedOrders, setLoggedOrders] = useState<Order[] | undefined>(undefined);
-  const [selectedOrder, setSelectedOrder] = useState<Order | undefined>(undefined);
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [loadedOrders, setLoadedOrders] = useState(false)
+  const [loadingOrderQueries, setLoadingOrderQueries] = useState(true)
+  const [loggedOrders, setLoggedOrders] = useState<Order[] | undefined>(undefined)
+  const [selectedOrder, setSelectedOrder] = useState<Order | undefined>(undefined)
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(0)
 
   const onSuccessGetOrders = useCallback((orders: Order[], totalPages: number, currentPage: number) => {
-    setLoggedOrders(orders);
-    setTotalPages(totalPages);
-    setCurrentPage(currentPage);
-    setLoading(false);
-  }, [setLoading]);
+    setLoggedOrders(orders)
+    setTotalPages(totalPages)
+    setCurrentPage(currentPage)
+    setLoading(false)
+  }, [setLoading])
 
   const onErrorGetOrders = useCallback((_errorMsg: string) => {
-    router.push(pages.home.path);
-  }, [router]);
+    void router.push(pages.home.path)
+  }, [router])
 
   const onChangePage = useCallback((page: number) => {
-    getOrders(page, onSuccessGetOrders, onErrorGetOrders);
-  }, [getOrders, onErrorGetOrders, onSuccessGetOrders]);
+    void getOrders(page, onSuccessGetOrders, onErrorGetOrders)
+  }, [getOrders, onErrorGetOrders, onSuccessGetOrders])
 
   const onSuccessGetOrder = useCallback((order: Order) => {
-    setSelectedOrder(order);
-    setLoadingOrderQueries(false);
-  }, []);
+    setSelectedOrder(order)
+    setLoadingOrderQueries(false)
+  }, [])
 
   const showOrder = useCallback((order: Order) => {
-    getOrderById(order.id, onSuccessGetOrder);
-  }, [getOrderById, onSuccessGetOrder]);
+    void getOrderById(order.id, onSuccessGetOrder)
+  }, [getOrderById, onSuccessGetOrder])
 
   const onErrorGetOrderByQueries = useCallback((_errorMsg: string) => {
-    setLoadingOrderQueries(false);
-  }, []);
+    setLoadingOrderQueries(false)
+  }, [])
 
   const getOrderByQueries = useCallback((queries: { id: string, email: string }) => {
-    getOrderByBigbuyId({ orderId: queries.id, guestUserEmail: queries.email }, onSuccessGetOrder, onErrorGetOrderByQueries);
-  }, [getOrderByBigbuyId, onErrorGetOrderByQueries, onSuccessGetOrder]);
+    void getOrderByBigbuyId({ orderId: queries.id, guestUserEmail: queries.email }, onSuccessGetOrder, onErrorGetOrderByQueries)
+  }, [getOrderByBigbuyId, onErrorGetOrderByQueries, onSuccessGetOrder])
 
   const getOrderQueries = useCallback(() => {
-    const { id, email } = router.query;
+    const { id, email } = router.query
     if (
-        (id && typeof id === 'string') &&
-        (email && typeof email === 'string')
-      ) {
-      return { id, email };
+      (typeof id === 'string') &&
+      (typeof email === 'string')
+    ) {
+      return { id, email }
     }
-    return undefined;
-  }, [router.query]);
+    return undefined
+  }, [router.query])
 
   const onClickBack = useCallback(() => {
-    router.replace(pages.orders.path, undefined, { shallow: true })
-    setSelectedOrder(undefined);
-    window.scrollTo(0, 0);
-    if (isLogged() && !loggedOrders) {
-      getOrders(0, onSuccessGetOrders, onErrorGetOrders);
+    void router.replace(pages.orders.path, undefined, { shallow: true })
+    setSelectedOrder(undefined)
+    window.scrollTo(0, 0)
+    if (isLogged() && (loggedOrders == null)) {
+      void getOrders(0, onSuccessGetOrders, onErrorGetOrders)
     }
-  }, [getOrders, isLogged, loggedOrders, onErrorGetOrders, onSuccessGetOrders, router]);
+  }, [getOrders, isLogged, loggedOrders, onErrorGetOrders, onSuccessGetOrders, router])
 
   const ActiveComponent = useCallback(() => {
     if (
-        (initialized && pageChecked) &&
-        ((!selectedOrder && !loadingOrderQueries) || selectedOrder)
-      ) {
-      if (selectedOrder) {
-        return (  
-          <OrderDetail 
-            order={selectedOrder} 
+      (initialized && pageChecked) &&
+        (((selectedOrder == null) && !loadingOrderQueries) || (selectedOrder != null))
+    ) {
+      if (selectedOrder != null) {
+        return (
+          <OrderDetail
+            order={selectedOrder}
             backBtn={true}
             onClickBack={onClickBack}
           />
-        );
+        )
       } else if (isLogged()) {
-          return(
-            <OrderList 
-              orders={loggedOrders || []} 
+        return (
+            <OrderList
+              orders={loggedOrders ?? []}
               totalPages={totalPages}
               currentPage={currentPage}
               onChangePage={onChangePage}
               onClickShowOrder={showOrder}
             />
-          );
+        )
       } else {
         return (
           <GetOrderForm
@@ -127,48 +127,48 @@ const Orders = (props: OrdersProps) => {
             successMsg={successMsg}
             errorMsg={errorMsg}
           />
-        );
+        )
       }
     }
     return (
       <></>
-    );
-  }, [currentPage, errorMsg, getOrderByBigbuyId, initialized, isLogged, loadingOrderQueries, loggedOrders, onChangePage, onClickBack, onSuccessGetOrder, pageChecked, selectedOrder, showOrder, successMsg, totalPages]);
+    )
+  }, [currentPage, errorMsg, getOrderByBigbuyId, initialized, isLogged, loadingOrderQueries, loggedOrders, onChangePage, onClickBack, onSuccessGetOrder, pageChecked, selectedOrder, showOrder, successMsg, totalPages])
 
   useEffect(() => {
     if (!pageChecked || !initialized) {
-      setLoading(true);
+      setLoading(true)
     } else if (pageChecked && initialized && !loadedOrders) {
-      setLoadedOrders(true);
-      const queries = getOrderQueries();
-      if (queries && !isLogged()) {
-        getOrderByQueries(queries);
+      setLoadedOrders(true)
+      const queries = getOrderQueries()
+      if ((queries != null) && !isLogged()) {
+        getOrderByQueries(queries)
       } else {
-        setLoadingOrderQueries(false);
+        setLoadingOrderQueries(false)
         if (isLogged()) {
-          getOrders(0, onSuccessGetOrders, onErrorGetOrders);
+          void getOrders(0, onSuccessGetOrders, onErrorGetOrders)
         } else {
-          setLoading(false);
+          setLoading(false)
         }
       }
     } else if (loadedOrders) {
-      if (!isLogged() && loggedOrders) {
-        setLoggedOrders(undefined);
-        setSelectedOrder(undefined);
+      if (!isLogged() && (loggedOrders != null)) {
+        setLoggedOrders(undefined)
+        setSelectedOrder(undefined)
       }
     }
-  }, [getOrderByQueries, getOrderQueries, getOrders, initialized, isLogged, loadedOrders, loggedOrders, onErrorGetOrders, onSuccessGetOrders, pageChecked, setLoading]);
+  }, [getOrderByQueries, getOrderQueries, getOrders, initialized, isLogged, loadedOrders, loggedOrders, onErrorGetOrders, onSuccessGetOrders, pageChecked, setLoading])
 
   useEffect(() => {
-    setSuccessMsg('');
-    setErrorMsg('');
-  }, [isLogged, selectedOrder, setErrorMsg, setSuccessMsg]);
+    setSuccessMsg('')
+    setErrorMsg('')
+  }, [isLogged, selectedOrder, setErrorMsg, setSuccessMsg])
 
   return (
     <Container>
       <ActiveComponent />
     </Container>
-  );
-};
+  )
+}
 
-export default Orders;
+export default Orders

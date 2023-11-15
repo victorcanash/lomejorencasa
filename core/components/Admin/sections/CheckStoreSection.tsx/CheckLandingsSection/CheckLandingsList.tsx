@@ -1,21 +1,21 @@
-import { Fragment } from 'react';
+import { Fragment } from 'react'
 
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
 
-import type { CheckCategory } from '@core/types/admin';
-import type { Landing } from '@core/types/products';
-import CheckLandingDetail from './CheckLandingDetail';
+import type { CheckCategory } from '@core/types/admin'
+import type { Landing } from '@core/types/products'
+import CheckLandingDetail from './CheckLandingDetail'
 
-type CheckLandingsListProps = {
-  checkCategory: CheckCategory,
-  onClickUpdateBtn: (landing: Landing) => void,
-};
+interface CheckLandingsListProps {
+  checkCategory: CheckCategory
+  onClickUpdateBtn: (landing: Landing) => void
+}
 
 const CheckLandingsList = (props: CheckLandingsListProps) => {
   const {
     checkCategory,
-    onClickUpdateBtn,
-  } = props;
+    onClickUpdateBtn
+  } = props
 
   return (
     <>
@@ -29,7 +29,7 @@ const CheckLandingsList = (props: CheckLandingsListProps) => {
         </Fragment>
       ))}
     </>
-  );
-};
+  )
+}
 
-export default CheckLandingsList;
+export default CheckLandingsList

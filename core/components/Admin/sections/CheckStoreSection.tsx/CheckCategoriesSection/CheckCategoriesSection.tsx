@@ -1,58 +1,58 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { ManageActions } from '@core/constants/app';
-import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin';
-import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm';
-import CheckCategoriesList from './CheckCategoriesList';
+import { ManageActions } from '@core/constants/app'
+import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin'
+import ManagePCategoryForm from '@core/components/forms/admin/ManagePCategoryForm'
+import CheckCategoriesList from './CheckCategoriesList'
 
-type CheckCategoriesSectionProps = {
+interface CheckCategoriesSectionProps {
   onClickSelectBtn: (checkCategory: CheckCategory) => void
-};
+}
 
 const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
   const {
-    onClickSelectBtn,
-  } = props;
+    onClickSelectBtn
+  } = props
 
-  const [updateCategory, setUpdateCategory] = useState<CheckCategory | CheckCategoryGroup | undefined>(undefined);
+  const [updateCategory, setUpdateCategory] = useState<CheckCategory | CheckCategoryGroup | undefined>(undefined)
   const [createCategory, setCreateCategory] = useState<{
-    enabled: boolean,
-    isGroup: boolean,
-    groupId?: number,
+    enabled: boolean
+    isGroup: boolean
+    groupId?: number
   }>({
     enabled: false,
     isGroup: false,
-    groupId: undefined, 
-  });
+    groupId: undefined
+  })
 
   const onClickCreateBtn = (isGroup: boolean, groupId?: number) => {
-    setCreateCategory({ enabled: true, isGroup, groupId });
-  };
+    setCreateCategory({ enabled: true, isGroup, groupId })
+  }
 
   const onClickUpdateBtn = (checkCategory: CheckCategory | CheckCategoryGroup) => {
-    setUpdateCategory(checkCategory);
-  };
+    setUpdateCategory(checkCategory)
+  }
 
   const onSuccessCreate = () => {
-    setCreateCategory({ enabled: false, isGroup: false, groupId: undefined });
-  };
+    setCreateCategory({ enabled: false, isGroup: false, groupId: undefined })
+  }
 
   const onSuccessUpdate = () => {
-    setUpdateCategory(undefined);
-  };
+    setUpdateCategory(undefined)
+  }
 
   const onSuccessDelete = () => {
-    setUpdateCategory(undefined);
-  };
+    setUpdateCategory(undefined)
+  }
 
   const onCancel = () => {
-    setUpdateCategory(undefined);
-    setCreateCategory({ enabled: false, isGroup: false, groupId: undefined });
-  };
+    setUpdateCategory(undefined)
+    setCreateCategory({ enabled: false, isGroup: false, groupId: undefined })
+  }
 
   return (
     <>
-      { (!updateCategory && !createCategory.enabled) &&
+      { ((updateCategory == null) && !createCategory.enabled) &&
         <CheckCategoriesList
           onClickSelectBtn={onClickSelectBtn}
           onClickCreateBtn={onClickCreateBtn}
@@ -60,18 +60,18 @@ const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
         />
       }
 
-      { (updateCategory && !createCategory.enabled) &&
+      { ((updateCategory != null) && !createCategory.enabled) &&
         <ManagePCategoryForm
           action={ManageActions.update}
-          productCategory={(updateCategory as CheckCategory)?.category || (updateCategory as CheckCategoryGroup).categoryGroup}
-          initIsCategoryGroup={(updateCategory as CheckCategory)?.category ? false : true}
+          productCategory={(updateCategory as CheckCategory)?.category ?? (updateCategory as CheckCategoryGroup).categoryGroup}
+          initIsCategoryGroup={(updateCategory as CheckCategory)?.category == null}
           onSubmitSuccess={onSuccessUpdate}
           onDeleteSuccess={onSuccessDelete}
           onCancel={onCancel}
         />
       }
 
-      { (!updateCategory && createCategory.enabled) &&
+      { ((updateCategory == null) && createCategory.enabled) &&
         <ManagePCategoryForm
           action={ManageActions.create}
           initIsCategoryGroup={createCategory.isGroup}
@@ -81,7 +81,7 @@ const CheckCategoriesSection = (props: CheckCategoriesSectionProps) => {
         />
       }
     </>
-  );
-};
+  )
+}
 
-export default CheckCategoriesSection;
+export default CheckCategoriesSection

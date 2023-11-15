@@ -1,41 +1,41 @@
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react'
 
-import envConfig from '@core/config/env.config';
-import { FormFieldTypes } from '@core/constants/forms';
-import { ContactTypes } from '@core/constants/contact';
-import type { User, UserContact } from '@core/types/user';
-import Link from '@core/components/navigation/Link';
+import envConfig from '@core/config/env.config'
+import { FormFieldTypes } from '@core/constants/forms'
+import { ContactTypes } from '@core/constants/contact'
+import type { User, UserContact } from '@core/types/user'
+import Link from '@core/components/navigation/Link'
 
-import { pages } from '@lib/config/navigation.config';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import useForms from '@core/hooks/useForms';
-import useUser from '@core/hooks/useUser';
-import BaseForm from '@core/components/forms/BaseForm';
+import { pages } from '@lib/config/navigation.config'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import useForms from '@core/hooks/useForms'
+import useUser from '@core/hooks/useUser'
+import BaseForm from '@core/components/forms/BaseForm'
 
 const UserContactForm = () => {
-  const { user, isLogged } = useAuthContext();
+  const { user, isLogged } = useAuthContext()
 
   const {
     userContactFormValidation,
     userFieldsInitValues,
-    orderFieldsInitValues,
-  } = useForms();
-  const { sendUserContactEmail, errorMsg, successMsg } = useUser();
+    orderFieldsInitValues
+  } = useForms()
+  const { sendUserContactEmail, errorMsg, successMsg } = useUser()
 
-  const [acceptPolicy, setAcceptPolicy] = useState(isLogged() ? true : false);
+  const [acceptPolicy, setAcceptPolicy] = useState(!!isLogged())
 
-  const maxWidth = '500px';
+  const maxWidth = '500px'
 
   const handleSubmit = async (values: UserContact) => {
-    sendUserContactEmail(values);
-  };
+    void sendUserContactEmail(values)
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleChange = (event: any) => {
     if (event.target.name === 'acceptPolicy') {
-      setAcceptPolicy(event.target.checked);
+      setAcceptPolicy(event.target.checked)
     }
-  };
+  }
 
   return (
     <BaseForm
@@ -43,12 +43,12 @@ const UserContactForm = () => {
       maxWidth={maxWidth}
       initialValues={{
         type: ContactTypes.normal,
-        email: user.email || userFieldsInitValues.email,
-        firstName: (user as User)?.firstName || userFieldsInitValues.firstName,
+        email: user.email ?? userFieldsInitValues.email,
+        firstName: (user as User)?.firstName !== '' ? (user as User)?.firstName : userFieldsInitValues.firstName,
         orderId: orderFieldsInitValues.bigbuyId,
         comments: userFieldsInitValues.comments,
-        acceptPolicy: isLogged() ? true : false,
-      } as UserContact}
+        acceptPolicy: !!isLogged()
+      }}
       validationSchema={userContactFormValidation}
       enableReinitialize={true}
       formFieldGroups={[
@@ -57,60 +57,60 @@ const UserContactForm = () => {
             id: 'contact.description',
             values: {
               email: envConfig.EMAIL,
-              'linkEmail': (...chunks: ReactNode[]) => (
+              linkEmail: (...chunks: ReactNode[]) => (
                 <Link href={`mailto:${envConfig.EMAIL}`} target="_blank">
                   {chunks}
                 </Link>
-              ),
-            },
+              )
+            }
           },
           formFields: [
             {
               name: 'firstName',
               type: FormFieldTypes.text,
               required: true,
-              disabled: isLogged(),
+              disabled: isLogged()
             },
             {
               name: 'email',
               type: FormFieldTypes.text,
               required: true,
-              disabled: isLogged(),
+              disabled: isLogged()
             },
             {
               name: 'comments',
               type: FormFieldTypes.multiline,
-              required: true,
+              required: true
             },
             {
               name: 'acceptPolicy',
               type: FormFieldTypes.checkbox,
-              disabled: isLogged(),
-            },
-          ],
+              disabled: isLogged()
+            }
+          ]
         }
       ]}
       formButtons={{
         submit: {
-          text: { 
-            id: 'app.sendBtn',
+          text: {
+            id: 'app.sendBtn'
           },
           onSubmit: handleSubmit,
-          disabled: !acceptPolicy,
-        },
+          disabled: !acceptPolicy
+        }
       }}
       linksItems={[
         {
           text: {
-            id: 'contact.resolutionsLink',
+            id: 'contact.resolutionsLink'
           },
-          path: pages.resolutions.path,
+          path: pages.resolutions.path
         }
       ]}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
-  );
-};
+  )
+}
 
-export default UserContactForm;
+export default UserContactForm

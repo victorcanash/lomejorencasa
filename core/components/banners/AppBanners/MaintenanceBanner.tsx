@@ -1,57 +1,57 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import EngineeringIcon from '@mui/icons-material/Engineering';
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import EngineeringIcon from '@mui/icons-material/Engineering'
 
-import envConfig from '@core/config/env.config';
-import { Environments } from '@core/constants/app';
-import type { ThemeElement } from '@core/types/themes';
-import type { FormatText } from '@core/types/texts';
-import { convertElementToSx } from '@core/utils/themes';
-import HideOnScroll from '@core/components/animations/HideOnScroll';
+import envConfig from '@core/config/env.config'
+import { Environments } from '@core/constants/app'
+import type { ThemeElement } from '@core/types/themes'
+import type { FormatText } from '@core/types/texts'
+import { convertElementToSx } from '@core/utils/themes'
+import HideOnScroll from '@core/components/animations/HideOnScroll'
 
-type MaintenanceBannerProps = {
-  themeElementContent?: ThemeElement,
-  themeElementIcon?: ThemeElement,
-  text: FormatText,
-};
+interface MaintenanceBannerProps {
+  themeElementContent?: ThemeElement
+  themeElementIcon?: ThemeElement
+  text: FormatText
+}
 
 const MaintenanceBanner = (props: MaintenanceBannerProps) => {
   const {
     themeElementContent,
     themeElementIcon,
-    text,
-  } = props;
+    text
+  } = props
 
   return (
     <>
       { envConfig.APP_ENV === Environments.development &&
         <HideOnScroll direction="up">
-          <Grid     
+          <Grid
             container
             wrap="nowrap"
             alignItems="center"
             justifyContent="center"
             sx={{
-              ...themeElementContent ? convertElementToSx(themeElementContent) : undefined,
+              ...(themeElementContent != null) ? convertElementToSx(themeElementContent) : undefined,
               position: 'fixed',
               bottom: '0px',
               py: '0px',
               px: '12px',
-              zIndex: (theme) => theme.zIndex.drawer + 1,
+              zIndex: (theme) => theme.zIndex.drawer + 1
             }}
           >
             <Grid item mr={1}>
               <EngineeringIcon
                 sx={{
-                  ...themeElementIcon ? convertElementToSx(themeElementIcon) : undefined,
+                  ...(themeElementIcon != null) ? convertElementToSx(themeElementIcon) : undefined,
                   fontSize: 30,
-                  mt: '5px',
+                  mt: '5px'
                 }}
               />
             </Grid>
-            { text.id &&
+            { (text.id != null) &&
               <Grid item>
                 <Typography
                   component="div"
@@ -66,7 +66,7 @@ const MaintenanceBanner = (props: MaintenanceBannerProps) => {
         </HideOnScroll>
       }
     </>
-  );
-};
+  )
+}
 
-export default MaintenanceBanner;
+export default MaintenanceBanner

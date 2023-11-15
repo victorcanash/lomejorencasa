@@ -1,76 +1,76 @@
 // import { useRouter } from 'next/router'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import { OrderEmailTypes } from '@core/constants/admin';
-import type { Order, OrderSendEmail } from '@core/types/orders';
+import { FormFieldTypes } from '@core/constants/forms'
+import { OrderEmailTypes } from '@core/constants/admin'
+import type { Order, OrderSendEmail } from '@core/types/orders'
 
-import useForms from '@core/hooks/useForms';
-import useOrders from '@core/hooks/useOrders';
-import BaseForm from '@core/components/forms/BaseForm';
-import { getOrderEmailValue } from '@core/utils/admin';
+import useForms from '@core/hooks/useForms'
+import useOrders from '@core/hooks/useOrders'
+import BaseForm from '@core/components/forms/BaseForm'
+import { getOrderEmailValue } from '@core/utils/admin'
 
-type SendOrderEmailFormProps = {
-  onSubmitSuccess?: (order: Order) => void,
-  onCancel?: () => void,
-};
+interface SendOrderEmailFormProps {
+  onSubmitSuccess?: (order: Order) => void
+  onCancel?: () => void
+}
 
 const SendOrderEmailForm = (props: SendOrderEmailFormProps) => {
-  const { onSubmitSuccess, onCancel } = props;
+  const { onSubmitSuccess, onCancel } = props
 
   // const router = useRouter();
 
-  const { sendOrderEmailFormValidation, orderFieldsInitValues, emailsFieldsInitValues } = useForms();
-  const { sendOrderEmail, errorMsg, successMsg } = useOrders();
+  const { sendOrderEmailFormValidation, orderFieldsInitValues, emailsFieldsInitValues } = useForms()
+  const { sendOrderEmail, errorMsg, successMsg } = useOrders()
 
   const handleSubmit = async (values: OrderSendEmail) => {
-    sendOrderEmail(values, onSubmitSuccess);
-  };
+    void sendOrderEmail(values, onSubmitSuccess)
+  }
 
   const handleCancelBtn = () => {
-    if (onCancel) {
-      onCancel();
+    if (onCancel != null) {
+      onCancel()
     };
-  };
+  }
 
   return (
-    <BaseForm 
+    <BaseForm
       initialValues={{
         bigbuyId: orderFieldsInitValues.bigbuyId,
         locale: emailsFieldsInitValues.locale,
-        emailType: OrderEmailTypes.issued,
-      } as OrderSendEmail}
+        emailType: OrderEmailTypes.issued
+      }}
       validationSchema={sendOrderEmailFormValidation}
       formFieldGroups={[
         {
           titleTxt: {
-            id: 'forms.sendOrderEmail.title',
+            id: 'forms.sendOrderEmail.title'
           },
           formFields: [
             {
               name: 'bigbuyId',
               type: FormFieldTypes.text,
-              required: true, 
+              required: true
             },
             {
               name: 'locale',
               type: FormFieldTypes.select,
               required: true,
-              /*menuItems: router.locales?.map((locale) => {
+              /* menuItems: router.locales?.map((locale) => {
                 return {
                   text: {
                     id: locale,
                   },
                   value: locale,
                 };
-              }) | undefined,*/ 
+              }) | undefined, */
               menuItems: [
                 {
                   text: {
-                    id: 'es',
+                    id: 'es'
                   },
-                  value: 'es',
+                  value: 'es'
                 }
-              ],       
+              ]
             },
             {
               name: 'emailType',
@@ -79,33 +79,33 @@ const SendOrderEmailForm = (props: SendOrderEmailFormProps) => {
               menuItems: Object.keys(OrderEmailTypes).map((key) => {
                 return {
                   text: {
-                    id: key,
+                    id: key
                   },
-                  value: getOrderEmailValue(key),
-                };
-              }),
-            },
-          ],
+                  value: getOrderEmailValue(key)
+                }
+              })
+            }
+          ]
         }
       ]}
       formButtons={{
         submit: {
           text: {
-            id: 'app.sendBtn',
+            id: 'app.sendBtn'
           },
-          onSubmit: handleSubmit,
+          onSubmit: handleSubmit
         },
         cancel: {
           text: {
-            id: 'app.cancelBtn',
+            id: 'app.cancelBtn'
           },
-          onClick: handleCancelBtn,
-        },
+          onClick: handleCancelBtn
+        }
       }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
-  );
-};
+  )
+}
 
-export default SendOrderEmailForm;
+export default SendOrderEmailForm

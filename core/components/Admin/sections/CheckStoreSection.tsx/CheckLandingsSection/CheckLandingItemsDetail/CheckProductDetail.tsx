@@ -1,21 +1,21 @@
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import UpdateIcon from '@mui/icons-material/Update';
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import UpdateIcon from '@mui/icons-material/Update'
 
-import type { Product } from '@core/types/products';
-import Button from '@core/components/inputs/Button';
-import CheckProductDiscountDetail from './CheckProductDiscountDetail';
-import CheckProductInventoryDetail from './CheckProductInventoryDetail';
+import type { Product } from '@core/types/products'
+import Button from '@core/components/inputs/Button'
+import CheckProductDiscountDetail from './CheckProductDiscountDetail'
+import CheckProductInventoryDetail from './CheckProductInventoryDetail'
 
-type CheckProductDetailProps = {
-  product: Product,
-  creating?: boolean,
-  onClickUpdateBtn?: (product: Product) => void,
-  onClickRemoveInventoryBtn?: (index: number) => void,
-  onClickRemoveDiscountBtn?: (index: number) => void,
-};
+interface CheckProductDetailProps {
+  product: Product
+  creating?: boolean
+  onClickUpdateBtn?: (product: Product) => void
+  onClickRemoveInventoryBtn?: (index: number) => void
+  onClickRemoveDiscountBtn?: (index: number) => void
+}
 
 const CheckProductDetail = (props: CheckProductDetailProps) => {
   const {
@@ -23,14 +23,14 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
     creating,
     onClickUpdateBtn,
     onClickRemoveInventoryBtn,
-    onClickRemoveDiscountBtn,
-  } = props;
+    onClickRemoveDiscountBtn
+  } = props
 
-  const intl = useIntl();
+  const intl = useIntl()
 
   return (
     <>
-      { !creating &&
+      { (!(creating ?? false)) &&
         <>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.id' })}: ${product.id}`}
@@ -52,7 +52,7 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.description.es' })}: ${product.description.es}`}
       </Typography>
-      { !creating &&
+      { !(creating ?? false) &&
         <>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.lowestPrice' })}: ${product.lowestPrice}`}
@@ -96,14 +96,14 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
           </Box>
         ))}
       </Typography>
-      { !creating &&
+      { !(creating ?? false) &&
         <>
           <Typography component="div" variant="body1">
-            {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${product.activeDiscount ? product.activeDiscount.id : 'None'}`}
+            {`${intl.formatMessage({ id: 'forms.activeDiscountId' })}: ${(product.activeDiscount != null) ? product.activeDiscount.id : 'None'}`}
           </Typography>
           <Button
             startIcon={<UpdateIcon />}
-            onClick={onClickUpdateBtn ? () => onClickUpdateBtn(product) : undefined}
+            onClick={(onClickUpdateBtn != null) ? () => { onClickUpdateBtn(product) } : undefined}
           >
             <FormattedMessage
               id="admin.updateProductBtn"
@@ -112,7 +112,7 @@ const CheckProductDetail = (props: CheckProductDetailProps) => {
         </>
       }
     </>
-  );
-};
+  )
+}
 
-export default CheckProductDetail;
+export default CheckProductDetail

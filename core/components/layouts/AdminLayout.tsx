@@ -1,11 +1,10 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react'
 
-import { AdminProvider } from '@core/contexts/AdminContext';
-import MainComponent from '@core/components/layouts/MainComponent';
-import NavBar from '@core/components/NavBar';
+import { AdminProvider } from '@core/contexts/AdminContext'
+import MainComponent from '@core/components/layouts/MainComponent'
+import NavBar from '@core/components/NavBar'
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
-
   return (
     <AdminProvider>
       <NavBar />
@@ -13,7 +12,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         {children}
       </MainComponent>
     </AdminProvider>
-  );
-};
+  )
+}
 
-export default AdminLayout;
+export default AdminLayout

@@ -1,45 +1,47 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import MuiButton, { ButtonProps as MuiButtonProps } from '@mui/material/Button';
+import MuiButton, { type ButtonProps as MuiButtonProps } from '@mui/material/Button'
 
-import { convertElementToSx } from '@core/utils/themes';
-import Link, { LinkProps } from '@core/components/navigation/Link';
+import { convertElementToSx } from '@core/utils/themes'
+import Link, { type LinkProps } from '@core/components/navigation/Link'
 
-import { themeCustomElements } from '@lib/config/theme/elements';
+import { themeCustomElements } from '@lib/config/theme/elements'
 
-type ButtonProps = {
-  customtype?: 'actionPrimary' | 'actionSecondary',
-};
+interface ButtonProps {
+  customtype?: 'actionPrimary' | 'actionSecondary'
+}
 
 const LinkButton = (props: MuiButtonProps & LinkProps & ButtonProps) => {
   const {
-    customtype,
-  } = props;
+    customtype
+  } = props
 
   const typeSx = useMemo(() => {
     if (customtype === 'actionPrimary') {
-      return themeCustomElements.button?.action?.primary ?
-        convertElementToSx(themeCustomElements.button.action.primary) : undefined;
+      return ((themeCustomElements.button?.action?.primary) != null)
+        ? convertElementToSx(themeCustomElements.button.action.primary)
+        : undefined
     } else if (customtype === 'actionSecondary') {
-      return themeCustomElements.button?.action?.secondary ?
-        convertElementToSx(themeCustomElements.button.action.secondary) : undefined;
+      return ((themeCustomElements.button?.action?.secondary) != null)
+        ? convertElementToSx(themeCustomElements.button.action.secondary)
+        : undefined
     }
-    return undefined;
-  }, [customtype]);
+    return undefined
+  }, [customtype])
 
-  return (  
+  return (
     <MuiButton
       variant="contained"
       {...props}
       component={Link}
       sx={{
         ...typeSx,
-        ...props.sx,
+        ...props.sx
       }}
     >
       { props.children }
     </MuiButton>
-  );
-};
+  )
+}
 
-export default LinkButton;
+export default LinkButton

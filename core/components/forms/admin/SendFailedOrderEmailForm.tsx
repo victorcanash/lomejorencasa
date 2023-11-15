@@ -1,102 +1,102 @@
 // import { useRouter } from 'next/router'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import type { Order, OrderFailedSendEmail } from '@core/types/orders';
+import { FormFieldTypes } from '@core/constants/forms'
+import type { Order, OrderFailedSendEmail } from '@core/types/orders'
 
-import useForms from '@core/hooks/useForms';
-import useOrders from '@core/hooks/useOrders';
-import BaseForm from '@core/components/forms/BaseForm';
+import useForms from '@core/hooks/useForms'
+import useOrders from '@core/hooks/useOrders'
+import BaseForm from '@core/components/forms/BaseForm'
 
-type SendFailedOrderEmailFormProps = {
-  onSubmitSuccess?: (order: Order) => void,
-  onCancel?: () => void,
-};
+interface SendFailedOrderEmailFormProps {
+  onSubmitSuccess?: (order: Order) => void
+  onCancel?: () => void
+}
 
 const SendFailedOrderEmailForm = (props: SendFailedOrderEmailFormProps) => {
-  const { onSubmitSuccess, onCancel } = props;
+  const { onSubmitSuccess, onCancel } = props
 
   // const router = useRouter();
 
-  const { sendFailedOrderEmailFormValidation, orderFieldsInitValues, emailsFieldsInitValues } = useForms();
-  const { sendFailedOrderEmail, errorMsg, successMsg } = useOrders();
+  const { sendFailedOrderEmailFormValidation, orderFieldsInitValues, emailsFieldsInitValues } = useForms()
+  const { sendFailedOrderEmail, errorMsg, successMsg } = useOrders()
 
   const handleSubmit = async (values: OrderFailedSendEmail) => {
-    sendFailedOrderEmail(values, onSubmitSuccess);
-  };
+    void sendFailedOrderEmail(values, onSubmitSuccess)
+  }
 
   const handleCancelBtn = () => {
-    if (onCancel) {
-      onCancel();
+    if (onCancel != null) {
+      onCancel()
     };
-  };
+  }
 
   return (
-    <BaseForm 
+    <BaseForm
       initialValues={{
         orderId: orderFieldsInitValues.id,
         locale: emailsFieldsInitValues.locale,
-        currency: orderFieldsInitValues.currency,
-      } as OrderFailedSendEmail}
+        currency: orderFieldsInitValues.currency
+      }}
       validationSchema={sendFailedOrderEmailFormValidation}
       formFieldGroups={[
         {
           titleTxt: {
-            id: 'forms.sendFailedOrderEmail.title',
+            id: 'forms.sendFailedOrderEmail.title'
           },
           formFields: [
             {
               name: 'orderId',
               type: FormFieldTypes.numeric,
-              required: true, 
+              required: true
             },
             {
               name: 'locale',
               type: FormFieldTypes.select,
               required: true,
-              /*menuItems: router.locales?.map((locale) => {
+              /* menuItems: router.locales?.map((locale) => {
                 return {
                   text: {
                     id: locale,
                   },
                   value: locale,
                 };
-              }) | undefined,*/ 
+              }) | undefined, */
               menuItems: [
                 {
                   text: {
-                    id: 'es',
+                    id: 'es'
                   },
-                  value: 'es',
+                  value: 'es'
                 }
-              ],       
+              ]
             },
             {
               name: 'currency',
               type: FormFieldTypes.text,
               required: true,
-              disabled: true,
-            },
-          ],
+              disabled: true
+            }
+          ]
         }
       ]}
       formButtons={{
         submit: {
           text: {
-            id: 'app.sendBtn',
+            id: 'app.sendBtn'
           },
-          onSubmit: handleSubmit,
+          onSubmit: handleSubmit
         },
         cancel: {
           text: {
-            id: 'app.cancelBtn',
+            id: 'app.cancelBtn'
           },
-          onClick: handleCancelBtn,
-        },
+          onClick: handleCancelBtn
+        }
       }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
-  );
-};
+  )
+}
 
-export default SendFailedOrderEmailForm;
+export default SendFailedOrderEmailForm

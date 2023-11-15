@@ -1,28 +1,28 @@
-import { MutableRefObject } from 'react';
-import Image from 'next/image';
+import { type MutableRefObject } from 'react'
+import Image from 'next/image'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import MuiButton from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import MuiButton from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
-import type { UploadFile } from '@core/types/multimedia';
-import type { FormatText } from '@core/types/texts';
-import Button from '@core/components/inputs/Button';
+import type { UploadFile } from '@core/types/multimedia'
+import type { FormatText } from '@core/types/texts'
+import Button from '@core/components/inputs/Button'
 
-import { uploadConfig } from '@lib/config/multimedia.config';
+import { uploadConfig } from '@lib/config/multimedia.config'
 
-type UploadInputProps = {
-  uploadInputRef: MutableRefObject<HTMLInputElement | null>,
-  uploadImgs: UploadFile[],
-  handleChangeUploadInput: (event: React.ChangeEvent<HTMLInputElement>, maxFiles: number) => void,
-  handleClickDeleteUploadBtn: (uploadIndex: number) => void,
-  maxFiles: number,
-  maxWidth: string,
-  descriptionText?: FormatText,
-};
+interface UploadInputProps {
+  uploadInputRef: MutableRefObject<HTMLInputElement | null>
+  uploadImgs: UploadFile[]
+  handleChangeUploadInput: (event: React.ChangeEvent<HTMLInputElement>, maxFiles: number) => void
+  handleClickDeleteUploadBtn: (uploadIndex: number) => void
+  maxFiles: number
+  maxWidth: string
+  descriptionText?: FormatText
+}
 
 const UploadInput = (props: UploadInputProps) => {
   const {
@@ -32,30 +32,30 @@ const UploadInput = (props: UploadInputProps) => {
     handleClickDeleteUploadBtn,
     maxFiles,
     maxWidth,
-    descriptionText,
-  } = props;
+    descriptionText
+  } = props
 
   const RemoveBtn = (props: { index: number }) => (
     <Button
-      onClick={()=>handleClickDeleteUploadBtn(props.index)}
+      onClick={() => { handleClickDeleteUploadBtn(props.index) }}
       sx={{ float: 'right' }}
     >
       <FormattedMessage
         id="app.removeBtn"
       />
     </Button>
-  );
+  )
 
   return (
     <>
-      { uploadImgs && uploadImgs.length > 0 &&
+      { uploadImgs.length > 0 &&
         <Box
           sx={{
             maxWidth: maxFiles > 1 ? maxWidth : undefined,
             position: maxFiles > 1 ? undefined : 'relative',
             width: maxFiles > 1 ? undefined : '100%',
             margin: 'auto',
-            paddingTop: maxFiles > 1 ? undefined : '100%',
+            paddingTop: maxFiles > 1 ? undefined : '100%'
           }}
         >
           { (maxFiles === 1 && uploadImgs.length === 1) &&
@@ -99,42 +99,42 @@ const UploadInput = (props: UploadInputProps) => {
       }
       <Box
         sx={{
-          maxWidth: maxWidth,
-          margin: 'auto',
+          maxWidth,
+          margin: 'auto'
         }}
       >
-        { descriptionText &&
-          <Typography mb={3} textAlign={descriptionText.textAlign || 'left'}>
-            <FormattedMessage 
+        { (descriptionText != null) &&
+          <Typography mb={3} textAlign={descriptionText.textAlign ?? 'left'}>
+            <FormattedMessage
               id={descriptionText.id}
               values={descriptionText.values}
             />
           </Typography>
         }
-        <MuiButton 
-          variant="contained" 
+        <MuiButton
+          variant="contained"
           fullWidth
           disabled={uploadImgs.length >= maxFiles}
           component="label"
           sx={{ mt: 2 }}
         >
-          <FormattedMessage 
+          <FormattedMessage
             id="forms.uploadInput.uploadBtn"
           />
-          <input 
+          <input
             ref={uploadInputRef}
             hidden
             accept={uploadConfig.extensions.join(',')}
-            multiple={maxFiles > 1 ? true : false}
+            multiple={maxFiles > 1}
             type="file"
             onChange={(e) => {
-              handleChangeUploadInput(e, maxFiles);
+              handleChangeUploadInput(e, maxFiles)
             }}
           />
         </MuiButton>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default UploadInput;
+export default UploadInput

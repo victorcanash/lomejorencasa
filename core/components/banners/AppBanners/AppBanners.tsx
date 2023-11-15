@@ -1,27 +1,27 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import MaintenanceBanner from '@core/components/banners/AppBanners/MaintenanceBanner';
+import MaintenanceBanner from '@core/components/banners/AppBanners/MaintenanceBanner'
 
-import { themeCustomElements } from '@lib/config/theme/elements';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import CookiesBanner from '@core/components/banners/AppBanners/CookiesBanner';
-import RegisterBanner from '@core/components/banners/AppBanners/RegisterBanner';
+import { themeCustomElements } from '@lib/config/theme/elements'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import CookiesBanner from '@core/components/banners/AppBanners/CookiesBanner'
+import RegisterBanner from '@core/components/banners/AppBanners/RegisterBanner'
 
 const AppBanners = () => {
-  const { enabledRegisterBanner } = useAuthContext();
+  const { enabledRegisterBanner } = useAuthContext()
 
-  const [openRegisterBanner, setOpenRegisterBanner] = useState(false);
+  const [openRegisterBanner, setOpenRegisterBanner] = useState(false)
 
   const handleRegisterBanner = () => {
-    setOpenRegisterBanner(!open);
-  };
+    setOpenRegisterBanner(!openRegisterBanner)
+  }
 
   const onConsentCookies = () => {
-    enabledRegisterBanner.current = false;
+    enabledRegisterBanner.current = false
     setTimeout(() => {
-      setOpenRegisterBanner(true);
-    }, 5000);
-  };
+      setOpenRegisterBanner(true)
+    }, 5000)
+  }
 
   return (
     <>
@@ -39,7 +39,7 @@ const AppBanners = () => {
         text={{ id: 'banners.maintenance' }}
       />
     </>
-  );
-};
+  )
+}
 
-export default AppBanners;
+export default AppBanners

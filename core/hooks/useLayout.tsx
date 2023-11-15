@@ -1,61 +1,61 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/router';
+import { useState, useEffect, useCallback } from 'react'
+import { useRouter } from 'next/router'
 
-import { PageTypes } from '@core/constants/navigation';
+import { PageTypes } from '@core/constants/navigation'
 
-import { pages } from '@lib/config/navigation.config';
-import WebLayout from '@core/components/layouts/WebLayout';
-import LinkLayout from '@core/components/layouts/LinkLayout';
-import AdminLayout from '@core/components/layouts/AdminLayout';
+import { pages } from '@lib/config/navigation.config'
+import WebLayout from '@core/components/layouts/WebLayout'
+import LinkLayout from '@core/components/layouts/LinkLayout'
+import AdminLayout from '@core/components/layouts/AdminLayout'
 
 const useLayout = (children: React.ReactNode) => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const [pageType, setPageType] = useState<PageTypes | undefined>(undefined);
-  const [layout, setLayout] = useState<JSX.Element | undefined>(undefined);
+  const [pageType, setPageType] = useState<PageTypes | undefined>(undefined)
+  const [layout, setLayout] = useState<JSX.Element | undefined>(undefined)
 
   const checkLayout = useCallback(() => {
-    let foundPage = false;
+    let foundPage = false
     for (const [, page] of Object.entries(pages)) {
-      if (page.filepath == router.pathname) {
-        foundPage = true;
-        setPageType(page.type);
-        if (page.type == PageTypes.link) {
+      if (page.filepath === router.pathname) {
+        foundPage = true
+        setPageType(page.type)
+        if (page.type === PageTypes.link) {
           setLayout(
             <LinkLayout>
               { children }
             </LinkLayout>
-          );
-          return;
-        } else if (page.type == PageTypes.admin) {
+          )
+          return
+        } else if (page.type === PageTypes.admin) {
           setLayout(
             <AdminLayout>
               { children }
             </AdminLayout>
-          );
-          return;
+          )
+          return
         }
-        break;
+        break
       }
     };
     if (!foundPage) {
-      setPageType(PageTypes.notFound);
+      setPageType(PageTypes.notFound)
     }
     setLayout(
       <WebLayout>
         { children }
       </WebLayout>
-    );
-  }, [children, router.pathname]);
+    )
+  }, [children, router.pathname])
 
   useEffect(() => {
-    checkLayout();
-  }, [checkLayout]);
-  
-  return {
-    layout: layout,
-    pageType: pageType,
-  };
-};
+    checkLayout()
+  }, [checkLayout])
 
-export default useLayout;
+  return {
+    layout,
+    pageType
+  }
+}
+
+export default useLayout

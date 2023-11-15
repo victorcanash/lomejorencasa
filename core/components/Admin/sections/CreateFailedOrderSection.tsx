@@ -1,38 +1,36 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography'
 
-import type { Order } from '@core/types/orders';
+import type { Order } from '@core/types/orders'
 
-import CreateFailedOrderForm from '@core/components/forms/admin/CreateFailedOrderForm';
-import OrderDetail from '@core/components/Orders/OrderDetail';
+import CreateFailedOrderForm from '@core/components/forms/admin/CreateFailedOrderForm'
+import OrderDetail from '@core/components/Orders/OrderDetail'
 
 const CreateFailedOrderSection = () => {
   const [order, setOrder] = useState<undefined | Order>(undefined)
   const [created, setCreated] = useState(false)
 
   const onSuccessCreate = (order?: Order) => {
-    setOrder(order);
-    setCreated(true);
-  };
+    setOrder(order)
+    setCreated(true)
+  }
 
   return (
-    <>   
-      { !created ?     
-        <CreateFailedOrderForm
+    <>
+      { !created
+        ? <CreateFailedOrderForm
           onSubmitSuccess={onSuccessCreate}
         />
-        :
-        <>
-          { order ?
-            <OrderDetail 
-              order={order} 
+        : <>
+          { (order != null)
+            ? <OrderDetail
+              order={order}
               backBtn={false}
             />
-            :
-            <Typography variant="h1" component="h1">
+            : <Typography variant="h1" component="h1">
               <FormattedMessage
                 id="forms.createFailedOrder.createdWithoutEmail"
               />
@@ -41,7 +39,7 @@ const CreateFailedOrderSection = () => {
         </>
       }
     </>
-  );
-};
+  )
+}
 
-export default CreateFailedOrderSection;
+export default CreateFailedOrderSection

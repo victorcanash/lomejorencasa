@@ -1,1 +1,1 @@
-export const GuestCartKey = 'c_guest';
+export const GuestCartKey = 'c_guest'

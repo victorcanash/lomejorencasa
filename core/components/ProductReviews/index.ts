@@ -1,3 +1,3 @@
-import ProductReviews from './ProductReviews';
+import ProductReviews from './ProductReviews'
 
-export default ProductReviews;
+export default ProductReviews

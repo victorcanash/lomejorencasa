@@ -1,60 +1,60 @@
-import { FormFieldTypes } from '@core/constants/forms';
-import type { AuthUpdateEmail } from '@core/types/auth';
+import { FormFieldTypes } from '@core/constants/forms'
+import type { AuthUpdateEmail } from '@core/types/auth'
 
-import useForms from '@core/hooks/useForms';
-import useAuth from '@core/hooks/useAuth';
-import BaseForm from '@core/components/forms/BaseForm';
+import useForms from '@core/hooks/useForms'
+import useAuth from '@core/hooks/useAuth'
+import BaseForm from '@core/components/forms/BaseForm'
 
 const UpdateEmailForm = () => {
-  const { updateEmailFormValidation, userFieldsInitValues } = useForms();
-  const { sendUpdateEmail, errorMsg, successMsg } = useAuth();
+  const { updateEmailFormValidation, userFieldsInitValues } = useForms()
+  const { sendUpdateEmail, errorMsg, successMsg } = useAuth()
 
   const handleSubmit = async (values: AuthUpdateEmail) => {
-    sendUpdateEmail(values);
-  };
+    sendUpdateEmail(values)
+  }
 
   return (
     <BaseForm
       initialValues={{
         password: userFieldsInitValues.password,
-        newEmail: userFieldsInitValues.email,
-      } as AuthUpdateEmail}
+        newEmail: userFieldsInitValues.email
+      }}
       validationSchema={updateEmailFormValidation}
       formFieldGroups={[
         {
           titleTxt: {
             id: 'forms.updateEmail.title',
-            textAlign: 'center',
+            textAlign: 'center'
           },
           descriptionTxt: {
-            id: 'forms.updateEmail.description',
+            id: 'forms.updateEmail.description'
           },
           formFields: [
             {
               name: 'password',
               type: FormFieldTypes.password,
-              required: true,
+              required: true
             },
             {
               name: 'newEmail',
               type: FormFieldTypes.text,
-              required: true,
+              required: true
             }
-          ],
+          ]
         }
       ]}
       formButtons={{
         submit: {
           text: {
-            id: 'forms.updateEmail.successBtn',
+            id: 'forms.updateEmail.successBtn'
           },
-          onSubmit: handleSubmit,
-        },
+          onSubmit: handleSubmit
+        }
       }}
       successMsg={successMsg}
       errorMsg={errorMsg}
     />
-  );
-};
+  )
+}
 
-export default UpdateEmailForm;
+export default UpdateEmailForm

@@ -1,31 +1,31 @@
-/*import { FormattedMessage } from 'react-intl';
+/* import { FormattedMessage } from 'react-intl';
 
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import Box from '@mui/material/Box';*/
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Box from '@mui/material/Box'; */
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import type { AuthLogin } from '@core/types/auth';
+import { FormFieldTypes } from '@core/constants/forms'
+import type { AuthLogin } from '@core/types/auth'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 // import { useAppContext } from '@lib/contexts/AppContext';
-import useForms from '@core/hooks/useForms';
-import useAuth from '@core/hooks/useAuth';
-import BaseForm from '@core/components/forms/BaseForm';
+import useForms from '@core/hooks/useForms'
+import useAuth from '@core/hooks/useAuth'
+import BaseForm from '@core/components/forms/BaseForm'
 // import GoogleLogin from '@components/google/GoogleLogin';
 
 const LoginForm = () => {
   // const { initialized } = useAppContext();
 
-  const { loginFormValidation, userFieldsInitValues } = useForms();
-  const { login, /*loginGoogle, */errorMsg } = useAuth();
+  const { loginFormValidation, userFieldsInitValues } = useForms()
+  const { login, /* loginGoogle, */errorMsg } = useAuth()
 
   const handleSubmit = async (values: AuthLogin) => {
-    login(values);
-  };
+    void login(values)
+  }
 
-  const maxWidth = '500px';
+  const maxWidth = '500px'
 
   return (
     <>
@@ -34,55 +34,55 @@ const LoginForm = () => {
         initialValues={{
           email: userFieldsInitValues.email,
           password: userFieldsInitValues.password,
-          remember: userFieldsInitValues.remember,
-        } as AuthLogin}
+          remember: userFieldsInitValues.remember
+        }}
         validationSchema={loginFormValidation}
         formFieldGroups={[
           {
             avatarIcon: <LockOutlinedIcon />,
             titleTxt: {
-              id: 'forms.login.title',
+              id: 'forms.login.title'
             },
             formFields: [
               {
                 name: 'email',
                 type: FormFieldTypes.text,
-                required: true,
+                required: true
               },
               {
                 name: 'password',
                 type: FormFieldTypes.password,
                 required: true,
-                autoComplete: 'current-password',
+                autoComplete: 'current-password'
               },
               {
                 name: 'remember',
-                type: FormFieldTypes.checkbox,
+                type: FormFieldTypes.checkbox
               }
-            ],
+            ]
           }
         ]}
         formButtons={{
           submit: {
             text: {
-              id: 'forms.login.successBtn',
+              id: 'forms.login.successBtn'
             },
-            onSubmit: handleSubmit,
-          },
+            onSubmit: handleSubmit
+          }
         }}
         errorMsg={errorMsg}
         linksItems={[
           {
             text: {
-              id: 'forms.login.forgotLink',
+              id: 'forms.login.forgotLink'
             },
-            path: pages.forgot.path,
+            path: pages.forgot.path
           },
           {
             text: {
-              id: 'forms.login.registerLink',
+              id: 'forms.login.registerLink'
             },
-            path: pages.register.path,
+            path: pages.register.path
           }
         ]}
       />
@@ -105,7 +105,7 @@ const LoginForm = () => {
         </Box>
       */}
     </>
-  );
-};
+  )
+}
 
-export default LoginForm;
+export default LoginForm

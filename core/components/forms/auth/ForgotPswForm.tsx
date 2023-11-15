@@ -1,27 +1,27 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
-import { FormFieldTypes } from '@core/constants/forms';
+import { FormFieldTypes } from '@core/constants/forms'
 
-import { pages } from '@lib/config/navigation.config';
-import { useAuthContext } from '@core/contexts/AuthContext';
-import useForms from '@core/hooks/useForms';
-import useAuth from '@core/hooks/useAuth';
-import BaseForm from '@core/components/forms/BaseForm';
+import { pages } from '@lib/config/navigation.config'
+import { useAuthContext } from '@core/contexts/AuthContext'
+import useForms from '@core/hooks/useForms'
+import useAuth from '@core/hooks/useAuth'
+import BaseForm from '@core/components/forms/BaseForm'
 
 const ForgotPswForm = () => {
-  const { user } = useAuthContext();
+  const { user } = useAuthContext()
 
-  const { sendEmailFormValidation, userFieldsInitValues } = useForms();
-  const { sendResetPswEmail, errorMsg, successMsg } = useAuth();
+  const { sendEmailFormValidation, userFieldsInitValues } = useForms()
+  const { sendResetPswEmail, errorMsg, successMsg } = useAuth()
 
-  const handleSubmit = async (values: {email: string}) => {
-    sendResetPswEmail(values.email);
-  };
+  const handleSubmit = async (values: { email: string }) => {
+    sendResetPswEmail(values.email)
+  }
 
   return (
-    <BaseForm 
+    <BaseForm
       initialValues={{
-        email: user?.email || userFieldsInitValues.email,
+        email: user?.email ?? userFieldsInitValues.email
       }}
       validationSchema={sendEmailFormValidation}
       enableReinitialize={true}
@@ -29,41 +29,41 @@ const ForgotPswForm = () => {
         {
           avatarIcon: <LockOutlinedIcon />,
           titleTxt: {
-            id: 'forms.forgotPassword.title',
+            id: 'forms.forgotPassword.title'
           },
           descriptionTxt: {
-            id: 'forms.forgotPassword.description',
+            id: 'forms.forgotPassword.description'
           },
           formFields: [
             {
               name: 'email',
               type: FormFieldTypes.text,
               required: true,
-              autoFocus: true,
+              autoFocus: true
             }
-          ],
+          ]
         }
       ]}
       formButtons={{
         submit: {
           text: {
-            id: 'forms.forgotPassword.successBtn',
+            id: 'forms.forgotPassword.successBtn'
           },
-          onSubmit: handleSubmit,
-        },
+          onSubmit: handleSubmit
+        }
       }}
       successMsg={successMsg}
       errorMsg={errorMsg}
       linksItems={[
         {
           text: {
-            id: 'forms.forgotPassword.loginLink',
+            id: 'forms.forgotPassword.loginLink'
           },
-          path: pages.login.path,
+          path: pages.login.path
         }
       ]}
     />
-  );
-};
+  )
+}
 
-export default ForgotPswForm;
+export default ForgotPswForm

@@ -1,145 +1,187 @@
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Alert from '@mui/material/Alert';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Alert from '@mui/material/Alert'
 
-import { ManageActions } from '@core/constants/app';
+import { ManageActions } from '@core/constants/app'
 import type {
   Landing,
   Product,
   ProductCategory,
   ProductDiscount,
   ProductInventory,
-  ProductPack,
-} from '@core/types/products';
-import useAdminStore from '@core/hooks/useAdminStore';
-import Button from '@core/components/inputs/Button';
-import ManageLandingForm from '@core/components/forms/admin/ManageLandingForm';
-import ManageProductForm from '@core/components/forms/admin/ManageProductForm';
-import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm';
-import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm';
-import ManagePDiscountForm from '@core/components/forms/admin/ManagePDiscountForm';
-import CheckLandingDetail from '../CheckLandingDetail';
-import CheckProductDetail from '../CheckLandingItemsDetail/CheckProductDetail';
-import CheckProductPackDetail from '../CheckLandingItemsDetail/CheckProductPackDetail';
+  ProductPack
+} from '@core/types/products'
+import useAdminStore from '@core/hooks/useAdminStore'
+import Button from '@core/components/inputs/Button'
+import ManageLandingForm from '@core/components/forms/admin/ManageLandingForm'
+import ManageProductForm from '@core/components/forms/admin/ManageProductForm'
+import ManagePPackForm from '@core/components/forms/admin/ManagePPackForm'
+import ManagePInventoryForm from '@core/components/forms/admin/ManagePInventoryForm'
+import ManagePDiscountForm from '@core/components/forms/admin/ManagePDiscountForm'
+import CheckLandingDetail from '../CheckLandingDetail'
+import CheckProductDetail from '../CheckLandingItemsDetail/CheckProductDetail'
+import CheckProductPackDetail from '../CheckLandingItemsDetail/CheckProductPackDetail'
 
-type CreateLandingSectionProps = {
-  category: ProductCategory,
-  onSubmitSuccess: (landing: Landing) => void,
-  onCancel: () => void,
-};
+interface CreateLandingSectionProps {
+  category: ProductCategory
+  onSubmitSuccess: (landing: Landing) => void
+  onCancel: () => void
+}
 
 const CreateLandingSection = (props: CreateLandingSectionProps) => {
   const {
     category,
     onSubmitSuccess,
-    onCancel,
-  } = props;
+    onCancel
+  } = props
 
-  const { createLanding, successMsg, errorMsg } = useAdminStore();
+  const { createLanding, successMsg, errorMsg } = useAdminStore()
 
-  const [landing, setLanding] = useState<Landing | undefined>(undefined);
-  const [createProduct, setCreateProduct] = useState(false);
-  const [createPack, setCreatePack] = useState(false);
-  const [product, setProduct] = useState<Product | undefined>(undefined);
-  const [pack, setPack] = useState<ProductPack | undefined>(undefined);
+  const [landing, setLanding] = useState<Landing | undefined>(undefined)
+  const [createProduct, setCreateProduct] = useState(false)
+  const [createPack, setCreatePack] = useState(false)
+  const [product, setProduct] = useState<Product | undefined>(undefined)
+  const [pack, setPack] = useState<ProductPack | undefined>(undefined)
 
   const onSuccessCreateLanding = (newLanding: Landing) => {
-    setLanding(newLanding);
-  };
+    setLanding(newLanding)
+  }
 
   const handleChooseProductBtn = () => {
-    setCreateProduct(true);
-  };
+    setCreateProduct(true)
+  }
 
   const handleChoosePackBtn = () => {
-    setCreatePack(true);
-  };
+    setCreatePack(true)
+  }
 
   const onSuccessCreateProduct = (newProduct: Product) => {
-    setProduct(newProduct);
-  };
+    setProduct(newProduct)
+  }
 
   const onSuccessCreatePack = (newPack: ProductPack) => {
-    setPack(newPack);
-  };
+    setPack(newPack)
+  }
 
   const onCancelCreateProduct = () => {
-    setCreateProduct(false);
-  };
+    setCreateProduct(false)
+  }
 
   const onCancelCreatePack = () => {
-    setCreatePack(false);
-  };
+    setCreatePack(false)
+  }
 
   const onSuccessCreateInventory = (inventory: ProductInventory) => {
-    const newProduct = {
+    const newProduct: Product = {
+      id: 0,
+      landingId: 0,
+      name: {
+        en: '',
+        es: '',
+        current: ''
+      },
+      description: {
+        en: '',
+        es: '',
+        current: ''
+      },
+      lowestPrice: 0,
+      lowestRealPrice: 0,
       ...product,
       inventories: [
-        ...product?.inventories || [],
-        inventory,
-      ],
-    } as Product;
-    setProduct(newProduct);
-  };
+        ...product?.inventories ?? [],
+        inventory
+      ]
+    }
+    setProduct(newProduct)
+  }
 
   const onCancelCreateInventory = () => {
-    setProduct(undefined);
-    setPack(undefined);
-  };
+    setProduct(undefined)
+    setPack(undefined)
+  }
 
   const onSuccessCreateDiscount = (discount: ProductDiscount) => {
-    const newProduct = {
+    const newProduct: Product = {
+      id: 0,
+      landingId: 0,
+      name: {
+        en: '',
+        es: '',
+        current: ''
+      },
+      description: {
+        en: '',
+        es: '',
+        current: ''
+      },
+      lowestPrice: 0,
+      lowestRealPrice: 0,
       ...product,
       discounts: [
-        ...product?.discounts || [],
-        discount,
-      ],
-    } as Product;
-    setProduct(newProduct);
-  };
+        ...product?.discounts ?? [],
+        discount
+      ]
+    }
+    setProduct(newProduct)
+  }
 
   const onCancelCreateDiscount = () => {
-    setProduct(undefined);
-  };
+    setProduct(undefined)
+  }
 
   const onClickRemoveInventoryBtn = (index: number) => {
-    if (product) {
-      const newProduct = {
+    if (product != null) {
+      const newProduct: Product = {
         ...product,
-        inventories: product?.inventories ? product.inventories.filter((_inventory, inventoryIndex) => inventoryIndex !== index) : [],
-      } as Product;
-      setProduct(newProduct);
-    } else if (pack) {
-      const newPack = {
+        inventories: ((product?.inventories) != null) ? product.inventories.filter((_inventory, inventoryIndex) => inventoryIndex !== index) : []
+      }
+      setProduct(newProduct)
+    } else if (pack != null) {
+      const newPack: ProductPack = {
         ...pack,
-        inventoriesIds: pack?.inventoriesIds ? pack.inventoriesIds.filter((_inventoryId, inventoryIndex) => inventoryIndex !== index) : [],
-      } as ProductPack;
-      setPack(newPack);
+        inventoriesIds: (pack?.inventoriesIds != null) ? pack.inventoriesIds.filter((_inventoryId, inventoryIndex) => inventoryIndex !== index) : []
+      }
+      setPack(newPack)
     }
-  };
+  }
 
   const onClickRemoveDiscountBtn = (index: number) => {
-    const newProduct = {
+    const newProduct: Product = {
+      id: 0,
+      landingId: 0,
+      name: {
+        en: '',
+        es: '',
+        current: ''
+      },
+      description: {
+        en: '',
+        es: '',
+        current: ''
+      },
+      lowestPrice: 0,
+      lowestRealPrice: 0,
       ...product,
-      discounts: product?.discounts ? product.discounts.filter((_discount, discountIndex) => discountIndex !== index) : [],
-    } as Product;
-    setProduct(newProduct);
-  };
+      discounts: ((product?.discounts) != null) ? product.discounts.filter((_discount, discountIndex) => discountIndex !== index) : []
+    }
+    setProduct(newProduct)
+  }
 
   const handleConfirmBtn = () => {
-    if (landing && (product || pack)) {
-      createLanding(landing, product, pack, onSubmitSuccess);
+    if ((landing != null) && ((product != null) || (pack != null))) {
+      void createLanding(landing, product, pack, onSubmitSuccess)
     }
-  };
+  }
 
   return (
     <>
       {/* Views */}
-      { (landing) &&
+      { (landing != null) &&
         <>
           <Typography component="div" variant="h2" textAlign="center" mt={2} mb={1}>
             <FormattedMessage
@@ -152,7 +194,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
           />
         </>
       }
-      { (product) &&
+      { (product != null) &&
         <>
           <Typography component="div" variant="h2" textAlign="center" mt={2} mb={1}>
             <FormattedMessage
@@ -167,7 +209,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
           />
         </>
       }
-      { (pack) &&
+      { (pack != null) &&
         <>
           <Typography component="div" variant="h2" textAlign="center" mt={2} mb={1}>
             <FormattedMessage
@@ -183,7 +225,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Create landing model */}
-      { (!landing) &&
+      { (landing == null) &&
         <ManageLandingForm
           action={ManageActions.create}
           onSubmitSuccess={onSuccessCreateLanding}
@@ -192,7 +234,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Choose item type */}
-      { (landing && !createProduct && !createPack && !product && !pack) &&
+      { ((landing != null) && !createProduct && !createPack && (product == null) && (pack == null)) &&
         <Box mt={2}>
           <Button
             onClick={handleChooseProductBtn}
@@ -212,7 +254,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Create product model */}
-      { (landing && createProduct && !createPack && !product && !pack) &&
+      { ((landing != null) && createProduct && !createPack && (product == null) && (pack == null)) &&
         <Box mt={2}>
           <ManageProductForm
             action={ManageActions.create}
@@ -225,7 +267,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Create pack model */}
-      { (landing && !createProduct && createPack && !product && !pack) &&
+      { ((landing != null) && !createProduct && createPack && (product == null) && (pack == null)) &&
         <Box mt={2}>
           <ManagePPackForm
             action={ManageActions.create}
@@ -237,7 +279,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Create inventories */}
-      { (landing && createProduct && !createPack && product && !pack) &&
+      { ((landing != null) && createProduct && !createPack && (product != null) && (pack == null)) &&
         <>
           <Box mt={2}>
             <ManagePInventoryForm
@@ -258,7 +300,7 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
         </>
       }
 
-      { (landing && !createProduct && createPack && !product && pack) &&
+      { ((landing != null) && !createProduct && createPack && (product == null) && (pack != null)) &&
         <Button
           fullWidth
           onClick={onCancelCreateInventory}
@@ -270,14 +312,14 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
       }
 
       {/* Confirmation */}
-      { (landing && (createProduct || createPack) && (product || pack)) &&
+      { ((landing != null) && (createProduct || createPack) && ((product != null) || (pack != null))) &&
         <Box mt={4}>
           <Button
             fullWidth
             onClick={handleConfirmBtn}
             disabled={
-              (product && (!product.inventories || product.inventories.length < 1)) ||
-              (pack && (!pack.inventoriesIds || pack.inventoriesIds.length < 1))
+              ((product != null) && ((product.inventories == null) || product.inventories.length < 1)) ||
+              ((pack != null) && (pack.inventoriesIds.length < 1))
             }
           >
             <FormattedMessage
@@ -285,17 +327,17 @@ const CreateLandingSection = (props: CreateLandingSectionProps) => {
             />
           </Button>
           {
-            errorMsg && errorMsg !== '' &&
+            errorMsg !== '' &&
               <Alert severity="error">{ errorMsg }</Alert>
-          } 
+          }
           {
-            successMsg && successMsg !== '' &&
+            successMsg !== '' &&
               <Alert>{ successMsg }</Alert>
-          }  
+          }
         </Box>
       }
     </>
-  );
-};
+  )
+}
 
-export default CreateLandingSection;
+export default CreateLandingSection

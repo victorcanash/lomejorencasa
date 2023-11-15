@@ -1,11 +1,10 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 const Privacy = () => {
-  
   return (
     <Container>
       <Typography variant="h2" mb={3}>
@@ -217,7 +216,7 @@ const Privacy = () => {
         <FormattedMessage id="privacy.acceptance.description" />
       </Typography>
     </Container>
-  );
-};
+  )
+}
 
-export default Privacy;
+export default Privacy

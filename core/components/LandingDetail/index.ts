@@ -1,3 +1,3 @@
-import LandingDetail from './LandingDetail';
+import LandingDetail from './LandingDetail'
 
-export default LandingDetail;
+export default LandingDetail

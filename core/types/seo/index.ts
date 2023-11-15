@@ -1,5 +1,5 @@
-import { DefaultSeoProps } from 'next-seo';
+import { type DefaultSeoProps } from 'next-seo'
 
-export type SeoConfig = {
-  defaultSeoProps: DefaultSeoProps,
-};
+export interface SeoConfig {
+  defaultSeoProps: DefaultSeoProps
+}

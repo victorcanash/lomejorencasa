@@ -1,3 +1,3 @@
-import AppBanners from './AppBanners';
+import AppBanners from './AppBanners'
 
-export default AppBanners;
+export default AppBanners

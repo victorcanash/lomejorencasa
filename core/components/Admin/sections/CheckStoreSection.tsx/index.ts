@@ -1,3 +1,3 @@
-import CheckStoreSection from './CheckStoreSection';
+import CheckStoreSection from './CheckStoreSection'
 
-export default CheckStoreSection;
+export default CheckStoreSection

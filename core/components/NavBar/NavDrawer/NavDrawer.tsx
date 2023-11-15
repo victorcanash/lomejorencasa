@@ -1,36 +1,36 @@
-import { Fragment } from 'react';
+import { Fragment } from 'react'
 
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Collapse from '@mui/material/Collapse';
-import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box'
+import Drawer from '@mui/material/Drawer'
+import List from '@mui/material/List'
+import Collapse from '@mui/material/Collapse'
+import Toolbar from '@mui/material/Toolbar'
 
-import type { NavDrawerItem } from '@core/types/navigation';
-import Divider from '@core/components/ui/Divider';
+import type { NavDrawerItem } from '@core/types/navigation'
+import Divider from '@core/components/ui/Divider'
 
-import useAuth from '@core/hooks/useAuth';
-import { themeCustomElements } from '@lib/config/theme/elements';
-import NavDrawerBtn from '@core/components/NavBar/NavDrawer/NavDrawerBtn';
+import useAuth from '@core/hooks/useAuth'
+import { themeCustomElements } from '@lib/config/theme/elements'
+import NavDrawerBtn from '@core/components/NavBar/NavDrawer/NavDrawerBtn'
 
-type NavDrawerProps = {
-  open: boolean,
-  items: NavDrawerItem[],
-  handleOpen: () => void,
-  handleCollapse: (item: NavDrawerItem) => void,
-  minHeight: string,
-};
+interface NavDrawerProps {
+  open: boolean
+  items: NavDrawerItem[]
+  handleOpen: () => void
+  handleCollapse: (item: NavDrawerItem) => void
+  minHeight: string
+}
 
 const NavDrawer = (props: NavDrawerProps) => {
-  const { 
-    open, 
-    items, 
+  const {
+    open,
+    items,
     handleOpen,
     handleCollapse,
-    minHeight,
-   } = props;
+    minHeight
+  } = props
 
-  const { logout } = useAuth();
+  const { logout } = useAuth()
 
   return (
     <Drawer
@@ -38,20 +38,20 @@ const NavDrawer = (props: NavDrawerProps) => {
       open={open}
       onClose={handleOpen}
       sx={{
-        flexShrink: 0,
+        flexShrink: 0
       }}
     >
       <Toolbar
         variant="dense"
         disableGutters
         sx={{
-          minHeight: minHeight,
+          minHeight
         }}
       />
       <Box
         sx={{
           overflow: 'auto',
-          width: '250px',
+          width: '250px'
         }}
       >
         <List component="div">
@@ -63,10 +63,10 @@ const NavDrawer = (props: NavDrawerProps) => {
                 handleCollapse={handleCollapse}
                 logout={logout}
               />
-              { item.items && item.items.length > 0  &&
+              { item.items.length > 0 &&
                 <Collapse
-                  in={item.open} 
-                  timeout="auto" 
+                  in={item.open}
+                  timeout="auto"
                   unmountOnExit
                 >
                   <List component="div" disablePadding>
@@ -78,7 +78,7 @@ const NavDrawer = (props: NavDrawerProps) => {
                           handleCollapse={handleCollapse}
                           logout={logout}
                         />
-                        { subitem.divider &&
+                        { (subitem.divider === true) &&
                           <Divider
                             themeElement={themeCustomElements.dividers?.headerDrawer?.highlight}
                           />
@@ -96,7 +96,7 @@ const NavDrawer = (props: NavDrawerProps) => {
         </List>
       </Box>
     </Drawer>
-  );
-};
+  )
+}
 
-export default NavDrawer;
+export default NavDrawer

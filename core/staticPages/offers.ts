@@ -1,25 +1,26 @@
-import type { GetStaticProps } from 'next';
+import type { GetStaticProps } from 'next'
 
-import type { Landing } from '@core/types/products';
-import { getAllLandings } from '@core/utils/products';
+import type { Landing } from '@core/types/products'
+import { getAllLandings } from '@core/utils/products'
 
-export type OffersPageProps = {
-  landings: Landing[],
-};
+export interface OffersPageProps {
+  landings: Landing[]
+}
 
 export const getOffersStaticProps: GetStaticProps = async () => {
-  let landings: Landing[] = [];
+  let landings: Landing[] = []
   await getAllLandings(true, true)
     .then((response) => {
-      landings = response.landings;
+      landings = response.landings
     })
     .catch((error) => {
-      throw error;
-    });
+      throw error
+    })
 
+  const props: OffersPageProps = {
+    landings
+  }
   return {
-    props: {
-      landings: landings,
-    } as OffersPageProps,
-  };
-};
+    props
+  }
+}

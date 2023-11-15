@@ -1,11 +1,10 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
 const Legal = () => {
-
   return (
     <Container>
       <Typography variant="h2" mb={3}>
@@ -66,7 +65,7 @@ const Legal = () => {
         <FormattedMessage id="legal.legislation.description" />
       </Typography>
     </Container>
-  );
-};
+  )
+}
 
-export default Legal;
+export default Legal

@@ -1,40 +1,40 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react'
 
-import type { FacebookEvent, FacebookEventContent } from '@core/types/facebook';
-import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
-import { sendFBEvent } from '@core/utils/facebook';
+import type { FacebookEvent, FacebookEventContent } from '@core/types/facebook'
+import type { Landing, ProductInventory, ProductPack } from '@core/types/products'
+import { sendFBEvent } from '@core/utils/facebook'
 
-import { useAuthContext } from '@core/contexts/AuthContext';
-import { useCartContext } from '@core/contexts/CartContext';
-import { useProductsContext } from '@core/contexts/ProductsContext';
+import { useAuthContext } from '@core/contexts/AuthContext'
+import { useCartContext } from '@core/contexts/CartContext'
+import { useProductsContext } from '@core/contexts/ProductsContext'
 
-const contentCategory = 'Camping Cookware';
-const contentType = 'product';
+const contentCategory = 'Camping Cookware'
+const contentType = 'product'
 
 const useFacebook = () => {
-  const { currency } = useAuthContext();
-  const { cart, totalPrice, totalQuantity } = useCartContext();
-  const { getFirstLandingItem, getProductPriceData } = useProductsContext();
+  const { currency } = useAuthContext()
+  const { cart, totalPrice, totalQuantity } = useCartContext()
+  const { getFirstLandingItem, getProductPriceData } = useProductsContext()
 
   const cartContents = useMemo(() => {
-    const contents: FacebookEventContent[] = [];
+    const contents: FacebookEventContent[] = []
     cart.items.forEach(item => {
-      if (item.inventory) {
+      if (item.inventory != null) {
         contents.push({
-          id: item.inventory.metaId || '',
-          quantity: item.quantity,
-        });
-      } else if (item.pack) {
+          id: item.inventory.metaId ?? '',
+          quantity: item.quantity
+        })
+      } else if (item.pack != null) {
         contents.push({
-          id: item.pack.metaId || '',
-          quantity: item.quantity,
-        });
+          id: item.pack.metaId ?? '',
+          quantity: item.quantity
+        })
       };
-    });
-    return contents;
-  }, [cart.items]);
+    })
+    return contents
+  }, [cart.items])
 
-  /*const landingContentIds = useCallback((landing: Landing) => {
+  /* const landingContentIds = useCallback((landing: Landing) => {
     const contentIds: string[] = [];
     landing.products.forEach(product => {
       product.inventories?.forEach((inventory) => {
@@ -45,96 +45,97 @@ const useFacebook = () => {
       contentIds.push(pack.metaId || '');
     });
     return contentIds;
-  }, []);*/
+  }, []); */
 
   const sendViewContentEvent = useCallback((landing: Landing) => {
-    const firstLandingItem = getFirstLandingItem(landing);
-    const data = {
+    const firstLandingItem = getFirstLandingItem(landing)
+    const data: FacebookEvent = {
       content_category: contentCategory,
       content_type: contentType,
       content_ids: [
-        firstLandingItem?.metaId || '',
+        firstLandingItem?.metaId ?? ''
       ],
-      content_name: firstLandingItem?.name.current || '',
-      value: firstLandingItem ? getProductPriceData(firstLandingItem).price : undefined,
-      currency: currency,
-    } as FacebookEvent;
+      content_name: firstLandingItem?.name.current ?? '',
+      value: (firstLandingItem != null) ? getProductPriceData(firstLandingItem).price : undefined,
+      currency
+    }
 
-    sendFBEvent('ViewContent', data);
-  }, [currency, getFirstLandingItem, getProductPriceData]);
+    sendFBEvent('ViewContent', data)
+  }, [currency, getFirstLandingItem, getProductPriceData])
 
   const sendAddToCartEvent = useCallback((item: ProductInventory | ProductPack, quantity: number) => {
-    const data = {
+    const data: FacebookEvent = {
       content_category: contentCategory,
       content_type: contentType,
       contents: [{
-        id: item.metaId || '',
-        quantity: quantity,
+        id: item.metaId ?? '',
+        quantity
       }],
       content_name: item.name.current,
       value: getProductPriceData(item).price,
-      currency: currency,
-    } as FacebookEvent;
-  
-    sendFBEvent('AddToCart', data);
-  }, [currency, getProductPriceData]);
+      currency
+    }
+
+    sendFBEvent('AddToCart', data)
+  }, [currency, getProductPriceData])
 
   const sendInitiateCheckoutEvent = useCallback(() => {
-    const data = {
+    const data: FacebookEvent = {
       content_category: contentCategory,
       content_type: contentType,
       contents: cartContents,
       num_items: totalQuantity,
       value: totalPrice,
-      currency: currency,
-    } as FacebookEvent;
+      currency
+    }
 
-    sendFBEvent('InitiateCheckout', data);
-  }, [cartContents, currency, totalPrice, totalQuantity]);
+    sendFBEvent('InitiateCheckout', data)
+  }, [cartContents, currency, totalPrice, totalQuantity])
 
   const sendAddPaymentInfoEvent = useCallback(() => {
-    const data = {
+    const data: FacebookEvent = {
       content_category: contentCategory,
       content_type: contentType,
       contents: cartContents,
       value: totalPrice,
-      currency: currency,
-    } as FacebookEvent;
+      currency
+    }
 
-    sendFBEvent('AddPaymentInfo', data);
-  }, [cartContents, currency, totalPrice]);
+    sendFBEvent('AddPaymentInfo', data)
+  }, [cartContents, currency, totalPrice])
 
   const sendPurchaseEvent = useCallback(() => {
-    let contentName: string | undefined;
+    let contentName: string | undefined
     if (cart.items.length > 0) {
-      contentName = cart.items[0].inventory ?
-        cart.items[0].inventory.name.current : cart.items[0].pack?.name.current;
+      contentName = (cart.items[0].inventory != null)
+        ? cart.items[0].inventory.name.current
+        : cart.items[0].pack?.name.current
     }
-    const data = {
+    const data: FacebookEvent = {
       content_category: contentCategory,
       content_type: contentType,
       contents: cartContents,
       content_name: contentName,
       num_items: totalQuantity,
       value: totalPrice,
-      currency: currency,
-    } as FacebookEvent;
+      currency
+    }
 
-    sendFBEvent('Purchase', data);
-  }, [cart.items, cartContents, currency, totalPrice, totalQuantity]);
-  
+    sendFBEvent('Purchase', data)
+  }, [cart.items, cartContents, currency, totalPrice, totalQuantity])
+
   const sendCompleteRegistrationEvent = useCallback((success: boolean) => {
-    const data = {
-      currency: currency,
-      status: success,
-    } as FacebookEvent;
+    const data: FacebookEvent = {
+      currency,
+      status: success
+    }
 
-    sendFBEvent('CompleteRegistration', data);
-  }, [currency]);
+    sendFBEvent('CompleteRegistration', data)
+  }, [currency])
 
   const sendContactEvent = useCallback(() => {
-    sendFBEvent('Contact');
-  }, []);
+    sendFBEvent('Contact')
+  }, [])
 
   return {
     sendViewContentEvent,
@@ -143,8 +144,8 @@ const useFacebook = () => {
     sendAddPaymentInfoEvent,
     sendPurchaseEvent,
     sendCompleteRegistrationEvent,
-    sendContactEvent,
-  };
-};
+    sendContactEvent
+  }
+}
 
-export default useFacebook;
+export default useFacebook

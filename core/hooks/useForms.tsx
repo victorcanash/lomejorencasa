@@ -1,33 +1,33 @@
-import * as Yup from 'yup';
-import { useIntl } from 'react-intl';
-import dayjs from 'dayjs';
+import * as Yup from 'yup'
+import { useIntl } from 'react-intl'
+import dayjs from 'dayjs'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import { CountryOptions } from '@core/constants/addresses';
-import type { FormField } from '@core/types/forms';
-import { getCountryName } from '@core/utils/addresses';
-import { subtractYears } from '@core/utils/dates';
+import { FormFieldTypes } from '@core/constants/forms'
+import { CountryOptions } from '@core/constants/addresses'
+import type { FormField } from '@core/types/forms'
+import { getCountryName } from '@core/utils/addresses'
+import { subtractYears } from '@core/utils/dates'
 
 const useForms = () => {
-  const intl = useIntl();
+  const intl = useIntl()
 
   const initForms = () => {
     Yup.setLocale({
       mixed: {
         default: intl.formatMessage({ id: 'forms.errors.default' }),
-        required: intl.formatMessage({ id: 'forms.errors.required' }),
+        required: intl.formatMessage({ id: 'forms.errors.required' })
       },
       string: {
         min: ({ min }) => (intl.formatMessage({ id: 'forms.errors.minString' }, { min })),
         max: ({ max }) => (intl.formatMessage({ id: 'forms.errors.maxString' }, { max })),
-        email: intl.formatMessage({ id: 'forms.errors.email' }),
+        email: intl.formatMessage({ id: 'forms.errors.email' })
       },
       number: {
         min: ({ min }) => (intl.formatMessage({ id: 'forms.errors.minNumber' }, { min })),
-        max: ({ max }) => (intl.formatMessage({ id: 'forms.errors.maxNumber' }, { max })),
-      },
-    });
-  };
+        max: ({ max }) => (intl.formatMessage({ id: 'forms.errors.maxNumber' }, { max }))
+      }
+    })
+  }
 
   // Custom fields validation and init values
 
@@ -44,13 +44,13 @@ const useForms = () => {
       return Yup
         .string()
         .when(passwordKey, {
-          is: (value: string) => (value && value.length > 0 ? true : false),
+          is: (value: string) => (value.length > 0),
           then: Yup.string().oneOf(
             [Yup.ref(passwordKey)],
-            intl.formatMessage({ id: 'forms.errors.confirmPassword' }),
-          ),
+            intl.formatMessage({ id: 'forms.errors.confirmPassword' })
+          )
         })
-        .required('You must confirm your password');
+        .required('You must confirm your password')
     },
     firstName: Yup
       .string()
@@ -65,9 +65,9 @@ const useForms = () => {
     birthday: Yup
       .date()
       .max(
-        subtractYears(14), 
+        subtractYears(14),
         intl.formatMessage(
-          { id: 'forms.errors.maxBirthday' }, 
+          { id: 'forms.errors.maxBirthday' },
           { minYears: 14 }
         )
       )
@@ -87,10 +87,10 @@ const useForms = () => {
       .min(1)
       .required(),
     acceptPolicy: Yup
-      .boolean(),
-  };
+      .boolean()
+  }
 
-  const userFieldsInitValues = { 
+  const userFieldsInitValues = {
     email: '',
     password: '',
     confirm: '',
@@ -101,15 +101,15 @@ const useForms = () => {
     remember: true,
     tlf: '',
     comments: '',
-    acceptPolicy: false,
-  };
+    acceptPolicy: false
+  }
 
   const contactFieldsValidation = {
     type: Yup
       .string()
       .min(3)
-      .required(),
-  };
+      .required()
+  }
 
   const addressFieldsValidation = {
     firstName: userFieldsValidation.firstName,
@@ -137,18 +137,18 @@ const useForms = () => {
       .string()
       .min(3)
       .max(35)
-      .required(),
-  };
+      .required()
+  }
 
-  const addressFieldsInitValues = { 
+  const addressFieldsInitValues = {
     firstName: userFieldsInitValues.firstName,
     lastName: userFieldsInitValues.lastName,
     addressLine1: '',
     addressLine2: '',
     postalCode: '',
     locality: '',
-    country: getCountryName(Object.keys(CountryOptions)[0]),
-  };
+    country: getCountryName(Object.keys(CountryOptions)[0])
+  }
 
   const orderFieldsValidation = {
     id: Yup
@@ -171,8 +171,8 @@ const useForms = () => {
     notes: Yup
       .string(),
     currency: Yup
-      .string(),
-  };
+      .string()
+  }
 
   const orderFieldsInitValues = {
     id: 0,
@@ -181,8 +181,8 @@ const useForms = () => {
     guestUserEmail: '',
     paypalTransactionId: '',
     notes: '',
-    currency: 'EUR',
-  };
+    currency: 'EUR'
+  }
 
   const orderProductFieldsValidation = {
     quantity: Yup
@@ -192,18 +192,18 @@ const useForms = () => {
     inventoryId: Yup
       .number()
       .min(0)
-      .required(),
-  };
+      .required()
+  }
 
   const orderProductFieldsInitValues = {
     quantity: 1,
     inventoryId: -1,
-    packId: -1,
-  };
+    packId: -1
+  }
 
   const couponFieldsInitValues = {
-    couponCode: '',
-  };
+    couponCode: ''
+  }
 
   const reviewFieldsValidation = {
     rating: Yup
@@ -221,15 +221,15 @@ const useForms = () => {
       .string()
       .min(3)
       .max(101)
-      .required(), 
-  };
+      .required()
+  }
 
   const reviewFieldsInitValues = {
     rating: 5,
     title: '',
     description: '',
-    publicName: '',
-  };
+    publicName: ''
+  }
 
   const localizedTextsFieldsValidation = {
     en: Yup
@@ -239,13 +239,13 @@ const useForms = () => {
     es: Yup
       .string()
       .min(1)
-      .required(),
-  };
+      .required()
+  }
 
   const localizedTextsFieldsInitValues = {
     en: '',
-    es: '',
-  };
+    es: ''
+  }
 
   const emailsFieldsValidation = {
     emailType: Yup
@@ -256,12 +256,12 @@ const useForms = () => {
       .string()
       .min(2)
       .max(5)
-      .required(),
-  };
+      .required()
+  }
 
   const emailsFieldsInitValues = {
-    locale: 'es', // intl.defaultLocale,
-  };
+    locale: 'es' // intl.defaultLocale,
+  }
 
   const categoryFieldsValidation = {
     name: Yup.object().shape(localizedTextsFieldsValidation),
@@ -273,14 +273,14 @@ const useForms = () => {
     image: Yup
       .string()
       .min(1)
-  };
+  }
 
   const categoryFieldsInitValues = {
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
     slug: '',
-    image: '',
-  };
+    image: ''
+  }
 
   const landingFieldsValidation = {
     name: Yup.object().shape(localizedTextsFieldsValidation),
@@ -288,24 +288,24 @@ const useForms = () => {
     slug: Yup
       .string()
       .min(1)
-      .required(),
-  };
+      .required()
+  }
 
   const landingFieldsInitValues = {
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
-    slug: '',
-  };
+    slug: ''
+  }
 
   const productFieldsValidation = {
     name: Yup.object().shape(localizedTextsFieldsValidation),
-    description: Yup.object().shape(localizedTextsFieldsValidation),
-  };
+    description: Yup.object().shape(localizedTextsFieldsValidation)
+  }
 
   const productFieldsInitValues = {
     name: localizedTextsFieldsInitValues,
-    description: localizedTextsFieldsInitValues,
-  };
+    description: localizedTextsFieldsInitValues
+  }
 
   const inventoryFieldsValidation = {
     sku: Yup
@@ -326,8 +326,8 @@ const useForms = () => {
       .min(1),
     metaId: Yup
       .string()
-      .min(1),
-  };
+      .min(1)
+  }
 
   const inventoryFieldsInitValues = {
     sku: '',
@@ -336,8 +336,8 @@ const useForms = () => {
     price: 0,
     quantity: 0,
     image: '',
-    metaId: '',
-  };
+    metaId: ''
+  }
 
   const discountFieldsValidation = {
     name: Yup.object().shape(localizedTextsFieldsValidation),
@@ -348,14 +348,14 @@ const useForms = () => {
       .required(),
     active: Yup
       .boolean()
-  };
+  }
 
   const discountFieldsInitValues = {
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
     discountPercent: 0.1,
-    active: false,
-  };
+    active: false
+  }
 
   const packFieldsValidation = {
     name: Yup.object().shape(localizedTextsFieldsValidation),
@@ -369,36 +369,36 @@ const useForms = () => {
       .min(1),
     metaId: Yup
       .string()
-      .min(1),
-  };
+      .min(1)
+  }
 
   const packFieldsInitValues = {
     name: localizedTextsFieldsInitValues,
     description: localizedTextsFieldsInitValues,
     price: 0,
     image: '',
-    metaId: '',
-  };
+    metaId: ''
+  }
 
   const packInventoryFieldsValidation = {
     id: Yup
       .number()
       .min(0)
-      .required(),
-  };
+      .required()
+  }
 
   const packInventoryFieldsInitValues = {
-    id: 0,
-  };
+    id: 0
+  }
 
   // Custom forms validation
 
   const loginFormValidation = Yup.object().shape({
     email: userFieldsValidation.email,
     password: userFieldsValidation.password,
-    remember: userFieldsValidation.remember,
-  });
-  
+    remember: userFieldsValidation.remember
+  })
+
   const registerFormValidation = Yup.object().shape({
     email: userFieldsValidation.email,
     password: userFieldsValidation.password,
@@ -406,75 +406,75 @@ const useForms = () => {
     firstName: userFieldsValidation.firstName,
     lastName: userFieldsValidation.lastName,
     birthday: userFieldsValidation.birthday,
-    getEmails: userFieldsValidation.getEmails,
-  });
-  
+    getEmails: userFieldsValidation.getEmails
+  })
+
   const sendEmailFormValidation = Yup.object().shape({
-    email: userFieldsValidation.email,
-  });
-  
+    email: userFieldsValidation.email
+  })
+
   const updateEmailFormValidation = Yup.object().shape({
     password: userFieldsValidation.password,
-    newEmail: userFieldsValidation.email,
-  });
-  
+    newEmail: userFieldsValidation.email
+  })
+
   const resetPasswordFormValidation = Yup.object().shape({
     newPassword: userFieldsValidation.password,
-    newConfirm: userFieldsValidation.confirm('newPassword'),
-  });
+    newConfirm: userFieldsValidation.confirm('newPassword')
+  })
 
   const updateUserFormValidation = Yup.object().shape({
     firstName: userFieldsValidation.firstName,
     lastName: userFieldsValidation.lastName,
     birthday: userFieldsValidation.birthday,
-    getEmails: userFieldsValidation.getEmails,
-  });
+    getEmails: userFieldsValidation.getEmails
+  })
 
   const checkoutContactFormValidation = Yup.object().shape({
     shipping: Yup.object().shape(addressFieldsValidation),
     billing: Yup.object().when('sameAsShipping', {
       is: (sameAsShipping: boolean) => !sameAsShipping,
-      then: Yup.object().shape(addressFieldsValidation),
+      then: Yup.object().shape(addressFieldsValidation)
     }),
     sameAsShipping: Yup
       .boolean(),
     checkoutEmail: userFieldsValidation.email,
-    notes: orderFieldsValidation.notes,
-  });
+    notes: orderFieldsValidation.notes
+  })
 
   const couponFormValidation = Yup.object().shape({
     couponCode: Yup
       .string()
-      .required(),
-  });
+      .required()
+  })
 
   const productReviewFormValidation = Yup.object().shape({
     rating: reviewFieldsValidation.rating,
     title: reviewFieldsValidation.title,
     description: reviewFieldsValidation.description,
     email: userFieldsValidation.email,
-    publicName: reviewFieldsValidation.publicName,
-  });
+    publicName: reviewFieldsValidation.publicName
+  })
 
   const userContactFormValidation = Yup.object().shape({
     firstName: userFieldsValidation.firstName,
     email: userFieldsValidation.email,
     comments: userFieldsValidation.comments,
-    acceptPolicy: userFieldsValidation.acceptPolicy,
-  });
+    acceptPolicy: userFieldsValidation.acceptPolicy
+  })
 
   const userResolutionFormValidation = Yup.object().shape({
     type: contactFieldsValidation.type,
     email: userFieldsValidation.email,
     firstName: userFieldsValidation.firstName,
     orderId: orderFieldsValidation.bigbuyId,
-    comments: userFieldsValidation.comments,
-  });
+    comments: userFieldsValidation.comments
+  })
 
   const getOrderFormValidation = Yup.object().shape({
     orderId: orderFieldsValidation.bigbuyId,
-    guestUserEmail: orderFieldsValidation.guestUserEmail,
-  });
+    guestUserEmail: orderFieldsValidation.guestUserEmail
+  })
 
   const createFailedOrderFormValidation = Yup.object().shape({
     locale: emailsFieldsValidation.locale,
@@ -482,43 +482,43 @@ const useForms = () => {
     currency: orderFieldsValidation.currency,
     checkoutEmail: userFieldsValidation.email,
     notes: orderFieldsValidation.notes,
-    shipping: Yup.object().shape(addressFieldsValidation),
-  });
-  
+    shipping: Yup.object().shape(addressFieldsValidation)
+  })
+
   const createFailedOrderProductFormValidation = Yup.object().shape({
     quantity: orderProductFieldsValidation.quantity,
-    inventoryId: orderProductFieldsValidation.inventoryId,
-  });
+    inventoryId: orderProductFieldsValidation.inventoryId
+  })
 
   const sendOrderEmailFormValidation = Yup.object().shape({
     bigbuyId: orderFieldsValidation.bigbuyId,
     locale: emailsFieldsValidation.locale,
-    emailType: emailsFieldsValidation.emailType,
-  });
-  
+    emailType: emailsFieldsValidation.emailType
+  })
+
   const sendFailedOrderEmailFormValidation = Yup.object().shape({
     orderId: orderFieldsValidation.id,
     locale: emailsFieldsValidation.locale,
-    currency: orderFieldsValidation.currency,
-  });
+    currency: orderFieldsValidation.currency
+  })
 
   const manageCategoryFormValidation = Yup.object().shape({
     name: categoryFieldsValidation.name,
     description: categoryFieldsValidation.description,
     slug: categoryFieldsValidation.slug,
-    image: categoryFieldsValidation.image,
-  });
+    image: categoryFieldsValidation.image
+  })
 
   const manageLandingFormValidation = Yup.object().shape({
     name: landingFieldsValidation.name,
     description: landingFieldsValidation.description,
-    slug: landingFieldsValidation.slug,
-  });
+    slug: landingFieldsValidation.slug
+  })
 
   const manageProductFormValidation = Yup.object().shape({
     name: productFieldsValidation.name,
-    description: productFieldsValidation.description,
-  });
+    description: productFieldsValidation.description
+  })
 
   const manageInventoryFormValidation = Yup.object().shape({
     sku: inventoryFieldsValidation.sku,
@@ -527,27 +527,27 @@ const useForms = () => {
     price: inventoryFieldsValidation.price,
     quantity: inventoryFieldsValidation.quantity,
     image: packFieldsValidation.image,
-    metaId: packFieldsValidation.metaId,
-  });
+    metaId: packFieldsValidation.metaId
+  })
 
   const manageDiscountFormValidation = Yup.object().shape({
     name: discountFieldsValidation.name,
     description: discountFieldsValidation.description,
     discountPercent: discountFieldsValidation.discountPercent,
-    active: discountFieldsValidation.active,
-  });
+    active: discountFieldsValidation.active
+  })
 
   const managePackFormValidation = Yup.object().shape({
     name: packFieldsValidation.name,
     description: packFieldsValidation.description,
     price: packFieldsValidation.price,
     image: packFieldsValidation.image,
-    metaId: packFieldsValidation.metaId,
-  });
+    metaId: packFieldsValidation.metaId
+  })
 
   const managePackInventoryFormValidation = Yup.object().shape({
-    id: packInventoryFieldsValidation.id,
-  });
+    id: packInventoryFieldsValidation.id
+  })
 
   // Custom form fields
 
@@ -557,37 +557,37 @@ const useForms = () => {
         name: `${name}.firstName`,
         type: FormFieldTypes.text,
         required: true,
-        autoFocus: autoFocus,
-        autoComplete: 'firstName',
+        autoFocus,
+        autoComplete: 'firstName'
       },
       {
         name: `${name}.lastName`,
         type: FormFieldTypes.text,
         required: true,
-        autoComplete: 'lastName',
+        autoComplete: 'lastName'
       },
       {
         name: `${name}.addressLine1`,
         type: FormFieldTypes.text,
         required: true,
-        autoComplete: 'addressLine1',
+        autoComplete: 'addressLine1'
       },
       {
         name: `${name}.addressLine2`,
         type: FormFieldTypes.text,
-        autoComplete: 'addressLine2',
+        autoComplete: 'addressLine2'
       },
       {
         name: `${name}.postalCode`,
         type: FormFieldTypes.text,
         required: true,
-        autoComplete: 'postalCode',
+        autoComplete: 'postalCode'
       },
       {
         name: `${name}.locality`,
         type: FormFieldTypes.text,
         required: true,
-        autoComplete: 'city',
+        autoComplete: 'city'
       },
       {
         name: `${name}.country`,
@@ -596,18 +596,18 @@ const useForms = () => {
         menuItems: Object.keys(CountryOptions).map((countryKey) => {
           return {
             text: {
-              id: countryKey,
+              id: countryKey
             },
-            value: getCountryName(countryKey),
-          };
-        }),
-      },
-    ] as FormField[];
-  };
+            value: getCountryName(countryKey)
+          }
+        })
+      }
+    ] as FormField[]
+  }
 
   return {
     initForms,
-    
+
     userFieldsInitValues,
     addressFieldsInitValues,
     orderFieldsInitValues,
@@ -647,8 +647,8 @@ const useForms = () => {
     managePackFormValidation,
     managePackInventoryFormValidation,
 
-    addressFormFields,
+    addressFormFields
   }
-};
+}
 
-export default useForms;
+export default useForms

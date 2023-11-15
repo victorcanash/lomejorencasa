@@ -1,3 +1,3 @@
-import CheckLandingsSection from './CheckLandingsSection';
+import CheckLandingsSection from './CheckLandingsSection'
 
-export default CheckLandingsSection;
+export default CheckLandingsSection

@@ -1,34 +1,34 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Breadcrumbs from '@mui/material/Breadcrumbs'
+import NavigateNextIcon from '@mui/icons-material/NavigateNext'
 
-import type { FormatText } from '@core/types/texts';
-import type { Landing, ProductCategoryGroup, ProductCategory } from '@core/types/products';
-import { useProductsContext } from '@core/contexts/ProductsContext';
-import usePagination from '@core/hooks/usePagination';
-import Link from '@core/components/navigation/Link';
-import Title from '@core/components/ui/Title';
-import Pagination from '@core/components/ui/Pagination';
-import CategoryList from '@core/components/CategoryList';
-import LandingItem from './LandingItem';
+import type { FormatText } from '@core/types/texts'
+import type { Landing, ProductCategoryGroup, ProductCategory } from '@core/types/products'
+import { useProductsContext } from '@core/contexts/ProductsContext'
+import usePagination from '@core/hooks/usePagination'
+import Link from '@core/components/navigation/Link'
+import Title from '@core/components/ui/Title'
+import Pagination from '@core/components/ui/Pagination'
+import CategoryList from '@core/components/CategoryList'
+import LandingItem from './LandingItem'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
-type LandingListProps = {
-  type: 'collectionsPage' | 'stack',
-  category?: ProductCategoryGroup | ProductCategory,
-  landings: Landing[],
-  title?: FormatText,
-  marginBottom?: boolean,
-};
+interface LandingListProps {
+  type: 'collectionsPage' | 'stack'
+  category?: ProductCategoryGroup | ProductCategory
+  landings: Landing[]
+  title?: FormatText
+  marginBottom?: boolean
+}
 
 const LandingList = (props: LandingListProps) => {
   const {
@@ -36,21 +36,21 @@ const LandingList = (props: LandingListProps) => {
     category,
     landings,
     title,
-    marginBottom,
-  } = props;
+    marginBottom
+  } = props
 
-  const { getItemPath } = useProductsContext();
+  const { getItemPath } = useProductsContext()
 
   const {
     currentPage,
     allItems,
     totalPages,
-    handleChangePage,
-  } = usePagination(landings, 'landings');
+    handleChangePage
+  } = usePagination(landings, 'landings')
 
   const allLandings = useMemo(() => {
-    return allItems as Landing[];
-  }, [allItems]);
+    return allItems as Landing[]
+  }, [allItems])
 
   return (
     <>
@@ -68,14 +68,15 @@ const LandingList = (props: LandingListProps) => {
                 type="h2"
                 noMarginTop
                 texts={{
-                  title: title,
-                  titleAdd: (category && !title) ?
-                    category.name.current : undefined,
+                  title,
+                  titleAdd: ((category != null) && (title == null))
+                    ? category.name.current
+                    : undefined
                 }}
                 divider={false}
               />
             </Grid>
-            { category &&
+            { (category != null) &&
               <Grid item>
                 <Typography component={Link} variant="body1Head" href={getItemPath(category)} sx={{ lineHeight: '30px' }}>
                   <FormattedMessage
@@ -92,8 +93,8 @@ const LandingList = (props: LandingListProps) => {
         id="landings"
         sx={{
           overflowX: type === 'stack' ? 'auto' : undefined,
-          mb: marginBottom ? 6 : undefined,
-          pt: type === 'stack' ? 1 : undefined,
+          mb: (marginBottom === true) ? 6 : undefined,
+          pt: type === 'stack' ? 1 : undefined
         }}
       >
         <Box
@@ -129,27 +130,28 @@ const LandingList = (props: LandingListProps) => {
                 type="h1"
                 noMarginTop
                 texts={{
-                  title: title,
-                  titleAdd: (category && !title) ?
-                    category.name.current : undefined,
+                  title,
+                  titleAdd: ((category != null) && (title == null))
+                    ? category.name.current
+                    : undefined
                 }}
                 divider
               />
             </>
           }
 
-          { (type === 'collectionsPage' && (category as ProductCategoryGroup)?.categories) &&
+          { (type === 'collectionsPage' && category != null && (category as ProductCategoryGroup).categories != null) &&
             <Box mx={-2} mb={4}>
               <CategoryList
                 type="stack"
-                categories={(category as ProductCategoryGroup).categories || []}
+                categories={(category as ProductCategoryGroup).categories ?? []}
               />
             </Box>
           }
 
           {/* List */}
-          { allLandings.length > 0 ?
-            <>
+          { allLandings.length > 0
+            ? <>
 
               {/* Masonry List */}
               { type === 'collectionsPage' &&
@@ -166,11 +168,11 @@ const LandingList = (props: LandingListProps) => {
                           m: 'auto',
                           mb: {
                             xs: 1,
-                            sm: 2,
+                            sm: 2
                           },
                           px: {
                             xs: 0.5,
-                            sm: 1,
+                            sm: 1
                           }
                         }}
                       >
@@ -198,8 +200,8 @@ const LandingList = (props: LandingListProps) => {
                         width: 'max-content',
                         minWidth: {
                           xs: '43%',
-                          sm_md: '30%',
-                        },
+                          sm_md: '30%'
+                        }
                       }}
                     >
                       <LandingItem
@@ -211,8 +213,7 @@ const LandingList = (props: LandingListProps) => {
                 </Stack>
               }
             </>
-            :
-            <Typography component="h3" variant="body1" sx={{ textAlign: "center" }}>
+            : <Typography component="h3" variant="body1" sx={{ textAlign: 'center' }}>
               <FormattedMessage
                 id="productList.noItems"
               />
@@ -233,7 +234,7 @@ const LandingList = (props: LandingListProps) => {
         </Box>
       </Container>
     </>
-  );
-};
+  )
+}
 
-export default LandingList;
+export default LandingList

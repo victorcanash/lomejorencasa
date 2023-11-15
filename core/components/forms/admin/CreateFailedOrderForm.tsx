@@ -1,72 +1,72 @@
-import { useState } from 'react';
+import { useState } from 'react'
 // import { useRouter } from 'next/router'
 
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
-import { FormFieldTypes } from '@core/constants/forms';
-import { AddressTypes } from '@core/constants/addresses';
-import type { Order, OrderFailedCreate } from '@core/types/orders';
-import type { GuestCartItem } from '@core/types/cart';
-import Button from '@core/components/inputs/Button';
+import { FormFieldTypes } from '@core/constants/forms'
+import { AddressTypes } from '@core/constants/addresses'
+import type { Order, OrderFailedCreate } from '@core/types/orders'
+import type { GuestCartItem } from '@core/types/cart'
+import Button from '@core/components/inputs/Button'
 
-import useForms from '@core/hooks/useForms';
-import useOrders from '@core/hooks/useOrders';
-import BaseForm from '@core/components/forms/BaseForm';
-import CreateFailedOrderProductForm from '@core/components/forms/admin/CreateFailedOrderProductForm';
+import useForms from '@core/hooks/useForms'
+import useOrders from '@core/hooks/useOrders'
+import BaseForm from '@core/components/forms/BaseForm'
+import CreateFailedOrderProductForm from '@core/components/forms/admin/CreateFailedOrderProductForm'
 
-type CreateFailedOrderFormProps = {
-  onSubmitSuccess?: (order?: Order) => void,
-  onCancel?: () => void,
-};
+interface CreateFailedOrderFormProps {
+  onSubmitSuccess?: (order?: Order) => void
+  onCancel?: () => void
+}
 
 const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
-  const { onSubmitSuccess, onCancel } = props;
+  const { onSubmitSuccess, onCancel } = props
 
   // const router = useRouter();
-  const intl = useIntl();
+  const intl = useIntl()
 
-  const { 
+  const {
     createFailedOrderFormValidation,
     emailsFieldsInitValues,
     orderFieldsInitValues,
     userFieldsInitValues,
     addressFieldsInitValues,
-    addressFormFields,
-  } = useForms();
-  const { createFailedOrder, errorMsg, successMsg } = useOrders();
+    addressFormFields
+  } = useForms()
+  const { createFailedOrder, errorMsg, successMsg } = useOrders()
 
-  const [orderProducts, setOrderProducts] = useState<GuestCartItem[]>([]);
+  const [orderProducts, setOrderProducts] = useState<GuestCartItem[]>([])
 
   const onSuccessCreateOrderProduct = (orderProduct: GuestCartItem) => {
-    setOrderProducts(current => [...current, orderProduct]);
-  };
+    setOrderProducts(current => [...current, orderProduct])
+  }
 
   const onClickDeleteOrderProductBtn = (deleteIndex: number) => {
     setOrderProducts(
       orderProducts.filter((_item, index) => index !== deleteIndex)
-    );
-  };
+    )
+  }
 
   const handleSubmit = async (values: OrderFailedCreate) => {
-    if (orderProducts && orderProducts.length > 0) {
-      createFailedOrder({
+    if (orderProducts.length > 0) {
+      void createFailedOrder({
         ...values,
-        products: orderProducts,
-      }, onSubmitSuccess);
+        products: orderProducts
+      }, onSubmitSuccess)
     }
-  };
+  }
 
   const handleCancelBtn = () => {
-    if (onCancel) {
-      onCancel();
+    if (onCancel != null) {
+      onCancel()
     };
-  };
+  }
 
-  const maxWidth = '500px';
+  const maxWidth = '500px'
 
   return (
     <>
@@ -81,76 +81,76 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
             id: -1,
             userId: -1,
             type: AddressTypes.shipping,
-            ...addressFieldsInitValues,
+            ...addressFieldsInitValues
           },
           products: [],
-          currency: orderFieldsInitValues.currency,
-        } as OrderFailedCreate}
+          currency: orderFieldsInitValues.currency
+        }}
         validationSchema={createFailedOrderFormValidation}
         formFieldGroups={[
           {
             titleTxt: {
-              id: 'forms.createFailedOrder.title',
+              id: 'forms.createFailedOrder.title'
             },
             formFields: [
               {
                 name: 'locale',
                 type: FormFieldTypes.select,
                 required: true,
-                /*menuItems: router.locales?.map((locale) => {
+                /* menuItems: router.locales?.map((locale) => {
                   return {
                     text: {
                       id: locale,
                     },
                     value: locale,
                   };
-                }) | undefined,*/ 
+                }) | undefined, */
                 menuItems: [
                   {
                     text: {
-                      id: 'es',
+                      id: 'es'
                     },
-                    value: 'es',
+                    value: 'es'
                   }
-                ],       
+                ]
               },
               {
                 name: 'paypalTransactionId',
                 type: FormFieldTypes.text,
-                required: true,
+                required: true
               },
               {
                 name: 'currency',
                 type: FormFieldTypes.text,
                 required: true,
-                disabled: true,
+                disabled: true
               },
               {
                 name: 'checkoutEmail',
                 type: FormFieldTypes.text,
-                required: true,
+                required: true
               },
               {
                 name: 'notes',
-                type: FormFieldTypes.text,
+                type: FormFieldTypes.text
               },
               ...addressFormFields(AddressTypes.shipping)
-            ],
+            ]
           }
         ]}
         formButtons={{
           submit: {
             text: {
-              id: 'forms.createFailedOrder.successBtn',
+              id: 'forms.createFailedOrder.successBtn'
             },
-            onSubmit: handleSubmit,
+            onSubmit: handleSubmit
           },
           cancel: {
             text: {
-              id: 'app.cancelBtn',
+              id: 'app.cancelBtn'
             },
-            onClick: handleCancelBtn,
-          },
+            onClick: handleCancelBtn
+          }
         }}
         successMsg={successMsg}
         errorMsg={errorMsg}
@@ -162,42 +162,42 @@ const CreateFailedOrderForm = (props: CreateFailedOrderFormProps) => {
       <CreateFailedOrderProductForm
         onSubmitSuccess={onSuccessCreateOrderProduct}
       />
-      { orderProducts && orderProducts.length > 0 &&
+      { orderProducts.length > 0 &&
         <Box
           sx={{
-            maxWidth: maxWidth,
-            margin: 'auto',
+            maxWidth,
+            margin: 'auto'
           }}
         >
           <Typography component="h3" variant="body1" mt={3}>
-            {`${intl.formatMessage({ id: "orderDetail.products" })}:`}
+            {`${intl.formatMessage({ id: 'orderDetail.products' })}:`}
           </Typography>
           <Grid container spacing={1} pt={2} pb={5}>
             { orderProducts.map((product, productIndex) => (
               <Grid item xs={6} sm={4} key={productIndex}>
                 <Typography component="div" variant="body1">
-                  {`${intl.formatMessage({ id: "forms.quantity" })}: ${product.quantity}`}
+                  {`${intl.formatMessage({ id: 'forms.quantity' })}: ${product.quantity}`}
                 </Typography>
                 <Typography component="div" variant="body1">
-                  {`${intl.formatMessage({ id: "forms.inventoryId" })}: ${product.inventoryId}`}
+                  {`${intl.formatMessage({ id: 'forms.inventoryId' })}: ${product.inventoryId}`}
                 </Typography>
                 <Typography component="div" variant="body1">
-                  {`${intl.formatMessage({ id: "forms.packId" })}: ${product.packId}`}
+                  {`${intl.formatMessage({ id: 'forms.packId' })}: ${product.packId}`}
                 </Typography>
-                <Button                   
-                  onClick={() => onClickDeleteOrderProductBtn(productIndex)}
+                <Button
+                  onClick={() => { onClickDeleteOrderProductBtn(productIndex) }}
                 >
-                  <FormattedMessage 
-                    id="app.deleteBtn" 
+                  <FormattedMessage
+                    id="app.deleteBtn"
                   />
-                </Button> 
+                </Button>
               </Grid>
             ))}
           </Grid>
         </Box>
       }
     </>
-  );
-};
+  )
+}
 
-export default CreateFailedOrderForm;
+export default CreateFailedOrderForm

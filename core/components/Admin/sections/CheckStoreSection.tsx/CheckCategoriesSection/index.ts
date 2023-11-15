@@ -1,3 +1,3 @@
-import CheckCategoriesSection from './CheckCategoriesSection';
+import CheckCategoriesSection from './CheckCategoriesSection'
 
-export default CheckCategoriesSection;
+export default CheckCategoriesSection

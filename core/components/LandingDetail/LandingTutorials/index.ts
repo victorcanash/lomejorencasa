@@ -1,3 +1,3 @@
-import LandingTutorials from './LandingTutorials';
+import LandingTutorials from './LandingTutorials'
 
-export default LandingTutorials;
+export default LandingTutorials

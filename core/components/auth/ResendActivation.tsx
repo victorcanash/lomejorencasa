@@ -1,28 +1,28 @@
-import { useMemo } from 'react';
-import { useRouter } from 'next/router';
+import { useMemo } from 'react'
+import { useRouter } from 'next/router'
 
-import Container from '@mui/material/Container';
+import Container from '@mui/material/Container'
 
-import ResendActivationForm from '@core/components/forms/auth/ResendActivationForm';
+import ResendActivationForm from '@core/components/forms/auth/ResendActivationForm'
 
 const ResendActivation = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   const emailQuery = useMemo(() => {
-    const { email } = router.query;
-    if (email && typeof email === 'string') {
-      return email;
+    const { email } = router.query
+    if (email != null && typeof email === 'string') {
+      return email
     }
-    return undefined;
-  }, [router.query]);
+    return undefined
+  }, [router.query])
 
   return (
     <Container>
-      { emailQuery &&
+      { (emailQuery != null) &&
         <ResendActivationForm email={emailQuery} />
       }
     </Container>
-  );
-};
+  )
+}
 
-export default ResendActivation;
+export default ResendActivation

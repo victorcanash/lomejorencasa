@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export {};
+export {}
 
 declare global {
   interface Window {
-    dataLayer: any,
-    fbq: any;
+    dataLayer: any
+    fbq: any
   };
 };

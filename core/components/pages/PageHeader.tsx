@@ -1,68 +1,68 @@
-import { useCallback } from 'react';
+import { useCallback } from 'react'
 // import Head from 'next/head';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'
 
-import { NextSeo } from 'next-seo';
-import { useIntl } from 'react-intl';
+import { NextSeo } from 'next-seo'
+import { useIntl } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
 
-import envConfig from '@core/config/env.config';
-import { PageTypes } from '@core/constants/navigation';
-import type { FormatText } from '@core/types/texts';
+import envConfig from '@core/config/env.config'
+import { PageTypes } from '@core/constants/navigation'
+import type { FormatText } from '@core/types/texts'
 
-import Title from '@core/components/ui/Title';
+import Title from '@core/components/ui/Title'
 
-type PageHeaderProps = {
-  pageType: PageTypes,
+interface PageHeaderProps {
+  pageType: PageTypes
   metas: {
-    titleId?: string,
-    titleAdd?: string,
-    descriptionId?: string,
-    descriptionAdd?: string,
-    noindex?: boolean,
-    nofollow?: boolean,
-  },
-  marginTop?: boolean,
+    titleId?: string
+    titleAdd?: string
+    descriptionId?: string
+    descriptionAdd?: string
+    noindex?: boolean
+    nofollow?: boolean
+  }
+  marginTop?: boolean
   texts?: {
-    title?: FormatText,
-    titleAdd?: string,
-  },
-};
+    title?: FormatText
+    titleAdd?: string
+  }
+}
 
 const PageHeader = (props: PageHeaderProps) => {
   const {
     pageType,
     metas,
     marginTop,
-    texts,
-  } = props;
+    texts
+  } = props
 
-  const router = useRouter();
-  const intl = useIntl();
+  const router = useRouter()
+  const intl = useIntl()
 
   const getTitle = useCallback(() => {
-    let title = '';
-    if (metas.titleId) {
-      title = intl.formatMessage({ id: metas.titleId });
+    let title = ''
+    if (metas.titleId != null) {
+      title = intl.formatMessage({ id: metas.titleId })
     }
-    if (metas.titleAdd) {
-      title += metas.titleAdd;
+    if (metas.titleAdd != null) {
+      title += metas.titleAdd
     }
-    return title;
-  }, [intl, metas.titleAdd, metas.titleId]);
+    return title
+  }, [intl, metas.titleAdd, metas.titleId])
 
   const getDescription = useCallback(() => {
-    let description = '';
-    if (metas.descriptionId) {
-      description = intl.formatMessage({ id: metas.descriptionId });
+    let description = ''
+    if (metas.descriptionId != null) {
+      description = intl.formatMessage({ id: metas.descriptionId })
     }
-    if (metas.descriptionAdd) {
-      description += metas.descriptionAdd;
+    if (metas.descriptionAdd != null) {
+      description += metas.descriptionAdd
     }
-    return description;
-  }, [intl, metas.descriptionAdd, metas.descriptionId]);
+    return description
+  }, [intl, metas.descriptionAdd, metas.descriptionId])
 
   return (
     <>
@@ -77,26 +77,26 @@ const PageHeader = (props: PageHeaderProps) => {
           title: getTitle(),
           description: getDescription(),
           url: `${envConfig.APP_URL}${router.asPath}`,
-          /*images: [
+          /* images: [
             {
               url: `https://${envConfig.NEXT_PUBLIC_APP_URL}/logo_lg.png`,
               width: 1000,
               height: 750,
             },
-          ],*/
-          siteName: getTitle(),
+          ], */
+          siteName: getTitle()
         }}
       />
 
-      { (pageType == PageTypes.main || 
-         pageType == PageTypes.admin || 
-         pageType == PageTypes.notFound || 
-         pageType == PageTypes.error) &&
+      { (pageType === PageTypes.main ||
+         pageType === PageTypes.admin ||
+         pageType === PageTypes.notFound ||
+         pageType === PageTypes.error) &&
         <>
-          { marginTop &&
-            <Box sx={{height: '20px'}} />
+          { (marginTop === true) &&
+            <Box sx={{ height: '20px' }} />
           }
-          { (texts?.title?.id || texts?.titleAdd) &&
+          { (((texts?.title?.id) != null) || ((texts?.titleAdd) != null)) &&
             <Container>
               <Title
                 type="h1"
@@ -109,7 +109,7 @@ const PageHeader = (props: PageHeaderProps) => {
         </>
       }
     </>
-  );
-};
+  )
+}
 
-export default PageHeader;
+export default PageHeader

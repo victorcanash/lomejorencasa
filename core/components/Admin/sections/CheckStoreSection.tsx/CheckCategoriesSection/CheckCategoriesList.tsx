@@ -1,39 +1,39 @@
-import { Fragment } from 'react';
+import { Fragment } from 'react'
 
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl'
 
-import Box from '@mui/material/Box';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CreateIcon from '@mui/icons-material/Create';
+import Box from '@mui/material/Box'
+import Accordion from '@mui/material/Accordion'
+import AccordionSummary from '@mui/material/AccordionSummary'
+import AccordionDetails from '@mui/material/AccordionDetails'
+import Typography from '@mui/material/Typography'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import CreateIcon from '@mui/icons-material/Create'
 
-import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin';
-import { useAdminContext } from '@core/contexts/AdminContext';
-import Button from '@core/components/inputs/Button';
-import CheckCategoryDetail from './CheckCategoryDetail';
+import type { CheckCategory, CheckCategoryGroup } from '@core/types/admin'
+import { useAdminContext } from '@core/contexts/AdminContext'
+import Button from '@core/components/inputs/Button'
+import CheckCategoryDetail from './CheckCategoryDetail'
 
-type CheckCategoriesListProps = {
-  onClickSelectBtn: (checkCategory: CheckCategory) => void,
-  onClickCreateBtn: (isGroup: boolean, groupId?: number) => void,
-  onClickUpdateBtn: (checkCategory: CheckCategory | CheckCategoryGroup) => void,
-};
+interface CheckCategoriesListProps {
+  onClickSelectBtn: (checkCategory: CheckCategory) => void
+  onClickCreateBtn: (isGroup: boolean, groupId?: number) => void
+  onClickUpdateBtn: (checkCategory: CheckCategory | CheckCategoryGroup) => void
+}
 
-const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
+const CheckCategoriesList = (props: CheckCategoriesListProps) => {
   const {
     onClickSelectBtn,
     onClickCreateBtn,
-    onClickUpdateBtn,
-  } = props;
+    onClickUpdateBtn
+  } = props
 
   const {
     checkCategoryGroups,
-    checkCategoriesWithoutGroup,
-  } = useAdminContext();
+    checkCategoriesWithoutGroup
+  } = useAdminContext()
 
-  const intl = useIntl();
+  const intl = useIntl()
 
   return (
     <>
@@ -48,7 +48,7 @@ const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
         <AccordionDetails>
           <Button
             startIcon={<CreateIcon />}
-            onClick={() => onClickCreateBtn(true)}
+            onClick={() => { onClickCreateBtn(true) }}
           >
             <FormattedMessage
               id="admin.createCategoryBtn"
@@ -67,7 +67,7 @@ const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
               <Box ml={2}>
                 <Button
                   startIcon={<CreateIcon />}
-                  onClick={() => onClickCreateBtn(false, checkCategoryGroup.categoryGroup.id)}
+                  onClick={() => { onClickCreateBtn(false, checkCategoryGroup.categoryGroup.id) }}
                 >
                   <FormattedMessage
                     id="admin.createCategoryBtn"
@@ -98,7 +98,7 @@ const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
         <AccordionDetails>
           <Button
             startIcon={<CreateIcon />}
-            onClick={() => onClickCreateBtn(false)}
+            onClick={() => { onClickCreateBtn(false) }}
           >
             <FormattedMessage
               id="admin.createCategoryBtn"
@@ -116,7 +116,7 @@ const  CheckCategoriesList = (props: CheckCategoriesListProps) => {
         </AccordionDetails>
       </Accordion>
     </>
-  );
-};
+  )
+}
 
-export default CheckCategoriesList;
+export default CheckCategoriesList

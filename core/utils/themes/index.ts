@@ -1,6 +1,6 @@
-import type { ThemeElement } from '@core/types/themes';
+import type { ThemeElement } from '@core/types/themes'
 
-export const convertElementToSx= (themeElement: ThemeElement) => {
+export const convertElementToSx = (themeElement: ThemeElement) => {
   return ({
     ...convertElementToEventSx(themeElement, 'default'),
     '&.Mui-disabled': convertElementToEventSx(themeElement, 'disabled'),
@@ -11,13 +11,13 @@ export const convertElementToSx= (themeElement: ThemeElement) => {
     '&:first-of-type': convertElementToEventSx(themeElement, 'firstChild'),
     '&:last-child': convertElementToEventSx(themeElement, 'lastChild'),
     '&:last-of-type': convertElementToEventSx(themeElement, 'lastChild'),
-    '&:before': convertElementToEventSx(themeElement, 'before'),
-  });
-};
+    '&:before': convertElementToEventSx(themeElement, 'before')
+  })
+}
 
 const convertElementToEventSx = (
   themeElement: ThemeElement,
-  themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'firstChild' | 'lastChild' | 'before',
+  themeElementType: 'default' | 'disabled' | 'hover' | 'focus' | 'even' | 'odd' | 'firstChild' | 'lastChild' | 'before'
 ) => {
   return ({
     background: themeElement.background?.[themeElementType],
@@ -41,6 +41,6 @@ const convertElementToEventSx = (
     paddingRight: themeElement.spacing?.[themeElementType]?.padding?.right,
     paddingLeft: themeElement.spacing?.[themeElementType]?.padding?.left,
     paddingTop: themeElement.spacing?.[themeElementType]?.padding?.top,
-    paddingBottom: themeElement.spacing?.[themeElementType]?.padding?.bottom,
-  });
-};
+    paddingBottom: themeElement.spacing?.[themeElementType]?.padding?.bottom
+  })
+}

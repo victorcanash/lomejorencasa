@@ -1,15 +1,15 @@
-import { ChangeEvent, useState, useCallback, useEffect } from 'react';
+import { type ChangeEvent, useState, useCallback, useEffect } from 'react'
 
-import { FormattedMessage } from 'react-intl';
-import { setCookie, getCookie } from 'cookies-next';
-import { OptionsType } from 'cookies-next/lib/types';
+import { FormattedMessage } from 'react-intl'
+import { setCookie, getCookie } from 'cookies-next'
+import { type OptionsType } from 'cookies-next/lib/types'
 
-import Backdrop from '@mui/material/Backdrop';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Switch from '@mui/material/Switch';
+import Backdrop from '@mui/material/Backdrop'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Stack from '@mui/material/Stack'
+import Switch from '@mui/material/Switch'
 
 import {
   ConsentKey,
@@ -18,75 +18,75 @@ import {
   PerformanceConsentKey,
   AdConsentKey,
   WithoutCategoryConsentKey,
-  ConsentValues,
-} from '@core/constants/cookies';
-import type { Consents } from '@core/types/cookies';
-import { consentFBEvents } from '@core/utils/facebook';
-import { consentGTMEvents } from '@core/utils/gtm';
-import { subtractYears } from '@core/utils/dates';
-import Link from '@core/components/navigation/Link';
-import Button from '@core/components/inputs/Button';
+  ConsentValues
+} from '@core/constants/cookies'
+import type { Consents } from '@core/types/cookies'
+import { consentFBEvents } from '@core/utils/facebook'
+import { consentGTMEvents } from '@core/utils/gtm'
+import { subtractYears } from '@core/utils/dates'
+import Link from '@core/components/navigation/Link'
+import Button from '@core/components/inputs/Button'
 
-import { pages } from '@lib/config/navigation.config';
-import { useAppContext } from '@core/contexts/AppContext';
+import { pages } from '@lib/config/navigation.config'
+import { useAppContext } from '@core/contexts/AppContext'
 
-type CookiesBannerProps = {
-  onConsentCookies: () => void,
-};
+interface CookiesBannerProps {
+  onConsentCookies: () => void
+}
 
 const CookiesBanner = (props: CookiesBannerProps) => {
-  const { onConsentCookies } = props;
+  const { onConsentCookies } = props
 
-  const { initialized } = useAppContext();
+  const { initialized } = useAppContext()
 
-  const [open, setOpen] = useState(false);
-  const [customSection, setCustomSection] = useState(false);
-  const [functionalSwitch, setFunctionalSwitch] = useState(true);
-  const [analyticSwitch, setAnalyticSwitch] = useState(true);
-  const [performanceSwitch, setPerformanceSwitch] = useState(true);
-  const [adSwitch, setAdSwitch] = useState(true);
-  const [withoutCategorySwitch, setWithoutCategorySwitch] = useState(true);
+  const [open, setOpen] = useState(false)
+  const [customSection, setCustomSection] = useState(false)
+  const [functionalSwitch, setFunctionalSwitch] = useState(true)
+  const [analyticSwitch, setAnalyticSwitch] = useState(true)
+  const [performanceSwitch, setPerformanceSwitch] = useState(true)
+  const [adSwitch, setAdSwitch] = useState(true)
+  const [withoutCategorySwitch, setWithoutCategorySwitch] = useState(true)
 
   const setConsentCookies = useCallback((consents: Consents) => {
-    consentFBEvents(consents.ad);
-    consentGTMEvents(consents.analytic);
-    onConsentCookies();
-    setOpen(false);
+    consentFBEvents(consents.ad)
+    consentGTMEvents(consents.analytic)
+    onConsentCookies()
+    setOpen(false)
     const options: OptionsType = {
       expires: subtractYears(-1),
-      sameSite: true,
-    };
+      sameSite: true
+    }
     setCookie(
       ConsentKey,
       ConsentValues.accepted,
-      options,
-    );
+      options
+    )
     setCookie(
       FunctionalConsentKey,
       consents.functional ? ConsentValues.accepted : ConsentValues.refused,
-      options,
-    );
+      options
+    )
     setCookie(
       AnalyticConsentKey,
       consents.analytic ? ConsentValues.accepted : ConsentValues.refused,
-      options,
-    );
+      options
+    )
     setCookie(
       PerformanceConsentKey,
       consents.performance ? ConsentValues.accepted : ConsentValues.refused,
-      options,
-    );
+      options
+    )
     setCookie(
       AdConsentKey,
       consents.ad ? ConsentValues.accepted : ConsentValues.refused,
-      options,
-    );
+      options
+    )
     setCookie(
       WithoutCategoryConsentKey,
       consents.withoutCategory ? ConsentValues.accepted : ConsentValues.refused,
-      options,
-    );
-  }, [onConsentCookies]);
+      options
+    )
+  }, [onConsentCookies])
 
   const handleClickAcceptBtn = () => {
     setConsentCookies({
@@ -94,17 +94,17 @@ const CookiesBanner = (props: CookiesBannerProps) => {
       analytic: true,
       performance: true,
       ad: true,
-      withoutCategory: true,
-    });
-  };
+      withoutCategory: true
+    })
+  }
 
   const handleClickCustomBtn = () => {
-    setCustomSection(true);
-  };
+    setCustomSection(true)
+  }
 
   const handleClickBackBtn = () => {
-    setCustomSection(false);
-  };
+    setCustomSection(false)
+  }
 
   const handleClickSaveBtn = () => {
     setConsentCookies({
@@ -112,44 +112,43 @@ const CookiesBanner = (props: CookiesBannerProps) => {
       analytic: analyticSwitch,
       performance: performanceSwitch,
       ad: adSwitch,
-      withoutCategory: withoutCategorySwitch,
-    });
-  };
+      withoutCategory: withoutCategorySwitch
+    })
+  }
 
   const handleFunctionalSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setFunctionalSwitch(event.target.checked);
-  };
+    setFunctionalSwitch(event.target.checked)
+  }
 
   const handleAnalyticSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAnalyticSwitch(event.target.checked);
-  };
+    setAnalyticSwitch(event.target.checked)
+  }
 
   const handlePerformanceSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setPerformanceSwitch(event.target.checked);
-  };
+    setPerformanceSwitch(event.target.checked)
+  }
 
   const handleAdSwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAdSwitch(event.target.checked);
-  };
+    setAdSwitch(event.target.checked)
+  }
 
   const handleWithoutCategorySwitchChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setWithoutCategorySwitch(event.target.checked);
-  };
+    setWithoutCategorySwitch(event.target.checked)
+  }
 
   useEffect(() => {
     if (initialized) {
       setOpen(
-        getCookie(ConsentKey) === ConsentValues.accepted ?
-          false : true
-      );
+        getCookie(ConsentKey) !== ConsentValues.accepted
+      )
     }
-  }, [initialized]);
+  }, [initialized])
 
   const CookiesType = (props: {
-    textId: string,
-    disabled?: boolean,
-    checked?: boolean,
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+    textId: string
+    disabled?: boolean
+    checked?: boolean
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void
   }) => (
     <>
       <Stack direction="row" spacing={1} justifyContent="space-between">
@@ -159,7 +158,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
           </Typography>
         </Box>
         <Switch
-          checked={!props.disabled ? props.checked : true}
+          checked={!(props.disabled ?? false) ? props.checked : true}
           disabled={props.disabled}
           onChange={props.onChange}
         />
@@ -168,23 +167,23 @@ const CookiesBanner = (props: CookiesBannerProps) => {
         <FormattedMessage id={`banners.cookies.custom.${props.textId}.content`} />
       </Typography>
     </>
-  );
+  )
 
   return (
     <Backdrop
-      sx={{ 
+      sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         position: 'fixed',
         top: 'auto',
         bottom: '0px',
         width: '100%',
         backgroundColor: 'rgb(0 0 0 / 90%)',
-        boxShadow: 3,
+        boxShadow: 3
       }}
       open={open}
     >
-      { !customSection ?
-        <Grid
+      { !customSection
+        ? <Grid
           container
           flexWrap="wrap"
           justifyContent="space-around"
@@ -207,7 +206,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
               <FormattedMessage id="footer.utility.cookies" />
             </Link>
           </Grid>
-          <Grid 
+          <Grid
             item
             xs={12}
             sm={6}
@@ -231,7 +230,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Button 
+              <Button
                 onClick={handleClickCustomBtn}
                 fullWidth
               >
@@ -242,16 +241,15 @@ const CookiesBanner = (props: CookiesBannerProps) => {
             </Grid>
           </Grid>
         </Grid>
-        :
-        <Box
+        : <Box
           sx={{
             maxHeight: !customSection ? 'auto' : '500px',
             overflowY: !customSection ? 'visible' : 'scroll',
-            p: 2,
+            p: 2
           }}
         >
           {/* Description */}
-          <Button 
+          <Button
             customtype='back'
             onClick={handleClickBackBtn}
           >
@@ -300,7 +298,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
             onChange={handleWithoutCategorySwitchChange}
           />
           {/* Buttons */}
-          <Grid 
+          <Grid
             container
             direction="column"
             flexWrap="nowrap"
@@ -321,7 +319,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Button 
+              <Button
                 onClick={handleClickSaveBtn}
                 fullWidth
               >
@@ -334,7 +332,7 @@ const CookiesBanner = (props: CookiesBannerProps) => {
         </Box>
       }
     </Backdrop>
-  );
-};
+  )
+}
 
-export default CookiesBanner;
+export default CookiesBanner

@@ -1,30 +1,30 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { type IconDefinition } from '@fortawesome/fontawesome-svg-core'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
-import type { FormatText } from '@core/types/texts';
+import type { FormatText } from '@core/types/texts'
 
-type LandingAdvantage = {
-  icon: IconDefinition,
-  text: FormatText,
-  columnSpacing: number,
-};
+interface LandingAdvantageProps {
+  icon: IconDefinition
+  text: FormatText
+  columnSpacing: number
+}
 
-const LandingAdvantage = (props: LandingAdvantage) => {
+const LandingAdvantage = (props: LandingAdvantageProps) => {
   const {
     icon,
     text,
-    columnSpacing,
-  } = props;
+    columnSpacing
+  } = props
 
   return (
     <Grid item xs={12} container columnSpacing={columnSpacing}>
       <Grid item>
-        <FontAwesomeIcon 
-          size="2xl" 
+        <FontAwesomeIcon
+          size="2xl"
           icon={icon}
         />
       </Grid>
@@ -34,7 +34,7 @@ const LandingAdvantage = (props: LandingAdvantage) => {
         </Typography>
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default LandingAdvantage;
+export default LandingAdvantage

@@ -1,54 +1,55 @@
-import { useMemo } from 'react';
+import { useMemo } from 'react'
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faTruck,
-} from '@fortawesome/free-solid-svg-icons';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+  faTruck
+} from '@fortawesome/free-solid-svg-icons'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
-import { convertElementToSx } from '@core/utils/themes';
+import { convertElementToSx } from '@core/utils/themes'
 
-import { themeCustomElements } from '@lib/config/theme/elements';
+import { themeCustomElements } from '@lib/config/theme/elements'
 
-type ShippingBarProps = {
-  superSmallBreakpoint: boolean,
-  smallBreakpoint: boolean,
-};
+interface ShippingBarProps {
+  superSmallBreakpoint: boolean
+  smallBreakpoint: boolean
+}
 
 const ShippingBar = (props: ShippingBarProps) => {
   const {
     superSmallBreakpoint,
-    smallBreakpoint,
-  } = props;
+    smallBreakpoint
+  } = props
 
   const shippingTruckMr = useMemo(() => {
     if (superSmallBreakpoint) {
-      return '0px';
+      return '0px'
     } else if (smallBreakpoint) {
-      return '2px';
+      return '2px'
     }
-    return '5px';
-  }, [smallBreakpoint, superSmallBreakpoint]);
+    return '5px'
+  }, [smallBreakpoint, superSmallBreakpoint])
 
   return (
     <Box
       sx={{
-        ...themeCustomElements.navBar?.shippingBar?.content ?
-          convertElementToSx(themeCustomElements.navBar?.shippingBar?.content) : undefined,
+        ...((themeCustomElements.navBar?.shippingBar?.content) != null)
+          ? convertElementToSx(themeCustomElements.navBar?.shippingBar?.content)
+          : undefined,
         p: '5px',
-        px: superSmallBreakpoint ? '1px' : undefined,
+        px: superSmallBreakpoint ? '1px' : undefined
       }}
     >
       <Typography
-        variant={smallBreakpoint ? 'body2Head': 'body1Head'}
+        variant={smallBreakpoint ? 'body2Head' : 'body1Head'}
         textAlign="center"
         sx={{
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center',
+          justifyContent: 'center'
         }}
         lineHeight="18px"
       >
@@ -57,14 +58,15 @@ const ShippingBar = (props: ShippingBarProps) => {
           icon={faTruck}
           style={{
             marginRight: shippingTruckMr,
-            ...themeCustomElements.navBar?.shippingBar?.icon ?
-              convertElementToSx(themeCustomElements.navBar?.shippingBar?.icon) : undefined,
+            ...((themeCustomElements.navBar?.shippingBar?.icon) != null)
+              ? convertElementToSx(themeCustomElements.navBar?.shippingBar?.icon)
+              : undefined
           }}
         />
         <FormattedMessage id="header.banners.shipping" />
       </Typography>
     </Box>
-  );
-};
+  )
+}
 
-export default ShippingBar;
+export default ShippingBar

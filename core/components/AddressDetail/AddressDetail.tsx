@@ -1,18 +1,18 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
 
-import { AddressTypes } from '@core/constants/addresses';
-import type { UserAddress } from '@core/types/user';
-import { getCountryCode } from '@core/utils/addresses';
+import { AddressTypes } from '@core/constants/addresses'
+import type { UserAddress } from '@core/types/user'
+import { getCountryCode } from '@core/utils/addresses'
 
-type AddressDetailProps = {
-  address: UserAddress,
-};
+interface AddressDetailProps {
+  address: UserAddress
+}
 
 const AddressDetail = (props: AddressDetailProps) => {
-  const { address } = props;
+  const { address } = props
 
   return (
     <>
@@ -39,7 +39,7 @@ const AddressDetail = (props: AddressDetailProps) => {
         </Typography>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default AddressDetail;
+export default AddressDetail

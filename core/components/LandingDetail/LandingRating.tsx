@@ -1,34 +1,33 @@
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Rating from '@mui/material/Rating';
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Rating from '@mui/material/Rating'
 
-import type { Landing } from '@core/types/products';
-import { scrollToSection } from '@core/utils/navigation';
-import { useAppContext } from '@core/contexts/AppContext';
-import { useProductsContext } from '@core/contexts/ProductsContext';
-import LoadingRating from '@core/components/ui/LoadingRating';
-import Link from '@core/components/navigation/Link';
+import type { Landing } from '@core/types/products'
+import { scrollToSection } from '@core/utils/navigation'
+import { useAppContext } from '@core/contexts/AppContext'
+import { useProductsContext } from '@core/contexts/ProductsContext'
+import LoadingRating from '@core/components/ui/LoadingRating'
+import Link from '@core/components/navigation/Link'
 
-type LandingRatingProps = {
-  landing: Landing,
-};
+interface LandingRatingProps {
+  landing: Landing
+}
 
 const LandingRating = (props: LandingRatingProps) => {
   const {
-    landing,
-  } = props;
+    landing
+  } = props
 
-  const { initialized } = useAppContext();
-  const { getItemPath } = useProductsContext();
-  
+  const { initialized } = useAppContext()
+  const { getItemPath } = useProductsContext()
+
   return (
     <>
-      { !initialized ?
-        <LoadingRating />
-        :
-        <Link
+      { !initialized
+        ? <LoadingRating />
+        : <Link
           href={getItemPath(landing)}
-          onClick={() => scrollToSection('reviews')}
+          onClick={() => { scrollToSection('reviews') }}
           scroll={false}
           sx={{ textDecoration: 'none' }}
         >
@@ -49,7 +48,7 @@ const LandingRating = (props: LandingRatingProps) => {
         </Link>
       }
     </>
-  );
-};
+  )
+}
 
-export default LandingRating;
+export default LandingRating

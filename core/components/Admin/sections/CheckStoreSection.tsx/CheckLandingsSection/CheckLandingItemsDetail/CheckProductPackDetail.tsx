@@ -1,34 +1,34 @@
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl'
 
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import DeleteIcon from '@mui/icons-material/Delete';
-import UpdateIcon from '@mui/icons-material/Update';
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import DeleteIcon from '@mui/icons-material/Delete'
+import UpdateIcon from '@mui/icons-material/Update'
 
-import type { ProductPack } from '@core/types/products';
-import Button from '@core/components/inputs/Button';
-import CheckProductInventoryDetail from './CheckProductInventoryDetail';
+import type { ProductPack } from '@core/types/products'
+import Button from '@core/components/inputs/Button'
+import CheckProductInventoryDetail from './CheckProductInventoryDetail'
 
-type CheckProductPackDetailProps = {
-  productPack: ProductPack,
-  creating?: boolean,
-  onClickUpdateBtn?: (productPack: ProductPack) => void,
-  onClickRemoveInventoryBtn?: (index: number) => void,
-};
+interface CheckProductPackDetailProps {
+  productPack: ProductPack
+  creating?: boolean
+  onClickUpdateBtn?: (productPack: ProductPack) => void
+  onClickRemoveInventoryBtn?: (index: number) => void
+}
 
 const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
   const {
     productPack,
     creating,
     onClickUpdateBtn,
-    onClickRemoveInventoryBtn,
-  } = props;
+    onClickRemoveInventoryBtn
+  } = props
 
-  const intl = useIntl();
+  const intl = useIntl()
 
   return (
     <>
-      { !creating &&
+      { !(creating ?? false) &&
         <>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.id' })}: ${productPack.id}`}
@@ -59,7 +59,7 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
       <Typography component="div" variant="body1">
         {`${intl.formatMessage({ id: 'forms.metaId' })}: ${productPack.metaId}`}
       </Typography>
-      { !creating &&
+      { !(creating ?? false) &&
         <>
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.quantity' })}: ${productPack.quantity}`}
@@ -73,7 +73,7 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
           <Typography component="div" variant="body1">
             {`${intl.formatMessage({ id: 'forms.inventories' })}:`}
             { productPack.inventories?.map((inventory, index) => (
-              <Box key={index} ml={1}> 
+              <Box key={index} ml={1}>
                 <CheckProductInventoryDetail
                   index={index}
                   productInventory={inventory}
@@ -85,7 +85,7 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
           </Typography>
         </>
       }
-      { creating &&
+      { (creating ?? false) &&
         <Typography component="div" variant="body1">
           {`${intl.formatMessage({ id: 'forms.inventoriesIds' })}:`}
           { productPack.inventoriesIds?.map((inventoryId, index) => (
@@ -93,10 +93,10 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
               <Typography component="div" variant="body1">
                 { inventoryId }
               </Typography>
-              { onClickRemoveInventoryBtn &&
+              { (onClickRemoveInventoryBtn != null) &&
                 <Button
                   startIcon={<DeleteIcon />}
-                  onClick={() => onClickRemoveInventoryBtn(index)}
+                  onClick={() => { onClickRemoveInventoryBtn(index) }}
                 >
                   <FormattedMessage
                     id="app.removeBtn"
@@ -107,10 +107,10 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
           ))}
         </Typography>
       }
-      { !creating &&
+      { !(creating ?? false) &&
         <Button
           startIcon={<UpdateIcon />}
-          onClick={onClickUpdateBtn ? () => onClickUpdateBtn(productPack) : undefined}
+          onClick={(onClickUpdateBtn != null) ? () => { onClickUpdateBtn(productPack) } : undefined}
         >
           <FormattedMessage
             id="admin.updatePackBtn"
@@ -118,7 +118,7 @@ const CheckProductPackDetail = (props: CheckProductPackDetailProps) => {
         </Button>
       }
     </>
-  );
-};
+  )
+}
 
-export default CheckProductPackDetail;
+export default CheckProductPackDetail

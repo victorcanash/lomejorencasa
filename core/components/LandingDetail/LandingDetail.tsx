@@ -1,94 +1,94 @@
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react'
 
-import { FormattedMessage } from 'react-intl';
-import { useInView } from 'react-intersection-observer';
-import { type Swiper as SwiperRef } from 'swiper';
+import { FormattedMessage } from 'react-intl'
+import { useInView } from 'react-intersection-observer'
+import { type Swiper as SwiperRef } from 'swiper'
 
 import {
   faTruck,
   faLock,
   faPhoneVolume,
-  faArrowRightArrowLeft,
-} from '@fortawesome/free-solid-svg-icons';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Slide from '@mui/material/Slide';
-import Masonry from '@mui/lab/Masonry';
+  faArrowRightArrowLeft
+} from '@fortawesome/free-solid-svg-icons'
+import Container from '@mui/material/Container'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Slide from '@mui/material/Slide'
+import Masonry from '@mui/lab/Masonry'
 
-import type { Landing, ProductInventory, ProductPack } from '@core/types/products';
-import type { Source } from '@core/types/multimedia';
-import Link from '@core/components/navigation/Link';
-import SelectItem from '@core/components/inputs/SelectItem';
-import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity';
-import Button from '@core/components/inputs/Button';
-import ProductReviews from '@core/components/ProductReviews';
-import { useAppContext } from '@core/contexts/AppContext';
-import { useProductsContext } from '@core/contexts/ProductsContext';
-import useCart from '@core/hooks/useCart';
-import LandingCarousel from './LandingCarousel';
-import LandingRating from './LandingRating';
-import LandingPrice from './LandingPrice';
-import LandingAdvantage from './LandingAdvantage';
+import type { Landing, ProductInventory, ProductPack } from '@core/types/products'
+import type { Source } from '@core/types/multimedia'
+import Link from '@core/components/navigation/Link'
+import SelectItem from '@core/components/inputs/SelectItem'
+import SelectItemQuantity from '@core/components/inputs/SelectItemQuantity'
+import Button from '@core/components/inputs/Button'
+import ProductReviews from '@core/components/ProductReviews'
+import { useAppContext } from '@core/contexts/AppContext'
+import { useProductsContext } from '@core/contexts/ProductsContext'
+import useCart from '@core/hooks/useCart'
+import LandingCarousel from './LandingCarousel'
+import LandingRating from './LandingRating'
+import LandingPrice from './LandingPrice'
+import LandingAdvantage from './LandingAdvantage'
 // import BundleDetail from './BundleDetail';
-import LandingCharacteristics from './LandingCharacteristics';
-import LandingTutorials from './LandingTutorials';
+import LandingCharacteristics from './LandingCharacteristics'
+import LandingTutorials from './LandingTutorials'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
-type LandingDetailProps = {
-  landing: Landing,
-};
+interface LandingDetailProps {
+  landing: Landing
+}
 
 const LandingDetail = (props: LandingDetailProps) => {
-  const { landing } = props;
+  const { landing } = props
 
-  const { initialized } = useAppContext();
+  const { initialized } = useAppContext()
   const {
     getLandingImgsUrl,
     getLandingItems,
-    getFirstLandingItem,
-  } = useProductsContext();
+    getFirstLandingItem
+  } = useProductsContext()
 
-  const { addCartItem } = useCart(false);
+  const { addCartItem } = useCart(false)
   const { ref: payNowBtnRef, inView: payNowInView } = useInView({
     initialInView: true,
     threshold: 0,
-    rootMargin: '-83px 0px 1000px 0px',
-  });
+    rootMargin: '-83px 0px 1000px 0px'
+  })
 
   const swiperRef = useRef<SwiperRef>()
 
-  const [selectedItem, setSelectedItem] = useState<ProductInventory | ProductPack | undefined>();
-  const [selectedQuantity, setSelectedQuantity] = useState(0);
+  const [selectedItem, setSelectedItem] = useState<ProductInventory | ProductPack | undefined>()
+  const [selectedQuantity, setSelectedQuantity] = useState(0)
 
-  const [maxWidthSmall, _setMaxWidthSmall] = useState('540px');
-  const [maxWidthMedium, _setMaxWidthMedium] = useState('623px');
+  const [maxWidthSmall] = useState('540px')
+  const [maxWidthMedium] = useState('623px')
 
   const onClickAddCartBtn = useCallback(() => {
-    if (selectedItem) {
-      addCartItem(selectedItem, selectedQuantity);
+    if (selectedItem != null) {
+      addCartItem(selectedItem, selectedQuantity)
     }
-  }, [addCartItem, selectedItem, selectedQuantity]);
+  }, [addCartItem, selectedItem, selectedQuantity])
 
   const onClickPayNowBtn = useCallback(() => {
-    if (selectedItem) {
-      addCartItem(selectedItem, selectedQuantity, true);
+    if (selectedItem != null) {
+      addCartItem(selectedItem, selectedQuantity, true)
     }
   }, [addCartItem, selectedItem, selectedQuantity])
 
   const title = useMemo(() => {
-    let text = getFirstLandingItem(landing)?.name.current || '';
-    if (selectedItem) {
-      text = selectedItem.name.current;
+    let text = getFirstLandingItem(landing)?.name.current ?? ''
+    if (selectedItem != null) {
+      text = selectedItem.name.current
     }
-    return text;
-  }, [getFirstLandingItem, landing, selectedItem]);
+    return text
+  }, [getFirstLandingItem, landing, selectedItem])
 
   useEffect(() => {
-    swiperRef.current?.slideTo(1, undefined, false);
-  }, [landing]);
+    swiperRef.current?.slideTo(1, undefined, false)
+  }, [landing])
 
   return (
     <Box sx={{ overflow: 'hidden' }}>
@@ -104,23 +104,24 @@ const LandingDetail = (props: LandingDetailProps) => {
 
           {/* Carousel */}
           <Box>
-            <Box 
+            <Box
               sx={{
                 maxWidth: {
                   xs: maxWidthSmall,
-                  md: maxWidthMedium,
+                  md: maxWidthMedium
                 },
-                m: 'auto',
+                m: 'auto'
               }}
             >
               <LandingCarousel
                 sources={
                   getLandingImgsUrl(landing, selectedItem).map((item) => {
-                    return {
+                    const source: Source = {
                       src: item,
                       alt: landing.name.current,
-                      priority: true,
-                    } as Source;
+                      priority: true
+                    }
+                    return source
                   })
                 }
                 swiperRef={swiperRef}
@@ -134,16 +135,16 @@ const LandingDetail = (props: LandingDetailProps) => {
               sx={{
                 maxWidth: {
                   xs: maxWidthSmall,
-                  md: 'max-content',
+                  md: 'max-content'
                 },
                 m: 'auto',
                 ml: {
                   xs: 'auto',
                   md: 4,
                   md_lg: 5,
-                  lg: 6,
+                  lg: 6
                 }
-              }}  
+              }}
             >
 
               {/* Rating */}
@@ -173,28 +174,28 @@ const LandingDetail = (props: LandingDetailProps) => {
                 <LandingAdvantage
                   icon={faTruck}
                   text={{
-                    id: 'productDetail.icons.shipping',
+                    id: 'productDetail.icons.shipping'
                   }}
                   columnSpacing={2}
                 />
                 <LandingAdvantage
                   icon={faLock}
                   text={{
-                    id: 'productDetail.icons.payment',
+                    id: 'productDetail.icons.payment'
                   }}
                   columnSpacing={3}
                 />
                 <LandingAdvantage
                   icon={faPhoneVolume}
                   text={{
-                    id: 'productDetail.icons.support',
+                    id: 'productDetail.icons.support'
                   }}
                   columnSpacing={2.5}
                 />
                 <LandingAdvantage
                   icon={faArrowRightArrowLeft}
                   text={{
-                    id: 'productDetail.icons.guarantee',
+                    id: 'productDetail.icons.guarantee'
                   }}
                   columnSpacing={3}
                 />
@@ -207,7 +208,7 @@ const LandingDetail = (props: LandingDetailProps) => {
                     landing={landing}
                     items={getLandingItems(landing)}
                     selectInputLabel={{
-                      id: `landing.${landing.slug}.selectInventory.label`,
+                      id: `landing.${landing.slug}.selectInventory.label`
                     }}
                     selectedItem={selectedItem}
                     setSelectedItem={setSelectedItem}
@@ -226,12 +227,12 @@ const LandingDetail = (props: LandingDetailProps) => {
               {/* Add cart button */}
               <Button
                 customtype="actionPrimary"
-                loading={initialized && selectedItem ? undefined : 'true'}
+                loading={initialized && (selectedItem != null) ? undefined : 'true'}
                 fullWidth
                 onClick={onClickAddCartBtn}
-                disabled={selectedItem && selectedItem.quantity === 0}
+                disabled={selectedItem != null && selectedItem.quantity === 0}
                 sx={{
-                  mb: 3,
+                  mb: 3
                 }}
               >
                 <FormattedMessage id="productDetail.addCartBtn" />
@@ -240,35 +241,35 @@ const LandingDetail = (props: LandingDetailProps) => {
               {/* Pay now button */}
               <Box
                 sx={{
-                  mb: 3,
+                  mb: 3
                 }}
                 ref={payNowBtnRef}
               >
                 <Button
                   customtype="payNow"
-                  loading={initialized && selectedItem ? undefined : 'true'}
+                  loading={initialized && (selectedItem != null) ? undefined : 'true'}
                   fullWidth
                   onClick={onClickPayNowBtn}
-                  disabled={selectedItem && selectedItem.quantity === 0}
+                  disabled={(selectedItem != null) && selectedItem.quantity === 0}
                 >
                   <FormattedMessage id="productDetail.payNowBtn" />
                 </Button>
               </Box>
-              <Slide appear={true} in={initialized && selectedItem && !payNowInView} direction="up">
+              <Slide appear={true} in={initialized && (selectedItem != null) && !payNowInView} direction="up">
                 <Box
                   sx={{
                     position: 'fixed',
                     bottom: '0px',
                     left: '0px',
                     zIndex: 10,
-                    width: '100%',
+                    width: '100%'
                   }}
                 >
                   <Button
                     customtype="payNow"
                     fullWidth
                     onClick={onClickPayNowBtn}
-                    disabled={selectedItem && selectedItem.quantity == 0}
+                    disabled={(selectedItem != null) && selectedItem.quantity === 0}
                     sx={{ borderRadius: '0px' }}
                   >
                     <FormattedMessage id="productDetail.payNowBtn" />
@@ -303,7 +304,7 @@ const LandingDetail = (props: LandingDetailProps) => {
                   },
                   m: 'auto',
                   pt: 3,
-                }}  
+                }}
               >
                 <BundleDetail
                   bundleConfig={landingConfig.bundle}
@@ -331,7 +332,7 @@ const LandingDetail = (props: LandingDetailProps) => {
         landing={landing}
       />
     </Box>
-  );
-};
+  )
+}
 
-export default LandingDetail;
+export default LandingDetail

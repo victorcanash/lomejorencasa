@@ -1,3 +1,3 @@
-import CartDetail from './CartDetail';
+import CartDetail from './CartDetail'
 
-export default CartDetail;
+export default CartDetail
