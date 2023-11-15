@@ -1,3 +1,3 @@
-import CartView from './CartView';
+import CartView from './CartView'
 
-export default CartView;
+export default CartView

@@ -1,14 +1,13 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
 
-import LinkButton from '@core/components/inputs/LinkButton';
+import LinkButton from '@core/components/inputs/LinkButton'
 
-import { pages } from '@lib/config/navigation.config';
+import { pages } from '@lib/config/navigation.config'
 
 const AboutView = () => {
-
   return (
     <Container>
       <Typography variant="body1" sx={{ mb: 4 }}>
@@ -24,7 +23,7 @@ const AboutView = () => {
         />
       </LinkButton>
     </Container>
-  );
-};
+  )
+}
 
-export default AboutView;
+export default AboutView

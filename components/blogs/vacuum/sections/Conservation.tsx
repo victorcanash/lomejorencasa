@@ -1,44 +1,44 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react'
 
-import { useIntl, FormattedMessage } from 'react-intl';
+import { useIntl, FormattedMessage } from 'react-intl'
 
-import { styled } from '@mui/material/styles';
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow, { tableRowClasses } from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles'
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow, { tableRowClasses } from '@mui/material/TableRow'
+import Paper from '@mui/material/Paper'
 
-import Title from '@core/components/ui/Title';
-import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
+import Title from '@core/components/ui/Title'
+import MultimediaContainer from '@core/components/multimedia/MultimediaContainer'
 
-import { keywords } from '@lib/config/next-seo.config';
+import { keywords } from '@lib/config/next-seo.config'
 
 const StyledTableRow = styled(TableRow)(() => ({
   [`&.${tableRowClasses.head}`]: {
-    backgroundColor: '#A7AC93',
+    backgroundColor: '#A7AC93'
   },
-  ['&:nth-of-type(even)']: {
-    backgroundColor: '#ECF7DC',
-  },
-}));
+  '&:nth-of-type(even)': {
+    backgroundColor: '#ECF7DC'
+  }
+}))
 
 const Conservation = () => {
-  const intl = useIntl();
+  const intl = useIntl()
 
   const createData = useCallback((
     food: string,
     noVacuum: string,
     vacuumFridge: string,
-    vacuumFrozen: string,
+    vacuumFrozen: string
   ) => {
-    return { food, noVacuum, vacuumFridge, vacuumFrozen };
-  }, []);
+    return { food, noVacuum, vacuumFridge, vacuumFrozen }
+  }, [])
 
   const rows = useMemo(() => {
     return [
@@ -95,15 +95,15 @@ const Conservation = () => {
         `1-2 ${intl.formatMessage({ id: 'home.conservation.table.days' })}`,
         `1-2 ${intl.formatMessage({ id: 'home.conservation.table.weeks' })}`,
         `6-12 ${intl.formatMessage({ id: 'home.conservation.table.months' })}`
-      ),
-    ];
-  }, [createData, intl]);
+      )
+    ]
+  }, [createData, intl])
 
   const tableCellSx = useMemo(() => {
     return {
-      p: 1,
-    };
-  }, []);
+      p: 1
+    }
+  }, [])
 
   return (
     <>
@@ -116,37 +116,37 @@ const Conservation = () => {
             type="h2"
             texts={{
               title: {
-                id: 'home.conservation.title',
-              },
+                id: 'home.conservation.title'
+              }
             }}
             divider={true}
           />
           <Typography component="div" variant="body1" mb={4}>
             <FormattedMessage id="home.conservation.description" />
           </Typography>
-          
+
           <TableContainer component={Paper}>
             <Table aria-label="time-conservation-table">
               <TableHead>
                 <StyledTableRow>
                   <TableCell sx={tableCellSx}>
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.food'} 
+                    <FormattedMessage
+                      id={'home.conservation.table.head.food'}
                     />
                   </TableCell>
                   <TableCell sx={tableCellSx}>
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.noVacuum'} 
+                    <FormattedMessage
+                      id={'home.conservation.table.head.noVacuum'}
                     />
                   </TableCell>
                   <TableCell sx={tableCellSx}>
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.vacuumFridge'} 
+                    <FormattedMessage
+                      id={'home.conservation.table.head.vacuumFridge'}
                     />
                   </TableCell>
                   <TableCell sx={tableCellSx}>
-                    <FormattedMessage 
-                      id={'home.conservation.table.head.vacuumFrozen'} 
+                    <FormattedMessage
+                      id={'home.conservation.table.head.vacuumFrozen'}
                     />
                   </TableCell>
                 </StyledTableRow>
@@ -176,11 +176,11 @@ const Conservation = () => {
         type="default"
         source={{
           src: 'v1680888620/laenvasadora/HOME%20PAGE/BANNER/FOTO_PRODUCTO_QUESO_eihinu.jpg',
-          alt: keywords.vacuumMachine.main,
+          alt: keywords.vacuumMachine.main
         }}
       />
     </>
-  );
-};
+  )
+}
 
-export default Conservation;
+export default Conservation

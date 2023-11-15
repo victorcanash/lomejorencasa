@@ -1,3 +1,3 @@
-import CbdBlog from './CbdBlog';
+import CbdBlog from './CbdBlog'
 
-export default CbdBlog;
+export default CbdBlog

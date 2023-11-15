@@ -1,15 +1,14 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
-import CustomImage from '@core/components/multimedia/CustomImage';
-import Title from '@core/components/ui/Title';
+import CustomImage from '@core/components/multimedia/CustomImage'
+import Title from '@core/components/ui/Title'
 
 const WhyVacuumPacked = () => {
-
   return (
     <>
       <Container id="whyVacuumPacked">
@@ -21,8 +20,8 @@ const WhyVacuumPacked = () => {
             type="h2"
             texts={{
               title: {
-                id: 'home.whyVacuumPacked.title',
-              },
+                id: 'home.whyVacuumPacked.title'
+              }
             }}
             divider={true}
           />
@@ -33,18 +32,18 @@ const WhyVacuumPacked = () => {
         </Box>
       </Container>
 
-      <Grid 
+      <Grid
         container
         maxWidth="sm"
         m="auto"
-        mt={1} 
+        mt={1}
         rowSpacing={3}
         wrap="wrap"
         justifyContent="space-between"
       >
 
         <Grid item xs={7} xs_sm={7}>
-          <Box 
+          <Box
             sx={{
               backgroundColor: '#E5ECDC',
               borderRadius: '0px 45px 45px 0px',
@@ -52,7 +51,7 @@ const WhyVacuumPacked = () => {
               mr: 'auto',
               py: 3,
               pr: 3,
-              pl: 4,
+              pl: 4
             }}
           >
             <Typography component="div" variant="body1">
@@ -65,7 +64,7 @@ const WhyVacuumPacked = () => {
             sx={{
               width: '100%',
               maxWidth: '250px',
-              mr: 'auto',
+              mr: 'auto'
             }}
           >
             <CustomImage
@@ -82,7 +81,7 @@ const WhyVacuumPacked = () => {
             sx={{
               width: '100%',
               maxWidth: '200px',
-              ml: 2,
+              ml: 2
             }}
           >
             <CustomImage
@@ -95,7 +94,7 @@ const WhyVacuumPacked = () => {
           </Box>
         </Grid>
         <Grid item xs={8} xs_sm={8}>
-          <Box 
+          <Box
             sx={{
               backgroundColor: '#E9D9B1',
               borderRadius: '45px 0px 0px 45px',
@@ -103,7 +102,7 @@ const WhyVacuumPacked = () => {
               ml: 'auto',
               py: 3,
               pr: 4,
-              pl: 3,
+              pl: 3
             }}
           >
             <Typography component="div" variant="body1">
@@ -113,7 +112,7 @@ const WhyVacuumPacked = () => {
         </Grid>
       </Grid>
     </>
-  );
-};
+  )
+}
 
-export default WhyVacuumPacked;
+export default WhyVacuumPacked

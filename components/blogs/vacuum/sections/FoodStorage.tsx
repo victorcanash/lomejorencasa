@@ -1,14 +1,13 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 
-import Title from '@core/components/ui/Title';
-import MultimediaContainer from '@core/components/multimedia/MultimediaContainer';
+import Title from '@core/components/ui/Title'
+import MultimediaContainer from '@core/components/multimedia/MultimediaContainer'
 
 const FoodStorage = () => {
-
   return (
     <Container id="foodStorage">
       <Box
@@ -19,8 +18,8 @@ const FoodStorage = () => {
           type="h2"
           texts={{
             title: {
-              id: 'home.foodStorage.title',
-            },
+              id: 'home.foodStorage.title'
+            }
           }}
           divider={true}
         />
@@ -29,17 +28,17 @@ const FoodStorage = () => {
         </Typography>
         <MultimediaContainer
           type="default"
-          source={{ 
+          source={{
             src: 'v1680692948/laenvasadora/HOME%20PAGE/ILUSTRACIONES/cooking-ingredients-32089_hc3pld.png',
             width: '1920',
-            height: '960',
+            height: '960'
           }}
           mt={0}
           borderRadius="0px"
         />
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default FoodStorage;
+export default FoodStorage

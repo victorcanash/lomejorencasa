@@ -1,3 +1,3 @@
-import VacuumBlog from './VacuumBlog';
+import VacuumBlog from './VacuumBlog'
 
-export default VacuumBlog;
+export default VacuumBlog

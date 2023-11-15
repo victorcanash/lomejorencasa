@@ -1,28 +1,28 @@
-import { useCallback } from 'react';
+import { useCallback } from 'react'
 
-import { FormattedMessage } from 'react-intl';
-import { Autoplay, EffectCards } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { FormattedMessage } from 'react-intl'
+import { Autoplay, EffectCards } from 'swiper'
+import { Swiper, SwiperSlide } from 'swiper/react'
 
-import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
+import CardContent from '@mui/material/CardContent'
+import Typography from '@mui/material/Typography'
 
-import { keywords } from '@lib/config/next-seo.config';
-import Title from '@core/components/ui/Title';
-import CustomImage from '@core/components/multimedia/CustomImage';
+import { keywords } from '@lib/config/next-seo.config'
+import Title from '@core/components/ui/Title'
+import CustomImage from '@core/components/multimedia/CustomImage'
 
 const PackingMachine = () => {
   const getBackgroundColor = useCallback((index: number) => {
-    if (index == 0) {
-      return '#E9D9B1';
-    } else if (index == 1) {
-      return '#E5ECDC';
+    if (index === 0) {
+      return '#E9D9B1'
+    } else if (index === 1) {
+      return '#E5ECDC'
     }
-    return '#A7AC93';
-  }, []);
+    return '#A7AC93'
+  }, [])
 
   return (
     <>
@@ -35,15 +35,15 @@ const PackingMachine = () => {
             type="h2"
             texts={{
               title: {
-                id: 'home.packingMachine.title',
-              },
+                id: 'home.packingMachine.title'
+              }
             }}
             divider={true}
           />
         </Box>
 
         <Box
-          sx={{     
+          sx={{
             position: 'absolute',
             width: '225px',
             left: {
@@ -52,28 +52,28 @@ const PackingMachine = () => {
               sm_md: '10%',
               lg: '15%',
               lg_xl: '20%',
-              xl: '25%',
-            },
+              xl: '25%'
+            }
           }}
         >
-          <Swiper 
+          <Swiper
             modules={[Autoplay, EffectCards]}
-            //speed={1000} 
-            effect={"cards"}
+            // speed={1000}
+            effect={'cards'}
             grabCursor={true}
             className="mySwiper"
           >
             { [
-                'home.packingMachine.description.1', 
-                'home.packingMachine.description.2',
-                'home.packingMachine.description.3'
-              ].map((item, index) => (
+              'home.packingMachine.description.1',
+              'home.packingMachine.description.2',
+              'home.packingMachine.description.3'
+            ].map((item, index) => (
               <SwiperSlide key={index}>
                 <Card
                   sx={{
                     borderRadius: '8px',
                     backgroundColor: getBackgroundColor(index),
-                    minHeight: '256px',
+                    minHeight: '256px'
                   }}
                 >
                   <CardContent>
@@ -91,7 +91,7 @@ const PackingMachine = () => {
       <Box
         sx={{
           width: '100%',
-          overflow: 'hidden',
+          overflow: 'hidden'
         }}
       >
         <Box
@@ -99,19 +99,19 @@ const PackingMachine = () => {
           width={{
             xs: '765px',
             sm_md: '900px',
-            md: '1085px',
+            md: '1085px'
           }}
           m="auto"
           mt={{
             xs: 17,
             sm_md: 14,
-            md: 10,
+            md: 10
           }}
         >
           <Box
             sx={{
               position: 'relative',
-              width: 'calc(100% + (0px * 2))',
+              width: 'calc(100% + (0px * 2))'
             }}
           >
             <CustomImage
@@ -127,7 +127,7 @@ const PackingMachine = () => {
         </Box>
       </Box>
     </>
-  );
-};
+  )
+}
 
-export default PackingMachine;
+export default PackingMachine

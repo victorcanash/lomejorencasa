@@ -1,30 +1,30 @@
-import Box from '@mui/material/Box';
+import Box from '@mui/material/Box'
 
-import { VacuumBlogPageProps } from '@core/staticPages/vacuumBlog';
-import VacuumBanner from '@core/components/banners/productBanners/VacuumBanner';
+import { type VacuumBlogPageProps } from '@core/staticPages/vacuumBlog'
+import VacuumBanner from '@core/components/banners/productBanners/VacuumBanner'
 
-import Intro from './sections/Intro';
-import PackingMachine from './sections/PackingMachine';
-import WhatIsVacuumPacked from './sections/WhatIsVacuumPacked';
-import WhyVacuumPacked from './sections/WhyVacuumPacked';
-import Characteristics from './sections/Characteristics';
-import Use from './sections/Use';
-import FoodStorage from './sections/FoodStorage';
-import Conservation from './sections/Conservation';
+import Intro from './sections/Intro'
+import PackingMachine from './sections/PackingMachine'
+import WhatIsVacuumPacked from './sections/WhatIsVacuumPacked'
+import WhyVacuumPacked from './sections/WhyVacuumPacked'
+import Characteristics from './sections/Characteristics'
+import Use from './sections/Use'
+import FoodStorage from './sections/FoodStorage'
+import Conservation from './sections/Conservation'
 
-type VacuumBlogProps = {
-  pageProps: VacuumBlogPageProps,
+interface VacuumBlogProps {
+  pageProps: VacuumBlogPageProps
 }
 
 const VacuumBlog = (props: VacuumBlogProps) => {
   const {
-    pageProps,
-  } = props;
+    pageProps
+  } = props
 
   return (
-    <Box 
+    <Box
       sx={{
-        overflow: 'hidden',
+        overflow: 'hidden'
       }}
     >
       <VacuumBanner />
@@ -55,7 +55,7 @@ const VacuumBlog = (props: VacuumBlogProps) => {
         landingVacuumMachine={pageProps.landingVacuumMachine}
       />
     </Box>
-  );
-};
+  )
+}
 
-export default VacuumBlog;
+export default VacuumBlog

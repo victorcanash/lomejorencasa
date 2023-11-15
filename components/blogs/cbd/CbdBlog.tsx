@@ -1,15 +1,14 @@
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl'
 
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container'
+import Typography from '@mui/material/Typography'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
 
-import Link from '@core/components/navigation/Link';
-import CustomImage from '@core/components/multimedia/CustomImage';
+import Link from '@core/components/navigation/Link'
+import CustomImage from '@core/components/multimedia/CustomImage'
 
 const CbdBlog = () => {
-
   return (
     <Container>
       <Typography variant="h2" mb={3}>
@@ -23,8 +22,8 @@ const CbdBlog = () => {
           m: 'auto',
           mt: 3,
           mb: 3,
-          maxWidth: '600px',
-        }} 
+          maxWidth: '600px'
+        }}
       >
         <CustomImage
           src="v1684694599/laenvasadora/CBD/insomnia_qnvyro.jpg"
@@ -61,10 +60,10 @@ const CbdBlog = () => {
               m: 'auto',
               mt: {
                 xs: 3,
-                md: 1,
+                md: 1
               },
-              maxWidth: '300px',
-            }} 
+              maxWidth: '300px'
+            }}
           >
             <Link href="https://www.sensitivecbd.com/" target="_blank">
               <CustomImage
@@ -105,9 +104,9 @@ const CbdBlog = () => {
               textAlign: 'center',
               mb: {
                 xs: 3,
-                sm_md: 'auto',
-              },
-            }} 
+                sm_md: 'auto'
+              }
+            }}
           >
             <Link href="https://www.sensitivecbd.com/" target="_blank">
               <CustomImage
@@ -171,7 +170,7 @@ const CbdBlog = () => {
         </Link>
       </Box>
     </Container>
-  );
-};
+  )
+}
 
-export default CbdBlog;
+export default CbdBlog
