@@ -21,7 +21,7 @@ const NavDrawerBtn = (props: NavDrawerBtnProps) => {
   } = props
 
   const handleItemBtn = (item: NavDrawerItem) => {
-    if (item.items.length > 0) {
+    if (item.items && item.items.length > 0) {
       handleCollapse(item)
     } else {
       handleOpen()
@@ -35,7 +35,7 @@ const NavDrawerBtn = (props: NavDrawerBtnProps) => {
     <>
       { (item.path != null)
         ? <ListItemButton
-          sx={{ pl: item.items.length <= 0 ? 4 : undefined }}
+          sx={{ pl: !item.items ? 4 : undefined }}
           onClick={() => { handleItemBtn(item) }}
           component={Link}
           href={item.path}
@@ -45,7 +45,7 @@ const NavDrawerBtn = (props: NavDrawerBtnProps) => {
           />
         </ListItemButton>
         : <ListItemButton
-          sx={ item.items.length <= 0 ? { pl: 4 } : undefined }
+          sx={ !item.items ? { pl: 4 } : undefined }
           onClick={() => { handleItemBtn(item) }}
         >
           <NavDrawerBtnContent
